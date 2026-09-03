@@ -1,0 +1,74 @@
+classDiagram
+    direction TB
+    class BaseResetPasswordNotification {
+        <<abstract>>
+        #string token
+        #getRoleName()* string
+        #resolveRouteName(notifiable)* string
+        +resetUrl(notifiable) string
+        +toMail(notifiable) MailMessage
+    }
+    class AdminResetPasswordNotification {
+        +ROUTE_NAME string = "admin.password.reset"
+        #getRoleName() string
+        #resolveRouteName(notifiable) string
+    }
+    class PenyewaResetPasswordNotification {
+        +ROUTE_NAME string = "password.reset"
+        #getRoleName() string
+        #resolveRouteName(notifiable) string
+    }
+
+    class NotificationMail {
+        +string subjectStr
+        +string viewName
+        +array viewData
+        +envelope() Envelope
+        +content() Content
+    }
+    class TagihanBulanMail {
+        +Tagihan tagihan
+        +envelope() Envelope
+        +content() Content
+    }
+
+    class ReservasiPolicy {
+        +view(User, Reservasi) bool
+        +chat(User, Reservasi) bool
+        +pay(User, Reservasi) bool
+        +update(User, Reservasi) bool
+    }
+    class KeluhanPolicy {
+        +view(User, Keluhan) bool
+    }
+    class PembayaranPolicy {
+        +downloadNota(User, Pembayaran) bool
+    }
+    class TagihanPolicy {
+        +view(User, Tagihan) bool
+        +pay(User, Tagihan) bool
+    }
+
+    class HandlesReservationSession {
+        <<trait>>
+        #getReservationSessionKeys() array
+        #storeReservationSessionState(Request) string
+    }
+    class SanitizesCurrency {
+        <<trait>>
+        +formatCurrency(nominal) string
+    }
+    class Sanitizer {
+        +static currency(value) mixed
+        +static phoneNumber(value) string
+        +static email(value) string
+    }
+
+    AdminResetPasswordNotification --|> BaseResetPasswordNotification : "extends"
+    PenyewaResetPasswordNotification --|> BaseResetPasswordNotification : "extends"
+
+    ReservasiPolicy ..> User : "authorizes"
+    ReservasiPolicy ..> Reservasi : "authorizes"
+    KeluhanPolicy ..> Keluhan : "authorizes"
+    PembayaranPolicy ..> Pembayaran : "authorizes"
+    TagihanPolicy ..> Tagihan : "authorizes"

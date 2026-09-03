@@ -1,0 +1,65 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor A as Admin
+    participant V as View (Admin Panel)
+    participant C_Penyewa as Admin\PenyewaController
+    participant C_Kamar as Admin\KamarController
+    participant P as Penyewa (Model)
+    participant K as Kamar (Model)
+    participant PE as Pengeluaran / Jurnal (Model)
+    participant DB as Database (MySQL)
+
+    A->>V: Buka Profil Penyewa Aktif & Klik "Checkout / Nonaktifkan"
+    V->>C_Penyewa: POST /admin/penyewa/{id}/checkout
+    C_Penyewa->>P: update(['status' => 'nonaktif'])
+    P->>DB: UPDATE penyewas SET status = 'nonaktif', tanggal_keluar = TODAY() WHERE id = ?
+    Note over C_Penyewa, K: Aturan Bisnis: Status Kamar Master tetap terkunci 'terisi'
+    C_Penyewa-->>V: Return redirect() dengan Toast Success
+
+    A->>A: Melakukan inspeksi fisik kebersihan & kondisi fasilitas kamar kost
+    
+    alt Skenario A: Ditemukan Kerusakan Fasilitas Kamar
+        A->>A: Hitung nominal ganti rugi perbaikan
+        A->>A: Deposit dikembalikan setelah dikurangi potongan biaya perbaikan
+        A->>PE: Catat Jurnal Potongan & Pengembalian Sisa Deposit
+        PE->>DB: INSERT INTO pengeluarans (nama: 'Pengembalian Deposit Sisa', nominal: ?)
+    else Skenario B: Kondisi Kamar Baik & Bersih
+        A->>A: Uang deposit jaminan dikembalikan penuh 100% ke Penyewa
+        A->>PE: Catat Pengeluaran Pengembalian Deposit 100%
+        PE->>DB: INSERT INTO pengeluarans (nama: 'Pengembalian Deposit Full', nominal: deposit)
+    end
+
+    A->>V: Buka Menu Manajemen Kamar & klik Edit Kamar terkait
+    A->>V: Pilih status kamar baru & klik "Update Status"
+    V->>C_Kamar: PATCH /admin/kamar/{id}/status (status)
+    Note over C_Kamar: Validasi: status harus salah satu dari: 'tersedia', 'maintenance'
+    C_Kamar->>K: update(['status' => status])
+    K->>DB: UPDATE kamars SET status = ? WHERE id = ?
+    C_Kamar-->>V: Return redirect() dengan Toast Success "Status kamar berhasil diperbarui"

@@ -1,0 +1,51 @@
+classDiagram
+    direction TB
+    class DomainEvents {
+        +ReservasiDibuat
+        +ReservasiDibayar
+        +ReservasiDikonfirmasi
+        +TagihanDibuat
+        +PembayaranBerhasil
+        +PembayaranCashDikonfirmasi
+        +ReminderPenyewa
+        +NotifikasiWali
+        +DendaDikenakan
+        +KeluhanDibuat
+        +KeluhanDitanggapi
+    }
+    class EventListeners {
+        +HandleReservasiDibuat
+        +HandleReservasiDibayar
+        +HandleReservasiDikonfirmasi
+        +ProsesTransisiPenyewa
+        +HandleTagihanDibuat
+        +HandleReminderPenyewa
+        +HandleNotifikasiWali
+        +HandleDendaDikenakan
+        +GeneratePdfNotaListener
+        +KirimNotifikasiKeluhanDibuat
+        +KirimNotifikasiKeluhanDitanggapi
+        +NotifikasiKhususSubscriber
+    }
+    class QueueJobs {
+        +KirimNotifikasiAdminReservasiJob
+        +KirimNotifikasiUserReservasiJob
+        +KirimNotifikasiTagihanJob
+        +KirimNotifikasiPembayaranJob
+        +KirimReminderJatuhTempoJob
+        +KirimNotifikasiWaliJob
+        +KirimWelcomeMessageJob
+        +GeneratePdfNotaJob
+        +KirimNotifikasiKustomJob
+    }
+
+    DomainEvents ..> EventListeners : "triggers via Event Bus"
+    HandleReservasiDibuat ..> KirimNotifikasiAdminReservasiJob : "dispatches"
+    HandleReservasiDibayar ..> KirimNotifikasiUserReservasiJob : "dispatches"
+    HandleReservasiDikonfirmasi ..> KirimNotifikasiUserReservasiJob : "dispatches"
+    HandleTagihanDibuat ..> KirimNotifikasiTagihanJob : "dispatches"
+    HandleReminderPenyewa ..> KirimReminderJatuhTempoJob : "dispatches"
+    HandleNotifikasiWali ..> KirimNotifikasiWaliJob : "dispatches"
+    HandleDendaDikenakan ..> KirimReminderJatuhTempoJob : "dispatches"
+    ProsesTransisiPenyewa ..> NotifikasiService : "calls"
+    GeneratePdfNotaListener ..> PdfNotaService : "generates PDF"

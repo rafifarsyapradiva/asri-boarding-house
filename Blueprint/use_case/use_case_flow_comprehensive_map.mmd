@@ -1,0 +1,114 @@
+flowchart TB
+    classDef actorNode fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
+    classDef externalNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
+    classDef timerNode fill:#e0f7fa,stroke:#00acc1,stroke-width:2px,font-weight:bold;
+    classDef baseUC fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20,font-weight:bold;
+    classDef extendUC fill:#fff3e0,stroke:#f57c00,stroke-width:2px,font-weight:bold;
+
+    %% ACTORS
+    Guest(["Tamu (Guest)"]):::actorNode
+    Calon(["Calon Penyewa"]):::actorNode
+    Penyewa(["Penyewa Aktif"]):::primaryActor
+    Admin(["Administrator"]):::actorNode
+    Cron[["System Scheduler (Timer/Cron)"]]:::timerNode
+
+    %% EXTERNAL SERVICES
+    Midtrans[["Payment Gateway (Midtrans Snap)"]]:::externalNode
+    Fonnte[["WhatsApp Gateway (Fonnte)"]]:::externalNode
+
+    %% FLOW PHASE 1: AUTHENTICATION & DISCOVERY
+    subgraph Phase1 ["Fase 1: Penemuan & Otentikasi"]
+        UC10(["UC-10: Cek Katalog & Ketersediaan Kamar"]):::baseUC
+        UC12(["UC-12: Registrasi Akun Calon"]):::baseUC
+        UC18(["UC-18: Login / SSO Google OAuth"]):::baseUC
+        UC22(["UC-22: Login Akun Manual"]):::baseUC
+        UC24(["UC-24: Lupa & Reset Password"]):::extendUC
+        UC17(["UC-17: Diskusi via Guest Chat"]):::baseUC
+    end
+
+    %% FLOW PHASE 2: RESERVATION & PRE-PAYMENT
+    subgraph Phase2 ["Fase 2: Reservasi & Transisi Penyewa"]
+        UC01(["UC-01: Melakukan Reservasi Kamar"]):::baseUC
+        UC03(["UC-03: Chat Reservasi Real-time"]):::extendUC
+        UC02(["UC-02: Melakukan Pembayaran Reservasi"]):::extendUC
+        UC06(["UC-06: Verifikasi Reservasi & Konfirmasi Kas"]):::baseUC
+    end
+
+    %% FLOW PHASE 3: ACTIVE TENANCY & AUTOMATED BILLING
+    subgraph Phase3 ["Fase 3: Masa Sewa Aktif & Penagihan"]
+        UC28(["UC-28: Otomasi Billing & Denda Eskalasi"]):::baseUC
+        UC04(["UC-04: Membayar Tagihan Bulanan"]):::baseUC
+        UC25(["UC-25: Mengunduh Kuitansi Bukti PDF"]):::extendUC
+        UC05(["UC-05: Mengajukan Keluhan Fasilitas"]):::baseUC
+        UC15(["UC-15: Memproses & Menanggapi Keluhan"]):::baseUC
+        UC11(["UC-11: Mengakses Menu Peraturan"]):::baseUC
+        UC21(["UC-21: Melihat Pengumuman & Notifikasi"]):::baseUC
+    end
+
+    %% FLOW PHASE 4: ADMIN CONTROLS & REPORTING
+    subgraph Phase4 ["Fase 4: Operasional & Pengakhiran Sewa"]
+        UC14(["UC-14: Manajemen Data Master Penyewa"]):::baseUC
+        UC26(["UC-26: Process Checkout & Perpanjangan"]):::extendUC
+        UC07(["UC-07: Laporan Arus Kas"]):::baseUC
+        UC08(["UC-08: Pencatatan Pengeluaran (CRUD)"]):::baseUC
+        UC27(["UC-27: Ekspor Data & Laporan (PDF/Excel)"]):::extendUC
+        UC19(["UC-19: Memantau Kalender Kontrol Visual"]):::baseUC
+        UC20(["UC-20: Broadcast Notifikasi Massal"]):::baseUC
+    end
+
+    %% CONNECTIONS & INTERACTIONS
+    Guest --> UC10
+    Guest --> UC17
+    Guest --> UC12
+    Guest --> UC18
+    Guest --> UC22
+
+    UC24 -.-> |extend| UC22
+    UC12 --> Calon
+    UC18 --> Calon
+
+    Calon --> UC01
+    UC03 -.-> |extend| UC01
+    UC02 -.-> |extend| UC01
+    UC02 -.-> |include| Midtrans
+    Calon --> UC03
+    Calon --> UC02
+
+    Admin --> UC03
+    Admin --> UC06
+    Admin --> UC17
+    UC06 -.-> |include| Fonnte
+    UC06 --> |Transisi Sukses -> Akun Terbit| Penyewa
+
+    Cron --> UC28
+    UC28 -.-> |include| Fonnte
+    UC28 --> |Terbit Tagihan Rutin| UC04
+
+    Penyewa --> UC04
+    UC04 -.-> |include| Midtrans
+    Admin --> |Konfirmasi Kas Manual| UC06
+    UC06 -.-> |Update Status Lunas| UC04
+
+    UC25 -.-> |extend| UC04
+    Penyewa --> UC25
+
+    Penyewa --> UC05
+    UC05 -.-> |include| Fonnte
+    Fonnte --> |Notifikasi WA Masuk| Admin
+    Admin --> UC15
+    UC15 -.-> |include| Fonnte
+    Fonnte --> |Notifikasi Status Selesai| Penyewa
+
+    Admin --> UC14
+    UC26 -.-> |extend| UC14
+    Admin --> UC26
+    Admin --> UC07
+    Admin --> UC08
+    Admin --> UC19
+    Admin --> UC20
+    UC20 -.-> |include| Fonnte
+
+    UC27 -.-> |extend| UC07
+    UC27 -.-> |extend| UC14
+    UC27 -.-> |extend| UC08
+    Admin --> UC27

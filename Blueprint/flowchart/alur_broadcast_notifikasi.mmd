@@ -1,0 +1,38 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaBroadcastAdmin[/Admin membuka Menu Broadcast Pengumuman /admin/pengumuman/]
+    BukaBroadcastAdmin --> PilihPenerima[/Admin memilih Filter Penerima: Semua Penyewa Aktif / Lantai Tertentu/]
+    PilihPenerima --> IsiKonten[/Admin mengisi Judul Pengumuman, Pesan, & Pilihan Channel WA/Email/Web/]
+    IsiKonten --> KlikBroadcast[/Admin klik Kirim Broadcast/]
+    
+    KlikBroadcast --> ValidasiForm{"Apakah judul & isi pesan terisi?"}
+    ValidasiForm -- "Tidak" --> TampilError[/Tampilkan validation toast error/]
+    TampilError --> IsiKonten
+    
+    ValidasiForm -- "Ya" --> QueryPenerima[[Fetch list penyewa aktif sesuai filter dari database]]
+    QueryPenerima --> LoopPenerima{"Apakah ada penyewa aktif berikutnya?"}
+    
+    LoopPenerima -- "Tidak" --> BroadcastFinish[/Tampilkan Toast Success: Broadcast selesai dikirim/]
+    BroadcastFinish --> Selesai([Selesai])
+    
+    LoopPenerima -- "Ya" --> CekChannel{"Saluran mana yang dipilih?"}
+    
+    CekChannel -- "WhatsApp Fonnte" --> CallWA[/Panggil Fonnte WA API Dispatcher/]
+    CallWA --> CekWASukses{"API WA Sukses?"}
+    CekWASukses -- "Ya" --> LogWASukses[[Simpan log_notifikasi status sukses]]
+    CekWASukses -- "Tidak" --> LogWAGagal[[Simpan log_notifikasi status gagal & catat error]]
+    LogWASukses --> LoopPenerima
+    LogWAGagal --> LoopPenerima
+    
+    CekChannel -- "Email / In-App" --> SendMailWeb[[Kirim Email Notification & Simpan In-App Database Notification]]
+    SendMailWeb --> LoopPenerima

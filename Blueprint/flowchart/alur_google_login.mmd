@@ -1,0 +1,47 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> UserLogin[/Calon Penyewa membuka form login /reservasi/login/]
+    UserLogin --> KlikGoogle[/Klik tombol Masuk dengan Google/]
+    KlikGoogle --> RedirectGoogle[/Socialite mengalihkan user ke Google Authentication page/]
+    
+    RedirectGoogle --> CekOAuthResult{"Apakah pengguna menyetujui akses Google?"}
+    CekOAuthResult -- "Tidak - Batal / Denied" --> RedirectCancel[/Redirect ke login page with Toast Warning OAuth Dibatalkan/]
+    RedirectCancel --> Selesai([Selesai])
+    
+    CekOAuthResult -- "Ya - Sukses" --> FetchGoogleUser[[Sistem mengambil data user Google email, nama]]
+    FetchGoogleUser --> CekAdmin{"Apakah email terdaftar sebagai admin?"}
+    CekAdmin -- "Ya" --> RejectOAuth[/Tolak akses & redirect ke login dengan pesan kesalahan/]
+    RejectOAuth --> Selesai
+    
+    CekAdmin -- "Tidak" --> GetOrCreateUser[[User::firstOrCreate berdasarkan email:<br>- default role: penyewa<br>- default no_hp = null]]
+    
+    GetOrCreateUser --> LoginUser[[Auth::login user & session regenerate]]
+    LoginUser --> CheckProfileComplete{"Apakah no_hp kosong atau berawalan temp_?"}
+    
+    CheckProfileComplete -- "Ya" --> RedirectCompleteProfile[/Redirect paksa ke /profil/complete/]
+    RedirectCompleteProfile --> ViewCompleteForm[/Tampilkan form Pengisian Nomor WhatsApp/]
+    ViewCompleteForm --> InputNoHP[/Penyewa mengisi nomor WhatsApp baru/]
+    InputNoHP --> SubmitForm[/Submit POST /profil/complete/]
+    SubmitForm --> ValidasiNoHP{"Apakah no_hp valid Regex & Unik?"}
+    ValidasiNoHP -- "Tidak" --> ErrorValidation[/Kembalikan ke form lengkap profil dengan Toast Error/]
+    ErrorValidation --> ViewCompleteForm
+    ValidasiNoHP -- "Ya" --> UpdateUser[[Update user.no_hp di database]]
+    UpdateUser --> CheckPendingReservasi{"Apakah user memiliki reservasi pending?"}
+    
+    CheckProfileComplete -- "Tidak" --> CheckPendingReservasi
+    
+    CheckPendingReservasi -- "Ya" --> RedirectReservasi[/Redirect ke halaman detail reservasi/]
+    CheckPendingReservasi -- "Tidak" --> RedirectLanding[/Redirect ke Beranda utama /]
+    
+    RedirectReservasi --> Selesai
+    RedirectLanding --> Selesai

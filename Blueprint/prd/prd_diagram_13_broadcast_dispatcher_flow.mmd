@@ -1,0 +1,45 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Admin Membuat Broadcast]) --> AdminForm["Admin Buka Menu 'Broadcast Pengumuman'<br>Tulis Judul, Konten & Pilih Target Sasaran"]
+    AdminForm --> SelectTarget{"Pilih Target Pengguna"}
+    SelectTarget -->|Semua Penyewa| AllTenants["Query Seluruh Penyewa Aktif"]
+    SelectTarget -->|Kamar Tertentu| SpecificTenants["Query Penyewa Berdasarkan Kamar"]
+    
+    AllTenants --> SelectChannels{"Pilih Kanal Pengiriman"}
+    SpecificTenants --> SelectChannels
+    
+    SelectChannels --> SaveDraft["Simpan Draf ke Tabel 'pengumuman'"]
+    SaveDraft --> DispatchJob["Laravel Dispatch Job: 'KirimBroadcastNotificationJob'<br>ke Laravel Queue Driver"]
+    
+    DispatchJob --> Worker["Laravel Queue Worker Memproses Pesan Asinkron"]
+    
+    Worker --> ChannelSplit{Distribusi Multi-Kanal}
+    
+    ChannelSplit -->|Kanal 1: Web Portal| InAppChannel["Simpan Record ke 'notifikasi_khusus'<br>Muncul Badge Lonceng di Portal Penyewa"]
+    
+    ChannelSplit -->|Kanal 2: WhatsApp Fonnte| WAChannel["Sanitasi Nomor HP ('628xx')<br>HTTP POST JSON Payload ke Fonnte API"]
+    WAChannel --> WAResponse{"Status Response Fonnte"}
+    WAResponse -- 200 OK --> LogWASuccess["Simpan Log Sukses di 'log_notifikasi'"]
+    WAResponse -- Gagal / Timeout --> RetryWA["Queue Retry dengan Exponential Backoff (Maks 3x)"]
+    RetryWA -- Gagal Total --> FallbackMail["Trigger Fallback ke SMTP Mailer"]
+    
+    ChannelSplit -->|Kanal 3: Email SMTP| MailChannel["Render Blade Mailable Template<br>Kirim via Symfony Mailer / SMTP Host"]
+    MailChannel --> LogMail["Simpan Log Email di 'log_notifikasi'"]
+    
+    InAppChannel --> EndBroadcast([Penyewa Menerima Informasi])
+    LogWASuccess --> EndBroadcast
+    FallbackMail --> EndBroadcast
+    LogMail --> EndBroadcast

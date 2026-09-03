@@ -1,0 +1,121 @@
+flowchart LR
+    classDef primaryActor fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
+    classDef secondaryActor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
+    classDef timerActor fill:#e0f7fa,stroke:#00acc1,stroke-width:2px,font-weight:bold;
+    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    %% Actors
+    Guest(["Tamu (Guest)"]):::primaryActor
+    Calon(["Calon Penyewa"]):::primaryActor
+    Penyewa(["Penyewa Aktif"]):::primaryActor
+    Admin(["Administrator"]):::primaryActor
+
+    %% Systems & Timers
+    Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
+    Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
+    Cron[["System Scheduler (Timer/Cron)"]]:::timerActor
+
+    subgraph CoreSystem ["Sistem Informasi Asri Boarding House"]
+        direction TB
+        
+        subgraph AuthMod ["Modul Otentikasi & Keamanan"]
+            UC12(["UC-12: Registrasi Akun"]):::ucNode
+            UC18(["UC-18: Google OAuth SSO"]):::ucNode
+            UC22(["UC-22: Login Manual"]):::ucNode
+            UC24(["UC-24: Lupa & Reset Password"]):::ucNode
+        end
+
+        subgraph PublicMod ["Modul Publik & Reservasi"]
+            UC10(["UC-10: Cek Katalog Kamar"]):::ucNode
+            UC17(["UC-17: Guest Chat"]):::ucNode
+            UC01(["UC-01: Reservasi Kamar"]):::ucNode
+            UC03(["UC-03: Chat Reservasi"]):::ucNode
+            UC02(["UC-02: Pembayaran Reservasi"]):::ucNode
+        end
+
+        subgraph TenantMod ["Modul Penyewa Aktif"]
+            UC04(["UC-04: Bayar Tagihan Bulanan"]):::ucNode
+            UC25(["UC-25: Unduh Kuitansi PDF"]):::ucNode
+            UC05(["UC-05: Pengaduan Keluhan"]):::ucNode
+            UC11(["UC-11: Peraturan Kost"]):::ucNode
+            UC21(["UC-21: Pengumuman Portal"]):::ucNode
+            UC16(["UC-16: Riwayat Transaksi"]):::ucNode
+        end
+
+        subgraph AutoMod ["Modul Otomasi Latar Belakang"]
+            UC28(["UC-28: Otomasi Billing, Denda & Eskalasi"]):::ucNode
+        end
+
+        subgraph AdminMod ["Modul Admin Operations"]
+            UC06(["UC-06: Konfirmasi Reservasi & Kas"]):::ucNode
+            UC13(["UC-13: Kelola Kamar & Fasilitas"]):::ucNode
+            UC14(["UC-14: Kelola Penyewa"]):::ucNode
+            UC26(["UC-26: Checkout & Perpanjang"]):::ucNode
+            UC15(["UC-15: Resolusi Keluhan"]):::ucNode
+            UC08(["UC-08: Kelola Pengeluaran"]):::ucNode
+            UC07(["UC-07: Laporan Arus Kas"]):::ucNode
+            UC27(["UC-27: Ekspor Data & Laporan"]):::ucNode
+            UC19(["UC-19: Kalender Kontrol"]):::ucNode
+            UC20(["UC-20: Broadcast Notifikasi"]):::ucNode
+            UC09(["UC-09: Kelola Konten Dinamis"]):::ucNode
+            UC23(["UC-23: Pengaturan Sistem"]):::ucNode
+            UC29(["UC-29: Log Audit & Error System"]):::ucNode
+        end
+    end
+
+    %% Connect Primary Actors
+    Guest --> UC10
+    Guest --> UC12
+    Guest --> UC17
+    Guest --> UC18
+    Guest --> UC22
+
+    Calon --> UC22
+    Calon --> UC18
+    Calon --> UC01
+    Calon --> UC03
+    Calon --> UC02
+    Calon --> UC16
+
+    Penyewa --> UC22
+    Penyewa --> UC18
+    Penyewa --> UC04
+    Penyewa --> UC25
+    Penyewa --> UC05
+    Penyewa --> UC11
+    Penyewa --> UC21
+    Penyewa --> UC16
+
+    Admin --> UC22
+    Admin --> UC03
+    Admin --> UC06
+    Admin --> UC13
+    Admin --> UC14
+    Admin --> UC26
+    Admin --> UC15
+    Admin --> UC08
+    Admin --> UC07
+    Admin --> UC27
+    Admin --> UC19
+    Admin --> UC20
+    Admin --> UC09
+    Admin --> UC23
+    Admin --> UC17
+    Admin --> UC29
+
+    %% Connect Timer Actor
+    Cron --> UC28
+
+    %% Core Extension Dependencies
+    UC24 -.-> |extend| UC22
+    UC03 -.-> |extend| UC01
+    UC02 -.-> |extend| UC01
+    UC25 -.-> |extend| UC04
+
+    %% Connect Secondary Actors
+    UC02 -.-> |include| Midtrans
+    UC04 -.-> |include| Midtrans
+    UC06 -.-> |include| Fonnte
+    UC15 -.-> |include| Fonnte
+    UC20 -.-> |include| Fonnte
+    UC28 -.-> |include| Fonnte

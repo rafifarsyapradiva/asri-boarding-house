@@ -1,0 +1,92 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor PA as Penyewa Aktif
+    actor A as Admin
+    participant V as View (Detail Tagihan)
+    participant C as Penyewa\TagihanController
+    participant TokenC as Api\SnapTokenController
+    participant AC as Admin\TagihanController
+    participant Mid as Midtrans Snap API
+    participant Web as Api\MidtransCallbackController
+    participant DB as Database (MySQL)
+    participant Q as Queue Worker (Background Jobs)
+    participant Pdf as Dompdf Generator
+    participant F as Fonnte WA API
+
+    PA->>V: Buka Halaman Detail Tagihan
+    V->>C: GET /penyewa/tagihan/{id}
+    
+    alt Proteksi Celah IDOR (Kepemilikan Tagihan Invalide)
+        C->>C: Check tagihan->penyewa_id == auth()->user()->penyewa->id
+        C-->>V: Return HTTP 403 Forbidden
+        V-->>PA: Tampilkan Halaman Akses Ditolak
+    else Otorisasi Akses Lulus (Milik Sendiri)
+        C->>DB: Panggil data bank dari tabel settings (Setting::get('bank_name',...))
+        DB-->>C: Info Bank Dinamis
+        C-->>V: Tampilkan Detail Tagihan + Detail Rekening + Total (Pokok + Denda)
+
+        alt Opsi A: Bayar Online (Midtrans Snap)
+            PA->>V: Klik tombol "Bayar Online"
+            V->>TokenC: POST /penyewa/pembayaran/{tagihan}/token (AJAX Request)
+            TokenC->>Mid: Request Snap Token (API Request)
+            Mid-->>TokenC: Return snap_token
+            TokenC-->>V: Return JSON success (snap_token)
+            V->>V: Render Pop-Up Midtrans Snap via snap.pay()
+            PA->>Mid: Selesaikan Pembayaran
+            Mid->>Web: Callback Webhook Midtrans POST /api/midtrans/callback
+            
+            alt Webhook Terverifikasi Sukses (Settlement)
+                Web->>DB: DB::transaction() -> Update status tagihan 'lunas' & simpan pembayaran
+                Web->>Q: Dispatch GeneratePdfNotaJob & KirimNotifikasiPembayaranJob
+                Web-->>Mid: HTTP 200 OK
+                Q->>Pdf: Render & simpan kuitansi PDF (storage/public/nota/)
+                Q->>F: Kirim WA bukti lunas + tautan PDF download
+                F-->>PA: Terima WhatsApp Kuitansi Pembayaran PDF
+            end
+            
+        else Opsi B: Bayar Offline (Tunai / Transfer Manual)
+            PA->>A: Serahkan uang tunai / transfer ke Rekening Bank Admin secara manual
+            A->>DB: Cek mutasi bank / hitung fisik uang
+            A->>V: Buka Panel Admin -> Halaman Tagihan -> Klik "Konfirmasi Cash"
+            V->>AC: POST /admin/tagihan/{id}/konfirmasi-cash
+            
+            alt Validasi Otorisasi & Cek Status Lunas
+                AC->>DB: DB::transaction()
+                AC->>DB: UPDATE tagihans SET status = 'lunas' WHERE id = ?
+                AC->>DB: INSERT INTO pembayarans (tagihan_id, nominal, dikonfirmasi_oleh...)
+                AC->>DB: DB::commit()
+                AC->>Q: Dispatch GeneratePdfNotaJob & KirimNotifikasiPembayaranJob
+                Q->>Pdf: Render kuitansi PDF via Dompdf
+                Q->>F: Kirim WA notifikasi bukti lunas + tautan PDF download
+                F-->>PA: Terima WhatsApp Kuitansi Pembayaran PDF
+                AC-->>V: Return redirect() with Toast Success "Pembayaran cash berhasil dikonfirmasi"
+            end
+        end
+    end

@@ -1,0 +1,43 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Admin ["Swimlane: Administrator"]
+        Start([Mulai]) --> BukaMenuFasilitas["Admin membuka Menu Fasilitas (/admin/fasilitas)"]
+        BukaMenuFasilitas --> PilihAksiFasilitas{"Pilih tindakan CRUD?"}
+        
+        PilihAksiFasilitas -- "Tambah / Edit Fasilitas" --> FormFasilitas["Isi Nama, Ikon (wifi, snowflake, bolt, bath, dll), Deskripsi, & Status Keaktifan (is_active)"]
+        FormFasilitas --> SimpanFasilitas["Admin klik 'Simpan'"]
+        TampilValidationError["Tampilkan error validasi di form (AJAX Alert / Blade Form)"] --> FormFasilitas
+        
+        PilihAksiFasilitas -- "Hapus Fasilitas" --> KlikHapusFasilitas["Admin klik Hapus & konfirmasi modal"]
+    end
+
+    subgraph Swimlane_Backend ["Swimlane: Fasilitas Controller, Cache, & Database"]
+        SimpanFasilitas --> ValidasiFasilitas{"Validasi input form sukses?<br>(Nama unik, ikon valid, deskripsi required)"}
+        ValidasiFasilitas -- Tidak --> TampilValidationError
+        
+        ValidasiFasilitas -- Ya --> SimpanFasilitasDB["Sistem menyimpan data fasilitas baru/edit ke basis data"]
+        SimpanFasilitasDB --> InvalCache["Hapus cache key: 'fasilitas_all' & 'fasilitas_aktif_landing'"]
+        InvalCache --> TampilToastSukses["Tampilkan Toast sukses (AJAX / Blade Redirect)"]
+        TampilToastSukses --> SelesaiSave([Selesai])
+        
+        KlikHapusFasilitas --> CekRelasiKamar{"Apakah Fasilitas ini sedang digunakan oleh satu atau lebih kamar?"}
+        CekRelasiKamar -- Ya --> BlockDeleteFasilitas["Sistem membatalkan proses hapus & merender Toast error 'Fasilitas terikat dengan kamar'"]
+        BlockDeleteFasilitas --> SelesaiBlock([Selesai Blocked])
+        
+        CekRelasiKamar -- Tidak --> HapusFasilitasDB["Hapus baris data fasilitas dari tabel fasilitas secara permanen"]
+        HapusFasilitasDB --> InvalCacheHapus["Hapus cache key: 'fasilitas_all' & 'fasilitas_aktif_landing'"]
+        InvalCacheHapus --> TampilToastSukses
+    end

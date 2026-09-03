@@ -1,0 +1,59 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> PenyewaLogin[/Penyewa login & masuk Menu Tagihan Saya/]
+    PenyewaLogin --> CekIDOR{"Verifikasi ID Penyewa == ID Sesi Auth?"}
+    CekIDOR -- "Tidak (IDOR Attempt)" --> BlockIDOR[/Tolak akses & catat security warning log/]
+    BlockIDOR --> Selesai([Selesai])
+    
+    CekIDOR -- "Ya" --> PilihTagihan[/Penyewa memilih satu tagihan berstatus pending/]
+    PilihTagihan --> LoadBankDinamis[[Sistem memanggil data bank dari settings dinamis]]
+    
+    LoadBankDinamis --> CekTerlambat{"Tanggal hari ini melewati tanggal 10 jatuh tempo?"}
+    CekTerlambat -- "Tidak" --> TampilkanTotal[/Tampilkan nominal tagihan pokok/]
+    
+    CekTerlambat -- "Ya" --> CekBulanTunggakan{"Apakah menyeberang ke bulan kalender berikutnya?"}
+    CekBulanTunggakan -- "Tidak - Bulan Berjalan" --> MasaKeringanan[[Bebas Denda Masa Keringanan & Kirim WA Reminder Penyewa]]
+    MasaKeringanan --> TampilkanTotal
+    
+    CekBulanTunggakan -- "Ya - Bulan Berikutnya" --> HitungDendaFlat[[Terapkan Denda Flat 5% sekali saja]]
+    HitungDendaFlat --> KirimWAWarning[/Fonnte WA API: Kirim WA Warning ke Penyewa/]
+    KirimWAWarning --> CekBulan2{"Tunggakan > 1 Bulan?"}
+    CekBulan2 -- "Ya" --> KirimWAEskalasiWali[/Fonnte WA API: Kirim WA Eskalasi ke Nomor Wali/]
+    CekBulan2 -- "Tidak" --> TampilkanTotalDenda[/Tampilkan Total Tagihan Nominal Pokok + Denda 5%/]
+    KirimWAEskalasiWali --> TampilkanTotalDenda
+    
+    TampilkanTotal --> PilihMetode{"Pilih Metode Pembayaran?"}
+    TampilkanTotalDenda --> PilihMetode
+    
+    PilihMetode -- "Online (Midtrans Snap)" --> KlikBayarOnline[/Klik tombol Bayar Online/]
+    KlikBayarOnline --> ReqSnapToken[[Request Snap Token ke Midtrans API]]
+    ReqSnapToken --> OpenSnap[/Render Pop-Up Midtrans Snap/]
+    OpenSnap --> BayarOnline[/Penyewa menyelesaikan pembayaran online/]
+    BayarOnline --> WebhookMidtrans[/Webhook Midtrans mengirim callback settlement/]
+    WebhookMidtrans --> DBTransOnline[[DB::transaction: Set tagihan lunas & simpan pembayaran]]
+    
+    PilihMetode -- "Offline - Cash / Transfer Bank" --> TransferManual[/Penyewa menyerahkan cash fisik / bukti transfer manual/]
+    TransferManual --> AdminVerifikasiKas[/Admin memverifikasi dana kas masuk/]
+    AdminVerifikasiKas --> AdminValidasiUang{"Apakah dana fisik/transfer valid?"}
+    
+    AdminValidasiUang -- "Tidak" --> TolakPembayaranOffline[/Admin tolak pembayaran & kirim pesan koreksi/]
+    TolakPembayaranOffline --> Selesai
+    
+    AdminValidasiUang -- "Ya" --> AdminKonfirmasiCash[/Admin klik Konfirmasi Cash/]
+    AdminKonfirmasiCash --> DBTransOffline[[DB::transaction: Set tagihan lunas dikonfirmasi_oleh = admin_id]]
+    
+    DBTransOnline --> GenReceiptPDF[[Sistem memicu Dompdf men-generate nota kuitansi PDF]]
+    DBTransOffline --> GenReceiptPDF
+    
+    GenReceiptPDF --> CallFonnteReceipt[/Fonnte WA API mengirim pesan sukses bayar & link unduh PDF/]
+    CallFonnteReceipt --> Selesai

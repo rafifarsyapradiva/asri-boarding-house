@@ -1,0 +1,63 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor A as Admin
+    participant V as View (Manajemen Konten)
+    participant FC as Admin\FaqController
+    participant GC as Admin\GalleryController
+    participant RC as Admin\CustomerReviewController
+    participant DB as Database (MySQL)
+    participant FS as File System / Storage
+
+    alt Aksi 1: Tambah / Edit FAQ
+        A->>V: Isi data pertanyaan & jawaban FAQ
+        V->>FC: POST/PUT /admin/faq (pertanyaan, jawaban, urutan, is_active)
+        FC->>DB: INSERT/UPDATE faqs SET pertanyaan = ?, jawaban = ?, is_active = ?
+        DB-->>FC: Sukses Simpan
+        FC-->>V: Return redirect() dengan Toast Success
+
+    else Aksi 2: Tambah & Edit Galeri (Upload & File Cleanup)
+        A->>V: Isi judul, deskripsi, & unggah berkas foto galeri
+        V->>GC: POST/PUT /admin/gallery (judul, deskripsi, foto)
+        alt Update Foto Existing
+            GC->>FS: File::delete() (Hapus foto lama di storage/public/gallery/)
+        end
+        GC->>FS: Upload file foto galeri ke storage
+        GC->>DB: INSERT/UPDATE galleries SET judul = ?, deskripsi = ?, foto = ?
+        DB-->>GC: Sukses Simpan
+        GC-->>V: Return redirect() dengan Toast Success
+
+    else Aksi 3: Hapus Galeri / Ulasan Pelanggan (Delete with File Cleanup)
+        A->>V: Klik tombol "Hapus" Galeri / Ulasan
+        V->>RC: DELETE /admin/reviews/{id} ATAU /admin/gallery/{id}
+        RC->>FS: File::delete() (Hapus foto fisik terkait di storage)
+        RC->>DB: DELETE FROM customer_reviews / galleries WHERE id = ?
+        DB-->>RC: Sukses Hapus
+        RC-->>V: Return redirect() dengan Toast Success
+    end

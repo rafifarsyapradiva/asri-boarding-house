@@ -1,0 +1,65 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor PA as Penyewa Aktif
+    actor A as Admin
+    participant V as View (Form Keluhan)
+    participant C as Penyewa\KeluhanController
+    participant AC as Admin\KeluhanController
+    participant F as Fonnte WA API
+    participant DB as Database (MySQL)
+
+    PA->>V: Isi Formulir Keluhan & Unggah Foto Bukti
+    V->>C: POST /penyewa/keluhan (Form data + File upload)
+    Note over C: Validasi input: Kategori wajib,<br/>deskripsi wajib, foto maks 2MB.
+    
+    alt Validasi Form Gagal
+        C-->>V: Return back() with Validation Errors
+    else Validasi Form Sukses
+        C->>C: Simpan file foto ke public/storage/keluhan/
+        C->>DB: INSERT INTO keluhans (penyewa_id, judul, kategori, deskripsi, foto_bukti, status: 'pending')
+        C->>F: Kirim Notifikasi Keluhan Baru ke WA Admin Kost (Event KeluhanDibuat)
+        F-->>A: Terima pesan WA: "Ada keluhan baru dari Kamar X..."
+        C-->>V: Return redirect() with Toast Success "Keluhan berhasil dikirim"
+    end
+
+    Note over A, AC: Alur Tanggapan & Resolusi Keluhan oleh Admin
+    A->>V: Isi tanggapan admin, ubah status ke 'diproses' / 'selesai' & klik "Simpan"
+    V->>AC: PUT/PATCH /admin/keluhan/{id} (status, tanggapan_admin)
+    Note over AC: Validasi: status in (diproses, selesai), tanggapan_admin required
+    
+    alt Status == 'selesai'
+        AC->>DB: UPDATE keluhans SET status = 'selesai', tanggapan_admin = ?, tanggal_selesai = NOW()
+    else Status == 'diproses'
+        AC->>DB: UPDATE keluhans SET status = 'diproses', tanggapan_admin = ?, tanggal_selesai = NULL
+    end
+    
+    AC->>F: Kirim Notifikasi Tanggapan ke WA Penyewa (Event KeluhanDitanggapi)
+    F-->>PA: Terima pesan WA: "Keluhan Anda telah ditanggapi. Status: [status]. Tanggapan..."
+    AC-->>V: Return redirect() dengan Toast Success

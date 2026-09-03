@@ -1,0 +1,62 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Midtrans ["Swimlane: Payment Gateway (Midtrans Webhook)"]
+        Start([Midtrans kirim POST request ke Webhook Callback URL]) --> AmbilData["Ambil parameter: order_id, status_code, gross_amount, signature_key, transaction_status"]
+    end
+
+    subgraph Swimlane_Controller ["Swimlane: Webhook Callback Controller & Logic"]
+        AmbilData --> HitungSignature["Format gross_amount & hitung local signature SHA512 (order_id + status + amount + server_key)"]
+        HitungSignature --> VerifSignature{"Signature cocok (hash_equals)?"}
+        
+        VerifSignature -- Tidak --> LogErrorSignature["Catat log error signature & return Json 403 Forbidden"]
+        LogErrorSignature --> Selesai403([Selesai 403])
+        
+        VerifSignature -- Ya --> Idempotensi{"Apakah transaksi pembayaran ini sudah pernah diproses?"}
+        Idempotensi -- Ya --> ReturnOkProcessed["Return Json 200 'Already processed' (Idempotency Guard)"]
+        ReturnOkProcessed --> SelesaiIdem([Selesai Idempotent])
+        
+        Idempotensi -- Tidak --> KueriEntitas["Cek & cari data target (Tagihan atau Reservasi) berdasarkan order_id"]
+        KueriEntitas --> CekEntitasAda{"Data ditemukan?"}
+        
+        CekEntitasAda -- Tidak --> LogErrorNotFound["Catat log error data tidak ditemukan & return Json 404"]
+        LogErrorNotFound --> Selesai404([Selesai 404])
+        
+        CekEntitasAda -- Ya --> VerifNominal{"Apakah nominal gross_amount cocok dengan total tagihan/reservasi?"}
+        VerifNominal -- Tidak --> LogErrorMismatch["Catat log mismatch financial & return Json 400 Bad Request"]
+        LogErrorMismatch --> Selesai400([Selesai 400])
+        
+        VerifNominal -- Ya --> DbTx["Sistem memulai DB::transaction() & lock baris target (lockForUpdate)"]
+        DbTx --> CekLunas{"Apakah data target sudah berstatus 'lunas'?"}
+        
+        CekLunas -- Ya --> CommitUdahLunas["Commit & return Json 200 'Already processed'"]
+        CommitUdahLunas --> SelesaiAlready([Selesai Already])
+        
+        CekLunas -- Tidak --> MapStatus{"Pecah status berdasarkan transaction_status Midtrans"}
+        
+        MapStatus -- "settlement / capture" --> UpdateLunas["1. Update status tagihan / reservasi ke 'lunas' (atau 'dp')<br>2. Simpan/update record Pembayaran"]
+        MapStatus -- "deny" --> UpdateGagal["Update status tagihan / reservasi ke 'gagal'"]
+        MapStatus -- "expire / cancel" --> UpdateBatal["Update status tagihan / reservasi ke 'batal' & lepas kunci kamar"]
+        MapStatus -- "pending" --> SimpanInstruksiVA["Simpan nomor Virtual Account / QRIS Pay Code tanpa mengubah status lunas"]
+        
+        UpdateLunas --> CommitUpdate["Commit DB Transaction"]
+        UpdateGagal --> CommitUpdate
+        UpdateBatal --> CommitUpdate
+        SimpanInstruksiVA --> CommitUpdate
+        
+        CommitUpdate --> KirimNotifWA["Kirim notifikasi otomatis WhatsApp konfirmasi ke Penyewa/User"]
+        KirimNotifWA --> ReturnOk["Return Json 200 Success"]
+        ReturnOk --> SelesaiOk([Selesai 200])
+    end

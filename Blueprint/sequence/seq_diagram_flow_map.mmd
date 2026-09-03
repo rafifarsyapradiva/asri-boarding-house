@@ -1,0 +1,55 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    SD1[Sequence 1: Pencarian, Cek Kamar & Simulasi Biaya] -->|Kamar Tersedia| SD2[Sequence 2: Registrasi & Pembuatan Reservasi]
+    SD2 -->|Sesi Login Aktif & Terkunci| SD3[Sequence 3: Pembayaran DP/Lunas & Chat Box Pre-Bayar]
+    
+    SD3 -->|Pembayaran Sukses/Settlement| SD4[Sequence 4: Verifikasi & Konfirmasi Reservasi Baru]
+    SD3 -->|Pembayaran Expired / Dibatalkan / Timeout 24h| SD17[Sequence 17: Pembatalan & Hapus Permanen Reservasi]
+    
+    SD4 -->|Auto-Create Account & Login Pertama| SD13[Sequence 13: Keamanan Login & Force Password]
+    SD13 -->|Lengkap & Ubah Password Selesai| ActiveTenant[Penyewa Aktif Huni Kost]
+    
+    ActiveTenant --> SD5[Sequence 5: Siklus Billing Bulanan & Reminder Kontrak]
+    SD5 -->|Setiap Bulan Tanggal 1 & Harian| SD6[Sequence 6: Pembayaran Tagihan Online/Offline]
+    SD6 -->|Kuitansi PDF & Update Kas Masuk| SD8[Sequence 8: Laporan Arus Kas Keluar/Masuk]
+    
+    ActiveTenant --> SD7[Sequence 7: Pelaporan & Resolusi Keluhan]
+    ActiveTenant --> SD10[Sequence 10: Peraturan & Tata Tertib Kost]
+    
+    ActiveTenant --> SD11[Sequence 11: Penonaktifan Penyewa & Inspeksi]
+    SD11 -->|Status Kamar Manual ke Tersedia| SD1
+    
+    %% Admin Panel Master operations
+    AdminPanel[Panel Admin] --> SD14[Sequence 14: Manajemen Kamar & Fasilitas]
+    AdminPanel --> SD15[Sequence 15: Manajemen Penyewa & Validasi Kontrak]
+    AdminPanel --> SD9[Sequence 9: Manajemen Konten FAQ/Galeri/Ulasan]
+    AdminPanel --> SD18[Sequence 18: Broadcast Pengumuman & Notifikasi]
+    AdminPanel --> SD19[Sequence 19: Dasbor Kalender Aktivitas]
+    AdminPanel --> SD20[Sequence 20: Metrik & Grafik Dasbor Keuangan]
+    
+    %% Other pathways
+    GuestWidget[Widget Halaman Utama] --> SD12[Sequence 12: Live Chat Tamu Anonim]
+    GoogleOAuth[Masuk dengan Google] --> SD16[Sequence 16: Google OAuth & Lengkapi Profil]
+    SD16 -->|Tipe Akun Terdeteksi| SD2
+    
+    UserAuth[Lupa Kata Sandi] --> SD21[Sequence 21: Permohonan & Reset Password Akun]
+    SD21 -->|Password Baru Aktif| ActiveTenant
+    SD21 -->|Password Baru Aktif| AdminPanel
+    
+    SD18 -->|Post to Web / WA / Email| ActiveTenant
+    SD19 -->|Query Reservasi & Tagihan| SD4
+    SD19 -->|Query Reservasi & Tagihan| SD6
+    SD20 -->|Visualisasi Data Real-Time| SD8

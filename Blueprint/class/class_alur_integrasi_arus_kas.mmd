@@ -1,0 +1,44 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#F0FDFA',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#0D9488',
+    'lineColor': '#0F766E',
+    'secondaryColor': '#CCFBF1',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Admin Membuka Dashboard Finansial]) --> RequestAnalytics[DashboardController -> DashboardAnalyticsService::getDashboardMetrics]
+    
+    RequestAnalytics --> AggregateCashIn[Agregasi Kas Masuk]
+    RequestAnalytics --> AggregateCashOut[Agregasi Kas Keluar]
+    RequestAnalytics --> AggregateOccupancy[Agregasi Okupansi Kamar]
+    
+    AggregateCashIn --> SumReservasi["Hitung Kas Reservasi:<br>Reservasi status 'dp' (nominal_dp) + 'lunas' (total_harga)"]
+    AggregateCashIn --> SumTagihan["Hitung Kas Tagihan Sewa:<br>Pembayaran tagihan status 'lunas' (nominal)"]
+    SumReservasi --> TotalPemasukan["Total Pemasukan = Kas Reservasi + Kas Tagihan"]
+    SumTagihan --> TotalPemasukan
+    
+    AggregateCashOut --> SumExpenses["Hitung Kas Keluar:<br>Pengeluaran::sum('nominal') berdasarkan range tanggal & nota"]
+    SumExpenses --> TotalPengeluaran["Total Pengeluaran = Kas Beban & Perawatan"]
+    
+    AggregateOccupancy --> CountRooms["Kamar::count() total, terisi, tersedia, maintenance"]
+    CountRooms --> CalcOccupancyRate["Tingkat Okupansi (%) = (Terisi / Total) * 100%"]
+    
+    TotalPemasukan --> CalcProfit["LABA BERSIH = Total Pemasukan - Total Pengeluaran"]
+    TotalPengeluaran --> CalcProfit
+    
+    CalcProfit --> RenderView[Render Data ke Dashboard Blade View & Chart.js Visual]
+    CalcOccupancyRate --> RenderView
+    
+    RenderView --> ExportAction{Aksi Ekspor Laporan Admin}
+    ExportAction -->|Ekspor PDF Laporan Keuangan| GeneratePdfLaporan[PdfNotaService -> DompdfGenerator<br>Download Laporan PDF]
+    ExportAction -->|Ekspor Spreadsheet| GenerateExcel[Download File CSV / Excel]
+    
+    GeneratePdfLaporan --> End([Selesai])
+    GenerateExcel --> End

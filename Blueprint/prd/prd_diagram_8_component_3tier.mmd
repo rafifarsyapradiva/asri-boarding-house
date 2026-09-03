@@ -1,0 +1,134 @@
+flowchart TB
+    %% Presentation Tier (Tier 1)
+    subgraph PresentationTier["Tier 1: Presentation Layer (Client / Browser Interface)"]
+        direction TB
+        subgraph Views["Blade Templates (HTML Views)"]
+            AdminViews["Admin Views<br/>(Dashboard, Kamar, Penyewa, Tagihan, Keluhan, Laporan, FAQ, Kalender, Galeri, Pengeluaran, Notifikasi)"]
+            PenyewaViews["Penyewa Views<br/>(Dashboard, Tagihan, Keluhan, Reservasi, Profil, Notifikasi)"]
+            PublicViews["Public Views<br/>(Landing Page, Detail Kamar, FAQ, Ulasan)"]
+        end
+        
+        subgraph ReusableComp["Blade Components"]
+            ChatBox["guest-chat-widget.blade.php"]
+            WAButton["wa-float-button.blade.php"]
+            Toast["toast.blade.php"]
+            ChatBoxReserv["chat-box.blade.php (Reservasi)"]
+        end
+        
+        subgraph ClientScript["Client-Side Scripting & Styling"]
+            Tailwind["TailwindCSS<br/>(Neo-Brutalisme Style Layouts)"]
+            AlpineJS["Alpine.js<br/>(Dynamic Modals, Dropdowns, Toggles)"]
+            AJAXPoll["Smart Adaptive Polling<br/>(Focus & Delta Chat Poller)"]
+            ChartJS["Chart.js Component<br/>(Visual Cash Flow Chart)"]
+        end
+        
+        subgraph ExtClient["Third-Party Client UI Component"]
+            MidtransSnap["Midtrans Snap JS Popup<br/>(Client Payment Modal)"]
+        end
+    end
+
+    %% Application Tier (Tier 2)
+    subgraph ApplicationTier["Tier 2: Application Layer (Laravel 11 PHP Backend)"]
+        direction TB
+        subgraph RoutingMiddleware["Routing & Middleware Stack"]
+            Routes["web.php & api.php Routes<br/>(Stateless API for Guest Chat)"]
+            Middleware["Middleware Pipeline<br/>(Auth, Role:admin/penyewa, VerifyMidtransSignature, CSRF, Throttle)"]
+        end
+        
+        subgraph Controllers["Laravel Controllers"]
+            AdminCtrl["Admin Controllers<br/>(Dashboard, Kamar, Penyewa, Tagihan, Keluhan, Laporan, Calendar, Faq, Gallery, GuestChat, Notifikasi, Pengeluaran, Peraturan, Setting, Profile)"]
+            PenyewaCtrl["Penyewa Controllers<br/>(Dashboard, Tagihan, Keluhan, Reservasi, Notifikasi)"]
+            ApiCtrl["Api Controllers<br/>(ChatController, GuestChatApiController, MidtransCallbackController, MidtransReservasiCallbackController, SnapTokenController)"]
+            PublicCtrl["LandingController"]
+            AuthCtrl["Auth Controllers<br/>(Login, Socialite Google OAuth, ReservasiAuth, PasswordReset, Register)"]
+        end
+        
+        subgraph Services["Service Layer (Business Logic)"]
+            BillingServ["BillingService<br/>(Siklus Billing & Hitung Denda)"]
+            MidtransServ["MidtransService<br/>(Generate Snap Token & Status Check)"]
+            FonnteServ["FonnteService<br/>(WhatsApp Notification Sender)"]
+            NotifServ["NotifikasiService<br/>(Multi-channel Alert & HP Sanitizer)"]
+            ReservasiServ["ReservasiService<br/>(Booking Kamar & Voucher Check)"]
+            TransisiServ["TransisiPenyewaService<br/>(Check-in, Check-out & Deposit)"]
+            PdfNotaServ["PdfNotaService<br/>(Dompdf Invoice Generator)"]
+        end
+        
+        subgraph EventsListeners["Event/Listener & Job Queue System"]
+            Events["Laravel Events<br/>(PembayaranBerhasil, TagihanDibuat, DendaDikenakan, KeluhanDibuat, KeluhanDitanggapi, ReservasiDibuat, ReservasiDibayar, ReservasiDikonfirmasi, NotifikasiWali, ReminderPenyewa)"]
+            Listeners["Laravel Listeners<br/>(GeneratePdfNotaListener, KirimNotifikasi, ProsesTransisiPenyewa, NotifikasiKhususSubscriber, HandleDendaDikenakan, HandleNotifikasiWali, HandleReminderPenyewa, HandleTagihanDibuat, KirimNotifikasiPembayaranReservasi, KirimNotifikasiReservasiBaru)"]
+            Jobs["Laravel Queue Jobs<br/>(GeneratePdfNotaJob, KirimWelcomeMessageJob, KirimNotifikasiTagihanJob, KirimNotifikasiWaliJob, KirimNotifikasiAdminReservasiJob, KirimNotifikasiPembayaranJob, KirimNotifikasiUserReservasiJob, KirimReminderJatuhTempoJob)"]
+            MailNotif["Mailables & Notifications<br/>(TagihanBulanMail, TagihanReminderMail, ResetPasswordNotification)"]
+            Observers["Model Observers<br/>(KamarObserver, PenyewaObserver, FasilitasObserver, PengeluaranObserver, SettingObserver)"]
+        end
+
+        subgraph SystemScheduler["Scheduler & CLI Commands"]
+            ConsoleKernel["Laravel Scheduler<br/>(Daily Automatic Billing & Overdue Checks)"]
+        end
+    end
+
+    %% Data Tier (Tier 3)
+    subgraph DataTier["Tier 3: Data Layer"]
+        direction TB
+        subgraph EloquentORM["Eloquent Models (Data Access)"]
+            UserModel["User Model"]
+            KamarModel["Kamar, Fasilitas & Gallery Models"]
+            PenyewaModel["Penyewa & Reservasi Models"]
+            TagihanModel["Tagihan & Pembayaran Models"]
+            KeluhanModel["Keluhan Model"]
+            ChatModel["ChatMessage, GuestChatMessage & GuestChatThread Models"]
+            LogNotifModel["LogNotifikasi & NotifikasiKhusus Models"]
+            SettingModel["Setting Model"]
+            AuxModel["CustomerReview, Faq, Pengeluaran, Pengumuman, Peraturan Models"]
+        end
+        
+        subgraph RelationalDB["MySQL 8.x Database"]
+            Tables[("MySQL Tables<br/>(users, kamar, penyewa, tagihan, keluhan, dll.)")]
+        end
+        
+        subgraph FileStorage["Storage System"]
+            Disk["Local Disk File System<br/>(PDF Notes, Room Photos, User Avatars, Gallery)"]
+        end
+    end
+
+    %% External Systems
+    subgraph ExternalSystems["External Third-Party APIs"]
+        direction LR
+        MidtransAPI["Midtrans Snap API<br/>(Payment Gateway Services)"]
+        FonnteAPI["Fonnte WhatsApp API<br/>(WA Gateway Services)"]
+    end
+
+    %% Interconnection / Component Dependencies
+    Views -->|"HTTP Requests / Forms"| Routes
+    ReusableComp -->|"AJAX Polling / Fetch API"| Routes
+    ClientScript -->|"Enhances & Styles"| Views
+    
+    Routes --> Middleware
+    Middleware --> Controllers
+    
+    Controllers -->|"Invokes Business Logic"| Services
+    Controllers -->|"Direct Read/Write"| EloquentORM
+    
+    Services -->|"Queries Data"| EloquentORM
+    Services -->|"Integrates APIs"| ExternalSystems
+    Services -->|"Triggers Async Jobs"| EventsListeners
+    
+    EventsListeners -->|"Writes Logs / Updates Status"| EloquentORM
+    EventsListeners -->|"Calls Notification Services"| Services
+    Observers -->|"Hooks Model Lifecycle"| EventsListeners
+    
+    ConsoleKernel -->|"Daily Automatic Billing Checks"| Services
+    
+    EloquentORM -->|"SQL Queries (PDO)"| Tables
+    Services -->|"Generates & Stores PDF Invoices"| Disk
+    
+    MidtransSnap <-->|"Client-Side Web Token Validation"| MidtransAPI
+    
+    classDef tier1 fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef tier2 fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef tier3 fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
+    classDef ext fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#4A148C;
+    
+    class PresentationTier,Views,ReusableComp,ClientScript,ExtClient tier1;
+    class ApplicationTier,RoutingMiddleware,Controllers,Services,EventsListeners,SystemScheduler tier2;
+    class DataTier,EloquentORM,RelationalDB,FileStorage tier3;
+    class ExternalSystems,MidtransAPI,FonnteAPI ext;

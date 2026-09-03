@@ -1,0 +1,16 @@
+stateDiagram-v2
+    [*] --> pending : Submit Booking Kamar
+    
+    pending --> dp : Bayar DP 30%
+    pending --> lunas : Bayar Lunas 100%
+    pending --> batal : Timeout 24 Jam / Double-Booking
+    
+    dp --> dikonfirmasi : Konfirmasi [NIK & Wali OK]
+    lunas --> dikonfirmasi : Konfirmasi [NIK & Wali OK]
+    
+    dp --> batal : Batal Sebelum Konfirmasi
+    lunas --> batal : Batal Sebelum Konfirmasi
+    
+    dikonfirmasi --> selesai : Auto-Onboarding [User & Tenant]
+    selesai --> [*]
+    batal --> [*] : Hapus Permanen

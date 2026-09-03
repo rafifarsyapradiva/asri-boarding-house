@@ -1,0 +1,38 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFF1F2',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#E11D48',
+    'lineColor': '#BE123C',
+    'secondaryColor': '#FFE4E6',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Penyewa Melaporkan Keluhan]) --> CheckActiveTenant{Middleware: EnsureTenantIsActive<br>Penyewa Status 'aktif'?}
+    CheckActiveTenant -->|Tidak Aktif| RejectAccess[Akses Ditolak]
+    RejectAccess --> EndAbort([Selesai])
+    
+    CheckActiveTenant -->|Aktif| FillComplaint[Penyewa Isi Form Keluhan<br>Judul, Kategori, Deskripsi, Foto Bukti]
+    FillComplaint --> SaveComplaint[Keluhan::create<br>Status: 'pending']
+    
+    SaveComplaint --> DispatchCreateEvent[Dispatch Event: KeluhanDibuat]
+    DispatchCreateEvent --> TriggerAdminNotif[Listener: KirimNotifikasiKeluhanDibuat]
+    TriggerAdminNotif --> SendAdminWA[FonnteService: Kirim WA Alert Keluhan Baru ke Admin Kost]
+    
+    SendAdminWA --> AdminReview[Admin Review Tiket Keluhan di Dashboard]
+    AdminReview --> ProcessComplaint[Admin Update Status: 'diproses'<br>Tugaskan Teknisi / Perbaikan]
+    
+    ProcessComplaint --> FinishWork[Pekerjaan Perbaikan Fisik Selesai]
+    FinishWork --> AdminRespond[Admin Isi Tanggapan & Solusi<br>Keluhan::update status = 'selesai', tanggapan_admin]
+    
+    AdminRespond --> DispatchResponseEvent[Dispatch Event: KeluhanDitanggapi]
+    DispatchResponseEvent --> TriggerTenantNotif[Listener: KirimNotifikasiKeluhanDitanggapi]
+    TriggerTenantNotif --> SendTenantWA[FonnteService: Kirim WA Notifikasi Keluhan Selesai ke Penyewa]
+    
+    SendTenantWA --> AuditLog[NotifikasiKhusus::log Penyelesaian Keluhan]
+    AuditLog --> EndOK([Selesai: Tiket Keluhan Tuntas])

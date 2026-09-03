@@ -1,0 +1,52 @@
+classDiagram
+    direction TB
+
+    class BaseResetPasswordNotification {
+        <<abstract>>
+        #string token
+        #getRoleName() string
+        #resolveRouteName(notifiable) string
+        +resetUrl(notifiable) string
+        +toMail(notifiable) MailMessage
+    }
+
+    class AdminResetPasswordNotification {
+        +ROUTE_NAME string
+        #getRoleName() string
+        #resolveRouteName(notifiable) string
+    }
+
+    class PenyewaResetPasswordNotification {
+        +ROUTE_NAME string
+        #getRoleName() string
+        #resolveRouteName(notifiable) string
+    }
+
+    class Policies {
+        +ReservasiPolicy
+        +TagihanPolicy
+        +PembayaranPolicy
+        +KeluhanPolicy
+    }
+
+    class Middlewares {
+        +RoleMiddleware
+        +VerifyMidtransSignature
+        +EnsureTenantIsActive
+        +EnsureProfileIsComplete
+        +EnsurePasswordChanged
+    }
+
+    class ProtectedModels {
+        +User
+        +Reservasi
+        +Tagihan
+        +Pembayaran
+        +Keluhan
+    }
+
+    AdminResetPasswordNotification --|> BaseResetPasswordNotification : Extends
+    PenyewaResetPasswordNotification --|> BaseResetPasswordNotification : Extends
+
+    Middlewares ..> ProtectedModels : Guards HTTP Requests
+    Policies ..> ProtectedModels : Authorizes User Actions

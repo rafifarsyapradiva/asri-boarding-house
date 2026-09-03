@@ -1,0 +1,45 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#F0FDF4',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#16A34A',
+    'lineColor': '#15803D',
+    'secondaryColor': '#DCFCE7',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai: Calon Penyewa Pilih Kamar]) --> ValidateUser{Cek Profil User}
+    ValidateUser -->|Belum Lengkap| FillProfile[Isi NIK, No HP, Kontak Wali<br>EnsureProfileIsComplete]
+    FillProfile --> ValidateUser
+    ValidateUser -->|Lengkap| InputBooking[Input Tipe Sewa & Durasi]
+    
+    InputBooking --> CalcPrice[Kamar::kalkulasiHargaSewa<br>+ kalkulasiMinimalDp 30%]
+    CalcPrice --> CheckDoubleBooking{ReservasiService::cekDoubleBooking<br>isKamarTerbooking}
+    
+    CheckDoubleBooking -->|Kamar Sudah Terbooking| RejectBooking[Tampilkan Peringatan Kamar Terisi]
+    RejectBooking --> EndFail([Selesai: Booking Gagal])
+    
+    CheckDoubleBooking -->|Kamar Tersedia| CreateReservation[ReservasiService::buatReservasi<br>Status: Pending, is_dp=true/false]
+    CreateReservation --> DispatchEvent[Dispatch Event: ReservasiDibuat]
+    DispatchEvent --> TriggerJob[Queue Job: KirimNotifikasiAdminReservasiJob]
+    TriggerJob --> SendAdminWA[FonnteService: Kirim WA ke Admin Kost]
+    
+    CreateReservation --> CallMidtrans[MidtransService::createSnapTokenReservasi]
+    CallMidtrans --> RenderSnap[Tampilkan Popup Midtrans Snap UI]
+    
+    RenderSnap --> PaymentAction{Aksi Pembayaran User}
+    PaymentAction -->|Batal / Expired > 24 Jam| CronCancel[Artisan: reservasi:cancel-expired<br>Status -> Batal]
+    CronCancel --> EndCancel([Selesai: Reservasi Dibatalkan])
+    
+    PaymentAction -->|Bayar Berhasil| MidtransWebhook[Midtrans Webhook Callback]
+    MidtransWebhook --> VerifySig[Middleware: VerifyMidtransSignature<br>SHA-512 Hash Check]
+    VerifySig --> UpdateResStatus[Update Status Reservasi -> 'dp' / 'lunas']
+    UpdateResStatus --> DispatchPaidEvent[Dispatch Event: ReservasiDibayar]
+    DispatchPaidEvent --> NotifyUserJob[Queue Job: KirimNotifikasiUserReservasiJob]
+    NotifyUserJob --> SendUserWA[FonnteService: WA Konfirmasi Pembayaran Berhasil]
+    SendUserWA --> EndSuccess([Selesai: Menunggu Verifikasi Admin])

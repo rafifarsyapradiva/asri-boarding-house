@@ -1,0 +1,74 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor G as User / Guest
+    participant V as View (Login / Lengkapi Profil)
+    participant C_Social as Auth\SocialiteController
+    participant S_Auth as Google OAuth Service
+    participant U as User (Model)
+    participant R as Reservasi (Model)
+    participant DB as Database (MySQL)
+
+    G->>V: Klik Tombol "Masuk dengan Google"
+    V->>C_Social: GET /auth/google
+    C_Social-->>G: Redirect ke Portal Persetujuan Akun Google
+    G->>S_Auth: Berikan Persetujuan Akses
+    S_Auth-->>C_Social: Callback Akun Detail (Email, Nama, Avatar, Google ID)
+    
+    C_Social->>U: Ambil / Buat Akun Baru (User::firstOrCreate([email]))
+    
+    alt Akun Baru terbuat (User baru)
+        U->>DB: INSERT INTO users (nama, email, role: 'penyewa', no_hp: 'temp_...', is_active: 1)
+    end
+    
+    C_Social->>C_Social: Autentikasi Pengguna di Laravel (Auth::login)
+    
+    alt Profil Belum Lengkap (Nomor HP mengandung 'temp_' / Kosong)
+        C_Social-->>V: Redirect ke Halaman Lengkapi Profil (/profil/complete)
+        V-->>G: Tampilkan Form Pengisian Nomor WhatsApp
+        G->>V: Isi nomor WhatsApp & Klik "Simpan Profil"
+        V->>V: Validasi regex nomor WhatsApp format Indonesia (08/628/...) & Unik
+        V->>U: update(['no_hp' => no_hp])
+        U->>DB: UPDATE users SET no_hp = ? WHERE id = ?
+    end
+
+    alt Role User == "admin"
+        V-->>G: Redirect ke Dashboard Admin (/admin/dashboard)
+    else Role User == "penyewa" (Penyewa Aktif Huni)
+        V-->>G: Redirect ke Portal Penyewa (/penyewa/dashboard)
+    else Role User == "penyewa" (Calon Penyewa)
+        alt Memiliki Reservasi Berstatus pending
+            V->>R: Ambil reservasi pending terbaru
+            R->>DB: SELECT * FROM reservasis WHERE user_id = ? AND status = 'pending'
+            DB-->>V: Reservasi Detail
+            V-->>G: Redirect ke Detail Reservasi (/penyewa/reservasi/{id})
+        else Tidak Memiliki Reservasi pending
+            V-->>G: Redirect ke Beranda utama (landing.index / /kamar)
+        end
+    end

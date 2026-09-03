@@ -1,0 +1,42 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#1E293B',
+    'primaryBorderColor': '#D97706',
+    'lineColor': '#B45309',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart LR
+    subgraph KAMAR_NODE["Tabel: kamar (Master Unit)"]
+        direction TB
+        K1["<b>id</b>: 101 [PK] (Kamar 101)"]
+        K2["<b>id</b>: 102 [PK] (Kamar 102)"]
+    end
+
+    subgraph PIVOT_NODE["Tabel Pivot: kamar_fasilitas"]
+        direction TB
+        P_TITLE["<b>Composite Primary Key: (kamar_id, fasilitas_id)</b><br>Aksi: ON DELETE CASCADE"]
+        P1["(kamar_id: 101, fasilitas_id: 1) -> AC"]
+        P2["(kamar_id: 101, fasilitas_id: 2) -> Wi-Fi"]
+        P3["(kamar_id: 101, fasilitas_id: 4) -> Kamar Mandi Dalam"]
+        P4["(kamar_id: 102, fasilitas_id: 1) -> AC"]
+        P5["(kamar_id: 102, fasilitas_id: 2) -> Wi-Fi"]
+    end
+
+    subgraph FASILITAS_NODE["Tabel: fasilitas (Master Fasilitas)"]
+        direction TB
+        F1["<b>id</b>: 1 [PK] (Air Conditioner)"]
+        F2["<b>id</b>: 2 [PK] (Wi-Fi High Speed)"]
+        F3["<b>id</b>: 3 [PK] (Free Listrik)"]
+        F4["<b>id</b>: 4 [PK] (Kamar Mandi Dalam)"]
+    end
+
+    KAMAR_NODE ==>|"1 : N (kamar_id)<br>1 Kamar memiliki banyak fasilitas"| PIVOT_NODE
+    FASILITAS_NODE ==>|"1 : N (fasilitas_id)<br>1 Fasilitas terpasang di banyak kamar"| PIVOT_NODE
+
+    style KAMAR_NODE fill:#EFF6FF,stroke:#2563EB,stroke-width:2px
+    style PIVOT_NODE fill:#FEF3C7,stroke:#D97706,stroke-width:2px,stroke-dasharray: 5 5
+    style FASILITAS_NODE fill:#ECFDF5,stroke:#059669,stroke-width:2px

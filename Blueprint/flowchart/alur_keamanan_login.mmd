@@ -1,0 +1,41 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaFormLogin[/User membuka halaman Login Portal/]
+    BukaFormLogin --> InputKredensial[/User memasukkan Email dan Password default/]
+    InputKredensial --> KirimLogin[/Kirim data login POST /penyewa/login/]
+    
+    KirimLogin --> CekKredensial{"Kredensial cocok?"}
+    CekKredensial -- "Tidak" --> TampilErrorLogin[/Kembalikan ke form login dengan pesan error/]
+    TampilErrorLogin --> InputKredensial
+    
+    CekKredensial -- "Ya" --> SesiAktif[[Sesi autentikasi aktif di Laravel]]
+    SesiAktif --> AksesDashboard[/Penyewa mengakses rute /penyewa/dashboard/]
+    AksesDashboard --> SaringMiddleware[[Middleware EnsurePasswordChanged menyaring request]]
+    
+    SaringMiddleware --> CekFlag{"Apakah require_password_change == true?"}
+    
+    CekFlag -- "Ya - Login Pertama" --> InterceptRedirect[/Middleware paksa redirect ke /penyewa/change-password/]
+    InterceptRedirect --> TampilFormUbahPwd[/Render Form Ubah Password Wajib/]
+    TampilFormUbahPwd --> UserInputPwd[/User memasukkan Password Baru dan Konfirmasi/]
+    UserInputPwd --> KlikSimpanPwd[/Klik Simpan Password Baru/]
+    
+    KlikSimpanPwd --> ValidasiPwd{"Apakah validasi password baru lolos?<br>Min 8 karakter, konfirmasi cocok"}
+    ValidasiPwd -- "Tidak" --> TampilErrorPwdForm[/Tampilkan pesan kesalahan validasi in form/]
+    TampilErrorPwdForm --> UserInputPwd
+    
+    ValidasiPwd -- "Ya" --> SimpanPwdDB[[1. Simpan hash password baru ke tabel users<br>2. Set require_password_change = false]]
+    SimpanPwdDB --> RedirectDashboard[/Redirect ke Dashboard Penyewa Aktif with Toast Success/]
+    
+    CekFlag -- "Tidak - Login Selanjutnya" --> RedirectDashboard
+    RedirectDashboard --> TampilkanDashboardPenuh[/Portal Dashboard Utama ditampilkan secara penuh/]
+    TampilkanDashboardPenuh --> Selesai([Selesai])

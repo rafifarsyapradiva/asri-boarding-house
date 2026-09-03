@@ -1,0 +1,46 @@
+sequenceDiagram
+    autonumber
+    actor Admin
+    participant RC as ReservasiController
+    participant TPS as TransisiPenyewaService
+    participant PO as PenyewaObserver
+    participant Kamar as Kamar
+    participant BS as BillingService
+    participant Event as ReservasiDikonfirmasi (Event)
+    participant Listener as ProsesTransisiPenyewa (Listener)
+    participant NS as NotifikasiService
+    participant FS as FonnteService
+
+    Admin->>RC: Konfirmasi Reservasi (DP/Lunas)
+    activate RC
+    RC->>TPS: transisi(reservasi, adminId, data)
+    activate TPS
+    
+    Note over TPS: DB::transaction() starts
+    TPS->>TPS: create Penyewa
+    activate PO
+    PO->>Kamar: update status menjadi 'terisi'
+    deactivate PO
+    
+    alt is_dp
+        TPS->>BS: injectSisaDp(penyewa, sisa)
+    else is_lunas
+        TPS->>BS: injectLunasPenuh(penyewa, reservasi)
+    end
+    
+    TPS->>TPS: update status Reservasi 'dikonfirmasi'
+    Note over TPS: DB::transaction() commits
+    
+    TPS->>Event: dispatch(new ReservasiDikonfirmasi)
+    deactivate TPS
+    
+    Event->>Listener: handle(event)
+    activate Listener
+    Listener->>NS: kirimNotifikasiTransisiPenyewa(penyewa, kamar)
+    activate NS
+    NS->>FS: kirimPesan(Welcome WhatsApp)
+    deactivate NS
+    deactivate Listener
+    
+    RC-->>Admin: Redirect Success
+    deactivate RC

@@ -1,0 +1,120 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor A as Admin
+    actor PA as Penyewa Aktif
+    participant V as View (Manajemen Notifikasi)
+    participant C as Admin\NotifikasiController
+    participant NS as NotifikasiService
+    participant P as Pengumuman (Model)
+    participant LN as LogNotifikasi (Model)
+    participant F as Fonnte WA API
+    participant DB as Database (MySQL)
+
+    alt Aksi 1: Kirim Broadcast Manual
+        A->>V: Isi formulir broadcast, pilih target (semua/spesifik), isi pesan & pilih saluran (Web/WA/Email)
+        V->>C: POST /admin/notifikasi/broadcast (judul, target, pesan, send_wa, send_email, post_to_web)
+        Note over C: Validasi input: pesan wajib, target wajib, minimal 1 saluran dipilih
+
+        alt Validasi Gagal
+            C-->>V: Return back() dengan Toast Error
+        else Validasi Sukses
+            alt Pilihan: post_to_web == true
+                C->>P: Pengumuman::create([judul, isi, is_active: true])
+                P->>DB: INSERT INTO pengumumen (judul, isi, is_active)
+            end
+
+            alt Pilihan: send_wa == true ATAU send_email == true
+                C->>DB: Query data penyewa tujuan (all/spesifik)
+                DB-->>C: Collection Penyewa Aktif
+                
+                loop Per Penyewa Aktif
+                    alt send_wa == true
+                        C->>NS: kirimNotifikasiKustom(penyewa, 'whatsapp', pesan)
+                        NS->>LN: LogNotifikasi::create([penyewa_id, channel: 'WhatsApp', status: 'pending', pesan])
+                        LN->>DB: INSERT INTO log_notifikasis
+                        NS->>F: Call Fonnte Send Message API
+                        
+                        alt Kirim WA Sukses
+                            F-->>NS: Response success (OK)
+                            NS->>LN: update(['status' => 'sukses'])
+                            LN->>DB: UPDATE log_notifikasis SET status = 'sukses'
+                        else Kirim WA Gagal
+                            F-->>NS: Error/Timeout
+                            NS->>LN: update(['status' => 'gagal', 'error_msg' => '...'])
+                            LN->>DB: UPDATE log_notifikasis SET status = 'gagal'
+                        end
+                    end
+                    
+                    alt send_email == true
+                        C->>NS: kirimNotifikasiKustom(penyewa, 'email', pesan, judul)
+                        NS->>LN: LogNotifikasi::create([penyewa_id, channel: 'Email', status: 'pending', pesan])
+                        LN->>DB: INSERT INTO log_notifikasis
+                        Note over NS: Kirim Email via Laravel Mailer/SMTP
+                        alt Kirim Email Sukses
+                            NS->>LN: update(['status' => 'sukses'])
+                        else Kirim Email Gagal
+                            NS->>LN: update(['status' => 'gagal', 'error_msg' => '...'])
+                        end
+                    end
+                end
+            end
+            
+            C-->>V: Return redirect() dengan Toast Success broadcast terkirim
+            V-->>A: Refresh halaman & tampilkan status ringkasan pengiriman
+        end
+
+    else Aksi 2: Kirim Ulang (Retry) Notifikasi Gagal
+        A->>V: Klik tombol "Retry / Kirim Ulang" pada log notifikasi gagal
+        V->>C: POST /admin/notifikasi/{log}/retry
+        C->>LN: Temukan record log notifikasi (LogNotifikasi::findOrFail(id))
+        LN->>DB: SELECT * FROM log_notifikasis
+        DB-->>LN: LogNotifikasi Instance
+        
+        alt Pesan Kosong (Notifikasi Otomatis)
+            C->>NS: Generate pesan otomatis berdasarkan event & tagihan/reservasi
+            NS-->>C: Teks Pesan Template
+        end
+        
+        C->>NS: kirimUlangNotifikasi(log, pesan)
+        NS->>LN: update status 'pending'
+        Note over NS: Eksekusi pengiriman ulang ke API Gateway / Mail
+        
+        alt Pengiriman Ulang Sukses
+            NS->>LN: update(['status' => 'sukses'])
+            LN->>DB: UPDATE log_notifikasis SET status = 'sukses'
+            NS-->>C: true
+            C-->>V: Return redirect() dengan Toast Success "Pesan berhasil dikirim ulang"
+        else Pengiriman Ulang Gagal
+            NS->>LN: update(['status' => 'gagal'])
+            LN->>DB: UPDATE log_notifikasis SET status = 'gagal'
+            NS-->>C: false
+            C-->>V: Return redirect() dengan Toast Error "Pengiriman ulang gagal"
+        end
+    end

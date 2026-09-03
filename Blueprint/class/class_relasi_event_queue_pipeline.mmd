@@ -1,0 +1,53 @@
+classDiagram
+    direction TB
+
+    class Events {
+        +ReservasiDibuat
+        +ReservasiDibayar
+        +ReservasiDikonfirmasi
+        +TagihanDibuat
+        +PembayaranBerhasil
+        +PembayaranCashDikonfirmasi
+        +ReminderPenyewa
+        +NotifikasiWali
+        +DendaDikenakan
+        +KeluhanDibuat
+        +KeluhanDitanggapi
+    }
+
+    class Listeners {
+        +HandleReservasiDibuat
+        +HandleReservasiDibayar
+        +HandleReservasiDikonfirmasi
+        +ProsesTransisiPenyewa
+        +HandleTagihanDibuat
+        +HandleReminderPenyewa
+        +HandleNotifikasiWali
+        +HandleDendaDikenakan
+        +GeneratePdfNotaListener
+        +KirimNotifikasiKeluhanDibuat
+        +KirimNotifikasiKeluhanDitanggapi
+        +NotifikasiKhususSubscriber
+    }
+
+    class BackgroundJobs {
+        +KirimNotifikasiAdminReservasiJob
+        +KirimNotifikasiUserReservasiJob
+        +KirimNotifikasiTagihanJob
+        +KirimNotifikasiPembayaranJob
+        +KirimReminderJatuhTempoJob
+        +KirimNotifikasiWaliJob
+        +KirimWelcomeMessageJob
+        +GeneratePdfNotaJob
+    }
+
+    class ExternalGateways {
+        +FonnteWhatsAppGateway
+        +MidtransPaymentGateway
+        +DompdfRenderingEngine
+    }
+
+    Events ..> Listeners : Triggers via Event Bus
+    Listeners ..> BackgroundJobs : Dispatches to Queue
+    BackgroundJobs ..> ExternalGateways : Executes Async Request
+    GeneratePdfNotaListener ..> DompdfRenderingEngine : Generates PDF

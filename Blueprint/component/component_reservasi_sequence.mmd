@@ -1,0 +1,34 @@
+sequenceDiagram
+    autonumber
+    actor Guest as Calon Penyewa (Browser)
+    participant PublicUI as Tier 1: Public Views & Alpine.js
+    participant ReservasiCtrl as Tier 2: ReservasiAuthController & PenyewaCtrl
+    participant ReservasiServ as Tier 2: ReservasiService
+    participant MidtransServ as Tier 2: MidtransService
+    participant TransisiServ as Tier 2: TransisiPenyewaService
+    participant EventBus as Tier 2: Event System & Jobs
+    participant ModelDB as Tier 3: Eloquent ORM & MySQL
+    participant Midtrans as External API: Midtrans Gateway
+    participant Fonnte as External API: Fonnte WA Gateway
+
+    Guest->>PublicUI: Pilih Kamar & Isi Form Reservasi
+    PublicUI->>ReservasiCtrl: POST /reservasi/store
+    ReservasiCtrl->>ReservasiServ: processBookingData($input)
+    ReservasiServ->>ModelDB: Simpan Reservasi (Status: Pending)
+    ReservasiCtrl->>MidtransServ: createSnapToken($reservasi)
+    MidtransServ->>Midtrans: POST /snap/v1/transactions
+    Midtrans-->>MidtransServ: Return snap_token
+    ReservasiCtrl-->>PublicUI: Render Halaman Stepper Status Reservasi + Snap Modal
+    
+    Guest->>Midtrans: Bayar DP / Full Via Snap Popup
+    Midtrans->>ReservasiCtrl: Midtrans Webhook Callback (Settlement)
+    ReservasiCtrl->>ModelDB: Update Reservasi Status = 'dibayar'
+    ReservasiCtrl->>EventBus: Dispatch Event ReservasiDibayar
+    EventBus->>Fonnte: Kirim WhatsApp Alert Pembayaran Reservasi
+    
+    Note over ReservasiCtrl, TransisiServ: Admin Review & Konfirmasi Reservasi
+    ReservasiCtrl->>TransisiServ: aktivasiPenyewaDariReservasi($reservasi)
+    TransisiServ->>ModelDB: Buat Data Penyewa, Akun User, & Kontrak Sewa
+    ModelDB->>ModelDB: Trigger PenyewaObserver -> Update Kamar Status = 'terisi'
+    TransisiServ->>EventBus: Dispatch Event ReservasiDikonfirmasi
+    EventBus->>Fonnte: Kirim WhatsApp Welcome Message & Credential Account

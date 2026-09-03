@@ -1,0 +1,55 @@
+erDiagram
+    penyewa ||--o{ tagihan : "penyewa_id (1:N)"
+    tagihan ||--o{ pembayaran : "tagihan_id (1:N)"
+    users ||--o{ pembayaran : "dikonfirmasi_oleh (1:N)"
+    tagihan ||--o{ log_notifikasi : "tagihan_id (1:N)"
+    penyewa ||--o{ log_notifikasi : "penyewa_id (1:N)"
+
+    penyewa {
+        unsigned_bigint id PK
+        unsigned_bigint user_id FK
+        unsigned_bigint kamar_id FK
+        decimal harga_sewa
+        string no_wali
+    }
+    tagihan {
+        unsigned_bigint id PK
+        unsigned_bigint penyewa_id FK
+        string order_id UK
+        tinyint periode_bulan
+        smallint periode_tahun
+        date tanggal_tagihan
+        date tanggal_jatuh_tempo
+        decimal nominal_pokok
+        decimal nominal_denda
+        decimal nominal_total
+        tinyint bulan_keterlambatan
+        enum status "pending, lunas, gagal, kadaluarsa, terlambat"
+        enum metode_pembayaran "midtrans, cash"
+    }
+    pembayaran {
+        unsigned_bigint id PK
+        unsigned_bigint tagihan_id FK
+        string transaction_id UK
+        string payment_type
+        string bank
+        string va_number
+        decimal nominal
+        string status_midtrans
+        unsigned_bigint dikonfirmasi_oleh FK
+        datetime tanggal_bayar
+        string pdf_path
+    }
+    log_notifikasi {
+        unsigned_bigint id PK
+        unsigned_bigint penyewa_id FK
+        unsigned_bigint tagihan_id FK
+        enum channel "whatsapp, email, system"
+        string event
+        enum status "sukses, gagal"
+    }
+    users {
+        unsigned_bigint id PK
+        string nama
+        enum role
+    }

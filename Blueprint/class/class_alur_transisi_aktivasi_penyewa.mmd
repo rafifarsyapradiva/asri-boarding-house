@@ -1,0 +1,44 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#EFF6FF',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#2563EB',
+    'lineColor': '#1D4ED8',
+    'secondaryColor': '#DBEAFE',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Admin Membuka Permintaan Reservasi]) --> CheckAuth{ReservasiPolicy::update<br>Cek Hak Akses Admin}
+    CheckAuth -->|Ditolak| Unauthorized[Kembalikan 403 Forbidden]
+    Unauthorized --> EndAbort([Selesai: Akses Ditolak])
+    
+    CheckAuth -->|Diizinkan| SubmitConfirm[Admin Klik Setujui & Konfirmasi]
+    SubmitConfirm --> CallService[TransisiPenyewaService::transisi]
+    
+    CallService --> BeginTx[Mulai DB::transaction]
+    BeginTx --> CreatePenyewa[Penyewa::create<br>User ID, Kamar ID, Deposit, Tgl Masuk]
+    
+    CreatePenyewa --> TriggerObserver[PenyewaObserver::created]
+    TriggerObserver --> LockRoom[Kamar::update status = 'terisi']
+    TriggerObserver --> AuditLog[NotifikasiKhusus::log Transisi Hunian]
+    
+    LockRoom --> CheckPaymentType{Tipe Pembayaran Reservasi?}
+    CheckPaymentType -->|Pembayaran DP 30%| InjectSisa[BillingService::injectSisaDp<br>Create Tagihan Sisa Pokok]
+    CheckPaymentType -->|Pembayaran Lunas 100%| InjectLunas[BillingService::injectLunasPenuh<br>Create Tagihan & Pembayaran Lunas]
+    
+    InjectSisa --> UpdateRes[Reservasi::update status = 'dikonfirmasi', penyewa_id]
+    InjectLunas --> UpdateRes
+    
+    UpdateRes --> CommitTx[Commit DB::transaction]
+    CommitTx --> DispatchConfirmEvent[Dispatch Event: ReservasiDikonfirmasi]
+    
+    DispatchConfirmEvent --> TriggerListener[Listener: ProsesTransisiPenyewa]
+    TriggerListener --> CallNotif[NotifikasiService::kirimNotifikasiTransisiPenyewa]
+    CallNotif --> SendWelcomeWA[FonnteService: Kirim WA Selamat Datang & Kunci Kamar]
+    
+    SendWelcomeWA --> EndOK([Selesai: Penyewa Resmi Aktif])

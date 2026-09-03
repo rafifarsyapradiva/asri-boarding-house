@@ -1,0 +1,42 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    StartCron([Cron Job / Scheduler Berjalan Harian]) --> DateCheck{Apakah Tanggal 1 Bulan Baru?}
+    DateCheck -- Ya --> GenerateBilling["Sistem Generate Tagihan Rutin Bulanan<br>nominal_pokok = harga_sewa Personal"]
+    GenerateBilling --> SendWAInvoice[Kirim Invoice Tagihan via WA Fonnte]
+    SendWAInvoice --> CheckOverdue
+    
+    DateCheck -- Tidak --> CheckOverdue[Sistem Memeriksa Tagihan Unpaid/Belum Lunas]
+    CheckOverdue --> LoopStart{Loop Setiap Tagihan Unpaid}
+    
+    LoopStart --> CheckOverdue10{Apakah Hari Ini Melewati Tanggal 10?}
+    CheckOverdue10 -- Ya, Tanggal 11-Akhir Bulan --> SendReminder["Kirim WA Reminder ke Penyewa<br>Denda: Rp0 (Masa Toleransi)"]
+    CheckOverdue10 -- Tidak, Tanggal 1-10 --> NoAction[Masa Keringanan Pembayaran]
+    
+    LoopStart --> CheckMonthTransition{Apakah Memasuki Bulan Berikutnya?}
+    CheckMonthTransition -- Ya, Bulan Berganti --> CheckDendaApplied{Apakah Tagihan Sudah Pernah Didenda?}
+    CheckMonthTransition -- Tidak --> NoAction
+    
+    CheckDendaApplied -- Belum Pernah --> ApplyFine["Sistem Auto Denda Flat 5% Pokok<br>Meningkatkan bulan_keterlambatan<br>Kirim WA Warning ke Penyewa"]
+    CheckDendaApplied -- Sudah Pernah --> CheckEskalasi{Apakah bulan_keterlambatan > 1?}
+    
+    CheckEskalasi -- Ya --> SendWaliWA["Kirim Notifikasi Eskalasi Tunggakan<br>ke WhatsApp Wali Penyewa"]
+    CheckEskalasi -- Tidak --> NoAction
+    
+    ApplyFine --> LoopStart
+    SendWaliWA --> LoopStart
+    NoAction --> LoopStart
+    SendReminder --> LoopStart
+    LoopStart -- Loop Selesai --> End(["Siklus Selesai"])

@@ -1,0 +1,79 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    %% Fase 1: Eksplorasi Publik
+    subgraph Fase1 ["Fase 1: Eksplorasi Publik & Pra-Pemesanan"]
+        Guest([Tamu / Pengunjung]) --> AD01["AD-01: Pencarian & Filter Kamar"]
+        Guest --> AD12["AD-12: Live Chat Tamu Anonim"]
+        Guest --> AD16["AD-16: Google OAuth & Lengkapi Profil"]
+        
+        AD01 -- "Kamar Terisi" --> WA_Direct["Tanya WA Admin via Direct Link"]
+        AD01 -- "Kamar Tersedia" --> AD02["AD-02: Pembuatan Reservasi Kamar"]
+        AD16 -- "Sesi Login Aktif" --> AD02
+    end
+
+    %% Fase 2: Reservasi & Transaksi
+    subgraph Fase2 ["Fase 2: Reservasi, Negosiasi & Pembayaran"]
+        AD02 --> AD03["AD-03: Pembayaran Snap & Chat Diskusi"]
+        
+        AD03 -- "Expired / Batal 24 Jam" --> AD17["AD-17: Pembatalan & Hapus Reservasi"]
+        AD03 -- "Bayar Online Snap" --> AD19["AD-19: Callback Webhook Midtrans"]
+        
+        AD19 -- "Settlement / Sukses" --> AD04["AD-04: Konfirmasi Reservasi Baru (Admin)"]
+        AD19 -- "Deny / Cancel" --> AD17
+        
+        OfflineGuest([Calon Penyewa Offline / WA]) --> AD18["AD-18: Input Penyewa Offline & Deposit"]
+    end
+
+    %% Fase 3: Aktivasi & Operasional Berjalan
+    subgraph Fase3 ["Fase 3: Masa Sewa Aktif & Operasional Kost"]
+        AD04 -- "Auto-Create User & Penyewa" --> ActiveTenant([Penyewa Aktif Kost])
+        AD18 -- "Input Manual Sukses" --> ActiveTenant
+        
+        ActiveTenant --> AD13["AD-13: Keamanan Login & Force Change Password"]
+        ActiveTenant --> AD10["AD-10: Akses Tata Tertib Kost"]
+        ActiveTenant --> AD07["AD-07: Pelaporan Keluhan Fasilitas"]
+        
+        %% Siklus Bulanan
+        SchedulerTrigger([Scheduler Cron Awal Bulan]) --> AD05["AD-05: Billing Bulanan & Engine Denda"]
+        AD05 --> AD06["AD-06: Pembayaran Tagihan Bulanan (Hybrid)"]
+        
+        AD06 -- "Snap Online" --> AD19
+        AD06 -- "Cash Offline" --> AdminCash["Verifikasi Kas Masuk Admin"]
+    end
+
+    %% Fase 4: Terminasi & Keuangan
+    subgraph Fase4 ["Fase 4: Checkout, Tata Kelola Master & Keuangan"]
+        ActiveTenant -- "Kontrak Berakhir / Keluar" --> AD11["AD-11: Checkout & Pengembalian Deposit"]
+        
+        AD11 -- "Kamar Butuh Perbaikan" --> KamarMaint["Set Kamar 'Maintenance'"]
+        AD11 -- "Kamar Bersih" --> KamarAvail["Set Kamar 'Tersedia'"]
+        
+        KamarMaint --> AD14["AD-14: Manajemen Kamar & Fasilitas"]
+        KamarAvail --> AD14
+        
+        %% Konsolidasi Kas Masuk
+        AD19 --> AD08["AD-08: Pencatatan Pengeluaran & Laporan Arus Kas"]
+        AdminCash --> AD08
+        
+        %% Tata Kelola Admin
+        AdminUser([Administrator Panel]) --> AD13
+        AdminUser --> AD14
+        AdminUser --> AD15["AD-15: Manajemen Penyewa & Validasi"]
+        AdminUser --> AD20["AD-20: Master Fasilitas & Proteksi"]
+        AdminUser --> AD09["AD-09: Manajemen Konten (FAQ, Galeri, Review)"]
+        
+        AD08 --> ExportFinance["Ekspor Laporan Arus Kas (PDF / Excel)"]
+    end

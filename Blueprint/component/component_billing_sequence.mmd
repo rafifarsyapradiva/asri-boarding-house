@@ -1,0 +1,33 @@
+sequenceDiagram
+    autonumber
+    participant Cron as Cron Daemon / Task Scheduler
+    participant Artisan as Laravel Command<br/>(routes/console.php)
+    participant Service as Tier 2: BillingService
+    participant Model as Tier 3: Eloquent ORM<br/>(Penyewa / Tagihan)
+    participant DB as Tier 3: Database<br/>(MySQL)
+    participant Fonnte as Tier 2: FonnteService
+    participant WA as External API:<br/>Fonnte WhatsApp API
+
+    Cron->>Artisan: Eksekusi schedule harian
+    Artisan->>Service: Panggil BillingService::prosesSiklusBilling()
+    Service->>Model: Query penyewa aktif & tanggal billing hari ini
+    Model->>DB: SELECT * FROM penyewa WHERE status='aktif'
+    DB-->>Model: Return data penyewa
+    
+    loop Per Penyewa Jatuh Tempo
+        Service->>Model: Buat Tagihan Baru (TagihanDibuat)
+        Model->>DB: INSERT INTO tagihan (periode, nominal, status='pending')
+        Service->>Fonnte: Kirim Notifikasi Tagihan (FonnteService::kirimPesan)
+        Fonnte->>WA: HTTP POST Send Message to Tenant & Wali
+    end
+
+    Service->>Model: Query tagihan jatuh tempo belum dibayar (Overdue)
+    Model->>DB: SELECT * FROM tagihan WHERE status='pending' AND tanggal_jatuh_tempo < hari_ini
+    DB-->>Model: Return tagihan overdue
+
+    loop Per Tagihan Overdue
+        Service->>Model: Terapkan Denda Harian (DendaDikenakan)
+        Model->>DB: UPDATE tagihan SET denda = denda + nilai_denda
+        Service->>Fonnte: Kirim WhatsApp Pengingat & Denda
+        Fonnte->>WA: HTTP POST Send Overdue Alert
+    end

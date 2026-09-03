@@ -1,0 +1,45 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Pengguna Klik 'Masuk dengan Google']) --> RedirectGoogle[Sistem Redirect ke Google OAuth 2.0 Endpoint]
+    RedirectGoogle --> GoogleConsent[Halaman Persetujuan Akun Google]
+    GoogleConsent --> CallbackSocialite[Google Callback Data Profil: Nama, Email, Google_ID, Avatar]
+    
+    CallbackSocialite --> CheckRole{Apakah Akun Ber-role 'admin'?}
+    CheckRole -- Ya (Role Admin Terdeteksi) --> RejectAdmin[Tolak Akses & Kembalikan ke Form Login Admin<br>Pesan: Akun Admin Wajib Login Manual]
+    RejectAdmin --> EndFail([Gagal Masuk])
+    
+    CheckRole -- Tidak (Calon Penyewa / Penyewa) --> CheckExisting{Apakah Email Sudah Ada di DB?}
+    
+    CheckExisting -- Sudah Ada --> UpdateGoogleId[Tautkan google_id ke User yang Ada]
+    CheckExisting -- Belum Ada --> CreateUser[Buat Record Baru di Tabel 'users'<br>Role: 'calon_penyewa', Password: Auto-Generated]
+    
+    UpdateGoogleId --> CheckPhone{Apakah Kolom 'no_hp' Sudah Terisi?}
+    CreateUser --> CheckPhone
+    
+    CheckPhone -- Belum Terisi --> RedirectComplete[Middleware 'EnsureProfileIsComplete' Aktif<br>Redirect ke /auth/complete-profile]
+    RedirectComplete --> InputPhone[Pengguna Mengisi Nomor WhatsApp Aktif]
+    InputPhone --> ValidatePhone{Validasi Format Nomor HP?}
+    ValidatePhone -- Tidak Valid --> InputPhone
+    ValidatePhone -- Valid --> SavePhone[Simpan no_hp ke Database]
+    SavePhone --> AuthSuccess
+    
+    CheckPhone -- Sudah Terisi --> AuthSuccess[Autentikasi Berhasil / Session Dibuat]
+    AuthSuccess --> CheckIntended{Apakah Ada Transaksi Reservasi Tertunda?}
+    CheckIntended -- Ya --> RedirectBooking[Arahkan Kembali ke Form Reservasi Kamar]
+    CheckIntended -- Tidak --> RedirectDashboard[Arahkan ke Dashboard Portal Penyewa]
+    
+    RedirectBooking --> EndSuccess([Selesai: Sesi Aktif])
+    RedirectDashboard --> EndSuccess

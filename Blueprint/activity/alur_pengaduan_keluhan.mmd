@@ -1,0 +1,51 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Penyewa ["Swimlane: Penyewa Aktif"]
+        Start([Mulai]) --> BukaMenuKeluhan["Penyewa login & masuk Menu Keluhan & Pengaduan"]
+        BukaMenuKeluhan --> KlikBuatKeluhan["Penyewa klik tombol 'Buat Keluhan Baru'"]
+        KlikBuatKeluhan --> IsiFormKeluhan["Isi kategori (kamar/bersama/kebersihan/keamanan/lainnya), deskripsi, & unggah foto bukti"]
+        IsiFormKeluhan --> KlikKirim["Penyewa klik 'Kirim Laporan'"]
+        TampilErrorFile["Sistem memuat error ukuran file / kelengkapan form"] --> IsiFormKeluhan
+        
+        PantauStatus["Penyewa memantau riwayat & timeline penanganan status keluhan"] --> SelesaiPantau([Selesai])
+    end
+
+    subgraph Swimlane_Admin ["Swimlane: Administrator"]
+        AdminReviewKeluhan["Admin meninjau laporan kerusakan di panel Dashboard Keluhan Admin"] --> EvaluasiKeluhan{"Evaluasi Kelayakan Keluhan?"}
+        
+        EvaluasiKeluhan -- "Ditolak / Di Luar Wewenang" --> IsiAlasanTolak["Admin mengisi alasan penolakan & klik 'Tolak Keluhan'"]
+        EvaluasiKeluhan -- "Disetujui" --> UbahStatusProses["Admin mengubah status keluhan menjadi 'diproses'"]
+        
+        UbahStatusProses --> LakukanTindakan["Admin melakukan perbaikan fisik / koordinasi teknisi"]
+        LakukanTindakan --> IsiTanggapan["Admin mengisi form tanggapan penyelesaian & klik 'Selesaikan Keluhan'"]
+    end
+
+    subgraph Swimlane_Backend ["Swimlane: Backend Laravel, Storage, & Fonnte WA"]
+        KlikKirim --> ValidasiFile{"Apakah foto bukti valid (< 2MB) & form terisi lengkap?"}
+        ValidasiFile -- Tidak --> TampilErrorFile
+        
+        ValidasiFile -- Ya --> SimpanKeluhanPending["Simpan data keluhan status 'pending' ke database & simpan berkas foto ke storage"]
+        SimpanKeluhanPending --> KirimWAAdmin["Sistem mengirim WhatsApp notifikasi keluhan baru ke nomor Admin via Fonnte"]
+        KirimWAAdmin --> AdminReviewKeluhan
+        
+        IsiAlasanTolak --> UpdateTolakKeluhan["1. Update status keluhan menjadi 'ditolak'<br>2. Simpan alasan penolakan ke DB"]
+        UpdateTolakKeluhan --> KirimWANotifTolak["Sistem mengirim WA notifikasi penolakan keluhan ke Penyewa"]
+        KirimWANotifTolak --> PantauStatus
+        
+        IsiTanggapan --> UpdateSelesaiKeluhan["1. Update status keluhan menjadi 'selesai'<br>2. Simpan tanggal_selesai ke DB"]
+        UpdateSelesaiKeluhan --> KirimWANotifPenyewa["Sistem mengirim WhatsApp notifikasi resolusi keluhan ke nomor Penyewa via Fonnte"]
+        KirimWANotifPenyewa --> PantauStatus
+    end

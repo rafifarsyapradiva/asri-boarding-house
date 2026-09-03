@@ -1,0 +1,88 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> Guest[/Tamu membuka katalog kamar /kamar/]
+    Guest --> CariKamar{"Cari & cek status kamar"}
+    
+    CariKamar -- "Terisi / Maintenance" --> HubungiAdmin[/Hubungi WhatsApp Admin via CTA/]
+    HubungiAdmin --> Selesai([Selesai])
+    
+    CariKamar -- "Tersedia" --> PesanUnit[/Klik Pesan Unit & isi form reservasi/]
+    PesanUnit --> CekAuth{"Sudah login?"}
+    
+    CekAuth -- "Tidak" --> LoginReg[/Login / Register Akun Baru/]
+    LoginReg --> IsiForm[[Kirim data reservasi: kunci sementara tanggal & kamar]]
+    CekAuth -- "Ya" --> IsiForm
+    
+    IsiForm --> HalamanReservasi[/Redirect ke halaman detail reservasi/]
+    HalamanReservasi --> ChatPrePembayaran[/Diskusi pre-pembayaran via Chat Box AJAX Polling/]
+    ChatPrePembayaran --> BayarDP[/Calon penyewa lanjut pembayaran/]
+    HalamanReservasi --> BayarDP
+    
+    BayarDP --> BayarSnap[/Bayar DP 30% / Lunas 100% via Midtrans Snap/]
+    BayarSnap --> VerifBayar{"Status transaksi Midtrans?"}
+    
+    VerifBayar -- "Gagal / Expired / Batal Manual" --> BatalAuto[[Reservasi batal & tanggal kamar dilepas]]
+    BatalAuto --> Selesai
+    
+    VerifBayar -- "Pending - Menunggu Pembayaran" --> WaitBayar[/Menunggu pembayaran VA/E-Wallet max 24 jam/]
+    WaitBayar --> VerifBayar
+    
+    VerifBayar -- "Settlement / Success" --> TinjauDataAdmin[/Admin meninjau NIK & kontak Wali/]
+    TinjauDataAdmin --> ValidData{"Data valid?"}
+    
+    ValidData -- "Tidak" --> MintaKoreksi[/Admin minta koreksi data ke user via Chat/WA/]
+    MintaKoreksi --> TinjauDataAdmin
+    
+    ValidData -- "Ya" --> KonfirmasiAdmin[/Admin klik Konfirmasi Reservasi/]
+    
+    KonfirmasiAdmin --> DBTrans[[DB::transaction:<br>- Reservasi dikonfirmasi<br>- Kamar status terisi<br>- Salin harga_sewa personal<br>- Buat profil penyewa<br>- Inject sisa tagihan jika DP]]
+    
+    DBTrans --> KirimKredensial[/WA Fonnte mengirim kredensial login default/]
+    KirimKredensial --> LoginPenyewa[/Penyewa masuk portal pertama kali dengan sandi default/]
+    
+    LoginPenyewa --> CekForceChange{"require_password_change == true?"}
+    CekForceChange -- "Ya" --> ForceRedirect[/Redirect paksa ke form ubah password/]
+    ForceRedirect --> UbahPassword[/Penyewa update password & set flag = false/]
+    UbahPassword --> DashboardActive[/Akses penuh ke Dashboard Penyewa Aktif/]
+    CekForceChange -- "Tidak" --> DashboardActive
+    
+    DashboardActive --> SiklusAktif{"Aktivitas penyewa aktif"}
+    
+    SiklusAktif -- "Tagihan Bulanan" --> BayarTagihan[/Bayar tagihan tiap tanggal 1-10 Midtrans / Cash/]
+    BayarTagihan --> SiklusAktif
+    
+    SiklusAktif -- "Ada Masalah" --> LaporkanKeluhan[/Kirim keluhan fasilitas + foto bukti/]
+    LaporkanKeluhan --> TindakanAdmin[/Admin perbaiki fisik & isi tanggapan + notif WA/]
+    TindakanAdmin --> SiklusAktif
+    
+    SiklusAktif -- "Sewa Selesai" --> CheckoutPenyewa[/Admin checkout Penyewa status -> nonaktif/]
+    
+    CheckoutPenyewa --> KamarLocked["Aturan Bisnis: Kamar tetap berstatus terisi"]
+    KamarLocked --> InspeksiKamar[/Admin melakukan inspeksi fisik kamar/]
+    
+    InspeksiKamar --> CekRusak{"Ada kerusakan fisik?"}
+    CekRusak -- "Ya" --> PotongJaminan[[Hitung biaya perbaikan & potong deposit jaminan]]
+    CekRusak -- "Tidak" --> BalikJaminan[[Kembalikan deposit jaminan secara penuh]]
+    
+    PotongJaminan --> UpdateKamarManual[/Admin secara manual mengupdate status kamar/]
+    BalikJaminan --> UpdateKamarManual
+    
+    UpdateKamarManual --> KamarKondisi{"Kamar perlu perbaikan?"}
+    KamarKondisi -- "Ya" --> SetMaint[[Ubah status kamar menjadi maintenance]]
+    KamarKondisi -- "Tidak" --> SetReady[[Ubah status kamar menjadi tersedia]]
+    
+    SetMaint --> Selesai
+    SetReady --> Selesai

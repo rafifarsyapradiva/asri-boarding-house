@@ -1,0 +1,52 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#F8FAFC',
+    'primaryTextColor': '#0F172A',
+    'primaryBorderColor': '#334155',
+    'lineColor': '#475569',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    %% Rantai 1: Penagihan & Pembayaran
+    subgraph CHAIN1["Rantai 1: Siklus Tagihan, Pembayaran & Dispatcher WA (1:N)"]
+        direction LR
+        P["<b>penyewa</b><br>(1 Penyewa)"] -->|"1 : N [RESTRICT]"| T["<b>tagihan</b><br>(Banyak Tagihan Bulanan)"]
+        T -->|"1 : N [RESTRICT]"| PAY["<b>pembayaran</b><br>(Banyak Log Midtrans/Cash)"]
+        T -->|"1 : N [SET NULL]"| NOTIF["<b>log_notifikasi</b><br>(Banyak Log WA/Email)"]
+        P -->|"1 : N [RESTRICT]"| NOTIF
+    end
+
+    %% Rantai 2: Reservasi & Pre-Payment Chat
+    subgraph CHAIN2["Rantai 2: Alur Pemesanan (Reservasi) & Chat Pre-Payment (1:N)"]
+        direction LR
+        U["<b>users</b><br>(1 Calon Penyewa)"] -->|"1 : N [RESTRICT]"| RES["<b>reservasi</b><br>(Banyak Booking)"]
+        K["<b>kamar</b><br>(1 Unit Kamar)"] -->|"1 : N [RESTRICT]"| RES
+        RES -->|"1 : N [CASCADE]"| CHAT["<b>chat_messages</b><br>(Banyak Pesan Obrolan)"]
+    end
+
+    %% Rantai 3: Helpdesk Keluhan
+    subgraph CHAIN3["Rantai 3: Layanan Pengaduan Keluhan Fasilitas (1:N)"]
+        direction LR
+        P2["<b>penyewa</b><br>(1 Penyewa Aktif)"] -->|"1 : N [CASCADE]"| KEL["<b>keluhan</b><br>(Banyak Laporan Kerusakan & Foto)"]
+    end
+
+    %% Rantai 4: Sesi Chat Tamu
+    subgraph CHAIN4["Rantai 4: Live Chat Tamu Landing Page (1:N)"]
+        direction LR
+        TH["<b>guest_chat_threads</b><br>(1 Sesi Tamu Berdasarkan Token)"] -->|"1 : N [CASCADE]"| MSG["<b>guest_chat_messages</b><br>(Banyak Pesan Tamu & Balasan Admin)"]
+    end
+
+    %% Rantai 5: Analytics Tracking
+    subgraph CHAIN5["Rantai 5: Tracking Impresi & Analytics Klik WA Kamar (1:N)"]
+        direction LR
+        K2["<b>kamar</b><br>(1 Unit Kamar)"] -->|"1 : N [SET NULL]"| WA["<b>whatsapp_clicks</b><br>(Banyak Log IP & User Agent)"]
+    end
+
+    style CHAIN1 fill:#EFF6FF,stroke:#2563EB,stroke-width:1.5px
+    style CHAIN2 fill:#FEF3C7,stroke:#D97706,stroke-width:1.5px
+    style CHAIN3 fill:#ECFDF5,stroke:#059669,stroke-width:1.5px
+    style CHAIN4 fill:#F3E8FF,stroke:#9333EA,stroke-width:1.5px
+    style CHAIN5 fill:#F1F5F9,stroke:#64748B,stroke-width:1.5px

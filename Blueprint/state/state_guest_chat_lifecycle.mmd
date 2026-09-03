@@ -1,0 +1,5 @@
+stateDiagram-v2
+    [*] --> active : Tamu Kirim Chat Pertama [Cookie UUID]<br>/ Hash & Save Token
+    active --> closed : Klik Tutup Obrolan<br>/ Inject ___CHAT_CLOSED___
+    closed --> active : Admin Kirim Balasan<br>/ Reopen Chat
+    closed --> [*] : Scheduler [t > 90 Hari]<br>/ chat-guest:prune (Delete)

@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> tersedia : Tambah Kamar Baru
+    tersedia --> terisi : Reservasi / Registrasi Penyewa
+    terisi --> terisi : Checkout [Kamar Tetap 'terisi']
+    terisi --> tersedia : Set Tersedia [Inspeksi Fisik OK]
+    terisi --> maintenance : Set Perawatan [Kerusakan Fasilitas]
+    tersedia --> maintenance : Set Perawatan [Rutin]
+    maintenance --> tersedia : Set Tersedia [Perbaikan Selesai]

@@ -1,0 +1,55 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Modul_Publik ["Modul 1: Portal Publik & Guest Chat (AD-01, AD-12, AD-16)"]
+        GuestStart([Tamu / Visitor]) --> AD01["AD-01: Pencarian & Cek Ketersediaan Kamar"]
+        GuestStart --> AD12["AD-12: Live Chat Pengunjung Anonim (Guest Chat)"]
+        GuestStart --> AD16["AD-16: Google OAuth Login & Lengkapi Profil WA"]
+    end
+
+    subgraph Modul_Reservasi ["Modul 2: Pemesanan & Pembayaran Reservasi (AD-02, AD-03, AD-04, AD-17)"]
+        AD01 -- "Kamar Tersedia -> Pesan" --> AD02["AD-02: Pendaftaran & Pembuatan Reservasi Kamar"]
+        AD16 -- "Otorisasi Sukses" --> AD02
+        AD02 --> AD03["AD-03: Pembayaran Midtrans Snap & Chat Pre-Pembayaran"]
+        AD03 -- "Callback Lunas / DP 30%" --> AD04["AD-04: Verifikasi & Konfirmasi Reservasi Baru (Admin)"]
+        AD03 -- "Batal / Expired 24 Jam" --> AD17["AD-17: Pembatalan & Penghapusan Permanen Reservasi Batal"]
+    end
+
+    subgraph Modul_Billing ["Modul 3: Billing Engine & Payment Gateway (AD-05, AD-06, AD-19)"]
+        AD04 -- "Transisi Penyewa Aktif" --> AD05["AD-05: Siklus Billing Rutin Bulanan & Engine Denda (Scheduler)"]
+        AD05 -- "Invoice Bulanan Terbit" --> AD06["AD-06: Pembayaran Tagihan Bulanan (Hybrid Payment)"]
+        AD06 -- "Opsi Online Snap" --> AD19["AD-19: Callback Webhook Midtrans & Signature Check"]
+        AD19 -- "Status Settlement" --> Receipts["Generate PDF Kuitansi & Kirim WA Fonnte"]
+        AD06 -- "Opsi Offline Cash/Transfer" --> AdminCash["Verifikasi Mutasi Cash oleh Admin"] --> Receipts
+    end
+
+    subgraph Modul_Operasional ["Modul 4: Operasional & Keluhan Penyewa (AD-07, AD-10, AD-11, AD-18)"]
+        AD04 --> ActiveTenant([Portal Penyewa Aktif])
+        AD18["AD-18: Pendaftaran Penyewa Offline / WA Direct"] --> ActiveTenant
+        ActiveTenant --> AD07["AD-07: Pelaporan & Resolusi Keluhan Fasilitas"]
+        ActiveTenant --> AD10["AD-10: Access Peraturan & Tata Tertib Kost"]
+        ActiveTenant -- "Kontrak Selesai / Exit" --> AD11["AD-11: Penonaktifan Penyewa (Checkout) & Kelola Deposit"]
+    end
+
+    subgraph Modul_Admin ["Modul 5: Master Data, Finance & Governance (AD-08, AD-09, AD-13, AD-14, AD-15, AD-20)"]
+        AdminLogin(["Access Panel Admin"]) --> AD13["AD-13: Keamanan Login & Force Change Password"]
+        AD13 --> AD14["AD-14: CRUD Kamar & Relasi Fasilitas"]
+        AD13 --> AD15["AD-15: CRUD Penyewa & Validasi Kontrak"]
+        AD13 --> AD20["AD-20: CRUD Master Fasilitas & Proteksi Relasi"]
+        AD13 --> AD09["AD-09: CRUD Konten Dinamis (FAQ, Galeri, Review)"]
+        
+        Receipts --> AD08["AD-08: Pencatatan Pengeluaran & Integrasi Laporan Arus Kas"]
+        AD08 --> FinancialReport["Ekspor Laporan Arus Kas & Laba Bersih (PDF/Excel)"]
+    end

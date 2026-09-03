@@ -1,0 +1,33 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaKamarAdmin[/Admin membuka menu Manajemen Kamar /admin/kamar/]
+    BukaKamarAdmin --> PilihAksi{"Pilih Operasi CRUD?"}
+    
+    PilihAksi -- "Tambah / Edit Kamar" --> IsiFormKamar[/Isi Nomor Kamar, Lantai, Tipe, Luas, Harga Bulanan, Deskripsi, & Foto/]
+    IsiFormKamar --> KlikSimpanKamar[/Admin klik Simpan/]
+    KlikSimpanKamar --> ValidasiKamar{"Apakah input valid?"}
+    ValidasiKamar -- "Tidak" --> ErrorKamar[/Tampilkan error validation & Toast di form/]
+    ErrorKamar --> IsiFormKamar
+    ValidasiKamar -- "Ya" --> SimpanKamarDB[[1. Upload/Ganti foto kamar di storage auto-cleanup<br>2. Simpan / update data kamar di database]]
+    SimpanKamarDB --> SelesaiKamar[/Tampilkan Toast Success & perbarui daftar kamar/]
+    SelesaiKamar --> Selesai([Selesai])
+    
+    PilihAksi -- "Hapus Kamar" --> KlikHapusKamar[/Admin klik tombol Hapus pada unit kamar/]
+    KlikHapusKamar --> CekIkatan{"Apakah kamar terikat dengan Penyewa Aktif atau Reservasi?"}
+    
+    CekIkatan -- "Ya" --> CegahHapus[[1. Cegah eksekusi query delete<br>2. Tampilkan Toast Error: Kamar dilarang dihapus karena masih memiliki ikatan aktif!]]
+    CegahHapus --> Selesai
+    
+    CekIkatan -- "Tidak" --> HapusKamarDB[[1. Hapus record kamar dari database<br>2. Hapus file foto kamar dari storage fisik]]
+    HapusKamarDB --> ToastHapusSukses[/Tampilkan Toast Success: Unit kamar berhasil dihapus/]
+    ToastHapusSukses --> Selesai

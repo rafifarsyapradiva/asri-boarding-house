@@ -1,0 +1,43 @@
+sequenceDiagram
+    autonumber
+    actor Client as User / Browser (Tier 1)
+    participant Views as Tier 1: Views & Scripts<br/>(Blade / Alpine.js)
+    participant Router as Tier 2: Routes & Middleware<br/>(web.php / api.php)
+    participant Controller as Tier 2: Controller<br/>(Admin / Penyewa / Api)
+    participant Service as Tier 2: Service Layer<br/>(Billing / Reservasi / Notif)
+    participant Interface as Tier 2: Interface Abstraction<br/>(PdfGeneratorInterface)
+    participant Events as Tier 2: Event Bus & Queue<br/>(Events / Listeners / Jobs)
+    participant ORM as Tier 3: Eloquent ORM<br/>(Models & Observers)
+    participant DB as Tier 3: Database & Disk<br/>(MySQL 8.x / Storage)
+    participant External as External Gateway<br/>(Midtrans / Fonnte / Google)
+
+    Client->>Views: User Interaction (Form Submit / Click)
+    Views->>Router: HTTP Request / AJAX Fetch
+    Router->>Router: Run Middleware (Auth, CSRF, RateLimit, Role)
+    Router->>Controller: Dispatch Request to Controller Method
+    
+    alt Interaksi Bisnis / Logika Transaksi
+        Controller->>Service: Execute Business Logic Function
+        opt Penggunaan Interface SOLID
+            Service->>Interface: Call Interface Abstraction (e.g. generate PDF)
+            Interface->>Service: Return Executed Result
+        end
+        opt Integrasi API Eksternal
+            Service->>External: Outbound REST API Call
+            External-->>Service: Return API Response Payload
+        end
+        Service->>ORM: Read / Write Data Objects
+    else Akses Data Langsung
+        Controller->>ORM: Query Eloquent Builder
+    end
+
+    ORM->>DB: Execute PDO SQL Queries / File Storage Write
+    DB-->>ORM: Return Query Result Records
+    
+    opt Asynchronous Processing
+        Controller->>Events: Dispatch Event (e.g. TagihanDibuat)
+        Events->>Events: Trigger Listener & Push Job to Queue
+    end
+
+    Controller-->>Views: Render HTML Blade View / Return JSON Payload
+    Views-->>Client: Dynamic DOM Update / UI Notification

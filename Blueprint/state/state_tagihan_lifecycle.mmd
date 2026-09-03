@@ -1,0 +1,16 @@
+stateDiagram-v2
+    [*] --> pending : Scheduler Tgl 1 / Sisa DP 70%
+    [*] --> lunas : Full Payment / Registrasi Manual
+    
+    pending --> lunas : Settlement / Cash [Valid]
+    pending --> terlambat : Lewat Jatuh Tempo [t > Tgl 10]
+    pending --> gagal : Deny / Gagal Bayar
+    pending --> kadaluarsa : Sesi Snap Expired
+    
+    terlambat --> lunas : Bayar Pokok + Denda 5%
+    terlambat --> terlambat : Snap Expired (Tetap Terlambat)
+    
+    gagal --> pending : Bayar Ulang (Regenerate SNAP)
+    kadaluarsa --> pending : Bayar Ulang (Regenerate SNAP)
+    
+    lunas --> [*] : Nota PDF & WA Sukses

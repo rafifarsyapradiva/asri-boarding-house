@@ -1,0 +1,82 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor T as Tamu (Guest)
+    participant V as View (Katalog & Detail Kamar)
+    participant C as Public\LandingController
+    participant S as ReservasiService
+    participant M as Kamar (Model)
+    participant WA as WhatsappClick (Model)
+    participant DB as Database (MySQL)
+
+    T->>V: Buka Halaman Katalog /kamar & isi filter (Lantai, Tipe, Search)
+    V->>C: GET /kamar?tipe=..&q=..
+    C->>M: Kamar::whereIn('status', ['tersedia', 'terisi'])->with('fasilitas')
+    M->>DB: SELECT * FROM kamars WHERE status IN ('tersedia', 'terisi')
+    DB-->>M: Record dataset kamar kost
+    M-->>C: Collection Kamar
+    C-->>V: Return view('landing.kamar-list', compact('kamarList', 'waOwner'))
+    
+    alt Status Kamar: "terisi"
+        V-->>T: Tampilkan info kamar + Tombol "Tanya WA"
+        T->>V: Klik tombol "Tanya WA"
+        V->>C: AJAX POST /analytics/track-whatsapp (source: 'kamar_card', kamar_id: id)
+        C->>WA: WhatsappClick::create([...])
+        WA->>DB: INSERT INTO whatsapp_clicks (source, kamar_id, ip_address, user_agent)
+        C-->>V: Return JSON status success
+        V-->>T: Redirect ke WhatsApp Web/App (Pesan otomatis ter-URL encode)
+    else Status Kamar: "tersedia"
+        V-->>T: Tampilkan info kamar + Tombol "Pesan Unit"
+        T->>V: Klik tombol "Pesan Unit"
+        V->>C: GET /kamar/{id}
+        C->>M: Kamar::findOrFail(id)
+        M->>DB: SELECT * FROM kamars WHERE id = {id} LIMIT 1
+        
+        alt Kamar Ditemukan (Record Exist)
+            DB-->>M: Detail record kamar
+            M-->>C: Kamar Instance
+            C-->>V: Return view('landing.show', compact('kamar'))
+            
+            opt Tamu Melakukan Simulasi Harga Dinamis (AJAX Calculator)
+                T->>V: Pilih Tipe Sewa (harian/mingguan/bulanan) & Durasi
+                V->>C: AJAX POST /kamar/{id}/hitung-harga (tipe_sewa, durasi)
+                C->>S: hitungHarga(kamar, tipe_sewa, durasi)
+                S-->>C: Array ['total_harga' => ..., 'nominal_dp' => ...]
+                C-->>V: Return JSON Response (total_harga, dp_minimal)
+                V->>V: Update rincian biaya estimasi secara dinamis
+            end
+
+            V-->>T: Tampilkan detail kamar & Form Pemesanan siap diisi
+        else Kamar Tidak Ditemukan / ID Invalid (404 Error)
+            DB-->>M: Null / Exception
+            M-->>C: ModelNotFoundException
+            C-->>V: Redirect /kamar dengan Toast Error "Unit kamar tidak ditemukan"
+            V-->>T: Tampilkan pesan kesalahan 404
+        end
+    end

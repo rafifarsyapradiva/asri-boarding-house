@@ -1,0 +1,34 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaBerandaTamu[/Tamu membuka Landing Page Asri Boarding House/]
+    BukaBerandaTamu --> KlikWidgetChat[/Tamu klik widget Live Chat/]
+    KlikWidgetChat --> IsiNamaHP[/Tamu memasukkan Nama & Nomor HP WhatsApp/]
+    IsiNamaHP --> KlikMulaiChat[/Tamu klik Mulai Chat/]
+    
+    KlikMulaiChat --> GenerateToken[[Sistem generate session_token & simpan di Cookie Tamu]]
+    GenerateToken --> CreateChatThread[[Buat record baru di tabel guest_chat_threads status active]]
+    CreateChatThread --> KirimPesanTamu[/Tamu mengetik & mengirim pesan pertanyaan awal/]
+    KirimPesanTamu --> SimpanPesanTamu[[Pesan disimpan ke guest_chat_messages sender_type = guest]]
+    
+    SimpanPesanTamu --> TampilNotifAdmin[/Sistem memunculkan alert pesan tamu masuk di Admin Panel/]
+    TampilNotifAdmin --> BukaChatAdmin[/Admin membuka menu Guest Chats & memilih thread chat active/]
+    BukaChatAdmin --> BalasPesanAdmin[/Admin mengetik & mengirim balasan pesan/]
+    BalasPesanAdmin --> SimpanPesanAdmin[[Pesan disimpan ke guest_chat_messages sender_type = admin]]
+    
+    SimpanPesanAdmin --> AJAXPollingTamu[[AJAX Polling di browser Tamu menarik pesan balasan admin 3 detik]]
+    AJAXPollingTamu --> RenderPesanAdmin[/Browser merender balasan pesan di widget obrolan tamu/]
+    RenderPesanAdmin --> CekDiskusiSelesai{"Diskusi selesai?"}
+    
+    CekDiskusiSelesai -- "Tidak" --> KirimPesanTamu
+    CekDiskusiSelesai -- "Ya" --> TutupChatAdmin[/Admin klik Tutup Chat Ubah status thread closed/]
+    TutupChatAdmin --> Selesai([Selesai])

@@ -1,0 +1,35 @@
+flowchart TD
+    classDef actorNode fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
+    classDef sysNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef decisionNode fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    classDef terminalNode fill:#fce4ec,stroke:#c2185b,stroke-width:2px,font-weight:bold;
+
+    %% ACTORS
+    Admin(["👤 Administrator Kost"]):::actorNode
+    Sys["🖥️ Admin Panel Laravel (ABH)"]:::sysNode
+
+    %% FLOW
+    Start([Masa Sewa Mendekati Akhir / Berakhir]):::terminalNode --> A1[1. Buka Detail Penyewa - UC-14 / UC-26]:::sysNode
+    A1 --> A2{Pilih Jenis Operasi Kontrak?}:::decisionNode
+
+    %% JALUR A: CHECKOUT
+    A2 -- Opsi A: Checkout / Pengakhiran Sewa --> B1[Klik Tombol 'Checkout Penyewa' - UC-26]:::sysNode
+    B1 --> B2[Input Tanggal Selesai & Lakukan Inspeksi Fisik Kamar]:::actorNode
+    B2 --> B3{Kondisi Kamar & Fasilitas?}:::decisionNode
+
+    B3 -- Kamar Bersih / Tanpa Kerusakan --> C1[Pilih Pengembalian Deposit 100%]:::sysNode
+    B3 -- Terdapat Kerusakan / Tunggakan --> C2[Input Nominal Potongan Deposit & Alasan Audit]:::sysNode
+    C2 --> C3[Sistem Otomatis Catat Audit Pengeluaran/Kas - UC-08]:::sysNode
+    C3 --> D1
+    C1 --> D1[Sistem Ubah Status Penyewa Menjadi 'nonaktif']:::sysNode
+
+    D1 --> D2[Kamar Berstatus 'terisi' / Inspeksi - Safety Rule Anti-Double Booking]:::sysNode
+    D2 --> D3[Admin Bersihkan Kamar & Ubah Status Manual ke 'tersedia' - UC-13]:::sysNode
+    D3 --> EndCheckout([Proses Checkout Tuntas]):::terminalNode
+
+    %% JALUR B: PERPANJANGAN
+    A2 -- Opsi B: Perpanjang Masa Sewa --> E1[Klik Tombol 'Perpanjang Kontrak' - UC-26]:::sysNode
+    E1 --> E2[Pilih Tambahan Durasi Bulan Sewa]:::actorNode
+    E2 --> E3[Sistem Update 'tanggal_selesai' di Tabel Penyewa]:::sysNode
+    E3 --> E4[Sistem Injeksi Record Tagihan Perpanjangan Baru ke Tabel Tagihan]:::sysNode
+    E4 --> EndPerpanjang([Kontrak Berhasil Diperpanjang]):::terminalNode

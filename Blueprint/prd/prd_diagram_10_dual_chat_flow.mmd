@@ -1,0 +1,53 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    subgraph ChannelA["💬 Channel 1: Floating Guest Live Chat (Landing Page)"]
+        direction TB
+        VisitorA["Pengunjung Publik (Anonim)"] --> WidgetOpen["Klik Floating Chat Widget"]
+        WidgetOpen --> CheckCookie{"Cookie 'guest_chat_token' Ada?"}
+        CheckCookie -- Belum --> GenUUID["Generate UUID Token<br>Set Cookie (30 Hari)"]
+        CheckCookie -- Sudah --> ReadUUID["Baca UUID dari Cookie"]
+        GenUUID --> HashToken["SHA-256 Hash Token"]
+        ReadUUID --> HashToken
+        
+        HashToken --> RateLimit{"Cek Rate Limiter<br>(Maks 30 req/menit)"}
+        RateLimit -- Limit Terlampaui --> HTTP429["Response HTTP 429: Too Many Requests"]
+        RateLimit -- Aman --> QueryThread{"Thread Aktif di DB?"}
+        
+        QueryThread -- Belum --> InsertThread["INSERT INTO guest_chat_threads<br>(session_token, name, no_hp, status: 'active')"]
+        QueryThread -- Sudah --> InsertMsg["INSERT INTO guest_chat_messages<br>(guest_chat_thread_id, sender_type: 'guest', message)"]
+        InsertThread --> InsertMsg
+        
+        InsertMsg --> AdminPanelA["Notifikasi Masuk di Panel Admin"]
+        AdminPanelA --> AdminReplyA["Admin Balas Pesan Tamu<br>(sender_type: 'admin')"]
+        AdminReplyA --> GuestPoll["Smart Adaptive AJAX Polling Tamu<br>(Ambil Pesan Baru Tiap 4s)"]
+    end
+
+    subgraph ChannelB["🔒 Channel 2: Pre-Payment Chat Box (Portal Reservasi)"]
+        direction TB
+        TenantB["Calon Penyewa Terotentikasi"] --> ViewBooking["Buka Halaman Detail Reservasi<br>(Status: PENDING)"]
+        ViewBooking --> AuthCheck["Session Auth & Ownership Guard<br>(User ID Match Reservasi)"]
+        AuthCheck --> SendChatB["Kirim Pesan Diskusi Kamar"]
+        SendChatB --> InsertChatB["INSERT INTO chat_messages<br>(reservasi_id, user_id, message, is_admin: 0)"]
+        InsertChatB --> AdminPanelB["Notifikasi Masuk di Detail Reservasi Admin"]
+        AdminPanelB --> AdminReplyB["Admin Balas Chat<br>(is_admin: 1)"]
+        AdminReplyB --> PollingB["Delta AJAX Poller Mengambil Pesan Baru"]
+        
+        ViewBooking --> StatusChange{"Status Reservasi Berubah?<br>(DP / LUNAS / BATAL)"}
+        StatusChange -- Ya --> LockChat["Chat Box Otomatis Dinonaktifkan / Read-Only"]
+    end
+
+    classDef channelBox fill:#FAFAFA,stroke:#000000,stroke-width:2px;
+    class ChannelA,ChannelB channelBox;

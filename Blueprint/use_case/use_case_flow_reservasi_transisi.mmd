@@ -1,0 +1,51 @@
+flowchart TD
+    classDef actorNode fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
+    classDef sysNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef extNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
+    classDef decisionNode fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    classDef terminalNode fill:#fce4ec,stroke:#c2185b,stroke-width:2px,font-weight:bold;
+
+    %% ACTORS & SYSTEMS
+    Guest(["👤 Tamu / Calon Penyewa"]):::actorNode
+    Sys["🖥️ Sistem Web Laravel (ABH)"]:::sysNode
+    Midtrans[["💳 Midtrans Snap API"]]:::extNode
+    Admin(["👤 Administrator Kost"]):::actorNode
+    Fonnte[["💬 Fonnte WhatsApp API"]]:::extNode
+
+    %% FLOW
+    Start([Mulai: Pengunjung Buka Landing Page]):::terminalNode --> A1[1. Cari & Filter Kamar - UC-10]:::sysNode
+    A1 --> A2{Kamar Tersedia?}:::decisionNode
+    A2 -- Tidak (Kamar Terisi) --> A3[Klik Tombol 'Tanya WA' - WhatsApp Direct]:::sysNode
+    A2 -- Ya (Kamar Tersedia) --> B1[2. Registrasi / Login - UC-12 / UC-18 / UC-22]:::sysNode
+    
+    B1 --> B2[3. Isi Form Booking: Tanggal, Tipe Sewa, DP/Lunas - UC-01]:::sysNode
+    B2 --> B3[Sistem Simpan Reservasi status: 'pending' & Kunci Kamar]:::sysNode
+    
+    B3 --> C1{Calon Butuh Tanya Kamar?}:::decisionNode
+    C1 -- Ya (Extend) --> C2[Buka Chat Reservasi Real-Time - UC-03]:::sysNode
+    C2 <--> |AJAX Polling 3s| C3[Admin Balas Chat via Admin Panel - UC-03]:::sysNode
+    C3 --> D1
+    C1 -- Tidak --> D1[4. Klik Tombol 'Bayar Sekarang' - UC-02]:::sysNode
+
+    D1 --> D2[Sistem Request Snap Token - include Midtrans]:::sysNode
+    D2 --> Midtrans
+    Midtrans --> D3[Render Popup Midtrans Snap di Browser]:::sysNode
+    D3 --> D4{Calon Selesaikan Pembayaran?}:::decisionNode
+    
+    D4 -- Tidak / Batal / Expired 24 Jam --> D5[Sistem Ubah status: 'dibatalkan' & Lepas Kamar]:::sysNode
+    D5 --> EndCancel([Reservasi Dibatalkan]):::terminalNode
+
+    D4 -- Ya (VA/QRIS/E-Wallet Sukses) --> E1[Midtrans Kirim Callback Webhook]:::extNode
+    E1 --> E2[Sistem Verifikasi SHA-512 & Update status: 'dp' / 'lunas']:::sysNode
+    
+    E2 --> F1[5. Admin Verifikasi NIK & Data Wali - UC-06]:::sysNode
+    F1 --> F2{Data Valid & Disetujui Admin?}:::decisionNode
+    F2 -- Tolak / Batal --> F3[Admin Batalkan Reservasi status: 'dibatalkan']:::sysNode
+    F3 --> EndCancel
+
+    F2 -- Setujui --> G1[Admin Klik 'Konfirmasi Reservasi' - UC-06]:::sysNode
+    G1 --> G2[DB::transaction: Ubah status 'dikonfirmasi', Kamar 'terisi', Buat Akun & Profil Penyewa]:::sysNode
+    G2 --> G3[Sistem Dispatch WhatsApp Kredensial via Fonnte - include Fonnte]:::sysNode
+    G3 --> Fonnte
+    Fonnte --> G4[Calon Terima WA Kredensial & Resmi Menjadi Penyewa Aktif]:::actorNode
+    G4 --> EndSuccess([Transisi Sukses: Penyewa Aktif]):::terminalNode

@@ -1,0 +1,86 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor T as Tamu (Guest)
+    actor A as Admin
+    participant V as View (Landing Page Widget)
+    participant C as Api\GuestChatApiController
+    participant AV as View (Admin Chats Halaman)
+    participant AC as Admin\GuestChatController
+    participant DB as Database (MySQL)
+
+    alt Aksi A: Alur Obrolan & Tutup Chat
+        alt Cookie session_token Sudah Ada di Browser (Restore Session)
+            V->>C: GET /api/guest-chat/messages (session_token dari Cookie)
+            C->>DB: SELECT * FROM guest_chat_messages WHERE guest_chat_thread_id = ?
+            DB-->>C: Data pesan obrolan terdahulu
+            C-->>V: Return JSON payload riwayat chat
+            V-->>T: Tampilkan widget obrolan yang sudah memuat pesan sebelumnya
+        else Cookie session_token Belum Ada (Sesi Baru)
+            T->>V: Klik widget Chat & masukkan Nama + No HP
+            V->>C: POST /api/guest-chat/start
+            C->>C: Generate session_token unik (UUID)
+            C->>DB: INSERT INTO guest_chat_threads (session_token, name, no_hp, status: 'active')
+            DB-->>C: Thread Instance
+            C-->>V: Return JSON success (session_token disimpan di Cookie browser)
+        end
+
+        T->>V: Ketik pesan & klik Kirim
+        V->>C: AJAX POST /api/guest-chat/send (message, session_token)
+        C->>DB: INSERT INTO guest_chat_messages (guest_chat_thread_id, sender_type: 'guest', message)
+        DB-->>C: Sukses simpan
+        C-->>V: Return JSON success
+        
+        loop AJAX Polling Browser Tamu (Interval 3 detik)
+            V->>C: GET /api/guest-chat/messages (session_token)
+            C->>DB: SELECT * FROM guest_chat_messages WHERE guest_chat_thread_id = ?
+            DB-->>C: List data chat baru
+            C-->>V: Return JSON payload chat
+            V->>V: Render balasan admin di gelembung obrolan widget
+        end
+
+        Note over A, AC: Alur Tanggapan Admin Panel
+        A->>AV: Buka menu obrolan Tamu & balas pesan
+        AV->>AC: POST /admin/guest-chats/{thread}/send (message)
+        AC->>DB: INSERT INTO guest_chat_messages (guest_chat_thread_id, sender_type: 'admin', sender_id, message)
+        DB-->>AC: Sukses simpan
+        AC-->>AV: Return JSON success
+        
+        A->>AV: Klik "Tutup Chat"
+        AV->>AC: POST /admin/guest-chats/{thread}/close
+        AC->>DB: UPDATE guest_chat_threads SET status = 'closed' WHERE id = ?
+        AC-->>AV: Return success
+
+    else Aksi B: Hapus Permanen Thread Chat oleh Admin (Delete Constraint)
+        A->>AV: Klik "Hapus Chat" (Thread status closed/active)
+        AV->>AC: DELETE /admin/guest-chats/{thread}
+        AC->>DB: DELETE FROM guest_chat_threads WHERE id = ?
+        Note over DB: Database otomatis menghapus pesan chat terkait (FK ON DELETE CASCADE)
+        AC-->>AV: Return JSON success (Halaman reload otomatis)
+    end

@@ -1,0 +1,35 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#EFF6FF',
+    'primaryTextColor': '#1E293B',
+    'primaryBorderColor': '#2563EB',
+    'lineColor': '#2563EB',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart LR
+    subgraph USER_CONTAINER["Tabel users (Master Akun)"]
+        direction TB
+        U1["<b>id</b>: unsigned bigint [PK]"]
+        U2["<b>email</b>: varchar(150) [UK]"]
+        U3["<b>role</b>: 'penyewa'"]
+        U4["<b>is_active</b>: 1"]
+        U5["<b>deleted_at</b>: timestamp [Nullable]"]
+    end
+
+    subgraph PENYEWA_CONTAINER["Tabel penyewa (Profil Transaksi Sewa)"]
+        direction TB
+        P1["<b>id</b>: unsigned bigint [PK]"]
+        P2["<b>user_id</b>: unsigned bigint [FK]"]
+        P3["<b>kamar_id</b>: unsigned bigint [FK]"]
+        P4["<b>harga_sewa</b>: decimal(12,2)"]
+        P5["<b>status</b>: 'aktif' | 'nonaktif'"]
+        P6["<b>deleted_at</b>: timestamp [Nullable]"]
+    end
+
+    USER_CONTAINER ===|"<b>1 : 1 (Secara Logis untuk Sewa Aktif)</b><br>• 1 User hanya boleh memegang 1 profil penyewa aktif<br>• ON DELETE RESTRICT (Akun tidak boleh dihapus jika profil aktif)<br>• Secara fisik 1:N historis untuk arsip kontrak masa lalu"| PENYEWA_CONTAINER
+
+    style USER_CONTAINER fill:#EFF6FF,stroke:#2563EB,stroke-width:2px
+    style PENYEWA_CONTAINER fill:#F0FDF4,stroke:#16A34A,stroke-width:2px

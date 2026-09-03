@@ -1,0 +1,53 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Admin ["Swimlane: Administrator"]
+        Start([Mulai]) --> MasukForm["Admin membuka Menu Penyewa & klik 'Tambah Penyewa'"]
+        MasukForm --> IsiForm["Admin mengisi form: Nama, Email, NIK, No HP, Wali, Kamar, Tipe Sewa (harian/mingguan/bulanan), Durasi, Deposit (opsional)"]
+        IsiForm --> KlikSimpan["Admin klik tombol 'Simpan'"]
+        TampilValidationError["Tampilkan error validasi di form"] --> IsiForm
+    end
+
+    subgraph Swimlane_Backend ["Swimlane: Backend Laravel & Queue Engine"]
+        KlikSimpan --> ValidasiForm{"Validasi input form sukses?<br>(NIK 16 digit, No HP valid, email valid)"}
+        ValidasiForm -- Tidak --> TampilValidationError
+        
+        ValidasiForm -- Ya --> CekKamar{"Apakah Kamar berstatus 'tersedia'?"}
+        CekKamar -- Tidak --> BlockPendaftaran["Sistem memicu error 'Kamar sedang terisi/maintenance'"]
+        BlockPendaftaran --> SelesaiBlock([Selesai Gagal])
+        
+        CekKamar -- Ya --> DbTx["Sistem memulai DB::transaction()"]
+        DbTx --> CekUserEksis{"Apakah user sudah terdaftar di database?"}
+        
+        CekUserEksis -- Ya --> PakaiUserEksis["Gunakan user_id yang sudah ada"]
+        CekUserEksis -- Tidak --> CreateUser["1. Buat user baru dengan role 'penyewa'<br>2. Set password default nomor HP"]
+        
+        PakaiUserEksis --> HitungKeluar["Kalkulasi tanggal_keluar_seharusnya berdasarkan Tipe Sewa & Durasi"]
+        CreateUser --> HitungKeluar
+        
+        HitungKeluar --> CreatePenyewa["Buat data profil penyewa (harga_sewa personal, deposit, status 'aktif')"]
+        CreatePenyewa --> UpdateKamarStatus["Ubah status Kamar terkait menjadi 'terisi'"]
+        UpdateKamarStatus --> CallBillingManual["Sistem memanggil BillingService untuk mencatat tagihan pertama manual lunas"]
+        CallBillingManual --> CommitTx["Commit DB Transaction"]
+        
+        CommitTx --> DispatchJob["Sistem men-dispatch KirimWelcomeMessageJob secara asinkron"]
+    end
+
+    subgraph Swimlane_Fonnte ["Swimlane: WhatsApp Gateway (Fonnte API)"]
+        DispatchJob --> PanggilFonnte["KirimWelcomeMessageJob memanggil Fonnte WA API"]
+        PanggilFonnte --> KirimWA["Kirim WhatsApp kredensial login (Email & Sandi default) ke nomor Penyewa"]
+        KirimWA --> TampilSukses["Redirect ke daftar penyewa dengan Toast sukses"]
+        TampilSukses --> Selesai([Selesai])
+    end

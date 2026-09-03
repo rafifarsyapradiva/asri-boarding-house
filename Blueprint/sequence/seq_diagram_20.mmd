@@ -1,0 +1,73 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor A as Admin
+    participant V as View (Admin Dashboard)
+    participant C as Admin\DashboardController
+    participant DAS as DashboardAnalyticsService
+    participant K as Kamar (Model)
+    participant P as Pembayaran (Model)
+    participant R as Reservasi (Model)
+    participant PE as Pengeluaran (Model)
+    participant T as Tagihan (Model)
+    participant DB as Database (MySQL)
+
+    A->>V: Buka Dashboard Admin (/admin/dashboard)
+    V->>C: GET /admin/dashboard
+    C->>DAS: getDashboardMetrics() & getFinancialTrends(12)
+    
+    DAS->>K: Hitung metrik kamar (Kamar::count(), terisi, tersedia, occupancyRate)
+    K->>DB: SELECT status, COUNT(*) FROM kamars GROUP BY status
+    DB-->>K: Rekap status kamar
+    
+    DAS->>P: Hitung pembayaran tagihan masuk bulan ini
+    P->>DB: SELECT SUM(nominal) FROM pembayarans WHERE MONTH(tanggal_bayar) = current_month
+    DB-->>P: Total pembayaran tagihan
+    
+    DAS->>R: Hitung reservasi DP & full lunas bulan ini
+    R->>DB: SELECT SUM(nominal_dp/total_harga) FROM reservasis WHERE status IN (...)
+    DB-->>R: Total reservasi masuk
+
+    DAS->>PE: Hitung operasional kas keluar bulan ini
+    PE->>DB: SELECT SUM(nominal) FROM pengeluarans WHERE MONTH(tanggal_pengeluaran) = current_month
+    DB-->>PE: Total pengeluaran operasional
+
+    DAS->>DAS: Hitung Laba Bersih = (Pembayaran Tagihan + Reservasi Masuk) - Pengeluaran
+
+    DAS->>T: Hitung breakdown tagihan belum lunas & keterlambatan
+    T->>DB: SELECT COUNT(*) FROM tagihans WHERE status = 'pending' GROUP BY bulan_keterlambatan
+    DB-->>T: Rekap breakdown penunggakan
+
+    DAS->>DB: Query gabungan histori 12 bulan terakhir (pembayarans & pengeluarans)
+    DB-->>DAS: Dataset riwayat keuangan 12 bulan
+
+    DAS-->>C: Data Aggregation Object (metrics, chartData)
+    C-->>V: Return view('admin.dashboard', compact('metrics', 'chartData'))
+    V->>V: Render Summary Cards Neo-Brutalisme & Inisialisasi Chart.js Bar Chart
+    V-->>A: Tampilkan Dasbor Utama interaktif & dinamis

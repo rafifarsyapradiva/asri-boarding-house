@@ -1,0 +1,38 @@
+flowchart LR
+    classDef primaryActor fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
+    classDef secondaryActor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
+    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+
+    %% Primary Actor
+    Penyewa(["Penyewa Aktif"]):::primaryActor
+
+    %% Secondary Actors
+    Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
+    Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
+
+    %% System Boundary
+    subgraph System ["Sistem Informasi Asri Boarding House (Modul Penyewa Aktif)"]
+        UC22_P(["UC-22: Login Portal Penyewa"]):::ucNode
+        UC18_P(["UC-18: Login Google OAuth SSO"]):::ucNode
+        UC16_P(["UC-16: Melihat Riwayat Tagihan & Transaksi"]):::ucNode
+        UC04(["UC-04: Membayar Tagihan Bulanan Rutin"]):::ucNode
+        UC25(["UC-25: Mengunduh Kuitansi Bukti Pembayaran PDF"]):::ucNode
+        UC05(["UC-05: Mengajukan Keluhan & Laporan Kerusakan"]):::ucNode
+        UC11(["UC-11: Mengakses Menu Peraturan & Tata Tertib"]):::ucNode
+        UC21(["UC-21: Melihat Pengumuman & Notifikasi"]):::ucNode
+    end
+
+    %% Relations - Penyewa Aktif
+    Penyewa --> UC22_P
+    Penyewa --> UC18_P
+    Penyewa --> UC16_P
+    Penyewa --> UC04
+    Penyewa --> UC25
+    Penyewa --> UC05
+    Penyewa --> UC11
+    Penyewa --> UC21
+
+    %% Relationships (Include & Extend)
+    UC25 -.-> |extend| UC04
+    UC04 -.-> |include| Midtrans
+    UC05 -.-> |include| Fonnte

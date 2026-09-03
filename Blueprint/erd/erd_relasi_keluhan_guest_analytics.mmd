@@ -1,0 +1,60 @@
+erDiagram
+    penyewa ||--o{ keluhan : "penyewa_id (1:N)"
+    guest_chat_threads ||--o{ guest_chat_messages : "guest_chat_thread_id (1:N)"
+    users ||--o{ guest_chat_messages : "sender_id (1:N)"
+    kamar ||--o{ whatsapp_clicks : "kamar_id (1:N)"
+    users ||--o{ notifikasi_khusus : "user_id (1:N)"
+
+    keluhan {
+        unsigned_bigint id PK
+        unsigned_bigint penyewa_id FK
+        string judul
+        enum kategori "kamar, fasilitas_bersama, kebersihan, keamanan, lainnya"
+        text deskripsi
+        string foto_bukti
+        enum status "pending, diproses, selesai"
+        text tanggapan_admin
+        datetime tanggal_selesai
+    }
+    guest_chat_threads {
+        unsigned_bigint id PK
+        string session_token UK
+        string name
+        string no_hp
+        enum status "active, closed"
+    }
+    guest_chat_messages {
+        unsigned_bigint id PK
+        unsigned_bigint guest_chat_thread_id FK
+        enum sender_type "guest, admin"
+        unsigned_bigint sender_id FK
+        text message
+        boolean is_read
+    }
+    whatsapp_clicks {
+        unsigned_bigint id PK
+        string sumber
+        unsigned_bigint kamar_id FK
+        string ip_address
+        text user_agent
+        timestamp created_at
+    }
+    notifikasi_khusus {
+        unsigned_bigint id PK
+        string sumber
+        string tipe_aktivitas
+        text deskripsi
+        json data_detail
+        unsigned_bigint user_id FK
+    }
+    penyewa {
+        unsigned_bigint id PK
+    }
+    users {
+        unsigned_bigint id PK
+        string nama
+    }
+    kamar {
+        unsigned_bigint id PK
+        string nomor_kamar
+    }

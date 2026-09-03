@@ -1,0 +1,4932 @@
+{
+    "database": "asri_kost_db",
+    "tables": [
+        {
+            "TABLE_NAME": "cache",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 36,
+            "DATA_LENGTH": 1589248,
+            "INDEX_LENGTH": 16384,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "cache_locks",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 16384,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "chat_messages",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 81920,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "customer_reviews",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 3,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 0,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "failed_jobs",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 16384,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "faqs",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 5,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 0,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "fasilitas",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 8,
+            "DATA_LENGTH": 32768,
+            "INDEX_LENGTH": 32768,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "galleries",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 3,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 0,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "guest_chat_messages",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 49152,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "guest_chat_threads",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 16384,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "jobs",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 16384,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "job_batches",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 0,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "kamar",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 32,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 81920,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "kamar_fasilitas",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 198,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 16384,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "keluhan",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 32768,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "log_notifikasi",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 32768,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "migrations",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 40,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 0,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "notifikasi_khusus",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 70,
+            "DATA_LENGTH": 65536,
+            "INDEX_LENGTH": 49152,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "password_reset_tokens",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 0,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "pembayaran",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 65536,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "pengeluaran",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 16384,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "pengumuman",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 0,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "penyewa",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 98304,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "peraturan",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 9,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 0,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "reservasi",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 147456,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "sessions",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 32768,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "settings",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 38,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 0,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "tagihan",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 65536,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "users",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 2,
+            "DATA_LENGTH": 32768,
+            "INDEX_LENGTH": 81920,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        },
+        {
+            "TABLE_NAME": "whatsapp_clicks",
+            "ENGINE": "InnoDB",
+            "TABLE_ROWS": 0,
+            "DATA_LENGTH": 16384,
+            "INDEX_LENGTH": 32768,
+            "TABLE_COLLATION": "utf8mb4_unicode_ci"
+        }
+    ],
+    "columns": {
+        "cache": [
+            {
+                "TABLE_NAME": "cache",
+                "COLUMN_NAME": "key",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "cache",
+                "COLUMN_NAME": "value",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "mediumtext",
+                "CHARACTER_MAXIMUM_LENGTH": 16777215,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "mediumtext",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "cache",
+                "COLUMN_NAME": "expiration",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            }
+        ],
+        "cache_locks": [
+            {
+                "TABLE_NAME": "cache_locks",
+                "COLUMN_NAME": "key",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "cache_locks",
+                "COLUMN_NAME": "owner",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "cache_locks",
+                "COLUMN_NAME": "expiration",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            }
+        ],
+        "chat_messages": [
+            {
+                "TABLE_NAME": "chat_messages",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "chat_messages",
+                "COLUMN_NAME": "reservasi_id",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "chat_messages",
+                "COLUMN_NAME": "sender_id",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "chat_messages",
+                "COLUMN_NAME": "message",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "chat_messages",
+                "COLUMN_NAME": "is_read",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "0",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(1)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "chat_messages",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "current_timestamp()",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "customer_reviews": [
+            {
+                "TABLE_NAME": "customer_reviews",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "customer_reviews",
+                "COLUMN_NAME": "nama",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "customer_reviews",
+                "COLUMN_NAME": "pekerjaan",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "customer_reviews",
+                "COLUMN_NAME": "bintang",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "5",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(3) unsigned",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "customer_reviews",
+                "COLUMN_NAME": "ulasan",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "customer_reviews",
+                "COLUMN_NAME": "foto",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "customer_reviews",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "customer_reviews",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "failed_jobs": [
+            {
+                "TABLE_NAME": "failed_jobs",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "failed_jobs",
+                "COLUMN_NAME": "uuid",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "UNI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "failed_jobs",
+                "COLUMN_NAME": "connection",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "failed_jobs",
+                "COLUMN_NAME": "queue",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "failed_jobs",
+                "COLUMN_NAME": "payload",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "longtext",
+                "CHARACTER_MAXIMUM_LENGTH": 4294967295,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "longtext",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "failed_jobs",
+                "COLUMN_NAME": "exception",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "longtext",
+                "CHARACTER_MAXIMUM_LENGTH": 4294967295,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "longtext",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "failed_jobs",
+                "COLUMN_NAME": "failed_at",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "current_timestamp()",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "faqs": [
+            {
+                "TABLE_NAME": "faqs",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "faqs",
+                "COLUMN_NAME": "pertanyaan",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "faqs",
+                "COLUMN_NAME": "jawaban",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "faqs",
+                "COLUMN_NAME": "urutan",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "0",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(4)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "faqs",
+                "COLUMN_NAME": "is_active",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "1",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(4)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "faqs",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "faqs",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "fasilitas": [
+            {
+                "TABLE_NAME": "fasilitas",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "fasilitas",
+                "COLUMN_NAME": "nama",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "UNI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "fasilitas",
+                "COLUMN_NAME": "ikon",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "fasilitas",
+                "COLUMN_NAME": "deskripsi",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "fasilitas",
+                "COLUMN_NAME": "is_active",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "1",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(1)",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "fasilitas",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "current_timestamp()",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "fasilitas",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": "on update current_timestamp()"
+            }
+        ],
+        "galleries": [
+            {
+                "TABLE_NAME": "galleries",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "galleries",
+                "COLUMN_NAME": "judul",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "galleries",
+                "COLUMN_NAME": "deskripsi",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "galleries",
+                "COLUMN_NAME": "foto",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "galleries",
+                "COLUMN_NAME": "urutan",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "0",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "galleries",
+                "COLUMN_NAME": "is_active",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "1",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(1)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "galleries",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "galleries",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "guest_chat_messages": [
+            {
+                "TABLE_NAME": "guest_chat_messages",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "guest_chat_messages",
+                "COLUMN_NAME": "guest_chat_thread_id",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "guest_chat_messages",
+                "COLUMN_NAME": "sender_type",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 5,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('guest','admin')",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "guest_chat_messages",
+                "COLUMN_NAME": "sender_id",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "guest_chat_messages",
+                "COLUMN_NAME": "message",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "guest_chat_messages",
+                "COLUMN_NAME": "is_read",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "0",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(1)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "guest_chat_messages",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "guest_chat_messages",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "guest_chat_threads": [
+            {
+                "TABLE_NAME": "guest_chat_threads",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "guest_chat_threads",
+                "COLUMN_NAME": "session_token",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "UNI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "guest_chat_threads",
+                "COLUMN_NAME": "name",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "guest_chat_threads",
+                "COLUMN_NAME": "no_hp",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "guest_chat_threads",
+                "COLUMN_NAME": "status",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "'active'",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 6,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('active','closed')",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "guest_chat_threads",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "guest_chat_threads",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "jobs": [
+            {
+                "TABLE_NAME": "jobs",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "jobs",
+                "COLUMN_NAME": "queue",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "jobs",
+                "COLUMN_NAME": "payload",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "longtext",
+                "CHARACTER_MAXIMUM_LENGTH": 4294967295,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "longtext",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "jobs",
+                "COLUMN_NAME": "attempts",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(3) unsigned",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "jobs",
+                "COLUMN_NAME": "reserved_at",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "jobs",
+                "COLUMN_NAME": "available_at",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "jobs",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "job_batches": [
+            {
+                "TABLE_NAME": "job_batches",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "job_batches",
+                "COLUMN_NAME": "name",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "job_batches",
+                "COLUMN_NAME": "total_jobs",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "job_batches",
+                "COLUMN_NAME": "pending_jobs",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "job_batches",
+                "COLUMN_NAME": "failed_jobs",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "job_batches",
+                "COLUMN_NAME": "failed_job_ids",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "longtext",
+                "CHARACTER_MAXIMUM_LENGTH": 4294967295,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "longtext",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "job_batches",
+                "COLUMN_NAME": "options",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "mediumtext",
+                "CHARACTER_MAXIMUM_LENGTH": 16777215,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "mediumtext",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "job_batches",
+                "COLUMN_NAME": "cancelled_at",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "job_batches",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 9,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "job_batches",
+                "COLUMN_NAME": "finished_at",
+                "ORDINAL_POSITION": 10,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "kamar": [
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "nomor_kamar",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "active_nomor_kamar",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "UNI",
+                "EXTRA": "VIRTUAL GENERATED"
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "lantai",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "1",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(4)",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "tipe",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "'standar'",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 7,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('standar','deluxe','vip')",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "luas_m2",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 5,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(5,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "harga_bulan",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 12,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(12,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "deskripsi",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "foto",
+                "ORDINAL_POSITION": 9,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "status",
+                "ORDINAL_POSITION": 10,
+                "COLUMN_DEFAULT": "'tersedia'",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 11,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('tersedia','terisi','maintenance')",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 11,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 12,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "kamar",
+                "COLUMN_NAME": "deleted_at",
+                "ORDINAL_POSITION": 13,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            }
+        ],
+        "kamar_fasilitas": [
+            {
+                "TABLE_NAME": "kamar_fasilitas",
+                "COLUMN_NAME": "kamar_id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "kamar_fasilitas",
+                "COLUMN_NAME": "fasilitas_id",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": ""
+            }
+        ],
+        "keluhan": [
+            {
+                "TABLE_NAME": "keluhan",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "keluhan",
+                "COLUMN_NAME": "penyewa_id",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "keluhan",
+                "COLUMN_NAME": "judul",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 150,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(150)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "keluhan",
+                "COLUMN_NAME": "kategori",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 17,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('kamar','fasilitas_bersama','kebersihan','keamanan','lainnya')",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "keluhan",
+                "COLUMN_NAME": "deskripsi",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "keluhan",
+                "COLUMN_NAME": "foto_bukti",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "keluhan",
+                "COLUMN_NAME": "status",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "'pending'",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 8,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('pending','diproses','selesai')",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "keluhan",
+                "COLUMN_NAME": "tanggapan_admin",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "keluhan",
+                "COLUMN_NAME": "tanggal_selesai",
+                "ORDINAL_POSITION": 9,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "datetime",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "datetime",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "keluhan",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 10,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "keluhan",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 11,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "log_notifikasi": [
+            {
+                "TABLE_NAME": "log_notifikasi",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "log_notifikasi",
+                "COLUMN_NAME": "penyewa_id",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "log_notifikasi",
+                "COLUMN_NAME": "tagihan_id",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "log_notifikasi",
+                "COLUMN_NAME": "channel",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 8,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('whatsapp','email','system')",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "log_notifikasi",
+                "COLUMN_NAME": "event",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "log_notifikasi",
+                "COLUMN_NAME": "status",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 6,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('sukses','gagal')",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "log_notifikasi",
+                "COLUMN_NAME": "pesan",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "log_notifikasi",
+                "COLUMN_NAME": "error_msg",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "log_notifikasi",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 9,
+                "COLUMN_DEFAULT": "current_timestamp()",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "migrations": [
+            {
+                "TABLE_NAME": "migrations",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "migrations",
+                "COLUMN_NAME": "migration",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "migrations",
+                "COLUMN_NAME": "batch",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "notifikasi_khusus": [
+            {
+                "TABLE_NAME": "notifikasi_khusus",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "notifikasi_khusus",
+                "COLUMN_NAME": "sumber",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "notifikasi_khusus",
+                "COLUMN_NAME": "tipe_aktivitas",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "notifikasi_khusus",
+                "COLUMN_NAME": "deskripsi",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "notifikasi_khusus",
+                "COLUMN_NAME": "data_detail",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "longtext",
+                "CHARACTER_MAXIMUM_LENGTH": 4294967295,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "longtext",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "notifikasi_khusus",
+                "COLUMN_NAME": "user_id",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "notifikasi_khusus",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "notifikasi_khusus",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "password_reset_tokens": [
+            {
+                "TABLE_NAME": "password_reset_tokens",
+                "COLUMN_NAME": "email",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "password_reset_tokens",
+                "COLUMN_NAME": "token",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "password_reset_tokens",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "pembayaran": [
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "tagihan_id",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "transaction_id",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "UNI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "payment_type",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "bank",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 20,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(20)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "va_number",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 30,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(30)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "nominal",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 12,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(12,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "status_midtrans",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "dikonfirmasi_oleh",
+                "ORDINAL_POSITION": 9,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "signature_key",
+                "ORDINAL_POSITION": 10,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "response_json",
+                "ORDINAL_POSITION": 11,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "longtext",
+                "CHARACTER_MAXIMUM_LENGTH": 4294967295,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "longtext",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "tanggal_bayar",
+                "ORDINAL_POSITION": 12,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "datetime",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "datetime",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "pdf_path",
+                "ORDINAL_POSITION": 13,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 14,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pembayaran",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 15,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "pengeluaran": [
+            {
+                "TABLE_NAME": "pengeluaran",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "pengeluaran",
+                "COLUMN_NAME": "nama_pengeluaran",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 150,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(150)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pengeluaran",
+                "COLUMN_NAME": "kategori",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 11,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('maintenance','utilitas','operasional','lainnya')",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pengeluaran",
+                "COLUMN_NAME": "nominal",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 12,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(12,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pengeluaran",
+                "COLUMN_NAME": "tanggal_pengeluaran",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "date",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "date",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pengeluaran",
+                "COLUMN_NAME": "bukti_nota",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pengeluaran",
+                "COLUMN_NAME": "keterangan",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pengeluaran",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pengeluaran",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 9,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "pengumuman": [
+            {
+                "TABLE_NAME": "pengumuman",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "pengumuman",
+                "COLUMN_NAME": "judul",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 150,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(150)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pengumuman",
+                "COLUMN_NAME": "isi",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pengumuman",
+                "COLUMN_NAME": "is_active",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "1",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(1)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pengumuman",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "pengumuman",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "penyewa": [
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "user_id",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "kamar_id",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "harga_sewa",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 12,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(12,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "nik",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "active_nik",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 20,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(20)",
+                "COLUMN_KEY": "",
+                "EXTRA": "VIRTUAL GENERATED"
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "tanggal_masuk",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "date",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "date",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "tanggal_keluar",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "date",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "date",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "tanggal_keluar_seharusnya",
+                "ORDINAL_POSITION": 9,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "date",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "date",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "status",
+                "ORDINAL_POSITION": 10,
+                "COLUMN_DEFAULT": "'aktif'",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 8,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('aktif','nonaktif')",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "tanggal_billing",
+                "ORDINAL_POSITION": 11,
+                "COLUMN_DEFAULT": "1",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(4)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "tipe_sewa",
+                "ORDINAL_POSITION": 12,
+                "COLUMN_DEFAULT": "'bulanan'",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 8,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('harian','mingguan','bulanan')",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "durasi",
+                "ORDINAL_POSITION": 13,
+                "COLUMN_DEFAULT": "1",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(4)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "deposit",
+                "ORDINAL_POSITION": 14,
+                "COLUMN_DEFAULT": "0.00",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 12,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(12,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "no_wali",
+                "ORDINAL_POSITION": 15,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 20,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(20)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "nama_wali",
+                "ORDINAL_POSITION": 16,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "catatan",
+                "ORDINAL_POSITION": 17,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 18,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 19,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "penyewa",
+                "COLUMN_NAME": "deleted_at",
+                "ORDINAL_POSITION": 20,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            }
+        ],
+        "peraturan": [
+            {
+                "TABLE_NAME": "peraturan",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "peraturan",
+                "COLUMN_NAME": "judul",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "peraturan",
+                "COLUMN_NAME": "deskripsi",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "peraturan",
+                "COLUMN_NAME": "ikon",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "peraturan",
+                "COLUMN_NAME": "urutan",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "0",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "peraturan",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "peraturan",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "reservasi": [
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "user_id",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "kamar_id",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "dikonfirmasi_oleh",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "penyewa_id",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "tipe_sewa",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "'bulanan'",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 8,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('harian','mingguan','bulanan')",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "tanggal_mulai",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "date",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "date",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "tanggal_selesai",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "date",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "date",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "durasi",
+                "ORDINAL_POSITION": 9,
+                "COLUMN_DEFAULT": "1",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(4)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "total_harga",
+                "ORDINAL_POSITION": 10,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 12,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(12,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "status",
+                "ORDINAL_POSITION": 11,
+                "COLUMN_DEFAULT": "'pending'",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 12,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('pending','dp','lunas','dikonfirmasi','batal')",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "metode_pembayaran",
+                "ORDINAL_POSITION": 12,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 8,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('midtrans','cash')",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "is_dp",
+                "ORDINAL_POSITION": 13,
+                "COLUMN_DEFAULT": "0",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(1)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "nominal_dp",
+                "ORDINAL_POSITION": 14,
+                "COLUMN_DEFAULT": "0.00",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 12,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(12,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "nominal_sisa",
+                "ORDINAL_POSITION": 15,
+                "COLUMN_DEFAULT": "0.00",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 12,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(12,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "snap_token",
+                "ORDINAL_POSITION": 16,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "order_id",
+                "ORDINAL_POSITION": 17,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "active_order_id",
+                "ORDINAL_POSITION": 18,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "UNI",
+                "EXTRA": "VIRTUAL GENERATED"
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "transaction_id",
+                "ORDINAL_POSITION": 19,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "catatan_user",
+                "ORDINAL_POSITION": 20,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "catatan_admin",
+                "ORDINAL_POSITION": 21,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "tanggal_konfirmasi",
+                "ORDINAL_POSITION": 22,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "datetime",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "datetime",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 23,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 24,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "reservasi",
+                "COLUMN_NAME": "deleted_at",
+                "ORDINAL_POSITION": 25,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            }
+        ],
+        "sessions": [
+            {
+                "TABLE_NAME": "sessions",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "sessions",
+                "COLUMN_NAME": "user_id",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "sessions",
+                "COLUMN_NAME": "ip_address",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 45,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(45)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "sessions",
+                "COLUMN_NAME": "user_agent",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "sessions",
+                "COLUMN_NAME": "payload",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "mediumtext",
+                "CHARACTER_MAXIMUM_LENGTH": 16777215,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "mediumtext",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "sessions",
+                "COLUMN_NAME": "last_activity",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(11)",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            }
+        ],
+        "settings": [
+            {
+                "TABLE_NAME": "settings",
+                "COLUMN_NAME": "key",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "settings",
+                "COLUMN_NAME": "value",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "settings",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "settings",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "tagihan": [
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "penyewa_id",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "order_id",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "UNI",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "periode_bulan",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(4)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "periode_tahun",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "smallint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 5,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "smallint(6)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "tanggal_tagihan",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "date",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "date",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "tanggal_jatuh_tempo",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "date",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "date",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "nominal_pokok",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 12,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(12,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "nominal_denda",
+                "ORDINAL_POSITION": 9,
+                "COLUMN_DEFAULT": "0.00",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 12,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(12,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "nominal_total",
+                "ORDINAL_POSITION": 10,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "decimal",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 12,
+                "NUMERIC_SCALE": 2,
+                "COLUMN_TYPE": "decimal(12,2)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "bulan_keterlambatan",
+                "ORDINAL_POSITION": 11,
+                "COLUMN_DEFAULT": "0",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(4)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "status",
+                "ORDINAL_POSITION": 12,
+                "COLUMN_DEFAULT": "'pending'",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 10,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('pending','lunas','gagal','kadaluarsa','terlambat')",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "metode_pembayaran",
+                "ORDINAL_POSITION": 13,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 8,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('midtrans','cash','')",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "keterangan",
+                "ORDINAL_POSITION": 14,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 15,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "tagihan",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 16,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ],
+        "users": [
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "nama",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "email",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 150,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(150)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "active_email",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 150,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(150)",
+                "COLUMN_KEY": "UNI",
+                "EXTRA": "VIRTUAL GENERATED"
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "password",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "no_hp",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "active_no_hp",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 20,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(20)",
+                "COLUMN_KEY": "UNI",
+                "EXTRA": "VIRTUAL GENERATED"
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "nik",
+                "ORDINAL_POSITION": 8,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "active_nik",
+                "ORDINAL_POSITION": 9,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 20,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(20)",
+                "COLUMN_KEY": "UNI",
+                "EXTRA": "VIRTUAL GENERATED"
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "nama_wali",
+                "ORDINAL_POSITION": 10,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 100,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(100)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "no_wali",
+                "ORDINAL_POSITION": 11,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 20,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(20)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "role",
+                "ORDINAL_POSITION": 12,
+                "COLUMN_DEFAULT": "'penyewa'",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "enum",
+                "CHARACTER_MAXIMUM_LENGTH": 7,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "enum('admin','penyewa')",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "foto",
+                "ORDINAL_POSITION": 13,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 255,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(255)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "is_active",
+                "ORDINAL_POSITION": 14,
+                "COLUMN_DEFAULT": "1",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(4)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 15,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 16,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "require_password_change",
+                "ORDINAL_POSITION": 17,
+                "COLUMN_DEFAULT": "0",
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "tinyint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 3,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "tinyint(1)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "users",
+                "COLUMN_NAME": "deleted_at",
+                "ORDINAL_POSITION": 18,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            }
+        ],
+        "whatsapp_clicks": [
+            {
+                "TABLE_NAME": "whatsapp_clicks",
+                "COLUMN_NAME": "id",
+                "ORDINAL_POSITION": 1,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "bigint",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 20,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "bigint(20) unsigned",
+                "COLUMN_KEY": "PRI",
+                "EXTRA": "auto_increment"
+            },
+            {
+                "TABLE_NAME": "whatsapp_clicks",
+                "COLUMN_NAME": "source",
+                "ORDINAL_POSITION": 2,
+                "COLUMN_DEFAULT": null,
+                "IS_NULLABLE": "NO",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 50,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(50)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "whatsapp_clicks",
+                "COLUMN_NAME": "kamar_id",
+                "ORDINAL_POSITION": 3,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "int",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": 10,
+                "NUMERIC_SCALE": 0,
+                "COLUMN_TYPE": "int(10) unsigned",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "whatsapp_clicks",
+                "COLUMN_NAME": "ip_address",
+                "ORDINAL_POSITION": 4,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "varchar",
+                "CHARACTER_MAXIMUM_LENGTH": 45,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "varchar(45)",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "whatsapp_clicks",
+                "COLUMN_NAME": "user_agent",
+                "ORDINAL_POSITION": 5,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "text",
+                "CHARACTER_MAXIMUM_LENGTH": 65535,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "text",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "whatsapp_clicks",
+                "COLUMN_NAME": "created_at",
+                "ORDINAL_POSITION": 6,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "MUL",
+                "EXTRA": ""
+            },
+            {
+                "TABLE_NAME": "whatsapp_clicks",
+                "COLUMN_NAME": "updated_at",
+                "ORDINAL_POSITION": 7,
+                "COLUMN_DEFAULT": "NULL",
+                "IS_NULLABLE": "YES",
+                "DATA_TYPE": "timestamp",
+                "CHARACTER_MAXIMUM_LENGTH": null,
+                "NUMERIC_PRECISION": null,
+                "NUMERIC_SCALE": null,
+                "COLUMN_TYPE": "timestamp",
+                "COLUMN_KEY": "",
+                "EXTRA": ""
+            }
+        ]
+    },
+    "foreign_keys": [
+        {
+            "TABLE_NAME": "chat_messages",
+            "COLUMN_NAME": "reservasi_id",
+            "CONSTRAINT_NAME": "chat_messages_reservasi_id_foreign",
+            "REFERENCED_TABLE_NAME": "reservasi",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "CASCADE"
+        },
+        {
+            "TABLE_NAME": "chat_messages",
+            "COLUMN_NAME": "sender_id",
+            "CONSTRAINT_NAME": "chat_messages_sender_id_foreign",
+            "REFERENCED_TABLE_NAME": "users",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "CASCADE"
+        },
+        {
+            "TABLE_NAME": "guest_chat_messages",
+            "COLUMN_NAME": "guest_chat_thread_id",
+            "CONSTRAINT_NAME": "guest_chat_messages_guest_chat_thread_id_foreign",
+            "REFERENCED_TABLE_NAME": "guest_chat_threads",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "CASCADE"
+        },
+        {
+            "TABLE_NAME": "guest_chat_messages",
+            "COLUMN_NAME": "sender_id",
+            "CONSTRAINT_NAME": "guest_chat_messages_sender_id_foreign",
+            "REFERENCED_TABLE_NAME": "users",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "CASCADE"
+        },
+        {
+            "TABLE_NAME": "kamar_fasilitas",
+            "COLUMN_NAME": "fasilitas_id",
+            "CONSTRAINT_NAME": "kamar_fasilitas_fasilitas_id_foreign",
+            "REFERENCED_TABLE_NAME": "fasilitas",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "CASCADE"
+        },
+        {
+            "TABLE_NAME": "kamar_fasilitas",
+            "COLUMN_NAME": "kamar_id",
+            "CONSTRAINT_NAME": "kamar_fasilitas_kamar_id_foreign",
+            "REFERENCED_TABLE_NAME": "kamar",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "CASCADE"
+        },
+        {
+            "TABLE_NAME": "keluhan",
+            "COLUMN_NAME": "penyewa_id",
+            "CONSTRAINT_NAME": "keluhan_penyewa_id_foreign",
+            "REFERENCED_TABLE_NAME": "penyewa",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "CASCADE"
+        },
+        {
+            "TABLE_NAME": "log_notifikasi",
+            "COLUMN_NAME": "penyewa_id",
+            "CONSTRAINT_NAME": "log_notifikasi_penyewa_id_foreign",
+            "REFERENCED_TABLE_NAME": "penyewa",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "CASCADE",
+            "DELETE_RULE": "CASCADE"
+        },
+        {
+            "TABLE_NAME": "log_notifikasi",
+            "COLUMN_NAME": "tagihan_id",
+            "CONSTRAINT_NAME": "log_notifikasi_tagihan_id_foreign",
+            "REFERENCED_TABLE_NAME": "tagihan",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "SET NULL"
+        },
+        {
+            "TABLE_NAME": "notifikasi_khusus",
+            "COLUMN_NAME": "user_id",
+            "CONSTRAINT_NAME": "notifikasi_khusus_user_id_foreign",
+            "REFERENCED_TABLE_NAME": "users",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "SET NULL"
+        },
+        {
+            "TABLE_NAME": "pembayaran",
+            "COLUMN_NAME": "dikonfirmasi_oleh",
+            "CONSTRAINT_NAME": "pembayaran_dikonfirmasi_oleh_foreign",
+            "REFERENCED_TABLE_NAME": "users",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "SET NULL"
+        },
+        {
+            "TABLE_NAME": "pembayaran",
+            "COLUMN_NAME": "tagihan_id",
+            "CONSTRAINT_NAME": "pembayaran_tagihan_id_foreign",
+            "REFERENCED_TABLE_NAME": "tagihan",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "RESTRICT"
+        },
+        {
+            "TABLE_NAME": "penyewa",
+            "COLUMN_NAME": "kamar_id",
+            "CONSTRAINT_NAME": "penyewa_kamar_id_foreign",
+            "REFERENCED_TABLE_NAME": "kamar",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "RESTRICT"
+        },
+        {
+            "TABLE_NAME": "penyewa",
+            "COLUMN_NAME": "user_id",
+            "CONSTRAINT_NAME": "penyewa_user_id_foreign",
+            "REFERENCED_TABLE_NAME": "users",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "RESTRICT"
+        },
+        {
+            "TABLE_NAME": "reservasi",
+            "COLUMN_NAME": "dikonfirmasi_oleh",
+            "CONSTRAINT_NAME": "reservasi_dikonfirmasi_oleh_foreign",
+            "REFERENCED_TABLE_NAME": "users",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "SET NULL"
+        },
+        {
+            "TABLE_NAME": "reservasi",
+            "COLUMN_NAME": "kamar_id",
+            "CONSTRAINT_NAME": "reservasi_kamar_id_foreign",
+            "REFERENCED_TABLE_NAME": "kamar",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "RESTRICT"
+        },
+        {
+            "TABLE_NAME": "reservasi",
+            "COLUMN_NAME": "penyewa_id",
+            "CONSTRAINT_NAME": "reservasi_penyewa_id_foreign",
+            "REFERENCED_TABLE_NAME": "penyewa",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "SET NULL"
+        },
+        {
+            "TABLE_NAME": "reservasi",
+            "COLUMN_NAME": "user_id",
+            "CONSTRAINT_NAME": "reservasi_user_id_foreign",
+            "REFERENCED_TABLE_NAME": "users",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "RESTRICT"
+        },
+        {
+            "TABLE_NAME": "tagihan",
+            "COLUMN_NAME": "penyewa_id",
+            "CONSTRAINT_NAME": "tagihan_penyewa_id_foreign",
+            "REFERENCED_TABLE_NAME": "penyewa",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "RESTRICT"
+        },
+        {
+            "TABLE_NAME": "whatsapp_clicks",
+            "COLUMN_NAME": "kamar_id",
+            "CONSTRAINT_NAME": "whatsapp_clicks_kamar_id_foreign",
+            "REFERENCED_TABLE_NAME": "kamar",
+            "REFERENCED_COLUMN_NAME": "id",
+            "UPDATE_RULE": "RESTRICT",
+            "DELETE_RULE": "SET NULL"
+        }
+    ],
+    "indexes": {
+        "cache": {
+            "cache_expiration_index": [
+                "expiration"
+            ],
+            "PRIMARY": [
+                "key"
+            ]
+        },
+        "cache_locks": {
+            "cache_locks_expiration_index": [
+                "expiration"
+            ],
+            "PRIMARY": [
+                "key"
+            ]
+        },
+        "chat_messages": {
+            "chat_messages_reservasi_id_id_index": [
+                "reservasi_id",
+                "id"
+            ],
+            "chat_messages_reservasi_read_status_index": [
+                "reservasi_id",
+                "is_read",
+                "sender_id"
+            ],
+            "chat_messages_sender_id_foreign": [
+                "sender_id"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "customer_reviews": {
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "failed_jobs": {
+            "failed_jobs_uuid_unique": [
+                "uuid"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "faqs": {
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "fasilitas": {
+            "fasilitas_is_active_index": [
+                "is_active"
+            ],
+            "fasilitas_nama_unique": [
+                "nama"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "galleries": {
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "guest_chat_messages": {
+            "guest_chat_messages_sender_id_foreign": [
+                "sender_id"
+            ],
+            "idx_guest_chat_messages_thread_id_id": [
+                "guest_chat_thread_id",
+                "id"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "guest_chat_threads": {
+            "guest_chat_threads_session_token_unique": [
+                "session_token"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "jobs": {
+            "jobs_queue_index": [
+                "queue"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "job_batches": {
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "kamar": {
+            "idx_kamar_lantai_deleted_at": [
+                "lantai",
+                "deleted_at"
+            ],
+            "idx_kamar_status_deleted_at": [
+                "status",
+                "deleted_at"
+            ],
+            "idx_kamar_tipe_deleted_at": [
+                "tipe",
+                "deleted_at"
+            ],
+            "kamar_deleted_at_index": [
+                "deleted_at"
+            ],
+            "PRIMARY": [
+                "id"
+            ],
+            "uq_kamar_active_nomor": [
+                "active_nomor_kamar"
+            ]
+        },
+        "kamar_fasilitas": {
+            "kamar_fasilitas_fasilitas_id_foreign": [
+                "fasilitas_id"
+            ],
+            "PRIMARY": [
+                "kamar_id",
+                "fasilitas_id"
+            ]
+        },
+        "keluhan": {
+            "idx_keluhan_penyewa_status": [
+                "penyewa_id",
+                "status"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "log_notifikasi": {
+            "idx_log_notifikasi_tagihan_id": [
+                "tagihan_id"
+            ],
+            "log_notifikasi_penyewa_id_foreign": [
+                "penyewa_id"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "migrations": {
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "notifikasi_khusus": {
+            "idx_notifikasi_khusus_user_created": [
+                "user_id",
+                "created_at"
+            ],
+            "notifikasi_khusus_sumber_index": [
+                "sumber"
+            ],
+            "notifikasi_khusus_tipe_aktivitas_index": [
+                "tipe_aktivitas"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "password_reset_tokens": {
+            "PRIMARY": [
+                "email"
+            ]
+        },
+        "pembayaran": {
+            "idx_pembayaran_tanggal_status": [
+                "status_midtrans",
+                "tanggal_bayar"
+            ],
+            "pembayaran_dikonfirmasi_oleh_foreign": [
+                "dikonfirmasi_oleh"
+            ],
+            "pembayaran_tagihan_id_foreign": [
+                "tagihan_id"
+            ],
+            "pembayaran_transaction_id_unique": [
+                "transaction_id"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "pengeluaran": {
+            "idx_pengeluaran_tanggal": [
+                "tanggal_pengeluaran"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "pengumuman": {
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "penyewa": {
+            "idx_penyewa_kamar_deleted_at": [
+                "kamar_id",
+                "deleted_at"
+            ],
+            "idx_penyewa_overlap_check": [
+                "kamar_id",
+                "status",
+                "tanggal_masuk",
+                "tanggal_keluar"
+            ],
+            "idx_penyewa_status_deleted_at": [
+                "status",
+                "deleted_at"
+            ],
+            "penyewa_deleted_at_index": [
+                "deleted_at"
+            ],
+            "penyewa_nik_index": [
+                "nik"
+            ],
+            "penyewa_user_id_index": [
+                "user_id"
+            ],
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "peraturan": {
+            "PRIMARY": [
+                "id"
+            ]
+        },
+        "reservasi": {
+            "idx_reservasi_kamar_deleted_at": [
+                "kamar_id",
+                "deleted_at"
+            ],
+            "idx_reservasi_overlap_check": [
+                "kamar_id",
+                "status",
+                "tanggal_mulai",
+                "tanggal_selesai"
+            ],
+            "idx_reservasi_status_deleted_at": [
+                "status",
+                "deleted_at"
+            ],
+            "idx_reservasi_user_deleted_at": [
+                "user_id",
+                "deleted_at"
+            ],
+            "PRIMARY": [
+                "id"
+            ],
+            "reservasi_deleted_at_index": [
+                "deleted_at"
+            ],
+            "reservasi_dikonfirmasi_oleh_foreign": [
+                "dikonfirmasi_oleh"
+            ],
+            "reservasi_penyewa_id_foreign": [
+                "penyewa_id"
+            ],
+            "reservasi_tanggal_mulai_tanggal_selesai_index": [
+                "tanggal_mulai",
+                "tanggal_selesai"
+            ],
+            "uq_reservasi_active_order_id": [
+                "active_order_id"
+            ]
+        },
+        "sessions": {
+            "PRIMARY": [
+                "id"
+            ],
+            "sessions_last_activity_index": [
+                "last_activity"
+            ],
+            "sessions_user_id_index": [
+                "user_id"
+            ]
+        },
+        "settings": {
+            "PRIMARY": [
+                "key"
+            ]
+        },
+        "tagihan": {
+            "idx_tagihan_cron_keterlambatan": [
+                "status",
+                "tanggal_jatuh_tempo"
+            ],
+            "PRIMARY": [
+                "id"
+            ],
+            "tagihan_order_id_unique": [
+                "order_id"
+            ],
+            "tagihan_penyewa_id_status_index": [
+                "penyewa_id",
+                "status"
+            ],
+            "uq_periode": [
+                "penyewa_id",
+                "periode_bulan",
+                "periode_tahun"
+            ]
+        },
+        "users": {
+            "idx_users_role_deleted_at": [
+                "role",
+                "deleted_at"
+            ],
+            "PRIMARY": [
+                "id"
+            ],
+            "uq_users_active_email": [
+                "active_email"
+            ],
+            "uq_users_active_nik": [
+                "active_nik"
+            ],
+            "uq_users_active_no_hp": [
+                "active_no_hp"
+            ],
+            "users_deleted_at_index": [
+                "deleted_at"
+            ]
+        },
+        "whatsapp_clicks": {
+            "idx_whatsapp_clicks_created": [
+                "created_at"
+            ],
+            "PRIMARY": [
+                "id"
+            ],
+            "whatsapp_clicks_kamar_id_foreign": [
+                "kamar_id"
+            ]
+        }
+    },
+    "index_meta": {
+        "cache": {
+            "cache_expiration_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "cache_locks": {
+            "cache_locks_expiration_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "chat_messages": {
+            "chat_messages_reservasi_id_id_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "chat_messages_reservasi_read_status_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "chat_messages_sender_id_foreign": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "customer_reviews": {
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "failed_jobs": {
+            "failed_jobs_uuid_unique": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "faqs": {
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "fasilitas": {
+            "fasilitas_is_active_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "fasilitas_nama_unique": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "galleries": {
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "guest_chat_messages": {
+            "guest_chat_messages_sender_id_foreign": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "idx_guest_chat_messages_thread_id_id": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "guest_chat_threads": {
+            "guest_chat_threads_session_token_unique": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "jobs": {
+            "jobs_queue_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "job_batches": {
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "kamar": {
+            "idx_kamar_lantai_deleted_at": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "idx_kamar_status_deleted_at": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "idx_kamar_tipe_deleted_at": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "kamar_deleted_at_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "uq_kamar_active_nomor": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "kamar_fasilitas": {
+            "kamar_fasilitas_fasilitas_id_foreign": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "keluhan": {
+            "idx_keluhan_penyewa_status": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "log_notifikasi": {
+            "idx_log_notifikasi_tagihan_id": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "log_notifikasi_penyewa_id_foreign": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "migrations": {
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "notifikasi_khusus": {
+            "idx_notifikasi_khusus_user_created": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "notifikasi_khusus_sumber_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "notifikasi_khusus_tipe_aktivitas_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "password_reset_tokens": {
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "pembayaran": {
+            "idx_pembayaran_tanggal_status": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "pembayaran_dikonfirmasi_oleh_foreign": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "pembayaran_tagihan_id_foreign": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "pembayaran_transaction_id_unique": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "pengeluaran": {
+            "idx_pengeluaran_tanggal": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "pengumuman": {
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "penyewa": {
+            "idx_penyewa_kamar_deleted_at": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "idx_penyewa_overlap_check": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "idx_penyewa_status_deleted_at": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "penyewa_deleted_at_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "penyewa_nik_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "penyewa_user_id_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "peraturan": {
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "reservasi": {
+            "idx_reservasi_kamar_deleted_at": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "idx_reservasi_overlap_check": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "idx_reservasi_status_deleted_at": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "idx_reservasi_user_deleted_at": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "reservasi_deleted_at_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "reservasi_dikonfirmasi_oleh_foreign": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "reservasi_penyewa_id_foreign": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "reservasi_tanggal_mulai_tanggal_selesai_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "uq_reservasi_active_order_id": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "sessions": {
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "sessions_last_activity_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "sessions_user_id_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            }
+        },
+        "settings": {
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "tagihan": {
+            "idx_tagihan_cron_keterlambatan": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "tagihan_order_id_unique": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "tagihan_penyewa_id_status_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "uq_periode": {
+                "non_unique": 0,
+                "type": "BTREE"
+            }
+        },
+        "users": {
+            "idx_users_role_deleted_at": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "uq_users_active_email": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "uq_users_active_nik": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "uq_users_active_no_hp": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "users_deleted_at_index": {
+                "non_unique": 1,
+                "type": "BTREE"
+            }
+        },
+        "whatsapp_clicks": {
+            "idx_whatsapp_clicks_created": {
+                "non_unique": 1,
+                "type": "BTREE"
+            },
+            "PRIMARY": {
+                "non_unique": 0,
+                "type": "BTREE"
+            },
+            "whatsapp_clicks_kamar_id_foreign": {
+                "non_unique": 1,
+                "type": "BTREE"
+            }
+        }
+    }
+}

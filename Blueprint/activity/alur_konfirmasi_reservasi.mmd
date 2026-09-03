@@ -1,0 +1,52 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Admin ["Swimlane: Administrator"]
+        Start([Mulai]) --> MasukReservasi["Admin membuka panel admin & masuk menu Daftar Reservasi (/admin/reservasi)"]
+        MasukReservasi --> PilihReservasi["Admin memilih data reservasi berstatus 'dp' atau 'lunas'"]
+        PilihReservasi --> TinjauData["Admin meninjau kelengkapan NIK KTP (16 digit), Foto Bukti & Kontak Wali"]
+        TinjauData --> KeputusanAdmin{"Keputusan Administrator?"}
+        
+        KeputusanAdmin -- "Tolak Reservasi" --> KlikTolak["Admin klik 'Tolak Reservasi' & input alasan"]
+        KeputusanAdmin -- "Konfirmasi" --> KlikKonfirmasi["Admin klik tombol 'Konfirmasi Reservasi'"]
+        TampilToastError["Sistem memuat Toast error validation (e.g. NIK harus numerik & 16 digit)"] --> TinjauData
+    end
+
+    subgraph Swimlane_Backend ["Swimlane: Sistem Backend Laravel & Database MySQL"]
+        KlikTolak --> TolakDb["1. Set status reservasi = 'batal'<br>2. Lepas kunci kamar menjadi 'tersedia'"]
+        TolakDb --> KirimWATolak["Sistem memanggil Fonnte WA untuk notifikasi penolakan & instruksi refund"]
+        KirimWATolak --> SelesaiTolak([Selesai Ditolak])
+        
+        KlikKonfirmasi --> ValidasiForm{"Apakah data wajib terisi & valid?"}
+        ValidasiForm -- Tidak --> TampilToastError
+        
+        ValidasiForm -- Ya --> DbTx["Sistem memulai DB::transaction()"]
+        DbTx --> UpdateStatusReserv["Ubah status reservasi menjadi 'dikonfirmasi'"]
+        UpdateStatusReserv --> LockRoomTerisi["Ubah status kamar terkait menjadi 'terisi' secara permanen"]
+        LockRoomTerisi --> CopyHargaSewa["Salin harga kamar saat ini ke penyewa.harga_sewa secara immutable"]
+        CopyHargaSewa --> CreateUserPenyewa["Auto-Create akun di tabel users & data profil penyewa di tabel penyewa"]
+        CreateUserPenyewa --> CekSkemaDp{"Apakah reservasi memakai skema DP?"}
+        
+        CekSkemaDp -- Ya --> InjectTagihanSisa["Sistem menginjeksi tagihan sisa pelunasan (70%) ke tabel tagihan"]
+        CekSkemaDp -- Tidak / Lunas --> PanggilFonnte["Sistem memanggil Fonnte WA API untuk notifikasi kredensial"]
+        InjectTagihanSisa --> PanggilFonnte
+        
+        PanggilFonnte --> CommitTx["Commit DB Transaction secara atomik"]
+    end
+
+    subgraph Swimlane_Fonnte ["Swimlane: WhatsApp Gateway (Fonnte API)"]
+        CommitTx --> KirimKredensialWA["Kirim WhatsApp kredensial login (Email & Password default nomor HP) ke penyewa"]
+        KirimKredensialWA --> Selesai([Selesai])
+    end

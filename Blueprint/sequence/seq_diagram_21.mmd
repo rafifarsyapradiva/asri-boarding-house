@@ -1,0 +1,74 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor U as Pengguna (Penyewa / Admin)
+    participant V as View (Form Lupa Password)
+    participant C as Auth\PasswordResetController
+    participant Token as PasswordResetTokens (DB Table)
+    participant Notif as BaseResetPasswordNotification (Queue)
+    participant Mail as Mailer / SMTP Server
+    participant User as User (Model)
+    participant DB as Database (MySQL)
+
+    Note over U, DB: FASA 1: PERMINTAAN TAUTAN RESET PASSWORD
+    U->>V: Buka Halaman /forgot-password & Masukkan Email
+    V->>C: POST /forgot-password (email)
+    Note over C: Validasi: format email & terdaftar di users
+
+    alt Email Tidak Terdaftar (User Not Found)
+        C-->>V: Return back() with Errors "Email tidak terdaftar"
+        V-->>U: Tampilkan pesan error di form
+    else Email Valid & Ditemukan
+        C->>C: Generate Secure Random Token (Str::random(64))
+        C->>Token: Simpan hash token & waktu dibuat (created_at)
+        Token->>DB: INSERT / UPDATE password_reset_tokens (email, token, created_at)
+        C->>Notif: dispatch(ResetPasswordNotification)
+        Notif->>Mail: Kirim Email Notifikasi (+ Tautan URL Reset Password)
+        Mail-->>U: Terima Email: "Permintaan Reset Kata Sandi Akun Kost"
+        C-->>V: Return back() dengan Toast Success "Tautan reset telah dikirim ke email"
+        V-->>U: Tampilkan notifikasi sukses pengiriman email
+    end
+
+    Note over U, DB: FASA 2: EKSEKUSI PEMBARUAN PASSWORD BARU
+    U->>V: Klik tautan dari email -> Buka /reset-password/{token}
+    U->>V: Masukkan Email, Password Baru & Konfirmasi Password
+    V->>C: POST /reset-password (token, email, password, password_confirmation)
+    Note over C: Validasi: token belum expired (< 60 menit), password minimal 8 karakter
+
+    alt Token Tidak Cocok / Expired
+        C-->>V: Return back() with Errors "Token reset tidak valid atau kadaluarsa"
+        V-->>U: Tampilkan pesan kesalahan token
+    else Token Valid & Sesuai
+        C->>User: Update Password Baru
+        User->>DB: UPDATE users SET password = Hash::make(password) WHERE email = ?
+        C->>Token: Hapus record token yang telah digunakan
+        Token->>DB: DELETE FROM password_reset_tokens WHERE email = ?
+        C-->>V: Redirect ke /login dengan Toast Success "Kata sandi berhasil diatur ulang"
+        V-->>U: Tampilkan halaman login dan arahkan untuk masuk dengan password baru
+    end

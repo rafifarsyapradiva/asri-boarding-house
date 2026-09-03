@@ -1,0 +1,352 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================
+ * DESIGN TOKENS (Clean Architecture & Centralized Configuration)
+ * Centralized Design System Variables untuk Neobrutalisme Theme
+ * ============================================================= */
+:root {
+    /* Color Tokens */
+    --neo-border-color: #000000;
+    --neo-focus-ring-color: #2563eb; /* Blue-600 untuk High-Contrast Focus Ring */
+    
+    /* Border Width & Durasi Animasi Tokens */
+    --neo-border-width-sm: 2px;
+    --neo-border-width-main: 4px;
+    --neo-transition-fast: 150ms ease-in-out;
+    --neo-transition-normal: 200ms ease-in-out;
+
+    /* Elevation Shadow Tokens */
+    --neo-shadow-1: 1px 1px 0px 0px var(--neo-border-color);
+    --neo-shadow-2: 2px 2px 0px 0px var(--neo-border-color);
+    --neo-shadow-3: 3px 3px 0px 0px var(--neo-border-color);
+    --neo-shadow-4: 4px 4px 0px 0px var(--neo-border-color);
+    --neo-shadow-6: 6px 6px 0px 0px var(--neo-border-color);
+    --neo-shadow-8: 8px 8px 0px 0px var(--neo-border-color);
+}
+
+.dark {
+    /* Auto-cascading color inversion untuk Dark Mode */
+    --neo-border-color: #ffffff;
+    --neo-focus-ring-color: #60a5fa; /* Blue-400 */
+}
+
+@layer base {
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    body {
+        font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    }
+}
+
+@layer utilities {
+    /* Neo-Brutalist Elevation Shadow Utilities */
+    .neo-card-shadow {
+        box-shadow: 4px 4px 0px 0px var(--neo-border-color);
+    }
+    @screen md {
+        .neo-card-shadow {
+            box-shadow: 6px 6px 0px 0px var(--neo-border-color);
+        }
+    }
+    .neo-btn-shadow {
+        box-shadow: 2px 2px 0px 0px var(--neo-border-color);
+    }
+    @screen sm {
+        .neo-btn-shadow {
+            box-shadow: 4px 4px 0px 0px var(--neo-border-color);
+        }
+    }
+    .neo-shadow-sm {
+        box-shadow: 1.5px 1.5px 0px 0px var(--neo-border-color);
+    }
+    @screen sm {
+        .neo-shadow-sm {
+            box-shadow: 2px 2px 0px 0px var(--neo-border-color);
+        }
+    }
+
+    /* Interactive Button Transitions */
+    .neo-btn-interactive {
+        transition: transform var(--neo-transition-fast), box-shadow var(--neo-transition-fast), background-color var(--neo-transition-fast);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .neo-btn-interactive:hover:not(:disabled) {
+            transform: translate(-2px, -2px);
+        }
+        .neo-btn-interactive:active:not(:disabled) {
+            transform: translate(0px, 0px);
+        }
+    }
+}
+
+@layer components {
+    /* ==========================================
+     * FORM LABELS & GROUP TITLES
+     * ========================================== */
+    .admin-label {
+        @apply block text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-1.5 select-none;
+    }
+
+    .admin-section-title {
+        @apply font-black text-sm text-black dark:text-white uppercase tracking-wider mb-4 pb-1;
+        border-bottom: var(--neo-border-width-sm) solid var(--neo-border-color);
+    }
+
+    .admin-subtitle {
+        @apply text-xs text-slate-700 dark:text-slate-300 mt-1 block font-bold;
+    }
+
+    /* ==========================================
+     * INPUTS, TEXTAREAS & SELECTS (Clean Code & Accessibility)
+     * ========================================== */
+    .admin-input,
+    .admin-textarea,
+    .admin-select {
+        @apply w-full rounded-none border-4 bg-white dark:bg-slate-900 px-4 py-2.5 text-sm font-bold text-slate-950 dark:text-slate-100 outline-none;
+        border-color: var(--neo-border-color);
+        box-shadow: var(--neo-shadow-3);
+        transition: transform var(--neo-transition-fast), box-shadow var(--neo-transition-fast), border-color var(--neo-transition-fast);
+    }
+
+    /* Focus State & Focus-Visible Accessibility */
+    .admin-input:focus,
+    .admin-textarea:focus,
+    .admin-select:focus {
+        border-color: var(--neo-border-color);
+        box-shadow: var(--neo-shadow-4);
+    }
+
+    /* Support keyboard navigation focus indicator (WCAG 2.1 AA) */
+    .admin-input:focus-visible,
+    .admin-textarea:focus-visible,
+    .admin-select:focus-visible {
+        outline: 2px solid var(--neo-focus-ring-color);
+        outline-offset: 2px;
+    }
+
+    /* Modifiers */
+    .admin-input {
+        @apply placeholder-slate-400;
+    }
+
+    .admin-textarea {
+        @apply placeholder-slate-400 h-24 resize-none;
+    }
+
+    .admin-select-sm {
+        @apply rounded-none border-2 bg-white dark:bg-slate-900 px-3 py-1.5 text-xs font-extrabold cursor-pointer text-slate-950 dark:text-slate-100 outline-none;
+        border-color: var(--neo-border-color);
+        box-shadow: var(--neo-shadow-2);
+        transition: transform var(--neo-transition-fast), box-shadow var(--neo-transition-fast);
+    }
+
+    .admin-select-sm:focus-visible {
+        outline: 2px solid var(--neo-focus-ring-color);
+        outline-offset: 2px;
+    }
+
+    /* Input State: Disabled */
+    .admin-input:disabled,
+    .admin-textarea:disabled,
+    .admin-select:disabled {
+        @apply opacity-60 cursor-not-allowed bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400;
+        box-shadow: var(--neo-shadow-1);
+        transform: none !important;
+    }
+
+    /* ==========================================
+     * CHECKBOX & RADIO BUTTONS
+     * ========================================== */
+    .admin-checkbox {
+        @apply rounded-none border-4 text-yellow-400 w-5 h-5 cursor-pointer outline-none;
+        border-color: var(--neo-border-color);
+        box-shadow: var(--neo-shadow-1);
+    }
+
+    .admin-checkbox:focus-visible {
+        outline: 2px solid var(--neo-focus-ring-color);
+        outline-offset: 2px;
+    }
+
+    .admin-checkbox:disabled {
+        @apply opacity-50 cursor-not-allowed;
+    }
+
+    /* ==========================================
+     * CARD PANELS & CONTAINERS
+     * ========================================== */
+    .admin-card {
+        @apply bg-white dark:bg-slate-800 overflow-hidden rounded-none border-4 p-6 md:p-8;
+        border-color: var(--neo-border-color);
+        box-shadow: var(--neo-shadow-6);
+        transition: transform var(--neo-transition-normal), box-shadow var(--neo-transition-normal);
+    }
+
+    .admin-card-hover {
+        transition: transform var(--neo-transition-normal), box-shadow var(--neo-transition-normal);
+    }
+
+    /* ==========================================
+     * BUTTONS (Clean Logic - State Management & Accessibility)
+     * ========================================== */
+    .admin-btn-primary,
+    .admin-btn-secondary,
+    .admin-btn-danger,
+    .admin-btn-success {
+        @apply inline-flex items-center justify-center py-3 px-6 min-h-[44px] border-4 rounded-none text-xs uppercase tracking-wider gap-2 cursor-pointer select-none outline-none;
+        border-color: var(--neo-border-color);
+        box-shadow: var(--neo-shadow-4);
+        transition: transform var(--neo-transition-fast), box-shadow var(--neo-transition-fast), background-color var(--neo-transition-fast);
+    }
+
+    /* Button Focus Visible Keyboard Indicator */
+    .admin-btn-primary:focus-visible,
+    .admin-btn-secondary:focus-visible,
+    .admin-btn-danger:focus-visible,
+    .admin-btn-success:focus-visible {
+        outline: 3px solid var(--neo-focus-ring-color);
+        outline-offset: 3px;
+    }
+
+    /* Button State: Hover (Non-disabled) */
+    .admin-btn-primary:hover:not(:disabled),
+    .admin-btn-secondary:hover:not(:disabled),
+    .admin-btn-danger:hover:not(:disabled),
+    .admin-btn-success:hover:not(:disabled) {
+        box-shadow: var(--neo-shadow-6);
+    }
+
+    /* Button State: Active / Click (Non-disabled) */
+    .admin-btn-primary:active:not(:disabled),
+    .admin-btn-secondary:active:not(:disabled),
+    .admin-btn-danger:active:not(:disabled),
+    .admin-btn-success:active:not(:disabled) {
+        box-shadow: var(--neo-shadow-2);
+    }
+
+    /* Button State: Disabled */
+    .admin-btn-primary:disabled,
+    .admin-btn-secondary:disabled,
+    .admin-btn-danger:disabled,
+    .admin-btn-success:disabled,
+    .admin-btn-primary[aria-disabled="true"],
+    .admin-btn-secondary[aria-disabled="true"],
+    .admin-btn-danger[aria-disabled="true"],
+    .admin-btn-success[aria-disabled="true"] {
+        @apply opacity-50 cursor-not-allowed pointer-events-none;
+        box-shadow: var(--neo-shadow-2);
+        transform: none !important;
+    }
+
+    /* Button Color Variants */
+    .admin-btn-primary   { @apply bg-yellow-400 hover:bg-yellow-500 text-black font-black; }
+    .admin-btn-secondary { @apply bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 text-slate-900 font-extrabold; }
+    .admin-btn-danger    { @apply bg-red-500 hover:bg-red-600 text-white font-extrabold; }
+    .admin-btn-success   { @apply bg-emerald-500 hover:bg-emerald-600 text-black font-extrabold; }
+
+    /* ==========================================
+     * BADGE TAGS
+     * ========================================== */
+    .admin-badge {
+        @apply px-2.5 py-1 text-xs font-black rounded-none border-2 inline-flex items-center select-none;
+        border-color: var(--neo-border-color);
+        box-shadow: var(--neo-shadow-1);
+    }
+
+    .admin-badge-success { @apply bg-emerald-400 text-black; }
+    .admin-badge-info    { @apply bg-cyan-400 text-black; }
+    .admin-badge-warning { @apply bg-amber-400 text-black; }
+    .admin-badge-danger  { @apply bg-red-400 text-white; }
+    .admin-badge-neutral { @apply bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100; }
+
+    /* ==========================================
+     * TABLES (Refactored Border Consistency & High Contrast)
+     * ========================================== */
+    .admin-table-container {
+        @apply overflow-x-auto rounded-none border-4;
+        border-color: var(--neo-border-color);
+        box-shadow: var(--neo-shadow-4);
+    }
+
+    .admin-table {
+        @apply min-w-full text-sm border-collapse;
+    }
+    
+    .admin-table > :not([hidden]) ~ :not([hidden]) {
+        border-top-width: var(--neo-border-width-main);
+        border-color: var(--neo-border-color);
+    }
+
+    .admin-table-thead {
+        @apply bg-yellow-300 dark:bg-yellow-500 text-black;
+    }
+
+    .admin-table-th {
+        @apply px-6 py-3.5 text-left text-xs font-black uppercase tracking-wider;
+        border-right-width: var(--neo-border-width-sm);
+        border-color: var(--neo-border-color);
+    }
+    
+    .admin-table-th:last-child {
+        border-right-width: 0px;
+    }
+
+    .admin-table-tbody {
+        @apply bg-white dark:bg-slate-800;
+    }
+    
+    .admin-table-tbody > :not([hidden]) ~ :not([hidden]) {
+        border-top-width: var(--neo-border-width-sm);
+        border-color: var(--neo-border-color);
+    }
+
+    .admin-table-tr {
+        @apply hover:bg-yellow-50/30 dark:hover:bg-slate-700/40;
+        transition: background-color var(--neo-transition-fast);
+    }
+
+    .admin-table-td {
+        @apply px-6 py-4 whitespace-nowrap align-middle;
+        border-right-width: var(--neo-border-width-sm);
+        border-color: var(--neo-border-color);
+    }
+
+    .admin-table-td:last-child {
+        border-right-width: 0px;
+    }
+}
+
+/* =============================================================
+ * ACCESSIBILITY & PREFERS-REDUCED-MOTION (Clean Logic)
+ * Menghentikan gerakan elemen untuk pengguna dengan motion sensitivity
+ * ============================================================= */
+@media (prefers-reduced-motion: no-preference) {
+    .admin-input:focus,
+    .admin-textarea:focus,
+    .admin-select:focus {
+        transform: translate(-1px, -1px);
+    }
+
+    .admin-card-hover:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: var(--neo-shadow-8);
+    }
+
+    .admin-btn-primary:hover:not(:disabled),
+    .admin-btn-secondary:hover:not(:disabled),
+    .admin-btn-danger:hover:not(:disabled),
+    .admin-btn-success:hover:not(:disabled) {
+        transform: translate(-2px, -2px);
+    }
+
+    .admin-btn-primary:active:not(:disabled),
+    .admin-btn-secondary:active:not(:disabled),
+    .admin-btn-danger:active:not(:disabled),
+    .admin-btn-success:active:not(:disabled) {
+        transform: translate(0px, 0px);
+    }
+}

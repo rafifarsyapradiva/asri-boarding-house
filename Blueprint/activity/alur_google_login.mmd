@@ -1,0 +1,55 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_User ["Swimlane: Pengguna (Guest / User)"]
+        Start([Mulai]) --> KlikGoogle["User klik 'Masuk dengan Google' di Beranda/Login"]
+        TampilFormHp["Render form pengisian nomor WhatsApp aktif"] --> InputNoHp["User memasukkan nomor WhatsApp & klik Simpan"]
+        TampilErrorHp["Tampilkan pesan kesalahan validasi format/keunikan nomor"] --> TampilFormHp
+    end
+
+    subgraph Swimlane_Google ["Swimlane: Google OAuth Service"]
+        KlikGoogle --> RedirectGoogle["Sistem mengalihkan user ke halaman autentikasi Google"]
+        RedirectGoogle --> AutentikasiGoogle{"User mengotorisasi akun Google?"}
+        AutentikasiGoogle -- "Batal / Error" --> RejectOauthGoogle["Tolak otorisasi & kembalikan ke login dengan alert error"]
+        RejectOauthGoogle --> SelesaiBatalGoogle([Selesai Batal])
+        AutentikasiGoogle -- "Sukses" --> CallbackSocialite["Google mengembalikan callback data profil user ke Laravel Socialite"]
+    end
+
+    subgraph Swimlane_Backend ["Swimlane: Backend Laravel, Middleware, & Database"]
+        CallbackSocialite --> CekEmailTerdaftar{"Apakah Email user sudah terdaftar di database?"}
+        
+        CekEmailTerdaftar -- Ya --> CekAdminGuardrail{"Apakah peran pengguna terdaftar adalah 'admin'?"}
+        CekAdminGuardrail -- Ya --> RejectOAuth["Tolak akses, batalkan sesi login & kembalikan ke Login (Error 403)"]
+        RejectOAuth --> SelesaiAdminGuard([Selesai Blocked Admin])
+        
+        CekAdminGuardrail -- Tidak --> LoginUserExist["Sistem mengotentikasi user & mengaktifkan sesi login"]
+        
+        CekEmailTerdaftar -- Tidak --> BuatUserBaru["Sistem membuat akun User baru (role: 'penyewa', no_hp diset null)"]
+        BuatUserBaru --> LoginUserExist
+        
+        LoginUserExist --> AksesInternal["User mencoba mengakses menu internal portal penyewa"]
+        AksesInternal --> FilterMiddleware{"Apakah user->no_hp bernilai null atau ber-prefix 'temp_'?"}
+        
+        FilterMiddleware -- Ya --> RedirectLengkapi["Middleware secara paksa mengalihkan user ke /profil/complete"]
+        RedirectLengkapi --> TampilFormHp
+        
+        InputNoHp --> ValidasiNoHp{"Validasi format No HP Indonesia & Keunikan nomor?"}
+        ValidasiNoHp -- Tidak --> TampilErrorHp
+        ValidasiNoHp -- Ya --> SimpanNoHpDB["Sistem meng-update no_hp di tabel users & menghapus status temp_"]
+        SimpanNoHpDB --> RedirectDashboard["Sistem mengarahkan user ke halaman Dashboard utama portal"]
+        
+        FilterMiddleware -- Tidak --> RedirectDashboard
+        RedirectDashboard --> SelesaiOAuth([Selesai Sukses])
+    end

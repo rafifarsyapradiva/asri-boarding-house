@@ -1,0 +1,71 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Penyewa ["Swimlane: Calon Penyewa"]
+        Start([Mulai]) --> HalamanReservasi["Calon Penyewa membuka detail reservasi portal calon penyewa"]
+        
+        %% Fork Paralel
+        HalamanReservasi --> ForkParalel{{"Fork: Aktivitas Paralel"}}
+        
+        %% Jalur 1: Diskusi Chat
+        ForkParalel --> ChatBox["Calon Penyewa masuk ke tab Chat Diskusi"]
+        ChatBox --> KirimPesan["Mengetik & mengirim pesan ke Admin"]
+        
+        %% Jalur 2: Pembayaran
+        ForkParalel --> KlikBayar["Calon Penyewa klik tombol 'Bayar Sekarang'"]
+        RenderPopUp["Render portal Pop-Up Midtrans Snap di browser"] --> UserAksiSnap{"Aksi Pengguna di Pop-Up Snap?"}
+        
+        UserAksiSnap -- "Tutup Pop-Up / Batal" --> CloseSnap["Penyewa menutup modal Snap (Status reservasi tetap 'pending')"]
+        UserAksiSnap -- "Selesaikan Pembayaran" --> SelesaikanBayar["Calon Penyewa memilih metode & menyelesaikan pembayaran"]
+    end
+
+    subgraph Swimlane_Backend ["Swimlane: Sistem Backend Laravel & Scheduler Engine"]
+        KirimPesan --> SimpanChat["Sistem menyimpan pesan ke tabel chat_messages"]
+        SimpanChat --> PollingChat["Komponen AJAX Polling memuat pesan baru secara asinkron (interval 3-5 detik)"]
+        PollingChat --> ChatBox
+        
+        KlikBayar --> ReqSnap["Sistem mengirim request Snap Token ke Midtrans API"]
+        ReqSnap --> ReturnSnap["Midtrans API mengembalikan snap_token"]
+        ReturnSnap --> RenderPopUp
+        
+        CloseSnap --> CekTimer24Jam{"Apakah melewati 24 jam tanpa pembayaran?"}
+        CekTimer24Jam -- Ya (Trigger Cron) --> AutoCancelCron["Sistem Scheduler membatalkan reservasi & melepaskan kunci kamar menjadi 'tersedia'"]
+        AutoCancelCron --> SelesaiBatalCron([Selesai Batal Expired])
+        CekTimer24Jam -- Tidak --> HalamanReservasi
+        
+        WebhookMidtrans["Webhook Midtrans mengirim callback notification POST ke Laravel"] --> VerifikasiSignature{"Apakah signature_key & nominal valid?"}
+        
+        VerifikasiSignature -- Tidak --> RejectCallback["Tolak callback notifikasi & catat log error (HTTP 403)"]
+        RejectCallback --> SelesaiErr([Selesai Error])
+        
+        VerifikasiSignature -- Ya --> EvaluasiTransaksi{"Bagaimana status transaksi?"}
+        
+        EvaluasiTransaksi -- "Success / Settlement" --> CekSkema{"Skema Pembayaran?"}
+        CekSkema -- "DP 30%" --> SetDP["Ubah status reservasi ke 'dp' & catat data pembayaran"]
+        CekSkema -- "Lunas 100%" --> SetLunas["Ubah status reservasi ke 'lunas' & catat data pembayaran"]
+        
+        EvaluasiTransaksi -- "Expired / Failed / Deny" --> SetBatal["1. Ubah status reservasi ke 'batal'<br>2. Ubah status kamar kembali ke 'tersedia'"]
+        
+        SetDP --> JoinParalel{{"Join: Konfirmasi Status Pembayaran"}}
+        SetLunas --> JoinParalel
+        SetBatal --> JoinParalel
+        
+        JoinParalel --> TampilStepper["Sistem memperbarui visual Stepper langkah pembayaran & kunci chat"]
+        TampilStepper --> SelesaiOk([Selesai Sukses])
+    end
+
+    subgraph Swimlane_Midtrans ["Swimlane: Payment Gateway (Midtrans API)"]
+        SelesaikanBayar --> WebhookMidtrans
+    end

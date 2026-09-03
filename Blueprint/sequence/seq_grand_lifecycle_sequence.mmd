@@ -1,0 +1,186 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '11px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor U as Pengguna (Tamu / Penyewa)
+    actor A as Admin Kost
+    actor S as Scheduler (Cron)
+    participant V as View (Blade UI & AJAX JS)
+    participant C as Controller & Middleware
+    participant Srv as Service & Queue Layer
+    participant DB as Model & Database (MySQL)
+    participant API as External APIs (Midtrans & Fonnte WA)
+
+    %% ==========================================
+    %% FASA 1: DISCOVERY & PEMBUATAN RESERVASI (SD 1 & SD 2)
+    %% ==========================================
+    Note over U, API: [FASA 1] DISCOVERY & PEMBUATAN RESERVASI (SD 1 & SD 2)
+    U->>V: 1. Buka katalog /kamar & lakukan simulasi harga
+    V->>C: AJAX POST /kamar/{id}/hitung-harga (tipe, durasi)
+    C->>Srv: ReservasiService::hitungHarga()
+    Srv-->>V: JSON Response (total_harga, dp_minimal)
+    U->>V: 2. Submit formulir reservasi unit kamar
+    V->>C: POST /penyewa/reservasi (data pemesanan)
+    C->>DB: DB::beginTransaction() & Kamar::lockForUpdate()
+    DB-->>C: Lock kamar diperoleh
+    C->>DB: INSERT INTO reservasis (status: 'pending') & commit()
+    C-->>V: Redirect ke Detail Reservasi (/penyewa/reservasi/{id})
+
+    %% ==========================================
+    %% FASA 2: PEMBAYARAN ONLINE & PRE-PAYMENT CHAT (SD 3 & SD 17)
+    %% ==========================================
+    Note over U, API: [FASA 2] PRE-PAYMENT CHAT & PEMBAYARAN GATEWAY (SD 3 & SD 17)
+    loop AJAX Polling Obrolan (Setiap 3-5 Detik)
+        U->>V: Kirim pesan di Chat Box detail reservasi
+        V->>C: AJAX POST /reservasi/{id}/chat/send
+        C->>DB: INSERT INTO chat_messages
+        C-->>V: JSON chat payload
+    end
+    U->>V: 3. Klik "Bayar Sekarang" (DP 30% / Lunas 100%)
+    V->>C: GET Snap Token Request
+    C->>API: Request Midtrans Snap Token
+    API-->>C: Snap Token Payload
+    C-->>V: Render Snap Modal Pop-Up
+    U->>API: Selesaikan pembayaran (VA / E-Wallet)
+    API->>C: Webhook Callback POST /api/midtrans/callback-reservasi
+    Note over C: Verifikasi signature_key Midtrans
+    C->>DB: UPDATE reservasis SET status = 'dp' / 'lunas'
+    C-->>API: HTTP 200 OK
+    V-->>U: Stepper ter-update ke status Pembayaran Berhasil
+
+    %% ==========================================
+    %% FASA 3: VERIFIKASI ADMIN & ONBOARDING AKUN (SD 4, SD 13, SD 16)
+    %% ==========================================
+    Note over A, API: [FASA 3] VERIFIKASI ADMIN & ONBOARDING AKUN (SD 4 & SD 13)
+    A->>V: 4. Buka Reservasi DP/Lunas & Klik "Konfirmasi"
+    V->>C: POST /admin/reservasi/{id}/konfirmasi
+    C->>Srv: TransisiPenyewaService::transisi()
+    Srv->>DB: DB::beginTransaction() -> INSERT penyewas (status: 'aktif')
+    Srv->>DB: UPDATE kamars SET status = 'terisi'
+    Srv->>DB: INSERT tagihans (sisa DP / lunas) & UPDATE reservasis 'dikonfirmasi'
+    Srv->>DB: DB::commit()
+    Srv->>API: Kirim Kredensial Akun via WA (Fonnte API)
+    API-->>U: Pesan WA: "Akun Kost Aktif. Username & Password: ..."
+    U->>V: Login pertama kali ke portal
+    V->>C: Disaring Middleware EnsurePasswordChanged
+    C-->>V: Intercept & Force Redirect ke /admin/force-change-password
+    U->>V: Input sandi baru & konfirmasi
+    V->>C: POST /admin/force-change-password
+    C->>DB: UPDATE users SET require_password_change = 0
+    C-->>V: Akses Penuh Dashboard Penyewa Terbuka
+
+    %% ==========================================
+    %% FASA 4: SIKLUS BILLING, REMINDER & BAYAR TAGIHAN (SD 5 & SD 6)
+    %% ==========================================
+    Note over S, API: [FASA 4] SIKLUS BILLING BULANAN & PEMBAYARAN TAGIHAN (SD 5 & SD 6)
+    S->>C: 5. Scheduler Tgl 1: php artisan tagihan:generate-bulanan
+    C->>Srv: BillingService::generateTagihanBulanan()
+    Srv->>DB: INSERT tagihans (status: 'pending') per penyewa aktif (immutable rate)
+    Srv->>API: Kirim Invoice Tagihan Bulanan via Fonnte WA
+    API-->>U: Pesan WA: "Tagihan Bulanan Baru Periode Ini Telah Terbit"
+    
+    opt Deteksi Overdue Harian (Tgl > 10)
+        S->>C: php artisan tagihan:proses-keterlambatan
+        C->>DB: UPDATE tagihans SET nominal_denda = 5% (jika lewat bulan)
+        C->>API: Kirim WA Peringatan Denda ke Penyewa & Wali
+    end
+
+    U->>V: 6. Bayar Tagihan (Online Midtrans Snap / Offline Cash Admin)
+    V->>C: POST Bayar Tagihan (Online Webhook / Admin Konfirmasi Cash)
+    C->>DB: DB::transaction() -> UPDATE tagihans 'lunas' & INSERT pembayarans
+    C->>Srv: Dispatch GeneratePdfNotaJob & KirimNotifikasiPembayaranJob
+    Srv->>DB: Render Kuitansi PDF via Dompdf (storage/public/nota/)
+    Srv->>API: Kirim Kuitansi PDF via Fonnte WA
+    API-->>U: Terima Berkas PDF Kuitansi Pembayaran Lunas di WA
+
+    %% ==========================================
+    %% FASA 5: OPERASIONAL, KELUHAN, BROADCAST & ARUS KAS (SD 7, 8, 10, 18)
+    %% ==========================================
+    Note over U, A: [FASA 5] OPERASIONAL, KELUHAN & ARUS KAS (SD 7, SD 8, SD 18)
+    U->>V: 7. Kirim Laporan Keluhan Fasilitas (+ Unggah Foto)
+    V->>C: POST /penyewa/keluhan
+    C->>DB: INSERT INTO keluhans (status: 'pending')
+    C->>API: Kirim Notifikasi Keluhan Baru ke WA Admin
+    API-->>A: Pesan WA: "Keluhan Fasilitas Baru dari Kamar X"
+    A->>V: Input tanggapan perbaikan & ubah status ke 'selesai'
+    V->>C: PUT /admin/keluhan/{id} (status: 'selesai')
+    C->>DB: UPDATE keluhans SET status = 'selesai'
+    C->>API: Kirim Notifikasi WA ke Penyewa
+    API-->>U: Pesan WA: "Keluhan Anda Telah Selesai Diperbaiki"
+    
+    A->>V: 8. Catat Pengeluaran Operasional (+ Nota Upload)
+    V->>C: POST /admin/pengeluaran
+    C->>DB: INSERT INTO pengeluarans (File::delete jika edit foto)
+    
+    A->>V: 9. Kirim Broadcast Pengumuman (Web, WA & Email)
+    V->>C: POST /admin/notifikasi/broadcast
+    C->>Srv: NotifikasiService::kirimNotifikasiKustom()
+    Srv->>DB: INSERT pengumumen & INSERT log_notifikasis
+    Srv->>API: Kirim Broadcast WA / SMTP Mail
+
+    %% ==========================================
+    %% FASA 6: REMINDER KONTRAK, CHECKOUT & INSPEKSI (SD 11, 15, 19)
+    %% ==========================================
+    Note over S, A: [FASA 6] REMINDER KONTRAK, CHECKOUT & INSPEKSI (SD 5, SD 11, SD 15)
+    S->>C: 10. Scheduler Harian: php artisan kontrak:reminder-habis
+    C->>Srv: NotifikasiService::prosesReminderHabisKontrak()
+    Srv->>API: Kirim WA Reminder H-14 & H-7 Masa Sewa Berakhir
+    API-->>U: Pesan WA: "Masa Sewa Berakhir dalam X Hari. Opsi Perpanjang/Checkout"
+    
+    A->>V: 11. Proses Checkout Penyewa
+    V->>C: POST /admin/penyewa/{id}/checkout
+    C->>DB: UPDATE penyewas SET status = 'nonaktif', tanggal_keluar = TODAY()
+    Note over C, DB: Status Kamar tetap 'terisi' (Aturan Two-Step Inspection)
+    A->>A: Melakukan inspeksi fisik kebersihan & fasilitas kamar kost
+    A->>V: Update Status Kamar Secara Manual
+    V->>C: PATCH /admin/kamar/{id}/status (status: 'tersedia' / 'maintenance')
+    C->>DB: UPDATE kamars SET status = ?
+    C-->>V: Kamar kembali siap dipesan pada Sequence Diagram 1
+
+    %% ==========================================
+    %% FASA 7: ACCOUNT RECOVERY & ANALYTICS DASBOR (SD 20 & SD 21)
+    %% ==========================================
+    Note over U, A: [FASA 7] PEMULIHAN AKUN & ANALITIK DASBOR (SD 20 & SD 21)
+    opt Pemulihan Akun Lupa Kata Sandi (SD 21)
+        U->>V: Lupa kata sandi -> Masukkan Email Terdaftar
+        V->>C: POST /forgot-password
+        C->>DB: INSERT INTO password_reset_tokens (hash_token, created_at)
+        C->>Srv: Dispatch BaseResetPasswordNotification (Queue)
+        Srv->>API: Kirim Email Tautan Reset Password
+        API-->>U: Terima Email Link Reset Password
+        U->>V: Buka URL Token & Submit Password Baru
+        V->>C: POST /reset-password
+        C->>DB: UPDATE users SET password = Hash::make() & DELETE token
+    end
+
+    A->>V: 12. Buka Dasbor Utama Administrator (/admin/dashboard)
+    V->>C: GET /admin/dashboard
+    C->>Srv: DashboardAnalyticsService::getDashboardMetrics()
+    Srv->>DB: Agregasi kueri okupansi, kas masuk, kas keluar & tren 12 bulan
+    DB-->>Srv: Dataset Keuangan & Okupansi
+    Srv-->>C: Metrics & Chart Data Object
+    C-->>V: Render Summary Cards Neo-Brutalisme & Chart.js Grouped Bar Chart
+    V-->>A: Dasbor Keuangan & Operasional Real-Time Ditampilkan Sempurna

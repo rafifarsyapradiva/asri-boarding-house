@@ -1,0 +1,49 @@
+sequenceDiagram
+    autonumber
+    actor Tenant as Penyewa (Browser)
+    participant Tier1 as Tier 1: Presentation<br/>(Blade / Alpine.js)
+    participant Routes as Routes & Middleware<br/>(web.php / api.php)
+    participant Controller as Tier 2: Controllers<br/>(TagihanController / Callback)
+    participant Service as Tier 2: Services & Interface<br/>(Midtrans / PdfGeneratorInterface / Fonnte)
+    participant Model as Tier 3: Eloquent ORM<br/>(Tagihan / Pembayaran)
+    participant DB as Tier 3: Database<br/>(MySQL)
+    participant Disk as Tier 3: Storage<br/>(Local Storage)
+    participant Midtrans as External API:<br/>Midtrans Gateway
+    participant Fonnte as External API:<br/>Fonnte WA Gateway
+
+    %% Phase 1: Request Snap Token
+    Tenant->>Tier1: Klik "Bayar Sekarang"
+    Tier1->>Routes: AJAX POST /penyewa/tagihan/{id}/pay
+    Routes->>Controller: Route to TagihanController@pay
+    Controller->>Service: MidtransService::createSnapToken($tagihan)
+    Service->>Midtrans: HTTP POST /snap/v1/transactions
+    Midtrans-->>Service: Return snap_token
+    Service-->>Controller: Return snap_token
+    Controller-->>Tier1: Return JSON {token: snap_token}
+    Tier1->>Tenant: snap.pay(token) -> Tampilkan Snap Popup
+
+    %% Phase 2: Payment Execution & Callback
+    Tenant->>Midtrans: Selesaikan Pembayaran di UI Snap
+    Midtrans-->>Tenant: Pembayaran Sukses / Pending
+    Note over Midtrans, Routes: Midtrans Callback (Server-to-Server)
+    Midtrans->>Routes: POST /api/midtrans/callback
+    Routes->>Routes: VerifyMidtransSignature Middleware
+    Routes->>Controller: Route to MidtransCallbackController@handle
+    Controller->>Service: MidtransService::handleCallback($payload)
+    
+    %% Phase 3: DB Update & Events
+    Service->>Model: Update status pembayaran & tagihan
+    Model->>DB: UPDATE pembayaran, tagihan SET status='lunas'
+    Controller->>Controller: Dispatch PembayaranBerhasil Event
+    
+    %% Phase 4: Async Listeners
+    Note over Controller, Disk: Event Listeners Triggered
+    Controller->>Service: Trigger GeneratePdfNotaListener
+    Service->>Disk: PdfNotaService -> PdfGeneratorInterface::generate() -> Simpan berkas PDF nota
+    Controller->>Service: Trigger KirimNotifikasi (FonnteService)
+    Service->>Fonnte: Kirim Notifikasi WhatsApp via Fonnte API
+    
+    Controller-->>Midtrans: Return HTTP 200 OK
+    
+    %% Phase 5: Client Update
+    Tier1->>Tenant: Tampilan Halaman Diperbarui (Lunas + Tombol Unduh PDF)

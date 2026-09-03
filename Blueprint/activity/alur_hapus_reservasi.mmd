@@ -1,0 +1,36 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Actors ["Swimlane: Aktor (Penyewa / Administrator)"]
+        Start([Mulai]) --> PilihTindakan{"Aktor memilih tindakan?"}
+        
+        %% Alur Pembatalan
+        PilihTindakan -- "Batalkan Reservasi (Penyewa / Admin)" --> KlikTombolBatal["Penyewa / Admin klik 'Batalkan Reservasi'"]
+        
+        %% Alur Hapus Permanen
+        PilihTindakan -- "Hapus Permanen (Hanya Admin)" --> BukaDetailReservasiBatal["Admin membuka rincian reservasi berstatus 'batal'"]
+        BukaDetailReservasiBatal --> KlikHapusPermanen["Admin klik tombol 'Hapus' & menyetujui konfirmasi modal"]
+    end
+
+    subgraph Swimlane_Backend ["Swimlane: Backend System & Database MySQL"]
+        KlikTombolBatal --> UpdateStatusBatal["Sistem memperbarui status reservasi menjadi 'batal' di DB"]
+        UpdateStatusBatal --> LepasKunciKamar["Sistem mengembalikan status Kamar terkait menjadi 'tersedia'"]
+        LepasKunciKamar --> SelesaiBatal([Selesai Batal])
+        
+        KlikHapusPermanen --> ExecuteHapus["Sistem mengeksekusi penghapusan permanen dari basis data"]
+        ExecuteHapus --> CascadeChat["Database melakukan cascade delete untuk menghapus seluruh chat_messages terkait"]
+        CascadeChat --> TampilSuksesHapusReservasi["Render Toast sukses menghapus data permanen"]
+        TampilSuksesHapusReservasi --> SelesaiHapus([Selesai Hapus])
+    end

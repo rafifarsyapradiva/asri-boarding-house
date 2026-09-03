@@ -1,0 +1,42 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaPengeluaran[/Admin masuk Menu Manajemen Pengeluaran /admin/pengeluaran/]
+    BukaPengeluaran --> PilihAksi{"Pilih Operasi CRUD?"}
+    
+    PilihAksi -- "Tambah Pengeluaran" --> IsiFormTambah[/Isi nama, kategori, tanggal, nominal, & upload foto nota/]
+    IsiFormTambah --> KlikSimpan[/Admin klik Simpan/]
+    KlikSimpan --> ValidasiForm{"Apakah nominal numeric & foto nota < 2MB?"}
+    ValidasiForm -- "Tidak" --> TampilErrorVal[/Tampilkan error form input pengeluaran/]
+    TampilErrorVal --> IsiFormTambah
+    ValidasiForm -- "Ya" --> SimpanDBPengeluaran[[1. Upload berkas nota baru ke storage<br>2. Simpan entri pengeluaran ke database]]
+    
+    PilihAksi -- "Edit Pengeluaran" --> BukaFormEdit[/Buka form edit data pengeluaran/]
+    BukaFormEdit --> CekFotoBaru{"Apakah mengunggah berkas foto nota baru?"}
+    CekFotoBaru -- "Tidak" --> SimpanPerubahan[[Simpan perubahan data mempertahankan foto nota lama]]
+    CekFotoBaru -- "Ya" --> GantiFotoNota[[1. Hapus berkas foto nota lama dari storage<br>2. Upload berkas foto nota baru<br>3. Simpan data & path baru]]
+    
+    PilihAksi -- "Hapus Pengeluaran" --> KlikHapus[/Admin klik Hapus & konfirmasi modal/]
+    KlikHapus --> HapusDBPengeluaran[[Hapus data pengeluaran dari database]]
+    HapusDBPengeluaran --> CleanupFileNota[[Hapus berkas foto nota secara fisik dari storage]]
+    
+    SimpanDBPengeluaran --> AgregasiKeuangan[[Sistem menghitung Neraca Arus Kas secara real-time]]
+    SimpanPerubahan --> AgregasiKeuangan
+    GantiFotoNota --> AgregasiKeuangan
+    CleanupFileNota --> AgregasiKeuangan
+    
+    AgregasiKeuangan --> HitungArusKas[[Agregasi: Kas Masuk - Kas Keluar]]
+    HitungArusKas --> BukaLaporan[/Admin membuka halaman Laporan Keuangan/]
+    BukaLaporan --> FilterLaporan[/Admin menyaring laporan berdasarkan Bulan & Tahun/]
+    FilterLaporan --> KlikEkspor[/Admin klik Ekspor PDF / Excel/]
+    KlikEkspor --> DownloadFile[/Sistem men-generate berkas & file terunduh otomatis/]
+    DownloadFile --> Selesai([Selesai])

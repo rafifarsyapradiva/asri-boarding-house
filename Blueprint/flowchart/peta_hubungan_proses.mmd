@@ -1,0 +1,84 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '11px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    subgraph GUEST["🌐 FASE 1: TAMU & GUEST (PUBLIK)"]
+        A1[/Sub-FC 1: Pencarian Kamar & Cek Ketersediaan/]
+        A2[/Sub-FC 12: Live Chat Pengunjung Anonim/]
+        A3[/Sub-FC 9: Tampilan Konten Dinamis Landing/]
+    end
+
+    subgraph AUTH["🔑 FASE 2: OTENTIKASI & REGISTRASI"]
+        B1[/Sub-FC 17: Google OAuth Socialite & Complete Profile/]
+        B2[/Sub-FC 2: Pendaftaran & Pembuatan Reservasi/]
+        B3[/Sub-FC 15: Pendaftaran Penyewa Offline Walk-In/]
+    end
+
+    subgraph PAYMENT["💳 FASE 3: PAYMENT GATEWAY & VERIFIKASI"]
+        C1[/Sub-FC 3: Pembayaran DP/Lunas Midtrans Snap & Pre-Chat/]
+        C2[[Sub-FC 18: Callback Webhook Midtrans & Signature Check]]
+        C3[/Sub-FC 4: Verifikasi & Konfirmasi Admin Auto-Tenant/]
+        C4[/Sub-FC 14: Pembersihan Reservasi Batal & Cascade Chat/]
+    end
+
+    subgraph ONBOARDING["🔐 FASE 4: ONBOARDING & DASHBOARD PENYEWA"]
+        D1[/Sub-FC 13: Keamanan Login & Force Change Password/]
+        D2[/Sub-FC 10: Menu Tata Tertib & Peraturan Kost/]
+    end
+
+    subgraph CYCLIC["🔄 FASE 5: OPERASIONAL & BILLING RUTIN"]
+        E1[[Sub-FC 5: Siklus Billing Rutin Bulanan Laravel Scheduler]]
+        E2[/Sub-FC 6: Pembayaran Tagihan Hybrid & Denda 5% + Eskalasi Wali/]
+        E3[/Sub-FC 7: Pelaporan & Resolusi Keluhan Fasilitas/]
+    end
+
+    subgraph OFFBOARDING["🚪 FASE 6: CHECKOUT & MANAGEMENT KAMAR"]
+        F1[/Sub-FC 11: Penonaktifan Penyewa Checkout & Deposit/]
+        F2[/Sub-FC 16: Inspeksi Kamar & Update Status Manual Maintenance/Ready/]
+    end
+
+    subgraph ADMIN_MASTER["⚙️ MANAGEMENT MASTER & AKUNTANSI (ADMIN)"]
+        M1[/Sub-FC 8: Pencatatan Pengeluaran & Laporan Arus Kas/]
+        M2[/Sub-FC 19: Master Fasilitas & Safety Proteksi/]
+        M3[/Sub-FC 20: Master Penyewa & Validasi Kontrak/]
+        M4[/Sub-FC 21: Broadcast Notifikasi Massal & Retry Engine/]
+    end
+
+    %% Keterhubungan Antar Proses %%
+    A1 -->|"Kamar Tersedia & Klik Pesan"| B1
+    A1 -->|"Direct Register"| B2
+    B1 --> B2
+    B2 --> C1
+    C1 <-->|"Server Callback"| C2
+    C1 -->|"Payment Settlement"| C3
+    C1 -->|"Batal / Expired"| C4
+    
+    B3 -->|"Walk-In Input by Admin"| D1
+    
+    C3 -->|"Send WA Default Pwd"| D1
+    D1 -->|"Password Updated"| D2
+    D1 --> E3
+    D1 --> E2
+    
+    E1 -->|"Generate Invoice Tgl 1"| E2
+    E2 -->|"Update Mutasi & Kas Masuk"| M1
+    
+    D1 -->|"Masa Sewa Berakhir"| F1
+    F1 -->|"Kamar Terkunci Status Terisi"| F2
+    
+    F2 -->|"Status Ready Kembali"| A1
+    
+    M2 <--> F2
+    M3 <--> C3
+    M4 --> D2

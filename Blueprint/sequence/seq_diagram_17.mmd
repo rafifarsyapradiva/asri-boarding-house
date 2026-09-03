@@ -1,0 +1,77 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor CP as Calon Penyewa
+    actor A as Admin
+    participant S as Scheduler (Cron)
+    participant Cmd as CancelExpiredReservations (Command)
+    participant V as View (Portal / Admin Panel)
+    participant C_Penyewa as Penyewa\ReservasiController
+    participant C_Admin as Admin\ReservasiController
+    participant R as Reservasi (Model)
+    participant F as Fonnte WA API
+    participant DB as Database (MySQL)
+
+    alt Kasus A: Pembatalan Mandiri oleh Calon Penyewa
+        CP->>V: Klik tombol "Batalkan Pemesanan"
+        V->>C_Penyewa: POST /penyewa/reservasi/{id}/batal
+        C_Penyewa->>R: update(['status' => 'batal'])
+        R->>DB: UPDATE reservasis SET status = 'batal' WHERE id = ?
+        C_Penyewa-->>V: Redirect ke Beranda utama (landing.index) dengan Toast Success
+    
+    else Kasus B: Pembatalan Manual oleh Administrator
+        A->>V: Buka Detail Reservasi & Klik "Batalkan Reservasi"
+        V->>C_Admin: POST /admin/reservasi/{id}/batal
+        C_Admin->>R: update(['status' => 'batal'])
+        R->>DB: UPDATE reservasis SET status = 'batal' WHERE id = ?
+        C_Admin->>F: Kirim Notifikasi WA Pembatalan ke Calon Penyewa
+        C_Admin-->>V: Return redirect() dengan Toast Success "Reservasi berhasil dibatalkan"
+
+    else Kasus C: Pembatalan Otomatis Scheduler (php artisan reservasi:cancel-expired)
+        S->>Cmd: Eksekusi Command (Setiap Jam)
+        Cmd->>R: Query reservasi pending > 24 Jam
+        R->>DB: SELECT * FROM reservasis WHERE status = 'pending' AND created_at < threshold
+        DB-->>R: List reservasi kadaluarsa (Chunk 100)
+        loop Per Reservasi Kadaluarsa
+            Cmd->>R: update(['status' => 'batal'])
+            R->>DB: UPDATE reservasis SET status = 'batal' WHERE id = ?
+            Note over R: Model Event menghapus cache status kamar
+        end
+        Cmd-->>S: Log "Berhasil membatalkan X reservasi kadaluarsa"
+
+    else Kasus D: Hapus Permanen Reservasi Batal oleh Admin (Cascade Delete)
+        A->>V: Klik tombol "Hapus Permanen" (Reservasi status 'batal')
+        V->>C_Admin: DELETE /admin/reservasi/{id}
+        C_Admin->>DB: DB::beginTransaction()
+        C_Admin->>R: delete() (Reservasi Model)
+        Note over R, DB: Foreign Key cascade otomatis menghapus record chat_messages terkait
+        R->>DB: DELETE FROM reservasis WHERE id = ?
+        C_Admin->>DB: DB::commit()
+        C_Admin-->>V: Return redirect() dengan Toast Success "Reservasi berhasil dihapus secara permanen"
+    end

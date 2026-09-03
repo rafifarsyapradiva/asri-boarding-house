@@ -1,0 +1,43 @@
+flowchart TB
+    subgraph SharedHostingNode["Hostinger Shared Hosting Node (CloudLinux u123456789)"]
+        subgraph WebServer["Web Server Layer (Managed LiteSpeed)"]
+            LiteSpeed["LiteSpeed Enterprise Web Server<br/>(Configured via .htaccess & SSL Sectigo)"]
+            PHPRuntime["PHP 8.2+ Process Runtime<br/>(mod_lsapi)"]
+            StaticAssets["Direct Static Assets Serving<br/>(public/build/, public/storage/, public/images/)"]
+            LiteSpeed -->|"Executes Dynamic Script"| PHPRuntime
+            LiteSpeed -->|"Direct Serve (Bypass PHP)"| StaticAssets
+        end
+
+        subgraph LaravelApp["Laravel 11 Application Container"]
+            LaravelEngine["Laravel 11 Core Engine"]
+            Services["Laravel Services & Business Logic<br/>• BillingService (Siklus Billing & Denda)<br/>• ReservasiService (Booking & Dynamic Pricing)<br/>• MidtransService (Snap Token & Webhook)<br/>• FonnteService (WhatsApp Gateway)<br/>• NotifikasiService (Multi-channel Alerts)<br/>• TransisiPenyewaService (Check-in/out)<br/>• PdfNotaService (Dompdf Invoice)<br/>• Socialite (Google OAuth 2.0)<br/>• Symfony Mailer (SMTP TLS)"]
+            Schedulers["Cron Jobs (hPanel Task Scheduler)<br/>• schedule:run (Setiap Menit)<br/>• queue:work --once (Setiap Menit)"]
+            
+            LaravelEngine --- Services
+            LaravelEngine --- Schedulers
+        end
+
+        subgraph Storage["File Storage (SSD)"]
+            PublicSSD["Public Storage (storage/app/public/)<br/>├── kamar/ (Foto Kamar Kost)<br/>├── nota/ (Invoice/Kuitansi PDF)<br/>├── nota_pengeluaran/ (Bukti Kas Keluar)<br/>├── galleries/ (Aset Foto Galeri)<br/>├── reviews/ (Foto Testimoni)<br/>├── settings/ (Aset Brand/Logo Kost)<br/>└── keluhan/ (Foto Bukti Komplain)"]
+            PrivateSSD["Private Storage (storage/app/private/)<br/>└── Temp exports & internal framework caches"]
+        end
+
+        subgraph DatabaseLayer["Database Layer (Shared MySQL)"]
+            MySQLDB["MySQL Database Server<br/>(Host: localhost, Port: 3306)<br/>• InnoDB Engine & UTF8mb4 Charset"]
+        end
+
+        PHPRuntime -->|"Launches"| LaravelEngine
+        LaravelEngine -->|"Read/Write Files"| PublicSSD
+        LaravelEngine -->|"Read/Write Private Data"| PrivateSSD
+        PublicSSD -.->|"Symlink (php artisan storage:link)"| StaticAssets
+        LaravelEngine -->|"Query Data (PDO Driver)"| MySQLDB
+    end
+
+    %% Styling
+    classDef server fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef db fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
+    classDef storage fill:#FCE4EC,stroke:#C2185B,stroke-width:1.5px,color:#880E4F;
+
+    class SharedHostingNode,LiteSpeed,PHPRuntime,StaticAssets,LaravelEngine,Services,Schedulers server;
+    class MySQLDB db;
+    class Storage,PublicSSD,PrivateSSD storage;

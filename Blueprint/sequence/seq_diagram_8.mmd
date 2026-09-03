@@ -1,0 +1,76 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor A as Admin
+    participant V as View (Form Pengeluaran)
+    participant C as Admin\PengeluaranController
+    participant LC as Admin\LaporanController
+    participant Pdf as Dompdf Generator
+    participant DB as Database (MySQL)
+    participant FS as File System / Storage
+
+    alt Aksi 1: Tambah Pengeluaran Baru (Create)
+        A->>V: Isi form Pengeluaran & unggah foto nota
+        V->>C: POST /admin/pengeluaran (nama, kategori, nominal, bukti_nota...)
+        Note over C: Validasi: nominal numeric, bukti_nota maks 2MB
+        C->>FS: Simpan file nota baru ke storage/app/public/pengeluaran/
+        C->>DB: INSERT INTO pengeluarans (nama_pengeluaran, kategori, nominal, tanggal_pengeluaran, bukti_nota...)
+        C-->>V: Return redirect() with Toast Success
+
+    else Aksi 2: Edit Data Pengeluaran & File Cleanup saat Update
+        A->>V: Edit data pengeluaran (unggah foto nota baru)
+        V->>C: PUT /admin/pengeluaran/{id}
+        C->>FS: File::delete() (Hapus file bukti nota lama di storage)
+        C->>FS: Upload file bukti nota baru ke storage
+        C->>DB: UPDATE pengeluarans SET nominal = ?, bukti_nota = ? WHERE id = ?
+        C-->>V: Return redirect() with Toast Success
+
+    else Aksi 3: Hapus Data Pengeluaran & File Cleanup saat Delete
+        A->>V: Klik tombol "Hapus Pengeluaran"
+        V->>C: DELETE /admin/pengeluaran/{id}
+        C->>FS: File::delete() (Hapus file bukti nota fisik dari storage)
+        C->>DB: DELETE FROM pengeluarans WHERE id = ?
+        C-->>V: Return redirect() with Toast Success
+    end
+
+    Note over A, LC: Konsolidasi Arus Kas Real-Time (Akuntansi Terintegrasi)
+    A->>V: Buka Halaman Laporan Keuangan (/admin/laporan?bulan=..&tahun=..)
+    V->>LC: GET /admin/laporan (Filter tanggal dengan proteksi month overflow)
+    LC->>DB: Query Pemasukan (Total Tagihan Lunas + Akumulasi DP/Lunas Reservasi Online)
+    DB-->>LC: Nominal Kas Masuk
+    LC->>DB: Query Pengeluaran (Total Nominal Pengeluaran)
+    DB-->>LC: Nominal Kas Keluar
+    LC->>LC: Hitung Laba Bersih = Kas Masuk - Kas Keluar
+    LC-->>V: Tampilkan data Summary Cards & Chart.js tren keuangan
+    
+    A->>V: Klik "Ekspor PDF"
+    V->>LC: GET /admin/laporan/export-pdf
+    LC->>Pdf: Render data tabel Neraca Kas (Pemasukan vs Pengeluaran)
+    Pdf-->>LC: Berkas PDF Laporan
+    LC-->>V: Kirim response download file PDF ke browser Admin

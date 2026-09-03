@@ -1,0 +1,51 @@
+graph TB
+    subgraph Clients["📱 Clients & User Interfaces"]
+        Visitor["🌐 Pengunjung Publik<br/>(Landing Page & Catalog)"]
+        GuestUser["👤 Calon Penyewa<br/>(Portal Reservasi & Chat)"]
+        ActiveTenant["🏠 Penyewa Aktif<br/>(Portal Billing & Keluhan)"]
+        AdminUser["💻 Admin / Owner Kost<br/>(Dashboard Akuntansi & Management)"]
+    end
+
+    subgraph Infrastructure["☁️ Web Server & Application Tier (Laravel 11)"]
+        Nginx["🌐 Web Server / Router<br/>(Nginx / Apache HTTP)"]
+        AuthMiddleware["🛡️ Auth & Middleware Stack<br/>(Role: Admin/Penyewa, CSRF, Throttle)"]
+        
+        subgraph Controllers["⚙️ Business Controllers"]
+            LandingCtrl["Landing & Catalog Ctrl"]
+            ReservasiCtrl["Reservasi & Chat Ctrl"]
+            BillingCtrl["Billing & Payment Ctrl"]
+            KeluhanCtrl["Keluhan Facilities Ctrl"]
+            ArusKasCtrl["Arus Kas & Accounting Ctrl"]
+        end
+
+        subgraph Engine["⚡ Engine & Services"]
+            BillingEngine["Billing Engine & Cron Scheduler"]
+            MidtransService["Midtrans Snap Gateway Service"]
+            FonnteService["Fonnte WhatsApp Dispatcher"]
+            PdfGenerator["Dompdf Export Engine"]
+        end
+
+        subgraph QueueJob["🔄 Event & Job Queue System"]
+            QueueWorker["Laravel Queue Worker"]
+        end
+    end
+
+    subgraph DataStorage["🗄️ Data Storage Tier"]
+        MySQL[("🗄️ MySQL 8.x Database<br/>(20 Entitas System Data)")]
+        FileStorage["📁 Local File Storage<br/>(Foto Kamar, Nota, PDF Invoice)"]
+    end
+
+    subgraph ExternalAPIs["🌐 External Third-Party APIs"]
+        MidtransAPI["💳 Midtrans Payment Gateway<br/>(Snap & Webhook Callback)"]
+        FonnteAPI["💬 Fonnte WhatsApp API<br/>(WA Engine & Webhook)"]
+    end
+
+    Clients -->|"HTTP / HTTPS Requests"| Nginx
+    Nginx --> AuthMiddleware
+    AuthMiddleware --> Controllers
+    Controllers --> Engine
+    Engine --> QueueWorker
+    Engine --> MySQL
+    Engine --> FileStorage
+    Engine <-->|"REST API / Webhooks"| MidtransAPI
+    Engine <-->|"HTTP Post JSON"| FonnteAPI

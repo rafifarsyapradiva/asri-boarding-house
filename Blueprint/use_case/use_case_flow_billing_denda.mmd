@@ -1,0 +1,65 @@
+flowchart TD
+    classDef timerNode fill:#e0f7fa,stroke:#00acc1,stroke-width:2px,font-weight:bold;
+    classDef actorNode fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
+    classDef sysNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef extNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
+    classDef decisionNode fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    classDef terminalNode fill:#fce4ec,stroke:#c2185b,stroke-width:2px,font-weight:bold;
+
+    %% TIMERS & ACTORS
+    Cron[["⏰ Laravel Task Scheduler (Cron Engine)"]]:::timerNode
+    Tenant(["👤 Penyewa Aktif"]):::actorNode
+    Admin(["👤 Administrator"]):::actorNode
+    Midtrans[["💳 Midtrans Snap API"]]:::extNode
+    Fonnte[["💬 Fonnte WhatsApp API"]]:::extNode
+
+    %% PHASE 1: GENERATE INVOICE
+    Start([Pemicu: Tanggal 1 Jam 00:05 WIB]):::terminalNode --> A1[Eksekusi Console Command 'tagihan:generate-bulanan' - UC-28]:::sysNode
+    A1 --> A2[Query Seluruh Penyewa Berstatus 'aktif' & Tipe 'bulanan']:::sysNode
+    A2 --> A3[Buat Record Tagihan: nominal_pokok = harga_sewa, Jatuh Tempo: Tgl 10]:::sysNode
+    A3 --> A4[Broadcast WhatsApp Invoice Rincian Tagihan via Fonnte - include Fonnte]:::sysNode
+    A4 --> Fonnte
+    Fonnte --> A5[Penyewa Terima WhatsApp Tagihan Baru]:::actorNode
+
+    %% PHASE 2: DAILY PENALTY & GUARDIAN ESCALATION
+    A5 --> B1([Pemicu: Setiap Hari Jam 01:00 WIB]):::terminalNode
+    B1 --> B2[Eksekusi 'tagihan:proses-keterlambatan' - UC-28]:::sysNode
+    B2 --> B3{Apakah Tagihan 'pending' Melewati Tgl 10?}:::decisionNode
+    
+    B3 -- Tidak (Sebelum Tgl 10) --> B4[Masa Tenggang Grace Period / Normal]:::sysNode
+    B3 -- Ya (Lewat Tgl 10) --> B5{Kondisi Periode Bulan?}:::decisionNode
+
+    B5 -- Masih Bulan Berjalan --> B6[Kirim Pengingat Rutin WA Tanpa Denda]:::sysNode
+    B6 --> B7{Bulan Keterlambatan == 2?}:::decisionNode
+    B7 -- Ya --> B8[Kirim Notifikasi Persuasif Eskalasi ke Nomor Wali - include Fonnte]:::sysNode
+    B7 -- Tidak --> C1
+
+    B5 -- Melewati Batas Bulan Kalender --> B9[Terapkan Denda Flat 5% tepat 1x via Idempotency Guard]:::sysNode
+    B9 --> B10[Update nominal_denda & nominal_total di DB::transaction lockForUpdate]:::sysNode
+    B10 --> B11[Kirim WhatsApp Rincian Denda ke Penyewa - include Fonnte]:::sysNode
+
+    %% PHASE 3: PAYMENT
+    B8 --> C1[Penyewa Melakukan Pembayaran - UC-04]:::sysNode
+    B11 --> C1
+    B4 --> C1
+    
+    C1 --> C2{Pilih Jalur Pembayaran?}:::decisionNode
+    
+    %% OPSI ONLINE
+    C2 -- Jalur Online (Snap) --> D1[Penyewa Klik 'Bayar Online' di Portal]:::sysNode
+    D1 --> D2[Sistem Request Snap Token - include Midtrans]:::sysNode
+    D2 --> Midtrans
+    Midtrans --> D3[Penyewa Selesaikan Pembayaran VA/QRIS/E-Wallet]:::actorNode
+    D3 --> D4[Callback Webhook Midtrans - Verify SHA-512 Signature]:::extNode
+    D4 --> D5[Sistem Update Tagihan status: 'lunas' & Simpan Pembayaran]:::sysNode
+
+    %% OPSI OFFLINE
+    C2 -- Jalur Offline (Cash/Transfer Manual) --> E1[Penyewa Bayar Tunai ke Rekening/Kasir Admin]:::actorNode
+    E1 --> E2[Admin Buka Detail Tagihan & Klik 'Konfirmasi Cash' - UC-06]:::sysNode
+    E2 --> E3[DB::transaction: Update Tagihan status: 'lunas' & Simpan Pembayaran]:::sysNode
+
+    %% PHASE 4: RECEIPT GENERATION
+    D5 --> F1[Penyewa Buka Riwayat & Klik 'Unduh Nota PDF' - UC-25]:::sysNode
+    E3 --> F1
+    F1 --> F2[Sistem Render Template Dompdf Dinamis]:::sysNode
+    F2 --> End([File Kuitansi Resmi PDF Terunduh]):::terminalNode

@@ -1,0 +1,76 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    StartCheck([Titik Evaluasi Keputusan]) --> DecPublik{"D-01: Status Kamar di Katalog? (AD-01)"}
+    
+    %% Decision 1
+    DecPublik -- "maintenance" --> HideRoom["Sembunyikan dari Publik"]
+    DecPublik -- "terisi" --> DirectWA["Tampilkan Tombol 'Tanya WA'"]
+    DecPublik -- "tersedia" --> AllowOrder["Tampilkan Tombol 'Pesan Unit'"]
+    
+    %% Decision 2
+    AllowOrder --> DecAuth{"D-02: Role & Sesi Pengguna? (AD-02, AD-16)"}
+    DecAuth -- "Belum Login" --> RedirLogin["Redirect ke /reservasi/login"]
+    DecAuth -- "Role Admin" --> BlockAdmin["Tolak & Toast 'Admin dilarang pesan'"]
+    DecAuth -- "Penyewa Valid" --> DecPessimistic{"D-03: Ketersediaan Kamar Saat Kunci? (AD-02)"}
+    
+    %% Decision 3
+    DecPessimistic -- "Sudah Dipesan Lain" --> ToastPenuh["Rollback & Toast 'Kamar Penuh'"]
+    DecPessimistic -- "Masih Tersedia" --> LockRoom["Kunci Kamar & Buat Reservasi Pending"]
+    
+    %% Decision 4
+    LockRoom --> DecPayment{"D-04: Transaksi Midtrans? (AD-03, AD-19)"}
+    DecPayment -- "24 Jam Tanpa Bayar" --> AutoCancel["Auto-Cancel Scheduler & Lepas Kamar"]
+    DecPayment -- "Signature Invalid / Mismatch" --> RejectWebhook["Tolak Callback (HTTP 403/400)"]
+    DecPayment -- "Settlement / Capture" --> DecSkema{"D-05: Skema Pembayaran? (AD-03, AD-04)"}
+    
+    %% Decision 5
+    DecSkema -- "DP 30%" --> SetDP["Set Status 'dp' & Injeksi Tagihan Sisa 70%"]
+    DecSkema -- "Lunas 100%" --> SetLunas["Set Status 'lunas' & Bebas Tagihan Awal"]
+    
+    %% Decision 6
+    SetDP --> DecKonfirmasi{"D-06: Verifikasi Admin? (AD-04)"}
+    SetLunas --> DecKonfirmasi
+    DecKonfirmasi -- "Tolak / Data Buram" --> RefundReserv["Set 'batal', Lepas Kamar & Proses Refund"]
+    DecKonfirmasi -- "Setujui" --> ActivateTenant["Ubah Kamar 'terisi' & Kirim WA Kredensial"]
+    
+    %% Decision 7
+    ActivateTenant --> DecBilling{"D-07: Siklus Jatuh Tempo Tagihan? (AD-05)"}
+    DecBilling -- "Tanggal 1 s/d 10" --> TagihanNormal["Nominal Pokok Murni (Grace Period)"]
+    DecBilling -- "Bulan 1 & 2 Overdue" --> ReminderOnly["Status 'terlambat' & Denda Rp 0 + WA Eskalasi"]
+    DecBilling -- "Bulan 3+ Overdue" --> DendaApplied["Status 'terlambat' & Denda 5% per Bulan"]
+    
+    %% Decision 8
+    TagihanNormal --> DecPayType{"D-08: Metode Bayar Tagihan? (AD-06)"}
+    ReminderOnly --> DecPayType
+    DendaApplied --> DecPayType
+    DecPayType -- "Snap Gateway" --> AutoVerify["Verifikasi Otomatis via Webhook"]
+    DecPayType -- "Cash / Transfer" --> DecAdminCash{"D-09: Validasi Kas Admin? (AD-06)"}
+    DecAdminCash -- "Bukti Palsu / Kurang" --> TolakCash["Tolak & Minta Pembayaran Ulang"]
+    DecAdminCash -- "Valid & Sesuai" --> KonfirmasiCash["Admin Klik 'Konfirmasi Cash' & Cetak PDF"]
+    
+    %% Decision 9
+    ActivateTenant --> DecCheckout{"D-10: Syarat Checkout Penyewa? (AD-11)"}
+    DecCheckout -- "Memiliki Tunggakan" --> BlockExit["Blokir Checkout (Wajib Lunasi Dulu)"]
+    DecCheckout -- "Bebas Tunggakan" --> DecInspeksi{"D-11: Hasil Inspeksi Fisik Kamar? (AD-11)"}
+    DecInspeksi -- "Fasilitas Rusak" --> PotongDepo["Potong Biaya Perbaikan dari Deposit"]
+    DecInspeksi -- "Fasilitas Bersih" --> FullDepo["Kembalikan Deposit Jaminan Penuh"]
+    
+    %% Decision 10
+    AdminPanel([Admin CRUD Guard]) --> DecDelete{"D-12: Safety Deletion Constraints? (AD-14, AD-15, AD-20)"}
+    DecDelete -- "Kamar Ada Penyewa/Reservasi" --> BlockDelKamar["Dilarang Hapus Kamar"]
+    DecDelete -- "Penyewa Punya Tagihan" --> BlockDelPenyewa["Dilarang Hapus Penyewa"]
+    DecDelete -- "Fasilitas Dipakai Kamar" --> BlockDelFasilitas["Dilarang Hapus Fasilitas"]
+    DecDelete -- "Relasi Bersih" --> AllowDelete["Hapus Record & Bersihkan File Storage"]

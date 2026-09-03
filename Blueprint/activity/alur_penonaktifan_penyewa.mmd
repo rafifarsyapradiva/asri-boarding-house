@@ -1,0 +1,44 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Admin ["Swimlane: Administrator"]
+        Start([Mulai]) --> BukaPenyewa["Admin masuk Menu Manajemen Penyewa"]
+        BukaPenyewa --> PilihPenyewa["Pilih Penyewa Aktif yang akan keluar (Checkout)"]
+        PilihPenyewa --> KlikNonaktif["Admin klik tombol 'Nonaktifkan Kontrak / Checkout'"]
+        
+        TolakCheckout["Sistem memblokir checkout & merender Toast error: 'Penyewa masih memiliki tunggakan tagihan'"] --> SelesaiGagal([Selesai Gagal])
+        
+        LanjutCheckout["Admin melakukan inspeksi fisik kamar kost"] --> CekKerusakan{"Apakah ditemukan kerusakan fasilitas?"}
+        CekKerusakan -- Ya --> PotongDeposit["1. Hitung estimasi biaya perbaikan kerusakan<br>2. Deposit dikembalikan setelah dipotong biaya perbaikan<br>3. Catat bukti potongan perbaikan"]
+        CekKerusakan -- Tidak --> KembalikanDeposit["1. Deposit jaminan dikembalikan penuh ke Penyewa<br>2. Catat nomor rekening / bukti transfer pengembalian"]
+        
+        PotongDeposit --> BukaKamar["Admin membuka Menu Manajemen Kamar"]
+        KembalikanDeposit --> BukaKamar
+        
+        BukaKamar --> UbahStatusKamar["Admin secara MANUAL memperbarui status kamar"]
+        UbahStatusKamar --> TentukanStatus{"Kamar perlu perbaikan / pembersihan?"}
+        TentukanStatus -- Ya --> SetMaintenance["Set status kamar ke 'maintenance'"]
+        TentukanStatus -- Tidak --> SetTersedia["Set status kamar ke 'tersedia'"]
+    end
+
+    subgraph Swimlane_System ["Swimlane: Backend System & Database MySQL"]
+        KlikNonaktif --> CekTunggakan{"Apakah penyewa memiliki tagihan berstatus 'pending' atau 'terlambat'?"}
+        CekTunggakan -- Ya --> TolakCheckout
+        CekTunggakan -- Tidak --> DbUpdateNonaktif["1. Set status penyewa = 'nonaktif'<br>2. Simpan tanggal_keluar_aktual"]
+        DbUpdateNonaktif --> LanjutCheckout
+        
+        SetMaintenance --> SelesaiMaint([Selesai Maintenance])
+        SetTersedia --> SelesaiAvail([Selesai Tersedia])
+    end

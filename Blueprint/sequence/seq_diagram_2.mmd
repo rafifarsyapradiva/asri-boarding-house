@@ -1,0 +1,79 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor CP as Calon Penyewa
+    participant V as View (Detail Halaman)
+    participant Auth as Auth\ReservasiAuthController
+    participant C as Penyewa\ReservasiController
+    participant S as ReservasiService
+    participant K as Kamar (Model)
+    participant R as Reservasi (Model)
+    participant DB as Database (MySQL)
+
+    CP->>V: Isi data pemesanan & klik "Pesan Unit"
+    
+    alt Sesi Pengguna: Belum Login
+        V->>Auth: Redirect ke /reservasi/login
+        Auth-->>CP: Tampilkan Form Login/Register Brutalist
+        CP->>Auth: Lakukan Registrasi / Login
+        Auth->>DB: Verifikasi & Simpan Akun Baru
+        DB-->>Auth: Sukses login
+        Auth-->>V: Redirect kembali ke halaman Detail Kamar semula
+    end
+
+    V->>C: POST /penyewa/reservasi (Form Data)
+    C->>S: buatReservasi(data)
+    
+    Note over S: Validasi input: NIK (16 digit numerik),<br/>No HP Wali (format WA), dll.
+    
+    alt Input Form Tidak Valid
+        S-->>C: Lempar ValidationException
+        C-->>V: Return back() with Errors & Toast Notifikasi
+        V-->>CP: Tampilkan pesan error di samping input form
+    else Input Form Valid
+        S->>DB: DB::beginTransaction()
+        S->>K: Kamar::lockForUpdate()->findOrFail(id)
+        K->>DB: SELECT * FROM kamars WHERE id = ? FOR UPDATE
+        DB-->>K: Kamar Instance
+        
+        S->>S: cekDoubleBooking(kamar, tgl_mulai, tgl_selesai)
+        
+        alt Kamar Sudah Ter-booking pada Tanggal Tersebut (Overlap)
+            S-->>C: Lempar ValidationException
+            C-->>V: Rollback & Return redirect back dengan Toast Error
+            V-->>CP: Tampilkan pesan kegagalan transaksi
+        else Kamar Tersedia
+            S->>R: Buat entri Reservasi baru (status: 'pending')
+            R->>DB: INSERT INTO reservasis (order_id, user_id, kamar_id, status, nominal_dp, nominal_sisa...)
+            S->>DB: DB::commit()
+            S-->>C: Reservasi Instance
+            C-->>V: Redirect ke /penyewa/reservasi/{id}/pembayaran
+            V-->>CP: Muat halaman Detail Reservasi (Sidebar Layout + Stepper & Chat Box AJAX)
+        end
+    end

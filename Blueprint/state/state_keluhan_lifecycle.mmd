@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> pending : Submit Keluhan [Foto < 2MB]<br>/ WA ke Admin
+    pending --> diproses : Klik Proses / Mulai Perbaikan
+    pending --> selesai : Klik Selesai [Tanggapan Diisi]<br>/ Kirim WA Solusi
+    diproses --> selesai : Klik Selesai [Tanggapan Diisi]<br>/ Kirim WA Solusi
+    selesai --> diproses : Klik Reopen / Tiket Dibuka Kembali
+    selesai --> [*] : Arsip Keluhan

@@ -1,0 +1,70 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor A as Admin Baru
+    participant V as View (Admin Login & Dashboard)
+    participant C as Auth\AdminLoginController
+    participant M as EnsurePasswordChanged (Middleware)
+    participant PC as Admin\ProfileController
+    participant U as User (Model)
+    participant DB as Database (MySQL)
+
+    A->>V: Masukkan Email & Password default admin
+    V->>C: POST /admin/login (kredensial)
+    C->>DB: SELECT * FROM users WHERE email = ? LIMIT 1
+    DB-->>C: User Record (role: 'admin', require_password_change: true)
+    C->>C: Cocokkan Hash Password (Hash::check)
+    C-->>V: Autentikasi Sukses, login sesi aktif
+    
+    A->>V: Akses Halaman /admin/dashboard
+    V->>M: Route Request disaring oleh Middleware
+    M->>M: Cek properti auth()->user()->role === 'admin' & require_password_change === true
+    
+    alt require_password_change == true
+        M-->>V: Intercept Request & paksa redirect ke /admin/force-change-password
+        V-->>A: Tampilkan halaman Form Ubah Password Wajib Admin
+        A->>V: Masukkan Password Baru & Konfirmasi
+        V->>PC: POST /admin/force-change-password
+        Note over PC: Validasi: password baru minimal 8 karakter,<br/>harus konfirmasi cocok, mengandung huruf dan angka.
+        
+        alt Validasi Password Gagal (Terlalu Pendek / Konfirmasi Miskonfigurasi)
+            PC-->>V: Return back() with Toast Error Validation
+            V-->>A: Tampilkan pesan kesalahan validasi input
+        else Validasi Password Sukses
+            PC->>U: Update Password Hash & Set require_password_change = false
+            U->>DB: UPDATE users SET password = ?, require_password_change = 0 WHERE id = ?
+            DB-->>PC: Sukses update
+            PC-->>V: Redirect ke /admin/dashboard dengan Toast Success
+        end
+    end
+
+    V->>M: Route Request disaring oleh Middleware (Akses Kedua)
+    M->>M: require_password_change == false (Lulus filter)
+    M->>V: Teruskan request ke Admin\DashboardController@index
+    V-->>A: Tampilkan Dashboard Utama Administrator

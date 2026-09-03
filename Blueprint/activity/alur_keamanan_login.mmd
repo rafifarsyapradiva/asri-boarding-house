@@ -1,0 +1,56 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_User ["Swimlane: Pengguna (User / Admin)"]
+        Start([Mulai]) --> BukaLogin["User membuka portal login"]
+        BukaLogin --> OpsiLogin{"Pilih tindakan login?"}
+        
+        OpsiLogin -- "Input Kredensial" --> InputKredensial["Masukkan Email / No HP & Password"]
+        OpsiLogin -- "Lupa Password" --> KlikLupaPassword["Klik 'Lupa Password?'"]
+        
+        KlikLupaPassword --> InputEmailWa["Masukkan Email terdaftar"]
+        InputEmailWa --> SendResetToken["Sistem mengirimkan token reset kata sandi via WhatsApp Fonnte / Email"]
+        SendResetToken --> FormResetPass["User membuka link reset & membuat password baru"]
+        FormResetPass --> InputKredensial
+        
+        TampilErrorLogin["Tampilkan error kredensial tidak valid"] --> InputKredensial
+        TampilLockout["Tampilkan error Rate Limit Lockout (HTTP 429: Tunggu 60 detik)"] --> SelesaiLockout([Selesai Lockout])
+        
+        ForceRedirect["Sistem secara paksa mengarahkan ke halaman Ubah Password (/admin/force-change-password)"] --> InputPasswordBaru["Admin mengisi Password Baru & Konfirmasi Password"]
+        InputPasswordBaru --> ValidasiPasswordBaru{"Validasi password baru cocok & aman?"}
+        ValidasiPasswordBaru -- Tidak --> TampilErrorPassword["Tampilkan error validasi password baru"]
+        TampilErrorPassword --> InputPasswordBaru
+    end
+
+    subgraph Swimlane_System ["Swimlane: Auth Middleware, Throttle & Database"]
+        InputKredensial --> CekThrottle{"Apakah percobaan gagal > 5 kali?"}
+        CekThrottle -- Ya --> TampilLockout
+        
+        CekThrottle -- Tidak --> ValidasiKredensial{"Kredensial cocok di DB?"}
+        ValidasiKredensial -- Tidak --> TampilErrorLogin
+        ValidasiKredensial -- Ya --> CekRole{"Apakah peran Pengguna?"}
+        
+        CekRole -- "Admin" --> CekPasswordDefault{"Apakah require_password_change = true?"}
+        CekPasswordDefault -- Ya --> ForceRedirect
+        
+        ValidasiPasswordBaru -- Ya --> UpdatePasswordDB["Sistem menyimpan hash password baru & set require_password_change = false"]
+        UpdatePasswordDB --> RedirectDashboardAdmin["Sistem mengarahkan ke Dashboard Panel Admin"]
+        
+        CekPasswordDefault -- Tidak --> RedirectDashboardAdmin
+        CekRole -- "Penyewa" --> RedirectDashboardPenyewa["Sistem mengarahkan ke Dashboard Portal Penyewa"]
+        
+        RedirectDashboardAdmin --> SelesaiAdmin([Selesai Admin])
+        RedirectDashboardPenyewa --> SelesaiPenyewa([Selesai Penyewa])
+    end

@@ -1,0 +1,50 @@
+erDiagram
+    users ||--o{ reservasi : "user_id (1:N)"
+    kamar ||--o{ reservasi : "kamar_id (1:N)"
+    users ||--o{ reservasi : "dikonfirmasi_oleh (1:N)"
+    penyewa ||--o{ reservasi : "penyewa_id (1:N)"
+    reservasi ||--o{ chat_messages : "reservasi_id (1:N)"
+    users ||--o{ chat_messages : "sender_id (1:N)"
+
+    reservasi {
+        unsigned_bigint id PK
+        unsigned_bigint user_id FK
+        unsigned_bigint kamar_id FK
+        unsigned_bigint dikonfirmasi_oleh FK
+        unsigned_bigint penyewa_id FK
+        enum tipe_sewa "harian, mingguan, bulanan"
+        date tanggal_mulai
+        date tanggal_selesai
+        tinyint durasi
+        decimal total_harga
+        enum status "pending, dp, lunas, dikonfirmasi, batal"
+        boolean is_dp
+        decimal nominal_dp
+        decimal nominal_sisa
+        string snap_token
+        string order_id UK
+        string transaction_id
+    }
+    chat_messages {
+        unsigned_bigint id PK
+        unsigned_bigint reservasi_id FK
+        unsigned_bigint sender_id FK
+        text message
+        boolean is_read
+        timestamp created_at "Append-only"
+    }
+    users {
+        unsigned_bigint id PK
+        string nama
+        string email UK
+        enum role
+    }
+    kamar {
+        unsigned_bigint id PK
+        string nomor_kamar UK
+        enum status
+    }
+    penyewa {
+        unsigned_bigint id PK
+        enum status
+    }

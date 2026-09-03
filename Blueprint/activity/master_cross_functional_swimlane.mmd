@@ -1,0 +1,101 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Lane_Guest ["1. Aktor: Tamu / Calon Penyewa"]
+        U_Search["1. Filter Katalog Kamar (AD-01)"] --> U_Book["2. Isi Form Pemesanan & DP/Lunas (AD-02)"]
+        U_Book --> U_Pay["3. Bayar Snap & Chat Pre-Bayar (AD-03)"]
+    end
+
+    subgraph Lane_Gateway ["2. Layanan Gateway (Midtrans Snap & Fonnte WA)"]
+        G_SnapToken["Generate Snap Token"] --> G_SnapModal["Render Portal Pop-Up Snap"]
+        G_SnapModal --> G_Webhook["Trigger POST Webhook Callback (AD-19)"]
+        G_SendWA["Kirim WhatsApp Notifikasi & Kredensial"]
+    end
+
+    subgraph Lane_System ["3. Sistem Backend Laravel 11 & Scheduler Engine"]
+        S_LockRoom["Kunci Kamar & Buat Reservasi 'pending' (AD-02)"]
+        S_VerifyWebhook["Verifikasi Signature SHA512 & Idempotensi (AD-19)"]
+        S_AutoBilling["Cron Billing Bulanan & Engine Denda (AD-05)"]
+        S_PdfEngine["Dompdf Engine: Generate Kuitansi PDF (AD-06)"]
+    end
+
+    subgraph Lane_Database ["4. Basis Data MySQL Relasional & Storage"]
+        DB_Kamar[("Tabel: kamar")]
+        DB_Reservasi[("Tabel: reservasi")]
+        DB_Penyewa[("Tabel: penyewa & users")]
+        DB_Tagihan[("Tabel: tagihan & pembayaran")]
+        DB_Keluhan[("Tabel: keluhan")]
+        DB_Pengeluaran[("Tabel: pengeluaran")]
+    end
+
+    subgraph Lane_Admin ["5. Aktor: Administrator Kost"]
+        A_Confirm["4. Verifikasi & Konfirmasi Reservasi (AD-04)"]
+        A_Offline["Input Penyewa Offline / WA Direct (AD-18)"]
+        A_Resolve["Tanggapi & Selesaikan Keluhan (AD-07)"]
+        A_VerifyCash["Verifikasi Pembayaran Cash/Transfer (AD-06)"]
+        A_Checkout["Proses Checkout & Kelola Deposit (AD-11)"]
+        A_Reports["Pantau Arus Kas & Ekspor Laporan (AD-08)"]
+    end
+
+    subgraph Lane_Tenant ["6. Aktor: Penyewa Aktif Kost"]
+        T_Login["5. Login Portal & Akses Aturan (AD-10, AD-13)"]
+        T_Lapor["Kirim Laporan Keluhan & Bukti Foto (AD-07)"]
+        T_PayBill["Bayar Tagihan Bulanan (Online/Cash) (AD-06)"]
+        T_Exit["Ajukan / Selesaikan Kontrak Sewa (AD-11)"]
+    end
+
+    %% Relasi Alur Lintas Swimlane
+    U_Search -.-> DB_Kamar
+    U_Book --> S_LockRoom
+    S_LockRoom --> DB_Reservasi
+    S_LockRoom --> DB_Kamar
+    
+    U_Pay --> G_SnapToken
+    G_SnapToken --> G_SnapModal
+    G_Webhook --> S_VerifyWebhook
+    S_VerifyWebhook --> DB_Reservasi
+    
+    DB_Reservasi --> A_Confirm
+    A_Confirm --> DB_Penyewa
+    A_Confirm --> DB_Kamar
+    A_Confirm --> G_SendWA
+    
+    A_Offline --> DB_Penyewa
+    A_Offline --> DB_Kamar
+    A_Offline --> G_SendWA
+    
+    G_SendWA --> T_Login
+    
+    %% Alur Operasional
+    S_AutoBilling --> DB_Tagihan
+    S_AutoBilling --> G_SendWA
+    
+    T_PayBill --> G_SnapToken
+    T_PayBill --> A_VerifyCash
+    A_VerifyCash --> S_PdfEngine
+    S_VerifyWebhook --> S_PdfEngine
+    S_PdfEngine --> G_SendWA
+    
+    T_Lapor --> DB_Keluhan
+    DB_Keluhan --> A_Resolve
+    A_Resolve --> G_SendWA
+    
+    T_Exit --> A_Checkout
+    A_Checkout --> DB_Penyewa
+    A_Checkout --> DB_Kamar
+    
+    DB_Tagihan --> A_Reports
+    DB_Pengeluaran --> A_Reports
+    DB_Reservasi --> A_Reports

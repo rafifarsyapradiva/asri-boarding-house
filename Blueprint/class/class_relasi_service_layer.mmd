@@ -1,0 +1,82 @@
+classDiagram
+    direction LR
+
+    class PdfGeneratorInterface {
+        <<interface>>
+        +generate(view, data, paper, orientation) string
+    }
+
+    class DompdfGenerator {
+        +generate(view, data, paper, orientation) string
+    }
+
+    class PdfNotaService {
+        #PdfGeneratorInterface pdfGenerator
+        +generate(Pembayaran) string
+        +getOrGeneratePdfPath(Pembayaran) string
+    }
+
+    class BillingService {
+        +generateTagihanBulanan() void
+        +prosesKeterlambatan() void
+        +terapkanDendaDirect(Tagihan) void
+        +injectSisaDp(Penyewa, float) void
+        +injectLunasPenuh(Penyewa, Reservasi, int) void
+        +injectManualPenyewaLunas(Penyewa, int) void
+    }
+
+    class TransisiPenyewaService {
+        #BillingService billingService
+        +transisi(Reservasi, int, array) Penyewa
+    }
+
+    class AdminPenyewaService {
+        #BillingService billingService
+        +registerPenyewa(array, int) Penyewa
+    }
+
+    class ReservasiService {
+        +hitungHarga(Kamar, string, int) array
+        +buatReservasi(array) Reservasi
+        +cekDoubleBooking(Kamar, string, string) bool
+    }
+
+    class TagihanService {
+        +confirmCashPayment(Tagihan, int, string) Pembayaran
+    }
+
+    class DashboardAnalyticsService {
+        +getDashboardMetrics() array
+    }
+
+    class NotificationTemplateBuilder {
+        +buildTagihanBaru(Tagihan, Penyewa) string
+        +buildPembayaranBerhasil(Pembayaran) string
+        +buildReminderJatuhTempo(Tagihan, Penyewa) string
+    }
+
+    class NotifikasiService {
+        #FonnteService fonnte
+        #NotificationTemplateBuilder templateBuilder
+        +kirimNotifikasiTagihan(Tagihan, bool) void
+        +kirimNotifikasiPembayaran(Pembayaran, bool) void
+        +kirimNotifikasiWelcomePenyewa(Penyewa, bool) void
+    }
+
+    class FonnteService {
+        +kirimPesan(string, string) bool
+        +formatNomor(string) string
+    }
+
+    class MidtransService {
+        +createSnapToken(Tagihan) array
+        +createSnapTokenReservasi(Reservasi) array
+    }
+
+    %% Dependency & Realization %%
+    DompdfGenerator ..|> PdfGeneratorInterface : Implements
+    PdfNotaService ..> PdfGeneratorInterface : Dependency Injection
+    TransisiPenyewaService ..> BillingService : Dependency Injection
+    AdminPenyewaService ..> BillingService : Dependency Injection
+    NotifikasiService *-- NotificationTemplateBuilder : Composition
+    NotifikasiService ..> FonnteService : Uses API Gateway

@@ -1,0 +1,128 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    participant S as Cron / Laravel Scheduler
+    participant E1 as GenerateBulananTagihan (Command)
+    participant E2 as ProsesKeterlambatanTagihan (Command)
+    participant E3 as ReminderHabisKontrakCommand (Command)
+    participant B as BillingService
+    participant NS as NotifikasiService
+    participant P as Penyewa (Model)
+    participant T as Tagihan (Model)
+    participant L as LogNotifikasi (Model)
+    participant F as Fonnte WA API
+    participant DB as Database (MySQL)
+
+    alt Aksi 1: php artisan tagihan:generate-bulanan (Setiap Tanggal 1, 00:00)
+        S->>E1: Eksekusi Command
+        E1->>B: generateTagihanBulanan()
+        B->>P: Query semua penyewa berstatus 'aktif'
+        P->>DB: SELECT * FROM penyewas WHERE status = 'aktif'
+        DB-->>P: Dataset penyewa aktif
+        P-->>B: Collection Penyewa
+        
+        loop Per Penyewa Aktif (Chunk 100)
+            B->>B: Ambil tarif personal dari penyewa.harga_sewa (immutable rate)
+            B->>B: Generate order_id unik tagihan bulanan (TGH-{id}-YYYYMM)
+            B->>T: firstOrCreate([penyewa_id, bulan, tahun], [...])
+            T->>DB: INSERT INTO tagihans (status: 'pending', nominal_pokok, nominal_total...)
+            Note over B: Memicu Event TagihanDibuat jika tagihan baru terbuat
+            B->>L: Catat Log Notifikasi baru (status: 'pending')
+            L->>DB: INSERT INTO log_notifikasis (status: 'pending', channel: 'WhatsApp')
+            
+            B->>F: Call API Send Message (Nomor HP, Detail Tagihan, & Tautan Bayar)
+            
+            alt Kirim API Fonnte Sukses
+                F-->>B: Response OK
+                B->>L: Update log_notifikasi status menjadi 'sukses'
+                L->>DB: UPDATE log_notifikasis SET status = 'sukses' WHERE id = ?
+            else Kirim API Fonnte Gagal (Exception Caught)
+                F-->>B: Connection Timeout / Error 500
+                B->>L: Update log_notifikasi status menjadi 'gagal' & simpan error_msg
+                L->>DB: UPDATE log_notifikasis SET status = 'gagal', error_msg = ? WHERE id = ?
+            end
+        end
+        E1-->>S: Finished
+
+    else Aksi 2: php artisan tagihan:proses-keterlambatan (Setiap Hari, 01:00)
+        S->>E2: Eksekusi Command
+        E2->>B: prosesKeterlambatan()
+        B->>T: Query tagihan 'pending' yang melewati jatuh tempo
+        T->>DB: SELECT * FROM tagihans WHERE status = 'pending' AND tanggal_jatuh_tempo < TODAY
+        DB-->>T: Dataset tagihan overdue
+        T-->>B: Collection Tagihan
+
+        loop Per Tagihan Overdue
+            B->>DB: DB::transaction()
+            B->>T: Lock tagihan record for update
+            T->>DB: SELECT * FROM tagihans WHERE id = ? FOR UPDATE
+            
+            alt Skenario A: Sudah melewati bulan periode berjalan (Bulan Berikutnya)
+                B->>B: Hitung Denda 5% dari nominal pokok
+                B->>T: Update nominal_denda = 5%, nominal_total = pokok + denda, bulan_keterlambatan = 3
+                T->>DB: UPDATE tagihans SET nominal_denda = ?, nominal_total = ?, bulan_keterlambatan = 3 WHERE id = ?
+                B->>L: Catat Log Notifikasi Denda (status: 'pending')
+                B->>F: Kirim WA Peringatan Denda ke Penyewa & Wali
+            else Skenario B: Masih berada di bulan berjalan yang sama (Masa Keringanan/Grace Period)
+                B->>T: Set bulan_keterlambatan = 1
+                T->>DB: UPDATE tagihans SET bulan_keterlambatan = 1 WHERE id = ?
+                B->>L: Catat Log Notifikasi Reminder (status: 'pending')
+                B->>F: Kirim WA Reminder Tagihan ke Penyewa (Bebas Denda)
+            end
+            
+            alt Kirim WA Overdue Sukses
+                F-->>B: Response OK
+                B->>L: UPDATE log_notifikasis SET status = 'sukses'
+            else Kirim WA Overdue Gagal
+                F-->>B: Error / Timeout
+                B->>L: UPDATE log_notifikasis SET status = 'gagal'
+            end
+            B->>DB: DB::commit()
+        end
+        E2-->>S: Finished
+
+    else Aksi 3: php artisan kontrak:reminder-habis (Setiap Hari, 08:00)
+        S->>E3: Eksekusi Command
+        E3->>NS: prosesReminderHabisKontrak()
+        NS->>P: Query penyewa aktif mendekati habis kontrak (H-14 & H-7)
+        P->>DB: SELECT * FROM penyewas WHERE status = 'aktif' AND tanggal_keluar_seharusnya IN (TODAY+14, TODAY+7)
+        DB-->>P: Dataset penyewa mendekati habis kontrak
+        loop Per Penyewa Mendekati Habis Kontrak
+            NS->>L: LogNotifikasi::create([penyewa_id, channel: 'WhatsApp', status: 'pending'])
+            NS->>F: Kirim Pesan WA Pengingat Habis Kontrak & Tautan Perpanjang/Checkout
+            alt Kirim WA Sukses
+                F-->>NS: Response OK
+                NS->>L: UPDATE log_notifikasis SET status = 'sukses'
+            else Kirim WA Gagal
+                F-->>NS: Error
+                NS->>L: UPDATE log_notifikasis SET status = 'gagal'
+            end
+        end
+        E3-->>S: Finished
+    end

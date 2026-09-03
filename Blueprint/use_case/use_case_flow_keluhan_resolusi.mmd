@@ -1,0 +1,37 @@
+flowchart TD
+    classDef actorNode fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
+    classDef sysNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef extNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
+    classDef decisionNode fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    classDef terminalNode fill:#fce4ec,stroke:#c2185b,stroke-width:2px,font-weight:bold;
+
+    %% ACTORS & SYSTEMS
+    Tenant(["👤 Penyewa Aktif"]):::actorNode
+    Sys["🖥️ Portal Web Laravel (ABH)"]:::sysNode
+    Fonnte[["💬 Fonnte WhatsApp API"]]:::extNode
+    Admin(["👤 Administrator"]):::actorNode
+
+    %% FLOW
+    Start([Penyewa Temukan Fasilitas Rusak]):::terminalNode --> A1[1. Buka Menu 'Keluhan & Pengaduan' - UC-05]:::sysNode
+    A1 --> A2[2. Isi Judul, Kategori Fasilitas, Uraian Kerusakan, & Upload Foto]:::sysNode
+    A2 --> A3{Validasi Ukuran File Foto <= 2MB & Format Gambar?}:::decisionNode
+    
+    A3 -- Tidak Sesuai --> A4[Tampilkan Alert Validasi Unggah Foto]:::sysNode
+    A4 --> A2
+
+    A3 -- Valid --> B1[3. Klik Tombol 'Kirim Pengaduan']:::sysNode
+    B1 --> B2[Sistem Simpan Rekaman ke Tabel 'keluhan' status: 'pending']:::sysNode
+    B2 --> B3[Trigger WhatsApp API Dispatcher ke Nomor Admin - include Fonnte]:::sysNode
+    B3 --> Fonnte
+    Fonnte --> B4[Admin Terima WhatsApp Pemberitahuan Keluhan Masuk]:::actorNode
+
+    B4 --> C1[4. Admin Buka Menu 'Daftar Keluhan' di Admin Panel - UC-15]:::sysNode
+    C1 --> C2[5. Admin Ubah Status Keluhan Menjadi 'diproses']:::sysNode
+    C2 --> C3[Admin & Teknisi Melakukan Perbaikan Fisik di Kamar/Lokasi]:::actorNode
+    
+    C3 --> D1[6. Setelah Selesai, Admin Input Catatan Solusi & Klik 'Selesaikan']:::sysNode
+    D1 --> D2[Sistem Simpan tanggal_selesai & Ubah status: 'selesai']:::sysNode
+    D2 --> D3[Trigger WhatsApp API Dispatcher ke Nomor Penyewa - include Fonnte]:::sysNode
+    D3 --> Fonnte
+    Fonnte --> D4[Penyewa Terima Notifikasi WhatsApp Hasil Perbaikan]:::actorNode
+    D4 --> End([Laporan Keluhan Tuntas Solved]):::terminalNode

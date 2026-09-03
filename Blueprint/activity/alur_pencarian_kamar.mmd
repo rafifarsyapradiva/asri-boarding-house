@@ -1,0 +1,46 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Pengunjung ["Swimlane: Pengunjung (Guest / Calon Penyewa)"]
+        Start([Mulai]) --> BukaKatalog["Buka halaman katalog kamar (/kamar) atau Beranda"]
+        BukaKatalog --> InputFilter["Masukkan kriteria pencarian (Filter Lantai, Tipe Kamar, Tanggal Masuk, & Durasi Sewa)"]
+        TampilEmptyState["Melihat pesan 'Tidak ada kamar yang sesuai kriteria' & tombol Reset Filter"] --> InputFilter
+        TanyaWA["Klik 'Tanya WA' & dialihkan ke WA Direct Link (URL-encoded message)"] --> SelesaiWA([Selesai])
+        KlikPesan["Klik tombol 'Pesan Unit' pada katalog"] --> DetailKamar["Sistem memuat halaman detail kamar (/kamar/{id}) beserta query string"]
+        TampilForm["Pengunjung melihat Form Reservasi & rincian kalkulasi estimasi harga"] --> SelesaiForm([Selesai])
+    end
+
+    subgraph Swimlane_System ["Swimlane: Sistem Backend Laravel & Database MySQL"]
+        InputFilter --> QueryKamar["Sistem melakukan query data kamar dari database"]
+        QueryKamar --> CekMaintenance{"Apakah status kamar 'maintenance'?"}
+        
+        CekMaintenance -- Ya --> SembunyikanKamar["Sistem menyembunyikan kamar dari katalog publik"]
+        SembunyikanKamar --> SelesaiMaint([Selesai])
+        
+        CekMaintenance -- Tidak --> CekAdaKamar{"Apakah ada kamar yang memenuhi filter?"}
+        CekAdaKamar -- Tidak (Hasil 0) --> TampilEmptyState
+        
+        CekAdaKamar -- Ya --> TampilkanKamar["Tampilkan data kamar ke grid katalog publik"]
+        TampilkanKamar --> CekStatus{"Bagaimana status ketersediaan kamar?"}
+        
+        CekStatus -- "terisi" --> TombolWA["Sistem menampilkan tombol 'Tanya WA' ke Admin"]
+        TombolWA --> TanyaWA
+        
+        CekStatus -- "tersedia" --> TombolPesan["Sistem menampilkan tombol 'Pesan Unit' terintegrasi parameter URL"]
+        TombolPesan --> KlikPesan
+        
+        DetailKamar --> KalkulasiOtomatis["Sistem secara otomatis mengeksekusi JS hitungEstimasi() total tarif"]
+        KalkulasiOtomatis --> TampilForm
+    end

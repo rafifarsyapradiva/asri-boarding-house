@@ -1,0 +1,100 @@
+classDiagram
+    direction TB
+
+    %% Layer 1: Security & Middlewares %%
+    namespace Security_Authorization {
+        class BaseResetPasswordNotification { <<abstract>> }
+        class AdminResetPasswordNotification
+        class PenyewaResetPasswordNotification
+        class ReservasiPolicy
+        class TagihanPolicy
+        class Middlewares
+    }
+
+    %% Layer 2: Business Service Layer %%
+    namespace Business_Services {
+        class PdfGeneratorInterface { <<interface>> }
+        class DompdfGenerator
+        class PdfNotaService
+        class BillingService
+        class ReservasiService
+        class TransisiPenyewaService
+        class AdminPenyewaService
+        class TagihanService
+        class DashboardAnalyticsService
+        class NotifikasiService
+    }
+
+    %% Layer 3: Event-Driven Infrastructure %%
+    namespace Event_Queues {
+        class ReservasiDibuat
+        class TagihanDibuat
+        class PembayaranBerhasil
+        class HandleTagihanDibuat
+        class GeneratePdfNotaListener
+        class KirimNotifikasiTagihanJob
+        class GeneratePdfNotaJob
+    }
+
+    %% Layer 4: Data Models & Persistence %%
+    namespace Data_Persistence {
+        class User
+        class Kamar
+        class Fasilitas
+        class Penyewa
+        class Tagihan
+        class Pembayaran
+        class Reservasi
+        class ChatMessage
+        class Keluhan
+        class Pengeluaran
+        class PenyewaObserver
+        class KamarObserver
+    }
+
+    %% Relasi Realization & Inheritance %%
+    AdminResetPasswordNotification --|> BaseResetPasswordNotification : Extends
+    PenyewaResetPasswordNotification --|> BaseResetPasswordNotification : Extends
+    DompdfGenerator ..|> PdfGeneratorInterface : Implements
+    PdfNotaService ..> PdfGeneratorInterface : Uses
+
+    %% Relasi Service Dependencies %%
+    TransisiPenyewaService ..> BillingService : Uses
+    AdminPenyewaService ..> BillingService : Uses
+    TransisiPenyewaService ..> ReservasiService : Coordinates
+
+    %% Relasi Policy & Middlewares to Models %%
+    ReservasiPolicy ..> Reservasi : Authorizes
+    TagihanPolicy ..> Tagihan : Authorizes
+    Middlewares ..> User : Guards
+
+    %% Relasi Service to Models %%
+    BillingService ..> Tagihan : Generates
+    BillingService ..> Penyewa : Manages
+    ReservasiService ..> Reservasi : Processes
+    TagihanService ..> Pembayaran : Records
+    DashboardAnalyticsService ..> Pembayaran : Aggregates
+
+    %% Relasi Event & Queues %%
+    TagihanDibuat ..> HandleTagihanDibuat : Triggers
+    HandleTagihanDibuat ..> KirimNotifikasiTagihanJob : Dispatches
+    KirimNotifikasiTagihanJob ..> NotifikasiService : Executes
+    PembayaranBerhasil ..> GeneratePdfNotaListener : Triggers
+    GeneratePdfNotaListener ..> GeneratePdfNotaJob : Dispatches
+    GeneratePdfNotaJob ..> PdfNotaService : Executes
+
+    %% Relasi Domain Associations %%
+    User "1" -- "0..1" Penyewa : 1 to 0..1
+    Kamar "1" -- "*" Penyewa : 1 to N
+    Kamar "*" -- "*" Fasilitas : N to M
+    Penyewa "1" -- "*" Tagihan : 1 to N
+    Tagihan "1" -- "*" Pembayaran : 1 to N
+    User "1" -- "*" Reservasi : 1 to N
+    Kamar "1" -- "*" Reservasi : 1 to N
+    Reservasi "1" *-- "*" ChatMessage : Composition
+    Penyewa "1" -- "*" Keluhan : 1 to N
+
+    %% Relasi Observers %%
+    PenyewaObserver ..> Penyewa : Observes
+    PenyewaObserver ..> Kamar : Locks room
+    KamarObserver ..> Kamar : Observes

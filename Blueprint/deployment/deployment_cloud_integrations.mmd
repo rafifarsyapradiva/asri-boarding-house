@@ -1,0 +1,59 @@
+flowchart LR
+    subgraph Browser["Web Browser (Client Device)"]
+        SnapJS["Midtrans Snap.js UI"]
+        OAuthUI["OAuth Web Consent"]
+        InAppBell["In-App Notifications UI"]
+    end
+
+    subgraph LaravelApp["Laravel 11 Backend (Hostinger Server)"]
+        MidtransServ["MidtransService"]
+        FonnteServ["FonnteService"]
+        SocialiteServ["Socialite Service"]
+        MailServ["Symfony Mailer"]
+        NotifServ["NotifikasiService (In-App)"]
+    end
+
+    subgraph DatabaseLayer["MySQL Database (localhost:3306)"]
+        NotifTable["Table: notifikasis & notifikasi_khusus"]
+    end
+
+    subgraph ExternalServices["External Cloud & API Services"]
+        Midtrans["Midtrans Cloud API Gateway"]
+        Fonnte["Fonnte WhatsApp API Gateway"]
+        GoogleAuth["Google Cloud Identity API"]
+        SMTPServer["Google SMTP Server (Gmail)"]
+    end
+
+    subgraph Receivers["End Users / Notification Receivers"]
+        Subscriber["📱 Tenant / Wali Smartphone (WhatsApp)"]
+        MailBox["📬 Tenant Mailbox (Email Inbox)"]
+    end
+
+    %% Interactions
+    MidtransServ -->|"1. Generate Snap Token (HTTPS POST)"| Midtrans
+    Midtrans -->|"2. Return snap_token"| MidtransServ
+    SnapJS <-->|"3. Load Payment Modal & Pay"| Midtrans
+    Midtrans -.->|"4. Dual Webhook Callback (POST /api/midtrans/callback & /callback-reservasi)"| LaravelApp
+
+    FonnteServ -->|"5. Push WA notification (HTTPS POST)"| Fonnte
+    Fonnte -->|"6. Cellular / WA Protocol delivery"| Subscriber
+
+    SocialiteServ <-->|"7. OAuth code verification exchange"| GoogleAuth
+    OAuthUI <-->|"8. Authentication Consent Flow"| GoogleAuth
+
+    MailServ -->|"9. SMTP Dispatch (Port 587 - TLS)"| SMTPServer
+    SMTPServer -->|"10. Deliver PDF invoice/reset mail"| MailBox
+
+    NotifServ -->|"11. Save in-app notification"| NotifTable
+    NotifTable -.->|"12. Rendered to dashboard"| InAppBell
+
+    %% Styling
+    classDef server fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef client fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef ext fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#4A148C;
+    classDef db fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
+
+    class LaravelApp,MidtransServ,FonnteServ,SocialiteServ,MailServ,NotifServ server;
+    class Browser,SnapJS,OAuthUI,InAppBell client;
+    class ExternalServices,Midtrans,Fonnte,GoogleAuth,SMTPServer,Receivers,Subscriber,MailBox ext;
+    class DatabaseLayer,NotifTable db;

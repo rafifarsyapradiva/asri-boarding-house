@@ -1,0 +1,55 @@
+stateDiagram-v2
+    state "Siklus Hidup Reservasi (Calon Penyewa)" as ReservasiLifecycle {
+        [*] --> Res_Pending : Checkout Booking Kamar
+        Res_Pending --> Res_DP : Settlement / Cash [DP 30%]
+        Res_Pending --> Res_Lunas : Settlement / Cash [Lunas 100%]
+        Res_Pending --> Res_Batal : Timeout 24 Jam / Double-Booking
+        
+        Res_DP --> Res_Dikonfirmasi : Admin Konfirmasi [NIK & Wali OK]
+        Res_Lunas --> Res_Dikonfirmasi : Admin Konfirmasi [NIK & Wali OK]
+        Res_DP --> Res_Batal : Batalkan Sebelum Konfirmasi
+        Res_Lunas --> Res_Batal : Batalkan Sebelum Konfirmasi
+        
+        Res_Dikonfirmasi --> Res_Selesai : Auto-Onboarding [User & Tenant]
+        Res_Batal --> [*] : Kunci Kamar Dilepas
+        Res_Selesai --> [*]
+    }
+
+    state "Siklus Hidup Penyewa Aktif (Tenant)" as PenyewaLifecycle {
+        [*] --> Pen_Aktif : Konfirmasi Reservasi / Registrasi Manual
+        Pen_Aktif --> Pen_Aktif : Perpanjang Sewa [Harian/Mingguan]
+        Pen_Aktif --> Pen_Nonaktif : Checkout [Potong Deposit jika Rusak]
+        Pen_Nonaktif --> Pen_Aktif : Reaktivasi [Kamar 'tersedia']
+        Pen_Nonaktif --> [*] : Selesai Menghuni
+    }
+
+    state "Siklus Hidup Tagihan Bulanan (Billing)" as TagihanLifecycle {
+        [*] --> Tag_Pending : Scheduler Tgl 1 / Sisa DP 70%
+        [*] --> Tag_Lunas : Full Payment / Registrasi Manual
+        
+        Tag_Pending --> Tag_Lunas : Settlement / Cash [Valid]
+        Tag_Pending --> Tag_Terlambat : Scheduler [t > Tgl 10]
+        Tag_Pending --> Tag_Gagal : Webhook Deny / Fraud
+        Tag_Pending --> Tag_Kadaluarsa : Sesi Snap Expired
+        
+        Tag_Terlambat --> Tag_Lunas : Bayar Pokok + Denda 5%
+        Tag_Terlambat --> Tag_Terlambat : Sesi Snap Expire [Anti-Regression]
+        
+        Tag_Gagal --> Tag_Pending : Klik Bayar / Regenerate SNAP
+        Tag_Kadaluarsa --> Tag_Pending : Klik Bayar / Regenerate SNAP
+        Tag_Lunas --> [*] : Kuitansi PDF & WA Sukses
+    }
+
+    state "Siklus Status Kamar Fisik (Room Allocation)" as KamarLifecycle {
+        [*] --> Kam_Tersedia : Kamar Baru Ditambahkan
+        Kam_Tersedia --> Kam_Terisi : Konfirmasi / Registrasi Penyewa
+        Kam_Terisi --> Kam_Terisi : Checkout [Kunci Kamar Tetap 'terisi']
+        Kam_Terisi --> Kam_Tersedia : Inspeksi Fisik OK / Set Tersedia
+        Kam_Terisi --> Kam_Maintenance : Kerusakan Ditemukan / Set Perawatan
+        Kam_Maintenance --> Kam_Tersedia : Perbaikan Selesai / Set Tersedia
+    }
+
+    ReservasiLifecycle --> PenyewaLifecycle : Auto-Onboarding
+    PenyewaLifecycle --> TagihanLifecycle : Tagihan Bulanan
+    ReservasiLifecycle --> KamarLifecycle : Alokasi Unit
+    PenyewaLifecycle --> KamarLifecycle : Menghuni Unit

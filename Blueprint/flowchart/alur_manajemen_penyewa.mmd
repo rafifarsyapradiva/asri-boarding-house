@@ -1,0 +1,41 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaMenuPenyewa[/Admin masuk Menu Manajemen Penyewa /admin/penyewa/]
+    BukaMenuPenyewa --> PilihAksi{"Pilih Tindakan CRUD?"}
+    
+    PilihAksi -- "Tambah / Edit Penyewa" --> IsiFormPenyewa[/Isi NIK, No HP & Nama Wali, Deposit, Durasi, Tipe Sewa, & Kamar/]
+    IsiFormPenyewa --> KlikSimpan[/Admin klik Simpan/]
+    KlikSimpan --> ValidasiForm{"Apakah validasi input form sukses?"}
+    ValidasiForm -- "Tidak" --> TampilError[/Tampilkan pesan error validation & Toast di form/]
+    TampilError --> IsiFormPenyewa
+    
+    ValidasiForm -- "Ya" --> CekReaktivasi{"Apakah status diubah dari nonaktif menjadi aktif?"}
+    CekReaktivasi -- "Tidak" --> SimpanDB[[Sistem menyimpan data profil penyewa ke database]]
+    SimpanDB --> SuccessToast[/Tampilkan Toast Success & muat ulang daftar/]
+    SuccessToast --> Selesai([Selesai])
+    
+    CekReaktivasi -- "Ya" --> CekKetersediaanKamar{"Apakah kamar terkait berstatus tersedia?"}
+    CekKetersediaanKamar -- "Tidak" --> BlockReaktivasi[[Sistem membatalkan pembaruan & memicu Toast error: Kamar tidak tersedia]]
+    BlockReaktivasi --> IsiFormPenyewa
+    CekKetersediaanKamar -- "Ya" --> SimpanReaktivasi[[1. Simpan data reaktivasi aktif<br>2. Ubah status kamar menjadi terisi secara otomatis]]
+    SimpanReaktivasi --> SuccessToast
+    
+    PilihAksi -- "Hapus Penyewa" --> KlikHapus[/Admin klik tombol Hapus penyewa & konfirmasi modal/]
+    KlikHapus --> CekRiwayatTagihan{"Apakah penyewa memiliki riwayat tagihan?"}
+    
+    CekRiwayatTagihan -- "Ya" --> BlockDelete[[Sistem menolak penghapusan demi integritas keuangan]]
+    BlockDelete --> Selesai
+    
+    CekRiwayatTagihan -- "Tidak" --> HapusDB[[Hapus data profil penyewa & hapus akun user dari tabel users]]
+    HapusDB --> SuccessHapusToast[/Tampilkan Toast Success: Data penyewa berhasil dihapus/]
+    SuccessHapusToast --> Selesai

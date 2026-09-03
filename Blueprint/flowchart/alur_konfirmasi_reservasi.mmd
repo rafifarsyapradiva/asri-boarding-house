@@ -1,0 +1,37 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> AdminBukaReservasi[/Admin membuka menu Daftar Reservasi /admin/reservasi/]
+    AdminBukaReservasi --> PilihReservasi[/Admin memilih reservasi berstatus dp atau lunas/]
+    PilihReservasi --> TinjauBerkas[/Admin memverifikasi NIK KTP & Telepon Wali/]
+    TinjauBerkas --> KlikKonfirmasi[/Admin klik tombol Konfirmasi Reservasi/]
+    
+    KlikKonfirmasi --> ValidasiInput{"Apakah input data valid?<br>NIK 16 digit & No Wali valid"}
+    ValidasiInput -- "Tidak" --> TampilToastError[/Kembalikan dengan Toast Error validation/]
+    TampilToastError --> TinjauBerkas
+    
+    ValidasiInput -- "Ya" --> DBTrans[[DB::transaction dimulai]]
+    DBTrans --> UpdateReservasi[[1. Ubah status reservasi dikonfirmasi<br>2. Simpan tanggal_konfirmasi = NOW]]
+    UpdateReservasi --> LockKamarTerisi[[Ubah status kamar terkait menjadi terisi secara permanen]]
+    LockKamarTerisi --> SalinHargaSewa[[Salin harga kamar saat ini ke penyewa.harga_sewa secara immutable]]
+    SalinHargaSewa --> CreateAccountUser[[Buat akun User baru role: penyewa, require_password_change: true]]
+    CreateAccountUser --> CreateProfilPenyewa[[Buat data Profil Penyewa baru di tabel penyewa]]
+    
+    CreateProfilPenyewa --> CekSkemaDP{"Apakah reservasi menggunakan skema DP?"}
+    CekSkemaDP -- "Ya" --> InjectTagihanSisa[[Sistem menginjeksi tagihan sisa pelunasan 70% ke tabel tagihan]]
+    CekSkemaDP -- "Tidak / Lunas" --> CommitTx
+    InjectTagihanSisa --> CommitTx
+    CommitTx[[Commit DB Transaction secara atomik]]
+    
+    CommitTx --> DispatchFonnteWA[/Kirim WhatsApp kredensial login Email & Password default via Fonnte API/]
+    DispatchFonnteWA --> ToastSuccess[/Tampilkan Toast: Penyewa berhasil diaktivasi & kredensial terkirim/]
+    ToastSuccess --> Selesai([Selesai])

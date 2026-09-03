@@ -1,0 +1,36 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaKatalog[/Guest membuka katalog kamar /kamar atau Beranda/]
+    BukaKatalog --> RenderLandingUI["Render Komponen UI Landing: Navbar Responsif, Floating WhatsApp Button, & Room Tour Video"]
+    
+    RenderLandingUI --> InputFilter[/User memasukkan Filter Lantai, Tipe, Tanggal, Durasi/]
+    
+    InputFilter --> QueryKamar[[Sistem eksekusi Query: SELECT * FROM kamar WHERE status != maintenance]]
+    
+    QueryKamar --> CekKosong{"Apakah hasil pencarian ditemukan?"}
+    CekKosong -- "Tidak - 0 Result" --> RenderEmptyState[/Tampilkan Empty State UI Kamar Tidak Ditemukan + Tombol Reset Filter/]
+    RenderEmptyState --> InputFilter
+    
+    CekKosong -- "Ya" --> Tampilkan[/Tampilkan daftar unit kamar di grid katalog/]
+    Tampilkan --> EvaluasiStatus{"Bagaimana status unit kamar?"}
+    
+    EvaluasiStatus -- "terisi" --> TampilTombolWA[/Tampilkan tombol Tanya WA/]
+    TampilTombolWA --> KlikWA[/Arahkan ke WhatsApp Chat Admin/]
+    KlikWA --> Selesai([Selesai])
+    
+    EvaluasiStatus -- "tersedia" --> TampilTombolPesan[/Tampilkan tombol Pesan Unit/]
+    TampilTombolPesan --> KlikPesan[/Guest klik Pesan Unit/]
+    KlikPesan --> BukaDetail[/Buka detail kamar /kamar/:id beserta query string/]
+    BukaDetail --> AutoKalkulasi[[JS otomatis eksekusi hitungEstimasi tarif total]]
+    AutoKalkulasi --> TampilForm[/Form reservasi siap diisi di detail kamar/]
+    TampilForm --> Selesai

@@ -1,0 +1,52 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Admin ["Swimlane: Administrator"]
+        Start([Mulai]) --> BukaPengeluaran["Admin membuka Menu Manajemen Pengeluaran (/admin/pengeluaran)"]
+        BukaPengeluaran --> PilihAksiCRUD{"Pilih tindakan CRUD?"}
+        
+        PilihAksiCRUD -- "Tambah Pengeluaran" --> IsiFormTambah["Isi Nama Pengeluaran, Kategori, Tanggal, Nominal (>0), Keterangan, & Upload Bukti Nota"]
+        IsiFormTambah --> KlikSimpan["Admin klik Simpan"]
+        TampilValidationError["Sistem menampilkan pesan error validation"] --> IsiFormTambah
+        
+        PilihAksiCRUD -- "Edit Pengeluaran" --> BukaFormEdit["Buka form edit data pengeluaran"]
+        PilihAksiCRUD -- "Hapus Pengeluaran" --> KlikHapus["Admin klik tombol hapus & konfirmasi modal"]
+        
+        FilterLaporan["Admin menyaring laporan berdasarkan Rentang Tanggal / Bulan & Tahun"] --> KlikEkspor["Admin klik tombol Ekspor PDF / Excel"]
+    end
+
+    subgraph Swimlane_Backend ["Swimlane: Backend Laravel, Arus Kas Engine, & Dompdf/Spreadsheet"]
+        KlikSimpan --> ValidasiForm{"Apakah nominal valid (>0) & foto bukti < 2MB?"}
+        ValidasiForm -- Tidak --> TampilValidationError
+        ValidasiForm -- Ya --> SimpanPengeluaran["1. Simpan ke database tabel pengeluaran<br>2. Upload file bukti nota ke public storage"]
+        
+        BukaFormEdit --> CekFileFotoBaru{"Apakah mengunggah foto baru?"}
+        CekFileFotoBaru -- Tidak --> SimpanTanpaGantiFoto["Simpan perubahan data dengan mempertahankan referensi foto nota lama di DB"]
+        CekFileFotoBaru -- Ya --> SimpanDenganGantiFoto["1. Hapus berkas foto nota lama dari storage<br>2. Upload file foto baru ke storage<br>3. Simpan data & path baru ke database"]
+        
+        KlikHapus --> HapusDbPengeluaran["Hapus baris data pengeluaran dari database"]
+        HapusDbPengeluaran --> CleanupFileNota["Sistem menghapus file foto bukti nota secara fisik dari storage (File Cleanup)"]
+        
+        SimpanPengeluaran --> KonsolidasiData["Sistem melakukan konsolidasi laporan arus kas secara real-time"]
+        SimpanTanpaGantiFoto --> KonsolidasiData
+        SimpanDenganGantiFoto --> KonsolidasiData
+        CleanupFileNota --> KonsolidasiData
+        
+        KonsolidasiData --> TampilkanKas["Dashboard & Laporan menghitung:<br>1. Kas Masuk = (Tagihan Lunas + Reservasi DP & Lunas)<br>2. Kas Keluar = (Total Nominal Pengeluaran)<br>3. Laba Bersih = Kas Masuk - Kas Keluar"]
+        TampilkanKas --> FilterLaporan
+        
+        KlikEkspor --> UnduhFileLaporan["Sistem generate berkas via Dompdf / Spreadsheet & file terunduh otomatis"]
+        UnduhFileLaporan --> Selesai([Selesai])
+    end

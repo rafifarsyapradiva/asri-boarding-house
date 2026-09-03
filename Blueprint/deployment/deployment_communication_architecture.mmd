@@ -1,0 +1,102 @@
+flowchart TD
+    %% =========================================================================
+    %% TIER 1: CLIENT & MANAGEMENT ACCESS LAYER
+    %% =========================================================================
+    subgraph Tier1["📱 TIER 1: CLIENT & MANAGEMENT LAYER (PUBLIC INTERNET)"]
+        direction LR
+        Browser["🌐 User Web Browser<br/><b>(Desktop & Smartphone)</b><br/>• Blade HTML Views & Tailwind CSS<br/>• Alpine.js Runtime (Adaptive Chat Polling)<br/>• Midtrans Snap.js Modal SDK"]
+        DevAdmin["💻 Developer / Admin Station<br/>• Git Client & SSH Terminal<br/>• FileZilla SFTP Client<br/>• Web Browser (Hostinger hPanel)"]
+    end
+
+    %% =========================================================================
+    %% TIER 2: HOSTINGER PRODUCTION SERVER (CLOUDLINUX LVE)
+    %% =========================================================================
+    subgraph Tier2["🌐 TIER 2: WEB & APPLICATION SERVER (HOSTINGER CLOUDLINUX LVE)"]
+        direction TB
+        subgraph WebServerSub["Web Server Gateway (LiteSpeed Enterprise)"]
+            LiteSpeed["🚀 LiteSpeed Web Server (Port 80 / 443)<br/>• SSL/TLS Termination (Sectigo / Let's Encrypt)<br/>• .htaccess Rewrite & Compression Engine"]
+            StaticCache["📦 Direct Static Asset Engine<br/>• public/build/ (Vite JS/CSS)<br/>• public/storage/ (Symlinked Media Files)<br/>• public/images/ & favicon.ico"]
+        end
+
+        subgraph AppRuntimeSub["Application Engine (PHP 8.2+ Runtime via mod_lsapi)"]
+            LaravelApp["⚙️ Laravel 11 Application Container<br/>• Security Middleware (VerifyMidtransSignature, Role:admin/penyewa)<br/>• Core Services (BillingService, ReservasiService, TransisiPenyewaService)<br/>• Integration Clients (MidtransService, FonnteService, Socialite, Mailer)<br/>• Task Schedulers & Background Workers (Cron Setiap Menit)"]
+        end
+        
+        LiteSpeed -->|"1. Static Assets Direct Serving (Bypass PHP)"| StaticCache
+        LiteSpeed <-->|"2. Dynamic Requests via mod_lsapi (FastCGI IPC)"| LaravelApp
+    end
+
+    %% =========================================================================
+    %% TIER 3: DATA PERSISTENCE & STORAGE LAYER
+    %% =========================================================================
+    subgraph Tier3["🗄️ TIER 3: DATA PERSISTENCE & FILE STORAGE LAYER"]
+        direction LR
+        MySQLDB[("🗄️ MySQL 8.x Database Server<br/><b>IP: 127.0.0.1 | Port: 3306 (Internal)</b><br/>• Relational Data (users, kamars, reservasis, tagihans, pembayarans)<br/>• Framework Data (sessions, jobs, job_batches, cache_locks)")]
+        SSDDisk[("💾 Shared SSD File System<br/><b>storage/app/public/ & private/</b><br/>• Foto Kamar, PDF Nota, Bukti Pengeluaran, Keluhan")]
+    end
+
+    %% =========================================================================
+    %% TIER 4: EXTERNAL CLOUD SERVICES & APIS
+    %% =========================================================================
+    subgraph Tier4["☁️ TIER 4: EXTERNAL CLOUD SERVICES & API GATEWAYS"]
+        direction TB
+        Midtrans["💳 Midtrans Payment Gateway<br/><b>api.midtrans.com:443 (Production/Sandbox)</b><br/>• Snap Token API Generation<br/>• Dual Webhook Notification Dispatch"]
+        Fonnte["💬 Fonnte WhatsApp API Gateway<br/><b>api.fonnte.com:443</b><br/>• Automated WhatsApp Messages Dispatch"]
+        GoogleAuth["🔑 Google Identity Services<br/><b>accounts.google.com:443</b><br/>• OAuth 2.0 Single Sign-On Authentication"]
+        GoogleMail["✉️ Google SMTP Mail Server<br/><b>smtp.gmail.com:587 (TLS)</b><br/>• Transactional Email & PDF Invoice Dispatch"]
+        GitHub["🐙 GitHub VCS Platform<br/><b>github.com:443 / :22</b><br/>• Auto-Deployment Webhook Trigger"]
+    end
+
+    %% =========================================================================
+    %% TIER 5: END-USER RECEIVER TERMINALS
+    %% =========================================================================
+    subgraph Tier5["📲 TIER 5: END-USER NOTIFICATION RECEIVERS"]
+        direction LR
+        UserPhone["📱 Smartphone Penyewa / Wali<br/>(WhatsApp Official Application)"]
+        UserMail["📬 Tenant Mailbox<br/>(Email Client / Webmail)"]
+    end
+
+    %% =========================================================================
+    %% COMMUNICATION FLOWS & PROTOCOLS
+    %% =========================================================================
+    %% 1. Web Traffic & Management
+    Browser <-->|"① HTTPS (Port 443 - TLS 1.3) GET / POST"| LiteSpeed
+    DevAdmin -->|"② SFTP / SSH (Port 65002) & hPanel HTTPS (Port 443)"| Tier2
+    GitHub -->|"③ Auto-Deploy Webhook (HTTPS Port 443)"| LiteSpeed
+
+    %% 2. Internal Database & Storage
+    LaravelApp <-->|"④ TCP/IP (Port 3306 - PDO MySQL Driver)"| MySQLDB
+    LaravelApp <-->|"⑤ File I/O Read / Write (storage/app/)"| SSDDisk
+    SSDDisk -.->|"Symlink Bridge"| StaticCache
+
+    %% 3. Midtrans Payment Flow
+    LaravelApp -->|"⑥a Outbound Token Request (HTTPS POST :443 | Basic Auth)"| Midtrans
+    Browser <-->|"⑥b Direct Snap Payment Modal (HTTPS Port 443)"| Midtrans
+    Midtrans -->|"⑥c Webhook POST (/api/midtrans/callback & /callback-reservasi) + SHA512"| LiteSpeed
+
+    %% 4. Fonnte WhatsApp Flow
+    LaravelApp -->|"⑦ Push Notification (HTTPS POST :443 | Bearer Token)"| Fonnte
+    Fonnte -->|"⑧ Cellular / WhatsApp Message Protocol"| UserPhone
+
+    %% 5. Google OAuth Flow
+    LaravelApp <-->|"⑨ OAuth 2.0 Token Exchange (HTTPS Port 443)"| GoogleAuth
+    Browser <-->|"⑩ OAuth User Consent UI (HTTPS Port 443)"| GoogleAuth
+
+    %% 6. Google SMTP Flow
+    LaravelApp -->|"⑪ Outbound Email Dispatch (SMTP Port 587 - TLS + App Password)"| GoogleMail
+    GoogleMail -->|"⑫ SMTP / IMAP Mail Delivery"| UserMail
+
+    %% =========================================================================
+    %% STYLING
+    %% =========================================================================
+    classDef client fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef server fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef db fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
+    classDef ext fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#4A148C;
+    classDef receiver fill:#FCE4EC,stroke:#C2185B,stroke-width:1.5px,color:#880E4F;
+
+    class Browser,DevAdmin client;
+    class LiteSpeed,StaticCache,LaravelApp server;
+    class MySQLDB,SSDDisk db;
+    class Midtrans,Fonnte,GoogleAuth,GoogleMail,GitHub ext;
+    class UserPhone,UserMail receiver;

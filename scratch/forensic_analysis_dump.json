@@ -1,0 +1,1463 @@
+{
+  "models": {
+    "ChatMessage": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\ChatMessage.php",
+      "table": "chat_messages",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "reservasi_id",
+        "sender_id",
+        "message",
+        "is_read"
+      ],
+      "guarded": [],
+      "casts": {
+        "created_at": "datetime"
+      },
+      "relationships": [
+        {
+          "name": "reservasi",
+          "type": "belongsTo",
+          "target": "Reservasi::class",
+          "foreign_key": "reservasi_id')->withTrashed(",
+          "other_key": ""
+        },
+        {
+          "name": "sender",
+          "type": "belongsTo",
+          "target": "User::class",
+          "foreign_key": "sender_id')->withTrashed(",
+          "other_key": ""
+        }
+      ],
+      "constants": {}
+    },
+    "CustomerReview": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\CustomerReview.php",
+      "table": "customer_reviews",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "nama",
+        "pekerjaan",
+        "bintang",
+        "ulasan",
+        "foto"
+      ],
+      "guarded": [],
+      "casts": {
+        "bintang": "integer"
+      },
+      "relationships": [],
+      "constants": {}
+    },
+    "Faq": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Faq.php",
+      "table": "faqs",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "pertanyaan",
+        "jawaban",
+        "urutan",
+        "is_active"
+      ],
+      "guarded": [],
+      "casts": {
+        "is_active": "boolean"
+      },
+      "relationships": [],
+      "constants": {}
+    },
+    "Fasilitas": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Fasilitas.php",
+      "table": "fasilitas",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "nama",
+        "ikon",
+        "deskripsi",
+        "is_active"
+      ],
+      "guarded": [],
+      "casts": {
+        "is_active": "boolean"
+      },
+      "relationships": [
+        {
+          "name": "kamar",
+          "type": "belongsToMany",
+          "target": "Kamar::class",
+          "foreign_key": "kamar_fasilitas",
+          "other_key": "fasilitas_id"
+        }
+      ],
+      "constants": {}
+    },
+    "Gallery": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Gallery.php",
+      "table": "galleries",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "judul",
+        "deskripsi",
+        "foto",
+        "urutan",
+        "is_active"
+      ],
+      "guarded": [],
+      "casts": {
+        "is_active": "boolean"
+      },
+      "relationships": [],
+      "constants": {}
+    },
+    "GuestChatMessage": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\GuestChatMessage.php",
+      "table": "guest_chat_messages",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "guest_chat_thread_id",
+        "sender_type",
+        "sender_id",
+        "message",
+        "is_read"
+      ],
+      "guarded": [],
+      "casts": {
+        "is_read": "boolean"
+      },
+      "relationships": [
+        {
+          "name": "thread",
+          "type": "belongsTo",
+          "target": "GuestChatThread::class",
+          "foreign_key": "guest_chat_thread_id",
+          "other_key": ""
+        },
+        {
+          "name": "sender",
+          "type": "belongsTo",
+          "target": "User::class",
+          "foreign_key": "sender_id')->withTrashed(",
+          "other_key": ""
+        }
+      ],
+      "constants": {}
+    },
+    "GuestChatThread": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\GuestChatThread.php",
+      "table": "guest_chat_threads",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "session_token",
+        "name",
+        "no_hp",
+        "status"
+      ],
+      "guarded": [],
+      "casts": {},
+      "relationships": [
+        {
+          "name": "messages",
+          "type": "hasMany",
+          "target": "GuestChatMessage::class",
+          "foreign_key": "guest_chat_thread_id",
+          "other_key": ""
+        },
+        {
+          "name": "latestMessage",
+          "type": "hasOne",
+          "target": "GuestChatMessage::class",
+          "foreign_key": "guest_chat_thread_id')->latestOfMany('id",
+          "other_key": ""
+        }
+      ],
+      "constants": {}
+    },
+    "Kamar": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Kamar.php",
+      "table": "kamar",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": true,
+      "fillable": [
+        "nomor_kamar",
+        "lantai",
+        "tipe",
+        "luas_m2",
+        "harga_bulan",
+        "deskripsi",
+        "foto",
+        "status"
+      ],
+      "guarded": [],
+      "casts": {
+        "harga_bulan": "integer",
+        "luas_m2": "float",
+        "lantai": "integer"
+      },
+      "relationships": [
+        {
+          "name": "fasilitas",
+          "type": "belongsToMany",
+          "target": "Fasilitas::class",
+          "foreign_key": "kamar_fasilitas",
+          "other_key": "kamar_id"
+        },
+        {
+          "name": "penyewaAktif",
+          "type": "hasOne",
+          "target": "Penyewa::class",
+          "foreign_key": "kamar_id",
+          "other_key": "id')->where('status"
+        },
+        {
+          "name": "reservasi",
+          "type": "hasMany",
+          "target": "Reservasi::class",
+          "foreign_key": "kamar_id",
+          "other_key": ""
+        },
+        {
+          "name": "penyewa",
+          "type": "hasMany",
+          "target": "Penyewa::class",
+          "foreign_key": "kamar_id",
+          "other_key": ""
+        },
+        {
+          "name": "reservasiAktif",
+          "type": "hasMany",
+          "target": "Reservasi::class",
+          "foreign_key": "kamar_id')->where('status",
+          "other_key": "!="
+        }
+      ],
+      "constants": {}
+    },
+    "Keluhan": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Keluhan.php",
+      "table": "keluhan",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "penyewa_id",
+        "judul",
+        "kategori",
+        "deskripsi",
+        "foto_bukti",
+        "status",
+        "tanggapan_admin",
+        "tanggal_selesai"
+      ],
+      "guarded": [],
+      "casts": {
+        "tanggal_selesai": "datetime"
+      },
+      "relationships": [
+        {
+          "name": "penyewa",
+          "type": "belongsTo",
+          "target": "Penyewa::class",
+          "foreign_key": "penyewa_id",
+          "other_key": "id')->withTrashed("
+        }
+      ],
+      "constants": {}
+    },
+    "LogNotifikasi": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\LogNotifikasi.php",
+      "table": "log_notifikasi",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "penyewa_id",
+        "tagihan_id",
+        "channel",
+        "event",
+        "status",
+        "pesan",
+        "error_msg"
+      ],
+      "guarded": [],
+      "casts": {
+        "created_at": "datetime"
+      },
+      "relationships": [
+        {
+          "name": "penyewa",
+          "type": "belongsTo",
+          "target": "Penyewa::class",
+          "foreign_key": "penyewa_id",
+          "other_key": "id')->withTrashed("
+        },
+        {
+          "name": "tagihan",
+          "type": "belongsTo",
+          "target": "Tagihan::class",
+          "foreign_key": "tagihan_id",
+          "other_key": "id"
+        }
+      ],
+      "constants": {}
+    },
+    "NotifikasiKhusus": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\NotifikasiKhusus.php",
+      "table": "notifikasi_khusus",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "sumber",
+        "tipe_aktivitas",
+        "deskripsi",
+        "data_detail",
+        "user_id"
+      ],
+      "guarded": [],
+      "casts": {
+        "data_detail": "array"
+      },
+      "relationships": [
+        {
+          "name": "user",
+          "type": "belongsTo",
+          "target": "User::class",
+          "foreign_key": "user_id",
+          "other_key": "id')->withTrashed("
+        }
+      ],
+      "constants": {}
+    },
+    "Pembayaran": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Pembayaran.php",
+      "table": "pembayaran",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "tagihan_id",
+        "transaction_id",
+        "payment_type",
+        "bank",
+        "va_number",
+        "nominal",
+        "status_midtrans",
+        "dikonfirmasi_oleh",
+        "signature_key",
+        "response_json",
+        "tanggal_bayar",
+        "pdf_path"
+      ],
+      "guarded": [],
+      "casts": {
+        "response_json": "array",
+        "tanggal_bayar": "datetime"
+      },
+      "relationships": [
+        {
+          "name": "tagihan",
+          "type": "belongsTo",
+          "target": "Tagihan::class",
+          "foreign_key": "tagihan_id",
+          "other_key": "id"
+        },
+        {
+          "name": "dikonfirmasiOleh",
+          "type": "belongsTo",
+          "target": "User::class",
+          "foreign_key": "dikonfirmasi_oleh",
+          "other_key": "id')->withTrashed("
+        }
+      ],
+      "constants": {}
+    },
+    "Pengeluaran": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Pengeluaran.php",
+      "table": "pengeluaran",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "nama_pengeluaran",
+        "kategori",
+        "nominal",
+        "tanggal_pengeluaran",
+        "bukti_nota",
+        "keterangan"
+      ],
+      "guarded": [],
+      "casts": {
+        "tanggal_pengeluaran": "date",
+        "nominal": "decimal:2"
+      },
+      "relationships": [],
+      "constants": {}
+    },
+    "Pengumuman": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Pengumuman.php",
+      "table": "pengumuman",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "judul",
+        "isi",
+        "is_active"
+      ],
+      "guarded": [],
+      "casts": {
+        "is_active": "boolean"
+      },
+      "relationships": [],
+      "constants": {}
+    },
+    "Penyewa": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Penyewa.php",
+      "table": "penyewa",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": true,
+      "fillable": [
+        "user_id",
+        "kamar_id",
+        "harga_sewa",
+        "nik",
+        "tanggal_masuk",
+        "tanggal_keluar",
+        "tanggal_keluar_seharusnya",
+        "status",
+        "tanggal_billing",
+        "tipe_sewa",
+        "durasi",
+        "deposit",
+        "no_wali",
+        "nama_wali",
+        "catatan"
+      ],
+      "guarded": [],
+      "casts": {
+        "tanggal_masuk": "date",
+        "tanggal_keluar": "date",
+        "tanggal_keluar_seharusnya": "date",
+        "harga_sewa": "decimal:2"
+      },
+      "relationships": [
+        {
+          "name": "user",
+          "type": "belongsTo",
+          "target": "User::class",
+          "foreign_key": "user_id",
+          "other_key": "id')->withTrashed("
+        },
+        {
+          "name": "kamar",
+          "type": "belongsTo",
+          "target": "Kamar::class",
+          "foreign_key": "kamar_id",
+          "other_key": "id')->withTrashed("
+        },
+        {
+          "name": "keluhan",
+          "type": "hasMany",
+          "target": "Keluhan::class",
+          "foreign_key": "penyewa_id",
+          "other_key": "id"
+        },
+        {
+          "name": "tagihan",
+          "type": "hasMany",
+          "target": "Tagihan::class",
+          "foreign_key": "penyewa_id",
+          "other_key": "id"
+        }
+      ],
+      "constants": {}
+    },
+    "Peraturan": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Peraturan.php",
+      "table": "peraturan",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "judul",
+        "deskripsi",
+        "ikon",
+        "urutan"
+      ],
+      "guarded": [],
+      "casts": {},
+      "relationships": [],
+      "constants": {}
+    },
+    "Reservasi": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Reservasi.php",
+      "table": "reservasi",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": true,
+      "fillable": [
+        "user_id",
+        "kamar_id",
+        "dikonfirmasi_oleh",
+        "penyewa_id",
+        "tipe_sewa",
+        "tanggal_mulai",
+        "tanggal_selesai",
+        "durasi",
+        "total_harga",
+        "status",
+        "metode_pembayaran",
+        "is_dp",
+        "nominal_dp",
+        "nominal_sisa",
+        "snap_token",
+        "order_id",
+        "transaction_id",
+        "catatan_user",
+        "catatan_admin",
+        "tanggal_konfirmasi"
+      ],
+      "guarded": [],
+      "casts": {
+        "tanggal_mulai": "date",
+        "tanggal_selesai": "date",
+        "tanggal_konfirmasi": "datetime",
+        "is_dp": "boolean",
+        "total_harga": "decimal:2",
+        "nominal_dp": "decimal:2",
+        "nominal_sisa": "decimal:2"
+      },
+      "relationships": [
+        {
+          "name": "user",
+          "type": "belongsTo",
+          "target": "User::class",
+          "foreign_key": "user_id')->withTrashed(",
+          "other_key": ""
+        },
+        {
+          "name": "kamar",
+          "type": "belongsTo",
+          "target": "Kamar::class",
+          "foreign_key": "kamar_id')->withTrashed(",
+          "other_key": ""
+        },
+        {
+          "name": "dikonfirmasiOleh",
+          "type": "belongsTo",
+          "target": "User::class",
+          "foreign_key": "dikonfirmasi_oleh')->withTrashed(",
+          "other_key": ""
+        },
+        {
+          "name": "penyewa",
+          "type": "belongsTo",
+          "target": "Penyewa::class",
+          "foreign_key": "penyewa_id')->withTrashed(",
+          "other_key": ""
+        },
+        {
+          "name": "chatMessages",
+          "type": "hasMany",
+          "target": "ChatMessage::class",
+          "foreign_key": "reservasi_id",
+          "other_key": ""
+        },
+        {
+          "name": "latestMessage",
+          "type": "hasOne",
+          "target": "ChatMessage::class",
+          "foreign_key": "reservasi_id')->latestOfMany('id",
+          "other_key": ""
+        }
+      ],
+      "constants": {}
+    },
+    "Setting": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Setting.php",
+      "table": "settings",
+      "pk": "key",
+      "keyType": "string",
+      "incrementing": "false",
+      "soft_deletes": false,
+      "fillable": [
+        "key",
+        "value"
+      ],
+      "guarded": [],
+      "casts": {},
+      "relationships": [],
+      "constants": {}
+    },
+    "Tagihan": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\Tagihan.php",
+      "table": "tagihan",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "penyewa_id",
+        "order_id",
+        "periode_bulan",
+        "periode_tahun",
+        "tanggal_tagihan",
+        "tanggal_jatuh_tempo",
+        "nominal_pokok",
+        "nominal_denda",
+        "nominal_total",
+        "bulan_keterlambatan",
+        "status",
+        "metode_pembayaran",
+        "keterangan"
+      ],
+      "guarded": [],
+      "casts": {
+        "tanggal_tagihan": "date",
+        "tanggal_jatuh_tempo": "date"
+      },
+      "relationships": [
+        {
+          "name": "penyewa",
+          "type": "belongsTo",
+          "target": "Penyewa::class",
+          "foreign_key": "penyewa_id",
+          "other_key": "id')->withTrashed("
+        },
+        {
+          "name": "pembayaran",
+          "type": "hasMany",
+          "target": "Pembayaran::class",
+          "foreign_key": "tagihan_id",
+          "other_key": "id"
+        }
+      ],
+      "constants": {}
+    },
+    "User": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\User.php",
+      "table": null,
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": true,
+      "fillable": [
+        "nama",
+        "email",
+        "password",
+        "no_hp",
+        "nik",
+        "nama_wali",
+        "no_wali",
+        "role",
+        "foto",
+        "is_active",
+        "require_password_change"
+      ],
+      "guarded": [],
+      "casts": {
+        "email_verified_at": "datetime",
+        "password": "hashed",
+        "require_password_change": "boolean"
+      },
+      "relationships": [
+        {
+          "name": "penyewa",
+          "type": "hasOne",
+          "target": "Penyewa::class",
+          "foreign_key": "user_id",
+          "other_key": "id"
+        },
+        {
+          "name": "reservasi",
+          "type": "hasMany",
+          "target": "Reservasi::class",
+          "foreign_key": "user_id",
+          "other_key": ""
+        },
+        {
+          "name": "chatMessages",
+          "type": "hasMany",
+          "target": "ChatMessage::class",
+          "foreign_key": "sender_id",
+          "other_key": ""
+        }
+      ],
+      "constants": {
+        "ROLE_PENYEWA": "penyewa",
+        "ROLE_ADMIN": "admin"
+      }
+    },
+    "WhatsappClick": {
+      "file": "c:\\xampp\\htdocs\\asri-boarding-house\\app\\Models\\WhatsappClick.php",
+      "table": "whatsapp_clicks",
+      "pk": "id",
+      "keyType": "int",
+      "incrementing": "true",
+      "soft_deletes": false,
+      "fillable": [
+        "source",
+        "kamar_id",
+        "ip_address",
+        "user_agent"
+      ],
+      "guarded": [],
+      "casts": {},
+      "relationships": [
+        {
+          "name": "kamar",
+          "type": "belongsTo",
+          "target": "Kamar::class",
+          "foreign_key": "kamar_id",
+          "other_key": ""
+        }
+      ],
+      "constants": {}
+    }
+  },
+  "concurrency": [
+    {
+      "file": "app\\Console\\Commands\\AbhPurgeTrash.php",
+      "transactions": 4,
+      "lockForUpdate": 0,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\ProfileCompletionController.php",
+      "transactions": 1,
+      "lockForUpdate": 0,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\ProfileController.php",
+      "transactions": 1,
+      "lockForUpdate": 0,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\Admin\\GuestChatController.php",
+      "transactions": 3,
+      "lockForUpdate": 3,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\Admin\\KamarController.php",
+      "transactions": 3,
+      "lockForUpdate": 0,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\Admin\\PenyewaController.php",
+      "transactions": 4,
+      "lockForUpdate": 3,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\Admin\\ReservasiController.php",
+      "transactions": 3,
+      "lockForUpdate": 1,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\Api\\GuestChatApiController.php",
+      "transactions": 1,
+      "lockForUpdate": 1,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\Api\\MidtransCallbackController.php",
+      "transactions": 1,
+      "lockForUpdate": 2,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\Api\\MidtransReservasiCallbackController.php",
+      "transactions": 1,
+      "lockForUpdate": 2,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\Api\\SnapTokenController.php",
+      "transactions": 2,
+      "lockForUpdate": 3,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\Auth\\SocialiteController.php",
+      "transactions": 1,
+      "lockForUpdate": 1,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Http\\Controllers\\Penyewa\\KeluhanController.php",
+      "transactions": 1,
+      "lockForUpdate": 0,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Models\\User.php",
+      "transactions": 1,
+      "lockForUpdate": 0,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Services\\AdminPenyewaService.php",
+      "transactions": 1,
+      "lockForUpdate": 1,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Services\\BillingService.php",
+      "transactions": 6,
+      "lockForUpdate": 3,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Services\\DashboardAnalyticsService.php",
+      "transactions": 0,
+      "lockForUpdate": 0,
+      "sharedLock": 0,
+      "raw_queries": 2
+    },
+    {
+      "file": "app\\Services\\ReservasiService.php",
+      "transactions": 2,
+      "lockForUpdate": 2,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Services\\TagihanService.php",
+      "transactions": 1,
+      "lockForUpdate": 0,
+      "sharedLock": 0,
+      "raw_queries": 0
+    },
+    {
+      "file": "app\\Services\\TransisiPenyewaService.php",
+      "transactions": 1,
+      "lockForUpdate": 0,
+      "sharedLock": 0,
+      "raw_queries": 0
+    }
+  ],
+  "logic": {
+    "app\\Services\\AdminPenyewaService.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": true,
+      "has_midtrans": false,
+      "has_lock": true,
+      "has_tx": true,
+      "has_overlap_query": true
+    },
+    "app\\Services\\AuthRedirectService.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\BillingService.php": {
+      "has_denda": true,
+      "has_dp": true,
+      "has_deposit": true,
+      "has_midtrans": true,
+      "has_lock": true,
+      "has_tx": true,
+      "has_overlap_query": true
+    },
+    "app\\Services\\CalendarStyleHelper.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\DashboardAnalyticsService.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": true,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\DompdfGenerator.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\FonnteService.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\MidtransService.php": {
+      "has_denda": true,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": true,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\NotifikasiService.php": {
+      "has_denda": true,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\PdfGeneratorInterface.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\PdfNotaService.php": {
+      "has_denda": true,
+      "has_dp": false,
+      "has_deposit": true,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\PenyewaAuthService.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\ReservasiService.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": true,
+      "has_tx": true,
+      "has_overlap_query": true
+    },
+    "app\\Services\\SanitizerService.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\TagihanService.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": true,
+      "has_lock": false,
+      "has_tx": true,
+      "has_overlap_query": false
+    },
+    "app\\Services\\TransisiPenyewaService.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": true,
+      "has_midtrans": true,
+      "has_lock": false,
+      "has_tx": true,
+      "has_overlap_query": false
+    },
+    "app\\Services\\Auth\\PortalRedirectResolver.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Services\\Notifications\\NotificationTemplateBuilder.php": {
+      "has_denda": true,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": true,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Controller.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\DashboardRedirectController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\ProfileCompletionController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": true,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\ProfileController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": true,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\AdminCalendarController.php": {
+      "has_denda": true,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": true
+    },
+    "app\\Http\\Controllers\\Admin\\CustomerReviewController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\DashboardController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\FaqController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\FasilitasController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\GalleryController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\GuestChatController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": true,
+      "has_tx": true,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\KamarController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": true,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\KeluhanController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\LaporanController.php": {
+      "has_denda": true,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": true
+    },
+    "app\\Http\\Controllers\\Admin\\NotifikasiController.php": {
+      "has_denda": true,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\NotifikasiKhususController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": true
+    },
+    "app\\Http\\Controllers\\Admin\\PengeluaranController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": true
+    },
+    "app\\Http\\Controllers\\Admin\\PenyewaController.php": {
+      "has_denda": true,
+      "has_dp": true,
+      "has_deposit": true,
+      "has_midtrans": false,
+      "has_lock": true,
+      "has_tx": true,
+      "has_overlap_query": true
+    },
+    "app\\Http\\Controllers\\Admin\\PeraturanController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\ProfileController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\ReservasiController.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": true,
+      "has_tx": true,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\SettingController.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Admin\\TagihanController.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Api\\ChatController.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Api\\GuestChatApiController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": true,
+      "has_tx": true,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Api\\MidtransCallbackController.php": {
+      "has_denda": true,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": true,
+      "has_lock": true,
+      "has_tx": true,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Api\\MidtransReservasiCallbackController.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": true,
+      "has_lock": true,
+      "has_tx": true,
+      "has_overlap_query": true
+    },
+    "app\\Http\\Controllers\\Api\\SnapTokenController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": true,
+      "has_lock": true,
+      "has_tx": true,
+      "has_overlap_query": true
+    },
+    "app\\Http\\Controllers\\Auth\\AdminLoginController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Auth\\AdminPasswordResetController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Auth\\ConfirmablePasswordController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Auth\\EmailVerificationNotificationController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Auth\\EmailVerificationPromptController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Auth\\PasswordController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Auth\\PenyewaLoginController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Auth\\PenyewaPasswordResetController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Auth\\ReservasiAuthController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Auth\\SocialiteController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": true,
+      "has_tx": true,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Auth\\VerifyEmailController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Penyewa\\DashboardController.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": true,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Penyewa\\KeluhanController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": true,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Penyewa\\NotifikasiController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Penyewa\\ReservasiController.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": true,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": true
+    },
+    "app\\Http\\Controllers\\Penyewa\\TagihanController.php": {
+      "has_denda": false,
+      "has_dp": false,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": false
+    },
+    "app\\Http\\Controllers\\Public\\LandingController.php": {
+      "has_denda": false,
+      "has_dp": true,
+      "has_deposit": false,
+      "has_midtrans": false,
+      "has_lock": false,
+      "has_tx": false,
+      "has_overlap_query": true
+    }
+  }
+}

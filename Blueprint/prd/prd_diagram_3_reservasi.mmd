@@ -1,0 +1,45 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> Guest["Tamu melihat Katalog Kamar & Fasilitas"]
+    Guest --> CheckInterest{Tertarik Pesan?}
+    CheckInterest -- Ya --> Register[Login Google OAuth / Registrasi Portal Calon Penyewa]
+    CheckInterest -- Tidak --> Guest
+    Register --> CheckProfile{Apakah No WhatsApp Lengkap?}
+    CheckProfile -- Belum --> CompleteProf[Lengkapi Profil / Form No WA]
+    CompleteProf --> FillForm
+    CheckProfile -- Sudah --> FillForm[Isi Form Pemesanan Kamar & Tentukan Durasi]
+    
+    FillForm --> SystemLock[Sistem Kunci Booking Sementara<br>Reservasi Status: PENDING]
+    SystemLock --> AccessPortal[Akses Portal Reservasi Calon Penyewa]
+    AccessPortal --> ChatBox[Diskusi Real-time Calon Penyewa & Admin<br>via Chat Box Pre-Pembayaran]
+    ChatBox --> SelectScheme{Pilih Metode Pembayaran}
+    
+    SelectScheme -- Online: Midtrans Snap --> PayOnline["Calon Penyewa Bayar DP 30% atau Lunas 100%"]
+    SelectScheme -- Manual: Transfer Bank --> PayManual["Calon Penyewa Transfer ke Rekening Kost<br>& Unggah Bukti Bayar"]
+    
+    PayOnline --> Webhook{Webhook Midtrans}
+    Webhook -- Sukses (Settlement) --> UpdateStatus[Status Reservasi: DP / LUNAS]
+    Webhook -- Gagal / Expired --> CancelReservasi[Status Reservasi: BATAL]
+    
+    PayManual --> AdminVerifManual{Admin Verifikasi Bukti}
+    AdminVerifManual -- Valid --> UpdateStatus
+    AdminVerifManual -- Tidak Valid / Ditolak --> RejectManual[Status Reservasi: BATAL / Ulangi Upload]
+    
+    UpdateStatus --> AdminAudit["Admin Verifikasi Berkas:<br>NIK 16 Digit & No HP Wali"]
+    AdminAudit --> AdminConfirm["Admin Klik 'Konfirmasi Reservasi'"]
+    
+    AdminConfirm --> AutoSystem["Otomatisasi Sistem:<br>1. Buat Akun & Profil Penyewa Baru<br>2. Set Status Kamar: TERISI<br>3. Generate Invoice Sisa Tagihan (jika DP)<br>4. Kirim Kredensial & Detail via WA Fonnte"]
+    AutoSystem --> ActiveTenant(["Selesai: Penyewa Aktif"])

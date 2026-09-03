@@ -1,0 +1,26 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    StartTenant([Penyewa Aktif Login]) --> ClickKeluhan[Menu Keluhan Saya]
+    ClickKeluhan --> FillKeluhan["Isi Laporan: Pilih Kategori, Deskripsi<br>Unggah Bukti Foto maks 2MB"]
+    FillKeluhan --> SaveComplaint[Sistem Simpan Keluhan: Status PENDING / DIAJUKAN]
+    SaveComplaint --> SendAdminWA["Kirim WhatsApp Notifikasi otomatis via Fonnte<br>ke Nomor HP Admin Kost"]
+    SendAdminWA --> AdminLogin([Admin Login ke Portal Admin])
+    AdminLogin --> CheckComplaints[Buka Daftar Keluhan Aktif]
+    CheckComplaints --> ProcessComplaint["Admin Update Status: DIPROSES<br>Input Catatan Tindak Lanjut"]
+    ProcessComplaint --> SendTenantWA1["Kirim WhatsApp Notifikasi via Fonnte ke Penyewa<br>'Keluhan Anda sedang ditindaklanjuti'"]
+    SendTenantWA1 --> CompleteComplaint[Admin Menyelesaikan Perbaikan & Update Status: SELESAI]
+    CompleteComplaint --> SendTenantWA2["Kirim WhatsApp Notifikasi via Fonnte ke Penyewa<br>'Keluhan Selesai Diperbaiki. Terima kasih!'"]
+    SendTenantWA2 --> End(["Siklus Keluhan Selesai"])

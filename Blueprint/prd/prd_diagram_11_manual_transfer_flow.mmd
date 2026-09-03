@@ -1,0 +1,37 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Penyewa / Calon Penyewa Pilih 'Transfer Bank Manual']) --> FetchBank["Sistem Ambil Info Rekening Dinamis<br>(Bank, No Rekening, Atas Nama dari tabel 'settings')"]
+    FetchBank --> UserTransfer["Pengguna Melakukan Transfer Antar Bank / M-Banking"]
+    UserTransfer --> UploadProof["Pengguna Mengunggah Foto Bukti Transfer (JPG/PNG <2MB)"]
+    UploadProof --> ValidateFile{Validasi Ukuran & Format Berkas}
+    
+    ValidateFile -- Gagal (>2MB / Non-Image) --> UploadProof
+    ValidateFile -- Berhasil --> SavePayment["Sistem Simpan ke Tabel 'pembayaran'<br>metode: 'manual_transfer', status: 'menunggu_konfirmasi'"]
+    
+    SavePayment --> NotifyAdmin["Kirim Notifikasi Alert ke Dashboard Admin Kost"]
+    NotifyAdmin --> AdminAudit["Admin Membuka Menu Audit Pembayaran & Cek Mutasi Bank"]
+    AdminAudit --> DecisionAudit{Apakah Mutasi Dana Sesuai?}
+    
+    DecisionAudit -- Ya (Disetujui) --> ApprovePayment["Admin Klik 'Verifikasi Setuju'"]
+    ApprovePayment --> DBTrans["DB::transaction()<br>1. Update Status Pembayaran: 'lunas'<br>2. Update Status Tagihan / Reservasi: 'lunas' / 'dp'<br>3. Generate Invoice Kuitansi PDF<br>4. Trigger Event PembayaranBerhasil"]
+    DBTrans --> SendWASuccess["Kirim Notifikasi Kuitansi Lunas via WA Fonnte ke Penyewa"]
+    SendWASuccess --> EndSuccess([Pembayaran Selesai & Terverifikasi])
+    
+    DecisionAudit -- Tidak (Bukti Palsu / Nominal Salah) --> RejectPayment["Admin Klik 'Tolak Pembayaran'<br>& Input Alasan Penolakan"]
+    RejectPayment --> UpdateReject["Update Status Pembayaran: 'ditolak'<br>dengan catatan_penolakan"]
+    UpdateReject --> SendWAReject["Kirim Notifikasi Penolakan via WA Fonnte ke Penyewa"]
+    SendWAReject --> ReuploadOption["Penyewa Diizinkan Mengunggah Ulang Bukti Bayar yang Sah"]
+    ReuploadOption --> UploadProof

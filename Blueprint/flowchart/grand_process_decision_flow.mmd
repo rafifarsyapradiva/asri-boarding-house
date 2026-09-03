@@ -1,0 +1,189 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    %% ==========================================
+    %% FASE 1: PENEMUAN & KATALOG PUBLIK
+    %% ==========================================
+    subgraph FASE1["🌐 FASE 1: KATALOG & EKSPLORASI (GUEST / PUBLIK)"]
+        StartNode([Tamu Mengakses Beranda /kamar]) --> D_RoomStatus{"D1: Status Unit Kamar?"}
+        
+        D_RoomStatus -- "Maintenance" --> HideRoom["Sembunyikan dari Publik"]
+        D_RoomStatus -- "Terisi" --> CTAChatAdmin[/Hubungi Admin via WhatsApp WA/]
+        D_RoomStatus -- "Tersedia" --> ViewDetail[/Buka Detail Kamar & Kalkulator Tarif/]
+        
+        StartNode --> GuestChatWidget[/Live Chat Pengunjung Anonim/]
+        GuestChatWidget --> GuestChatSub[[Sub-FC 12: Thread Chat Session Token]]
+    end
+
+    %% ==========================================
+    %% FASE 2: OTENTIKASI & RESERVASI
+    %% ==========================================
+    subgraph FASE2["🔑 FASE 2: OTENTIKASI & FORM RESERVASI"]
+        ViewDetail --> D_AuthMethod{"D2: Status Otentikasi User?"}
+        
+        D_AuthMethod -- "Belum Login" --> ChoiceAuth{"Pilihan Login / Register?"}
+        ChoiceAuth -- "Form Manual" --> FormAuth[/Register Akun Baru / Login/]
+        ChoiceAuth -- "Google OAuth" --> GoogleAuth[[Sub-FC 17: Socialite OAuth & Complete Profile]]
+        
+        FormAuth --> ReserveForm[/Isi Tanggal Mulai, Durasi, NIK, No Wali/]
+        GoogleAuth --> ReserveForm
+        D_AuthMethod -- "Sudah Login" --> ReserveForm
+        
+        ReserveForm --> D_FormValidation{"D3: Validasi NIK & Kontak Wali?"}
+        D_FormValidation -- "Gagal" --> ToastValError[/Toast Error: Perbaiki Input Data/]
+        ToastValError --> ReserveForm
+        
+        D_FormValidation -- "Lolos" --> DB_LockTx[[DB Transaction: Kamar lockForUpdate]]
+        DB_LockTx --> D_RaceCondition{"D4: Kamar Masih Tersedia?"}
+        
+        D_RaceCondition -- "Tidak (Bentrok)" --> RollbackBooking[[Rollback Tx & Munculkan Notifikasi]]
+        RollbackBooking --> ViewDetail
+        
+        D_RaceCondition -- "Ya (Aman)" --> CreateReservation[[Buat Reservasi Status Pending & Generate Order ID]]
+    end
+
+    %% ==========================================
+    %% FASE 3: PAYMENT GATEWAY & VERIFIKASI
+    %% ==========================================
+    subgraph FASE3["💳 FASE 3: MIDTRANS SNAP & VERIFIKASI ADMIN"]
+        CreateReservation --> PortalReservation[/Portal Detail Reservasi & Pre-Chat Box/]
+        PortalReservation --> D_UserAction{"D5: Aksi Calon Penyewa?"}
+        
+        D_UserAction -- "Batalkan" --> UserCancel[[Update Status Batal & Lepas Kunci Kamar]]
+        D_UserAction -- "Chat Diskusi" --> PreChatSub[[Sub-FC 3: Diskusi Pre-Pembayaran AJAX Polling]]
+        D_UserAction -- "Bayar Now" --> RequestSnap[[Request Snap Token ke Midtrans API]]
+        PreChatSub --> RequestSnap
+        
+        RequestSnap --> OpenSnapUI[/Render Snap Popup: VA / QRIS / E-Wallet/]
+        OpenSnapUI --> MidtransWebhook[[Sub-FC 18: Webhook Midtrans POST]]
+        
+        MidtransWebhook --> D_SignatureCheck{"D6: Verifikasi SHA512 Signature?"}
+        D_SignatureCheck -- "Mismatch" --> RejectWebhook[[Tolak Request: HTTP 403 Forbidden]]
+        
+        D_SignatureCheck -- "Valid" --> D_MidtransStatus{"D7: Status Transaksi Midtrans?"}
+        D_MidtransStatus -- "Expire / Cancel / Deny" --> AutoCancelBooking[[Set Status Reservasi Batal & Lepas Kamar]]
+        D_MidtransStatus -- "Pending" --> WaitMidtrans[/Menunggu Pembayaran Max 24 Jam/]
+        
+        D_MidtransStatus -- "Settlement / Capture" --> D_PayScheme{"D8: Skema Pembayaran?"}
+        D_PayScheme -- "DP 30%" --> SetStatusDP[[Update Status Reservasi: DP 30%]]
+        D_PayScheme -- "Lunas 100%" --> SetStatusLunas[[Update Status Reservasi: Lunas 100%]]
+        
+        SetStatusDP --> AdminReview[/Admin Meninjau Berkas NIK & Kontak Wali/]
+        SetStatusLunas --> AdminReview
+        
+        AdminReview --> D_AdminVerify{"D9: Data Penyewa Disetujui?"}
+        D_AdminVerify -- "Minta Koreksi" --> RequestCorrection[/Kirim Pesan Revisi Data via Chat / WA/]
+        RequestCorrection --> AdminReview
+        
+        D_AdminVerify -- "Disetujui" --> AdminConfirmTx[[DB Transaction: Konfirmasi Reservasi & Kunci Kamar Terisi]]
+    end
+
+    %% ==========================================
+    %% FASE 4: ONBOARDING & AKTIVASI AKUN
+    %% ==========================================
+    subgraph FASE4["🔐 FASE 4: ONBOARDING & DASHBOARD PENYEWA"]
+        AdminConfirmTx --> SendWACredential[/Fonnte WA API: Kirim Password Default No HP/]
+        SendWACredential --> TenantFirstLogin[/Penyewa Login Pertama Kali/]
+        
+        TenantFirstLogin --> D_ForcePwd{"D10: require_password_change == true?"}
+        D_ForcePwd -- "Ya" --> ForceChangePage[/Redirect Paksa ke Form Ganti Password/]
+        ForceChangePage --> UpdateNewPwd[[Simpan Hash Password Baru & Set Flag False]]
+        UpdateNewPwd --> TenantDashboard[/Dashboard Portal Penyewa Aktif/]
+        D_ForcePwd -- "Tidak" --> TenantDashboard
+        
+        TenantDashboard --> RulesView[/Menu Tata Tertib Kost - Support Dark Mode/]
+    end
+
+    %% ==========================================
+    %% FASE 5: OPERASIONAL, BILLING & KELUHAN
+    %% ==========================================
+    subgraph FASE5["🔄 FASE 5: OPERASIONAL, BILLING RUTIN & KELUHAN"]
+        CronTrigger([Cron Scheduler Tanggal 1 00:00]) --> BillingCommand[[Sub-FC 5: Command billing:generate]]
+        BillingCommand --> CreateInvoices[[Generate Tagihan Pokok Jatuh Tempo Tanggal 10]]
+        CreateInvoices --> TenantPayTagihan[/Penyewa Membuka Menu Tagihan Saya/]
+        
+        TenantPayTagihan --> D_OverdueCheck{"D11: Tanggal Bayar Melewati Tanggal 10?"}
+        D_OverdueCheck -- "Tidak (Tepat Waktu)" --> NormalRate[/Nominal Tagihan Pokok/]
+        
+        D_OverdueCheck -- "Ya (Terlambat)" --> D_CrossMonth{"D12: Menyeberang ke Bulan Berikutnya?"}
+        D_CrossMonth -- "Tidak (Bulan Berjalan)" --> GracePeriod[[Masa Keringanan: Tanpa Denda & Kirim WA Reminder]]
+        GracePeriod --> NormalRate
+        
+        D_CrossMonth -- "Ya (Bulan Berikutnya)" --> ApplyPenalty[[Terapkan Denda Flat 5% Sekali Saja]]
+        ApplyPenalty --> D_TunggakanLanjut{"D13: Tunggakan > 1 Bulan?"}
+        D_TunggakanLanjut -- "Ya" --> EscalateGuardian[/Kirim Pesan Eskalasi WA ke Nomor Wali/]
+        D_TunggakanLanjut -- "Tidak" --> SendWarningWA[/Kirim Peringatan WA ke Penyewa/]
+        EscalateGuardian --> RatePlusPenalty[/Nominal Pokok + Denda 5%/]
+        SendWarningWA --> RatePlusPenalty
+        
+        NormalRate --> D_PaymentMethod{"D14: Pilihan Metode Bayar?"}
+        RatePlusPenalty --> D_PaymentMethod
+        
+        D_PaymentMethod -- "Online Midtrans" --> PayOnlineSnap[[Bayar via Midtrans Snap & Webhook Settlement]]
+        D_PaymentMethod -- "Offline Cash / Transfer" --> SubmitOfflineDoc[/Serahkan Cash Fisik / Bukti Transfer/]
+        
+        SubmitOfflineDoc --> AdminCheckCash[/Admin Verifikasi Kas Masuk/]
+        AdminCheckCash --> D_CashValid{"D15: Dana Fisik / Transfer Valid?"}
+        D_CashValid -- "Tidak" --> RejectCash[/Tolak Pembayaran & Minta Bukti Valid/]
+        D_CashValid -- "Ya" --> ConfirmCash[[Set Tagihan Lunas & Catat Admin ID]]
+        
+        PayOnlineSnap --> GenReceipt[[Dompdf: Generate Nota Kuitansi PDF]]
+        ConfirmCash --> GenReceipt
+        GenReceipt --> SendWAReceipt[/Fonnte WA API: Kirim Kuitansi PDF/]
+        
+        TenantDashboard --> ComplaintMenu[/Menu Keluhan & Pengaduan Fasilitas/]
+        ComplaintMenu --> SubmitComplaint[[Sub-FC 7: Upload Bukti Keluhan & Notif Admin]]
+        SubmitComplaint --> AdminResolveComplaint[[Admin Koordinasi Teknisi -> Status Selesai]]
+    end
+
+    %% ==========================================
+    %% FASE 6: OFFBOARDING & MANAGEMENT MASTER
+    %% ==========================================
+    subgraph FASE6["🚪 FASE 6: CHECKOUT, DEPOSIT & MASTER DATA"]
+        TenantDashboard --> EndOfLease([Masa Sewa Berakhir / Permintaan Checkout])
+        EndOfLease --> AdminCheckoutAction[/Admin Klik Nonaktifkan Penyewa/]
+        AdminCheckoutAction --> LockRoomTerisi["Aturan Bisnis: Kamar Tetap Berstatus Terisi"]
+        
+        LockRoomTerisi --> PhysicalInspection[/Admin Melakukan Inspeksi Fisik Kamar/]
+        PhysicalInspection --> D_DamageCheck{"D16: Terdapat Kerusakan Fasilitas?"}
+        
+        D_DamageCheck -- "Tidak Ada" --> ReturnFullDeposit[[Kembalikan Deposit Jaminan Penuh 100%]]
+        D_DamageCheck -- "Ada Kerusakan" --> D_CostVsDeposit{"D17: Estimasi Biaya > Nilai Deposit?"}
+        
+        D_CostVsDeposit -- "Biaya <= Deposit" --> DeductDeposit[[Potong Biaya Perbaikan & Kembalikan Sisa Deposit]]
+        D_CostVsDeposit -- "Biaya > Deposit" --> ForfeitDeposit[[Deposit Hangus & Terbitkan Tagihan Klaim Tambahan]]
+        
+        ReturnFullDeposit --> AdminManualRoomStatus[/Admin Buka Manajemen Kamar/]
+        DeductDeposit --> AdminManualRoomStatus
+        ForfeitDeposit --> AdminManualRoomStatus
+        
+        AdminManualRoomStatus --> D_RoomNextState{"D18: Kamar Perlu Perbaikan Lanjutan?"}
+        D_RoomNextState -- "Ya" --> SetMaintState[[Ubah Status Kamar: Maintenance]]
+        D_RoomNextState -- "Tidak" --> SetReadyState[[Ubah Status Kamar: Tersedia]]
+        
+        SetMaintState --> EndNode([Selesai / Siklus Berulang])
+        SetReadyState --> StartNode
+        
+        %% Admin Master & Akuntansi %%
+        AdminDashboard([Admin Master Control]) --> CashFlowSub[[Sub-FC 8: Arus Kas Masuk - Keluar & Ekspor PDF/Excel]]
+        AdminDashboard --> MasterSafetySub[[Sub-FC 16 & 19: Proteksi Hapus Kamar & Fasilitas Aktif]]
+        AdminDashboard --> BroadcastSub[[Sub-FC 21: Broadcast Notifikasi Massal WA/Email/Web]]
+    end
+
+    %% KONEKTOR LINTAS FASE %%
+    UserCancel --> EndNode
+    AutoCancelBooking --> EndNode
+    AdminResolveComplaint --> TenantDashboard
+    SendWAReceipt --> TenantDashboard

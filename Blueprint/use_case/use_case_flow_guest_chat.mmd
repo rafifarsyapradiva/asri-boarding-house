@@ -1,0 +1,33 @@
+flowchart TD
+    classDef actorNode fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
+    classDef sysNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef decisionNode fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    classDef terminalNode fill:#fce4ec,stroke:#c2185b,stroke-width:2px,font-weight:bold;
+
+    %% ACTORS
+    Guest(["👤 Tamu (Pengunjung Publik)"]):::actorNode
+    Sys["🖥️ Sistem Web Laravel (ABH)"]:::sysNode
+    Admin(["👤 Administrator Kost"]):::actorNode
+
+    %% FLOW
+    Start([Tamu Kunjungi Landing Page]):::terminalNode --> A1[1. Klik Widget Chat Melayang di Pojok Bawah - UC-17]:::sysNode
+    A1 --> A2[2. Isi Form Identitas Awal: Nama Lengkap & No WhatsApp]:::sysNode
+    A2 --> A3{Validasi Input Nama & No HP?}:::decisionNode
+    
+    A3 -- Tidak Valid --> A4[Tampilkan Alert Format Nomor HP Indonesia]:::sysNode
+    A4 --> A2
+
+    A3 -- Valid --> B1[Sistem Generate Token Sesi UUID & Simpan ke Cookie Browser]:::sysNode
+    B1 --> B2[Sistem Buat Thread Baru di Tabel 'guest_chat_threads']:::sysNode
+    B2 --> B3[3. Tamu Kirim Pesan Pertanyaan / Diskusi]:::actorNode
+    B3 --> B4[Sistem Simpan Pesan ke 'guest_chat_messages']:::sysNode
+
+    B4 --> C1[4. Admin Buka Panel 'Manajemen Chat Tamu' - UC-17]:::sysNode
+    C1 --> C2[Admin Baca Thread Pesan & Ketik Balasan]:::actorNode
+    C2 --> C3[Sistem Kirim Balasan ke Thread Guest Chat]:::sysNode
+
+    C3 <--> |AJAX Polling Real-Time Rate Limited| B3
+    C3 --> D1{Apakah Diskusi Sudah Selesai?}:::decisionNode
+    D1 -- Masih Diskusi --> B3
+    D1 -- Selesai --> D2[Admin Klik 'Tutup Thread / Selesai']:::sysNode
+    D2 --> End([Sesi Guest Chat Ditutup]):::terminalNode

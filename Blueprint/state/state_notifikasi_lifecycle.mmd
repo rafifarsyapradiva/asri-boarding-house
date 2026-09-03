@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> pending_send : Event Terpicu / Queue Job Pushed
+    pending_send --> sukses : Kirim Sukses [HTTP 200]<br>/ Log Sukses
+    pending_send --> gagal : Kirim Gagal [Timeout/API Down]<br>/ Log Error
+    gagal --> pending_send : Klik Retry / kirimUlangNotifikasi()
+    gagal --> [*] : Selesai
+    sukses --> [*] : Selesai

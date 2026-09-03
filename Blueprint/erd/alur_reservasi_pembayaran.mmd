@@ -1,0 +1,38 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> Guest["Tamu melihat Katalog Kamar & Fasilitas"]
+    Guest --> CheckInterest{Tertarik Pesan?}
+    CheckInterest -- Ya --> Register[Registrasi / Login Portal Calon Penyewa]
+    CheckInterest -- Tidak --> Guest
+    Register --> FillForm[Isi Form Pemesanan Kamar & Tentukan Durasi]
+    FillForm --> SystemLock[Sistem Kunci Booking Sementara<br>Reservasi Status: PENDING]
+    SystemLock --> AccessPortal[Akses Portal Reservasi Calon Penyewa]
+    AccessPortal --> ChatBox[Diskusi Real-time Calon Penyewa & Admin<br>via Chat Box Pre-Pembayaran]
+    ChatBox --> SelectScheme{Pilih Skema Bayar}
+    SelectScheme -- Online: Midtrans Snap --> PayOnline["Calon Penyewa Bayar DP 30% atau Lunas"]
+    SelectScheme -- Offline: Direct WA / Cash --> PayOffline[Pemesanan Diproses Manual oleh Admin]
+    
+    PayOnline --> Webhook{Webhook Midtrans}
+    Webhook -- Sukses --> UpdateStatus[Status Reservasi: DP / LUNAS]
+    Webhook -- Gagal / Expired --> CancelReservasi[Status Reservasi: BATAL]
+    PayOffline --> AdminAction[Admin Konfirmasi / Batalkan manual]
+    AdminAction --> UpdateStatus
+    
+    UpdateStatus --> AdminAudit["Admin Verifikasi Berkas:<br>NIK 16 Digit & No HP Wali"]
+    AdminAudit --> AdminConfirm["Admin Klik 'Konfirmasi Reservasi'"]
+    
+    AdminConfirm --> AutoSystem["Otomatisasi Sistem:<br>1. Buat Akun & Profil Penyewa Baru<br>2. Set Status Kamar: TERISI<br>3. Generate Invoice Sisa Tagihan (jika DP)<br>4. Kirim Kredensial & Detail via WA Fonnte"]
+    AutoSystem --> ActiveTenant(["Selesai: Penyewa Aktif"])

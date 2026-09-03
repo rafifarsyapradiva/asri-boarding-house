@@ -1,0 +1,45 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Admin ["Swimlane: Administrator"]
+        Start([Mulai]) --> BukaMenuKamar["Admin masuk halaman CRUD Kamar (/admin/kamar)"]
+        BukaMenuKamar --> PilihAksiKamar{"Pilih tindakan CRUD?"}
+        
+        PilihAksiKamar -- "Tambah / Edit Kamar" --> IsiDataKamar["Isi Nomor Kamar, Lantai, Luas, Harga, Fasilitas & Foto"]
+        IsiDataKamar --> KlikSimpan["Admin klik Simpan"]
+        TampilErrorKamar["Tampilkan pesan error validasi form"] --> IsiDataKamar
+        
+        PilihAksiKamar -- "Hapus Kamar" --> KlikHapusKamar["Admin klik Hapus & konfirmasi di modal"]
+    end
+
+    subgraph Swimlane_Backend ["Swimlane: Kamar Engine & Database MySQL"]
+        KlikSimpan --> ValidasiFormKamar{"Validasi form sukses?"}
+        ValidasiFormKamar -- Tidak --> TampilErrorKamar
+        
+        ValidasiFormKamar -- Ya --> SimpanKamarDB["Sistem menyimpan data Kamar & relasi fasilitas di tabel kamar_fasilitas"]
+        SimpanKamarDB --> CekStatusKamar{"Apakah status = 'maintenance'?"}
+        CekStatusKamar -- Ya --> HideKatalog["Sistem menyembunyikan kamar secara otomatis dari landing page"]
+        CekStatusKamar -- Tidak --> ShowKatalog["Sistem memuat kamar pada katalog publik"]
+        HideKatalog --> SelesaiHide([Selesai])
+        ShowKatalog --> SelesaiShow([Selesai])
+        
+        KlikHapusKamar --> CekKamarTerikat{"Apakah Kamar terikat dengan data Penyewa Aktif atau Reservasi?"}
+        CekKamarTerikat -- Ya --> BlockDeleteKamar["Sistem membatalkan proses hapus & merender Toast error 'Kamar masih terikat'"]
+        BlockDeleteKamar --> SelesaiBlock([Selesai])
+        
+        CekKamarTerikat -- Tidak --> HapusKamarDB["1. Hapus record kamar & relasi pivot kamar_fasilitas<br>2. Hapus file foto kamar dari storage secara fisik"]
+        HapusKamarDB --> TampilSuksesHapus["Tampilkan Toast sukses hapus kamar"]
+        TampilSuksesHapus --> SelesaiHapus([Selesai])
+    end

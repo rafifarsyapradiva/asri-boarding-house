@@ -1,0 +1,83 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor CP as Calon Penyewa
+    actor A as Admin
+    participant V as View (Detail Reservasi)
+    participant CC as Api\ChatController
+    participant C as Penyewa\ReservasiController
+    participant Mid as Midtrans Snap API
+    participant Web as Api\MidtransReservasiCallbackController
+    participant DB as Database (MySQL)
+
+    Note over CP, A: Jalur Obrolan Real-time Pre-Pembayaran (AJAX Polling)
+    CP->>V: Ketik pesan di Chat Box & klik "Kirim"
+    V->>CC: AJAX POST /reservasi/{id}/chat/send (message)
+    CC->>DB: INSERT INTO chat_messages (reservasi_id, sender_id, message)
+    DB-->>CC: Sukses simpan
+    CC-->>V: Return JSON status success
+    loop AJAX Polling (Setiap 3 - 5 Detik)
+        V->>CC: GET /reservasi/{id}/chat/fetch (Fetch new messages)
+        CC->>DB: SELECT * FROM chat_messages WHERE reservasi_id = ?
+        DB-->>CC: List data chat
+        CC-->>V: Return JSON payload chat
+        V->>V: Render gelembung chat Neo-Brutalisme (kuning vs putih)
+    end
+
+    Note over CP, Mid: Jalur Pembayaran Reservasi Online (Midtrans Snap)
+    CP->>V: Buka Halaman Detail Reservasi (/penyewa/reservasi/{id})
+    V->>C: GET /penyewa/reservasi/{id}
+    C->>Mid: Request Snap Token (API Request dengan parameter order_id & total_harga)
+    Mid-->>C: Return JSON payload snap_token
+    C-->>V: Return view dengan snapToken diikat ke JS
+    CP->>V: Klik tombol "Bayar Sekarang"
+    V->>V: Panggil snap.pay(snapToken)
+    V-->>CP: Tampilkan Portal Pop-Up Midtrans Snap
+    
+    alt Skenario Pembayaran Diselesaikan Pengguna
+        CP->>Mid: Selesaikan Pembayaran (Virtual Account / E-Wallet)
+        Mid->>Web: Callback Webhook Midtrans POST /api/midtrans/callback-reservasi
+        Note over Web: Validasi signature_key & nominal transaksi
+        
+        alt Signature Key Valid
+            alt Status Transaksi: success (settlement/capture)
+                Web->>DB: UPDATE reservasis SET status = 'dp' / 'lunas', transaction_id = ?
+            else Status Transaksi: expire / failed / deny
+                Web->>DB: UPDATE reservasis SET status = 'batal'
+            end
+            Web-->>Mid: Return HTTP 200 OK
+            V->>V: Reload halaman otomatis / Redirect via JS callback
+            V-->>CP: Tampilkan Stepper Langkah Pembayaran ter-update (Langkah 3/4)
+        else Signature Key Invalid (Serangan Callback Palsu)
+            Web-->>Mid: Return HTTP 400 Bad Request / 403 Forbidden
+        end
+    else Skenario Pop-Up Ditutup / Pembayaran Pending (User Close)
+        CP->>V: Tutup Pop-Up Midtrans tanpa membayar (onClose/onPending)
+        V-->>CP: Pertahankan status reservasi 'pending' (Tombol "Bayar Sekarang" tetap aktif)
+    end

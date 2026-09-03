@@ -1,0 +1,44 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai Kalkulasi Arus Kas]) --> DataSource{Sumber Data Transaksi}
+    
+    DataSource -->|Pemasukan Reservasi| Reservasi[Reservasi Online]
+    DataSource -->|Pemasukan Rutin| Tagihan[Tagihan Penyewa]
+    DataSource -->|Pengeluaran| Pengeluaran[Tabel Pengeluaran]
+    
+    Reservasi --> CheckResStatus{Cek Status & Jenis Transaksi}
+    CheckResStatus -->|"Status 'dp' / 'dikonfirmasi'"| CalcDP["Hitung nominal_dp / 30% Uang Muka"]
+    CheckResStatus -->|"Status 'lunas' unconfirmed"| CalcFull["Hitung total_harga / 100% Pelunasan"]
+    CalcDP --> AccumReservasi[Akumulasi ke Kas Masuk Reservasi]
+    CalcFull --> AccumReservasi
+    
+    Tagihan --> CheckTagihanStatus{Cek Status Tagihan}
+    CheckTagihanStatus -->|"Status 'lunas'"| CalcTagihan[Ambil Pembayaran nominal]
+    CalcTagihan --> AccumTagihan[Akumulasi ke Kas Masuk Tagihan]
+    
+    Pengeluaran --> CheckPengeluaran{Cek Upload Nota & Kategori}
+    CheckPengeluaran -->|Valid & Teregistrasi| CalcExp[Ambil nominal Pengeluaran]
+    CalcExp --> AccumExp[Akumulasi ke Total Kas Keluar]
+    
+    AccumReservasi --> CalcTotal["TOTAL PEMASUKAN =<br>Kas Reservasi + Kas Tagihan"]
+    AccumTagihan --> CalcTotal
+    AccumExp --> CalcTotalExp["TOTAL PENGELUARAN =<br>Kas Keluar Operasional"]
+    
+    CalcTotal --> CalcNet["LABA BERSIH =<br>Total Pemasukan - Total Pengeluaran"]
+    CalcTotalExp --> CalcNet
+    
+    CalcNet --> RenderDashboard["Render ke Dashboard Admin via Summary Cards & Chart.js<br>Ekspor PDF Dompdf & Excel/CSV dengan State Filter"]
+    RenderDashboard --> End(["Selesai"])

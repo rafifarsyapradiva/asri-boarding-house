@@ -1,0 +1,34 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> WalkIn[/Calon Penyewa transaksi via WA Pribadi / Walk-In/]
+    WalkIn --> BayarOffline[/Penyewa melunasi pembayaran awal sewa & deposit jaminan secara offline/]
+    BayarOffline --> BukaMenuPenyewa[/Admin membuka menu Manajemen Penyewa /admin/penyewa/]
+    
+    BukaMenuPenyewa --> KlikTambah[/Admin klik Tambah Penyewa Baru/]
+    KlikTambah --> IsiFormPenyewa[/Isi Nama, Email, NIK, No HP, No Wali, Nama Wali, Kamar, Durasi, Tanggal Masuk, & Deposit/]
+    
+    IsiFormPenyewa --> KlikSimpan[/Admin klik Simpan/]
+    
+    KlikSimpan --> ValidasiForm{"Apakah input valid?<br>NIK 16 digit & Kamar tersedia"}
+    ValidasiForm -- "Tidak" --> TampilError[/Kembalikan ke form dengan pesan error & toast/]
+    TampilError --> IsiFormPenyewa
+    
+    ValidasiForm -- "Ya" --> DBTrans[[DB::transaction running]]
+    DBTrans --> AutoCreateUser[[1. Buat User baru role: penyewa, sandi default = No HP<br>2. require_password_change = true]]
+    AutoCreateUser --> CreateProfil[[3. Buat profil Penyewa salin harga_sewa & catat deposit]]
+    CreateProfil --> LockKamar[[4. Ubah status kamar menjadi terisi]]
+    
+    LockKamar --> CommitTx[[Commit DB Transaction]]
+    CommitTx --> CallFonnte[/Fonnte WA API: Kirim kredensial login akun ke No HP Penyewa/]
+    CallFonnte --> ToastSuccess[/Tampilkan Toast Success: Penyewa baru berhasil ditambahkan/]
+    ToastSuccess --> Selesai([Selesai])

@@ -1,0 +1,32 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> TentukanAktor{"Siapa yang mengakses?"}
+    
+    TentukanAktor -- "Administrator" --> BukaAdminPeraturan[/Admin masuk Menu Peraturan Kost /admin/peraturan/]
+    BukaAdminPeraturan --> FormPeraturan[/Mengisi judul, deskripsi, pilihan 9 ikon Heroicons, & urutan/]
+    FormPeraturan --> KlikSimpan[/Admin klik Simpan/]
+    KlikSimpan --> ValidasiPeraturan{"Apakah validasi input lolos?"}
+    ValidasiPeraturan -- "Tidak" --> TampilErrorPeraturan[/Tampilkan pesan error validation in form/]
+    TampilErrorPeraturan --> FormPeraturan
+    ValidasiPeraturan -- "Ya" --> SimpanPeraturanDB[[Simpan data peraturan baru ke tabel peraturan]]
+    SimpanPeraturanDB --> Selesai([Selesai])
+    
+    TentukanAktor -- "Penyewa Aktif" --> LoginPortal[/Penyewa login ke portal penyewa/]
+    LoginPortal --> BukaMenuPeraturan[/Penyewa memilih Menu Peraturan Kost di sidebar/]
+    BukaMenuPeraturan --> QueryPeraturan[[Sistem query database ORDER BY urutan ASC]]
+    QueryPeraturan --> RenderTataTertib[/Sistem merender peraturan dengan ikon Heroicons/]
+    RenderTataTertib --> CekDarkMode{"Apakah penyewa mengaktifkan Dark Mode?"}
+    CekDarkMode -- "Ya" --> ApplyDarkMode[/Sistem menerapkan CSS dark:bg-slate-900 & dark:text-white/]
+    CekDarkMode -- "Tidak" --> BacaPeraturan[/Penyewa membaca tata tertib kost secara transparan/]
+    ApplyDarkMode --> BacaPeraturan
+    BacaPeraturan --> Selesai

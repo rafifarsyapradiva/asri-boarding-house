@@ -1,0 +1,43 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Guest ["Swimlane: Tamu (Guest Anonim)"]
+        Start([Mulai]) --> BukaBeranda["Tamu membuka Landing Page & klik widget live chat"]
+        BukaBeranda --> CekSessionAda{"Sudah ada token sesi aktif di browser?"}
+        
+        CekSessionAda -- Ya --> RestoreChat["Widget otomatis memulihkan riwayat percakapan sebelumnya"]
+        CekSessionAda -- Tidak --> IsiIdentitas["Tamu mengisi Nama & Nomor Handphone di form widget"]
+        
+        IsiIdentitas --> MulaiChat["Tamu klik 'Mulai Chat'"]
+        PollingGuest["AJAX Polling memuat pesan balasan di browser Tamu (3-5 dtk)"] --> CekSelesai{"Percakapan selesai?"}
+        CekSelesai -- Tidak --> KirimPesanGuest["Tamu mengirim pesan pertanyaan tambahan"]
+        RestoreChat --> KirimPesanGuest
+    end
+
+    subgraph Swimlane_Admin ["Swimlane: Administrator"]
+        AdminNotif["Sistem menampilkan notifikasi chat masuk di panel Admin"] --> BukaThreadAdmin["Admin membuka menu Guest Chats & memilih thread aktif"]
+        BukaThreadAdmin --> BalasChatAdmin["Admin mengetik & mengirim balasan pesan"]
+        CekSelesai -- Ya --> TutupChat["Admin klik 'Tutup Chat' (Ubah status thread ke 'closed')"]
+        TutupChat --> Selesai([Selesai])
+    end
+
+    subgraph Swimlane_System ["Swimlane: Live Chat API & AJAX Engine"]
+        MulaiChat --> CreateThread["Sistem generate session_token unik & buat baris di guest_chat_threads"]
+        CreateThread --> KirimPesanGuest
+        KirimPesanGuest --> SimpanPesanGuest["Sistem menyimpan pesan ke tabel guest_chat_messages"]
+        SimpanPesanGuest --> AdminNotif
+        BalasChatAdmin --> SimpanPesanAdmin["Sistem menyimpan balasan ke guest_chat_messages"]
+        SimpanPesanAdmin --> PollingGuest
+    end

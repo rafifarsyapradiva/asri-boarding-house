@@ -1,0 +1,56 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaDetailReservasi[/Calon penyewa membuka detail reservasi/]
+    
+    BukaDetailReservasi --> ChatSection[/Akses komponen Chat Box Diskusi/]
+    ChatSection --> KirimPesan[/User mengetik & kirim pesan chat/]
+    KirimPesan --> SimpanPesan[[Simpan ke tabel chat_messages sender_id = user_id]]
+    SimpanPesan --> AJAXPolling[[AJAX Polling memicu request periodik 3-5 detik]]
+    AJAXPolling --> RenderBubble[/Render gelembung chat Neo-Brutalisme/]
+    RenderBubble --> ChatSection
+    
+    BukaDetailReservasi --> PilihAksi{"Pilih Aksi User?"}
+    
+    PilihAksi -- "Batalkan Reservasi" --> KlikBatal[/User klik Batalkan Pemesanan/]
+    KlikBatal --> KonfirmasiBatal{"Konfirmasi pembatalan?"}
+    KonfirmasiBatal -- "Tidak" --> BukaDetailReservasi
+    KonfirmasiBatal -- "Ya" --> SetBatalUser[[1. Update status reservasi = batal<br>2. Lepas kunci tanggal kamar]]
+    SetBatalUser --> Selesai([Selesai])
+    
+    PilihAksi -- "Bayar Now" --> KlikBayar[/User klik tombol Bayar Sekarang/]
+    KlikBayar --> ReqSnapToken[[ReservasiController meminta Snap Token ke Midtrans API]]
+    ReqSnapToken --> ReturnSnapToken[/Midtrans API mengembalikan snap_token/]
+    ReturnSnapToken --> OpenSnapModal[/Panggil snap.pay snap_token membuka pop-up/]
+    OpenSnapModal --> SelesaikanPembayaran[/User menyelesaikan transfer VA / E-Wallet/]
+    
+    SelesaikanPembayaran --> WebhookMidtrans[/Midtrans mengirim callback POST /api/midtrans/webhook/]
+    WebhookMidtrans --> ValidasiSignature{"Apakah signature_key & nominal valid?"}
+    
+    ValidasiSignature -- "Tidak" --> RejectWebhook[[Tolak request webhook & catat error log]]
+    RejectWebhook --> Selesai
+    
+    ValidasiSignature -- "Ya" --> EvaluasiStatusMidtrans{"Status Transaksi Midtrans?"}
+    
+    EvaluasiStatusMidtrans -- "Settlement / Capture" --> CekSkemaBayar{"Skema Pembayaran?"}
+    CekSkemaBayar -- "DP 30%" --> SetStatusDP[[Update status reservasi = dp<br>Simpan data transaksi ke tabel pembayaran]]
+    CekSkemaBayar -- "Lunas 100%" --> SetStatusLunas[[Update status reservasi = lunas<br>Simpan data transaksi ke tabel pembayaran]]
+    
+    EvaluasiStatusMidtrans -- "Pending" --> WaitStatus[/Menunggu transfer dalam batas waktu 24 jam/]
+    WaitStatus --> Selesai
+    
+    EvaluasiStatusMidtrans -- "Expired / Failed / Deny" --> SetBatalSystem[[1. Update status reservasi = batal<br>2. Lepas kunci kamar]]
+    
+    SetStatusDP --> ReloadUI[/Sistem memperbarui visual Stepper Reservasi 5-Step/]
+    SetStatusLunas --> ReloadUI
+    SetBatalSystem --> ReloadUI
+    ReloadUI --> Selesai

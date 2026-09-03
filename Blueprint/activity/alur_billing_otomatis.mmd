@@ -1,0 +1,56 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Scheduler ["Swimlane: Sistem Scheduler (Timer / Cron Job)"]
+        StartCron1([Setiap Tanggal 1 Awal Bulan]) --> TriggerGenInvoice["Laravel Scheduler mengeksekusi GenerateBulananTagihan"]
+        StartCronDaily([Setiap Hari Jam 01:00 Pasca Tanggal 10]) --> TriggerDenda["Laravel Scheduler mengeksekusi ProsesKeterlambatanTagihan"]
+    end
+
+    subgraph Swimlane_BillingEngine ["Swimlane: Billing Engine & Database MySQL"]
+        %% Penerbitan Invoice
+        TriggerGenInvoice --> QueryPenyewaAktif["Query DB: Ambil semua penyewa berstatus 'aktif' via chunking"]
+        QueryPenyewaAktif --> LoopPenyewa{"Apakah ada penyewa aktif berikutnya?"}
+        
+        LoopPenyewa -- Ya --> CekTipeSewa{"Apakah tipe_sewa == 'bulanan'?"}
+        CekTipeSewa -- Tidak --> LoopPenyewa
+        
+        CekTipeSewa -- Ya --> AmbilTarif["Ambil tarif sewa immutable dari penyewa.harga_sewa"]
+        AmbilTarif --> BuatInvoice["firstOrCreate() tagihan periode ini:<br>1. Status 'pending'<br>2. Nominal = harga_sewa<br>3. Jatuh tempo = tanggal 10"]
+        BuatInvoice --> GenOrderId["Generate order_id transaksi unik"]
+        GenOrderId --> SimpanLogNotif["Simpan baris log_notifikasi baru status 'pending'"]
+        SimpanLogNotif --> CallFonnteBill["Sistem memanggil Fonnte WA API untuk notifikasi tagihan bulanan"]
+        
+        %% Pemrosesan Denda Keterlambatan Harian
+        TriggerDenda --> QueryTagihanOverdue["Query DB: Ambil tagihan berstatus 'pending' yang melewati tanggal 10"]
+        QueryTagihanOverdue --> LoopDenda{"Ada tagihan overdue berikutnya?"}
+        
+        LoopDenda -- Ya --> HitungDendaEngine["Hitung bulan_keterlambatan:<br>- Bulan 1 & 2: Denda 0 (Reminder & Eskalasi WA)<br>- Bulan 3+: Denda 5% per bulan"]
+        HitungDendaEngine --> UpdateTagihanTerlambat["Update status tagihan = 'terlambat' & simpan denda_keterlambatan ke DB"]
+        UpdateTagihanTerlambat --> CallFonnteDenda["Panggil Fonnte WA API untuk notifikasi peringatan denda"]
+    end
+
+    subgraph Swimlane_Fonnte ["Swimlane: WhatsApp Gateway (Fonnte API)"]
+        CallFonnteBill --> CekResponFonnte{"Apakah pengiriman WA sukses?"}
+        CekResponFonnte -- Ya --> LogSukses["Update log_notifikasi status = 'sukses'"]
+        CekResponFonnte -- Tidak --> LogGagal["Update log_notifikasi status = 'gagal' & catat error_msg"]
+        
+        LogSukses --> LoopPenyewa
+        LogGagal --> LoopPenyewa
+        
+        CallFonnteDenda --> LoopDenda
+    end
+
+    LoopPenyewa -- Tidak --> SelesaiBill([Selesai Invoice])
+    LoopDenda -- Tidak --> SelesaiDenda([Selesai Denda])

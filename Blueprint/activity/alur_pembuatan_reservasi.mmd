@@ -1,0 +1,50 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_User ["Swimlane: Calon Penyewa / User"]
+        Start([Mulai]) --> TampilForm["Form Reservasi Kamar ditampilkan di halaman detail kamar"]
+        TampilForm --> IsiForm["Calon Penyewa mengisi Tanggal Mulai, Durasi Sewa, Tipe Sewa, Catatan, & Opsi Pembayaran (DP 30% / Lunas 100%)"]
+        IsiForm --> KlikPesan["Calon Penyewa klik tombol 'Pesan Unit'"]
+        
+        RedirectLogin["Sistem mengarahkan ke halaman login (/reservasi/login)"] --> RegisterOpsi{"Sudah punya akun?"}
+        RegisterOpsi -- Tidak --> BukaRegister["Buka halaman registrasi & buat akun baru"]
+        BukaRegister --> LoginSukses["Berhasil Login"]
+        RegisterOpsi -- Ya --> LoginSukses
+        LoginSukses --> KlikPesan
+        
+        TampilError["Sistem memuat pesan kesalahan (Format NIK, Nomor HP Wali, Tanggal Lampau, dll)"] --> IsiForm
+    end
+
+    subgraph Swimlane_System ["Swimlane: Sistem Backend Laravel & Database MySQL"]
+        KlikPesan --> CekLogin{"Apakah pengguna sudah login?"}
+        CekLogin -- Tidak --> RedirectLogin
+        
+        CekLogin -- Ya --> CekRoleAdmin{"Apakah peran pengguna adalah 'admin'?"}
+        CekRoleAdmin -- Ya --> BlockAdmin["Sistem menampilkan pesan error Toast: 'Admin tidak dapat melakukan reservasi'"]
+        BlockAdmin --> SelesaiAdmin([Selesai])
+        
+        CekRoleAdmin -- Tidak --> ValidasiInput{"Apakah input form valid?"}
+        ValidasiInput -- Tidak --> TampilError
+        
+        ValidasiInput -- Ya --> DbTransactionStart["Sistem memulai DB::transaction() dengan lockForUpdate()"]
+        DbTransactionStart --> CekKetersediaan{"Apakah kamar yang dipilih masih berstatus 'tersedia'?"}
+        CekKetersediaan -- Tidak --> KamarPenuh["Sistem memicu toast error 'Kamar sudah terisi' & rollback transaksi"]
+        KamarPenuh --> SelesaiPenuh([Selesai])
+        
+        CekKetersediaan -- Ya --> DbTransaction["1. Buat record reservasi status 'pending'<br>2. Generate order_id unik<br>3. Kunci kamar sementara agar tidak dipesan user lain"]
+        DbTransaction --> BukaAksesChat["Sistem mengaktifkan akses Chat Box real-time pre-pembayaran"]
+        BukaAksesChat --> TampilDetail["Sistem merender halaman detail reservasi calon penyewa"]
+        TampilDetail --> SelesaiSukses([Selesai])
+    end

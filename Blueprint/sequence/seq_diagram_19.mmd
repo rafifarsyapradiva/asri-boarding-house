@@ -1,0 +1,76 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor A as Admin
+    participant V as View (Calendar Dashboard)
+    participant C as Admin\AdminCalendarController
+    participant R as Reservasi (Model)
+    participant T as Tagihan (Model)
+    participant DB as Database (MySQL)
+
+    A->>V: Buka menu Kalender Kontrol (/admin/calendar)
+    V->>V: Inisialisasi FullCalendar JS Widget
+    
+    loop Permintaan Data Kalender (AJAX GET pada perubahan bulan/navigasi)
+        V->>C: GET /admin/calendar/events (start_date, end_date)
+        C->>R: Query Reservasi aktif dalam range tanggal
+        R->>DB: SELECT * FROM reservasis WHERE status != 'batal' AND tanggal_mulai <= end_date AND tanggal_selesai >= start_date
+        DB-->>R: Record dataset reservasi
+        R-->>C: Collection Reservasi
+
+        C->>T: Query Tagihan jatuh tempo dalam range tanggal
+        T->>DB: SELECT * FROM tagihans WHERE tanggal_jatuh_tempo BETWEEN start_date AND end_date
+        DB-->>T: Record dataset tagihan
+        T-->>C: Collection Tagihan
+
+        loop Proses Setiap Reservasi
+            alt Catatan mengandung kata "surve" ATAU status "pending"
+                C->>C: Map event sebagai "survey" (📍 Amber color)
+            else Status reservasi dikonfirmasi/aktif
+                C->>C: Map event check-in pada tanggal_mulai (🔑 Blue color)
+                C->>C: Map event check-out pada tanggal_selesai (🚪 Purple color)
+            end
+        end
+
+        loop Proses Setiap Tagihan
+            alt Status Tagihan == 'lunas'
+                C->>C: Map event tagihan lunas (Gray color + strike-through)
+            else Status Tagihan == 'pending' & Overdue
+                C->>C: Map event tagihan menunggak (Red color + info denda)
+            end
+        end
+
+        C-->>V: Return JSON array of events (id, title, date, color, type, url, metadata)
+        V->>V: Render event secara visual pada kalender dengan Neo-Brutalist CSS classes
+    end
+
+    A->>V: Sorot/Klik salah satu event di kalender
+    V->>V: Tampilkan Tooltip / Modal pop-up dengan detail agenda & metadata
+    A->>V: Klik tombol "Lihat Detail" di modal
+    V-->>A: Redirect ke halaman detail terkait (reservasi.show / tagihan.show)

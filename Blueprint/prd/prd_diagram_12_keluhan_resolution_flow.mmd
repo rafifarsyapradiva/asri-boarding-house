@@ -1,0 +1,41 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Penyewa Melaporkan Masalah]) --> OpenForm["Penyewa Buka Menu 'Pengaduan & Keluhan'"]
+    OpenForm --> FillKeluhan["Isi Kategori (Kamar/Fasilitas/Kebersihan/Keamanan),<br>Judul, Deskripsi & Unggah Foto Bukti (<2MB)"]
+    FillKeluhan --> SubmitKeluhan["Submit Form Keluhan"]
+    
+    SubmitKeluhan --> SaveDB["Simpan ke Tabel 'keluhan'<br>status: 'diajukan'"]
+    SaveDB --> TriggerEventA["Trigger Event: KeluhanDibuat"]
+    TriggerEventA --> DispatchWAAdmin["Queue Job: Kirim Notifikasi WA Alert ke Admin"]
+    
+    DispatchWAAdmin --> AdminReview["Admin Buka Menu Keluhan & Menilai Tingkat Kerusakan"]
+    AdminReview --> ProcessKeluhan["Admin Update Status: 'diproses'<br>Input Catatan Penanganan & Jadwal Teknisi"]
+    
+    ProcessKeluhan --> TriggerEventB["Trigger Event: KeluhanDitanggapi"]
+    TriggerEventB --> DispatchWATenantA["Queue Job: Kirim Notifikasi Progres ke WA Penyewa"]
+    
+    DispatchWATenantA --> PhysicalRepair["Teknisi Melakukan Perbaikan Fisik di Kamar"]
+    PhysicalRepair --> RepairDone{"Perbaikan Selesai & Berhasil?"}
+    
+    RepairDone -- Belum Selesai --> PendingParts["Catat Kendala Suku Cadang & Update Catatan"]
+    PendingParts --> ProcessKeluhan
+    
+    RepairDone -- Sudah Selesai --> ResolveKeluhan["Admin Update Status: 'selesai'<br>Lampirkan Catatan Hasil Perbaikan"]
+    ResolveKeluhan --> TriggerEventC["Trigger Event: KeluhanSelesai"]
+    TriggerEventC --> DispatchWATenantB["Queue Job: Kirim Notifikasi WA 'Keluhan Selesai' ke Penyewa"]
+    
+    DispatchWATenantB --> TenantVerify["Penyewa Memeriksa Hasil Fisik di Kamar & Riwayat Timeline"]
+    TenantVerify --> EndKeluhan([Selesai: Masalah Teratasi])

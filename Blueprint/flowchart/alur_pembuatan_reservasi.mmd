@@ -1,0 +1,38 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> TampilForm[/Form reservasi dirender di detail kamar/]
+    TampilForm --> IsiData[/Calon penyewa mengisi tanggal mulai, durasi sewa, catatan, & skema bayar/]
+    IsiData --> KlikKirim[/Calon penyewa klik tombol Pesan Unit/]
+    
+    KlikKirim --> CekLogin{"Apakah user telah terautentikasi?"}
+    CekLogin -- "Tidak" --> RedirectLogin[/Redirect ke halaman login/register /reservasi/login/]
+    RedirectLogin --> RegisterForm[/Registrasi akun baru: Nama, Email, Sandi, No HP/]
+    RegisterForm --> LoginSuccess[/Berhasil login & sesi aktif/]
+    LoginSuccess --> KlikKirim
+    
+    CekLogin -- "Ya" --> ValidasiForm{"Apakah validasi input form sukses?<br>NIK 16 digit & No HP Wali valid"}
+    ValidasiForm -- "Tidak" --> TampilErrorValidation[/Tampilkan error detail & toast notification/]
+    TampilErrorValidation --> IsiData
+    
+    ValidasiForm -- "Ya" --> DBTrans[[DB::transaction dimulai]]
+    DBTrans --> LockRoom{"Kamar::lockForUpdate"}
+    
+    LockRoom -- "Kamar sudah dibooking pada tanggal tersebut" --> RollbackTx[[Rollback DB Transaction]]
+    RollbackTx --> ToastBentrok[/Tampilkan Toast: Kamar telah dipesan oleh pengguna lain pada tanggal tersebut/]
+    ToastBentrok --> IsiData
+    
+    LockRoom -- "Kamar tersedia pada tanggal tersebut" --> LockRoomSuccess[[1. Buat data reservasi status pending<br>2. Generate order_id unik<br>3. Simpan data reservasi]]
+    LockRoomSuccess --> CommitTx[[Commit DB Transaction]]
+    CommitTx --> BukaChatBox[/Aktifkan Chat Box pre-pembayaran AJAX Polling/]
+    BukaChatBox --> RedirectDetail[/Redirect ke portal reservasi /penyewa/reservasi/:id/]
+    RedirectDetail --> Selesai([Selesai])

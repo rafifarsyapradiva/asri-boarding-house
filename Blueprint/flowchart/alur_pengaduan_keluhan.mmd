@@ -1,0 +1,33 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaKeluhan[/Penyewa masuk Menu Keluhan & Pengaduan/]
+    BukaKeluhan --> KlikBuatLaporan[/Klik tombol Buat Keluhan Baru/]
+    IsiFormLaporan[/Isi judul, kategori, deskripsi, & upload foto bukti/]
+    KlikBuatLaporan --> IsiFormLaporan
+    IsiFormLaporan --> KlikKirim[/Penyewa klik Kirim Laporan/]
+    
+    KlikKirim --> ValidasiFoto{"Apakah foto bukti valid < 2MB & data lengkap?"}
+    ValidasiFoto -- "Tidak" --> TampilErrorForm[/Tampilkan error upload foto / deskripsi wajib/]
+    TampilErrorForm --> IsiFormLaporan
+    
+    ValidasiFoto -- "Ya" --> SimpanKeluhanDB[[Simpan keluhan status pending ke database]]
+    SimpanKeluhanDB --> NotifWAAdmin[/Fonnte WA API mengirim notifikasi otomatis ke Admin/]
+    NotifWAAdmin --> AdminReviewKeluhan[/Admin meninjau laporan kerusakan di panel admin/]
+    
+    AdminReviewKeluhan --> UbahStatusProses[[Admin mengubah status keluhan menjadi diproses]]
+    UbahStatusProses --> LakukanTindakan[/Admin melakukan perbaikan fisik / koordinasi teknisi/]
+    LakukanTindakan --> IsiTanggapan[/Admin mengisi tanggapan & klik Selesaikan Keluhan/]
+    
+    IsiTanggapan --> UpdateSelesaiKeluhan[[1. Update status keluhan: selesai<br>2. Simpan tanggal_selesai = NOW]]
+    UpdateSelesaiKeluhan --> KirimWANotifPenyewa[/Fonnte WA API mengirim notifikasi penyelesaian ke Penyewa/]
+    KirimWANotifPenyewa --> Selesai([Selesai])

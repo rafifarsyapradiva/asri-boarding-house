@@ -1,0 +1,85 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor A as Admin
+    participant V as View (Detail Reservasi Admin)
+    participant C as Admin\ReservasiController
+    participant TService as TransisiPenyewaService
+    participant R as Reservasi (Model)
+    participant K as Kamar (Model)
+    participant P as Penyewa (Model)
+    participant BService as BillingService
+    participant F as Fonnte WA API
+    participant DB as Database (MySQL)
+
+    A->>V: Buka Detail Reservasi status 'dp' / 'lunas'
+    A->>V: Klik tombol "Konfirmasi Reservasi"
+    V->>C: POST /admin/reservasi/{id}/konfirmasi
+    Note over C: Validasi NIK wajib 16 digit numerik,<br/>Nama Wali, dan No HP Wali terisi.
+
+    alt Validasi Input Gagal
+        C-->>V: Return back() with Toast Error validation
+        V-->>A: Tampilkan pesan kesalahan validasi
+    else Validasi Input Sukses
+        C->>TService: transisi(reservasi, adminId)
+        TService->>DB: DB::beginTransaction()
+        
+        TService->>P: Penyewa::create([...]) (Status: 'aktif')
+        P->>DB: INSERT INTO penyewas (user_id, kamar_id, harga_sewa, NIK, no_wali...)
+        DB-->>P: Penyewa Instance
+        
+        Note over P, K: PenyewaObserver otomatis mengubah status kamar menjadi 'terisi'
+        
+        alt Skema Pembayaran Reservasi == "DP 30%"
+            TService->>BService: injectSisaDp(penyewa, nominal_sisa)
+            BService->>DB: INSERT INTO tagihans (penyewa_id, order_id, nominal_pokok, nominal_total, status...)
+        else Skema Pembayaran Reservasi == "Lunas Penuh"
+            TService->>BService: injectLunasPenuh(penyewa, reservasi)
+            BService->>DB: INSERT INTO tagihans (status: 'lunas') & INSERT INTO pembayarans (...)
+        end
+        
+        TService->>R: Ubah status reservasi menjadi "dikonfirmasi"
+        R->>DB: UPDATE reservasis SET status = 'dikonfirmasi', penyewa_id = ? WHERE id = ?
+        
+        TService->>DB: DB::commit()
+        
+        alt Transaksi WhatsApp Fonnte Berhasil
+            TService->>F: Kirim Kredensial & Selamat Datang via WA (Fonnte API)
+            F-->>TService: Response status success
+        else Transaksi WhatsApp Fonnte Gagal / Timeout
+            TService->>F: Call Fonnte API
+            F-->>TService: Connection Timeout / Error
+            TService->>DB: INSERT INTO log_notifikasis (status: 'gagal', error_msg: '...')
+            Note over TService: Transaksi Konfirmasi DB Tetap Valid (Status Gagal Dicatat)
+        end
+        
+        TService-->>C: Penyewa Instance
+        C-->>V: Return redirect() with Toast Success "Reservasi berhasil dikonfirmasi"
+        V-->>A: Perbarui status halaman ke dikonfirmasi
+    end

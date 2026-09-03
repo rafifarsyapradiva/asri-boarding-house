@@ -1,0 +1,39 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaPenyewaAdmin[/Admin masuk Menu Manajemen Penyewa/]
+    BukaPenyewaAdmin --> PilihPenyewaCheckout[/Pilih Penyewa Aktif yang akan keluar/]
+    PilihPenyewaCheckout --> KlikNonaktifkan[/Admin klik Nonaktifkan Kontrak / Checkout/]
+    KlikNonaktifkan --> DBUpdateNonaktif[[Sistem mengubah status penyewa menjadi nonaktif]]
+    DBUpdateNonaktif --> KamarTerkunci["Aturan Bisnis: Kamar kost terkait tetap berstatus terisi"]
+    
+    KamarTerkunci --> LakukanInspeksi[/Admin melakukan inspeksi fisik kebersihan & kelengkapan kamar/]
+    LakukanInspeksi --> CekFasilitasRusak{"Apakah ada kerusakan fasilitas?"}
+    
+    CekFasilitasRusak -- "Tidak" --> BalikDepositPenuh[[Deposit jaminan dikembalikan secara penuh ke penyewa]]
+    
+    CekFasilitasRusak -- "Ya" --> EvaluasiBiaya{"Apakah estimasi biaya perbaikan > deposit jaminan?"}
+    EvaluasiBiaya -- "Tidak - Biaya <= Deposit" --> PotongDeposit[[Potong biaya perbaikan dari deposit & kembalikan sisa saldo]]
+    EvaluasiBiaya -- "Ya - Biaya > Deposit" --> HangusDeposit[[1. Deposit jaminan hangus 100%<br>2. Terbitkan tagihan klaim ganti rugi fisik tambahan]]
+    
+    BalikDepositPenuh --> BukaMenuKamar[/Admin masuk Menu Manajemen Kamar/]
+    PotongDeposit --> BukaMenuKamar
+    HangusDeposit --> BukaMenuKamar
+    
+    BukaMenuKamar --> UpdateKamarManual[/Admin secara manual memperbarui status kamar/]
+    UpdateKamarManual --> KamarKondisi{"Kamar membutuhkan perbaikan?"}
+    
+    KamarKondisi -- "Ya" --> SetStatusMaintenance[[Ubah status kamar menjadi maintenance]]
+    KamarKondisi -- "Tidak" --> SetStatusTersedia[[Ubah status kamar menjadi tersedia]]
+    
+    SetStatusMaintenance --> Selesai([Selesai])
+    SetStatusTersedia --> Selesai

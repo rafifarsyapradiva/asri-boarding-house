@@ -1,0 +1,27 @@
+sequenceDiagram
+    autonumber
+    actor User as User / Admin
+    participant System as Laravel System (Event)
+    participant Listener as Notification Listener
+    participant Queue as Laravel Queue Job
+    participant FonnteService as Fonnte Service / Sanitizer
+    participant FonnteAPI as Fonnte WA Gateway API
+    actor TargetWA as Penerima (WA User / Wali)
+
+    User->>System: Aksi (Trigger Event: Billing/Denda/Keluhan/Reservasi)
+    System->>Listener: Fire Event (e.g. TagihanDibuat)
+    Listener->>Queue: Push Job (KirimNotifikasiTagihanJob)
+    Note over Queue: Processing Async Background Job
+    Queue->>FonnteService: Execute Job Dispatch
+    FonnteService->>FonnteService: Sanitasi No HP (Converts '0812' to '62812')
+    FonnteService->>FonnteAPI: HTTP POST JSON Payload (Target, Message, Token)
+    
+    alt HTTP Status 200 OK (Terkirim)
+        FonnteAPI-->>TargetWA: Kirim Pesan WhatsApp Instant
+        FonnteAPI-->>FonnteService: Response Success JSON
+        FonnteService->>System: Log Status Terkirim ke `log_notifikasi`
+    else HTTP Fail / Timeout (Gagal)
+        FonnteAPI-->>FonnteService: Response Error / Timeout
+        FonnteService->>System: Log Status Gagal ke `log_notifikasi`
+        FonnteService->>Queue: Retry Job Execution (Exponential Backoff)
+    end

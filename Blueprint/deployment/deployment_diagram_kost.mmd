@@ -1,0 +1,102 @@
+flowchart TB
+    %% =========================================================================
+    %% CLIENT & DEVELOPER WORKSTATION NODES
+    %% =========================================================================
+    subgraph ClientDevice["«device» Client Device (Desktop / Mobile)"]
+        BrowserApp["«executionEnvironment» Web Browser<br/>• Blade HTML Views & Tailwind CSS<br/>• Alpine.js Runtime (Adaptive Polling Chat)<br/>• Midtrans Snap.js SDK Modal<br/>• Chart.js Financial Visualizer"]
+    end
+
+    subgraph DevDevice["«device» Developer / Admin Workstation"]
+        DevTools["«software» Administration & Dev Tools<br/>• Git Client & SSH Terminal (Port 65002)<br/>• FileZilla SFTP Client (.env sync)<br/>• Web Browser (Hostinger hPanel HTTPS)"]
+    end
+
+    %% =========================================================================
+    %% HOSTINGER SHARED HOSTING SERVER NODE
+    %% =========================================================================
+    subgraph HostingerNode["«device» Hostinger Server (CloudLinux OS - LVE Isolated Container)"]
+        
+        subgraph WebServerEnv["«executionEnvironment» Web Server Layer (LiteSpeed / Apache / Nginx)"]
+            LiteSpeedEngine["LiteSpeed Enterprise Web Server (Port 80 / 443)<br/>• .htaccess URL Rewrite Engine<br/>• SSL/TLS Termination (Let's Encrypt / Sectigo)<br/>• Direct Static File Serving (Gzip / Brotli)"]
+            StaticAssets["«artifact» Static Assets Layer<br/>• public/build/ (Compiled Vite JS/CSS)<br/>• public/storage/ (Symlinked Media Files)<br/>• public/images/ & favicon.ico"]
+        end
+
+        subgraph PHPEnv["«executionEnvironment» Application Runtime (PHP 8.2+ via mod_lsapi)"]
+            subgraph LaravelApp["«artifact» Laravel 11 Application Container"]
+                RoutingCore["Routing & Security Middleware<br/>(VerifyMidtransSignature, Role:admin/penyewa, GuestChatLimiter)"]
+                
+                ServicesLayer["Core Application Business Services<br/>• BillingService (Siklus Billing & Denda Otomatis)<br/>• ReservasiService (Booking & Dynamic Pricing)<br/>• MidtransService (Snap Token & Dual Webhook Handler)<br/>• FonnteService (WhatsApp Notification Gateway)<br/>• NotifikasiService (Multi-Channel Alerts: WA, Email, In-App)<br/>• TransisiPenyewaService (Check-in, Check-out & Deposit)<br/>• PdfNotaService (Dompdf Invoice/Kuitansi Generator)<br/>• Socialite (Google Cloud OAuth 2.0)"]
+                
+                SchedulerWorker["Task Schedulers & Background Workers<br/>• schedule:run (hPanel Cron Setiap Menit)<br/>• queue:work --once (Database Queue Worker)<br/>• Scheduled Tasks: tagihan:generate, denda, prune"]
+            end
+        end
+
+        subgraph StorageEnv["«storage» Shared SSD File Storage Layer"]
+            PublicDisk["«artifact» storage/app/public/<br/>├── kamar/ (Foto Kamar Kost)<br/>├── nota/ (PDF Kuitansi Transaksi)<br/>├── nota_pengeluaran/ (Bukti Kas Keluar)<br/>├── galleries/ (Foto Galeri Landing Page)<br/>├── reviews/ (Foto Testimoni Pelanggan)<br/>├── settings/ (Logo & Favicon Brand)<br/>└── keluhan/ (Foto Bukti Komplain)"]
+            PrivateDisk["«artifact» storage/app/private/<br/>└── cache & temporary exported files"]
+        end
+
+        subgraph DBEnv["«executionEnvironment» Database Server Layer"]
+            MySQLServer["«database» MySQL 8.x / MariaDB Shared Instance (Port 3306)<br/>• Business Tables: users, kamars, reservasis, tagihans, pembayarans, keluhans<br/>• Framework Tables: sessions, jobs, job_batches, failed_jobs, cache_locks"]
+        end
+    end
+
+    %% =========================================================================
+    %% EXTERNAL CLOUD SERVICES & REPOSITORIES
+    %% =========================================================================
+    subgraph ExternalServices["«cloud» External Cloud Services & APIs"]
+        MidtransAPI["«service» Midtrans Cloud API Gateway<br/>(api.midtrans.com:443 / sandbox)"]
+        FonnteAPI["«service» Fonnte WhatsApp API Gateway<br/>(api.fonnte.com:443)"]
+        GoogleOAuthAPI["«service» Google Identity OAuth 2.0<br/>(accounts.google.com:443)"]
+        GoogleSMTPAPI["«service» Google SMTP Mail Server<br/>(smtp.gmail.com:587 TLS)"]
+        GitHubVCS["«service» GitHub VCS Repository<br/>(github.com:443 / Port: 22)"]
+    end
+
+    subgraph EndUserRecipients["«devices» End-User Message Receivers"]
+        UserPhone["📲 Smartphone (WhatsApp Client App)"]
+        UserMail["📬 Tenant Mailbox (Email Client)"]
+    end
+
+    %% =========================================================================
+    %% PROTOCOL CONNECTIONS & COMMUNICATION PATHS
+    %% =========================================================================
+    BrowserApp <-->|"HTTPS (Port 443 - TLS 1.3 / SSL)"| LiteSpeedEngine
+    LiteSpeedEngine -->|"Direct Static Serve"| StaticAssets
+    LiteSpeedEngine <-->|"Internal IPC (mod_lsapi FastCGI)"| RoutingCore
+    
+    RoutingCore --- ServicesLayer
+    ServicesLayer --- SchedulerWorker
+    
+    ServicesLayer <-->|"TCP/IP (Port 3306 - PDO MySQL Driver)"| MySQLServer
+    ServicesLayer <-->|"File I/O Read/Write"| PublicDisk
+    PublicDisk -.->|"Symlink Bridge (php artisan storage:link)"| StaticAssets
+    
+    DevTools -->|"SFTP / SSH (Port 65002) & hPanel HTTPS (Port 443)"| HostingerNode
+    GitHubVCS -->|"Auto-Deploy Webhook (Port 443 HTTPS)"| LiteSpeedEngine
+
+    ServicesLayer <-->|"HTTPS REST POST Token Request (Port 443)"| MidtransAPI
+    MidtransAPI -->|"Webhook POST /api/midtrans/callback & /callback-reservasi (Port 443)"| LiteSpeedEngine
+    BrowserApp <-->|"Direct Snap Payment Modal (HTTPS Port 443)"| MidtransAPI
+
+    ServicesLayer -->|"HTTPS POST Bearer Auth (Port 443)"| FonnteAPI
+    FonnteAPI -->|"Cellular / WhatsApp Protocol"| UserPhone
+
+    ServicesLayer <-->|"OAuth 2.0 Auth Code Exchange (HTTPS Port 443)"| GoogleOAuthAPI
+    BrowserApp <-->|"OAuth Consent UI (HTTPS Port 443)"| GoogleOAuthAPI
+
+    ServicesLayer -->|"SMTP TLS (Port 587 + App Password)"| GoogleSMTPAPI
+    GoogleSMTPAPI -->|"SMTP / IMAP Mail Delivery"| UserMail
+
+    %% =========================================================================
+    %% STYLING
+    %% =========================================================================
+    classDef client fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef server fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef db fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
+    classDef ext fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#4A148C;
+    classDef storage fill:#FCE4EC,stroke:#C2185B,stroke-width:1.5px,color:#880E4F;
+
+    class BrowserApp,DevTools client;
+    class LiteSpeedEngine,StaticAssets,RoutingCore,ServicesLayer,SchedulerWorker server;
+    class MySQLServer db;
+    class MidtransAPI,FonnteAPI,GoogleOAuthAPI,GoogleSMTPAPI,GitHubVCS,UserPhone,UserMail ext;
+    class PublicDisk,PrivateDisk storage;

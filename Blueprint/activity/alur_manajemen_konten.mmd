@@ -1,0 +1,43 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Admin ["Swimlane: Administrator"]
+        Start([Mulai]) --> BukaKonten["Admin masuk ke halaman pengelolaan konten di panel admin"]
+        BukaKonten --> PilihSubMenu{"Pilih Sub-Menu Konten?"}
+        
+        PilihSubMenu -- "FAQ" --> CRUDFAQ["Tambah / Edit / Hapus / Toggle Status FAQ"]
+        PilihSubMenu -- "Galeri Kost" --> CRUDGaleri["Tambah / Edit / Hapus Foto Galeri"]
+        PilihSubMenu -- "Ulasan Pelanggan" --> CRUDReview["Tambah / Edit / Hapus Ulasan Pelanggan"]
+    end
+
+    subgraph Swimlane_Backend ["Swimlane: Content Engine, Storage, & Public Page"]
+        CRUDFAQ --> SaveFAQ["Simpan field pertanyaan, jawaban, urutan, & status is_active ke database"]
+        
+        CRUDGaleri --> CekUbahGaleri{"Apakah mengubah file foto galeri?"}
+        CekUbahGaleri -- Ya --> HapusFotoGaleriLama["Hapus berkas foto lama di storage fisik"]
+        HapusFotoGaleriLama --> SimpanGaleri["Simpan judul, deskripsi, urutan, path foto baru, & is_active ke DB"]
+        CekUbahGaleri -- Tidak --> SimpanGaleri
+        
+        CRUDReview --> CekUbahReview{"Apakah mengubah file foto ulasan?"}
+        CekUbahReview -- Ya --> HapusFotoReviewLama["Hapus berkas foto pelanggan lama di storage fisik"]
+        HapusFotoReviewLama --> SimpanReview["Simpan nama, pekerjaan, rating (1-5), teks ulasan, & path foto baru ke DB"]
+        CekUbahReview -- Tidak --> SimpanReview
+        
+        SaveFAQ --> TerapkanPerubahan["Sistem merefleksikan perubahan konten ke landing page secara dinamis"]
+        SimpanGaleri --> TerapkanPerubahan
+        SimpanReview --> TerapkanPerubahan
+        
+        TerapkanPerubahan --> Selesai([Selesai])
+    end

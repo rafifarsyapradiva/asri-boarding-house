@@ -1,0 +1,31 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaReservasi[/Admin masuk menu Daftar / Detail Reservasi /admin/reservasi/]
+    BukaReservasi --> CekStatusBatal{"Apakah status reservasi == batal?"}
+    
+    CekStatusBatal -- "Tidak" --> SembunyikanTombol[/Tombol Hapus Permanen disembunyikan/]
+    SembunyikanTombol --> Selesai([Selesai])
+    
+    CekStatusBatal -- "Ya" --> TampilkanTombol[/Tampilkan tombol aksi Hapus khusus/]
+    TampilkanTombol --> KlikHapus[/Admin klik tombol Hapus/]
+    KlikHapus --> TampilModal[/Sistem menampilkan modal konfirmasi hapus permanen/]
+    
+    TampilModal --> Konfirmasi{"Admin konfirmasi hapus?"}
+    Konfirmasi -- "Tidak" --> BatalHapus[/Batal menghapus data/]
+    BatalHapus --> Selesai
+    
+    Konfirmasi -- "Ya" --> DBTrans[[DB::transaction:<br>1. Hapus chat_messages terkait secara cascade<br>2. Hapus data reservasi secara permanen]]
+    DBTrans --> CommitTx[[Commit DB Transaction]]
+    CommitTx --> ToastSuccess[/Tampilkan Toast Success: Reservasi & chat berhasil dihapus/]
+    ToastSuccess --> RedirectDaftar[/Redirect ke halaman daftar reservasi ter-update/]
+    RedirectDaftar --> Selesai

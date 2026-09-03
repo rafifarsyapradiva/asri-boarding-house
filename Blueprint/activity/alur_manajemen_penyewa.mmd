@@ -1,0 +1,47 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    subgraph Swimlane_Admin ["Swimlane: Administrator"]
+        Start([Mulai]) --> BukaMenuPenyewa["Admin masuk halaman CRUD Penyewa (/admin/penyewa)"]
+        BukaMenuPenyewa --> PilihAksiPenyewa{"Pilih tindakan CRUD?"}
+        
+        PilihAksiPenyewa -- "Tambah / Edit Penyewa" --> IsiFormPenyewa["Isi NIK (wajib 16 digit), No HP & Nama Wali, Deposit, Durasi, Tipe Sewa, & Kamar"]
+        IsiFormPenyewa --> KlikSimpanPenyewa["Admin klik Simpan"]
+        TampilErrorPenyewa["Sistem memuat error validation"] --> IsiFormPenyewa
+        BlockReaktivasi["Sistem membatalkan pembaruan & memicu Toast error 'Kamar sedang terisi/maintenance'"] --> IsiFormPenyewa
+        
+        PilihAksiPenyewa -- "Hapus Penyewa" --> KlikHapusPenyewa["Admin klik Hapus & konfirmasi modal"]
+    end
+
+    subgraph Swimlane_Backend ["Swimlane: Penyewa Service & Database MySQL"]
+        KlikSimpanPenyewa --> ValidasiPenyewaForm{"Validasi data sukses?"}
+        ValidasiPenyewaForm -- Tidak --> TampilErrorPenyewa
+        
+        ValidasiPenyewaForm -- Ya --> CekReaktivasi{"Apakah status diubah dari nonaktif menjadi aktif?"}
+        CekReaktivasi -- Tidak --> SimpanDataPenyewa["Sistem menyimpan data profil penyewa ke database"]
+        SimpanDataPenyewa --> SelesaiSave([Selesai])
+        
+        CekReaktivasi -- Ya --> CekKetersediaanKamar{"Apakah Kamar terkait berstatus 'tersedia'?"}
+        CekKetersediaanKamar -- Tidak --> BlockReaktivasi
+        CekKetersediaanKamar -- Ya --> SimpanReaktivasi["1. Simpan data reaktivasi aktif<br>2. Ubah status kamar menjadi 'terisi' secara otomatis"]
+        SimpanReaktivasi --> SelesaiReaktivasi([Selesai])
+        
+        KlikHapusPenyewa --> CekRiwayatTagihan{"Apakah Penyewa memiliki riwayat tagihan di DB?"}
+        CekRiwayatTagihan -- Ya --> BlockDeletePenyewa["Sistem menolak penghapusan demi integritas keuangan & memicu Toast error"]
+        BlockDeletePenyewa --> SelesaiBlock([Selesai])
+        
+        CekRiwayatTagihan -- Tidak --> HapusPenyewaDB["Hapus data profil penyewa & hapus user account dari tabel users"]
+        HapusPenyewaDB --> SelesaiHapus([Selesai])
+    end

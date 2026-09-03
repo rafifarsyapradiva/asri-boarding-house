@@ -1,0 +1,33 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> BukaFasilitas[/Admin masuk Menu Manajemen Fasilitas /admin/fasilitas/]
+    BukaFasilitas --> PilihAksi{"Pilih Operasi CRUD?"}
+    
+    PilihAksi -- "Tambah / Edit Fasilitas" --> IsiFormFasilitas[/Isi Nama Fasilitas, Ikon, Deskripsi, & Status Aktif/]
+    IsiFormFasilitas --> KlikSimpan[/Admin klik Simpan/]
+    KlikSimpan --> ValidasiFasilitas{"Apakah input valid?"}
+    ValidasiFasilitas -- "Tidak" --> ErrorFasilitas[/Tampilkan error validation & Toast di form/]
+    ErrorFasilitas --> IsiFormFasilitas
+    ValidasiFasilitas -- "Ya" --> SimpanDB[[1. Simpan / update data fasilitas di database<br>2. Hapus Cache::forget fasilitas_all]]
+    SimpanDB --> SuccessToast[/Tampilkan Toast Success & muat ulang daftar/]
+    SuccessToast --> Selesai([Selesai])
+    
+    PilihAksi -- "Hapus Fasilitas" --> KlikHapus[/Admin klik tombol Hapus pada fasilitas/]
+    KlikHapus --> CekIkatan{"Apakah fasilitas terpasang pada satu atau lebih kamar?"}
+    
+    CekIkatan -- "Ya" --> CegahHapus[[1. Cegah eksekusi query delete<br>2. Tampilkan Toast Error: Fasilitas dilarang dihapus!]]
+    CegahHapus --> Selesai
+    
+    CekIkatan -- "Tidak" --> HapusDB[[1. Hapus record fasilitas dari database<br>2. Hapus Cache::forget fasilitas_all]]
+    HapusDB --> SuccessHapusToast[/Tampilkan Toast Success: Fasilitas berhasil dihapus/]
+    SuccessHapusToast --> Selesai

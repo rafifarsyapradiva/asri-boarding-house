@@ -1,0 +1,62 @@
+sequenceDiagram
+    autonumber
+    actor CalonPenyewa as Calon Penyewa
+    actor Admin as Admin Kost
+    participant Web as Web Interface (Blade)
+    participant RS as ReservasiService
+    participant MS as MidtransService
+    participant TPS as TransisiPenyewaService
+    participant PO as PenyewaObserver
+    participant BS as BillingService
+    participant NS as NotifikasiService
+    participant DB as MySQL Database
+
+    Note over CalonPenyewa, DB: FASE 1: PENDAFTARAN & PEMBAYARAN BOOKING
+    CalonPenyewa->>Web: Pilih Kamar & Ajukan Reservasi (DP/Lunas)
+    Web->>RS: buatReservasi(data)
+    RS->>DB: Lock Kamar & Simpan Reservasi (Status: Pending)
+    RS->>MS: createSnapTokenReservasi(reservasi)
+    MS-->>Web: Snap Token Midtrans
+    CalonPenyewa->>MS: Bayar DP / Lunas via VA / QRIS
+    MS-->>Web: Callback Webhook (Settlement)
+    Web->>DB: Update Reservasi (Status: DP / Lunas)
+
+    Note over Admin, DB: FASE 2: VERIFIKASI & AKTIVASI PENYEWA
+    Admin->>Web: Setujui & Konfirmasi Reservasi
+    Web->>TPS: transisi(reservasi, adminId)
+    TPS->>DB: Create Penyewa (Status: Aktif)
+    activate PO
+    PO->>DB: Update Kamar (Status: Terisi)
+    deactivate PO
+    alt Jika DP
+        TPS->>BS: injectSisaDp(penyewa, nominalSisa)
+        BS->>DB: Create Tagihan Sisa DP Bulan 1
+    else Jika Lunas
+        TPS->>BS: injectLunasPenuh(penyewa, reservasi)
+        BS->>DB: Create Tagihan & Pembayaran Lunas
+    end
+    TPS->>NS: kirimNotifikasiTransisiPenyewa(penyewa)
+    NS-->>CalonPenyewa: WhatsApp Welcome & Instruksi Masuk
+
+    Note over BS, DB: FASE 3: SIKLUS PENAGIHAN BULANAN RUTIN
+    BS->>DB: Cron tgl 1: Generate Tagihan Bulanan (Chunk 100)
+    BS->>NS: kirimNotifikasiTagihan(tagihan)
+    NS-->>CalonPenyewa: WhatsApp Rincian Tagihan + Link Bayar
+    alt Terlambat Melewati Tgl 10
+        BS->>DB: Cron: Terapkan Denda Flat 5%
+        BS->>NS: kirimReminderJatuhTempo(tagihan)
+        NS-->>CalonPenyewa: WhatsApp Pengingat Denda
+    end
+
+    Note over CalonPenyewa, DB: FASE 4: PEMBAYARAN SEWA & KUITANSI PDF
+    CalonPenyewa->>Web: Bayar Tagihan (Midtrans / Tunai)
+    Web->>DB: Update Tagihan (Lunas) & Simpan Pembayaran
+    Web->>NS: kirimNotifikasiPembayaran(pembayaran)
+    NS-->>CalonPenyewa: WhatsApp Bukti Lunas + Link PDF Kuitansi
+
+    Note over Admin, DB: FASE 5: CHECKOUT & INSPEKSI FISIK KAMAR
+    Admin->>Web: Proses Checkout Penyewa (Status: Nonaktif)
+    Web->>DB: Update Penyewa (Status: Nonaktif, tgl_keluar)
+    Note over PO: PenyewaObserver tidak langsung ubah kamar ke 'tersedia'
+    Admin->>Web: Inspeksi Fisik Kamar Selesai -> Ubah Kamar ke 'Tersedia'
+    Web->>DB: Update Kamar (Status: Tersedia)

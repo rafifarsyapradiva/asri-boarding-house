@@ -1,0 +1,5 @@
+stateDiagram-v2
+    [*] --> aktif : Onboarding Online / Manual
+    aktif --> nonaktif : Checkout (Potong Deposit)
+    nonaktif --> aktif : Reaktivasi (Kamar OK)
+    aktif --> aktif : Perpanjang Sewa (Harian/Mingguan)

@@ -1,0 +1,45 @@
+sequenceDiagram
+    autonumber
+    actor Browser as 📱 Client Web Browser
+    actor Phone as 📲 WhatsApp Client (Penyewa/Wali)
+    actor MailBox as 📬 Email Inbox Penyewa
+    participant HostingerServer as 🌐 Web Server (LiteSpeed/Laravel)
+    participant Database as 🗄️ Database (MySQL 3306)
+    participant Midtrans as 💳 Midtrans Cloud (Payment API)
+    participant Fonnte as 💬 Fonnte Gateway (WA API)
+    participant GoogleOAuth as 🔑 Google Identity (OAuth 2.0)
+    participant SMTPServer as ✉️ Google SMTP (Email 587)
+
+    Note over Browser, HostingerServer: 1. HTTP Request & Static/Dynamic Web Rendering
+    Browser->>HostingerServer: HTTPS GET / Request (Port 443 | TLS 1.3)
+    HostingerServer->>Database: Query SQL via TCP/IP (Port 3306 | MySQL PDO)
+    Database-->>HostingerServer: Return ResultSet
+    HostingerServer-->>Browser: HTTP 200 OK (Rendered Blade, Tailwind & Alpine.js)
+
+    Note over Browser, Midtrans: 2. Midtrans Snap Payment & Dual Webhook Callback
+    Browser->>HostingerServer: Klik Bayar Tagihan / DP (HTTPS POST Port 443)
+    HostingerServer->>Midtrans: Outbound Request Token (HTTPS POST Port 443 | Basic Auth)
+    Midtrans-->>HostingerServer: Return snap_token
+    HostingerServer-->>Browser: Return snap_token to snap.js Client SDK
+    Browser->>Midtrans: Direct Payment Processing Modal (HTTPS Port 443)
+    Midtrans-->>Browser: Payment Completion Status & Close Modal
+    Midtrans-->>HostingerServer: Webhook POST /api/midtrans/callback OR /callback-reservasi
+    HostingerServer->>HostingerServer: Verify SHA-512 Digital Signature (VerifyMidtransSignature)
+    HostingerServer->>Database: Update Bill / Reservasi Status to 'lunas' (Port 3306)
+
+    Note over HostingerServer, Phone: 3. Fonnte WhatsApp Notification Dispatch
+    HostingerServer->>Fonnte: WhatsApp dispatch payload (HTTPS POST Port 443 | Bearer Token)
+    Fonnte-->>Phone: Push Pesan WhatsApp Kuitansi / Tagihan Baru ke Smartphone
+
+    Note over Browser, GoogleOAuth: 4. Google OAuth 2.0 Identity Flow
+    Browser->>GoogleOAuth: Authentication Redirect (HTTPS Port 443)
+    GoogleOAuth-->>Browser: OAuth Web Consent Dialog UI
+    Browser->>HostingerServer: Callback Code Exchange Redirect (/auth/google/callback)
+    HostingerServer->>GoogleOAuth: Token Verification Exchange (HTTPS POST Port 443)
+    GoogleOAuth-->>HostingerServer: Return User Profile (Name, Email, Google ID)
+    HostingerServer->>Database: Create or Verify User Session (TCP/IP Port 3306)
+    HostingerServer-->>Browser: Redirect User to Tenant Dashboard
+
+    Note over HostingerServer, MailBox: 5. SMTP Email Notification Dispatch
+    HostingerServer->>SMTPServer: Outbound SMTP Mail Dispatch (Port 587 | TLS Encryption)
+    SMTPServer-->>MailBox: Deliver Invoice PDF / Password Reset to Tenant Inbox

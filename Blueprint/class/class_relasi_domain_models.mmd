@@ -1,0 +1,142 @@
+classDiagram
+    direction TB
+
+    class User {
+        +int id
+        +string nama
+        +string email
+        +string no_hp
+        +UserRole role
+        +isProfileComplete() bool
+        +isActiveTenant() bool
+    }
+
+    class Kamar {
+        +int id
+        +string nomor_kamar
+        +tinyint lantai
+        +TipeKamar tipe
+        +decimal harga_bulan
+        +KamarStatus status
+        +kalkulasiHargaSewa() float
+    }
+
+    class Fasilitas {
+        +int id
+        +string nama
+        +string ikon
+        +boolean is_active
+    }
+
+    class Penyewa {
+        +int id
+        +int user_id
+        +int kamar_id
+        +decimal harga_sewa
+        +date tanggal_masuk
+        +PenyewaStatus status
+        +getIsOverdueAttribute() bool
+    }
+
+    class Tagihan {
+        +int id
+        +int penyewa_id
+        +string order_id
+        +decimal nominal_total
+        +TagihanStatus status
+        +scopeTerlambat() Builder
+    }
+
+    class Pembayaran {
+        +int id
+        +int tagihan_id
+        +string transaction_id
+        +decimal nominal
+        +string status_midtrans
+        +datetime tanggal_bayar
+    }
+
+    class Reservasi {
+        +bigint id
+        +int user_id
+        +int kamar_id
+        +decimal total_harga
+        +boolean is_dp
+        +ReservasiStatus status
+        +isKamarTerbooking() bool
+    }
+
+    class ChatMessage {
+        +bigint id
+        +bigint reservasi_id
+        +int sender_id
+        +text message
+    }
+
+    class WhatsappClick {
+        +int id
+        +int kamar_id
+        +string source
+    }
+
+    class Keluhan {
+        +int id
+        +int penyewa_id
+        +string judul
+        +StatusKeluhan status
+    }
+
+    class Pengeluaran {
+        +int id
+        +string nama_pengeluaran
+        +decimal nominal
+    }
+
+    class GuestChatThread {
+        +bigint id
+        +string session_token
+        +string status
+    }
+
+    class GuestChatMessage {
+        +bigint id
+        +bigint guest_chat_thread_id
+        +text message
+    }
+
+    class LogNotifikasi {
+        +int id
+        +int penyewa_id
+        +int tagihan_id
+        +StatusNotifikasi status
+    }
+
+    class NotifikasiKhusus {
+        +int id
+        +string sumber
+        +string tipe_aktivitas
+        +int user_id
+    }
+
+    %% Relasi Asosiasi & Komposisi %%
+    User "1" -- "0..1" Penyewa : One-to-One
+    User "1" -- "*" Reservasi : One-to-Many
+    User "1" -- "*" Pembayaran : One-to-Many
+    User "1" -- "*" ChatMessage : One-to-Many
+    User "1" -- "*" GuestChatMessage : One-to-Many
+    User "1" -- "*" NotifikasiKhusus : One-to-Many
+
+    Kamar "1" -- "*" Penyewa : One-to-Many
+    Kamar "*" -- "*" Fasilitas : Many-to-Many
+    Kamar "1" -- "*" WhatsappClick : One-to-Many
+    Kamar "1" -- "*" Reservasi : One-to-Many
+
+    Penyewa "1" -- "*" Tagihan : One-to-Many
+    Penyewa "1" -- "*" Keluhan : One-to-Many
+    Penyewa "1" -- "*" LogNotifikasi : One-to-Many
+
+    Tagihan "1" -- "*" Pembayaran : One-to-Many
+    Tagihan "1" -- "*" LogNotifikasi : One-to-Many
+
+    Reservasi "1" *-- "*" ChatMessage : Composition
+    GuestChatThread "1" *-- "*" GuestChatMessage : Composition

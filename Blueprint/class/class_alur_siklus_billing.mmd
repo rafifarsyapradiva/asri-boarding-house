@@ -1,0 +1,48 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#D97706',
+    'lineColor': '#B45309',
+    'secondaryColor': '#FEF3C7',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Jadwal Cron Server: Tanggal 1 Tiap Bulan]) --> RunGenerateCmd[Artisan: tagihan:generate-bulanan<br>GenerateBulananTagihan]
+    RunGenerateCmd --> CallBilling[BillingService::generateTagihanBulanan]
+    
+    CallBilling --> QueryTenants[Ambil Semua Penyewa Status 'aktif'<br>Chunking per 100 Baris]
+    QueryTenants --> LoopTenant{Iterasi Setiap Penyewa}
+    
+    LoopTenant --> CheckExisting{Sudah Ada Tagihan Bulan Ini?}
+    CheckExisting -->|Ya| SkipTenant[Lewati Penyewa]
+    CheckExisting -->|Belum| CreateBill[Tagihan::create<br>Nominal Pokok = harga_sewa, Status = 'pending']
+    
+    CreateBill --> DispatchBillEvent[Dispatch Event: TagihanDibuat]
+    DispatchBillEvent --> DispatchBillJob[Queue Job: KirimNotifikasiTagihanJob]
+    DispatchBillJob --> SendBillWA[FonnteService: Kirim WA Rincian Invoice & Link Bayar]
+    
+    SkipTenant --> NextTenant[Lanjut ke Penyewa Berikutnya]
+    SendBillWA --> NextTenant
+    NextTenant --> CheckMoreTenants{Masih Ada Penyewa?}
+    CheckMoreTenants -->|Ya| LoopTenant
+    CheckMoreTenants -->|Selesai| EndGenerate([Tagihan Bulanan Berhasil Dibuat])
+    
+    EndGenerate -.-> DailyCron([Jadwal Cron Harian: Cek Jatuh Tempo])
+    DailyCron --> RunLateCmd[Artisan: tagihan:proses-keterlambatan<br>ProsesKeterlambatanTagihan]
+    RunLateCmd --> CallProcessLate[BillingService::prosesKeterlambatan]
+    
+    CallProcessLate --> CheckDueDate{Lewat Tanggal Jatuh Tempo tgl 10?}
+    CheckDueDate -->|H-3 sd H-1 Jatuh Tempo| SendReminderJob[Queue Job: KirimReminderJatuhTempoJob<br>WhatsApp Pengingat Jatuh Tempo]
+    CheckDueDate -->|Lewat Jatuh Tempo & Belum Denda| ApplyFine[BillingService::terapkanDendaDirect<br>Nominal Denda = 5% Flat]
+    
+    ApplyFine --> UpdateLateStatus[Update Status Tagihan -> 'terlambat']
+    UpdateLateStatus --> DispatchFineEvent[Dispatch Event: DendaDikenakan]
+    DispatchFineEvent --> NotifyLateJob[Queue Job: KirimReminderJatuhTempoJob + KirimNotifikasiWaliJob]
+    NotifyLateJob --> SendLateWA[FonnteService: Kirim WA Peringatan Denda ke Penyewa & Wali]
+    SendLateWA --> EndBillingCycle([Selesai Siklus Penagihan])

@@ -1,0 +1,34 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Mulai]) --> AdminBukaKonten[/Admin masuk halaman Pengaturan Konten/]
+    AdminBukaKonten --> PilihModul{"Pilih Modul Konten?"}
+    
+    PilihModul -- "FAQ" --> CRUDFAQ[/Tambah / Edit / Hapus FAQ/]
+    CRUDFAQ --> SaveFAQ[[Simpan field pertanyaan, jawaban, urutan, & is_active]]
+    
+    PilihModul -- "Galeri Kost" --> CRUDGaleri[/Tambah / Edit / Hapus Galeri/]
+    CRUDGaleri --> CekFotoGaleri{"Apakah mengganti file gambar galeri?"}
+    CekFotoGaleri -- "Ya" --> HapusFotoGaleriLama[[Hapus file gambar galeri lama dari storage]]
+    HapusFotoGaleriLama --> SaveGaleri[[Simpan judul, deskripsi, urutan, path gambar baru]]
+    CekFotoGaleri -- "Tidak" --> SaveGaleri
+    
+    PilihModul -- "Ulasan Pelanggan" --> CRUDReview[/Tambah / Edit / Hapus Ulasan Pelanggan/]
+    CRUDReview --> CekFotoReview{"Apakah mengganti file foto pelanggan?"}
+    CekFotoReview -- "Ya" --> HapusFotoReviewLama[[Hapus file foto pelanggan lama dari storage]]
+    HapusFotoReviewLama --> SaveReview[[Simpan nama, pekerjaan, bintang, ulasan, & path foto]]
+    CekFotoReview -- "Tidak" --> SaveReview
+    
+    SaveFAQ --> RenderPublik[/Perubahan direfleksikan secara dinamis ke Landing Page/]
+    SaveGaleri --> RenderPublik
+    SaveReview --> RenderPublik
+    RenderPublik --> Selesai([Selesai])

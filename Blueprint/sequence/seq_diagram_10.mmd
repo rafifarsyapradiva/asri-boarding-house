@@ -1,0 +1,66 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor A as Admin
+    actor P as Penyewa Aktif
+    participant V_Admin as View (Admin Peraturan)
+    participant C_Admin as Admin\PeraturanController
+    participant V_Penyewa as View (Penyewa Peraturan)
+    participant C_Penyewa as Penyewa\DashboardController
+    participant M as Peraturan (Model)
+    participant DB as Database (MySQL)
+
+    Note over A, C_Admin: Alur Pengelolaan Peraturan oleh Admin (Create, Edit, Delete)
+    alt Aksi 1: Tambah / Edit Peraturan
+        A->>V_Admin: Isi judul, deskripsi, urutan, & pilih 1 dari 9 ikon Heroicons
+        V_Admin->>C_Admin: POST/PUT /admin/peraturan (judul, deskripsi, ikon, urutan)
+        Note over C_Admin: Validasi: judul maks 100, deskripsi required,<br/>ikon in:sparkles,bolt,etc.
+        C_Admin->>M: Peraturan::updateOrCreate([...])
+        M->>DB: INSERT/UPDATE peraturans SET judul = ?, deskripsi = ?, ikon = ?, urutan = ?
+        DB-->>M: Record Peraturan
+        C_Admin-->>V_Admin: Return redirect() dengan Toast Success
+    else Aksi 2: Hapus Peraturan
+        A->>V_Admin: Klik "Hapus" Peraturan
+        V_Admin->>C_Admin: DELETE /admin/peraturan/{id}
+        C_Admin->>M: Peraturan::destroy(id)
+        M->>DB: DELETE FROM peraturans WHERE id = ?
+        C_Admin-->>V_Admin: Return redirect() dengan Toast Success
+    end
+
+    Note over P, C_Penyewa: Alur Membaca Peraturan oleh Penyewa Aktif
+    P->>V_Penyewa: Masuk portal & klik menu "Peraturan Kost"
+    V_Penyewa->>C_Penyewa: GET /penyewa/peraturan
+    C_Penyewa->>M: Peraturan::orderBy('urutan', 'asc')->get()
+    M->>DB: SELECT * FROM peraturans ORDER BY urutan ASC
+    DB-->>M: Collection Peraturan
+    M-->>C_Penyewa: Collection Peraturan
+    C_Penyewa-->>V_Penyewa: Return view('penyewa.peraturan', compact('peraturan'))
+    V_Penyewa->>V_Penyewa: Render tata letak list dengan ornamen ikon Heroicons
+    V_Penyewa->>V_Penyewa: Terapkan penyesuaian kontras Dark Mode otomatis (Tailwind dark:)
+    V_Penyewa-->>P: Tampilkan halaman tata tertib kost yang nyaman dibaca

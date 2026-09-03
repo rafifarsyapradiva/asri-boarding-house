@@ -1,0 +1,28 @@
+sequenceDiagram
+    autonumber
+    actor Visitor as Tamu Publik (Browser)
+    participant Widget as Tier 1: guest-chat-widget.blade.php
+    participant Poller as Tier 1: Smart Adaptive Poller (JS)
+    participant RateLimiter as Tier 2: GuestChatLimiter Middleware
+    participant ApiCtrl as Tier 2: GuestChatApiController
+    participant ModelDB as Tier 3: GuestChatMessage & MySQL DB
+    actor Admin as Admin Kost (Dashboard)
+
+    Visitor->>Widget: Buka Widget Chat & Kirim Pesan
+    Widget->>RateLimiter: AJAX POST /api/guest-chat/send (X-Guest-Chat-Token)
+    RateLimiter->>RateLimiter: Check SHA-256 Hashed Token Rate Limit (30 req/min)
+    RateLimiter->>ApiCtrl: Pass Request
+    ApiCtrl->>ModelDB: Simpan Pesan ke GuestChatThread & GuestChatMessage
+    ApiCtrl-->>Widget: Return JSON {success: true, message: data}
+    
+    loop Dynamic Adaptive Polling (Interval 4s - 12s)
+        Poller->>ApiCtrl: GET /api/guest-chat/poll?last_id={id}
+        ApiCtrl->>ModelDB: Query Delta Pesan Baru (created_at > last_time)
+        ModelDB-->>ApiCtrl: Return Pesan Baru
+        ApiCtrl-->>Poller: Return JSON Delta Messages
+        Poller->>Widget: Update Dynamic DOM Chat Messages
+    end
+
+    Admin->>ModelDB: Admin Balas Pesan via GuestChatController
+    ModelDB-->>Poller: Delta Fetch Mendeteksi Balasan Admin
+    Poller->>Widget: Render Balasan Admin pada Bubble Chat Tamu

@@ -1,0 +1,47 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#F5F3FF',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#7C3AED',
+    'lineColor': '#6D28D9',
+    'secondaryColor': '#EDE9FE',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Penyewa Melakukan Pembayaran]) --> PaymentMethod{Pilih Metode Bayar}
+    
+    PaymentMethod -->|Online: Midtrans Snap| RequestSnap[TagihanController -> MidtransService::createSnapToken]
+    RequestSnap --> ShowSnap[Buka Snap Popup: VA / GoPay / ShopeePay / QRIS]
+    ShowSnap --> PayOnline[Penyewa Selesaikan Pembayaran di Bank / e-Wallet]
+    PayOnline --> MidtransCallback[Callback HTTP Webhook Midtrans]
+    
+    MidtransCallback --> VerifyHMAC[Middleware: VerifyMidtransSignature<br>Hash SHA-512 Signature Key]
+    VerifyHMAC -->|Tidak Valid| Reject401[Tolak Callback: 401 Unauthorized]
+    Reject401 --> EndFail([Selesai: Transaksi Ditolak])
+    
+    VerifyHMAC -->|Valid| RecordMidtransPay[Pembayaran::create<br>Simpan transaction_id & Response JSON]
+    
+    PaymentMethod -->|Offline: Tunai / Cash Kasir| AdminCash[Admin Buka Modal Bayar Cash]
+    AdminCash --> CallCashService[TagihanService::confirmCashPayment<br>Penyimpanan DB::transaction]
+    CallCashService --> RecordCashPay[Pembayaran::create<br>dikonfirmasi_oleh = Admin ID]
+    
+    RecordMidtransPay --> UpdateTagihanLunas[Tagihan::update status = 'lunas']
+    RecordCashPay --> UpdateTagihanLunas
+    
+    UpdateTagihanLunas --> DispatchPayEvent[Dispatch Event: PembayaranBerhasil]
+    DispatchPayEvent --> ListenerPdf[Listener: GeneratePdfNotaListener]
+    
+    ListenerPdf --> QueuePdfJob[Queue Job: GeneratePdfNotaJob]
+    QueuePdfJob --> CallPdfService[PdfNotaService::generate]
+    CallPdfService --> CallEngine["DompdfGenerator implements PdfGeneratorInterface"]
+    CallEngine --> SavePdfFile[Simpan File PDF ke storage/app/public/nota/]
+    SavePdfFile --> UpdatePdfPath[Pembayaran::update pdf_path]
+    
+    UpdatePdfPath --> DispatchNotifJob[Queue Job: KirimNotifikasiPembayaranJob]
+    DispatchNotifJob --> SendReceiptWA[FonnteService: Kirim WA Bukti Lunas + Link Download PDF]
+    SendReceiptWA --> EndSuccess([Selesai: Pembayaran & Kuitansi Selesai])

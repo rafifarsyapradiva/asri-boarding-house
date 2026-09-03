@@ -1,0 +1,23 @@
+erDiagram
+    kamar ||--|{ kamar_fasilitas : "kamar_id (1:N)"
+    fasilitas ||--|{ kamar_fasilitas : "fasilitas_id (1:N)"
+
+    kamar {
+        unsigned_bigint id PK
+        string nomor_kamar UK
+        tinyint lantai
+        enum tipe
+        decimal harga_bulan
+        enum status
+    }
+    kamar_fasilitas {
+        unsigned_bigint kamar_id PK_FK
+        unsigned_bigint fasilitas_id PK_FK
+    }
+    fasilitas {
+        unsigned_bigint id PK
+        string nama UK
+        string ikon
+        text deskripsi
+        boolean is_active
+    }

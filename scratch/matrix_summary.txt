@@ -1,0 +1,12 @@
+WEB_COUNT=187
+API_COUNT=7
+TOTAL_COUNT=194
+
+--- API ROUTES ---
+METHOD: POST | URI: api/cek-ketersediaan | NAME: api.cekKetersediaan | ACTION: App\Http\Controllers\Public\LandingController@cekKetersediaan | MW: api
+METHOD: GET|HEAD | URI: api/guest-chat/messages | NAME: guest-chat.messages | ACTION: App\Http\Controllers\Api\GuestChatApiController@fetchMessages | MW: api,throttle:guest_chat_limiter
+METHOD: POST | URI: api/guest-chat/send | NAME: guest-chat.send | ACTION: App\Http\Controllers\Api\GuestChatApiController@sendMessage | MW: api,throttle:guest_chat_limiter
+METHOD: POST | URI: api/guest-chat/start | NAME: guest-chat.start | ACTION: App\Http\Controllers\Api\GuestChatApiController@startThread | MW: api,throttle:5,1
+METHOD: POST | URI: api/midtrans/callback | NAME: api.midtrans.callback | ACTION: App\Http\Controllers\Api\MidtransCallbackController@handle | MW: api,App\Http\Middleware\VerifyMidtransSignature
+METHOD: POST | URI: api/midtrans/callback-reservasi | NAME: api.midtrans.callback-reservasi | ACTION: App\Http\Controllers\Api\MidtransReservasiCallbackController@handle | MW: api,App\Http\Middleware\VerifyMidtransSignature
+METHOD: GET|HEAD | URI: api/user | NAME: None | ACTION: Closure | MW: api,auth:sanctum

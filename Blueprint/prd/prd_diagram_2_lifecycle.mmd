@@ -1,0 +1,37 @@
+stateDiagram-v2
+    [*] --> TamuPublik: Akses Landing Page & Katalog
+    TamuPublik --> CalonPenyewa: Registrasi / Login Google OAuth & Pilih Kamar
+    CalonPenyewa --> StatusPending: Form Booking Diisi (Status Kamar: Locked)
+    
+    state StatusPending {
+        [*] --> ChatPrePayment: Obrolan Chat Real-time dengan Admin
+        ChatPrePayment --> PilihPembayaran: Bayar DP 30% / Lunas 100% (Midtrans / Transfer Manual)
+    }
+    
+    StatusPending --> StatusBatal: Waktu Habis (>24 Jam) / Dibatalkan (Kamar Released)
+    StatusPending --> StatusDP: Webhook Midtrans / Verifikasi Manual DP Sukses
+    StatusPending --> StatusLunas: Webhook Midtrans / Verifikasi Manual Lunas Sukses
+    
+    StatusDP --> AuditAdmin: Audit NIK & Kontak Wali oleh Admin
+    StatusLunas --> AuditAdmin
+    
+    AuditAdmin --> PenyewaAktif: Admin Klik "Konfirmasi Reservasi"<br/>(Auto Account, Status Kamar: TERISI, Kirim Kredensial WA)
+    
+    state PenyewaAktif {
+        [*] --> BillingRutin: Invoice Seragam Diterbitkan Tiap Tanggal 1
+        BillingRutin --> MasaGracePeriod: Tanggal 1-10 (Bebas Denda)
+        MasaGracePeriod --> BayarSewa: Lunas Tepat Waktu
+        MasaGracePeriod --> MasaToleransi: Tanggal 11-Akhir Bulan (Reminder WA, Denda Rp0)
+        MasaToleransi --> DendaKalender: Memasuki Bulan Baru (Denda Flat 5% + Eskalasi WA Wali)
+        DendaKalender --> BayarSewa: Lunas Berdenda
+        
+        [*] --> LaporKeluhan: Unggah Foto Bukti Kerusakan (<2MB)
+        LaporKeluhan --> DiprosesAdmin: Admin Update Status "DIPROSES"
+        DiprosesAdmin --> KeluhanSelesai: Admin Update Status "SELESAI"
+    }
+    
+    PenyewaAktif --> NonAktifCheckOut: Admin Klik "Check-Out Penyewa"<br/>(Pengembalian / Potongan Deposit Jaminan)
+    NonAktifCheckOut --> InspeksiFisik: Status Kamar: Terkunci / Terisi (Manual Hold)
+    InspeksiFisik --> KamarTersedia: Admin Verifikasi Kebersihan & Ubah Status Kamar ke "TERSEDIA"
+    KamarTersedia --> [*]
+    StatusBatal --> [*]

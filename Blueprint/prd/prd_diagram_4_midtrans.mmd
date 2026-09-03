@@ -1,0 +1,25 @@
+stateDiagram-v2
+    [*] --> TransaksiDibuat: User Klik "Bayar Sekarang" (Midtrans Snap Popup)
+    TransaksiDibuat --> PendingPayment: Snap Token Generated & Order Created
+    
+    PendingPayment --> Settlement: Pembayaran Berhasil via QRIS / Bank Transfer / E-Wallet
+    PendingPayment --> Expired: Pembayaran Melewati Batas Waktu (>24 Jam)
+    PendingPayment --> Cancelled: Pembayaran Dibatalkan oleh User / Admin
+    PendingPayment --> Denied: Pembayaran Ditolak Sistem Anti-Fraud
+    
+    Settlement --> VerifySignature: Midtrans Kirim Webhook Event ke System
+    VerifySignature --> UpdateSuccess: SHA-512 Signature Valid
+    VerifySignature --> RejectWebhook: Signature Invalid (HTTP 403 Forbidden)
+    
+    UpdateSuccess --> UpdateDP: Skema DP 30% -> Status Reservasi: 'dp'
+    UpdateSuccess --> UpdateFull: Skema Lunas -> Status Reservasi: 'lunas'
+    
+    Expired --> UpdateBatal: Status Reservasi: 'batal' (Kamar Auto Release)
+    Cancelled --> UpdateBatal
+    Denied --> UpdateBatal
+    
+    UpdateDP --> TriggerWA: Event PembayaranBerhasil -> Dispatcher WA Fonnte
+    UpdateFull --> TriggerWA
+    TriggerWA --> [*]
+    UpdateBatal --> [*]
+    RejectWebhook --> [*]

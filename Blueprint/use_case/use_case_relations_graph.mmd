@@ -1,0 +1,47 @@
+flowchart TD
+    classDef includeStyle fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,font-weight:bold;
+    classDef extendStyle fill:#fff3e0,stroke:#f57c00,stroke-width:2px,font-weight:bold;
+    classDef coreStyle fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,font-weight:bold,color:#1b5e20;
+    classDef externalStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
+
+    %% Base Use Cases
+    UC01["UC-01: Melakukan Reservasi Kamar"]:::coreStyle
+    UC04["UC-04: Membayar Tagihan Bulanan"]:::coreStyle
+    UC06["UC-06: Konfirmasi Reservasi & Kas"]:::coreStyle
+    UC14["UC-14: Manajemen Penyewa"]:::coreStyle
+    UC07["UC-07: Laporan Arus Kas"]:::coreStyle
+    UC08["UC-08: Manajemen Pengeluaran"]:::coreStyle
+    UC22["UC-22: Login Akun Manual"]:::coreStyle
+    UC28["UC-28: Otomasi Billing & Denda Eskalasi"]:::coreStyle
+    UC15["UC-15: Resolusi Keluhan"]:::coreStyle
+    UC20["UC-20: Broadcast Notifikasi"]:::coreStyle
+
+    %% Extension Use Cases
+    UC03["UC-03: Chat Reservasi Real-time"]:::extendStyle
+    UC02["UC-02: Pembayaran Reservasi Online"]:::extendStyle
+    UC25["UC-25: Mengunduh Kuitansi PDF"]:::extendStyle
+    UC26["UC-26: Checkout & Perpanjang Kontrak"]:::extendStyle
+    UC27["UC-27: Ekspor Data & Laporan (PDF/Excel/CSV)"]:::extendStyle
+    UC24["UC-24: Lupa & Reset Password"]:::extendStyle
+
+    %% External System Services (Includes / Invocations)
+    Midtrans[["Layanan Payment Gateway (Midtrans)"]]:::externalStyle
+    Fonnte[["Layanan WhatsApp Gateway (Fonnte)"]]:::externalStyle
+
+    %% Include Relations
+    UC02 -.-> |include| Midtrans
+    UC04 -.-> |include| Midtrans
+    UC06 -.-> |include| Fonnte
+    UC15 -.-> |include| Fonnte
+    UC20 -.-> |include| Fonnte
+    UC28 -.-> |include| Fonnte
+
+    %% Extend Relations
+    UC03 -.-> |extend| UC01
+    UC02 -.-> |extend| UC01
+    UC25 -.-> |extend| UC04
+    UC26 -.-> |extend| UC14
+    UC27 -.-> |extend| UC07
+    UC27 -.-> |extend| UC14
+    UC27 -.-> |extend| UC08
+    UC24 -.-> |extend| UC22

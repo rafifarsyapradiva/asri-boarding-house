@@ -1,0 +1,96 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor A as Admin
+    participant V as View (Form/List Penyewa)
+    participant C as Admin\PenyewaController
+    participant K as Kamar (Model)
+    participant P as Penyewa (Model)
+    participant U as User (Model)
+    participant BService as BillingService
+    participant Job as KirimWelcomeMessageJob (Queue)
+    participant F as Fonnte WA API
+    participant DB as Database (MySQL)
+
+    alt Aksi 1: Pendaftaran Manual Penyewa Baru (Walk-in/Offline Create)
+        A->>V: Isi data penyewa baru (Nama, Email, No HP, Kamar, Durasi, Deposit, dll.) & Simpan
+        V->>C: POST /admin/penyewa (Form Data)
+        C->>DB: DB::transaction()
+        C->>U: User::create([...]) (Auto password default = No HP)
+        U->>DB: INSERT INTO users
+        C->>K: Kamar::findOrFail(kamar_id)
+        K->>DB: SELECT * FROM kamars
+        C->>P: Penyewa::create([...]) (Status: 'aktif')
+        P->>DB: INSERT INTO penyewas
+        C->>BService: injectManualPenyewaLunas(penyewa)
+        BService->>DB: INSERT INTO tagihans (status: 'lunas') & INSERT INTO pembayarans (...)
+        C->>DB: DB::commit()
+        C->>Job: dispatch(Welcome Message Job)
+        Job-->>A: Kirim pesan WhatsApp Selamat Datang + Kredensial login via Fonnte API (Background)
+        C-->>V: Return redirect() dengan Toast Success
+
+    else Aksi 2: Reaktivasi Penyewa Non-Aktif (Update Validation)
+        A->>V: Buka Edit Penyewa, ganti status ke 'aktif'
+        V->>C: PUT /admin/penyewa/{id} (status: 'aktif', kamar_id: ?)
+        C->>K: findOrFail(kamar_id)
+        
+        alt Status Kamar != "tersedia" / Ada Penyewa Aktif Lain di Kamar Itu
+            C-->>V: Return redirect back() dengan Toast Error "Kamar sudah diisi penyewa aktif lain"
+        else Status Kamar == "tersedia"
+            C->>DB: DB::transaction()
+            C->>P: update(['status' => 'aktif', 'tanggal_keluar' => null])
+            C->>K: update(['status' => 'terisi'])
+            C->>DB: DB::commit()
+            C-->>V: Return redirect() dengan Toast Success "Data penyewa berhasil diperbarui"
+        end
+
+    else Aksi 3: Perpanjang Kontrak Manual (Extension)
+        A->>V: Buka list penyewa & Klik "Perpanjang" (Isi durasi tambahan)
+        V->>C: POST /admin/penyewa/{id}/perpanjang (durasi_tambahan, tipe_sewa)
+        C->>BService: perpanjangKontrakManual(penyewa, durasi_tambahan, tipe_sewa)
+        Note over BService: Hitung tanggal_keluar_seharusnya baru & buat Tagihan Lunas/Pending manual
+        BService->>DB: UPDATE penyewas SET tanggal_keluar_seharusnya = ? & INSERT INTO tagihans
+        C->>F: Kirim notifikasi WA konfirmasi perpanjangan kontrak ke Penyewa
+        C-->>V: Return redirect() dengan Toast Success
+        
+    else Aksi 4: Hapus Data Penyewa (Delete Constraint)
+        A->>V: Klik tombol "Hapus Penyewa"
+        V->>C: DELETE /admin/penyewa/{id}
+        C->>P: Cek riwayat tagihan ($penyewa->tagihan()->exists())
+        
+        alt Penyewa Memiliki Riwayat Tagihan (Billing Logs)
+            C-->>V: Return redirect back() dengan Toast Error "Penyewa tidak dapat dihapus karena memiliki riwayat tagihan"
+        else Penyewa Bebas Riwayat Tagihan (Aman Dihapus)
+            C->>DB: DB::transaction()
+            C->>P: delete() (Hapus data profil penyewa & log notifikasi)
+            C->>U: delete() (Hapus akun user terkait)
+            C->>DB: DB::commit()
+            C-->>V: Return redirect() dengan Toast Success "Penyewa berhasil dihapus"
+        end
+    end

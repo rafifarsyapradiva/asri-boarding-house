@@ -1,0 +1,73 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, sans-serif',
+    'fontSize': '12px',
+    'actorBkg': '#FFFBEB',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'actorLineColor': '#000000',
+    'noteBkgColor': '#FFFBEB',
+    'noteBorderColor': '#000000',
+    'noteTextColor': '#000000',
+    'signalColor': '#000000',
+    'signalTextColor': '#000000',
+    'activationBkgColor': '#FDE047',
+    'activationBorderColor': '#000000',
+    'loopLimitBorderColor': '#000000',
+    'loopLimitBkgColor': '#FDE047',
+    'labelBoxBorderColor': '#000000',
+    'labelBoxBkgColor': '#FFFFFF',
+    'labelTextTextColor': '#000000',
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000'
+  }
+}}%%
+sequenceDiagram
+    autonumber
+    actor A as Admin
+    participant V as View (Form Kamar)
+    participant C as Admin\KamarController
+    participant K as Kamar (Model)
+    participant DB as Database (MySQL)
+    participant FS as File System / Storage
+
+    alt Aksi 1: Simpan Unit Kamar Baru (Create)
+        A->>V: Isi nomor kamar, lantai, harga sewa, pilih fasilitas, & upload foto
+        V->>C: POST /admin/kamar (nomor_kamar, lantai, tipe, harga_bulan, fasilitas[], foto)
+        Note over C: Validasi: nomor_kamar unique, nominal numeric, foto maks 2MB.
+        C->>FS: Simpan berkas foto kamar ke storage/public/kamars/
+        C->>DB: DB::transaction() -> INSERT INTO kamars (...)
+        C->>DB: INSERT INTO kamar_fasilitas (pivot relation)
+        C-->>V: Return redirect() dengan Toast Success
+
+    else Aksi 2: Edit Data Kamar & Sync Fasilitas (Update)
+        A->>V: Edit kamar & ubah pilihan fasilitas / foto
+        V->>C: PUT /admin/kamar/{id} (fasilitas[], foto_baru)
+        C->>DB: DB::transaction()
+        C->>K: update([...])
+        C->>DB: kamar->fasilitas()->sync(fasilitas_ids) (Sinkronisasi Pivot)
+        alt Foto Diganti
+            C->>FS: File::delete() foto lama & Upload foto baru ke storage
+        end
+        C->>DB: DB::commit()
+        C-->>V: Return redirect() dengan Toast Success "Data kamar berhasil diperbarui"
+
+    else Aksi 3: Hapus Unit Kamar (Delete - Safety Constraint)
+        A->>V: Klik tombol "Hapus Kamar"
+        V->>C: DELETE /admin/kamar/{id}
+        C->>K: Cek relasi penyewa & reservasi ($kamar->penyewa()->exists())
+        
+        alt Skenario Kamar Masih Terikat Penyewa / Reservasi Aktif
+            C-->>V: Return redirect back() dengan Toast Error "Kamar masih terikat penyewa/reservasi"
+        else Skenario Kamar Bebas Relasi (Aman Dihapus)
+            C->>DB: DB::transaction()
+            C->>DB: DELETE FROM kamar_fasilitas (Hapus relasi pivot terlebih dahulu)
+            C->>DB: DELETE FROM kamars WHERE id = ?
+            C->>FS: File::delete() (Hapus file foto fisik kamar dari storage)
+            C->>DB: DB::commit()
+            C-->>V: Return redirect() dengan Toast Success "Kamar berhasil dihapus"
+        end
+    end

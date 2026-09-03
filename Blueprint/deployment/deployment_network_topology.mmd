@@ -1,0 +1,42 @@
+flowchart LR
+    subgraph ClientZone["Client Zone (Public Access)"]
+        Browser["Web Browser (Client Device)<br/>Port: Random High Port"]
+    end
+
+    subgraph DevZone["Management & Developer Zone"]
+        DevPC["Developer / Admin Workstation<br/>SSH / SFTP Client & Browser"]
+    end
+
+    subgraph HostingerZone["Hostinger Shared Hosting Node (Isolated CloudLinux LVE)"]
+        HostingerServer["LiteSpeed Enterprise Web Server<br/>IP: Public Shared IP<br/>Port: 80 (HTTP) / 443 (HTTPS)"]
+        HostingerDB["MySQL Database Server<br/>IP: localhost (127.0.0.1)<br/>Port: 3306 (Blocked External)"]
+        HostingerSSH["Hostinger SSH/SFTP Gateway<br/>Port: 65002"]
+        HostingerPanel["Hostinger hPanel Management<br/>Port: 443 (HTTPS)"]
+    end
+
+    subgraph ExternalZone["External Cloud Services & VCS"]
+        GitHub["GitHub Repository<br/>Port: 22 (SSH) / 443 (HTTPS)"]
+        CloudAPIs["External Cloud APIs<br/>(Midtrans, Fonnte, Google Identity)<br/>Port: 443 (HTTPS)"]
+        SMTPServer["Google SMTP Server (Gmail)<br/>Port: 587 (TLS)"]
+    end
+
+    %% Connections
+    Browser <-->|"HTTPS (Port 443)<br/>SSL Let's Encrypt / Sectigo"| HostingerServer
+    HostingerServer <-->|"TCP/IP (Port 3306)<br/>MySQL Native Driver (PDO)"| HostingerDB
+    DevPC -->|"SFTP / SSH Terminal<br/>(Port 65002)"| HostingerSSH
+    DevPC -->|"hPanel Admin Web<br/>(Port 443)"| HostingerPanel
+    GitHub -->|"Git pull via Auto-deploy Webhook<br/>(Port 443)"| HostingerServer
+    HostingerServer <-->|"Outbound/Inbound API Calls<br/>HTTPS (Port 443)"| CloudAPIs
+    Browser <-->|"Direct Payment/OAuth Redirects<br/>HTTPS (Port 443)"| CloudAPIs
+    HostingerServer -->|"Outbound Email (SMTP TLS)<br/>Port 587"| SMTPServer
+
+    %% Styling
+    classDef client fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef server fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef db fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
+    classDef ext fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#4A148C;
+
+    class Browser,DevPC client;
+    class HostingerServer,HostingerSSH,HostingerPanel server;
+    class HostingerDB db;
+    class CloudAPIs,GitHub,SMTPServer ext;
