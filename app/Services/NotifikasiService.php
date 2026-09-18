@@ -85,7 +85,7 @@ class NotifikasiService
     }
 
     /**
-     * Kirim notifikasi welcome penyewa baru (WhatsApp).
+     * Kirim notifikasi welcome penyewa baru (WhatsApp + Email).
      */
     public function kirimNotifikasiWelcomePenyewa(Penyewa $penyewa, bool $throwOnError = false): void
     {
@@ -99,26 +99,53 @@ class NotifikasiService
         }
 
         $noHp = $penyewa->user->no_hp;
-        if (empty($noHp) || str_starts_with($noHp, 'temp_')) {
+
+        // Kirim WhatsApp (hanya jika nomor HP valid)
+        if (!empty($noHp) && !str_starts_with($noHp, 'temp_')) {
+            $pesan = $this->templateWelcomePenyewa($penyewa);
+            $this->kirimDanLog(
+                $penyewa,
+                null,
+                'whatsapp',
+                'welcome_penyewa',
+                $pesan,
+                fn($msg) => $this->fonnte->kirimPesan($noHp, $msg),
+                $throwOnError
+            );
+        } else {
             Log::info('WhatsApp welcome message skipped: temporary or empty phone number.', [
                 'penyewa_id' => $penyewa->id,
                 'no_hp' => $noHp,
             ]);
-            return;
         }
 
-        $pesan = $this->templateWelcomePenyewa($penyewa);
-
-        // Kirim WhatsApp
-        $this->kirimDanLog(
-            $penyewa,
-            null,
-            'whatsapp',
-            'welcome_penyewa',
-            $pesan,
-            fn($msg) => $this->fonnte->kirimPesan($noHp, $msg),
-            $throwOnError
-        );
+        // Kirim Email (selalu dikirim jika email tersedia)
+        $email = $penyewa->user->email ?? null;
+        if ($email) {
+            $viewData = [
+                'namaPenyewa'  => $penyewa->user->nama ?? 'Penyewa',
+                'nomorKamar'   => $penyewa->kamar?->nomor_kamar ?? '-',
+                'hargaSewa'    => $penyewa->kamar ? ('Rp ' . number_format($penyewa->kamar->harga_bulan ?? 0, 0, ',', '.') . '/bulan') : null,
+                'urlDashboard' => rtrim(config('app.url'), '/') . '/penyewa/dashboard',
+            ];
+            try {
+                $this->kirimDanLog(
+                    $penyewa,
+                    null,
+                    'email',
+                    'welcome_penyewa',
+                    'Email selamat datang penyewa baru.',
+                    fn($msg) => Mail::to($email)->send(
+                        new NotificationMail('Selamat Datang di Asri Boarding House! 🏠', 'emails.welcome-penyewa', $viewData)
+                    ),
+                    $throwOnError
+                );
+            } catch (\Throwable $e) {
+                Log::error('Gagal mengirim email welcome penyewa: ' . $e->getMessage(), [
+                    'penyewa_id' => $penyewa->id,
+                ]);
+            }
+        }
     }
 
     /**
@@ -197,11 +224,11 @@ class NotifikasiService
     }
 
     /**
-     * Kirim notifikasi transisi selamat datang penyewa aktif ke WA Penyewa.
+     * Kirim notifikasi transisi selamat datang penyewa aktif ke WA Penyewa & Email.
      */
     public function kirimNotifikasiTransisiPenyewa(Penyewa $penyewa, string $nomorKamar, bool $throwOnError = false): void
     {
-        $penyewa->loadMissing('user');
+        $penyewa->loadMissing(['user', 'kamar']);
         if (!$penyewa->user) {
             Log::warning('Batal kirim notif transisi penyewa: data user kosong.');
             return;
@@ -225,6 +252,34 @@ class NotifikasiService
                 fn($msg) => $this->fonnte->kirimPesan($penyewa->user->no_hp, $msg),
                 $throwOnError
             );
+        }
+
+        // Kirim Email Welcome
+        $email = $penyewa->user->email ?? null;
+        if ($email) {
+            $viewData = [
+                'namaPenyewa'  => $penyewa->user->nama ?? 'Penyewa',
+                'nomorKamar'   => $nomorKamar,
+                'hargaSewa'    => $penyewa->kamar ? ('Rp ' . number_format($penyewa->kamar->harga_bulan ?? 0, 0, ',', '.') . '/bulan') : null,
+                'urlDashboard' => rtrim(config('app.url'), '/') . '/penyewa/dashboard',
+            ];
+            try {
+                $this->kirimDanLog(
+                    $penyewa,
+                    null,
+                    'email',
+                    'transisi_aktif',
+                    'Email selamat datang penyewa baru (transisi aktif).',
+                    fn($msg) => Mail::to($email)->send(
+                        new \App\Mail\NotificationMail('Selamat Datang di Asri Boarding House! 🏠', 'emails.welcome-penyewa', $viewData)
+                    ),
+                    $throwOnError
+                );
+            } catch (\Throwable $e) {
+                Log::error('Gagal mengirim email welcome (transisi penyewa): ' . $e->getMessage(), [
+                    'penyewa_id' => $penyewa->id,
+                ]);
+            }
         }
     }
 

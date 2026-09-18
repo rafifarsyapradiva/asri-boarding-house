@@ -16,6 +16,18 @@ class VerifyMidtransSignature
     {
         $serverKey = config('midtrans.server_key');
 
+        // Bypass validasi signature untuk ping "Test Notification URL" dari dashboard Midtrans.
+        // Midtrans mengirim dummy payload dengan signature yang TIDAK bisa diverifikasi
+        // karena dihitung menggunakan server key internal Midtrans, bukan server key kita.
+        $orderId = (string) $request->input('order_id', '');
+        if (
+            str_starts_with($orderId, 'payment_notif_test_') ||
+            str_starts_with($orderId, 'test_') ||
+            str_contains($orderId, 'notif_test')
+        ) {
+            return response()->json(['message' => 'Test notification received successfully'], 200);
+        }
+
         // Validasi prasyarat: Pastikan konfigurasi server key sudah terisi
         if (empty($serverKey)) {
             Log::error('VerifyMidtransSignature: Midtrans server key is not configured.');

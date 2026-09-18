@@ -105,7 +105,9 @@ class Reservasi extends Model
 
     public function scopeAktif($query)
     {
-        return $query->where('status', '!=', 'batal');
+        // Status 'dikonfirmasi' tidak termasuk karena jika sudah dikonfirmasi,
+        // validasi ketersediaan kamar akan dihandle oleh record model Penyewa.
+        return $query->whereIn('status', ['pending', 'dp', 'lunas']);
     }
 
     public function scopeOverlapDengan($query, $kamarId, $mulai, $selesai)

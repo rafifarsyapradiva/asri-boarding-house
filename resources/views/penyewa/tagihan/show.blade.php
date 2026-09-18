@@ -107,7 +107,7 @@
                                             Bayar instan via <strong>Midtrans Snap</strong>. Mendukung Transfer Bank Virtual Account (BCA, Mandiri, BNI, BRI), QRIS (GoPay, OVO, ShopeePay), dan Kartu Kredit. Pembayaran Anda akan otomatis terverifikasi tanpa perlu kirim bukti transfer.
                                         </p>
                                     </div>
-                                    <button id="btn-bayar" class="admin-btn-primary w-full mt-2 justify-center py-2.5 text-center font-black">
+                                    <button id="btn-bayar" onclick="window.mulaiBayarOnline(this)" class="admin-btn-primary w-full mt-2 justify-center py-2.5 text-center font-black">
                                         Bayar Online Sekarang
                                     </button>
                                 </div>
@@ -161,75 +161,80 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+
 
 @push('scripts')
     @if($tagihan->can_be_paid)
         <script src="{{ config('midtrans.snap_url') }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                let isProcessing = false;
-                const btn = document.getElementById('btn-bayar');
-
-                if (btn) {
-                    btn.addEventListener('click', async function(e) {
-                        e.preventDefault();
-                        if (isProcessing) return;
-                        isProcessing = true;
-                        
-                        this.disabled = true;
-                        this.textContent = 'Memproses...';
-                        
-                        try {
-                            const response = await fetch('{{ route("penyewa.pembayaran.token", $tagihan) }}', {
-                                method: 'POST',
-                                headers: {
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json'
-                                }
-                            });
-                            
-                            if (!response.ok) {
-                                let errMsg = 'Gagal menghubungi server.';
-                                try {
-                                    const errData = await response.json();
-                                    errMsg = errData.message || errMsg;
-                                } catch (e) {}
-                                throw new Error(errMsg);
-                            }
-                            
-                            const data = await response.json();
-                            
-                            if (!data.snap_token) {
-                                throw new Error(data.message || 'Token tidak diterima');
-                            }
-                            
-                            window.snap.pay(data.snap_token, {
-                                onSuccess: function() {
-                                    window.location.href = '{{ route("penyewa.tagihan.index") }}';
-                                },
-                                onPending: function() {
-                                    window.location.reload();
-                                },
-                                onError: function(result) {
-                                    if (typeof window.showToast === 'function') window.showToast('Pembayaran gagal: ' + (result.status_message || 'Silakan coba lagi.'), 'error');
-                                    window.location.reload();
-                                },
-                                onClose: function() {
-                                    isProcessing = false;
-                                    btn.disabled = false;
-                                    btn.textContent = 'Bayar Online Sekarang';
-                                }
-                            });
-                        } catch (error) {
-                            if (typeof window.showToast === 'function') window.showToast('Terjadi kesalahan: ' + error.message, 'error');
-                            isProcessing = false;
-                            this.disabled = false;
-                            this.textContent = 'Bayar Online Sekarang';
+            window.isProcessingPayment = false;
+            
+            window.mulaiBayarOnline = async function(btn) {
+                if (window.isProcessingPayment) return;
+                window.isProcessingPayment = true;
+                
+                const originalText = btn.textContent;
+                btn.disabled = true;
+                btn.textContent = 'Memproses...';
+                
+                try {
+                    const response = await fetch('{{ route("penyewa.pembayaran.token", $tagihan) }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                         }
                     });
+                    
+                    if (!response.ok) {
+                        let errMsg = 'Gagal menghubungi server (HTTP ' + response.status + ').';
+                        try {
+                            const errData = await response.json();
+                            errMsg = errData.message || errMsg;
+                        } catch (e) {}
+                        throw new Error(errMsg);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (!data.snap_token) {
+                        throw new Error(data.message || 'Token tidak diterima');
+                    }
+                    
+                    if (typeof window.snap === 'undefined') {
+                        throw new Error('Midtrans Snap tidak termuat. Periksa koneksi internet atau matikan AdBlock Anda.');
+                    }
+                    
+                    window.snap.pay(data.snap_token, {
+                        onSuccess: function() {
+                            window.location.href = '{{ route("penyewa.tagihan.index") }}';
+                        },
+                        onPending: function() {
+                            window.location.reload();
+                        },
+                        onError: function(result) {
+                            if (typeof window.showToast === 'function') window.showToast('Pembayaran gagal: ' + (result.status_message || 'Silakan coba lagi.'), 'error');
+                            window.location.reload();
+                        },
+                        onClose: function() {
+                            window.isProcessingPayment = false;
+                            btn.disabled = false;
+                            btn.textContent = originalText;
+                        }
+                    });
+                } catch (error) {
+                    alert('Terjadi kesalahan: ' + error.message);
+                    window.isProcessingPayment = false;
+                    btn.disabled = false;
+                    btn.textContent = originalText;
                 }
+            };
+        </script>
+        
+        <script>
+            (function() {
+
 
                 const btnCopy = document.getElementById('btn-copy');
                 const norekElem = document.getElementById('norek');
@@ -276,8 +281,9 @@
                     }
                     document.body.removeChild(textArea);
                 }
-            });
+            })();
         </script>
     @endif
 @endpush
+</x-app-layout>
 

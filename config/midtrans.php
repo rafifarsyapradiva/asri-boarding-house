@@ -16,4 +16,5 @@ return [
             ? 'https://app.midtrans.com/snap/snap.js'
             : 'https://app.sandbox.midtrans.com/snap/snap.js'
     ),
+    'sync_fallback_enabled' => (bool) env('MIDTRANS_SYNC_FALLBACK_ENABLED', true),
 ];

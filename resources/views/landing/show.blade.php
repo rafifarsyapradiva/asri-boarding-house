@@ -184,7 +184,7 @@
                                 </div>
 
                                 <div>
-                                    <label for="tanggal_mulai" class="block text-xs font-black uppercase tracking-wider text-black mb-1">Tanggal Mulai</label>
+                                    <label for="tanggal_mulai" class="block text-xs font-black uppercase tracking-wider text-black mb-1">Tanggal Masuk Kost</label>
                                     <input type="date" id="tanggal_mulai" name="tanggal_mulai" min="{{ date('Y-m-d') }}" value="{{ request('tanggal_mulai', old('tanggal_mulai', date('Y-m-d'))) }}" class="w-full border-4 border-black bg-white px-4 py-3 font-bold text-sm focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:bg-yellow-50 text-black" required>
                                 </div>
 

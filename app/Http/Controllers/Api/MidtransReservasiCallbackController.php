@@ -40,6 +40,11 @@ class MidtransReservasiCallbackController extends Controller
         $paymentType = $request->input('payment_type');
         $transactionId = $request->input('transaction_id');
 
+        // Tangani ping testing dari dashboard Midtrans (Test Notification URL)
+        if (str_starts_with($orderId, 'payment_notif_test_') || str_starts_with($orderId, 'test_') || str_contains($orderId, 'notif_test')) {
+            return response()->json(['message' => 'Test notification received successfully'], 200);
+        }
+
         // Logika Database Transaction dengan Row Lock
         $result = DB::transaction(function () use ($orderId, $transactionStatus, $paymentType, $transactionId, $grossAmount) {
             $reservasi = Reservasi::where('order_id', $orderId)->lockForUpdate()->first();
