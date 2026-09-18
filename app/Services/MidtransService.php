@@ -76,7 +76,7 @@ class MidtransService
         ];
 
         $serverKey = config('midtrans.server_key');
-        $notificationUrl = route('api.midtrans.callback');
+        $notificationUrl = rtrim(config('app.url'), '/') . '/api/midtrans/callback';
 
         $response = Http::withBasicAuth($serverKey, '')
             ->withHeaders([
@@ -154,7 +154,7 @@ class MidtransService
         ];
 
         $serverKey = config('midtrans.server_key');
-        $notificationUrl = route('api.midtrans.callback-reservasi');
+        $notificationUrl = rtrim(config('app.url'), '/') . '/api/midtrans/callback-reservasi';
 
         $response = Http::withBasicAuth($serverKey, '')
             ->withHeaders([

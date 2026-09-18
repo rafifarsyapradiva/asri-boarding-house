@@ -37,10 +37,18 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->encryptCookies(except: [
             'guest_chat_token',
         ]);
+
+        $middleware->trustProxies(at: '*');
     })
     ->withEvents(discover: [
         __DIR__.'/../app/Listeners',
     ])
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\HttpException $e, Request $request) {
+            if ($e->getStatusCode() === 419) {
+                return redirect()->back()
+                    ->withInput($request->except('_token'))
+                    ->withErrors(['email' => 'Sesi keamanan halaman telah habis karena dibiarkan terlalu lama. Silakan coba tekan tombol login lagi.']);
+            }
+        });
     })->create();

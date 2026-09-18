@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Traits\SanitizesCurrency;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class KonfirmasiReservasiRequest extends FormRequest
 {
@@ -37,7 +38,22 @@ class KonfirmasiReservasiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nik' => ['required', 'numeric', 'digits:16', 'unique:penyewa,nik'],
+            // NIK harus unik, KECUALI jika NIK itu milik user yang sama (reservasi ulang oleh orang yang sama)
+            'nik' => [
+                'required',
+                'numeric',
+                'digits:16',
+                Rule::unique('penyewa', 'nik')
+                    ->where(function ($query) {
+                        // Hanya tolak jika NIK tersebut dimiliki oleh user LAIN
+                        // (bukan user yang sedang membuat reservasi ini)
+                        $reservasiUserId = $this->route('reservasi')?->user_id;
+                        if ($reservasiUserId) {
+                            $query->where('user_id', '!=', $reservasiUserId);
+                        }
+                    })
+                    ->withoutTrashed(), // abaikan record penyewa yang sudah soft-deleted
+            ],
             'nama_wali' => ['required', 'string', 'max:100'],
             'no_wali' => ['required', 'string', 'regex:/^(08|628|\+628)[0-9]{8,13}$/'],
             'deposit' => ['nullable', 'numeric', 'min:0'],

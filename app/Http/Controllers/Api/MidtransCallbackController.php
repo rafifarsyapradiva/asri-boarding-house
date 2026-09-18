@@ -39,6 +39,11 @@ class MidtransCallbackController extends Controller
             return response()->json(['message' => 'Invalid signature key'], 403);
         }
 
+        // Tangani ping testing dari dashboard Midtrans (Test Notification URL)
+        if (str_starts_with($orderId, 'payment_notif_test_') || str_starts_with($orderId, 'test_') || str_contains($orderId, 'notif_test')) {
+            return response()->json(['message' => 'Test notification received successfully'], 200);
+        }
+
         $transactionId = $request->input('transaction_id');
 
         // Fast-path IDEMPOTENCY CHECK (tanpa lock, untuk request biasa/lambat)

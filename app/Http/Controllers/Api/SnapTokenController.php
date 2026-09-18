@@ -34,7 +34,27 @@ class SnapTokenController extends Controller
                 if (!$lockedTagihan) {
                     throw new \Exception('Tagihan tidak ditemukan.');
                 }
-                return $this->midtransService->createSnapToken($lockedTagihan);
+                
+                // Gunakan cache untuk menyimpan snap_token agar timer 24 jam tidak terus di-reset.
+                // Kunci cache mencakup nominal_total agar token otomatis hangus jika ada perubahan denda/nominal.
+                $cacheKey = 'snap_token_tagihan_' . $lockedTagihan->id . '_' . $lockedTagihan->nominal_total;
+                $cachedToken = \Illuminate\Support\Facades\Cache::get($cacheKey);
+                
+                if ($cachedToken) {
+                    return $cachedToken;
+                }
+                
+                $tokenResult = $this->midtransService->createSnapToken($lockedTagihan);
+                
+                // Hitung durasi kedaluwarsa token (mengikuti logika di MidtransService)
+                $now = \Illuminate\Support\Carbon::now();
+                $hoursUntilEndOfMonth = $now->diffInHours($now->copy()->endOfMonth());
+                $duration = $hoursUntilEndOfMonth < 24 ? max(1, $hoursUntilEndOfMonth) : 24;
+                
+                // Simpan di cache sedikit lebih pendek dari durasi asli (kurangi 5 menit) untuk safety margin
+                \Illuminate\Support\Facades\Cache::put($cacheKey, $tokenResult, now()->addHours($duration)->subMinutes(5));
+                
+                return $tokenResult;
             });
 
             return response()->json($result);
@@ -92,7 +112,20 @@ class SnapTokenController extends Controller
                     throw new \Exception('Kamar sudah ter-booking pada rentang tanggal tersebut.');
                 }
 
-                return $this->midtransService->createSnapTokenReservasi($lockedReservasi);
+                $grossAmount = $lockedReservasi->is_dp ? $lockedReservasi->nominal_dp : $lockedReservasi->total_harga;
+                $cacheKey = 'snap_token_reservasi_' . $lockedReservasi->id . '_' . $grossAmount;
+                $cachedToken = \Illuminate\Support\Facades\Cache::get($cacheKey);
+                
+                if ($cachedToken) {
+                    return $cachedToken;
+                }
+
+                $tokenResult = $this->midtransService->createSnapTokenReservasi($lockedReservasi);
+                
+                // Simpan di cache sedikit lebih pendek dari durasi asli (kurangi 5 menit) untuk safety margin
+                \Illuminate\Support\Facades\Cache::put($cacheKey, $tokenResult, now()->addHours(24)->subMinutes(5));
+                
+                return $tokenResult;
             });
 
             return response()->json($result);

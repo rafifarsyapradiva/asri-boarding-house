@@ -34,8 +34,9 @@
                 <!-- Branding Header inside the container -->
                 <div class="flex flex-col items-center mb-6 {{ $size === 'lg' ? 'lg:hidden' : '' }}">
                     <a href="{{ route('landing.index') }}" class="flex flex-col items-center gap-2 group">
-                        <div class="px-4 py-2 bg-yellow-400 text-black border-4 border-black dark:border-white font-black uppercase tracking-wider text-sm shadow-[3px_3px_0px_0px_#000000] dark:shadow-[3px_3px_0px_0px_#ffffff]">
-                            {{ \App\Models\Setting::get('logo_icon', '🏠') }} {{ \App\Models\Setting::get('logo_text', 'ASRI') }}
+                        <div class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-black border-4 border-black dark:border-white font-black uppercase tracking-wider text-xs sm:text-sm whitespace-nowrap shadow-[3px_3px_0px_0px_#000000] dark:shadow-[3px_3px_0px_0px_#ffffff]">
+                            <span>{{ \App\Models\Setting::get('logo_icon', '🏠') }}</span>
+                            <span>{{ \App\Models\Setting::get('logo_text', 'ASRI') }}</span>
                         </div>
                     </a>
                 </div>

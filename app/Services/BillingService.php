@@ -226,13 +226,21 @@ class BillingService
         $bulanMulai = $tanggalMasuk->month;
         $tahunMulai = $tanggalMasuk->year;
 
+        // Hitung jatuh tempo dinamis khusus pelunasan Sisa DP
+        $waktuKedatangan = $tanggalMasuk->copy()->startOfDay();
+        $waktuToleransi24Jam = now()->addDay()->startOfDay();
+        
+        $jatuhTempoSisaDp = $waktuKedatangan->greaterThan($waktuToleransi24Jam) 
+                            ? $waktuKedatangan 
+                            : $waktuToleransi24Jam;
+
         // firstOrCreate mencegah duplikasi jika admin klik konfirmasi dua kali
         $tagihan = Tagihan::firstOrCreate(
             ['penyewa_id' => $penyewa->id, 'periode_bulan' => $bulanMulai, 'periode_tahun' => $tahunMulai],
             [
                 'order_id'            => sprintf('TGH-%d-%04d%02d', $penyewa->id, $tahunMulai, $bulanMulai),
                 'tanggal_tagihan'     => Carbon::create($tahunMulai, $bulanMulai, 1),
-                'tanggal_jatuh_tempo' => Carbon::create($tahunMulai, $bulanMulai, 10),
+                'tanggal_jatuh_tempo' => $jatuhTempoSisaDp,
                 'nominal_pokok'       => $nominalSisa, // Set pokok sebesar sisa kewajiban (70%) agar sinkron dengan total untuk Midtrans & Denda
                 'nominal_denda'       => 0,
                 'nominal_total'       => $nominalSisa,
@@ -244,17 +252,25 @@ class BillingService
             ]
         );
 
-        // Antisipasi: tagihan sudah dibuat scheduler sebelum admin konfirmasi
+        // Antisipasi dua kondisi:
+        // (A) Tagihan sudah dibuat scheduler sebelum admin konfirmasi → update nominal
+        // (B) Tagihan dari masa sewa SEBELUMNYA (penyewa checkout lalu reservasi ulang) → reset penuh ke pending
         if (!$tagihan->wasRecentlyCreated) {
             $tagihan->update([
-                'nominal_pokok' => $nominalSisa,
-                'nominal_denda' => 0, // Reset denda jika terlanjur terhitung oleh scheduler keterlambatan
-                'nominal_total' => $nominalSisa,
-                'keterangan'    => sprintf(
+                'nominal_pokok'     => $nominalSisa,
+                'nominal_denda'     => 0,
+                'nominal_total'     => $nominalSisa,
+                'status'            => 'pending',         // WAJIB: reset dari 'lunas' lama jika ini tagihan lama
+                'tanggal_bayar'     => null,              // Hapus tanggal bayar lama agar tidak membingungkan
+                'metode_pembayaran' => null,              // Hapus metode pembayaran lama
+                'keterangan'        => sprintf(
                     'Tagihan bulan pertama (Penyesuaian DP). Sisa kewajiban: Rp %s.',
                     number_format($nominalSisa, 0, ',', '.')
                 ),
             ]);
+
+            // Hapus record pembayaran lama dari masa sewa sebelumnya agar nota tidak mengacu ke transaksi lama
+            $tagihan->pembayaran()->delete();
         }
 
         if ($tagihan->wasRecentlyCreated) {
