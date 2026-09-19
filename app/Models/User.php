@@ -223,21 +223,22 @@ class User extends Authenticatable
     }
 
     /**
-     * Cek apakah user memiliki pembayaran reservasi yang sedang berjalan (tidak batal/belum aktif).
+     * Cek apakah user memiliki pembayaran reservasi yang sedang berjalan (pending atau dp saja).
+     * Status 'dikonfirmasi'/'lunas' tidak dihitung karena berarti reservasi sudah selesai.
      */
     public function hasBookingInProgress(): bool
     {
         return $this->role === self::ROLE_PENYEWA 
             && !$this->isActiveTenant() 
-            && $this->reservasi()->where('status', '!=', 'batal')->exists();
+            && $this->reservasi()->whereIn('status', ['pending', 'dp'])->exists();
     }
 
     /**
-     * Mengambil data reservasi aktif terakhir (tidak batal).
+     * Mengambil data reservasi yang masih dalam proses pembayaran (pending/dp).
      */
     public function getLatestActiveReservasiAttribute()
     {
-        return $this->reservasi()->where('status', '!=', 'batal')->latest()->first();
+        return $this->reservasi()->whereIn('status', ['pending', 'dp'])->latest()->first();
     }
 
     /**

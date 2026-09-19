@@ -38,23 +38,47 @@ class TransisiPenyewaService
         }
 
         $penyewaBaru = DB::transaction(function () use ($reservasi, $adminId, $data) {
-            // Langkah 1 (Insert Penyewa): PenyewaObserver::created() otomatis mengubah status kamar ke 'terisi'
-            $penyewa = Penyewa::create([
-                'user_id' => $reservasi->user_id,
-                'kamar_id' => $reservasi->kamar_id,
-                'harga_sewa' => ($reservasi->tipe_sewa === 'bulanan' && $reservasi->durasi > 0)
-                    ? ($reservasi->total_harga / $reservasi->durasi)
-                    : ($reservasi->kamar ? $reservasi->kamar->harga_bulan : 0),
-                'nik' => $data['nik'] ?? '',
-                'tanggal_masuk' => $reservasi->tanggal_mulai ? $reservasi->tanggal_mulai->toDateString() : date('Y-m-d'),
-                'nama_wali' => $data['nama_wali'] ?? '',
-                'no_wali' => $data['no_wali'] ?? '',
-                'deposit' => $data['deposit'] ?? 0,
-                'status' => 'aktif',
+            // Cari record penyewa lama milik user yang sama (termasuk yang soft-deleted)
+            // Ini terjadi saat penyewa yang sudah checkout ingin reservasi ulang.
+            $penyewa = Penyewa::withTrashed()
+                ->where('user_id', $reservasi->user_id)
+                ->latest()
+                ->first();
+
+            $hargaSewa = ($reservasi->tipe_sewa === 'bulanan' && $reservasi->durasi > 0)
+                ? ($reservasi->total_harga / $reservasi->durasi)
+                : ($reservasi->kamar ? $reservasi->kamar->harga_bulan : 0);
+
+            $dataUpdate = [
+                'kamar_id'        => $reservasi->kamar_id,
+                'harga_sewa'      => $hargaSewa,
+                'nik'             => $data['nik'] ?? '',
+                'tanggal_masuk'   => $reservasi->tanggal_mulai ? $reservasi->tanggal_mulai->toDateString() : date('Y-m-d'),
+                'tanggal_keluar'  => null,
+                'nama_wali'       => $data['nama_wali'] ?? '',
+                'no_wali'         => $data['no_wali'] ?? '',
+                'deposit'         => $data['deposit'] ?? 0,
+                'status'          => 'aktif',
                 'tanggal_billing' => 1,
-                'tipe_sewa' => $reservasi->tipe_sewa,
-                'durasi' => $reservasi->durasi,
-            ]);
+                'tipe_sewa'       => $reservasi->tipe_sewa,
+                'durasi'          => $reservasi->durasi,
+            ];
+
+            if ($penyewa) {
+                // Langkah 1A: Penyewa lama ditemukan — restore dan update datanya
+                // PenyewaObserver::updated() otomatis mengubah status kamar ke 'terisi'
+                $penyewa->restore(); // pulihkan jika soft-deleted
+                // Bersihkan NIK lama yang mungkin punya suffix '_deleted_...'
+                if (str_contains($penyewa->nik ?? '', '_deleted_')) {
+                    $dataUpdate['nik'] = $data['nik'] ?? '';
+                }
+                $penyewa->update($dataUpdate);
+            } else {
+                // Langkah 1B: Penyewa baru pertama kali — buat record baru
+                // PenyewaObserver::created() otomatis mengubah status kamar ke 'terisi'
+                $penyewa = Penyewa::create(array_merge($dataUpdate, ['user_id' => $reservasi->user_id]));
+            }
+
 
             // Langkah 2 (Routing Billing)
             if ($reservasi->is_dp && $reservasi->nominal_sisa > 0) {

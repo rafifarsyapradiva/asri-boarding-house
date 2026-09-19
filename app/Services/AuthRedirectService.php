@@ -52,9 +52,10 @@ class AuthRedirectService
             return ['type' => 'route', 'target' => 'penyewa.dashboard'];
         }
 
-        // 4. Fallback: Cek apakah pengguna memiliki reservasi yang sedang berjalan/pending
+        // 4. Fallback: Cek apakah pengguna memiliki reservasi yang masih dalam proses pembayaran (pending/dp) atau menunggu konfirmasi admin (lunas)
+        // Status 'dikonfirmasi' tidak dihitung karena berarti reservasi sudah selesai/sudah jadi penyewa aktif
         $pendingReservasi = Reservasi::where('user_id', $user->id)
-            ->where('status', '!=', 'batal')
+            ->whereIn('status', ['pending', 'dp', 'lunas'])
             ->latest()
             ->first();
 

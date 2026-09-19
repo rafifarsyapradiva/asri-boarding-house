@@ -135,7 +135,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $latestReservasi = $user->reservasi()
-            ->where('status', '!=', 'batal')
+            ->whereIn('status', ['pending', 'dp', 'lunas'])
             ->latest()
             ->first();
 

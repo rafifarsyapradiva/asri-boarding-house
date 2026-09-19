@@ -81,5 +81,11 @@ class PenyewaObserver
                 ]
             );
         }
+
+        // Saat penyewa lama diaktifkan kembali (reservasi ulang), tandai kamar sebagai 'terisi'
+        if ($penyewa->wasChanged('status') && $penyewa->status === 'aktif') {
+            $penyewa->loadMissing('kamar');
+            $penyewa->kamar?->update(['status' => 'terisi']);
+        }
     }
 }
