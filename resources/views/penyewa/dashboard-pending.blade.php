@@ -87,7 +87,11 @@
                         <!-- Proceed Button (CTA) -->
                         <div class="mt-8">
                             <a href="{{ route('penyewa.reservasi.pembayaran', $latestReservasi->id) }}" class="admin-btn-primary w-full text-center text-sm font-black uppercase tracking-wider block py-4 bg-yellow-400 text-black border-4 border-black shadow-[4px_4px_0px_0px_#000000] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#000000] transition-all">
-                                Lanjutkan ke Pembayaran Reservasi &rarr;
+                                @if($latestReservasi->status === 'pending')
+                                    Lanjutkan ke Pembayaran Reservasi &rarr;
+                                @else
+                                    Lihat Detail & Tunggu Konfirmasi Admin &rarr;
+                                @endif
                             </a>
                         </div>
                     </div>
@@ -121,18 +125,23 @@
                         </div>
 
                         @php
-                            $steps = $latestReservasi ? [
-                                ['title' => '1. Registrasi Akun', 'desc' => 'Akun Anda telah berhasil dibuat dan terdaftar.', 'status' => 'done'],
-                                ['title' => '2. Selesaikan Pembayaran', 'desc' => 'Lakukan transfer deposit/sewa melalui gerbang Midtrans.', 'status' => 'active'],
-                                ['title' => '3. Aktivasi Pengelola', 'desc' => 'Pengelola akan melakukan pengecekan administrasi.', 'status' => 'pending'],
-                                ['title' => '4. Siap Ditempati', 'desc' => 'Serah terima kunci kamar dan Anda siap menghuni kamar.', 'status' => 'pending'],
-                            ] : [
-                                ['title' => '1. Registrasi Akun', 'desc' => 'Akun Anda telah berhasil dibuat dan terdaftar.', 'status' => 'done'],
-                                ['title' => '2. Pilih & Booking Kamar', 'desc' => 'Silakan telusuri kamar yang tersedia dan lakukan pemesanan online.', 'status' => 'active'],
-                                ['title' => '3. Selesaikan Pembayaran', 'desc' => 'Lakukan transfer deposit/sewa melalui gerbang Midtrans.', 'status' => 'pending'],
-                                ['title' => '4. Aktivasi Pengelola', 'desc' => 'Pengelola akan melakukan pengecekan administrasi.', 'status' => 'pending'],
-                                ['title' => '5. Siap Ditempati', 'desc' => 'Serah terima kunci kamar dan Anda siap menghuni kamar.', 'status' => 'pending'],
-                            ];
+                            if ($latestReservasi) {
+                                $isPaid = in_array($latestReservasi->status, ['dp', 'lunas']);
+                                $steps = [
+                                    ['title' => '1. Registrasi Akun', 'desc' => 'Akun Anda telah berhasil dibuat dan terdaftar.', 'status' => 'done'],
+                                    ['title' => '2. Selesaikan Pembayaran', 'desc' => 'Lakukan transfer deposit/sewa melalui gerbang Midtrans.', 'status' => $isPaid ? 'done' : 'active'],
+                                    ['title' => '3. Aktivasi Pengelola', 'desc' => 'Pengelola akan melakukan pengecekan administrasi.', 'status' => $isPaid ? 'active' : 'pending'],
+                                    ['title' => '4. Siap Ditempati', 'desc' => 'Serah terima kunci kamar dan Anda siap menghuni kamar.', 'status' => 'pending'],
+                                ];
+                            } else {
+                                $steps = [
+                                    ['title' => '1. Registrasi Akun', 'desc' => 'Akun Anda telah berhasil dibuat dan terdaftar.', 'status' => 'done'],
+                                    ['title' => '2. Pilih & Booking Kamar', 'desc' => 'Silakan telusuri kamar yang tersedia dan lakukan pemesanan online.', 'status' => 'active'],
+                                    ['title' => '3. Selesaikan Pembayaran', 'desc' => 'Lakukan transfer deposit/sewa melalui gerbang Midtrans.', 'status' => 'pending'],
+                                    ['title' => '4. Aktivasi Pengelola', 'desc' => 'Pengelola akan melakukan pengecekan administrasi.', 'status' => 'pending'],
+                                    ['title' => '5. Siap Ditempati', 'desc' => 'Serah terima kunci kamar dan Anda siap menghuni kamar.', 'status' => 'pending'],
+                                ];
+                            }
                         @endphp
 
                         <div class="space-y-6">

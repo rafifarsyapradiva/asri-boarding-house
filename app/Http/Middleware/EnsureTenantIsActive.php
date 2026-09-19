@@ -9,15 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 class EnsureTenantIsActive
 {
     /**
-     * Rute read-only historis yang diizinkan untuk penyewa non-aktif.
-     */
-    protected const ALLOWED_READONLY_ROUTES = [
-        'penyewa.tagihan.index',
-        'penyewa.tagihan.show',
-        'penyewa.nota.download',
-    ];
-
-    /**
      * Handle an incoming request.
      */
     public function handle(Request $request, Closure $next): Response
@@ -26,11 +17,6 @@ class EnsureTenantIsActive
 
         // Guard Clause: Hanya jalankan pengecekan untuk role penyewa
         if (!$user || $user->role !== 'penyewa') {
-            return $next($request);
-        }
-
-        // Guard Clause: Izinkan mantan penyewa mengakses rute read-only historis
-        if ($request->routeIs(self::ALLOWED_READONLY_ROUTES)) {
             return $next($request);
         }
 
@@ -44,7 +30,7 @@ class EnsureTenantIsActive
             return redirect()->route('penyewa.reservasi.dashboard');
         }
 
-        return redirect()->route('landing.index')
+        return redirect()->route('penyewa.reservasi.dashboard')
             ->with('error', __('Akses ditolak. Halaman ini khusus untuk penyewa aktif.'));
     }
 }

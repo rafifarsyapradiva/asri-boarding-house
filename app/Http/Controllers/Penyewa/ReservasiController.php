@@ -8,6 +8,8 @@ use App\Models\Reservasi;
 use App\Models\Tagihan;
 use App\Services\ReservasiService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -80,13 +82,159 @@ class ReservasiController extends Controller
 
     /**
      * Display the reservation payment / detail page.
+     * Otomatis sinkronisasi status pembayaran dari Midtrans API jika masih pending,
+     * sebagai fallback apabila webhook Midtrans gagal terkirim (misal: ngrok timeout).
      */
-    public function show(Reservasi $reservasi): View
+    public function show(Reservasi $reservasi): View|RedirectResponse
     {
         $this->authorize('view', $reservasi);
+
+        // Jika penyewa sudah di-checkout oleh admin (status nonaktif) dan reservasi ini
+        // bukan lagi dalam proses (bukan pending/dp), arahkan ke dashboard reservasi
+        // agar penyewa bisa melakukan reservasi baru. Ini mencegah halaman "nyangkut".
+        $user = Auth::user();
+        $penyewa = $user->penyewa;
+        $isCheckedOut = $penyewa && $penyewa->status === 'nonaktif';
+        // 'lunas' adalah status aktif menunggu konfirmasi admin, bukan completed.
+        $reservasiIsCompleted = in_array($reservasi->status, ['dikonfirmasi', 'batal', 'gagal', 'selesai']);
+
+        if ($isCheckedOut && $reservasiIsCompleted) {
+            return redirect()
+                ->route('penyewa.reservasi.dashboard')
+                ->with('info', 'Masa sewa Anda telah selesai. Silakan buat reservasi baru untuk menyewa kembali.');
+        }
+
+        // FALLBACK: Jika status masih pending dan sudah ada snap_token,
+        // cek langsung ke Midtrans API apakah pembayaran sudah berhasil.
+        // Bisa dinonaktifkan via MIDTRANS_SYNC_FALLBACK_ENABLED=false di .env
+        // untuk keperluan testing webhook secara mandiri.
+        if ($reservasi->status === 'pending' && $reservasi->order_id && config('midtrans.sync_fallback_enabled', true)) {
+            try {
+                $this->syncStatusFromMidtrans($reservasi);
+                $reservasi->refresh(); // Reload data terbaru dari database
+            } catch (\Exception $e) {
+                // Gagal sinkronisasi tidak boleh menghalangi halaman terbuka
+                Log::warning('Gagal sinkronisasi status Midtrans saat show: ' . $e->getMessage(), [
+                    'reservasi_id' => $reservasi->id,
+                ]);
+            }
+        }
+
         $clientKey = config('midtrans.client_key');
 
         return view('reservasi.show', compact('reservasi', 'clientKey'));
+    }
+
+    /**
+     * Sinkronisasi status reservasi dengan mengecek langsung ke Midtrans Transaction Status API.
+     * Dipanggil sebagai fallback ketika webhook tidak terkirim (misal: ngrok timeout).
+     *
+     * Keamanan setara dengan Webhook controller:
+     * 1. Validasi Gross Amount — uang yang dibayar harus cocok dengan tagihan
+     * 2. Cek Double-Booking — kamar tidak boleh sudah dipesan orang lain pada tanggal yang sama
+     * 3. DB Transaction + Row Lock — mencegah race condition jika request masuk secara bersamaan
+     */
+    private function syncStatusFromMidtrans(Reservasi $reservasi): void
+    {
+        $orderId   = $reservasi->order_id;
+        $serverKey = config('midtrans.server_key');
+
+        $baseUrl = config('midtrans.is_production')
+            ? "https://api.midtrans.com/v2/{$orderId}/status"
+            : "https://api.sandbox.midtrans.com/v2/{$orderId}/status";
+
+        // Tanya langsung ke Midtrans API dengan timeout ketat (5 detik)
+        $response = Http::withBasicAuth($serverKey, '')
+            ->timeout(5)
+            ->get($baseUrl);
+
+        if (!$response->successful()) {
+            return;
+        }
+
+        $txStatus    = $response->json('transaction_status');
+        $grossAmount = $response->json('gross_amount');
+        $transactionId = $response->json('transaction_id');
+
+        // Hanya proses jika Midtrans konfirmasi pembayaran berhasil
+        if (!in_array($txStatus, ['settlement', 'capture'])) {
+            if (in_array($txStatus, ['deny', 'cancel', 'expire'])) {
+                $reservasi->update(['status' => 'batal']);
+            }
+            return;
+        }
+
+        // Jalankan seluruh validasi & update di dalam DB Transaction dengan Row Lock
+        \Illuminate\Support\Facades\DB::transaction(function () use ($reservasi, $grossAmount, $transactionId, $txStatus, $orderId) {
+            // LAYER 3: Row Lock — kunci baris di DB agar tidak ada proses lain yang bisa
+            // membaca/menulis data reservasi ini secara bersamaan (mencegah race condition)
+            $locked = Reservasi::where('id', $reservasi->id)->lockForUpdate()->first();
+
+            if (!$locked) {
+                return;
+            }
+
+            // IDEMPOTENCY: Jika sudah diproses (misal oleh webhook yang datang terlambat), hentikan
+            if (in_array($locked->status, ['dp', 'lunas', 'dikonfirmasi'])) {
+                return;
+            }
+
+            // LAYER 1: VALIDASI GROSS AMOUNT
+            // Uang yang dibayar harus persis sama dengan tagihan yang tersimpan di database.
+            // Mencegah bug jika admin mengubah harga kamar SETELAH penyewa sudah klik bayar.
+            $expectedAmount = $locked->is_dp ? $locked->nominal_dp : $locked->total_harga;
+            if (abs((float) $grossAmount - (float) $expectedAmount) > 0.01) {
+                Log::error('Midtrans fallback sync: gross_amount TIDAK COCOK dengan tagihan database', [
+                    'reservasi_id'    => $locked->id,
+                    'order_id'        => $orderId,
+                    'dibayar_midtrans' => $grossAmount,
+                    'tagihan_database' => $expectedAmount,
+                ]);
+                // Jangan update status — biarkan admin menangani secara manual
+                return;
+            }
+
+            // LAYER 2: CEK DOUBLE-BOOKING
+            // Pastikan tidak ada reservasi lain yang sudah 'dikonfirmasi/dp/lunas' untuk
+            // kamar yang sama pada rentang tanggal yang tumpang-tindih.
+            $hasDoubleBooking = Reservasi::isKamarTerbooking(
+                $locked->kamar_id,
+                $locked->tanggal_mulai->toDateString(),
+                $locked->tanggal_selesai->toDateString(),
+                $locked->id // Kecualikan diri sendiri dari pengecekan
+            );
+
+            if ($hasDoubleBooking) {
+                Log::error('Midtrans fallback sync: Double-booking terdeteksi saat konfirmasi pembayaran', [
+                    'reservasi_id' => $locked->id,
+                    'order_id'     => $orderId,
+                    'kamar_id'     => $locked->kamar_id,
+                ]);
+                $locked->update([
+                    'status'          => 'batal',
+                    'transaction_id'  => $transactionId,
+                    'catatan_admin'   => 'Double-booking terdeteksi saat sinkronisasi status Midtrans (fallback). Diperlukan refund manual oleh admin.',
+                ]);
+                return;
+            }
+
+            // Semua validasi lolos — update status menjadi dp/lunas
+            $statusTarget = $locked->is_dp ? 'dp' : 'lunas';
+            $locked->update([
+                'status'             => $statusTarget,
+                'metode_pembayaran'  => 'midtrans',
+                'tanggal_konfirmasi' => now(),
+                'transaction_id'     => $transactionId,
+            ]);
+
+            event(new \App\Events\ReservasiDibayar($locked));
+
+            Log::info('Midtrans fallback sync: status berhasil diperbarui (dengan validasi penuh)', [
+                'reservasi_id' => $locked->id,
+                'order_id'     => $orderId,
+                'new_status'   => $statusTarget,
+            ]);
+        });
     }
 
     /**

@@ -87,7 +87,7 @@
                                 <!-- Tanggal Masuk -->
                                 <div>
                                     <label for="tanggal_masuk" class="admin-label">Tanggal Masuk</label>
-                                    <input id="tanggal_masuk" name="tanggal_masuk" type="date" class="admin-input" value="{{ old('tanggal_masuk', $penyewa->tanggal_masuk) }}" required />
+                                    <input id="tanggal_masuk" name="tanggal_masuk" type="date" class="admin-input" value="{{ old('tanggal_masuk', \Carbon\Carbon::parse($penyewa->tanggal_masuk)->format('Y-m-d')) }}" required />
                                 </div>
                                 <!-- Tipe Sewa -->
                                 <div>
@@ -118,13 +118,23 @@
                                     <input id="deposit_display" type="text" class="admin-input rupiah-input" data-target="deposit" value="{{ old('deposit', intval($penyewa->deposit)) }}" required />
                                     <p class="text-[10px] text-slate-400 mt-1">Uang jaminan sewa penyewa.</p>
                                 </div>
-                                <!-- Status Keaktifan -->
+                                <!-- Status Keaktifan (Readonly — ubah status hanya via tombol Checkout) -->
                                 <div>
-                                    <label for="status" class="admin-label">Status Penyewa</label>
-                                    <select id="status" name="status" class="admin-select" required>
-                                        <option value="aktif" {{ old('status', $penyewa->status) == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                                        <option value="nonaktif" {{ old('status', $penyewa->status) == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
-                                    </select>
+                                    <label class="admin-label">Status Penyewa</label>
+                                    <div class="admin-input flex items-center gap-2 bg-slate-50 cursor-not-allowed select-none">
+                                        @if($penyewa->status === 'aktif')
+                                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700 border border-green-200">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                                Aktif
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-200">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                                Nonaktif
+                                            </span>
+                                        @endif
+                                        <span class="text-xs text-slate-400 ml-1">Status hanya dapat diubah melalui tombol Checkout.</span>
+                                    </div>
                                 </div>
                                 <!-- Catatan Tambahan -->
                                 <div class="md:col-span-2">

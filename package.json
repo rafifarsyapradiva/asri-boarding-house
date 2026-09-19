@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "prod": "npx concurrently -c \"#93c5fd,#c4b5fd\" \"php artisan serve\" \"php artisan queue:listen --tries=1 --timeout=0\" --names=server,queue --kill-others"
     },
     "devDependencies": {
         "@mermaid-js/mermaid-cli": "^11.15.0",

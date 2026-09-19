@@ -215,7 +215,7 @@ Route::middleware(['auth', 'role:penyewa', 'ensure.profile.complete', 'ensure.pa
         Route::get('/reservasi/riwayat-chat', [PenyewaReservasiController::class, 'riwayatChat'])->name('chat.history');
         Route::get('/reservasi/{reservasi}', [PenyewaReservasiController::class, 'show'])->name('reservasi.show');
         Route::get('/reservasi/{reservasi}/pembayaran', [PenyewaReservasiController::class, 'show'])->name('reservasi.pembayaran');
-        Route::post('/reservasi/{reservasi}/token', [SnapTokenController::class, 'generateReservasi'])->middleware('throttle:3,1')->name('reservasi.pembayaran.token');
+        Route::post('/reservasi/{reservasi}/token', [SnapTokenController::class, 'generateReservasi'])->middleware('throttle:15,1')->name('reservasi.pembayaran.token');
         Route::post('/reservasi/{reservasi}/batal', [PenyewaReservasiController::class, 'batal'])->name('reservasi.batal');
         Route::get('/reservasi/{reservasi}/chat', [PenyewaReservasiController::class, 'chat'])->name('reservasi.chat');
 
@@ -224,7 +224,7 @@ Route::middleware(['auth', 'role:penyewa', 'ensure.profile.complete', 'ensure.pa
             Route::get('/dashboard', [PenyewaDashboardController::class, 'index'])->name('dashboard');
             Route::resource('tagihan', PenyewaTagihanController::class)->only(['index', 'show']);
             Route::get('/nota/{pembayaran}/download', [PenyewaTagihanController::class, 'downloadNota'])->name('nota.download');
-            Route::post('/pembayaran/{tagihan}/token', [SnapTokenController::class, 'generate'])->middleware('throttle:3,1')->name('pembayaran.token');
+            Route::post('/pembayaran/{tagihan}/token', [SnapTokenController::class, 'generate'])->middleware('throttle:15,1')->name('pembayaran.token');
         });
     });
 
@@ -287,7 +287,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/penyewa/reservasi-alias/{reservasi}', [PenyewaReservasiController::class, 'show'])->name('reservasi.show');
     Route::get('/penyewa/reservasi-alias/{reservasi}/pembayaran', [PenyewaReservasiController::class, 'show'])->name('reservasi.pembayaran');
     Route::get('/penyewa/reservasi-alias/{reservasi}/chat', [PenyewaReservasiController::class, 'chat'])->name('reservasi.chat');
-    Route::post('/penyewa/reservasi-alias/{reservasi}/token', [SnapTokenController::class, 'generateReservasi'])->middleware('throttle:3,1')->name('reservasi.pembayaran.token');
+    Route::post('/penyewa/reservasi-alias/{reservasi}/token', [SnapTokenController::class, 'generateReservasi'])->middleware('throttle:15,1')->name('reservasi.pembayaran.token');
 });
 
 

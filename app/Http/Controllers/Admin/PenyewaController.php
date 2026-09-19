@@ -224,23 +224,10 @@ class PenyewaController extends Controller
                     }
                 }
 
-                // Jika status dirubah menjadi nonaktif (checkout)
-                $status = $request->input('status');
-                $tanggalKeluar = $penyewa->tanggal_keluar;
-                if ($status === 'nonaktif' && $penyewa->status === 'aktif') {
-                    $tanggalKeluar = now()->toDateString();
-                    // Catatan Bisnis: Kamar TETAP 'terisi' saat penyewa keluar. Admin mengubah status kamar secara MANUAL.
-                } elseif ($status === 'aktif' && $penyewa->status === 'nonaktif') {
-                    $tanggalKeluar = null;
-                    // Jika diaktifkan kembali, set status kamar terkait menjadi 'terisi' dengan row lock
-                    $kamar = Kamar::where('id', $newKamarId)->lockForUpdate()->first();
-                    if ($kamar) {
-                        if ($kamar->status !== 'tersedia') {
-                            throw new \Exception('Kamar tidak tersedia untuk diaktifkan kembali.');
-                        }
-                        $kamar->update(['status' => 'terisi']);
-                    }
-                }
+                // CATATAN: Status penyewa TIDAK bisa diubah lewat form edit.
+                // Perubahan status (aktif ↔ nonaktif) hanya dilakukan melalui tombol Checkout
+                // agar semua logika bisnis (update kamar, reservasi, keuangan) berjalan dengan benar.
+                // Status dipertahankan dari nilai yang ada di database.
 
                 $tanggalMasuk = \Illuminate\Support\Carbon::parse($request->input('tanggal_masuk'));
                 $tipeSewa = $request->input('tipe_sewa');
@@ -253,23 +240,22 @@ class PenyewaController extends Controller
                     $tanggalKeluarSeharusnya = $tanggalMasuk->copy()->addMonths($durasi)->toDateString();
                 }
 
-                // Update Penyewa
+                // Update Penyewa — status dan tanggal_keluar TIDAK diubah dari sini
                 $penyewa->update([
-                    'kamar_id' => $newKamarId,
-                    'harga_sewa' => $request->input('harga_sewa'),
-                    'nik' => $request->input('nik'),
-                    'tanggal_masuk' => $request->input('tanggal_masuk'),
-                    'tanggal_keluar' => $tanggalKeluar,
+                    'kamar_id'                  => $newKamarId,
+                    'harga_sewa'                => $request->input('harga_sewa'),
+                    'nik'                       => $request->input('nik'),
+                    'tanggal_masuk'             => $request->input('tanggal_masuk'),
                     'tanggal_keluar_seharusnya' => $tanggalKeluarSeharusnya,
-                    'nama_wali' => $request->input('nama_wali'),
-                    'no_wali' => $request->input('no_wali'),
-                    'status' => $status,
-                    'tipe_sewa' => $request->input('tipe_sewa'),
-                    'durasi' => $request->input('durasi'),
-                    'deposit' => $request->input('deposit'),
-                    'catatan' => $request->input('catatan'),
+                    'nama_wali'                 => $request->input('nama_wali'),
+                    'no_wali'                   => $request->input('no_wali'),
+                    'tipe_sewa'                 => $request->input('tipe_sewa'),
+                    'durasi'                    => $request->input('durasi'),
+                    'deposit'                   => $request->input('deposit'),
+                    'catatan'                   => $request->input('catatan'),
                 ]);
             });
+
 
             return redirect()->route('admin.penyewa.index')->with('success', 'Data penyewa berhasil diperbarui.');
         } catch (\Exception $e) {

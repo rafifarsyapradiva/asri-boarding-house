@@ -1,22 +1,23 @@
 <!-- SECTION NAVBAR (Navigasi Kaku) -->
 <nav x-data="{ mobileMenuOpen: false }" class="bg-white dark:bg-slate-900 border-b-4 border-black dark:border-white sticky top-0 z-50 text-black dark:text-white transition-colors duration-200">
-    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-8 h-20 flex items-center justify-between">
         <!-- Logo -->
         <a href="{{ route('landing.index') }}" class="flex items-center gap-2 group">
-            <div class="px-4 py-2 bg-yellow-400 text-black border-4 border-black font-black uppercase tracking-wider text-lg sm:text-xl neo-btn-shadow transition duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000000]">
-                {{ \App\Models\Setting::get('logo_icon') }} {{ \App\Models\Setting::get('logo_text') }}
+            <div class="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-black border-4 border-black font-black uppercase tracking-wider text-base sm:text-lg whitespace-nowrap neo-btn-shadow transition duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000000]">
+                <span>{{ \App\Models\Setting::get('logo_icon') }}</span>
+                <span>{{ \App\Models\Setting::get('logo_text') }}</span>
             </div>
         </a>
 
         <!-- Nav Items -->
-        <div class="hidden lg:flex items-center gap-6 font-black text-sm uppercase tracking-wider">
+        <div class="hidden lg:flex items-center gap-3 lg:gap-5 font-black text-xs lg:text-sm uppercase tracking-wider whitespace-nowrap">
             <a href="{{ route('landing.fasilitas') }}" class="hover:text-yellow-600 dark:hover:text-yellow-400 hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('landing.fasilitas') ? 'text-yellow-600 dark:text-yellow-400 underline decoration-4' : 'text-black dark:text-white' }}">Fasilitas</a>
             <a href="{{ route('landing.kamar') }}" class="hover:text-yellow-600 dark:hover:text-yellow-400 hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('landing.kamar') ? 'text-yellow-600 dark:text-yellow-400 underline decoration-4' : 'text-black dark:text-white' }}">Tipe Kamar</a>
             <a href="{{ route('landing.caraBooking') }}" class="hover:text-yellow-600 dark:hover:text-yellow-400 hover:underline underline-offset-4 decoration-2 {{ request()->routeIs('landing.caraBooking') ? 'text-yellow-600 dark:text-yellow-400 underline decoration-4' : 'text-black dark:text-white' }}">Cara Booking</a>
         </div>
 
         <!-- Auth & Hamburger Container -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 lg:gap-3">
             <!-- Theme Toggle Button -->
             <button 
                 x-data="themeToggle" 
@@ -74,7 +75,7 @@
                             </x-slot>
                         </x-dropdown>
                     </div>
-                    <a href="{{ route('dashboard') }}" class="px-4 py-3 min-h-[44px] inline-flex items-center justify-center bg-yellow-400 hover:bg-yellow-300 text-black text-xs font-black border-2 border-black dark:border-white uppercase tracking-wider neo-btn-shadow neo-btn-interactive">
+                    <a href="{{ route('dashboard') }}" class="px-3 lg:px-4 py-3 min-h-[44px] inline-flex items-center justify-center bg-yellow-400 hover:bg-yellow-300 text-black text-xs font-black border-2 border-black dark:border-white uppercase tracking-wider whitespace-nowrap neo-btn-shadow neo-btn-interactive">
                         @if(auth()->user()->hasBookingInProgress())
                             Pembayaran Reservasi
                         @else
