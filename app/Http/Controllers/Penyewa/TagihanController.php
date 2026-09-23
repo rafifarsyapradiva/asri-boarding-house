@@ -5,20 +5,12 @@ namespace App\Http\Controllers\Penyewa;
 use App\Http\Controllers\Controller;
 use App\Models\Tagihan;
 use App\Models\Pembayaran;
-use App\Services\PdfNotaService;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class TagihanController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct(protected PdfNotaService $pdfNotaService)
-    {
-    }
-
     /**
      * Display a listing of the resource for tenant.
      */
@@ -72,20 +64,30 @@ class TagihanController extends Controller
     }
 
     /**
-     * Download the invoice PDF.
+     * Tampilkan halaman cetak nota pembayaran (client-side PDF rendering).
+     * PDF di-generate di browser penyewa menggunakan html2pdf.js — zero server load.
      */
-    public function downloadNota(Pembayaran $pembayaran)
+    public function cetakNota(Pembayaran $pembayaran): View
     {
         if (!$pembayaran->tagihan) {
             abort(404, 'Data tagihan untuk pembayaran ini tidak ditemukan.');
         }
 
-        // Refaktor Otorisasi: Menggunakan PembayaranPolicy (mengatur admin & kepemilikan tagihan)
+        // Otorisasi: penyewa hanya bisa cetak nota miliknya sendiri
         $this->authorize('downloadNota', $pembayaran);
 
-        // Refaktor: Pengecekan penyimpanan & pembuatan nota didelegasikan sepenuhnya ke service
-        $pdfPath = $this->pdfNotaService->getOrGeneratePdfPath($pembayaran);
+        $pembayaran->load(['tagihan.penyewa.user', 'tagihan.penyewa.kamar']);
+        $tagihan  = $pembayaran->tagihan;
+        $penyewa  = $tagihan->penyewa;
 
-        return Storage::download($pdfPath);
+        $nominalDeposit  = $tagihan->nominal_total - $tagihan->nominal_pokok - $tagihan->nominal_denda;
+        $appName         = Setting::get('logo_text', 'Asri Boarding House');
+        $contactAddress  = Setting::get('contact_address');
+        $contactWhatsapp = Setting::get('contact_whatsapp');
+
+        return view('nota.cetak', compact(
+            'pembayaran', 'tagihan', 'penyewa',
+            'nominalDeposit', 'appName', 'contactAddress', 'contactWhatsapp'
+        ));
     }
 }

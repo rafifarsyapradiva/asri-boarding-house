@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tagihan;
+use App\Models\Pembayaran;
+use App\Models\Setting;
 use App\Http\Requests\KonfirmasiCashRequest;
 use App\Services\TagihanService;
 use Illuminate\Http\RedirectResponse;
@@ -60,5 +62,30 @@ class TagihanController extends Controller
             report($e);
             return back()->with('error', 'Gagal mengonfirmasi pembayaran: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Tampilkan halaman cetak nota pembayaran (client-side PDF rendering).
+     * PDF di-generate di browser admin menggunakan html2pdf.js — zero server load.
+     */
+    public function cetakNota(Pembayaran $pembayaran): View
+    {
+        if (!$pembayaran->tagihan) {
+            abort(404, 'Data tagihan untuk pembayaran ini tidak ditemukan.');
+        }
+
+        $pembayaran->load(['tagihan.penyewa.user', 'tagihan.penyewa.kamar']);
+        $tagihan  = $pembayaran->tagihan;
+        $penyewa  = $tagihan->penyewa;
+
+        $nominalDeposit  = $tagihan->nominal_total - $tagihan->nominal_pokok - $tagihan->nominal_denda;
+        $appName         = Setting::get('logo_text', 'Asri Boarding House');
+        $contactAddress  = Setting::get('contact_address');
+        $contactWhatsapp = Setting::get('contact_whatsapp');
+
+        return view('nota.cetak', compact(
+            'pembayaran', 'tagihan', 'penyewa',
+            'nominalDeposit', 'appName', 'contactAddress', 'contactWhatsapp'
+        ));
     }
 }

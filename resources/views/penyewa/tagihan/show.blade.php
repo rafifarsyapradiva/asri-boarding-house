@@ -152,8 +152,8 @@
                         </a>
 
                         @if($tagihan->computed_status === 'lunas' && $tagihan->pembayaran_terkonfirmasi)
-                            <a href="{{ route('penyewa.nota.download', $tagihan->pembayaran_terkonfirmasi->id) }}" class="admin-btn-success">
-                                📥 Unduh Nota Pembayaran (PDF)
+                            <a href="{{ route('penyewa.nota.cetak', $tagihan->pembayaran_terkonfirmasi->id) }}" target="_blank" class="admin-btn-success">
+                                📄 Cetak / Unduh Nota Pembayaran (PDF)
                             </a>
                         @endif
                     </div>

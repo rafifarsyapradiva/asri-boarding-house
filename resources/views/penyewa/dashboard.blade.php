@@ -249,7 +249,7 @@
                                                 Detail
                                             </a>
                                             @if($t->status === 'lunas' && $t->pembayaran_terkonfirmasi)
-                                                <a href="{{ route('penyewa.nota.download', $t->pembayaran_terkonfirmasi->id) }}" class="text-xs font-bold text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300">
+                                                <a href="{{ route('penyewa.nota.cetak', $t->pembayaran_terkonfirmasi->id) }}" target="_blank" class="text-xs font-bold text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300">
                                                     Nota PDF
                                                 </a>
                                             @endif
