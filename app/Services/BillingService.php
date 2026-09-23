@@ -323,7 +323,7 @@ class BillingService
                 ]);
             }
 
-            // [2] Buat record Pembayaran agar nota PDF dapat dicetak oleh PdfNotaService
+            // [2] Buat record Pembayaran (digunakan untuk otorisasi dan history, nota di-generate secara client-side)
             $pembayaran = Pembayaran::create([
                 'tagihan_id'       => $tagihan->id,
                 'transaction_id'   => $reservasi->transaction_id ?? sprintf('PAY-RSV-%d-%d', $reservasi->id, time()),
@@ -396,7 +396,7 @@ class BillingService
                 ]);
             }
 
-            // [2] Buat record Pembayaran agar nota PDF dapat dicetak oleh PdfNotaService
+            // [2] Buat record Pembayaran (digunakan untuk otorisasi dan history, nota di-generate secara client-side)
             $pembayaran = Pembayaran::create([
                 'tagihan_id'       => $tagihan->id,
                 'transaction_id'   => sprintf('PAY-MNL-%d-%d', $penyewa->id, time()),

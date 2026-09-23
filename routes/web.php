@@ -163,6 +163,7 @@ Route::middleware(['auth', 'role:admin', 'ensure.profile.complete', 'ensure.pass
         // Financial & Complaints
         Route::resource('tagihan', AdminTagihanController::class)->only(['index', 'show']);
         Route::post('/tagihan/{tagihan}/konfirmasi-cash', [AdminTagihanController::class, 'konfirmasiCash'])->name('tagihan.konfirmasiCash');
+        Route::get('/nota/{pembayaran}/cetak', [AdminTagihanController::class, 'cetakNota'])->name('nota.cetak');
         Route::get('/pengeluaran/export-pdf', [AdminPengeluaranController::class, 'exportPdf'])->name('pengeluaran.exportPdf');
         Route::get('/pengeluaran/export-excel', [AdminPengeluaranController::class, 'exportExcel'])->name('pengeluaran.exportExcel');
         Route::resource('pengeluaran', AdminPengeluaranController::class);
@@ -223,7 +224,7 @@ Route::middleware(['auth', 'role:penyewa', 'ensure.profile.complete', 'ensure.pa
         Route::middleware('ensure.tenant.active')->group(function () {
             Route::get('/dashboard', [PenyewaDashboardController::class, 'index'])->name('dashboard');
             Route::resource('tagihan', PenyewaTagihanController::class)->only(['index', 'show']);
-            Route::get('/nota/{pembayaran}/download', [PenyewaTagihanController::class, 'downloadNota'])->name('nota.download');
+            Route::get('/nota/{pembayaran}/cetak', [PenyewaTagihanController::class, 'cetakNota'])->name('nota.cetak');
             Route::post('/pembayaran/{tagihan}/token', [SnapTokenController::class, 'generate'])->middleware('throttle:15,1')->name('pembayaran.token');
         });
     });

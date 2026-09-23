@@ -24,7 +24,6 @@ class Pembayaran extends Model
         'signature_key',
         'response_json',
         'tanggal_bayar',
-        'pdf_path',
     ];
 
     protected $casts = [

@@ -227,13 +227,11 @@
                                             </div>
                                         @endif
                                     @endif
-                                    @if($p->pdf_path)
-                                        <div class="pt-2">
-                                            <a href="{{ Storage::url($p->pdf_path) }}" target="_blank" rel="noopener noreferrer" class="admin-btn-secondary w-full gap-2">
-                                                <span>📄</span> Download Nota PDF
-                                            </a>
-                                        </div>
-                                    @endif
+                                    <div class="pt-2">
+                                        <a href="{{ route('admin.nota.cetak', $p->id) }}" target="_blank" rel="noopener noreferrer" class="admin-btn-secondary w-full gap-2">
+                                            <span>📄</span> Cetak / Download Nota PDF
+                                        </a>
+                                    </div>
                                 </div>
                             @empty
                                 <p class="text-sm text-slate-400 italic font-bold">Pembayaran lunas via modifikasi admin.</p>
