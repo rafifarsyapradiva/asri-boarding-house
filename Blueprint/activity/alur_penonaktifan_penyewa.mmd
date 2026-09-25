@@ -21,11 +21,19 @@ flowchart TD
         TolakCheckout["Sistem memblokir checkout & merender Toast error: 'Penyewa masih memiliki tunggakan tagihan'"] --> SelesaiGagal([Selesai Gagal])
         
         LanjutCheckout["Admin melakukan inspeksi fisik kamar kost"] --> CekKerusakan{"Apakah ditemukan kerusakan fasilitas?"}
-        CekKerusakan -- Ya --> PotongDeposit["1. Hitung estimasi biaya perbaikan kerusakan<br>2. Deposit dikembalikan setelah dipotong biaya perbaikan<br>3. Catat bukti potongan perbaikan"]
+        
         CekKerusakan -- Tidak --> KembalikanDeposit["1. Deposit jaminan dikembalikan penuh ke Penyewa<br>2. Catat nomor rekening / bukti transfer pengembalian"]
+        
+        CekKerusakan -- Ya --> HitungBiayaKerusakan["Hitung estimasi total biaya perbaikan kerusakan fasilitas"]
+        HitungBiayaKerusakan --> CekKecukupanDeposit{"Estimasi Biaya vs Saldo Deposit?"}
+        
+        CekKecukupanDeposit -- "Biaya <= Deposit" --> PotongDeposit["1. Potong biaya perbaikan dari deposit jaminan<br>2. Kembalikan sisa saldo deposit ke Penyewa"]
+        CekKecukupanDeposit -- "Biaya > Deposit" --> KlaimSelisih["1. Tahan 100% deposit jaminan<br>2. Terbitkan tagihan selisih ganti rugi fisik wajib lunas"]
+        KlaimSelisih --> BayarSelisih["Penyewa melunasi selisih tunai/transfer ke Admin"]
         
         PotongDeposit --> BukaKamar["Admin membuka Menu Manajemen Kamar"]
         KembalikanDeposit --> BukaKamar
+        BayarSelisih --> BukaKamar
         
         BukaKamar --> UbahStatusKamar["Admin secara MANUAL memperbarui status kamar"]
         UbahStatusKamar --> TentukanStatus{"Kamar perlu perbaikan / pembersihan?"}

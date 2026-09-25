@@ -32,7 +32,7 @@ Berikut adalah 20 Activity Diagram utama beserta 4 Diagram Arsitektur Makro yang
 | **03** | **AD-03** | Pembayaran & Chat Diskusi Pre-Bayar | Calon Penyewa, Snap, Midtrans | [alur_reservasi_pembayaran.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_reservasi_pembayaran.mmd) | [alur_reservasi_pembayaran.png](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_reservasi_pembayaran.png) |
 | **04** | **AD-04** | Verifikasi & Konfirmasi Reservasi | Admin, Transisi Service, Fonnte | [alur_konfirmasi_reservasi.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_konfirmasi_reservasi.mmd) | [alur_konfirmasi_reservasi.png](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_konfirmasi_reservasi.png) |
 | **05** | **AD-05** | Siklus Billing Bulanan & Engine Denda | Laravel Scheduler, Billing Engine | [alur_billing_otomatis.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_billing_otomatis.mmd) | [alur_billing_otomatis.png](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_billing_otomatis.png) |
-| **06** | **AD-06** | Pembayaran Tagihan (Hybrid Payment) | Penyewa, Admin, Dompdf, Fonnte | [alur_tagihan_bulanan.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_tagihan_bulanan.mmd) | [alur_tagihan_bulanan.png](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_tagihan_bulanan.png) |
+| **06** | **AD-06** | **Pembayaran Tagihan Bulanan & Pelunasan DP (Hybrid)** | Penyewa, Admin, Dompdf, Fonnte | [alur_tagihan_bulanan.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_tagihan_bulanan.mmd) | [alur_tagihan_bulanan.png](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_tagihan_bulanan.png) |
 | **07** | **AD-07** | Pelaporan & Resolusi Keluhan | Penyewa Aktif, Admin, Storage | [alur_pengaduan_keluhan.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_pengaduan_keluhan.mmd) | [alur_pengaduan_keluhan.png](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_pengaduan_keluhan.png) |
 | **08** | **AD-08** | Pencatatan Pengeluaran & Arus Kas | Admin, Arus Kas Engine, Dompdf | [alur_pencatatan_pengeluaran.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_pencatatan_pengeluaran.mmd) | [alur_pencatatan_pengeluaran.png](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_pencatatan_pengeluaran.png) |
 | **09** | **AD-09** | Manajemen Konten Dinamis (FAQ/Galeri) | Admin, Content Engine, Storage | [alur_manajemen_konten.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_manajemen_konten.mmd) | [alur_manajemen_konten.png](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/activity/alur_manajemen_konten.png) |
@@ -258,7 +258,7 @@ flowchart TD
     %% Decision 6
     SetDP --> DecKonfirmasi{"D-06: Verifikasi Admin? (AD-04)"}
     SetLunas --> DecKonfirmasi
-    DecKonfirmasi -- "Tolak / Data Buram" --> RefundReserv["Set 'batal', Lepas Kamar & Proses Refund"]
+    DecKonfirmasi -- "Tolak / Data Buram" --> RefundReserv["Set 'batal', Lepas Kamar & Refund Manual Admin"]
     DecKonfirmasi -- "Setujui" --> ActivateTenant["Ubah Kamar 'terisi' & Kirim WA Kredensial"]
     
     %% Decision 7
@@ -268,10 +268,10 @@ flowchart TD
     DecBilling -- "Bulan 3+ Overdue" --> DendaApplied["Status 'terlambat' & Denda 5% per Bulan"]
     
     %% Decision 8
-    TagihanNormal --> DecPayType{"D-08: Metode Bayar Tagihan? (AD-06)"}
+    TagihanNormal --> DecPayType{"D-08: Metode Bayar Tagihan Sewa & Pelunasan DP? (AD-06)"}
     ReminderOnly --> DecPayType
     DendaApplied --> DecPayType
-    DecPayType -- "Snap Gateway" --> AutoVerify["Verifikasi Otomatis via Webhook"]
+    DecPayType -- "Snap Gateway" --> AutoVerify["Verifikasi Otomatis via Dual Channel (Sync + Webhook)"]
     DecPayType -- "Cash / Transfer" --> DecAdminCash{"D-09: Validasi Kas Admin? (AD-06)"}
     DecAdminCash -- "Bukti Palsu / Kurang" --> TolakCash["Tolak & Minta Pembayaran Ulang"]
     DecAdminCash -- "Valid & Sesuai" --> KonfirmasiCash["Admin Klik 'Konfirmasi Cash' & Cetak PDF"]
@@ -280,11 +280,13 @@ flowchart TD
     ActivateTenant --> DecCheckout{"D-10: Syarat Checkout Penyewa? (AD-11)"}
     DecCheckout -- "Memiliki Tunggakan" --> BlockExit["Blokir Checkout (Wajib Lunasi Dulu)"]
     DecCheckout -- "Bebas Tunggakan" --> DecInspeksi{"D-11: Hasil Inspeksi Fisik Kamar? (AD-11)"}
-    DecInspeksi -- "Fasilitas Rusak" --> PotongDepo["Potong Biaya Perbaikan dari Deposit"]
     DecInspeksi -- "Fasilitas Bersih" --> FullDepo["Kembalikan Deposit Jaminan Penuh"]
+    DecInspeksi -- "Fasilitas Rusak" --> DecKecukupan{"D-12: Kecukupan Deposit terhadap Biaya Rusak? (AD-11)"}
+    DecKecukupan -- "Biaya <= Deposit" --> PotongDepo["Potong Biaya & Kembalikan Sisa Deposit"]
+    DecKecukupan -- "Biaya > Deposit" --> KlaimLebih["Tahan 100% Deposit + Tagih Selisih Kerusakan"]
     
     %% Decision 10
-    AdminPanel([Admin CRUD Guard]) --> DecDelete{"D-12: Safety Deletion Constraints? (AD-14, AD-15, AD-20)"}
+    AdminPanel([Admin CRUD Guard]) --> DecDelete{"D-13: Safety Deletion Constraints? (AD-14, AD-15, AD-20)"}
     DecDelete -- "Kamar Ada Penyewa/Reservasi" --> BlockDelKamar["Dilarang Hapus Kamar"]
     DecDelete -- "Penyewa Punya Tagihan" --> BlockDelPenyewa["Dilarang Hapus Penyewa"]
     DecDelete -- "Fasilitas Dipakai Kamar" --> BlockDelFasilitas["Dilarang Hapus Fasilitas"]
@@ -438,7 +440,7 @@ flowchart TD
         BukaKatalog --> InputFilter["Masukkan kriteria pencarian (Filter Lantai, Tipe Kamar, Tanggal Masuk, & Durasi Sewa)"]
         TampilEmptyState["Melihat pesan 'Tidak ada kamar yang sesuai kriteria' & tombol Reset Filter"] --> InputFilter
         TanyaWA["Klik 'Tanya WA' & dialihkan ke WA Direct Link (URL-encoded message)"] --> SelesaiWA([Selesai])
-        KlikPesan["Klik tombol 'Pesan Unit' pada katalog"] --> DetailKamar["Sistem memuat halaman detail kamar (/kamar/{id}) beserta query string"]
+        KlikPesan["Klik tombol 'Pesan Unit' pada katalog"]
         TampilForm["Pengunjung melihat Form Reservasi & rincian kalkulasi estimasi harga"] --> SelesaiForm([Selesai])
     end
 
@@ -461,7 +463,8 @@ flowchart TD
         CekStatus -- "tersedia" --> TombolPesan["Sistem menampilkan tombol 'Pesan Unit' terintegrasi parameter URL"]
         TombolPesan --> KlikPesan
         
-        DetailKamar --> KalkulasiOtomatis["Sistem secara otomatis mengeksekusi JS hitungEstimasi() total tarif"]
+        KlikPesan --> MemuatDetailKamar["Sistem memuat halaman detail kamar (/kamar/{id}) beserta query string"]
+        MemuatDetailKamar --> KalkulasiOtomatis["Sistem mengeksekusi JS hitungEstimasi() total tarif"]
         KalkulasiOtomatis --> TampilForm
     end
 ```
@@ -499,24 +502,25 @@ flowchart TD
         TampilForm --> IsiForm["Calon Penyewa mengisi Tanggal Mulai, Durasi Sewa, Tipe Sewa, Catatan, & Opsi Pembayaran (DP 30% / Lunas 100%)"]
         IsiForm --> KlikPesan["Calon Penyewa klik tombol 'Pesan Unit'"]
         
-        RedirectLogin["Sistem mengarahkan ke halaman login (/reservasi/login)"] --> RegisterOpsi{"Sudah punya akun?"}
+        BukaHalamanLogin["Membuka antarmuka login (/reservasi/login)"] --> RegisterOpsi{"Sudah punya akun?"}
         RegisterOpsi -- Tidak --> BukaRegister["Buka halaman registrasi & buat akun baru"]
         BukaRegister --> LoginSukses["Berhasil Login"]
         RegisterOpsi -- Ya --> LoginSukses
-        LoginSukses --> KlikPesan
+        LoginSukses --> IsiForm
         
-        TampilError["Sistem memuat pesan kesalahan (Format NIK, Nomor HP Wali, Tanggal Lampau, dll)"] --> IsiForm
+        TampilError["Sistem memuat pesan kesalahan validasi (Kamar tidak valid, Tanggal lampau, Durasi melebihi batas)"] --> IsiForm
     end
 
     subgraph Swimlane_System ["Swimlane: Sistem Backend Laravel & Database MySQL"]
         KlikPesan --> CekLogin{"Apakah pengguna sudah login?"}
-        CekLogin -- Tidak --> RedirectLogin
+        CekLogin -- Tidak --> RedirectLogin["Sistem mengarahkan pengguna ke halaman login"]
+        RedirectLogin --> BukaHalamanLogin
         
         CekLogin -- Ya --> CekRoleAdmin{"Apakah peran pengguna adalah 'admin'?"}
         CekRoleAdmin -- Ya --> BlockAdmin["Sistem menampilkan pesan error Toast: 'Admin tidak dapat melakukan reservasi'"]
         BlockAdmin --> SelesaiAdmin([Selesai])
         
-        CekRoleAdmin -- Tidak --> ValidasiInput{"Apakah input form valid?"}
+        CekRoleAdmin -- Tidak --> ValidasiInput{"Apakah input form valid sesuai StoreReservasiRequest?"}
         ValidasiInput -- Tidak --> TampilError
         
         ValidasiInput -- Ya --> DbTransactionStart["Sistem memulai DB::transaction() dengan lockForUpdate()"]
@@ -567,14 +571,17 @@ flowchart TD
         
         %% Jalur 1: Diskusi Chat
         ForkParalel --> ChatBox["Calon Penyewa masuk ke tab Chat Diskusi"]
-        ChatBox --> KirimPesan["Mengetik & mengirim pesan ke Admin"]
+        ChatBox --> KirimPesan["Mengetik & mengirim pesan pertanyaan ke Admin"]
         
-        %% Jalur 2: Pembayaran
+        %% Jalur 2: Pembayaran Snap
         ForkParalel --> KlikBayar["Calon Penyewa klik tombol 'Bayar Sekarang'"]
         RenderPopUp["Render portal Pop-Up Midtrans Snap di browser"] --> UserAksiSnap{"Aksi Pengguna di Pop-Up Snap?"}
         
         UserAksiSnap -- "Tutup Pop-Up / Batal" --> CloseSnap["Penyewa menutup modal Snap (Status reservasi tetap 'pending')"]
-        UserAksiSnap -- "Selesaikan Pembayaran" --> SelesaikanBayar["Calon Penyewa memilih metode & menyelesaikan pembayaran"]
+        UserAksiSnap -- "Selesaikan Pembayaran" --> SelesaikanBayar["Calon Penyewa memilih metode & menyelesaikan pembayaran di Snap"]
+        
+        %% Dual-Channel Callback Klien
+        SelesaikanBayar --> SnapClientCallback["Browser memicu callback JS onSuccess / onPending -> window.location.reload()"]
     end
 
     subgraph Swimlane_Backend ["Swimlane: Sistem Backend Laravel & Scheduler Engine"]
@@ -591,12 +598,18 @@ flowchart TD
         AutoCancelCron --> SelesaiBatalCron([Selesai Batal Expired])
         CekTimer24Jam -- Tidak --> HalamanReservasi
         
-        WebhookMidtrans["Webhook Midtrans mengirim callback notification POST ke Laravel"] --> VerifikasiSignature{"Apakah signature_key & nominal valid?"}
+        %% Jalur 1 Dual-Channel: Sinkronisasi Saat Show Halaman (Fallback Check)
+        SnapClientCallback --> ShowReload["Controller show() dieksekusi saat reload"]
+        ShowReload --> SyncMidtransCheck["Sistem mengeksekusi syncStatusFromMidtrans() API Check ke Server Midtrans"]
+        
+        %% Jalur 2 Dual-Channel: Asynchronous Webhook
+        WebhookMidtrans["Webhook Midtrans mengirim callback notification POST ke /api/midtrans-reservasi-callback"] --> VerifikasiSignature{"Apakah signature_key & nominal valid?"}
         
         VerifikasiSignature -- Tidak --> RejectCallback["Tolak callback notifikasi & catat log error (HTTP 403)"]
         RejectCallback --> SelesaiErr([Selesai Error])
         
-        VerifikasiSignature -- Ya --> EvaluasiTransaksi{"Bagaimana status transaksi?"}
+        VerifikasiSignature -- Ya --> EvaluasiTransaksi{"Bagaimana status transaksi Midtrans?"}
+        SyncMidtransCheck --> EvaluasiTransaksi
         
         EvaluasiTransaksi -- "Success / Settlement" --> CekSkema{"Skema Pembayaran?"}
         CekSkema -- "DP 30%" --> SetDP["Ubah status reservasi ke 'dp' & catat data pembayaran"]
@@ -659,7 +672,7 @@ flowchart TD
 
     subgraph Swimlane_Backend ["Swimlane: Sistem Backend Laravel & Database MySQL"]
         KlikTolak --> TolakDb["1. Set status reservasi = 'batal'<br>2. Lepas kunci kamar menjadi 'tersedia'"]
-        TolakDb --> KirimWATolak["Sistem memanggil Fonnte WA untuk notifikasi penolakan & instruksi refund"]
+        TolakDb --> KirimWATolak["Sistem memanggil Fonnte WA untuk notifikasi penolakan & instruksi refund manual oleh Admin"]
         KirimWATolak --> SelesaiTolak([Selesai Ditolak])
         
         KlikKonfirmasi --> ValidasiForm{"Apakah data wajib terisi & valid?"}
@@ -758,7 +771,7 @@ flowchart TD
 
 ---
 
-### 2.6. Activity Diagram 6: Pembayaran Tagihan Bulanan (Penyewa Aktif & Admin - Hybrid Payment)
+### 2.6. Activity Diagram 6: Pembayaran Tagihan Bulanan & Pelunasan DP (Penyewa Aktif & Admin - Hybrid Payment)
 Diagram ini menjelaskan penanganan pembayaran tagihan bulanan oleh penyewa, verifikasi uang masuk offline oleh admin, opsi unduh kuitansi mandiri, serta pengiriman kuitansi PDF otomatis.
 
 * **Controller Terkait**: [Penyewa\TagihanController](file:///c:/xampp/htdocs/asri-boarding-house/app/Http/Controllers/Penyewa/TagihanController.php) (method: `index`, `show`, `downloadNota`), [Admin\TagihanController](file:///c:/xampp/htdocs/asri-boarding-house/app/Http/Controllers/Admin/TagihanController.php) (method: `konfirmasiCash`), [MidtransCallbackController](file:///c:/xampp/htdocs/asri-boarding-house/app/Http/Controllers/Api/MidtransCallbackController.php)
@@ -787,8 +800,8 @@ Diagram ini menjelaskan penanganan pembayaran tagihan bulanan oleh penyewa, veri
 flowchart TD
     subgraph Swimlane_Penyewa ["Swimlane: Penyewa Aktif"]
         Start([Mulai]) --> BukaTagihan["Penyewa Aktif login & membuka halaman 'Tagihan Saya'"]
-        BukaTagihan --> DetailTagihan["Sistem memuat daftar tagihan bulanan & penyewa memilih satu tagihan"]
-        DetailTagihan --> TampilkanTotal["Tampilkan total tagihan (Nominal Pokok + Denda Keterlambatan)"]
+        BukaTagihan --> DetailTagihan["Sistem memuat daftar tagihan (Sewa Bulanan / Sisa DP 70%) & penyewa memilih satu"]
+        DetailTagihan --> TampilkanTotal["Tampilkan total tagihan (Nominal Pokok + Denda Keterlambatan jika ada)"]
         TampilkanTotal --> PilihOpsiBayar{"Pilih metode pembayaran?"}
         
         PilihOpsiBayar -- "Online (Midtrans Snap)" --> KlikBayarOnline["Penyewa klik 'Bayar Online'"]
@@ -815,7 +828,7 @@ flowchart TD
         KlikBayarOnline --> RequestToken["Sistem meminta Snap Token ke Midtrans Snap API"]
         RequestToken --> RenderSnapModal["Render pop-up portal pembayaran Midtrans Snap"]
         
-        WebhookSuccess["Webhook Midtrans mengirim callback lunas ke Laravel"] --> UpdateLunasOnline["Update status tagihan menjadi 'lunas' & simpan data pembayaran"]
+        WebhookSuccess["Dual-Channel Webhook Midtrans / Sync Callback mengirim status settlement"] --> UpdateLunasOnline["Update status tagihan menjadi 'lunas' & simpan data pembayaran"]
         
         UpdateLunasOnline --> GeneratePDFReceipt["Sistem generate Kuitansi Bukti Pembayaran PDF via Dompdf"]
         CommitTx --> GeneratePDFReceipt
@@ -866,7 +879,6 @@ flowchart TD
         BukaMenuKeluhan --> KlikBuatKeluhan["Penyewa klik tombol 'Buat Keluhan Baru'"]
         KlikBuatKeluhan --> IsiFormKeluhan["Isi kategori (kamar/bersama/kebersihan/keamanan/lainnya), deskripsi, & unggah foto bukti"]
         IsiFormKeluhan --> KlikKirim["Penyewa klik 'Kirim Laporan'"]
-        TampilErrorFile["Sistem memuat error ukuran file / kelengkapan form"] --> IsiFormKeluhan
         
         PantauStatus["Penyewa memantau riwayat & timeline penanganan status keluhan"] --> SelesaiPantau([Selesai])
     end
@@ -883,7 +895,8 @@ flowchart TD
 
     subgraph Swimlane_Backend ["Swimlane: Backend Laravel, Storage, & Fonnte WA"]
         KlikKirim --> ValidasiFile{"Apakah foto bukti valid (< 2MB) & form terisi lengkap?"}
-        ValidasiFile -- Tidak --> TampilErrorFile
+        ValidasiFile -- Tidak --> TampilErrorFile["Render pesan kesalahan ukuran file (> 2MB) / kelengkapan form"]
+        TampilErrorFile --> IsiFormKeluhan
         
         ValidasiFile -- Ya --> SimpanKeluhanPending["Simpan data keluhan status 'pending' ke database & simpan berkas foto ke storage"]
         SimpanKeluhanPending --> KirimWAAdmin["Sistem mengirim WhatsApp notifikasi keluhan baru ke nomor Admin via Fonnte"]
@@ -1058,25 +1071,25 @@ flowchart TD
         %% Admin
         IdentifikasiAkses -- "Administrator" --> BukaAdminPeraturan["Admin masuk ke Menu Peraturan Kost (/admin/peraturan)"]
         BukaAdminPeraturan --> CRUDPeraturan["Melakukan Tambah / Edit / Hapus Peraturan Kost"]
-        TampilErrorValidation["Sistem memuat error validation di form peraturan"] --> CRUDPeraturan
         
         %% Penyewa
         IdentifikasiAkses -- "Penyewa Aktif" --> LoginPortal["Penyewa Aktif login ke portal penyewa"]
         LoginPortal --> KlikMenuPeraturan["Penyewa memilih Menu Peraturan Kost di sidebar"]
-        AdaptasiDarkMode["Sistem menerapkan tema gelap (Dark Mode) secara otomatis jika diaktifkan penyewa"] --> BacaPeraturan["Penyewa membaca tata tertib kost secara transparan & interaktif"]
-        BacaPeraturan --> SelesaiPenyewa([Selesai])
+        BacaPeraturan["Penyewa membaca tata tertib kost secara transparan & interaktif"] --> SelesaiPenyewa([Selesai])
     end
 
     subgraph Swimlane_Backend ["Swimlane: Backend System & Database MySQL"]
         CRUDPeraturan --> ValidasiPeraturan{"Apakah input form valid?<br>(Judul maks 100, Deskripsi, Ikon Heroicons, & Urutan)"}
-        ValidasiPeraturan -- Tidak --> TampilErrorValidation
+        ValidasiPeraturan -- Tidak --> TampilErrorValidation["Render pesan error validasi di form peraturan"]
+        TampilErrorValidation --> CRUDPeraturan
         ValidasiPeraturan -- Ya --> SimpanPeraturanDB["Simpan data peraturan baru ke tabel peraturan"]
         SimpanPeraturanDB --> SelesaiUpdateDB["Tata tertib ter-update di database relasional"]
         
         KlikMenuPeraturan --> QueryPeraturanDB["Sistem melakukan kueri mengambil peraturan diurutkan secara ascending berdasarkan urutan"]
         SelesaiUpdateDB --> QueryPeraturanDB
         QueryPeraturanDB --> RenderPeraturan["Sistem merender tata tertib kost beserta visual ikon Heroicons"]
-        RenderPeraturan --> AdaptasiDarkMode
+        RenderPeraturan --> AdaptasiDarkMode["Sistem menerapkan tema gelap (Dark Mode) secara dinamis sesuai preferensi"]
+        AdaptasiDarkMode --> BacaPeraturan
     end
 ```
 
@@ -1116,11 +1129,19 @@ flowchart TD
         TolakCheckout["Sistem memblokir checkout & merender Toast error: 'Penyewa masih memiliki tunggakan tagihan'"] --> SelesaiGagal([Selesai Gagal])
         
         LanjutCheckout["Admin melakukan inspeksi fisik kamar kost"] --> CekKerusakan{"Apakah ditemukan kerusakan fasilitas?"}
-        CekKerusakan -- Ya --> PotongDeposit["1. Hitung estimasi biaya perbaikan kerusakan<br>2. Deposit dikembalikan setelah dipotong biaya perbaikan<br>3. Catat bukti potongan perbaikan"]
+        
         CekKerusakan -- Tidak --> KembalikanDeposit["1. Deposit jaminan dikembalikan penuh ke Penyewa<br>2. Catat nomor rekening / bukti transfer pengembalian"]
+        
+        CekKerusakan -- Ya --> HitungBiayaKerusakan["Hitung estimasi total biaya perbaikan kerusakan fasilitas"]
+        HitungBiayaKerusakan --> CekKecukupanDeposit{"Estimasi Biaya vs Saldo Deposit?"}
+        
+        CekKecukupanDeposit -- "Biaya <= Deposit" --> PotongDeposit["1. Potong biaya perbaikan dari deposit jaminan<br>2. Kembalikan sisa saldo deposit ke Penyewa"]
+        CekKecukupanDeposit -- "Biaya > Deposit" --> KlaimSelisih["1. Tahan 100% deposit jaminan<br>2. Terbitkan tagihan selisih ganti rugi fisik wajib lunas"]
+        KlaimSelisih --> BayarSelisih["Penyewa melunasi selisih tunai/transfer ke Admin"]
         
         PotongDeposit --> BukaKamar["Admin membuka Menu Manajemen Kamar"]
         KembalikanDeposit --> BukaKamar
+        BayarSelisih --> BukaKamar
         
         BukaKamar --> UbahStatusKamar["Admin secara MANUAL memperbarui status kamar"]
         UbahStatusKamar --> TentukanStatus{"Kamar perlu perbaikan / pembersihan?"}
@@ -1493,15 +1514,23 @@ flowchart TD
         Start([Mulai]) --> PilihTindakan{"Aktor memilih tindakan?"}
         
         %% Alur Pembatalan
-        PilihTindakan -- "Batalkan Reservasi (Penyewa / Admin)" --> KlikTombolBatal["Penyewa / Admin klik 'Batalkan Reservasi'"]
+        PilihTindakan -- "Batalkan Reservasi" --> KlikTombolBatal["Penyewa / Admin klik 'Batalkan Reservasi'"]
         
         %% Alur Hapus Permanen
         PilihTindakan -- "Hapus Permanen (Hanya Admin)" --> BukaDetailReservasiBatal["Admin membuka rincian reservasi berstatus 'batal'"]
         BukaDetailReservasiBatal --> KlikHapusPermanen["Admin klik tombol 'Hapus' & menyetujui konfirmasi modal"]
+        
+        TolakBatalMandiri["Tolak Batal Mandiri: Reservasi berbayar wajib koordinasi pengembalian dana via Admin"] --> KoordinasiAdmin["Penyewa menghubungi Admin via WhatsApp / Chat untuk verifikasi refund"]
+        KoordinasiAdmin --> AdminSetBatal["Admin memproses persetujuan pembatalan & transfer refund manual"]
     end
 
     subgraph Swimlane_Backend ["Swimlane: Backend System & Database MySQL"]
-        KlikTombolBatal --> UpdateStatusBatal["Sistem memperbarui status reservasi menjadi 'batal' di DB"]
+        KlikTombolBatal --> CekStatusBatal{"Status Pembayaran Reservasi?"}
+        
+        CekStatusBatal -- "pending (Belum Bayar)" --> UpdateStatusBatal["Sistem memperbarui status reservasi menjadi 'batal' di DB"]
+        CekStatusBatal -- "dp / lunas (Sudah Bayar)" --> TolakBatalMandiri
+        AdminSetBatal --> UpdateStatusBatal
+        
         UpdateStatusBatal --> LepasKunciKamar["Sistem mengembalikan status Kamar terkait menjadi 'tersedia'"]
         LepasKunciKamar --> SelesaiBatal([Selesai Batal])
         

@@ -43,7 +43,7 @@ flowchart TD
     %% Decision 6
     SetDP --> DecKonfirmasi{"D-06: Verifikasi Admin? (AD-04)"}
     SetLunas --> DecKonfirmasi
-    DecKonfirmasi -- "Tolak / Data Buram" --> RefundReserv["Set 'batal', Lepas Kamar & Proses Refund"]
+    DecKonfirmasi -- "Tolak / Data Buram" --> RefundReserv["Set 'batal', Lepas Kamar & Refund Manual Admin"]
     DecKonfirmasi -- "Setujui" --> ActivateTenant["Ubah Kamar 'terisi' & Kirim WA Kredensial"]
     
     %% Decision 7
@@ -53,10 +53,10 @@ flowchart TD
     DecBilling -- "Bulan 3+ Overdue" --> DendaApplied["Status 'terlambat' & Denda 5% per Bulan"]
     
     %% Decision 8
-    TagihanNormal --> DecPayType{"D-08: Metode Bayar Tagihan? (AD-06)"}
+    TagihanNormal --> DecPayType{"D-08: Metode Bayar Tagihan Sewa & Pelunasan DP? (AD-06)"}
     ReminderOnly --> DecPayType
     DendaApplied --> DecPayType
-    DecPayType -- "Snap Gateway" --> AutoVerify["Verifikasi Otomatis via Webhook"]
+    DecPayType -- "Snap Gateway" --> AutoVerify["Verifikasi Otomatis via Dual Channel (Sync + Webhook)"]
     DecPayType -- "Cash / Transfer" --> DecAdminCash{"D-09: Validasi Kas Admin? (AD-06)"}
     DecAdminCash -- "Bukti Palsu / Kurang" --> TolakCash["Tolak & Minta Pembayaran Ulang"]
     DecAdminCash -- "Valid & Sesuai" --> KonfirmasiCash["Admin Klik 'Konfirmasi Cash' & Cetak PDF"]
@@ -65,11 +65,13 @@ flowchart TD
     ActivateTenant --> DecCheckout{"D-10: Syarat Checkout Penyewa? (AD-11)"}
     DecCheckout -- "Memiliki Tunggakan" --> BlockExit["Blokir Checkout (Wajib Lunasi Dulu)"]
     DecCheckout -- "Bebas Tunggakan" --> DecInspeksi{"D-11: Hasil Inspeksi Fisik Kamar? (AD-11)"}
-    DecInspeksi -- "Fasilitas Rusak" --> PotongDepo["Potong Biaya Perbaikan dari Deposit"]
     DecInspeksi -- "Fasilitas Bersih" --> FullDepo["Kembalikan Deposit Jaminan Penuh"]
+    DecInspeksi -- "Fasilitas Rusak" --> DecKecukupan{"D-12: Kecukupan Deposit terhadap Biaya Rusak? (AD-11)"}
+    DecKecukupan -- "Biaya <= Deposit" --> PotongDepo["Potong Biaya & Kembalikan Sisa Deposit"]
+    DecKecukupan -- "Biaya > Deposit" --> KlaimLebih["Tahan 100% Deposit + Tagih Selisih Kerusakan"]
     
     %% Decision 10
-    AdminPanel([Admin CRUD Guard]) --> DecDelete{"D-12: Safety Deletion Constraints? (AD-14, AD-15, AD-20)"}
+    AdminPanel([Admin CRUD Guard]) --> DecDelete{"D-13: Safety Deletion Constraints? (AD-14, AD-15, AD-20)"}
     DecDelete -- "Kamar Ada Penyewa/Reservasi" --> BlockDelKamar["Dilarang Hapus Kamar"]
     DecDelete -- "Penyewa Punya Tagihan" --> BlockDelPenyewa["Dilarang Hapus Penyewa"]
     DecDelete -- "Fasilitas Dipakai Kamar" --> BlockDelFasilitas["Dilarang Hapus Fasilitas"]

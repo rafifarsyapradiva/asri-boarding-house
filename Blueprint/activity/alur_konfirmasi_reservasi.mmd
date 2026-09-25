@@ -26,7 +26,7 @@ flowchart TD
 
     subgraph Swimlane_Backend ["Swimlane: Sistem Backend Laravel & Database MySQL"]
         KlikTolak --> TolakDb["1. Set status reservasi = 'batal'<br>2. Lepas kunci kamar menjadi 'tersedia'"]
-        TolakDb --> KirimWATolak["Sistem memanggil Fonnte WA untuk notifikasi penolakan & instruksi refund"]
+        TolakDb --> KirimWATolak["Sistem memanggil Fonnte WA untuk notifikasi penolakan & instruksi refund manual oleh Admin"]
         KirimWATolak --> SelesaiTolak([Selesai Ditolak])
         
         KlikKonfirmasi --> ValidasiForm{"Apakah data wajib terisi & valid?"}

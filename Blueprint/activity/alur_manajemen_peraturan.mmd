@@ -19,23 +19,23 @@ flowchart TD
         %% Admin
         IdentifikasiAkses -- "Administrator" --> BukaAdminPeraturan["Admin masuk ke Menu Peraturan Kost (/admin/peraturan)"]
         BukaAdminPeraturan --> CRUDPeraturan["Melakukan Tambah / Edit / Hapus Peraturan Kost"]
-        TampilErrorValidation["Sistem memuat error validation di form peraturan"] --> CRUDPeraturan
         
         %% Penyewa
         IdentifikasiAkses -- "Penyewa Aktif" --> LoginPortal["Penyewa Aktif login ke portal penyewa"]
         LoginPortal --> KlikMenuPeraturan["Penyewa memilih Menu Peraturan Kost di sidebar"]
-        AdaptasiDarkMode["Sistem menerapkan tema gelap (Dark Mode) secara otomatis jika diaktifkan penyewa"] --> BacaPeraturan["Penyewa membaca tata tertib kost secara transparan & interaktif"]
-        BacaPeraturan --> SelesaiPenyewa([Selesai])
+        BacaPeraturan["Penyewa membaca tata tertib kost secara transparan & interaktif"] --> SelesaiPenyewa([Selesai])
     end
 
     subgraph Swimlane_Backend ["Swimlane: Backend System & Database MySQL"]
         CRUDPeraturan --> ValidasiPeraturan{"Apakah input form valid?<br>(Judul maks 100, Deskripsi, Ikon Heroicons, & Urutan)"}
-        ValidasiPeraturan -- Tidak --> TampilErrorValidation
+        ValidasiPeraturan -- Tidak --> TampilErrorValidation["Render pesan error validasi di form peraturan"]
+        TampilErrorValidation --> CRUDPeraturan
         ValidasiPeraturan -- Ya --> SimpanPeraturanDB["Simpan data peraturan baru ke tabel peraturan"]
         SimpanPeraturanDB --> SelesaiUpdateDB["Tata tertib ter-update di database relasional"]
         
         KlikMenuPeraturan --> QueryPeraturanDB["Sistem melakukan kueri mengambil peraturan diurutkan secara ascending berdasarkan urutan"]
         SelesaiUpdateDB --> QueryPeraturanDB
         QueryPeraturanDB --> RenderPeraturan["Sistem merender tata tertib kost beserta visual ikon Heroicons"]
-        RenderPeraturan --> AdaptasiDarkMode
+        RenderPeraturan --> AdaptasiDarkMode["Sistem menerapkan tema gelap (Dark Mode) secara dinamis sesuai preferensi"]
+        AdaptasiDarkMode --> BacaPeraturan
     end

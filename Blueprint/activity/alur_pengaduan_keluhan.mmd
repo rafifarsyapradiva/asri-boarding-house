@@ -18,7 +18,6 @@ flowchart TD
         BukaMenuKeluhan --> KlikBuatKeluhan["Penyewa klik tombol 'Buat Keluhan Baru'"]
         KlikBuatKeluhan --> IsiFormKeluhan["Isi kategori (kamar/bersama/kebersihan/keamanan/lainnya), deskripsi, & unggah foto bukti"]
         IsiFormKeluhan --> KlikKirim["Penyewa klik 'Kirim Laporan'"]
-        TampilErrorFile["Sistem memuat error ukuran file / kelengkapan form"] --> IsiFormKeluhan
         
         PantauStatus["Penyewa memantau riwayat & timeline penanganan status keluhan"] --> SelesaiPantau([Selesai])
     end
@@ -35,7 +34,8 @@ flowchart TD
 
     subgraph Swimlane_Backend ["Swimlane: Backend Laravel, Storage, & Fonnte WA"]
         KlikKirim --> ValidasiFile{"Apakah foto bukti valid (< 2MB) & form terisi lengkap?"}
-        ValidasiFile -- Tidak --> TampilErrorFile
+        ValidasiFile -- Tidak --> TampilErrorFile["Render pesan kesalahan ukuran file (> 2MB) / kelengkapan form"]
+        TampilErrorFile --> IsiFormKeluhan
         
         ValidasiFile -- Ya --> SimpanKeluhanPending["Simpan data keluhan status 'pending' ke database & simpan berkas foto ke storage"]
         SimpanKeluhanPending --> KirimWAAdmin["Sistem mengirim WhatsApp notifikasi keluhan baru ke nomor Admin via Fonnte"]
