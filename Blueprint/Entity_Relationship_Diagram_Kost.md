@@ -4,9 +4,9 @@ Dokumen ini mendokumentasikan desain basis data relasional (*Entity Relationship
 
 ---
 
-## 1. Diagram ERD Master (21 Entitas Sistem)
+## 1. Diagram ERD Master (22 Entitas Sistem)
 
-Di bawah ini adalah representasi visual dari seluruh 21 entitas (20 entitas relasional + 1 tabel pivot), atribut (beserta tipe data, modifier & constraint), serta relasi antarentitas dalam sistem manajemen kost.
+Di bawah ini adalah representasi visual dari seluruh **22 entitas sistem** (21 entitas relasional + 1 tabel pivot `kamar_fasilitas`), atribut (beserta tipe data, modifier & constraint), kolom virtual fungsional MySQL 8.x, serta relasi antarentitas dalam sistem manajemen kost.
 
 ![Visual Diagram ERD Kost](erd/diagram_erd.png)
 
@@ -30,10 +30,13 @@ erDiagram
     users {
         unsigned_bigint id PK
         string nama "varchar(100)"
-        string email "varchar(150) UK"
+        string email "varchar(150)"
+        string active_email "varchar(150) VIRTUAL, UK"
         string password "varchar(255)"
-        string no_hp "varchar(20) UK, Nullable"
-        string nik "varchar(20) UK, Nullable"
+        string no_hp "varchar(50), Nullable"
+        string active_no_hp "varchar(20) VIRTUAL, UK"
+        string nik "varchar(50), Nullable"
+        string active_nik "varchar(20) VIRTUAL, UK"
         string nama_wali "varchar(100), Nullable"
         string no_wali "varchar(20), Nullable"
         enum role "admin, penyewa"
@@ -47,7 +50,8 @@ erDiagram
 
     kamar {
         unsigned_bigint id PK
-        string nomor_kamar "varchar(50) UK"
+        string nomor_kamar "varchar(50)"
+        string active_nomor_kamar "varchar(50) VIRTUAL, UK"
         tinyint lantai "Default 1"
         enum tipe "standar, deluxe, vip"
         decimal luas_m2 "5,2"
@@ -79,8 +83,8 @@ erDiagram
         unsigned_bigint id PK
         unsigned_bigint user_id FK "1:1 Aktif / 1:N Historis"
         unsigned_bigint kamar_id FK
-        decimal harga_sewa "12,2, Nullable (Immutable copy)"
-        string nik "varchar(20) UK"
+        decimal harga_sewa "12,2, Nullable (Immutable snapshot)"
+        string nik "varchar(50)"
         date tanggal_masuk
         date tanggal_keluar "Nullable"
         date tanggal_keluar_seharusnya "Nullable"
@@ -129,7 +133,6 @@ erDiagram
         string signature_key "varchar(255), Nullable"
         json response_json "Nullable"
         datetime tanggal_bayar "Nullable"
-        string pdf_path "varchar(255), Nullable"
         timestamp created_at
         timestamp updated_at
     }
@@ -163,7 +166,8 @@ erDiagram
         decimal nominal_dp "12,2, Default 0"
         decimal nominal_sisa "12,2, Default 0"
         string snap_token "varchar(255), Nullable"
-        string order_id "varchar(100) UK, Nullable"
+        string order_id "varchar(100), Nullable"
+        string active_order_id "varchar(100) VIRTUAL, UK"
         string transaction_id "varchar(100), Nullable"
         text catatan_user "Nullable"
         text catatan_admin "Nullable"
@@ -182,22 +186,49 @@ erDiagram
         timestamp created_at "Append-only"
     }
 
-    pengumuman {
+    guest_chat_threads {
         unsigned_bigint id PK
-        string judul "varchar(150)"
-        text isi
-        boolean is_active "Default true"
+        string session_token "varchar(255) UK, Index"
+        string name "varchar(255)"
+        string no_hp "varchar(255)"
+        enum status "active, closed"
         timestamp created_at
         timestamp updated_at
     }
 
-    notifikasi_khusus {
+    guest_chat_messages {
         unsigned_bigint id PK
-        string sumber "varchar(255), Index"
-        string tipe_aktivitas "varchar(255), Index"
+        unsigned_bigint guest_chat_thread_id FK
+        enum sender_type "guest, admin"
+        unsigned_bigint sender_id FK "Nullable"
+        text message
+        boolean is_read "Default false"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    keluhan {
+        unsigned_bigint id PK
+        unsigned_bigint penyewa_id FK
+        string judul "varchar(150)"
+        enum kategori "kamar, fasilitas_bersama, kebersihan, keamanan, lainnya"
         text deskripsi
-        json data_detail "Nullable"
-        unsigned_bigint user_id FK "Nullable"
+        string foto_bukti "varchar(255), Nullable"
+        enum status "pending, diproses, selesai"
+        text tanggapan_admin "Nullable"
+        datetime tanggal_selesai "Nullable"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    pengeluaran {
+        unsigned_bigint id PK
+        string nama_pengeluaran "varchar(150)"
+        enum kategori "maintenance, utilitas, operasional, lainnya"
+        decimal nominal "12,2"
+        date tanggal_pengeluaran "Index"
+        string bukti_nota "varchar(255), Nullable"
+        text keterangan "Nullable"
         timestamp created_at
         timestamp updated_at
     }
@@ -220,38 +251,12 @@ erDiagram
         timestamp updated_at
     }
 
-    pengeluaran {
-        unsigned_bigint id PK
-        string nama_pengeluaran "varchar(150)"
-        enum kategori "maintenance, utilitas, operasional, lainnya"
-        decimal nominal "12,2"
-        date tanggal_pengeluaran "Index"
-        string bukti_nota "varchar(255), Nullable"
-        text keterangan "Nullable"
-        timestamp created_at
-        timestamp updated_at
-    }
-
     faqs {
         unsigned_bigint id PK
         text pertanyaan
         text jawaban
         tinyint urutan "Default 0"
         tinyint is_active "Default 1"
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    keluhan {
-        unsigned_bigint id PK
-        unsigned_bigint penyewa_id FK
-        string judul "varchar(150)"
-        enum kategori "kamar, fasilitas_bersama, kebersihan, keamanan, lainnya"
-        text deskripsi
-        string foto_bukti "varchar(255), Nullable"
-        enum status "pending, diproses, selesai"
-        text tanggapan_admin "Nullable"
-        datetime tanggal_selesai "Nullable"
         timestamp created_at
         timestamp updated_at
     }
@@ -277,23 +282,22 @@ erDiagram
         timestamp updated_at
     }
 
-    guest_chat_threads {
+    pengumuman {
         unsigned_bigint id PK
-        string session_token "varchar(255) UK, Index"
-        string name "varchar(255)"
-        string no_hp "varchar(255)"
-        enum status "active, closed"
+        string judul "varchar(150)"
+        text isi
+        boolean is_active "Default true"
         timestamp created_at
         timestamp updated_at
     }
 
-    guest_chat_messages {
+    notifikasi_khusus {
         unsigned_bigint id PK
-        unsigned_bigint guest_chat_thread_id FK
-        enum sender_type "guest, admin"
-        unsigned_bigint sender_id FK "Nullable"
-        text message
-        boolean is_read "Default false"
+        string sumber "varchar(255), Index"
+        string tipe_aktivitas "varchar(255), Index"
+        text deskripsi
+        json data_detail "Nullable"
+        unsigned_bigint user_id FK "Nullable"
         timestamp created_at
         timestamp updated_at
     }
@@ -308,7 +312,7 @@ erDiagram
         timestamp updated_at
     }
 
-    %% Relationship Definitions %%
+    %% Definisi Relasi & Kardinalitas Sistem %%
     users ||--o{ penyewa : "user_id (1:1 Aktif / 1:N Historis)"
     kamar ||--o{ penyewa : "kamar_id (1:N)"
     
@@ -342,14 +346,89 @@ erDiagram
 
 ## 1.1. Visualisasi Relasi Antar-Entitas & Analisis Kardinalitas Lengkap
 
-Bagian ini menyajikan representasi visual topologi keterhubungan antar 21 entitas sistem, dikelompokkan berdasarkan klasifikasi kardinalitas: **One-to-One (1:1)**, **Many-to-Many (N:M)**, dan **One-to-Many (1:N)**.
+Bagian ini menyajikan representasi visual topologi keterhubungan antar 22 entitas sistem secara terstruktur dan bertingkat, yang mencakup:
+1. **Peta Taksonomi Kardinalitas Global**: Taksonomi pembagian relasi ke dalam kelompok **One-to-One (1:1)**, **Many-to-Many (N:M)**, dan **One-to-Many (1:N)**.
+2. **Peta Topologi Keterhubungan Global (5 Domain)**: Arsitektur keterkaitan 22 entitas sistem.
+3. **Analisis Mendalam Hubungan One-to-One (1:1)**: Disertai diagram kasus ganda, analisis logis vs fisik, dan integritas referensial.
+4. **Analisis Mendalam Hubungan Many-to-Many (N:M)**: Disertai dekomposisi tabel pivot, normalisasi (1NF-3NF), dan tabel contoh instansiasi data.
+5. **Analisis Mendalam Hubungan One-to-Many (1:N)**: Disertai diagram 5 rantai transaksi utama dan tabel rincian atribut per rantai.
+6. **Matriks Komprehensif Seluruh Relasi Antar-Entitas**: Rangkuman 20 relasi sistem lengkap beserta aturan bisnis dan aksi referensial.
 
-### A. Peta Topologi Relasi & Kardinalitas Global Sistem
+---
+
+### A. Peta Taksonomi Klasifikasi Kardinalitas Sistem
+*Berkas skrip: [`Blueprint/erd/taksonomi_relasi_kardinalitas.mmd`](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/erd/taksonomi_relasi_kardinalitas.mmd)*
+
+![Peta Taksonomi Relasi & Kardinalitas](erd/taksonomi_relasi_kardinalitas.png)
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#F8FAFC',
+    'primaryTextColor': '#0F172A',
+    'primaryBorderColor': '#2563EB',
+    'lineColor': '#334155',
+    'secondaryColor': '#FEF3C7',
+    'tertiaryColor': '#ECFDF5',
+    'fontSize': '13px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    ROOT["<b>TAKSONOMI & KLASIFIKASI KARDINALITAS BASIS DATA (22 ENTITAS)</b><br><i>Sistem Informasi Asri Boarding House Terintegrasi Payment Gateway</i>"]
+
+    subgraph GRID ["Klasifikasi Terstruktur Menurut Pola Hubungan"]
+        direction LR
+        
+        %% KOLOM KIRI: Pola Asosiasi Khusus (1:1 dan N:M)
+        subgraph COL_LEFT ["Pola Asosiasi Khusus & Dekomposisi"]
+            direction TB
+            
+            subgraph S_OTO ["1. Hubungan One-to-One (1:1) - Integritas Akun & Kontrak"]
+                direction TB
+                OTO_1["<b>users ↔ penyewa (Sewa Aktif)</b><br>• FK: user_id [RESTRICT]<br>• Logis: 1 Akun hanya boleh memiliki 1 profil penyewa berstatus 'aktif'<br>• Fisik: 1:N untuk mempertahankan riwayat kontrak sewa terdahulu"]
+                OTO_2["<b>reservasi ↔ penyewa (Konversi)</b><br>• FK: reservasi.penyewa_id [SET NULL]<br>• 1 Reservasi terkonfirmasi menghasilkan tepat 1 profil kontrak sewa<br>• Melacak riwayat asal-usul booking online"]
+            end
+
+            subgraph S_MTM ["2. Hubungan Many-to-Many (N:M) - Pivot Dekomposisi"]
+                direction TB
+                MTM_1["<b>kamar ↔ kamar_fasilitas ↔ fasilitas</b><br>• Pivot: kamar_fasilitas [Composite PK: kamar_id, fasilitas_id]<br>• FK kamar_id [CASCADE] & FK fasilitas_id [CASCADE]<br>• 1 Kamar dapat memiliki banyak fasilitas penunjang<br>• 1 Fasilitas dapat dipasang pada banyak unit kamar"]
+            end
+        end
+
+        %% KOLOM KANAN: Pola Transaksional Berulang (1:N)
+        subgraph COL_RIGHT ["Pola Transaksional & Audit Trail (One-to-Many / 1:N)"]
+            direction TB
+            OTM_BILL["<b>Siklus Billing & Pembayaran</b><br>• penyewa ──(1:N)──> tagihan [RESTRICT]<br>• tagihan ──(1:N)──> pembayaran [RESTRICT]<br>• users (admin) ──(1:N)──> pembayaran [SET NULL]"]
+            OTM_RES["<b>Siklus Pemesanan & Obrolan Pre-Payment</b><br>• users ──(1:N)──> reservasi [RESTRICT]<br>• kamar ──(1:N)──> reservasi [RESTRICT]<br>• users (admin) ──(1:N)──> reservasi [SET NULL]<br>• reservasi ──(1:N)──> chat_messages [CASCADE]<br>• users ──(1:N)──> chat_messages [CASCADE]"]
+            OTM_HELP["<b>Layanan Penghuni & Live Chat Tamu</b><br>• penyewa ──(1:N)──> keluhan [CASCADE]<br>• guest_chat_threads ──(1:N)──> guest_chat_messages [CASCADE]<br>• users (admin) ──(1:N)──> guest_chat_messages [CASCADE]"]
+            OTM_LOG["<b>Audit Log & Analytics Impresi</b><br>• penyewa ──(1:N)──> log_notifikasi [CASCADE]<br>• tagihan ──(1:N)──> log_notifikasi [SET NULL]<br>• users ──(1:N)──> notifikasi_khusus [SET NULL]<br>• kamar ──(1:N)──> whatsapp_clicks [SET NULL]"]
+        end
+    end
+
+    ROOT --> GRID
+
+    %% Styling
+    classDef rootClass fill:#1E293B,stroke:#0F172A,stroke-width:2px,color:#F8FAFC;
+    classDef otoBox fill:#EFF6FF,stroke:#2563EB,stroke-width:2px,color:#1E3A8A;
+    classDef mtmBox fill:#FFFBEB,stroke:#D97706,stroke-width:2px,color:#78350F;
+    classDef otmBox fill:#F8FAFC,stroke:#475569,stroke-width:2px,color:#0F172A;
+    classDef subClass fill:#FFFFFF,stroke:#CBD5E1,stroke-width:1.5px,color:#334155;
+
+    class ROOT rootClass;
+    class S_OTO otoBox;
+    class S_MTM mtmBox;
+    class COL_RIGHT otmBox;
+    class OTO_1,OTO_2,MTM_1,OTM_BILL,OTM_RES,OTM_HELP,OTM_LOG subClass;
+```
+
+---
+
+### B. Peta Topologi Relasi & Kardinalitas Global Sistem (Lintas 5 Domain)
 *Berkas skrip: [`Blueprint/erd/peta_relasi_kardinalitas_global.mmd`](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/erd/peta_relasi_kardinalitas_global.mmd)*
 
 ![Peta Topologi Relasi & Kardinalitas Global](erd/peta_relasi_kardinalitas_global.png)
-
-Diagram di bawah ini memetakan seluruh keterkaitan antar 21 entitas lintas 5 domain sistem:
 
 ```mermaid
 %%{init: {
@@ -366,48 +445,66 @@ Diagram di bawah ini memetakan seluruh keterkaitan antar 21 entitas lintas 5 dom
   }
 }}%%
 flowchart TB
-    %% Subgraphs per Domain
-    subgraph D1["Domain 1: Autentikasi & Master Kamar"]
-        direction TB
-        USERS[("users<br><i>Master Akun Login</i>")]
-        KAMAR[("kamar<br><i>Master Unit Fisik</i>")]
-        FASILITAS[("fasilitas<br><i>Master Fasilitas</i>")]
-        KF{{"kamar_fasilitas<br><i>Pivot Table N:M</i>"}}
+    TITLE["<b>PETA TOPOLOGI RELASI & KARDINALITAS GLOBAL (22 ENTITAS SISTEM)</b><br><i>Sistem Informasi Asri Boarding House Terintegrasi Payment Gateway</i>"]
+
+    %% BARIS 1: Core Kamar, Akun, Reservasi, dan Billing
+    subgraph ROW1 ["TIER 1: CORE MASTER ENTITAS, SIKLUS BILLING & PEMESANAN"]
+        direction LR
+        subgraph D1["Domain 1: Autentikasi & Master Kamar"]
+            direction TB
+            USERS[("users<br><i>Master Akun Login</i>")]
+            KAMAR[("kamar<br><i>Master Unit Fisik</i>")]
+            FASILITAS[("fasilitas<br><i>Master Fasilitas</i>")]
+            KF{{"kamar_fasilitas<br><i>Pivot Table N:M</i>"}}
+        end
+
+        subgraph D2["Domain 2: Penyewa & Siklus Billing"]
+            direction TB
+            PENYEWA[("penyewa<br><i>Profil Kontrak Sewa</i>")]
+            TAGIHAN[("tagihan<br><i>Invoice Penagihan</i>")]
+            PEMBAYARAN[("pembayaran<br><i>Log Transaksi Midtrans/Cash</i>")]
+            LOG_NOTIF[("log_notifikasi<br><i>Audit Log WA/Email</i>")]
+        end
+
+        subgraph D3["Domain 3: Reservasi & Pre-Payment"]
+            direction TB
+            RESERVASI[("reservasi<br><i>Booking Kamar Online</i>")]
+            CHAT_MSG[("chat_messages<br><i>Obrolan Pre-Payment</i>")]
+        end
     end
 
-    subgraph D2["Domain 2: Penyewa & Siklus Billing"]
-        direction TB
-        PENYEWA[("penyewa<br><i>Profil Kontrak Sewa</i>")]
-        TAGIHAN[("tagihan<br><i>Invoice Penagihan</i>")]
-        PEMBAYARAN[("pembayaran<br><i>Log Transaksi Midtrans/Cash</i>")]
-        LOG_NOTIF[("log_notifikasi<br><i>Audit Log WA/Email</i>")]
+    %% BARIS 2: Layanan, Operasional & CMS
+    subgraph ROW2 ["TIER 2: LAYANAN OPERASIONAL, CMS PUBLIK & TRACKING ANALYTICS"]
+        direction LR
+        subgraph D4["Domain 4: Layanan Penghuni & Operasional"]
+            direction TB
+            KELUHAN[("keluhan<br><i>Pengaduan Fasilitas</i>")]
+            PENGELUARAN[("pengeluaran<br><i>Arus Kas Keluar</i>")]
+            NOTIF_KHUSUS[("notifikasi_khusus<br><i>Audit Trail Log</i>")]
+        end
+
+        subgraph D5["Domain 5: CMS Publik & Interaksi Guest"]
+            direction TB
+            subgraph CMS_STATIC ["CMS & Pengaturan Website"]
+                direction LR
+                SETTINGS[("settings<br><i>Config Dinamis</i>")]
+                REVIEWS[("customer_reviews<br><i>Testimonial</i>")]
+                FAQS[("faqs<br><i>FAQ</i>")]
+                PERATURAN[("peraturan<br><i>Tata Tertib</i>")]
+                GALLERIES[("galleries<br><i>Galeri Foto</i>")]
+                PENGUMUMAN[("pengumuman<br><i>Broadcast</i>")]
+            end
+            subgraph GUEST_ENGAGEMENT ["Guest Chat & Tracking"]
+                direction TB
+                GUEST_THREADS[("guest_chat_threads<br><i>Sesi Chat Tamu</i>")]
+                GUEST_MSGS[("guest_chat_messages<br><i>Pesan Obrolan Tamu</i>")]
+                WA_CLICKS[("whatsapp_clicks<br><i>Analytics CTR WA</i>")]
+            end
+        end
     end
 
-    subgraph D3["Domain 3: Reservasi & Pre-Payment"]
-        direction TB
-        RESERVASI[("reservasi<br><i>Booking Kamar Online</i>")]
-        CHAT_MSG[("chat_messages<br><i>Obrolan Pre-Payment</i>")]
-    end
-
-    subgraph D4["Domain 4: Layanan Penghuni & Operasional"]
-        direction TB
-        KELUHAN[("keluhan<br><i>Pengaduan Fasilitas</i>")]
-        PENGELUARAN[("pengeluaran<br><i>Arus Kas Keluar</i>")]
-        NOTIF_KHUSUS[("notifikasi_khusus<br><i>Audit Trail Log</i>")]
-    end
-
-    subgraph D5["Domain 5: CMS Publik & Interaksi Guest"]
-        direction TB
-        SETTINGS[("settings<br><i>Config Dinamis</i>")]
-        REVIEWS[("customer_reviews<br><i>Testimonial</i>")]
-        FAQS[("faqs<br><i>Daftar FAQ</i>")]
-        PERATURAN[("peraturan<br><i>Tata Tertib</i>")]
-        GALLERIES[("galleries<br><i>Galeri Foto</i>")]
-        PENGUMUMAN[("pengumuman<br><i>Broadcast Informasi</i>")]
-        GUEST_THREADS[("guest_chat_threads<br><i>Sesi Chat Tamu</i>")]
-        GUEST_MSGS[("guest_chat_messages<br><i>Pesan Obrolan Tamu</i>")]
-        WA_CLICKS[("whatsapp_clicks<br><i>Analytics CTR WA</i>")]
-    end
+    TITLE --> ROW1
+    ROW1 --> ROW2
 
     %% Relasi 1:1 (Biru Tebal)
     USERS ===|"1 : 1 (Aktif)<br>FK: user_id [RESTRICT]"| PENYEWA
@@ -421,7 +518,7 @@ flowchart TB
     PENYEWA -->|"1 : N (penyewa_id) [RESTRICT]"| TAGIHAN
     TAGIHAN -->|"1 : N (tagihan_id) [RESTRICT]"| PEMBAYARAN
     USERS -.->|"1 : N (dikonfirmasi_oleh) [SET NULL]"| PEMBAYARAN
-    PENYEWA -->|"1 : N (penyewa_id) [RESTRICT]"| LOG_NOTIF
+    PENYEWA -->|"1 : N (penyewa_id) [CASCADE]"| LOG_NOTIF
     TAGIHAN -.->|"1 : N (tagihan_id) [SET NULL]"| LOG_NOTIF
 
     %% Relasi 1:N Reservasi
@@ -448,14 +545,14 @@ flowchart TB
     class USERS,PENYEWA otoClass;
     class KAMAR,FASILITAS mtmClass;
     class KF pivotClass;
-    class TAGIHAN,PEMBAYARAN,LOG_NOTIF,RESERVASI,CHAT_MSG,KELUHAN,GUEST_THREADS,GUEST_MSGS,NOTIF_KHUSUS,WA_CLICKS otmClass;
+    class TAGIHAN,PEMBAYARAN,LOG_NOTIF,RESERVASI,CHAT_MSG,KELUHAN,GUEST_THREADS,GUEST_MSGS,NOTIF_KHUSUS,WA_CLICKS,PENGELUARAN,SETTINGS,REVIEWS,FAQS,PERATURAN,GALLERIES,PENGUMUMAN otmClass;
 ```
 
 ---
 
-### B. Analisis & Visualisasi Khusus per Tipe Kardinalitas
+### C. Analisis & Visualisasi Khusus per Tipe Kardinalitas
 
-#### B.1. Relasi One-to-One (1:1 Logis): `users` ↔ `penyewa`
+#### C.1. Analisis Relasi One-to-One (1:1): Asosiasi Tunggal Terbatas
 *Berkas skrip: [`Blueprint/erd/diagram_relasi_one_to_one.mmd`](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/erd/diagram_relasi_one_to_one.mmd)*
 
 ![Diagram Relasi One-to-One](erd/diagram_relasi_one_to_one.png)
@@ -468,44 +565,49 @@ flowchart TB
     'primaryTextColor': '#1E293B',
     'primaryBorderColor': '#2563EB',
     'lineColor': '#2563EB',
-    'fontSize': '12px',
+    'fontSize': '13px',
     'fontFamily': 'Inter, system-ui, sans-serif'
   }
 }}%%
-flowchart LR
-    subgraph USER_CONTAINER["Tabel users (Master Akun Login)"]
-        direction TB
-        U1["<b>id</b>: unsigned bigint [PK]"]
-        U2["<b>email</b>: varchar(150) [UK]"]
-        U3["<b>role</b>: 'penyewa'"]
-        U4["<b>is_active</b>: 1"]
-        U5["<b>deleted_at</b>: timestamp [Nullable]"]
+flowchart TB
+    TITLE["<b>TOPOLOGI RELASI ONE-TO-ONE (1:1) PADA ASOSIASI TUNGGAL</b><br><i>Sistem Informasi Asri Boarding House</i>"]
+    
+    subgraph CASE1 ["Kasus 1: Hubungan 1:1 Logis Akun Login ke Profil Sewa Aktif"]
+        direction LR
+        U["<b>Tabel: users (Master Akun Login)</b><br>• id: unsigned bigint [PK]<br>• active_email: varchar(150) [VIRTUAL, UK]<br>• active_no_hp: varchar(20) [VIRTUAL, UK]<br>• role: 'penyewa'<br>• is_active: 1"]
+        U ===|"<b>1 : 1 (Secara Logis untuk Sewa Aktif)</b><br>• 1 Akun user hanya boleh memiliki 1 profil penyewa 'aktif'<br>• ON DELETE RESTRICT (Akun tak boleh dihapus saat kontrak aktif)<br>• Secara fisik 1:N historis untuk rekam jejak sewa masa lalu"| P["<b>Tabel: penyewa (Profil Kontrak Sewa)</b><br>• id: unsigned bigint [PK]<br>• user_id: unsigned bigint [FK, RESTRICT]<br>• kamar_id: unsigned bigint [FK, RESTRICT]<br>• harga_sewa: decimal(12,2) [Snapshot]<br>• status: 'aktif'"]
     end
 
-    subgraph PENYEWA_CONTAINER["Tabel penyewa (Profil Transaksi Sewa)"]
-        direction TB
-        P1["<b>id</b>: unsigned bigint [PK]"]
-        P2["<b>user_id</b>: unsigned bigint [FK]"]
-        P3["<b>kamar_id</b>: unsigned bigint [FK]"]
-        P4["<b>harga_sewa</b>: decimal(12,2)"]
-        P5["<b>status</b>: 'aktif' | 'nonaktif'"]
-        P6["<b>deleted_at</b>: timestamp [Nullable]"]
+    subgraph CASE2 ["Kasus 2: Hubungan 1:1 Asosiasi Konversi Pemesanan ke Kontrak"]
+        direction LR
+        R["<b>Tabel: reservasi (Pemesanan Online)</b><br>• id: unsigned bigint [PK]<br>• order_id: varchar(100) [UK]<br>• penyewa_id: unsigned bigint [FK, Nullable]<br>• status: 'dikonfirmasi'"]
+        R ===|"<b>1 : 1 (Asosiasi Konversi Pemesanan)</b><br>• 1 Reservasi disetujui menghasilkan tepat 1 profil kontrak<br>• ON DELETE SET NULL (Riwayat booking aman jika penyewa selesai)<br>• Audit komprehensif asal-usul sewa dari booking online"| T["<b>Tabel: penyewa (Penyewa Hasil Konversi)</b><br>• id: unsigned bigint [PK]<br>• user_id: unsigned bigint [FK]<br>• kamar_id: unsigned bigint [FK]<br>• status: 'aktif'"]
     end
 
-    USER_CONTAINER ===|"<b>1 : 1 (Secara Logis untuk Sewa Aktif)</b><br>• 1 User hanya boleh memegang 1 profil penyewa aktif<br>• ON DELETE RESTRICT (Akun tidak boleh dihapus jika profil aktif)<br>• Secara fisik 1:N historis untuk arsip kontrak masa lalu"| PENYEWA_CONTAINER
+    TITLE --> CASE1
+    CASE1 --> CASE2
 
-    style USER_CONTAINER fill:#EFF6FF,stroke:#2563EB,stroke-width:2px
-    style PENYEWA_CONTAINER fill:#F0FDF4,stroke:#16A34A,stroke-width:2px
+    style TITLE fill:#1E293B,stroke:#0F172A,color:#F8FAFC,stroke-width:2px
+    style CASE1 fill:#F8FAFC,stroke:#2563EB,stroke-width:2px
+    style CASE2 fill:#F8FAFC,stroke:#16A34A,stroke-width:2px
+    style U fill:#EFF6FF,stroke:#2563EB,stroke-width:1.5px
+    style P fill:#F0FDF4,stroke:#16A34A,stroke-width:1.5px
+    style R fill:#FEF3C7,stroke:#D97706,stroke-width:1.5px
+    style T fill:#F0FDF4,stroke:#16A34A,stroke-width:1.5px
 ```
 
-* **Penjelasan Hubungan 1:1**:
-  - **Prinsip Bisnis**: Menghubungkan akun login autentikasi (`users`) dengan data operasional transaksi sewa (`penyewa`). Satu pengguna penyewa hanya diizinkan memiliki **1 profil penyewa berstatus `aktif`**.
-  - **Prinsip Fisik Database**: Pada level fisik database, relasi menggunakan FK biasa tanpa Unique Key fisik kaku (diperbarui via migrasi `fix_penyewa_unique_constraints`) agar ketika penyewa melakukan *checkout* (status `nonaktif`), lalu di masa depan menyewa kamar kembali, riwayat kontrak lama tetap tersimpan (*historical contract audit trail*).
-  - **Integritas Aksi (`ON DELETE RESTRICT`)**: Akun user yang memiliki data sewa aktif tidak dapat dihapus sembarangan oleh admin guna melindungi riwayat transaksi keuangan.
+* **Rincian Karakteristik Hubungan One-to-One (1:1)**:
+  1. **Kasus 1: `users` ↔ `penyewa` (Akun Login ke Kontrak Aktif)**:
+     - **Prinsip Bisnis**: Satu akun pengguna kost (`users` dengan role `penyewa`) secara hukum dan operasional hanya boleh memiliki **1 profil penyewa berstatus `aktif`** yang mengikat 1 kamar fisik.
+     - **Dualitas Desain (1:1 Logis vs 1:N Fisik)**: Pada tabel fisik MySQL, kolom `user_id` tidak diberi indeks unik kaku (`penyewa_user_id_unique` dicabut via migrasi `fix_penyewa_unique_constraints`). Tujuannya adalah agar jika penyewa melakukan *checkout* (status beralih ke `nonaktif`), lalu 6 bulan kemudian ingin kembali menyewa kost di Asri Boarding House, riwayat kontrak masa lalu tetap tersimpan utuh dan kontrak baru dapat dibuat. Validasi 1:1 aktif ditegakkan oleh aplikasi melalui Eloquent query scope `where('status', 'aktif')`.
+     - **Integritas Aksi (`ON DELETE RESTRICT`)**: Akun user yang terikat dengan profil penyewa yang masih aktif tidak dapat dihapus sembarangan oleh admin guna melindungi riwayat transaksi keuangan.
+  2. **Kasus 2: `reservasi` ↔ `penyewa` (Konversi Booking ke Penyewa)**:
+     - **Prinsip Bisnis**: Satu pemesanan kamar online (`reservasi`) yang disetujui oleh admin akan memicu *service bus* `TransisiPenyewaService` untuk mengonversi data booking menjadi **tepat 1 profil penyewa baru**.
+     - **Kunci Penaut**: Kolom `reservasi.penyewa_id` menjadi Foreign Key yang mengunci hubungan 1:1 tersebut, dengan kebijakan `ON DELETE SET NULL` agar arsip reservasi lama tidak hilang jika profil penyewa dibersihkan.
 
 ---
 
-#### B.2. Relasi Many-to-Many (N:M Pivot): `kamar` ↔ `fasilitas`
+#### C.2. Analisis Relasi Many-to-Many (N:M Pivot): `kamar` ↔ `fasilitas`
 *Berkas skrip: [`Blueprint/erd/diagram_relasi_many_to_many.mmd`](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/erd/diagram_relasi_many_to_many.mmd)*
 
 ![Diagram Relasi Many-to-Many](erd/diagram_relasi_many_to_many.png)
@@ -518,51 +620,83 @@ flowchart LR
     'primaryTextColor': '#1E293B',
     'primaryBorderColor': '#D97706',
     'lineColor': '#B45309',
-    'fontSize': '12px',
+    'fontSize': '13px',
     'fontFamily': 'Inter, system-ui, sans-serif'
   }
 }}%%
-flowchart LR
-    subgraph KAMAR_NODE["Tabel: kamar (Master Unit)"]
-        direction TB
-        K1["<b>id</b>: 101 [PK] (Kamar 101)"]
-        K2["<b>id</b>: 102 [PK] (Kamar 102)"]
+flowchart TB
+    TITLE["<b>DEKOMPOSISI RELASI MANY-TO-MANY (N:M PIVOT RESOLUTION)</b><br><i>Sistem Informasi Asri Boarding House</i>"]
+
+    subgraph MASTERS ["Entitas Master Relasional"]
+        direction LR
+        subgraph KAMAR_NODE["Tabel: kamar (Master Unit Kamar)"]
+            direction TB
+            K_TITLE["<b>Atribut Kunci & Contoh Data:</b>"]
+            K1["<b>id</b>: 101 [PK] (Kamar Standar A1)"]
+            K2["<b>id</b>: 102 [PK] (Kamar Deluxe B2)"]
+            K_NOTE["• 1 Kamar dapat memilih banyak fasilitas"]
+        end
+
+        subgraph FASILITAS_NODE["Tabel: fasilitas (Master Fasilitas)"]
+            direction TB
+            F_TITLE["<b>Atribut Kunci & Contoh Data:</b>"]
+            F1["<b>id</b>: 1 [PK] (Air Conditioner)"]
+            F2["<b>id</b>: 2 [PK] (Wi-Fi High Speed)"]
+            F3["<b>id</b>: 3 [PK] (Kamar Mandi Dalam)"]
+            F_NOTE["• 1 Fasilitas dapat dipasang pada banyak kamar"]
+        end
     end
 
-    subgraph PIVOT_NODE["Tabel Pivot: kamar_fasilitas"]
+    subgraph PIVOT_CONTAINER ["Tabel Pivot Dekomposisi Fisik: kamar_fasilitas"]
         direction TB
-        P_TITLE["<b>Composite Primary Key: (kamar_id, fasilitas_id)</b><br>Aksi: ON DELETE CASCADE"]
-        P1["(kamar_id: 101, fasilitas_id: 1) -> AC"]
-        P2["(kamar_id: 101, fasilitas_id: 2) -> Wi-Fi"]
-        P3["(kamar_id: 101, fasilitas_id: 4) -> Kamar Mandi Dalam"]
-        P4["(kamar_id: 102, fasilitas_id: 1) -> AC"]
-        P5["(kamar_id: 102, fasilitas_id: 2) -> Wi-Fi"]
+        P_HEADER["<b>Composite Primary Key: (kamar_id, fasilitas_id)</b><br>Integritas Referensial: ON DELETE CASCADE / ON UPDATE CASCADE"]
+        subgraph PIVOT_RECORDS ["Matriks Pemetaan Data Relasi Nyata"]
+            direction LR
+            P1["Record 1:<br><b>kamar_id</b>: 101<br><b>fasilitas_id</b>: 1 (AC)"]
+            P2["Record 2:<br><b>kamar_id</b>: 101<br><b>fasilitas_id</b>: 2 (WiFi)"]
+            P3["Record 3:<br><b>kamar_id</b>: 102<br><b>fasilitas_id</b>: 1 (AC)"]
+            P4["Record 4:<br><b>kamar_id</b>: 102<br><b>fasilitas_id</b>: 3 (KM Dalam)"]
+        end
     end
 
-    subgraph FASILITAS_NODE["Tabel: fasilitas (Master Fasilitas)"]
-        direction TB
-        F1["<b>id</b>: 1 [PK] (Air Conditioner)"]
-        F2["<b>id</b>: 2 [PK] (Wi-Fi High Speed)"]
-        F3["<b>id</b>: 3 [PK] (Free Listrik)"]
-        F4["<b>id</b>: 4 [PK] (Kamar Mandi Dalam)"]
-    end
+    TITLE --> MASTERS
+    KAMAR_NODE ==>|"1 : N (kamar_id) [CASCADE]"| PIVOT_CONTAINER
+    FASILITAS_NODE ==>|"1 : N (fasilitas_id) [CASCADE]"| PIVOT_CONTAINER
 
-    KAMAR_NODE ==>|"1 : N (kamar_id)<br>1 Kamar memiliki banyak fasilitas"| PIVOT_NODE
-    FASILITAS_NODE ==>|"1 : N (fasilitas_id)<br>1 Fasilitas terpasang di banyak kamar"| PIVOT_NODE
-
+    style TITLE fill:#1E293B,stroke:#0F172A,color:#F8FAFC,stroke-width:2px
+    style MASTERS fill:#FFFFFF,stroke:#CBD5E1,stroke-width:1px
     style KAMAR_NODE fill:#EFF6FF,stroke:#2563EB,stroke-width:2px
-    style PIVOT_NODE fill:#FEF3C7,stroke:#D97706,stroke-width:2px,stroke-dasharray: 5 5
     style FASILITAS_NODE fill:#ECFDF5,stroke:#059669,stroke-width:2px
+    style PIVOT_CONTAINER fill:#FEF3C7,stroke:#D97706,stroke-width:2px
+    style PIVOT_RECORDS fill:#FFFBEB,stroke:#F59E0B,stroke-width:1px,stroke-dasharray: 4 4
+    style P1 fill:#FFFFFF,stroke:#D97706,stroke-width:1.5px
+    style P2 fill:#FFFFFF,stroke:#D97706,stroke-width:1.5px
+    style P3 fill:#FFFFFF,stroke:#D97706,stroke-width:1.5px
+    style P4 fill:#FFFFFF,stroke:#D97706,stroke-width:1.5px
 ```
 
-* **Penjelasan Hubungan N:M**:
-  - **Prinsip Bisnis**: Satu kamar kost dilengkapi oleh banyak fasilitas penunjang (AC, Wi-Fi, Kamar Mandi Dalam, Kasur Springbed), dan satu jenis master fasilitas dipasang pada banyak unit kamar.
-  - **Resolusi Normalisasi**: Relasi N:M diurai menjadi dua relasi 1:N melalui tabel perantara (*pivot table*) `kamar_fasilitas`.
-  - **Constraint & Aksi**: Menggunakan *Composite Primary Key* `(kamar_id, fasilitas_id)` untuk mencegah pemetaan duplikat, serta `ON DELETE CASCADE` sehingga apabila kamar atau jenis fasilitas dihapus, baris asosiasi di tabel pivot terhapus otomatis.
+* **Rincian Dekomposisi Normalisasi Relasi Many-to-Many (N:M)**:
+  - **Prinsip Bisnis**: Satu unit kamar kost (`kamar`) dilengkapi oleh banyak fasilitas penunjang (misal: Kamar 101 memiliki fasilitas AC, Kasur Springbed, Kamar Mandi Dalam, dan Wi-Fi). Sebaliknya, satu jenis fasilitas penunjang (`fasilitas`) dipasang pada banyak unit kamar.
+  - **Dekomposisi Normalisasi (Pencegahan Anomali)**:
+    - *Bentuk Tidak Normal (UNF)*: Menggabungkan ID fasilitas dalam satu kolom string/CSV di tabel kamar (misal: `kamar.fasilitas = "1,2,4"`). Hal ini melanggar **First Normal Form (1NF)** karena data tidak bernilai atomik (*repeating groups*) dan menyulitkan kueri pencarian filter kamar berdasarkan fasilitas.
+    - *Bentuk Normal Ketiga (3NF)*: Relasi N:M dipecah menjadi dua relasi One-to-Many (1:N) melalui tabel perantara (*junction/pivot table*) `kamar_fasilitas`.
+  - **Contoh Instansiasi Baris Data Fisik (*Concrete Instance Mapping Table*)**:
+
+| `kamar_id` (FK) | Nomor Kamar (Induk) | `fasilitas_id` (FK) | Nama Fasilitas (Induk) | Representasi Logis |
+| :-: | :--- | :-: | :--- | :--- |
+| **101** | Kamar 101 | **1** | Air Conditioner (AC) | Kamar 101 difasilitasi AC |
+| **101** | Kamar 101 | **2** | Wi-Fi High Speed | Kamar 101 difasilitasi Wi-Fi |
+| **101** | Kamar 101 | **4** | Kamar Mandi Dalam | Kamar 101 difasilitasi KM Dalam |
+| **102** | Kamar 102 | **1** | Air Conditioner (AC) | Kamar 102 difasilitasi AC |
+| **102** | Kamar 102 | **2** | Wi-Fi High Speed | Kamar 102 difasilitasi Wi-Fi |
+
+  - **Constraint & Aksi Integritas**:
+    - **Composite Primary Key**: Pasangan kolom `(kamar_id, fasilitas_id)` menjadi kunci utama komposit. Hal ini secara otomatis menolak duplikasi pasangan data yang sama di tingkat storage engine.
+    - **Aksi `ON DELETE CASCADE`**: Jika suatu kamar dihapus, asosiasi fasilitasnya di tabel pivot otomatis terhapus. Begitu pula jika master fasilitas dinonaktifkan/dihapus, pemetaannya di seluruh kamar otomatis dibersihkan tanpa meninggalkan *orphan records*.
 
 ---
 
-#### B.3. Relasi One-to-Many (1:N): Rantai Transaksional Utama
+#### C.3. Analisis Relasi One-to-Many (1:N): 5 Rantai Transaksional Utama
 *Berkas skrip: [`Blueprint/erd/diagram_relasi_one_to_many.mmd`](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/erd/diagram_relasi_one_to_many.mmd)*
 
 ![Diagram Relasi One-to-Many](erd/diagram_relasi_one_to_many.png)
@@ -575,64 +709,82 @@ flowchart LR
     'primaryTextColor': '#0F172A',
     'primaryBorderColor': '#334155',
     'lineColor': '#475569',
-    'fontSize': '12px',
+    'fontSize': '13px',
     'fontFamily': 'Inter, system-ui, sans-serif'
   }
 }}%%
-flowchart TD
+flowchart TB
+    TITLE["<b>TOPOLOGI 5 RANTAI TRANSAKSIONAL UTAMA (ONE-TO-MANY / 1:N)</b><br><i>Sistem Informasi Asri Boarding House</i>"]
+
     %% Rantai 1: Penagihan & Pembayaran
-    subgraph CHAIN1["Rantai 1: Siklus Tagihan, Pembayaran & Dispatcher WA (1:N)"]
+    subgraph CHAIN1["Rantai 1: Siklus Billing Bulanan & Pembayaran Transaksi"]
         direction LR
-        P["<b>penyewa</b><br>(1 Penyewa)"] -->|"1 : N [RESTRICT]"| T["<b>tagihan</b><br>(Banyak Tagihan Bulanan)"]
-        T -->|"1 : N [RESTRICT]"| PAY["<b>pembayaran</b><br>(Banyak Log Midtrans/Cash)"]
-        T -->|"1 : N [SET NULL]"| NOTIF["<b>log_notifikasi</b><br>(Banyak Log WA/Email)"]
-        P -->|"1 : N [RESTRICT]"| NOTIF
+        P1["<b>penyewa</b><br>(Master Kontrak)"] -->|"1 : N [RESTRICT]"| T1["<b>tagihan</b><br>(Tagihan Bulanan)"]
+        T1 -->|"1 : N [RESTRICT]"| PAY1["<b>pembayaran</b><br>(Log Midtrans / Kasir)"]
+        T1 -->|"1 : N [SET NULL]"| NOTIF1["<b>log_notifikasi</b><br>(Dispatcher WA Tagihan)"]
+        P1 -->|"1 : N [CASCADE]"| NOTIF1
     end
 
     %% Rantai 2: Reservasi & Pre-Payment Chat
-    subgraph CHAIN2["Rantai 2: Alur Pemesanan (Reservasi) & Chat Pre-Payment (1:N)"]
+    subgraph CHAIN2["Rantai 2: Alur Pemesanan Online (Reservasi) & Pre-Payment Chat"]
         direction LR
-        U["<b>users</b><br>(1 Calon Penyewa)"] -->|"1 : N [RESTRICT]"| RES["<b>reservasi</b><br>(Banyak Booking)"]
-        K["<b>kamar</b><br>(1 Unit Kamar)"] -->|"1 : N [RESTRICT]"| RES
-        RES -->|"1 : N [CASCADE]"| CHAT["<b>chat_messages</b><br>(Banyak Pesan Obrolan)"]
+        U2["<b>users</b><br>(Calon Penyewa)"] -->|"1 : N [RESTRICT]"| RES2["<b>reservasi</b><br>(Booking Kamar)"]
+        K2["<b>kamar</b><br>(Unit Kamar)"] -->|"1 : N [RESTRICT]"| RES2
+        RES2 -->|"1 : N [CASCADE]"| CHAT2["<b>chat_messages</b><br>(Pesan Obrolan Booking)"]
     end
 
     %% Rantai 3: Helpdesk Keluhan
-    subgraph CHAIN3["Rantai 3: Layanan Pengaduan Keluhan Fasilitas (1:N)"]
+    subgraph CHAIN3["Rantai 3: Helpdesk & Penanganan Keluhan Fasilitas"]
         direction LR
-        P2["<b>penyewa</b><br>(1 Penyewa Aktif)"] -->|"1 : N [CASCADE]"| KEL["<b>keluhan</b><br>(Banyak Laporan Kerusakan & Foto)"]
+        P3["<b>penyewa</b><br>(Penyewa Aktif)"] -->|"1 : N [CASCADE]"| KEL3["<b>keluhan</b><br>(Tiket Laporan & Bukti Foto)"]
     end
 
     %% Rantai 4: Sesi Chat Tamu
-    subgraph CHAIN4["Rantai 4: Live Chat Tamu Landing Page (1:N)"]
+    subgraph CHAIN4["Rantai 4: Live Chat Tamu Publik Landing Page"]
         direction LR
-        TH["<b>guest_chat_threads</b><br>(1 Sesi Tamu Berdasarkan Token)"] -->|"1 : N [CASCADE]"| MSG["<b>guest_chat_messages</b><br>(Banyak Pesan Tamu & Balasan Admin)"]
+        TH4["<b>guest_chat_threads</b><br>(Sesi Thread Tamu via Token)"] -->|"1 : N [CASCADE]"| MSG4["<b>guest_chat_messages</b><br>(Log Pesan Tamu & Respon Admin)"]
     end
 
     %% Rantai 5: Analytics Tracking
-    subgraph CHAIN5["Rantai 5: Tracking Impresi & Analytics Klik WA Kamar (1:N)"]
+    subgraph CHAIN5["Rantai 5: Tracking Impresi & Lead Conversion WhatsApp"]
         direction LR
-        K2["<b>kamar</b><br>(1 Unit Kamar)"] -->|"1 : N [SET NULL]"| WA["<b>whatsapp_clicks</b><br>(Banyak Log IP & User Agent)"]
+        K5["<b>kamar</b><br>(Unit Kamar)"] -->|"1 : N [SET NULL]"| WA5["<b>whatsapp_clicks</b><br>(Log IP, User Agent & Ref Source)"]
     end
 
-    style CHAIN1 fill:#EFF6FF,stroke:#2563EB,stroke-width:1.5px
-    style CHAIN2 fill:#FEF3C7,stroke:#D97706,stroke-width:1.5px
-    style CHAIN3 fill:#ECFDF5,stroke:#059669,stroke-width:1.5px
-    style CHAIN4 fill:#F3E8FF,stroke:#9333EA,stroke-width:1.5px
-    style CHAIN5 fill:#F1F5F9,stroke:#64748B,stroke-width:1.5px
+    TITLE --> CHAIN1
+    CHAIN1 --> CHAIN2
+    CHAIN2 --> CHAIN3
+    CHAIN3 --> CHAIN4
+    CHAIN4 --> CHAIN5
+
+    style TITLE fill:#1E293B,stroke:#0F172A,color:#F8FAFC,stroke-width:2px
+    style CHAIN1 fill:#EFF6FF,stroke:#2563EB,stroke-width:2px
+    style CHAIN2 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
+    style CHAIN3 fill:#ECFDF5,stroke:#059669,stroke-width:2px
+    style CHAIN4 fill:#F3E8FF,stroke:#9333EA,stroke-width:2px
+    style CHAIN5 fill:#F1F5F9,stroke:#64748B,stroke-width:2px
 ```
 
-* **Rincian Hubungan 1:N**:
-  1. **`penyewa` ➔ `tagihan` (1:N)**: 1 Penyewa menerima serangkaian invoice tagihan sewa bulanan rutin.
-  2. **`tagihan` ➔ `pembayaran` (1:N)**: 1 Tagihan dapat memiliki beberapa baris percobaan pembayaran transaksi Midtrans (misal: order pending yang expired lalu diulang hingga settlement, atau pembayaran cash).
-  3. **`reservasi` ➔ `chat_messages` (1:N)**: 1 Transaksi booking kamar membuka 1 ruang obrolan pre-payment berisikan banyak baris pesan obrolan antara calon penyewa dan admin.
-  4. **`penyewa` ➔ `keluhan` (1:N)**: 1 Penyewa aktif dapat mengajukan banyak laporan keluhan kerusakan fasilitas secara berkala.
-  5. **`guest_chat_threads` ➔ `guest_chat_messages` (1:N)**: 1 Sesi obrolan pengunjung web landing page anonim menampung banyak pesan tanya jawab sebelum calon penyewa membuat akun resmi.
-  6. **`kamar` ➔ `whatsapp_clicks` (1:N)**: 1 Unit kamar dapat diklik tombol WhatsApp-nya berulang kali oleh banyak pengunjung web, dicatat log IP dan User Agent untuk analitik minat pasar.
+* **Penjelasan Detail 5 Rantai Operasional One-to-Many (1:N)**:
+
+  1. **Rantai 1: Siklus Tagihan, Pembayaran & Dispatcher WA**:
+     - `penyewa ➔ tagihan (1:N)`: Satu penyewa aktif menerima rangkaian invoice penagihan rutin bulanan yang terbit setiap tanggal 1.
+     - `tagihan ➔ pembayaran (1:N)`: Satu tagihan dapat memiliki beberapa percobaan pembayaran transaksi Midtrans (misal percobaan awal kedaluwarsa lalu diulang hingga berhasil, atau pembayaran tunai bertahap).
+     - `tagihan ➔ log_notifikasi (1:N)` & `penyewa ➔ log_notifikasi (1:N)`: Setiap peristiwa terbitnya invoice, peringatan jatuh tempo tgl 10, atau denda tgl 11+ mencatat riwayat pesan WhatsApp Fonnte ke penyewa dan wali.
+  2. **Rantai 2: Alur Pemesanan (Reservasi) & Chat Pre-Payment**:
+     - `users ➔ reservasi (1:N)` & `kamar ➔ reservasi (1:N)`: Calon penyewa dapat mengajukan pemesanan kamar online berkali-kali sepanjang riwayat akunnya.
+     - `reservasi ➔ chat_messages (1:N)`: Setiap ID reservasi membuka 1 ruang obrolan pre-payment berisikan banyak baris pesan antara calon penyewa dan admin.
+  3. **Rantai 3: Helpdesk Keluhan & Kerusakan**:
+     - `penyewa ➔ keluhan (1:N)`: Satu penyewa aktif dapat menyampaikan beberapa laporan keluhan fasilitas secara berkala lengkap dengan foto bukti kerusakan dan respon tindak lanjut admin.
+  4. **Rantai 4: Live Chat Tamu Landing Page**:
+     - `guest_chat_threads ➔ guest_chat_messages (1:N)`: Satu sesi obrolan pengunjung anonim web landing page menampung banyak baris pesan tanya jawab sebelum mereka mendaftarkan akun resmi.
+  5. **Rantai 5: Tracking Impresi & Analitik Pasar**:
+     - `kamar ➔ whatsapp_clicks (1:N)`: Satu unit kamar dapat diklik tombol WhatsApp konsultasinya berulang kali oleh banyak pengunjung, dicatat log IP dan User Agent untuk analitik minat kamar terfavorit.
+     - `users ➔ notifikasi_khusus (1:N)`: Satu pengguna memicu berbagai aktivitas sistem (login, update profile, pembayaran lunas) yang dicatat ke dalam audit trail JSON.
 
 ---
 
-### C. Matriks Komprehensif Seluruh Relasi Antar-Entitas dalam Sistem
+### D. Matriks Komprehensif Seluruh Relasi Antar-Entitas dalam Sistem
 
 Tabel berikut merangkum seluruh 20 relasi antarentitas dalam sistem basis data:
 
@@ -645,10 +797,10 @@ Tabel berikut merangkum seluruh 20 relasi antarentitas dalam sistem basis data:
 | 5 | `penyewa` | `tagihan` | **1 : N** | `penyewa_id` | `id` | **RESTRICT** | 1 Penyewa memiliki banyak tagihan rutin bulanan. Penyewa tidak boleh dihapus jika punya riwayat billing. |
 | 6 | `tagihan` | `pembayaran` | **1 : N** | `tagihan_id` | `id` | **RESTRICT** | 1 Tagihan dapat memiliki beberapa percobaan pembayaran. Tagihan tidak boleh dihapus jika ada log transaksi. |
 | 7 | `users` | `pembayaran` | **1 : N** | `dikonfirmasi_oleh` | `id` | **SET NULL** | 1 Admin memverifikasi banyak pembayaran cash. Jika akun admin dihapus, log konfirmasi cash tetap utuh. |
-| 8 | `penyewa` | `log_notifikasi` | **1 : N** | `penyewa_id` | `id` | **RESTRICT** | 1 Penyewa memiliki banyak log notifikasi WA/Email pengingat tagihan. |
+| 8 | `penyewa` | `log_notifikasi` | **1 : N** | `penyewa_id` | `id` | **CASCADE** | 1 Penyewa memiliki log audit notifikasi WA/Email. Log terhapus jika profil penyewa dibersihkan permanen. |
 | 9 | `tagihan` | `log_notifikasi` | **1 : N** | `tagihan_id` | `id` | **SET NULL** | 1 Tagihan memicu notifikasi WA/Email. Mempertahankan audit log walau tagihan dibersihkan. |
 | 10 | `penyewa` | `keluhan` | **1 : N** | `penyewa_id` | `id` | **CASCADE** | 1 Penyewa dapat mengajukan banyak pengaduan keluhan fasilitas. Jika penyewa dibersihkan, log keluhan terhapus. |
-| 11 | `users` | `reservasi` | **1 : N** | `user_id` | `id` | **RESTRICT** | 1 User calon penyewa dapat melakukan pemesanan kamar online. |
+| 11 | `users` | `reservasi` | **1 : N** | `user_id` | `id` | **RESTRICT** | 1 User calon penyewa dapat melakukan pemesanan kamar online. Akun dilindungi selama ada riwayat booking. |
 | 12 | `kamar` | `reservasi` | **1 : N** | `kamar_id` | `id` | **RESTRICT** | 1 Kamar dapat dipesan oleh calon penyewa. Kamar master terkunci jika ada reservasi aktif. |
 | 13 | `users` | `reservasi` | **1 : N** | `dikonfirmasi_oleh` | `id` | **SET NULL** | 1 Admin menyetujui/mengonfirmasi banyak pemesanan kamar. |
 | 14 | `penyewa` | `reservasi` | **1 : N** | `penyewa_id` | `id` | **SET NULL** | Memetakan reservasi asal yang menghasilkan profil penyewa aktif. |
@@ -661,47 +813,56 @@ Tabel berikut merangkum seluruh 20 relasi antarentitas dalam sistem basis data:
 
 ---
 
-## 2. Kamus Data & Detail Entitas (21 Tabel)
+## 2. Kamus Data & Detail Entitas (22 Tabel)
 
-Berikut adalah penjelasan detail mengenai struktur kolom, tipe data, modifier, serta fungsi dari 21 tabel dalam basis data:
+Berikut adalah penjelasan detail mengenai struktur kolom, tipe data, modifier, serta fungsi dari seluruh **22 tabel** dalam basis data:
 
 ### 2.1. Tabel `users`
 Menyimpan akun pengguna untuk otentikasi login (`admin` atau `penyewa`).
 - **id**: Primary Key (`unsigned bigint auto_increment`).
 - **nama**: Nama lengkap pengguna (`varchar 100`).
-- **email**: Alamat email unik (`varchar 150`) sebagai kredensial login.
+- **email**: Alamat email kredensial login (`varchar 150`).
+- **active_email**: Kolom virtual generated (`varchar 150`, virtual `IF(deleted_at IS NULL, email, NULL)`, Unique Index).
 - **password**: Hash password bcrypt (`varchar 255`).
-- **no_hp**: Nomor handphone unik (`varchar 20`, nullable).
-- **nik**: Nomor Induk Kependudukan 16 digit (`varchar 20`, nullable).
+- **no_hp**: Nomor handphone pengguna (`varchar 50`, nullable).
+- **active_no_hp**: Kolom virtual generated (`varchar 20`, virtual `IF(deleted_at IS NULL, no_hp, NULL)`, Unique Index).
+- **nik**: Nomor Induk Kependudukan (`varchar 50`, nullable).
+- **active_nik**: Kolom virtual generated (`varchar 20`, virtual `IF(deleted_at IS NULL, nik, NULL)`, Unique Index).
 - **nama_wali**: Nama lengkap orang tua / wali penyewa (`varchar 100`, nullable).
 - **no_wali**: Nomor handphone aktif orang tua / wali (`varchar 20`, nullable).
-- **role**: Hak akses pengguna (`enum('admin', 'penyewa')`).
+- **role**: Hak akses pengguna (`enum('admin', 'penyewa')`, default 'penyewa').
 - **foto**: Path file foto profil (`varchar 255`, nullable).
 - **is_active**: Status keaktifan akun (`tinyint`, default 1).
 - **require_password_change**: Status keharusan ubah password saat login pertama kali (`boolean`, default false).
 - **deleted_at**: Kolom timestamp penanganan Soft Deletes (`nullable`, `index`).
-- *Catatan Indeks Soft Deletes*: Menerapkan kolom virtual generated `active_email`, `active_no_hp`, dan `active_nik` dengan Unique Index.
+- **created_at**: Timestamp waktu pembuatan akun.
+- **updated_at**: Timestamp waktu pembaruan akun.
 
 ### 2.2. Tabel `kamar`
 Menyimpan informasi fisik dan status ketersediaan unit kamar kost.
 - **id**: Primary Key (`unsigned bigint auto_increment`).
-- **nomor_kamar**: Nomor identifikasi kamar unik (`varchar 50`).
+- **nomor_kamar**: Nomor identifikasi fisik kamar (`varchar 50`).
+- **active_nomor_kamar**: Kolom virtual generated (`varchar 50`, virtual `IF(deleted_at IS NULL, nomor_kamar, NULL)`, Unique Index).
 - **lantai**: Posisi lantai kamar (`tinyint`, default 1).
 - **tipe**: Klasifikasi kelas kamar (`enum('standar', 'deluxe', 'vip')`).
 - **luas_m2**: Luas dimensi kamar dalam meter persegi (`decimal 5,2`).
 - **harga_bulan**: Tarif dasar sewa bulanan kamar (`decimal 12,2`).
 - **deskripsi**: Catatan kelengkapan/kondisi kamar (`text`, nullable).
-- **foto**: Path file foto galeri kamar (`varchar 255`, nullable).
-- **status**: Ketersediaan fisik kamar (`enum('tersedia', 'terisi', 'maintenance')`).
+- **foto**: Path file foto galeri utama kamar (`varchar 255`, nullable).
+- **status**: Ketersediaan fisik kamar (`enum('tersedia', 'terisi', 'maintenance')`, default 'tersedia').
 - **deleted_at**: Kolom timestamp penanganan Soft Deletes (`nullable`, `index`).
+- **created_at**: Timestamp waktu registrasi kamar.
+- **updated_at**: Timestamp waktu pembaruan data kamar.
 
 ### 2.3. Tabel `fasilitas`
 Menyimpan master data fasilitas penunjang kost.
 - **id**: Primary Key (`unsigned bigint auto_increment`).
-- **nama**: Nama fasilitas unik (`varchar 100`).
+- **nama**: Nama fasilitas unik (`varchar 100`, unique).
 - **ikon**: Kelas ikon representasi grafis Heroicons/FontAwesome (`varchar 50`, nullable).
 - **deskripsi**: Penjelasan spesifikasi fasilitas (`text`, nullable).
 - **is_active**: Status aktivasi ketersediaan fasilitas (`boolean`, default true).
+- **created_at**: Timestamp waktu registrasi fasilitas.
+- **updated_at**: Timestamp waktu pembaruan fasilitas.
 
 ### 2.4. Tabel `kamar_fasilitas`
 Tabel pivot *Many-to-Many* yang menghubungkan entitas `kamar` dan `fasilitas`.
@@ -715,19 +876,21 @@ Menyimpan profil transaksi sewa aktif pengguna yang mengikat kamar tertentu bese
 - **user_id**: Foreign Key merujuk ke `users.id` (`onDelete: restrict`). 1:1 untuk sewa aktif, 1:N secara historis.
 - **kamar_id**: Foreign Key merujuk ke `kamar.id` (`onDelete: restrict`).
 - **harga_sewa**: Tarif sewa personal yang mengunci nilai riil saat pemesanan disetujui (`decimal 12,2`, nullable). *Mencegah fluktuasi tagihan bulanan jika harga master kamar di kemudian hari diubah admin.*
-- **nik**: Nomor Induk Kependudukan wajib 16 digit (`varchar 20`).
+- **nik**: Nomor Induk Kependudukan penyewa (`varchar 50`).
 - **tanggal_masuk**: Tanggal efektif mulai sewa (`date`).
 - **tanggal_keluar**: Tanggal penyewa keluar secara resmi (`date`, nullable).
 - **tanggal_keluar_seharusnya**: Perkiraan tanggal selesai sewa berdasarkan durasi awal kontrak (`date`, nullable).
-- **status**: Status kontrak penyewa (`enum('aktif', 'nonaktif')`).
+- **status**: Status kontrak penyewa (`enum('aktif', 'nonaktif')`, default 'aktif').
 - **tanggal_billing**: Tanggal penerbitan invoice rutin (`tinyint`, default 1).
-- **tipe_sewa**: Durasi basis pembayaran (`enum('harian', 'mingguan', 'bulanan')`).
+- **tipe_sewa**: Durasi basis pembayaran (`enum('harian', 'mingguan', 'bulanan')`, default 'bulanan').
 - **durasi**: Angka pengali dari tipe sewa (`tinyint`, default 1).
 - **deposit**: Uang jaminan awal sewa (`decimal 12,2`, default 0).
 - **no_wali**: Kontak darurat wali/orang tua penyewa (`varchar 20`).
 - **nama_wali**: Nama lengkap wali penyewa (`varchar 100`).
 - **catatan**: Catatan internal admin mengenai penyewa (`text`, nullable).
 - **deleted_at**: Kolom timestamp penanganan Soft Deletes (`nullable`, `index`).
+- **created_at**: Timestamp waktu registrasi penyewa.
+- **updated_at**: Timestamp waktu pembaruan data penyewa.
 
 ### 2.6. Tabel `tagihan`
 Menyimpan riwayat invoice rutin (billing engine) bulanan serta tagihan sisa pembayaran reservasi.
@@ -742,9 +905,11 @@ Menyimpan riwayat invoice rutin (billing engine) bulanan serta tagihan sisa pemb
 - **nominal_denda**: Akumulasi denda keterlambatan flat 5% (`decimal 12,2`, default 0).
 - **nominal_total**: Jumlah keseluruhan pokok + denda (`decimal 12,2`).
 - **bulan_keterlambatan**: Jumlah bulan keterlambatan berturut-turut (`tinyint`, default 0).
-- **status**: Status pelunasan (`enum('pending', 'lunas', 'gagal', 'kadaluarsa', 'terlambat')`).
+- **status**: Status pelunasan (`enum('pending', 'lunas', 'gagal', 'kadaluarsa', 'terlambat')`, default 'pending').
 - **metode_pembayaran**: Cara pembayaran (`enum('midtrans', 'cash')`, nullable).
 - **keterangan**: Detail deskripsi tagihan (`text`, nullable).
+- **created_at**: Timestamp waktu pembuatan tagihan.
+- **updated_at**: Timestamp waktu pembaruan tagihan.
 - *Constraint*: Composite Unique `uq_periode (penyewa_id, periode_bulan, periode_tahun)`.
 
 ### 2.7. Tabel `pembayaran`
@@ -758,15 +923,17 @@ Menyimpan data detail log transaksi finansial, baik pembayaran otomatis lewat Mi
 - **nominal**: Jumlah uang yang dibayarkan (`decimal 12,2`).
 - **status_midtrans**: Kode respon status dari webhook Midtrans / cash_confirmed (`varchar 50`, nullable).
 - **dikonfirmasi_oleh**: Foreign Key merujuk ke `users.id` (`onDelete: set null`, nullable). Mengidentifikasi administrator yang memvalidasi pembayaran manual cash.
-- **signature_key**: Kunci verifikasi keamanan webhook Midtrans (`varchar 255`, nullable).
-- **response_json**: Payload JSON lengkap kiriman Midtrans (`json`, nullable).
+- **signature_key**: Kunci verifikasi keamanan webhook Midtrans SHA512 (`varchar 255`, nullable).
+- **response_json**: Payload JSON lengkap kiriman webhook Midtrans (`json`, nullable).
 - **tanggal_bayar**: Waktu penyelesaian transaksi (`datetime`, nullable).
-- **pdf_path**: Penyimpanan berkas nota bukti pembayaran PDF Dompdf (`varchar 255`, nullable).
+- **created_at**: Timestamp waktu pencatatan transaksi.
+- **updated_at**: Timestamp waktu pembaruan transaksi.
+- *Catatan Arsitektur*: Kolom `pdf_path` telah ditiadakan (dihapus via migrasi `remove_pdf_path_from_pembayaran_table`) karena sistem nota kwitansi PDF digenerate secara dinamis di sisi klien (*client-side Dompdf preview*).
 
 ### 2.8. Tabel `log_notifikasi`
 Menyimpan log audit *append-only* pengiriman pesan WhatsApp (Fonnte) maupun E-mail pengingat tagihan dan denda kepada penyewa/wali.
 - **id**: Primary Key (`unsigned bigint auto_increment`).
-- **penyewa_id**: Foreign Key merujuk ke `penyewa.id` (`onDelete: restrict`).
+- **penyewa_id**: Foreign Key merujuk ke `penyewa.id` (`onDelete: cascade`).
 - **tagihan_id**: Referensi tagihan pemicu notifikasi (`unsigned bigint`, nullable, FK to `tagihan.id`, `onDelete: set null`).
 - **channel**: Media penyampaian (`enum('whatsapp', 'email', 'system')`).
 - **event**: Pemicu pengiriman, e.g. 'billing_created', 'denda_warning', 'keluhan_resolved' (`varchar 50`).
@@ -782,23 +949,26 @@ Menyimpan log pemesanan kamar secara online oleh calon penyewa pra-pembayaran DP
 - **kamar_id**: Foreign Key merujuk ke `kamar.id` (`onDelete: restrict`).
 - **dikonfirmasi_oleh**: Foreign Key merujuk ke `users.id` (`onDelete: set null`, nullable). Menandai admin yang menyetujui pengajuan sewa.
 - **penyewa_id**: Foreign Key merujuk ke `penyewa.id` (`onDelete: set null`, nullable). Terisi otomatis setelah konfirmasi sukses membentuk profil penyewa aktif.
-- **tipe_sewa**: Opsi durasi sewa (`enum('harian', 'mingguan', 'bulanan')`).
+- **tipe_sewa**: Opsi durasi sewa (`enum('harian', 'mingguan', 'bulanan')`, default 'bulanan').
 - **tanggal_mulai**: Tanggal efektif mulai sewa (`date`).
 - **tanggal_selesai**: Tanggal efektif selesai kontrak (`date`).
 - **durasi**: Jumlah pengali waktu (`tinyint`, default 1).
 - **total_harga**: Total nilai transaksi awal sewa (`decimal 12,2`).
-- **status**: Status reservasi (`enum('pending', 'dp', 'lunas', 'dikonfirmasi', 'batal')`).
+- **status**: Status reservasi (`enum('pending', 'dp', 'lunas', 'dikonfirmasi', 'batal')`, default 'pending').
 - **metode_pembayaran**: Metode penyelesaian transaksi (`enum('midtrans', 'cash')`, nullable).
 - **is_dp**: Status pilihan opsi pembayaran uang muka 30% (`boolean`, default false).
 - **nominal_dp**: Besaran nominal uang muka (`decimal 12,2`, default 0).
 - **nominal_sisa**: Sisa pembayaran yang harus dilunasi kemudian (`decimal 12,2`, default 0).
 - **snap_token**: Token Snap Midtrans untuk portal pop-up bayar (`varchar 255`, nullable).
 - **order_id**: Referensi pesanan untuk Midtrans API (`varchar 100`, nullable).
+- **active_order_id**: Kolom virtual generated (`varchar 100`, virtual `IF(deleted_at IS NULL, order_id, NULL)`, Unique Index).
 - **transaction_id**: Referensi id transaksi Midtrans (`varchar 100`, nullable).
 - **catatan_user**: Permintaan khusus dari calon penyewa (`text`, nullable).
 - **catatan_admin**: Catatan internal admin (`text`, nullable).
 - **tanggal_konfirmasi**: Waktu status disetujui admin (`datetime`, nullable).
 - **deleted_at**: Kolom timestamp penanganan Soft Deletes (`nullable`, `index`).
+- **created_at**: Timestamp waktu pengajuan reservasi.
+- **updated_at**: Timestamp waktu pembaruan status reservasi.
 
 ### 2.10. Tabel `chat_messages`
 Menyimpan riwayat obrolan real-time berbasis AJAX polling antara Calon Penyewa dengan Admin di portal reservasi (pra-konfirmasi).
@@ -807,12 +977,14 @@ Menyimpan riwayat obrolan real-time berbasis AJAX polling antara Calon Penyewa d
 - **sender_id**: Foreign Key pengirim pesan merujuk ke `users.id` (`onDelete: cascade`).
 - **message**: Konten teks obrolan (`text`).
 - **is_read**: Status dibaca oleh penerima (`boolean`, default false).
-- **created_at**: Waktu pesan dikirim (`timestamp`). *Bersifat append-only log.*
+- **created_at**: Waktu pesan dikirim (`timestamp`, useCurrent). *Kolom `updated_at` ditiadakan karena bersifat append-only chat history.*
 
 ### 2.11. Tabel `settings`
 Menyimpan parameter konfigurasi global website (informasi bank dinamis, kontak WhatsApp owner/admin, teks hero landing page, persentase denda, diskon promo paket).
 - **key**: Primary Key (`varchar 255`). Kunci konfigurasi seperti `bank_name`, `bank_account_number`, `wa_owner`, `denda_flat_persen`.
 - **value**: Nilai pengaturan (`text`, nullable).
+- **created_at**: Timestamp konfigurasi dibuat.
+- **updated_at**: Timestamp konfigurasi diperbarui.
 
 ### 2.12. Tabel `customer_reviews`
 Menyimpan data testimonial ulasan dari alumni/pelanggan kost untuk ditampilkan pada landing page.
@@ -822,6 +994,8 @@ Menyimpan data testimonial ulasan dari alumni/pelanggan kost untuk ditampilkan p
 - **bintang**: Rating skor kepuasan 1-5 (`unsigned tinyint`, default 5).
 - **ulasan**: Konten teks ulasan (`text`).
 - **foto**: Path file foto pelanggan (`varchar 255`, nullable).
+- **created_at**: Timestamp pembuatan testimoni.
+- **updated_at**: Timestamp pembaruan testimoni.
 
 ### 2.13. Tabel `pengeluaran`
 Menyimpan riwayat pembukuan pengeluaran biaya operasional kost (arus kas keluar).
@@ -832,6 +1006,8 @@ Menyimpan riwayat pembukuan pengeluaran biaya operasional kost (arus kas keluar)
 - **tanggal_pengeluaran**: Tanggal pengeluaran biaya dilakukan (`date`, `index`).
 - **bukti_nota**: Path file foto kuitansi/nota bukti fisik (`varchar 255`, nullable).
 - **keterangan**: Detail deskripsi pengeluaran (`text`, nullable).
+- **created_at**: Timestamp pencatatan pengeluaran.
+- **updated_at**: Timestamp pembaruan pengeluaran.
 
 ### 2.14. Tabel `faqs`
 Menyimpan daftar pertanyaan umum (FAQ) interaktif untuk halaman publik `/faq` dan `/cara-booking`.
@@ -840,6 +1016,8 @@ Menyimpan daftar pertanyaan umum (FAQ) interaktif untuk halaman publik `/faq` da
 - **jawaban**: Teks jawaban (`text`).
 - **urutan**: Prioritas posisi tampil (`tinyint`, default 0).
 - **is_active**: Status publikasi faq (`tinyint`, default 1).
+- **created_at**: Timestamp pembuatan FAQ.
+- **updated_at**: Timestamp pembaruan FAQ.
 
 ### 2.15. Tabel `keluhan`
 Menyimpan riwayat pengaduan laporan kerusakan fasilitas kost yang diajukan oleh penyewa aktif.
@@ -849,9 +1027,11 @@ Menyimpan riwayat pengaduan laporan kerusakan fasilitas kost yang diajukan oleh 
 - **kategori**: Kategori pengaduan (`enum('kamar', 'fasilitas_bersama', 'kebersihan', 'keamanan', 'lainnya')`).
 - **deskripsi**: Detail kronologis keluhan (`text`).
 - **foto_bukti**: Path file foto bukti pendukung keluhan (`varchar 255`, nullable).
-- **status**: Status eskalasi keluhan (`enum('pending', 'diproses', 'selesai')`).
+- **status**: Status eskalasi keluhan (`enum('pending', 'diproses', 'selesai')`, default 'pending').
 - **tanggapan_admin**: Teks tanggapan resolusi dari admin (`text`, nullable).
 - **tanggal_selesai**: Waktu keluhan dinyatakan selesai/resolved (`datetime`, nullable).
+- **created_at**: Timestamp pengajuan keluhan.
+- **updated_at**: Timestamp pembaruan respon keluhan.
 
 ### 2.16. Tabel `peraturan`
 Menyimpan data tata tertib kost putri Asri Boarding House secara dinamis.
@@ -860,40 +1040,51 @@ Menyimpan data tata tertib kost putri Asri Boarding House secara dinamis.
 - **deskripsi**: Penjelasan detail peraturan (`text`).
 - **ikon**: Nama ikon representasi visual Heroicons (`varchar 50`).
 - **urutan**: Urutan penampilan peraturan (`integer`, default 0).
+- **created_at**: Timestamp pembuatan tata tertib.
+- **updated_at**: Timestamp pembaruan tata tertib.
 
 ### 2.17. Tabel `galleries`
 Menyimpan data galeri foto fasilitas atau lingkungan kost untuk halaman landing utama.
 - **id**: Primary Key (`unsigned bigint auto_increment`).
 - **judul**: Nama/keterangan foto (`varchar 100`).
 - **deskripsi**: Penjelasan foto galeri (`text`, nullable).
-- **foto**: Path file foto / tautan eksternal (`varchar 255`).
+- **foto**: Path file foto galeri (`varchar 255`).
 - **urutan**: Urutan penampilan foto (`integer`, default 0).
 - **is_active**: Status publikasi foto (`boolean`, default true).
+- **created_at**: Timestamp unggah foto.
+- **updated_at**: Timestamp pembaruan data foto.
 
-### 2.18. Tabel `guest_chat_threads` & `guest_chat_messages`
-Menyimpan data percakapan pengunjung anonim (tamu landing page) dengan administrator sebelum melakukan registrasi akun resmi.
-- **guest_chat_threads**:
-  - **id**: Primary Key (`unsigned bigint auto_increment`).
-  - **session_token**: Token session unik pengidentifikasi browser guest (`varchar 255`, unique, index).
-  - **name**: Nama pengunjung (`varchar 255`).
-  - **no_hp**: Nomor handphone pengunjung (`varchar 255`).
-  - **status**: Status status chat (`enum('active', 'closed')`, default 'active').
-- **guest_chat_messages**:
-  - **id**: Primary Key (`unsigned bigint auto_increment`).
-  - **guest_chat_thread_id**: Foreign Key merujuk ke `guest_chat_threads.id` (`onDelete: cascade`).
-  - **sender_type**: Tipe pengirim pesan (`enum('guest', 'admin')`).
-  - **sender_id**: Foreign Key admin yang membalas, merujuk ke `users.id` (`onDelete: cascade`, nullable).
-  - **message**: Isi pesan obrolan (`text`).
-  - **is_read**: Status keterbacaan (`boolean`, default false).
+### 2.18. Tabel `guest_chat_threads`
+Menyimpan sesi percakapan pengunjung anonim (tamu landing page) berdasarkan session token browser.
+- **id**: Primary Key (`unsigned bigint auto_increment`).
+- **session_token**: Token session unik pengidentifikasi browser guest (`varchar 255`, unique, index).
+- **name**: Nama lengkap pengunjung (`varchar 255`).
+- **no_hp**: Nomor handphone pengunjung (`varchar 255`).
+- **status**: Status sesi obrolan (`enum('active', 'closed')`, default 'active').
+- **created_at**: Timestamp inisialisasi sesi obrolan tamu.
+- **updated_at**: Timestamp aktivitas obrolan tamu terakhir.
 
-### 2.19. Tabel `pengumuman`
+### 2.19. Tabel `guest_chat_messages`
+Menyimpan isi pesan obrolan antara pengunjung anonim dengan administrator.
+- **id**: Primary Key (`unsigned bigint auto_increment`).
+- **guest_chat_thread_id**: Foreign Key merujuk ke `guest_chat_threads.id` (`onDelete: cascade`).
+- **sender_type**: Tipe pengirim pesan (`enum('guest', 'admin')`).
+- **sender_id**: Foreign Key admin yang membalas, merujuk ke `users.id` (`onDelete: cascade`, nullable).
+- **message**: Konten teks obrolan (`text`).
+- **is_read**: Status keterbacaan pesan (`boolean`, default false).
+- **created_at**: Timestamp pesan dikirim.
+- **updated_at**: Timestamp pembaruan pesan.
+
+### 2.20. Tabel `pengumuman`
 Menyimpan data pengumuman umum yang dipublikasikan oleh administrator untuk dibaca oleh seluruh penyewa kost.
 - **id**: Primary Key (`unsigned bigint auto_increment`).
 - **judul**: Judul pengumuman (`varchar 150`).
 - **isi**: Konten teks lengkap pengumuman (`text`).
 - **is_active**: Status publikasi pengumuman (`boolean`, default true).
+- **created_at**: Timestamp penerbitan pengumuman.
+- **updated_at**: Timestamp pembaruan pengumuman.
 
-### 2.20. Tabel `notifikasi_khusus`
+### 2.21. Tabel `notifikasi_khusus`
 Menyimpan log audit sistem dan notifikasi internal untuk mencatat aktivitas penting.
 - **id**: Primary Key (`unsigned bigint auto_increment`).
 - **sumber**: Sumber pemicu notifikasi, e.g. 'reservasi', 'tagihan', 'admin' (`varchar 255`, index).
@@ -901,15 +1092,18 @@ Menyimpan log audit sistem dan notifikasi internal untuk mencatat aktivitas pent
 - **deskripsi**: Teks penjelasan detail aktivitas (`text`).
 - **data_detail**: Payload data tambahan terstruktur dalam format JSON (`json`, nullable).
 - **user_id**: Foreign Key merujuk ke `users.id` (`onDelete: set null`, nullable) untuk mengidentifikasi aktor pemicu.
+- **created_at**: Timestamp pencatatan aktivitas.
+- **updated_at**: Timestamp pembaruan log aktivitas.
 
-### 2.21. Tabel `whatsapp_clicks`
+### 2.22. Tabel `whatsapp_clicks`
 Menyimpan data log analytics pengunjung web yang mengklik tombol WhatsApp ke pengelola dari halaman katalog atau detail kamar.
 - **id**: Primary Key (`unsigned bigint auto_increment`).
-- **sumber**: Lokasi tombol yang diklik, e.g. 'landing_kamar', 'detail_kamar' (`varchar 50`).
+- **source**: Lokasi tombol yang diklik, e.g. 'landing_kamar', 'detail_kamar' (`varchar 50`).
 - **kamar_id**: Foreign Key merujuk ke `kamar.id` (`onDelete: set null`, nullable).
 - **ip_address**: Alamat IP pengunjung web (`varchar 45`, nullable).
 - **user_agent**: Informasi user agent browser (`text`, nullable).
 - **created_at**: Tanggal dan waktu tombol diklik (`timestamp`, `index`).
+- **updated_at**: Timestamp pembaruan analitik.
 
 ---
 
@@ -930,6 +1124,27 @@ Menyimpan data log analytics pengunjung web yang mengklik tombol WhatsApp ke pen
    Ketika status `penyewa` diubah menjadi `nonaktif`, status `kamar` terkait tetap dipertahankan pada status `terisi`. Hal ini mewajibkan administrator melakukan inspeksi fisik kamar terlebih dahulu sebelum mengubah status kamar secara manual menjadi `tersedia` atau `maintenance`.
 6. **Pengelolaan Deposit Jaminan (`penyewa.deposit`)**:
    Uang jaminan awal kontrak disimpan dalam kolom `penyewa.deposit`. Dana ini dikembalikan manual secara utuh atau dipotong untuk biaya perbaikan fasilitas yang rusak saat *checkout*.
+
+---
+
+### 3.1. Spesifikasi Integritas Nilai (Database CHECK Constraints)
+
+Basis data menerapkan **12 aturan validasi CHECK Constraints** bawaan MySQL 8.x untuk mencegah anomali angka minus dan ketidakkonsistenan tanggal di level storage engine:
+
+| No | Nama Constraint | Tabel Target | Aturan Ekspresi SQL | Tujuan Pengamanan Bisnis |
+| :-: | :--- | :--- | :--- | :--- |
+| 1 | `chk_tagihan_nominal_pokok` | `tagihan` | `nominal_pokok >= 0` | Menjamin tagihan pokok tidak boleh bernilai negatif |
+| 2 | `chk_tagihan_nominal_denda` | `tagihan` | `nominal_denda >= 0` | Menjamin nilai denda keterlambatan tidak minus |
+| 3 | `chk_tagihan_nominal_total` | `tagihan` | `nominal_total >= 0` | Menjamin nominal tagihan akhir selalu valid (>= 0) |
+| 4 | `chk_reservasi_total_harga` | `reservasi` | `total_harga >= 0` | Menolak total harga sewa bernilai negatif |
+| 5 | `chk_reservasi_nominal_dp` | `reservasi` | `nominal_dp >= 0` | Menolak nilai uang muka bernilai minus |
+| 6 | `chk_reservasi_nominal_sisa`| `reservasi` | `nominal_sisa >= 0` | Menolak sisa pelunasan bernilai minus |
+| 7 | `chk_reservasi_tanggal_logic`| `reservasi`| `tanggal_selesai >= tanggal_mulai` | Mencegah tanggal checkout mendahului tanggal checkin |
+| 8 | `chk_pembayaran_nominal` | `pembayaran` | `nominal >= 0` | Menolak pencatatan uang masuk bernilai minus |
+| 9 | `chk_pengeluaran_nominal` | `pengeluaran`| `nominal >= 0` | Menolak pencatatan biaya operasional bernilai minus |
+| 10 | `chk_penyewa_harga_sewa` | `penyewa` | `harga_sewa >= 0` | Menjamin snapshot tarif kontrak selalu positif |
+| 11 | `chk_penyewa_deposit` | `penyewa` | `deposit >= 0` | Menolak nilai deposit uang jaminan minus |
+| 12 | `chk_penyewa_tanggal_logic`| `penyewa` | `tanggal_keluar_seharusnya IS NULL OR tanggal_keluar_seharusnya >= tanggal_masuk` | Validasi logis durasi kontrak sewa |
 
 ---
 
@@ -1129,7 +1344,7 @@ flowchart TD
 
 ### 5.1. Tabel Kebijakan Kunci Asing (Foreign Key Integrity)
 
-| Nama Tabel Anak | Kolom FK | Tabel Induk | Kolom PK Induk | Aksi saat Baris Induk Dihapus (`ON DELETE`) | Penjelasan Bisnis |
+| Nama Tabel Anak | Kolom FK | Tabel Induk | Kolom PK Induk | Aksi saat Baris Induk Dihapus (`ON DELETE`) | Penjelasan Bisnis & Audit Trail |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `penyewa` | `user_id` | `users` | `id` | **RESTRICT** | Akun pengguna penyewa tidak boleh dihapus jika profil sewanya masih aktif. |
 | `penyewa` | `kamar_id` | `kamar` | `id` | **RESTRICT** | Kamar kost tidak boleh dihapus selama masih dihuni oleh penyewa. |
@@ -1138,7 +1353,7 @@ flowchart TD
 | `tagihan` | `penyewa_id` | `penyewa` | `id` | **RESTRICT** | Penyewa tidak boleh dihapus jika memiliki riwayat tagihan (audit trail keuangan). |
 | `pembayaran` | `tagihan_id` | `tagihan` | `id` | **RESTRICT** | Data tagihan tidak boleh dihapus jika sudah mencatat data transaksi pembayaran. |
 | `pembayaran` | `dikonfirmasi_oleh` | `users` | `id` | **SET NULL** | Jika akun admin dihapus, log konfirmasi cash tetap utuh dengan nama konfirmator kosong. |
-| `log_notifikasi` | `penyewa_id` | `penyewa` | `id` | **RESTRICT** | Menolak penghapusan penyewa jika masih memiliki log notifikasi untuk keperluan audit. |
+| `log_notifikasi` | `penyewa_id` | `penyewa` | `id` | **CASCADE** | Audit log pengiriman pesan terhapus saat data penyewa dibersihkan secara permanen. |
 | `log_notifikasi` | `tagihan_id` | `tagihan` | `id` | **SET NULL** | Mempertahankan log notifikasi tagihan walaupun tagihan dibersihkan. |
 | `reservasi` | `user_id` | `users` | `id` | **RESTRICT** | Akun user tidak boleh dihapus jika memiliki riwayat pemesanan/reservasi. |
 | `reservasi` | `kamar_id` | `kamar` | `id` | **RESTRICT** | Kamar master tidak boleh dihapus jika memiliki keterikatan dengan riwayat reservasi. |
@@ -1154,25 +1369,43 @@ flowchart TD
 
 ---
 
-### 5.2. Indeks Database & Optimasi Performa Query
+### 5.2. Indeks Database & Kolom Virtual MySQL 8.x (Penanganan Soft Delete)
 
-1. **Unique Indexes & Virtual Generated Columns (Pencegahan Duplikasi dengan Soft Delete)**:
-   - `users`: Kolom virtual `active_email`, `active_no_hp`, dan `active_nik` (`CASE WHEN deleted_at IS NULL THEN ... ELSE NULL END`) dengan Unique Index.
-   - `kamar`: Kolom virtual `active_nomor_kamar` dengan Unique Index untuk mencegah nomor kamar aktif ganda.
-   - `penyewa`: Kolom virtual `active_nik` untuk mencegah NIK aktif ganda.
-   - `reservasi`: Kolom virtual `active_order_id`.
-   - `tagihan.order_id` & `guest_chat_threads.session_token`: Unique index transaksi & session token.
-   - *Composite Unique Index* `uq_periode` (`penyewa_id`, `periode_bulan`, `periode_tahun`): Menjamin idempotensi penagihan bulanan.
+Mekanisme penanganan nilai unik (`email`, `no_hp`, `nik`, `nomor_kamar`, `order_id`) saat baris di-*soft delete* menerapkan **Virtual Generated Columns** yang dipadukan dengan **Unique Index**:
 
-2. **Performance Indexes (Akselerasi Query & Filter)**:
-   - `kamar.status`: Mempercepat kueri pengecekan ketersediaan kamar di Landing Page.
-   - `tagihan` (`[status, tanggal_jatuh_tempo]` & `[penyewa_id, status]`): Digunakan oleh scheduler Cron Job denda dan portal penyewa.
-   - `keluhan` (`[penyewa_id, status]`): Mempercepat pemuatan keluhan di portal penyewa.
-   - `pembayaran` (`[status_midtrans, tanggal_bayar]`): Mempercepat rekapitulasi arus kas masuk.
-   - `pengeluaran` (`tanggal_pengeluaran`): Mempercepat rekapitulasi arus kas keluar.
-   - `whatsapp_clicks` (`created_at`): Mempercepat pencarian statistik impresi WA.
-   - `chat_messages` (`[reservasi_id, id]` & read status): Mempercepat pemuatan dan update read status obrolan.
-   - `notifikasi_khusus` (`[user_id, created_at]`): Indeks komposit untuk log audit notifikasi user.
+1. **`users`**: Kolom virtual `active_email`, `active_no_hp`, dan `active_nik` (`VIRTUAL GENERATED ALWAYS AS (IF(deleted_at IS NULL, column, NULL))`) dengan Unique Index. Karena MySQL memperbolehkan duplikasi nilai `NULL` pada indeks unik, nilai unik hanya ditegakkan untuk baris aktif.
+2. **`kamar`**: Kolom virtual `active_nomor_kamar` dengan Unique Index untuk mencegah nomor kamar aktif ganda.
+3. **`reservasi`**: Kolom virtual `active_order_id` dengan Unique Index untuk mencegah duplikasi order aktif.
+
+---
+
+### 5.3. Matriks Indeks Komposit & Akselerasi Kueri Kritis (*Performance Indexes*)
+
+Tabel berikut merangkum seluruh indeks komposit yang diterapkan pada database untuk mencegah *full table scan* dan operasi *Filesort*:
+
+| Nama Indeks Komposit | Tabel Target | Kolom yang Diindeks | Kueri yang Diakselerasi |
+| :--- | :--- | :--- | :--- |
+| `uq_periode` (Unique) | `tagihan` | `(penyewa_id, periode_bulan, periode_tahun)` | Idempotensi generate tagihan bulanan otomatis |
+| `idx_tagihan_cron_keterlambatan` | `tagihan` | `(status, tanggal_jatuh_tempo)` | Cron job harian pemeriksaan denda & pengingat WA |
+| `idx_tagihan_penyewa_status` | `tagihan` | `(penyewa_id, status)` | Query daftar tagihan aktif di portal penyewa |
+| `idx_kamar_status_deleted_at` | `kamar` | `(status, deleted_at)` | Filter kamar tersedia di katalog landing page |
+| `idx_reservasi_overlap` | `reservasi` | `(kamar_id, status, tanggal_mulai, tanggal_selesai)` | Pengecekan overlap tanggal pemesanan kamar |
+| `idx_chat_reservasi_id_created` | `chat_messages` | `(reservasi_id, created_at)` | Polling chat real-time pre-payment |
+| `idx_guest_chat_messages_thread_id_id` | `guest_chat_messages` | `(guest_chat_thread_id, id)` | Polling chat obrolan live chat tamu landing page |
+| `idx_notifikasi_khusus_user_created` | `notifikasi_khusus` | `(user_id, created_at DESC)` | Feed notifikasi dashboard user tanpa Filesort |
+| `idx_pengeluaran_tanggal` | `pengeluaran` | `(tanggal_pengeluaran)` | Rekapitulasi laporan arus kas keluar |
+| `idx_pembayaran_tanggal_status` | `pembayaran` | `(status_midtrans, tanggal_bayar)` | Rekapitulasi laporan arus kas masuk (Settlement) |
+| `idx_whatsapp_clicks_created` | `whatsapp_clicks` | `(created_at)` | Analitik traffic klik tombol WhatsApp per rentang waktu |
+
+---
+
+### 5.4. Catatan Khusus Tabel Infrastruktur Framework Laravel
+
+Terdapat 8 tabel bawaan framework Laravel yang difungsikan untuk kebutuhan state session, background queue worker, cache, dan reset credential, yang secara standar arsitektur relasional dipisahkan dari ERD bisnis:
+1. **`sessions`**: Menyimpan payload sesi autentikasi web pengguna.
+2. **`password_reset_tokens`**: Menyimpan token keamanan reset kata sandi pengguna.
+3. **`jobs`, `job_batches`, `failed_jobs`**: Antrean proses latar belakang (*background workers*) untuk pengiriman WhatsApp Fonnte, dispatching email, dan webhook.
+4. **`cache`, `cache_locks`**: Manajemen caching performa dan *atomic locks* transaksi reservasi.
 
 ---
 
@@ -1184,17 +1417,28 @@ Struktur folder artefak dokumentasi ERD telah distandarisasi di bawah subfolder 
 Blueprint/
 ├── Entity_Relationship_Diagram_Kost.md              # Dokumen Utama ERD & Kamus Data
 └── erd/
-    ├── diagram_erd.mmd                             # Skrip Master ERD 21 Entitas
+    ├── diagram_erd.mmd                             # Skrip Master ERD 22 Entitas
     ├── diagram_erd.png                             # Visual Gambar Master ERD
+    ├── taksonomi_relasi_kardinalitas.mmd           # Skrip Taksonomi Klasifikasi 3 Kardinalitas
+    ├── taksonomi_relasi_kardinalitas.png           # Visual Taksonomi Klasifikasi 3 Kardinalitas
     ├── peta_relasi_kardinalitas_global.mmd         # Peta Topologi Relasi & Kardinalitas Global
+    ├── peta_relasi_kardinalitas_global.png         # Visual Topologi Relasi & Kardinalitas Global
     ├── diagram_relasi_one_to_one.mmd               # Visual Khusus Relasi 1:1 (Users - Penyewa)
+    ├── diagram_relasi_one_to_one.png               # Gambar Khusus Relasi 1:1
     ├── diagram_relasi_many_to_many.mmd             # Visual Khusus Relasi N:M Pivot (Kamar - Fasilitas)
+    ├── diagram_relasi_many_to_many.png             # Gambar Khusus Relasi N:M Pivot
     ├── diagram_relasi_one_to_many.mmd              # Visual Khusus Relasi 1:N (Rantai Transaksional)
+    ├── diagram_relasi_one_to_many.png              # Gambar Khusus Relasi 1:N
     ├── erd_relasi_users_kamar_penyewa.mmd          # Skrip Sub-Sistem 1 (Users, Kamar, Penyewa)
+    ├── erd_relasi_users_kamar_penyewa.png          # Gambar Sub-Sistem 1
     ├── erd_relasi_kamar_fasilitas.mmd              # Skrip Sub-Sistem 2 (Pivot Kamar-Fasilitas)
+    ├── erd_relasi_kamar_fasilitas.png              # Gambar Sub-Sistem 2
     ├── erd_relasi_billing_pembayaran.mmd           # Skrip Sub-Sistem 3 (Billing & Payment)
+    ├── erd_relasi_billing_pembayaran.png           # Gambar Sub-Sistem 3
     ├── erd_relasi_reservasi_chat.mmd               # Skrip Sub-Sistem 4 (Reservasi & Chat)
+    ├── erd_relasi_reservasi_chat.png               # Gambar Sub-Sistem 4
     ├── erd_relasi_keluhan_guest_analytics.mmd      # Skrip Sub-Sistem 5 (Keluhan & Analytics)
+    ├── erd_relasi_keluhan_guest_analytics.png      # Gambar Sub-Sistem 5
     ├── alur_reservasi_pembayaran.mmd               # Skrip Flowchart Reservasi & Konfirmasi
     ├── alur_reservasi_pembayaran.png               # Visual Flowchart Reservasi & Konfirmasi
     ├── alur_siklus_billing.mmd                     # Skrip Flowchart Billing & Denda

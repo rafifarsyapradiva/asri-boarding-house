@@ -12,48 +12,66 @@
   }
 }}%%
 flowchart TB
-    %% Subgraphs per Domain
-    subgraph D1["Domain 1: Autentikasi & Master Kamar"]
-        direction TB
-        USERS[("users<br><i>Master Akun Login</i>")]
-        KAMAR[("kamar<br><i>Master Unit Fisik</i>")]
-        FASILITAS[("fasilitas<br><i>Master Fasilitas</i>")]
-        KF{{"kamar_fasilitas<br><i>Pivot Table N:M</i>"}}
+    TITLE["<b>PETA TOPOLOGI RELASI & KARDINALITAS GLOBAL (22 ENTITAS SISTEM)</b><br><i>Sistem Informasi Asri Boarding House Terintegrasi Payment Gateway</i>"]
+
+    %% BARIS 1: Core Kamar, Akun, Reservasi, dan Billing
+    subgraph ROW1 ["TIER 1: CORE MASTER ENTITAS, SIKLUS BILLING & PEMESANAN"]
+        direction LR
+        subgraph D1["Domain 1: Autentikasi & Master Kamar"]
+            direction TB
+            USERS[("users<br><i>Master Akun Login</i>")]
+            KAMAR[("kamar<br><i>Master Unit Fisik</i>")]
+            FASILITAS[("fasilitas<br><i>Master Fasilitas</i>")]
+            KF{{"kamar_fasilitas<br><i>Pivot Table N:M</i>"}}
+        end
+
+        subgraph D2["Domain 2: Penyewa & Siklus Billing"]
+            direction TB
+            PENYEWA[("penyewa<br><i>Profil Kontrak Sewa</i>")]
+            TAGIHAN[("tagihan<br><i>Invoice Penagihan</i>")]
+            PEMBAYARAN[("pembayaran<br><i>Log Transaksi Midtrans/Cash</i>")]
+            LOG_NOTIF[("log_notifikasi<br><i>Audit Log WA/Email</i>")]
+        end
+
+        subgraph D3["Domain 3: Reservasi & Pre-Payment"]
+            direction TB
+            RESERVASI[("reservasi<br><i>Booking Kamar Online</i>")]
+            CHAT_MSG[("chat_messages<br><i>Obrolan Pre-Payment</i>")]
+        end
     end
 
-    subgraph D2["Domain 2: Penyewa & Siklus Billing"]
-        direction TB
-        PENYEWA[("penyewa<br><i>Profil Kontrak Sewa</i>")]
-        TAGIHAN[("tagihan<br><i>Invoice Penagihan</i>")]
-        PEMBAYARAN[("pembayaran<br><i>Log Transaksi Midtrans/Cash</i>")]
-        LOG_NOTIF[("log_notifikasi<br><i>Audit Log WA/Email</i>")]
+    %% BARIS 2: Layanan, Operasional & CMS
+    subgraph ROW2 ["TIER 2: LAYANAN OPERASIONAL, CMS PUBLIK & TRACKING ANALYTICS"]
+        direction LR
+        subgraph D4["Domain 4: Layanan Penghuni & Operasional"]
+            direction TB
+            KELUHAN[("keluhan<br><i>Pengaduan Fasilitas</i>")]
+            PENGELUARAN[("pengeluaran<br><i>Arus Kas Keluar</i>")]
+            NOTIF_KHUSUS[("notifikasi_khusus<br><i>Audit Trail Log</i>")]
+        end
+
+        subgraph D5["Domain 5: CMS Publik & Interaksi Guest"]
+            direction TB
+            subgraph CMS_STATIC ["CMS & Pengaturan Website"]
+                direction LR
+                SETTINGS[("settings<br><i>Config Dinamis</i>")]
+                REVIEWS[("customer_reviews<br><i>Testimonial</i>")]
+                FAQS[("faqs<br><i>FAQ</i>")]
+                PERATURAN[("peraturan<br><i>Tata Tertib</i>")]
+                GALLERIES[("galleries<br><i>Galeri Foto</i>")]
+                PENGUMUMAN[("pengumuman<br><i>Broadcast</i>")]
+            end
+            subgraph GUEST_ENGAGEMENT ["Guest Chat & Tracking"]
+                direction TB
+                GUEST_THREADS[("guest_chat_threads<br><i>Sesi Chat Tamu</i>")]
+                GUEST_MSGS[("guest_chat_messages<br><i>Pesan Obrolan Tamu</i>")]
+                WA_CLICKS[("whatsapp_clicks<br><i>Analytics CTR WA</i>")]
+            end
+        end
     end
 
-    subgraph D3["Domain 3: Reservasi & Pre-Payment"]
-        direction TB
-        RESERVASI[("reservasi<br><i>Booking Kamar Online</i>")]
-        CHAT_MSG[("chat_messages<br><i>Obrolan Pre-Payment</i>")]
-    end
-
-    subgraph D4["Domain 4: Layanan Penghuni & Operasional"]
-        direction TB
-        KELUHAN[("keluhan<br><i>Pengaduan Fasilitas</i>")]
-        PENGELUARAN[("pengeluaran<br><i>Arus Kas Keluar</i>")]
-        NOTIF_KHUSUS[("notifikasi_khusus<br><i>Audit Trail Log</i>")]
-    end
-
-    subgraph D5["Domain 5: CMS Publik & Interaksi Guest"]
-        direction TB
-        SETTINGS[("settings<br><i>Config Dinamis</i>")]
-        REVIEWS[("customer_reviews<br><i>Testimonial</i>")]
-        FAQS[("faqs<br><i>Daftar FAQ</i>")]
-        PERATURAN[("peraturan<br><i>Tata Tertib</i>")]
-        GALLERIES[("galleries<br><i>Galeri Foto</i>")]
-        PENGUMUMAN[("pengumuman<br><i>Broadcast Informasi</i>")]
-        GUEST_THREADS[("guest_chat_threads<br><i>Sesi Chat Tamu</i>")]
-        GUEST_MSGS[("guest_chat_messages<br><i>Pesan Obrolan Tamu</i>")]
-        WA_CLICKS[("whatsapp_clicks<br><i>Analytics CTR WA</i>")]
-    end
+    TITLE --> ROW1
+    ROW1 --> ROW2
 
     %% Relasi 1:1 (Biru Tebal)
     USERS ===|"1 : 1 (Aktif)<br>FK: user_id [RESTRICT]"| PENYEWA
@@ -67,7 +85,7 @@ flowchart TB
     PENYEWA -->|"1 : N (penyewa_id) [RESTRICT]"| TAGIHAN
     TAGIHAN -->|"1 : N (tagihan_id) [RESTRICT]"| PEMBAYARAN
     USERS -.->|"1 : N (dikonfirmasi_oleh) [SET NULL]"| PEMBAYARAN
-    PENYEWA -->|"1 : N (penyewa_id) [RESTRICT]"| LOG_NOTIF
+    PENYEWA -->|"1 : N (penyewa_id) [CASCADE]"| LOG_NOTIF
     TAGIHAN -.->|"1 : N (tagihan_id) [SET NULL]"| LOG_NOTIF
 
     %% Relasi 1:N Reservasi
@@ -94,4 +112,4 @@ flowchart TB
     class USERS,PENYEWA otoClass;
     class KAMAR,FASILITAS mtmClass;
     class KF pivotClass;
-    class TAGIHAN,PEMBAYARAN,LOG_NOTIF,RESERVASI,CHAT_MSG,KELUHAN,GUEST_THREADS,GUEST_MSGS,NOTIF_KHUSUS,WA_CLICKS otmClass;
+    class TAGIHAN,PEMBAYARAN,LOG_NOTIF,RESERVASI,CHAT_MSG,KELUHAN,GUEST_THREADS,GUEST_MSGS,NOTIF_KHUSUS,WA_CLICKS,PENGELUARAN,SETTINGS,REVIEWS,FAQS,PERATURAN,GALLERIES,PENGUMUMAN otmClass;

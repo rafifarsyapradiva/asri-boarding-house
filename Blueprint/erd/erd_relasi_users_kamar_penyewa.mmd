@@ -5,10 +5,13 @@ erDiagram
     users {
         unsigned_bigint id PK
         string nama "varchar(100)"
-        string email "varchar(150) UK"
+        string email "varchar(150)"
+        string active_email "varchar(150) VIRTUAL, UK"
         string password "varchar(255)"
-        string no_hp "varchar(20) UK, Nullable"
-        string nik "varchar(20) UK, Nullable"
+        string no_hp "varchar(50), Nullable"
+        string active_no_hp "varchar(20) VIRTUAL, UK"
+        string nik "varchar(50), Nullable"
+        string active_nik "varchar(20) VIRTUAL, UK"
         string nama_wali "varchar(100), Nullable"
         string no_wali "varchar(20), Nullable"
         enum role "admin, penyewa"
@@ -22,7 +25,7 @@ erDiagram
         unsigned_bigint user_id FK "1:1 Aktif / 1:N Historis"
         unsigned_bigint kamar_id FK
         decimal harga_sewa "12,2 (Immutable snapshot)"
-        string nik "varchar(20) UK"
+        string nik "varchar(50)"
         date tanggal_masuk
         date tanggal_keluar "Nullable"
         date tanggal_keluar_seharusnya "Nullable"
@@ -37,7 +40,8 @@ erDiagram
     }
     kamar {
         unsigned_bigint id PK
-        string nomor_kamar "varchar(50) UK"
+        string nomor_kamar "varchar(50)"
+        string active_nomor_kamar "varchar(50) VIRTUAL, UK"
         tinyint lantai "Default 1"
         enum tipe "standar, deluxe, vip"
         decimal luas_m2 "5,2"

@@ -5,31 +5,32 @@
     'primaryTextColor': '#1E293B',
     'primaryBorderColor': '#2563EB',
     'lineColor': '#2563EB',
-    'fontSize': '12px',
+    'fontSize': '13px',
     'fontFamily': 'Inter, system-ui, sans-serif'
   }
 }}%%
-flowchart LR
-    subgraph USER_CONTAINER["Tabel users (Master Akun)"]
-        direction TB
-        U1["<b>id</b>: unsigned bigint [PK]"]
-        U2["<b>email</b>: varchar(150) [UK]"]
-        U3["<b>role</b>: 'penyewa'"]
-        U4["<b>is_active</b>: 1"]
-        U5["<b>deleted_at</b>: timestamp [Nullable]"]
+flowchart TB
+    TITLE["<b>TOPOLOGI RELASI ONE-TO-ONE (1:1) PADA ASOSIASI TUNGGAL</b><br><i>Sistem Informasi Asri Boarding House</i>"]
+    
+    subgraph CASE1 ["Kasus 1: Hubungan 1:1 Logis Akun Login ke Profil Sewa Aktif"]
+        direction LR
+        U["<b>Tabel: users (Master Akun Login)</b><br>• id: unsigned bigint [PK]<br>• active_email: varchar(150) [VIRTUAL, UK]<br>• active_no_hp: varchar(20) [VIRTUAL, UK]<br>• role: 'penyewa'<br>• is_active: 1"]
+        U ===|"<b>1 : 1 (Secara Logis untuk Sewa Aktif)</b><br>• 1 Akun user hanya boleh memiliki 1 profil penyewa 'aktif'<br>• ON DELETE RESTRICT (Akun tak boleh dihapus saat kontrak aktif)<br>• Secara fisik 1:N historis untuk rekam jejak sewa masa lalu"| P["<b>Tabel: penyewa (Profil Kontrak Sewa)</b><br>• id: unsigned bigint [PK]<br>• user_id: unsigned bigint [FK, RESTRICT]<br>• kamar_id: unsigned bigint [FK, RESTRICT]<br>• harga_sewa: decimal(12,2) [Snapshot]<br>• status: 'aktif'"]
     end
 
-    subgraph PENYEWA_CONTAINER["Tabel penyewa (Profil Transaksi Sewa)"]
-        direction TB
-        P1["<b>id</b>: unsigned bigint [PK]"]
-        P2["<b>user_id</b>: unsigned bigint [FK]"]
-        P3["<b>kamar_id</b>: unsigned bigint [FK]"]
-        P4["<b>harga_sewa</b>: decimal(12,2)"]
-        P5["<b>status</b>: 'aktif' | 'nonaktif'"]
-        P6["<b>deleted_at</b>: timestamp [Nullable]"]
+    subgraph CASE2 ["Kasus 2: Hubungan 1:1 Asosiasi Konversi Pemesanan ke Kontrak"]
+        direction LR
+        R["<b>Tabel: reservasi (Pemesanan Online)</b><br>• id: unsigned bigint [PK]<br>• order_id: varchar(100) [UK]<br>• penyewa_id: unsigned bigint [FK, Nullable]<br>• status: 'dikonfirmasi'"]
+        R ===|"<b>1 : 1 (Asosiasi Konversi Pemesanan)</b><br>• 1 Reservasi disetujui menghasilkan tepat 1 profil kontrak<br>• ON DELETE SET NULL (Riwayat booking aman jika penyewa selesai)<br>• Audit komprehensif asal-usul sewa dari booking online"| T["<b>Tabel: penyewa (Penyewa Hasil Konversi)</b><br>• id: unsigned bigint [PK]<br>• user_id: unsigned bigint [FK]<br>• kamar_id: unsigned bigint [FK]<br>• status: 'aktif'"]
     end
 
-    USER_CONTAINER ===|"<b>1 : 1 (Secara Logis untuk Sewa Aktif)</b><br>• 1 User hanya boleh memegang 1 profil penyewa aktif<br>• ON DELETE RESTRICT (Akun tidak boleh dihapus jika profil aktif)<br>• Secara fisik 1:N historis untuk arsip kontrak masa lalu"| PENYEWA_CONTAINER
+    TITLE --> CASE1
+    CASE1 --> CASE2
 
-    style USER_CONTAINER fill:#EFF6FF,stroke:#2563EB,stroke-width:2px
-    style PENYEWA_CONTAINER fill:#F0FDF4,stroke:#16A34A,stroke-width:2px
+    style TITLE fill:#1E293B,stroke:#0F172A,color:#F8FAFC,stroke-width:2px
+    style CASE1 fill:#F8FAFC,stroke:#2563EB,stroke-width:2px
+    style CASE2 fill:#F8FAFC,stroke:#16A34A,stroke-width:2px
+    style U fill:#EFF6FF,stroke:#2563EB,stroke-width:1.5px
+    style P fill:#F0FDF4,stroke:#16A34A,stroke-width:1.5px
+    style R fill:#FEF3C7,stroke:#D97706,stroke-width:1.5px
+    style T fill:#F0FDF4,stroke:#16A34A,stroke-width:1.5px

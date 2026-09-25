@@ -5,48 +5,57 @@
     'primaryTextColor': '#0F172A',
     'primaryBorderColor': '#334155',
     'lineColor': '#475569',
-    'fontSize': '12px',
+    'fontSize': '13px',
     'fontFamily': 'Inter, system-ui, sans-serif'
   }
 }}%%
-flowchart TD
+flowchart TB
+    TITLE["<b>TOPOLOGI 5 RANTAI TRANSAKSIONAL UTAMA (ONE-TO-MANY / 1:N)</b><br><i>Sistem Informasi Asri Boarding House</i>"]
+
     %% Rantai 1: Penagihan & Pembayaran
-    subgraph CHAIN1["Rantai 1: Siklus Tagihan, Pembayaran & Dispatcher WA (1:N)"]
+    subgraph CHAIN1["Rantai 1: Siklus Billing Bulanan & Pembayaran Transaksi"]
         direction LR
-        P["<b>penyewa</b><br>(1 Penyewa)"] -->|"1 : N [RESTRICT]"| T["<b>tagihan</b><br>(Banyak Tagihan Bulanan)"]
-        T -->|"1 : N [RESTRICT]"| PAY["<b>pembayaran</b><br>(Banyak Log Midtrans/Cash)"]
-        T -->|"1 : N [SET NULL]"| NOTIF["<b>log_notifikasi</b><br>(Banyak Log WA/Email)"]
-        P -->|"1 : N [RESTRICT]"| NOTIF
+        P1["<b>penyewa</b><br>(Master Kontrak)"] -->|"1 : N [RESTRICT]"| T1["<b>tagihan</b><br>(Tagihan Bulanan)"]
+        T1 -->|"1 : N [RESTRICT]"| PAY1["<b>pembayaran</b><br>(Log Midtrans / Kasir)"]
+        T1 -->|"1 : N [SET NULL]"| NOTIF1["<b>log_notifikasi</b><br>(Dispatcher WA Tagihan)"]
+        P1 -->|"1 : N [CASCADE]"| NOTIF1
     end
 
     %% Rantai 2: Reservasi & Pre-Payment Chat
-    subgraph CHAIN2["Rantai 2: Alur Pemesanan (Reservasi) & Chat Pre-Payment (1:N)"]
+    subgraph CHAIN2["Rantai 2: Alur Pemesanan Online (Reservasi) & Pre-Payment Chat"]
         direction LR
-        U["<b>users</b><br>(1 Calon Penyewa)"] -->|"1 : N [RESTRICT]"| RES["<b>reservasi</b><br>(Banyak Booking)"]
-        K["<b>kamar</b><br>(1 Unit Kamar)"] -->|"1 : N [RESTRICT]"| RES
-        RES -->|"1 : N [CASCADE]"| CHAT["<b>chat_messages</b><br>(Banyak Pesan Obrolan)"]
+        U2["<b>users</b><br>(Calon Penyewa)"] -->|"1 : N [RESTRICT]"| RES2["<b>reservasi</b><br>(Booking Kamar)"]
+        K2["<b>kamar</b><br>(Unit Kamar)"] -->|"1 : N [RESTRICT]"| RES2
+        RES2 -->|"1 : N [CASCADE]"| CHAT2["<b>chat_messages</b><br>(Pesan Obrolan Booking)"]
     end
 
     %% Rantai 3: Helpdesk Keluhan
-    subgraph CHAIN3["Rantai 3: Layanan Pengaduan Keluhan Fasilitas (1:N)"]
+    subgraph CHAIN3["Rantai 3: Helpdesk & Penanganan Keluhan Fasilitas"]
         direction LR
-        P2["<b>penyewa</b><br>(1 Penyewa Aktif)"] -->|"1 : N [CASCADE]"| KEL["<b>keluhan</b><br>(Banyak Laporan Kerusakan & Foto)"]
+        P3["<b>penyewa</b><br>(Penyewa Aktif)"] -->|"1 : N [CASCADE]"| KEL3["<b>keluhan</b><br>(Tiket Laporan & Bukti Foto)"]
     end
 
     %% Rantai 4: Sesi Chat Tamu
-    subgraph CHAIN4["Rantai 4: Live Chat Tamu Landing Page (1:N)"]
+    subgraph CHAIN4["Rantai 4: Live Chat Tamu Publik Landing Page"]
         direction LR
-        TH["<b>guest_chat_threads</b><br>(1 Sesi Tamu Berdasarkan Token)"] -->|"1 : N [CASCADE]"| MSG["<b>guest_chat_messages</b><br>(Banyak Pesan Tamu & Balasan Admin)"]
+        TH4["<b>guest_chat_threads</b><br>(Sesi Thread Tamu via Token)"] -->|"1 : N [CASCADE]"| MSG4["<b>guest_chat_messages</b><br>(Log Pesan Tamu & Respon Admin)"]
     end
 
     %% Rantai 5: Analytics Tracking
-    subgraph CHAIN5["Rantai 5: Tracking Impresi & Analytics Klik WA Kamar (1:N)"]
+    subgraph CHAIN5["Rantai 5: Tracking Impresi & Lead Conversion WhatsApp"]
         direction LR
-        K2["<b>kamar</b><br>(1 Unit Kamar)"] -->|"1 : N [SET NULL]"| WA["<b>whatsapp_clicks</b><br>(Banyak Log IP & User Agent)"]
+        K5["<b>kamar</b><br>(Unit Kamar)"] -->|"1 : N [SET NULL]"| WA5["<b>whatsapp_clicks</b><br>(Log IP, User Agent & Ref Source)"]
     end
 
-    style CHAIN1 fill:#EFF6FF,stroke:#2563EB,stroke-width:1.5px
-    style CHAIN2 fill:#FEF3C7,stroke:#D97706,stroke-width:1.5px
-    style CHAIN3 fill:#ECFDF5,stroke:#059669,stroke-width:1.5px
-    style CHAIN4 fill:#F3E8FF,stroke:#9333EA,stroke-width:1.5px
-    style CHAIN5 fill:#F1F5F9,stroke:#64748B,stroke-width:1.5px
+    TITLE --> CHAIN1
+    CHAIN1 --> CHAIN2
+    CHAIN2 --> CHAIN3
+    CHAIN3 --> CHAIN4
+    CHAIN4 --> CHAIN5
+
+    style TITLE fill:#1E293B,stroke:#0F172A,color:#F8FAFC,stroke-width:2px
+    style CHAIN1 fill:#EFF6FF,stroke:#2563EB,stroke-width:2px
+    style CHAIN2 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
+    style CHAIN3 fill:#ECFDF5,stroke:#059669,stroke-width:2px
+    style CHAIN4 fill:#F3E8FF,stroke:#9333EA,stroke-width:2px
+    style CHAIN5 fill:#F1F5F9,stroke:#64748B,stroke-width:2px
