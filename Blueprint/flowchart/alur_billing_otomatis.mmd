@@ -10,22 +10,22 @@
   }
 }}%%
 flowchart TD
-    Start([Setiap Tanggal 1 Awal Bulan, 00:00]) --> TriggerScheduler[[Cron Job memicu perintah scheduler Laravel]]
-    TriggerScheduler --> RunBillingCommand[[Eksekusi command: php artisan billing:generate]]
-    RunBillingCommand --> FetchPenyewaAktif[[Ambil semua data penyewa berstatus aktif tipe bulanan]]
+    Start([Setiap Tanggal 1 Awal Bulan, 00:05 WIB]) --> TriggerScheduler[[Cron Job memicu perintah scheduler Laravel]]
+    TriggerScheduler --> RunBillingCommand[[Eksekusi command: php artisan tagihan:generate-bulanan]]
+    RunBillingCommand --> FetchPenyewaAktif[[Ambil semua data penyewa berstatus 'aktif' tipe 'bulanan']]
     
     FetchPenyewaAktif --> LoopPenyewa{"Apakah ada penyewa aktif berikutnya?"}
     
     LoopPenyewa -- "Ya" --> GetImmutableRate[[Ambil tarif personal dari penyewa.harga_sewa]]
-    GetImmutableRate --> BuatTagihan[[Buat data Tagihan baru status: pending, nominal_pokok = harga_sewa]]
+    GetImmutableRate --> BuatTagihan[[Buat data Tagihan baru status: 'pending', nominal_pokok = harga_sewa]]
     BuatTagihan --> SetJatuhTempo[[Set tanggal_jatuh_tempo = tanggal 10 bulan berjalan]]
     SetJatuhTempo --> CreateOrderId[[Generate order_id unik transaksi]]
-    CreateOrderId --> LogNotifPending[[Simpan log_notifikasi baru status pending]]
+    CreateOrderId --> LogNotifPending[[Simpan log_notifikasi baru status 'pending']]
     LogNotifPending --> CallFonnteAPI[/Panggil Fonnte WA API untuk mengirim detail invoice/]
     
     CallFonnteAPI --> CekResponse{"Apakah API mengirim dengan sukses?"}
-    CekResponse -- "Ya" --> SetLogSukses[[Update log_notifikasi status menjadi sukses]]
-    CekResponse -- "Tidak" --> SetLogGagal[[Update log_notifikasi status gagal & catat error_msg]]
+    CekResponse -- "Ya" --> SetLogSukses[[Update log_notifikasi status menjadi 'sukses']]
+    CekResponse -- "Tidak" --> SetLogGagal[[Update log_notifikasi status 'gagal' & catat error_msg]]
     
     SetLogSukses --> LoopPenyewa
     SetLogGagal --> LoopPenyewa

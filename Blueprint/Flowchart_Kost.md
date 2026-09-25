@@ -58,48 +58,50 @@ Diagram berikut memetakan **hubungan antar-proses (inter-process mapping)**, ket
 }}%%
 flowchart TB
     subgraph GUEST["🌐 FASE 1: TAMU & GUEST (PUBLIK)"]
-        A1[/Sub-FC 1: Pencarian Kamar & Cek Ketersediaan/]
-        A2[/Sub-FC 12: Live Chat Pengunjung Anonim/]
-        A3[/Sub-FC 9: Tampilan Konten Dinamis Landing/]
+        A1[[Sub-FC 1: Pencarian Kamar & Cek Ketersediaan]]
+        A2[[Sub-FC 12: Live Chat Pengunjung Anonim]]
+        A3[[Sub-FC 9: Tampilan Konten Dinamis Landing]]
     end
 
     subgraph AUTH["🔑 FASE 2: OTENTIKASI & REGISTRASI"]
-        B1[/Sub-FC 17: Google OAuth Socialite & Complete Profile/]
-        B2[/Sub-FC 2: Pendaftaran & Pembuatan Reservasi/]
-        B3[/Sub-FC 15: Pendaftaran Penyewa Offline Walk-In/]
+        B1[[Sub-FC 17: Google OAuth Socialite & Complete Profile]]
+        B2[[Sub-FC 2: Pendaftaran & Pembuatan Reservasi]]
+        B3[[Sub-FC 15: Pendaftaran Penyewa Offline Walk-In]]
     end
 
     subgraph PAYMENT["💳 FASE 3: PAYMENT GATEWAY & VERIFIKASI"]
-        C1[/Sub-FC 3: Pembayaran DP/Lunas Midtrans Snap & Pre-Chat/]
+        C1[[Sub-FC 3: Pembayaran DP/Lunas Midtrans Snap & Pre-Chat]]
         C2[[Sub-FC 18: Callback Webhook Midtrans & Signature Check]]
-        C3[/Sub-FC 4: Verifikasi & Konfirmasi Admin Auto-Tenant/]
-        C4[/Sub-FC 14: Pembersihan Reservasi Batal & Cascade Chat/]
+        C3[[Sub-FC 4: Verifikasi & Konfirmasi Admin]]
+        C4[[Sub-FC 14: Pembersihan Reservasi Batal & Cascade Chat]]
     end
 
     subgraph ONBOARDING["🔐 FASE 4: ONBOARDING & DASHBOARD PENYEWA"]
-        D1[/Sub-FC 13: Keamanan Login & Force Change Password/]
-        D2[/Sub-FC 10: Menu Tata Tertib & Peraturan Kost/]
+        D1[[Sub-FC 13: Keamanan Login & Force Change Password]]
+        D2[[Sub-FC 10: Menu Tata Tertib & Peraturan Kost]]
     end
 
     subgraph CYCLIC["🔄 FASE 5: OPERASIONAL & BILLING RUTIN"]
         E1[[Sub-FC 5: Siklus Billing Rutin Bulanan Laravel Scheduler]]
-        E2[/Sub-FC 6: Pembayaran Tagihan Hybrid & Denda 5% + Eskalasi Wali/]
-        E3[/Sub-FC 7: Pelaporan & Resolusi Keluhan Fasilitas/]
+        E2[[Sub-FC 6: Pembayaran Tagihan Hybrid & Denda 5% + Eskalasi Wali]]
+        E3[[Sub-FC 7: Pelaporan & Resolusi Keluhan Fasilitas]]
     end
 
     subgraph OFFBOARDING["🚪 FASE 6: CHECKOUT & MANAGEMENT KAMAR"]
-        F1[/Sub-FC 11: Penonaktifan Penyewa Checkout & Deposit/]
-        F2[/Sub-FC 16: Inspeksi Kamar & Update Status Manual Maintenance/Ready/]
+        F1[[Sub-FC 11: Penonaktifan Penyewa Checkout & Deposit]]
+        F2[[Sub-FC 16: Inspeksi Kamar & Update Status Manual Maintenance/Ready]]
     end
 
     subgraph ADMIN_MASTER["⚙️ MANAGEMENT MASTER & AKUNTANSI (ADMIN)"]
-        M1[/Sub-FC 8: Pencatatan Pengeluaran & Laporan Arus Kas/]
-        M2[/Sub-FC 19: Master Fasilitas & Safety Proteksi/]
-        M3[/Sub-FC 20: Master Penyewa & Validasi Kontrak/]
-        M4[/Sub-FC 21: Broadcast Notifikasi Massal & Retry Engine/]
+        M1[[Sub-FC 8: Pencatatan Pengeluaran & Laporan Arus Kas]]
+        M2[[Sub-FC 19: Master Fasilitas & Safety Proteksi]]
+        M3[[Sub-FC 20: Master Penyewa & Validasi Kontrak]]
+        M4[[Sub-FC 21: Broadcast Notifikasi Massal & Retry Engine]]
     end
 
     %% Keterhubungan Antar Proses %%
+    A3 -->|"Render FAQ, Galeri, Ulasan"| A1
+    A1 <-->|"Konsultasi Live Chat Tamu"| A2
     A1 -->|"Kamar Tersedia & Klik Pesan"| B1
     A1 -->|"Direct Register"| B2
     B1 --> B2
@@ -110,12 +112,12 @@ flowchart TB
     
     B3 -->|"Walk-In Input by Admin"| D1
     
-    C3 -->|"Send WA Default Pwd"| D1
+    C3 -->|"Send WA Konfirmasi Aktivasi"| D1
     D1 -->|"Password Updated"| D2
     D1 --> E3
     D1 --> E2
     
-    E1 -->|"Generate Invoice Tgl 1"| E2
+    E1 -->|"Generate Invoice Tgl 1 (00:05)"| E2
     E2 -->|"Update Mutasi & Kas Masuk"| M1
     
     D1 -->|"Masa Sewa Berakhir"| F1
@@ -327,8 +329,18 @@ flowchart TB
     %% KONEKTOR LINTAS FASE %%
     UserCancel --> EndNode
     AutoCancelBooking --> EndNode
+    CTAChatAdmin --> EndNode
+    HideRoom --> EndNode
+    GuestChatSub --> EndNode
+    WaitMidtrans --> EndNode
+    RejectWebhook --> EndNode
+    RulesView --> EndNode
+    RejectCash --> SubmitOfflineDoc
     AdminResolveComplaint --> TenantDashboard
     SendWAReceipt --> TenantDashboard
+    CashFlowSub --> EndNode
+    MasterSafetySub --> EndNode
+    BroadcastSub --> EndNode
 ```
 
 ### 1.2.1 Matriks 18 Titik Keputusan Logika Kunci (Key Decision Flow Matrix)
@@ -356,7 +368,221 @@ Tabel berikut merinci setiap percabangan keputusan (*Decision Point*) yang digam
 | **D17** | Fase 6 (Checkout)| Komparasi biaya perbaikan vs deposit | `Biaya <= Deposit` vs `Biaya > Deposit`| Potong biaya & kembalikan sisa saldo vs Hangus 100% & klaim ganti rugi | Sub-FC 11 |
 | **D18** | Fase 6 (Room) | Kebutuhan renovasi fisik kamar | `Perlu Perbaikan` vs `Siap Huni`| Ubah status kamar 'maintenance' vs 'tersedia' untuk publik | Sub-FC 11, 16 |
 
-## 2. Detail Visualisasi & Alur Flowchart (Mermaid)
+---
+
+## 1.3 Diagram Visualisasi Alur Proses & Percabangan Keputusan Terpadu (Unified Process & Decision Flow Diagram)
+
+Diagram alir terpadu (*Unified Process & Decision Flow Diagram*) di bawah ini memadukan **hubungan antar-proses (inter-process relationships)** dan **18 titik keputusan logika kunci (decision flow D1 s/d D18)** ke dalam tata letak 6 Fase Bisnis yang terstruktur, berurutan, dan mudah dipahami:
+
+![Visual Diagram Alur Proses & Percabangan Terpadu](flowchart/diagram_alur_proses_terpadu.png)
+
+`mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#0F172A',
+    'primaryBorderColor': '#0F172A',
+    'lineColor': '#0F172A',
+    'secondaryColor': '#FEF08A',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    %% ========================================================
+    %% FASE 1: PENEMUAN & KATALOG PUBLIK
+    %% ========================================================
+    subgraph FASE1["🌐 FASE 1: PENEMUAN & KATALOG PUBLIK (GUEST)"]
+        StartNode([Tamu Mengakses Web /kamar]) --> D1{"D1: Status Unit Kamar?"}
+        
+        D1 -- "Maintenance" --> P_Hide["Sembunyikan Unit dari Publik"]
+        D1 -- "Terisi" --> P_CTAWA[/Tampilkan Tombol 'Tanya Admin WA'/]
+        D1 -- "Tersedia" --> P_Detail[/Buka Detail Kamar & Estimasi Tarif/]
+        
+        StartNode -.-> P_GuestChat[/Widget Live Chat Anonim/]
+        P_GuestChat --> SubFC12[[Sub-FC 12: Live Chat Guest Session Token]]
+        
+        P_Hide --> TermF1_Hide([Selesai: Unit Disembunyikan])
+        P_CTAWA --> TermF1_WA([Selesai: Diarahkan ke WA])
+        SubFC12 --> TermF1_Chat([Selesai: Chat Guest Ditutup])
+    end
+
+    %% ========================================================
+    %% FASE 2: OTENTIKASI & FORM RESERVASI
+    %% ========================================================
+    subgraph FASE2["🔑 FASE 2: OTENTIKASI & RESERVASI (CALON PENYEWA)"]
+        P_Detail --> D2{"D2: Sesi Pengguna?"}
+        
+        D2 -- "Belum Login" --> ChoiceAuth{"Pilihan Masuk / Daftar?"}
+        ChoiceAuth -- "Form Manual" --> FormManual[/Register / Login Akun/]
+        ChoiceAuth -- "Google Login" --> SubFC17[[Sub-FC 17: Socialite OAuth & Complete Phone]]
+        
+        FormManual --> FormReservasi[/Pengisian NIK, No HP Wali, Tgl Mulai, & Durasi/]
+        SubFC17 --> FormReservasi
+        D2 -- "Sudah Login" --> FormReservasi
+        
+        FormReservasi --> D3{"D3: Validasi NIK & No Wali?"}
+        D3 -- "Format Tidak Valid" --> ToastError[/Toast Validation Error/]
+        ToastError --> FormReservasi
+        
+        D3 -- "Valid" --> LockDB[[DB Trans: Kamar lockForUpdate]]
+        LockDB --> D4{"D4: Kamar Masih Bebas?"}
+        
+        D4 -- "Bentrok / Terisi" --> RollbackDB[[Rollback DB Transaction & Munculkan Toast]]
+        RollbackDB --> P_Detail
+        
+        D4 -- "Aman / Tersedia" --> CreatePending[[Buat Reservasi Status 'pending' & Order ID]]
+    end
+
+    %% ========================================================
+    %% FASE 3: MIDTRANS SNAP & VERIFIKASI ADMIN
+    %% ========================================================
+    subgraph FASE3["💳 FASE 3: PAYMENT GATEWAY & VERIFIKASI ADMIN"]
+        CreatePending --> DetailReservasi[/Buka Portal Reservasi & Pre-Chat Box/]
+        
+        DetailReservasi --> D5{"D5: Aksi Calon Penyewa?"}
+        D5 -- "Diskusi Pre-Bayar" --> SubFC3_Chat[[Sub-FC 3: Diskusi Pre-Pembayaran via Chat]]
+        SubFC3_Chat --> D5
+        
+        D5 -- "Batalkan Pemesanan" --> UserBatal[[Update Status 'batal' & Lepas Kunci Kamar]]
+        UserBatal --> TermF3_Batal([Selesai: Pemesanan Dibatalkan])
+        
+        D5 -- "Bayar Sekarang" --> SnapReq[[Request Token Snap ke Midtrans API]]
+        SnapReq --> SnapPopup[/Render Snap Popup: VA / QRIS / E-Wallet/]
+        SnapPopup --> WebhookCall[[Midtrans Mengirim Webhook Callback POST]]
+        
+        WebhookCall --> D6{"D6: Verifikasi SHA512 Signature?"}
+        D6 -- "Signature Mismatch" --> RejectWH[[Tolak Request HTTP 403 Forbidden]]
+        RejectWH --> TermF3_Reject([Selesai: Callback Ditolak])
+        
+        D6 -- "Signature Valid" --> D7{"D7: Status Transaksi Midtrans?"}
+        D7 -- "Pending" --> WaitPay[/Menunggu Pembayaran Max 24 Jam/]
+        WaitPay --> TermF3_Wait([Selesai: Menunggu Pembayaran])
+        D7 -- "Expire / Cancel / Deny" --> AutoBatal[[Set Status 'batal' & Lepaskan Kunci Kamar]]
+        AutoBatal --> TermF3_Expired([Selesai: Reservasi Kadaluarsa])
+        
+        D7 -- "Settlement / Capture" --> D8{"D8: Skema Pembayaran?"}
+        D8 -- "DP 30%" --> SetDP[[Update Status 'dp' & Catat Pembayaran DP]]
+        D8 -- "Lunas 100%" --> SetLunas[[Update Status 'lunas' & Catat Pembayaran]]
+        
+        SetDP --> AdminReview[/Admin Meninjau Berkas NIK & Kontak Wali/]
+        SetLunas --> AdminReview
+        
+        AdminReview --> D9{"D9: Verifikasi Admin?"}
+        D9 -- "Minta Koreksi" --> ReqRevisi[/Kirim Pesan Revisi via Chat / WA/]
+        ReqRevisi --> AdminReview
+        D9 -- "Tolak / Batalkan" --> AdminReject[[Update Status 'batal' & Lepas Kamar]]
+        AdminReject --> TermF3_AdminBatal([Selesai: Ditolak Admin])
+        
+        D9 -- "Disetujui" --> ConfirmTx[[Sub-FC 4: TransisiPenyewaService Aktivasi Profil Penyewa]]
+    end
+
+    %% ========================================================
+    %% FASE 4: ONBOARDING & DASHBOARD PENYEWA
+    %% ========================================================
+    subgraph FASE4["🔐 FASE 4: ONBOARDING & KEAMANAN AKUN"]
+        ConfirmTx --> SendNotifAktif[/Fonnte WA: Kirim Notifikasi Reservasi Disetujui/]
+        
+        %% Jalur Alternatif Walk-in Offline %%
+        WalkInStart([Pendaftaran Walk-In]) -.-> SubFC15[[Sub-FC 15: Pendaftaran Offline & Default Pwd]]
+        SubFC15 --> SendWACreds[/Fonnte WA: Kirim Password Default No HP/]
+        
+        SendNotifAktif --> TenantLogin[/Penyewa Mengakses Halaman Login/]
+        SendWACreds --> TenantLogin
+        
+        TenantLogin --> D10{"D10: require_password_change?"}
+        D10 -- "True (Walk-In Pertama)" --> ForcePwd[/Sub-FC 13: Redirect Paksa ke Form Ganti Password/]
+        ForcePwd --> SaveNewPwd[[Simpan Hash Password Baru & Flag = false]]
+        SaveNewPwd --> DashboardPenyewa[/Dashboard Portal Penyewa Aktif/]
+        
+        D10 -- "False (Online / Rutin)" --> DashboardPenyewa
+        DashboardPenyewa --> MenuTataTertib[/Sub-FC 10: Menu Tata Tertib Kost Dark Mode/]
+        MenuTataTertib --> TermF4_TataTertib([Selesai: Peraturan Ditampilkan])
+    end
+
+    %% ========================================================
+    %% FASE 5: OPERASIONAL, BILLING & KELUHAN
+    %% ========================================================
+    subgraph FASE5["🔄 FASE 5: OPERASIONAL, BILLING & KELUHAN (PENYEWA AKTIF)"]
+        CronBulan([Cron Scheduler Tgl 1, 00:05 WIB]) --> SubFC5[[Sub-FC 5: Command tagihan:generate-bulanan]]
+        SubFC5 --> InvoicesGenerated[[Generate Invoice Jatuh Tempo Tgl 10]]
+        
+        InvoicesGenerated --> MenuTagihan[/Penyewa Buka Menu 'Tagihan Saya'/]
+        
+        MenuTagihan --> D11{"D11: Melewati Jatuh Tempo Tgl 10?"}
+        D11 -- "Tidak (Tepat Waktu)" --> TagihanPokok[/Tagihan Nominal Pokok/]
+        
+        D11 -- "Ya (Terlambat)" --> D12{"D12: Menyeberang ke Bulan Baru?"}
+        D12 -- "Bulan Berjalan" --> MasaKeringanan[[Masa Keringanan: Tanpa Denda & Kirim WA Reminder]]
+        MasaKeringanan --> TagihanPokok
+        
+        D12 -- "Bulan Berikutnya" --> ApplyDenda[[Terapkan Denda Flat 5% Sekali Saja]]
+        ApplyDenda --> D13{"D13: Tunggakan > 1 Bulan?"}
+        D13 -- "Ya" --> EskalasiWali[/Kirim WA Eskalasi ke Nomor Wali/]
+        D13 -- "Tidak" --> WarningTenant[/Kirim WA Peringatan ke Penyewa/]
+        EskalasiWali --> TagihanPlusDenda[/Nominal Pokok + Denda 5%/]
+        WarningTenant --> TagihanPlusDenda
+        
+        TagihanPokok --> D14{"D14: Saluran Metode Pembayaran?"}
+        TagihanPlusDenda --> D14
+        
+        D14 -- "Online Midtrans Snap" --> SnapBill[[Sub-FC 6: Bayar Snap & Webhook Settlement]]
+        D14 -- "Offline Cash / Transfer" --> InputManualDoc[/Serahkan Cash Fisik / Bukti Transfer/]
+        
+        InputManualDoc --> AdminCekFisik[/Admin Cek Penerimaan Kas Masuk/]
+        AdminCekFisik --> D15{"D15: Dana Fisik / Transfer Valid?"}
+        D15 -- "Tidak Valid" --> TolakOffline[/Tolak Pembayaran & Minta Bukti Valid/]
+        TolakOffline --> D14
+        
+        D15 -- "Valid" --> AdminKonfirmasiCash[[Set Tagihan Lunas & Catat Admin ID]]
+        
+        SnapBill --> GenPDF[[Dompdf: Cetak Nota Kuitansi PDF]]
+        AdminKonfirmasiCash --> GenPDF
+        GenPDF --> SendWAReceipt[/Fonnte WA: Kirim Kuitansi PDF/]
+        SendWAReceipt --> DashboardPenyewa
+        
+        %% Keluhan Fasilitas %%
+        DashboardPenyewa --> MenuKeluhan[/Menu Keluhan Fasilitas/]
+        MenuKeluhan --> SubFC7[[Sub-FC 7: Pelaporan & Resolusi Keluhan]]
+        SubFC7 --> DashboardPenyewa
+        
+        %% Integrasi Akuntansi %%
+        AdminKonfirmasiCash -.-> SubFC8[[Sub-FC 8: Pencatatan Arus Kas Masuk]]
+        SubFC8 --> TermF5_Akuntansi([Selesai: Kas Masuk Tercatat])
+    end
+
+    %% ========================================================
+    %% FASE 6: CHECKOUT, DEPOSIT & SIKLUS KAMAR
+    %% ========================================================
+    subgraph FASE6["🚪 FASE 6: CHECKOUT, DEPOSIT & SIKLUS KAMAR"]
+        DashboardPenyewa --> MasaHabis([Masa Kontrak Berakhir / Permintaan Checkout])
+        MasaHabis --> AdminCheckout[/Admin Klik Nonaktifkan Kontrak Penyewa/]
+        AdminCheckout --> LockKamarTetapTerisi[[Sub-FC 11: Kamar Tetap Terkunci Berstatus 'terisi']]
+        
+        LockKamarTetapTerisi --> InspeksiKamar[/Admin Melakukan Inspeksi Fisik Kamar/]
+        InspeksiKamar --> D16{"D16: Ditemukan Kerusakan Fasilitas?"}
+        
+        D16 -- "Tidak Ada" --> BalikDeposit100[[Kembalikan Deposit Jaminan 100% Penuh]]
+        D16 -- "Ada Kerusakan" --> D17{"D17: Estimasi Biaya > Nilai Deposit?"}
+        
+        D17 -- "Biaya <= Deposit" --> PotongSebagian[[Potong Biaya Perbaikan & Kembalikan Sisa Saldo]]
+        D17 -- "Biaya > Deposit" --> HangusKlaim[[Deposit Hangus 100% & Terbitkan Tagihan Klaim Tambahan]]
+        
+        BalikDeposit100 --> AdminKelolaKamar[/Admin Buka Menu Manajemen Kamar /admin/kamar/]
+        PotongSebagian --> AdminKelolaKamar
+        HangusKlaim --> AdminKelolaKamar
+        
+        AdminKelolaKamar --> D18{"D18: Kondisi Kamar Perlu Perbaikan?"}
+        D18 -- "Ya (Renovasi)" --> SetMaintenance[[Sub-FC 16: Ubah Status Kamar -> 'maintenance']]
+        D18 -- "Tidak (Siap Huni)" --> SetTersedia[[Sub-FC 16: Ubah Status Kamar -> 'tersedia']]
+        
+        SetMaintenance --> TermF6_Maint([Selesai: Unit Masuk Perbaikan])
+        SetTersedia --> StartNode
+    end
+`## 2. Detail Visualisasi & Alur Flowchart (Mermaid)
 
 ### 2.1. Flowchart Utama: Siklus Hidup Pengguna End-to-End (Master Flowchart)
 * **Controller Terkait**: Seluruh Controller Utama (Public, Auth, Penyewa, & Admin)
@@ -483,25 +709,25 @@ flowchart TD
 }}%%
 flowchart TD
     Start([Mulai]) --> BukaKatalog[/Guest membuka katalog kamar /kamar atau Beranda/]
-    BukaKatalog --> RenderLandingUI["Render Komponen UI Landing: Navbar Responsif, Floating WhatsApp Button, & Room Tour Video"]
+    BukaKatalog --> RenderLandingUI[/Render Komponen UI Landing: Navbar Responsif, Floating WhatsApp Button, & Room Tour Video/]
     
     RenderLandingUI --> InputFilter[/User memasukkan Filter Lantai, Tipe, Tanggal, Durasi/]
     
-    InputFilter --> QueryKamar[[Sistem eksekusi Query: SELECT * FROM kamar WHERE status != 'maintenance']]
+    InputFilter --> QueryKamar[[Sistem eksekusi Query: SELECT * FROM kamar WHERE status != maintenance]]
     
     QueryKamar --> CekKosong{"Apakah hasil pencarian ditemukan?"}
-    CekKosong -- "Tidak (0 Result)" --> RenderEmptyState[/Tampilkan Empty State UI 'Kamar Tidak Ditemukan' + Tombol Reset Filter/]
+    CekKosong -- "Tidak - 0 Result" --> RenderEmptyState[/Tampilkan Empty State UI Kamar Tidak Ditemukan + Tombol Reset Filter/]
     RenderEmptyState --> InputFilter
     
     CekKosong -- "Ya" --> Tampilkan[/Tampilkan daftar unit kamar di grid katalog/]
     Tampilkan --> EvaluasiStatus{"Bagaimana status unit kamar?"}
     
-    EvaluasiStatus -- "terisi" --> TampilTombolWA[/Tampilkan tombol 'Tanya WA'/]
+    EvaluasiStatus -- "terisi" --> TampilTombolWA[/Tampilkan tombol Tanya WA/]
     TampilTombolWA --> KlikWA[/Arahkan ke WhatsApp Chat Admin/]
     KlikWA --> Selesai([Selesai])
     
-    EvaluasiStatus -- "tersedia" --> TampilTombolPesan[/Tampilkan tombol 'Pesan Unit'/]
-    TampilTombolPesan --> KlikPesan[/Guest klik 'Pesan Unit'/]
+    EvaluasiStatus -- "tersedia" --> TampilTombolPesan[/Tampilkan tombol Pesan Unit/]
+    TampilTombolPesan --> KlikPesan[/Guest klik Pesan Unit/]
     KlikPesan --> BukaDetail[/Buka detail kamar /kamar/:id beserta query string/]
     BukaDetail --> AutoKalkulasi[[JS otomatis eksekusi hitungEstimasi tarif total]]
     AutoKalkulasi --> TampilForm[/Form reservasi siap diisi di detail kamar/]
@@ -587,15 +813,17 @@ flowchart TD
     AJAXPolling --> RenderBubble[/Render gelembung chat Neo-Brutalisme/]
     RenderBubble --> ChatSection
     
-    BukaDetailReservasi --> PilihAksi{"Pilih Aksi User?"}
+    %% Exit gate dari Chat Box menuju tindakan reservasi %%
+    ChatSection --> PilihAksi{"Pilih Aksi User?"}
+    BukaDetailReservasi --> PilihAksi
     
-    PilihAksi -- "Batalkan Reservasi" --> KlikBatal[/User klik 'Batalkan Pemesanan'/]
+    PilihAksi -- "Batalkan Reservasi" --> KlikBatal[/User klik Batalkan Pemesanan/]
     KlikBatal --> KonfirmasiBatal{"Konfirmasi pembatalan?"}
     KonfirmasiBatal -- "Tidak" --> BukaDetailReservasi
-    KonfirmasiBatal -- "Ya" --> SetBatalUser[[1. Update status reservasi = 'batal'<br>2. Lepas kunci tanggal kamar]]
+    KonfirmasiBatal -- "Ya" --> SetBatalUser[[1. Update status reservasi = batal<br>2. Lepas kunci tanggal kamar]]
     SetBatalUser --> Selesai([Selesai])
     
-    PilihAksi -- "Bayar Now" --> KlikBayar[/User klik tombol 'Bayar Sekarang'/]
+    PilihAksi -- "Bayar Now" --> KlikBayar[/User klik tombol Bayar Sekarang/]
     KlikBayar --> ReqSnapToken[[ReservasiController meminta Snap Token ke Midtrans API]]
     ReqSnapToken --> ReturnSnapToken[/Midtrans API mengembalikan snap_token/]
     ReturnSnapToken --> OpenSnapModal[/Panggil snap.pay snap_token membuka pop-up/]
@@ -610,13 +838,13 @@ flowchart TD
     ValidasiSignature -- "Ya" --> EvaluasiStatusMidtrans{"Status Transaksi Midtrans?"}
     
     EvaluasiStatusMidtrans -- "Settlement / Capture" --> CekSkemaBayar{"Skema Pembayaran?"}
-    CekSkemaBayar -- "DP 30%" --> SetStatusDP[[Update status reservasi = 'dp'<br>Simpan data transaksi ke tabel pembayaran]]
-    CekSkemaBayar -- "Lunas 100%" --> SetStatusLunas[[Update status reservasi = 'lunas'<br>Simpan data transaksi ke tabel pembayaran]]
+    CekSkemaBayar -- "DP 30%" --> SetStatusDP[[Update status reservasi = dp<br>Simpan data transaksi ke tabel pembayaran]]
+    CekSkemaBayar -- "Lunas 100%" --> SetStatusLunas[[Update status reservasi = lunas<br>Simpan data transaksi ke tabel pembayaran]]
     
     EvaluasiStatusMidtrans -- "Pending" --> WaitStatus[/Menunggu transfer dalam batas waktu 24 jam/]
     WaitStatus --> Selesai
     
-    EvaluasiStatusMidtrans -- "Expired / Failed / Deny" --> SetBatalSystem[[1. Update status reservasi = 'batal'<br>2. Lepas kunci kamar]]
+    EvaluasiStatusMidtrans -- "Expired / Failed / Deny" --> SetBatalSystem[[1. Update status reservasi = batal<br>2. Lepas kunci kamar]]
     
     SetStatusDP --> ReloadUI[/Sistem memperbarui visual Stepper Reservasi 5-Step/]
     SetStatusLunas --> ReloadUI
@@ -627,7 +855,7 @@ flowchart TD
 ---
 
 ### 2.5. Sub-Flowchart 4: Verifikasi & Konfirmasi Reservasi Baru
-* **Controller Terkait**: [ReservasiController](file:///c:/xampp/htdocs/asri-boarding-house/app/Http/Controllers/Admin/ReservasiController.php) (method: `confirm`)
+* **Controller Terkait**: [ReservasiController](file:///c:/xampp/htdocs/asri-boarding-house/app/Http/Controllers/Admin/ReservasiController.php) (method: `konfirmasi`, `batal`, `destroy`), [TransisiPenyewaService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/TransisiPenyewaService.php)
 * **Model Terkait**: [Reservasi](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Reservasi.php), [Penyewa](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Penyewa.php), [User](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/User.php)
 
 ![Visual Alur Konfirmasi Reservasi](flowchart/alur_konfirmasi_reservasi.png)
@@ -648,8 +876,18 @@ flowchart TD
     Start([Mulai]) --> AdminBukaReservasi[/Admin membuka menu Daftar Reservasi /admin/reservasi/]
     AdminBukaReservasi --> PilihReservasi[/Admin memilih reservasi berstatus dp atau lunas/]
     PilihReservasi --> TinjauBerkas[/Admin memverifikasi NIK KTP & Telepon Wali/]
-    TinjauBerkas --> KlikKonfirmasi[/Admin klik tombol 'Konfirmasi Reservasi'/]
     
+    TinjauBerkas --> KeputusanAdmin{"Apakah Admin menyetujui data reservasi?"}
+    
+    KeputusanAdmin -- "Tolak / Batalkan" --> KlikBatalAdmin[/Admin klik tombol 'Batalkan Reservasi'/]
+    KlikBatalAdmin --> BatalReservasiDB[[1. Ubah status reservasi 'batal'<br>2. Lepas kunci kamar]]
+    BatalReservasiDB --> ToastBatal[/Tampilkan Toast: Reservasi telah dibatalkan/]
+    ToastBatal --> Selesai([Selesai])
+    
+    KeputusanAdmin -- "Minta Koreksi" --> ChatRevisi[/Admin kirim pesan perbaikan via Chat / WA/]
+    ChatRevisi --> TinjauBerkas
+    
+    KeputusanAdmin -- "Disetujui" --> KlikKonfirmasi[/Admin klik tombol Konfirmasi Reservasi/]
     KlikKonfirmasi --> ValidasiInput{"Apakah input data valid?<br>NIK 16 digit & No Wali valid"}
     ValidasiInput -- "Tidak" --> TampilToastError[/Kembalikan dengan Toast Error validation/]
     TampilToastError --> TinjauBerkas
@@ -658,8 +896,7 @@ flowchart TD
     DBTrans --> UpdateReservasi[[1. Ubah status reservasi 'dikonfirmasi'<br>2. Simpan tanggal_konfirmasi = NOW]]
     UpdateReservasi --> LockKamarTerisi[[Ubah status kamar terkait menjadi 'terisi' secara permanen]]
     LockKamarTerisi --> SalinHargaSewa[[Salin harga kamar saat ini ke penyewa.harga_sewa secara immutable]]
-    SalinHargaSewa --> CreateAccountUser[[Buat akun User baru role: 'penyewa', require_password_change: true]]
-    CreateAccountUser --> CreateProfilPenyewa[[Buat data Profil Penyewa baru di tabel penyewa]]
+    SalinHargaSewa --> CreateProfilPenyewa[[TransisiPenyewaService: Buat / aktifkan record di tabel penyewa linked to user_id]]
     
     CreateProfilPenyewa --> CekSkemaDP{"Apakah reservasi menggunakan skema DP?"}
     CekSkemaDP -- "Ya" --> InjectTagihanSisa[[Sistem menginjeksi tagihan sisa pelunasan 70% ke tabel tagihan]]
@@ -667,15 +904,15 @@ flowchart TD
     InjectTagihanSisa --> CommitTx
     CommitTx[[Commit DB Transaction secara atomik]]
     
-    CommitTx --> DispatchFonnteWA[/Kirim WhatsApp kredensial login Email & Password default via Fonnte API/]
-    DispatchFonnteWA --> ToastSuccess[/Tampilkan Toast: 'Penyewa berhasil diaktivasi & kredensial terkirim'/]
-    ToastSuccess --> Selesai([Selesai])
+    CommitTx --> DispatchFonnteWA[/Kirim WhatsApp Notifikasi Konfirmasi Reservasi Disetujui via Fonnte API/]
+    DispatchFonnteWA --> ToastSuccess[/Tampilkan Toast: Penyewa berhasil diaktivasi & notifikasi terkirim/]
+    ToastSuccess --> Selesai
 ```
 
 ---
 
 ### 2.6. Sub-Flowchart 5: Siklus Billing Rutin Bulanan Otomatis
-* **Controller Terkait**: [BillingService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/BillingService.php) (Laravel Command: `billing:generate`)
+* **Controller Terkait**: [BillingService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/BillingService.php) (Laravel Command: `tagihan:generate-bulanan` pada `00:05 WIB`)
 * **Model Terkait**: [Tagihan](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Tagihan.php), [LogNotifikasi](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/LogNotifikasi.php)
 
 ![Visual Alur Billing Otomatis](flowchart/alur_billing_otomatis.png)
@@ -693,8 +930,8 @@ flowchart TD
   }
 }}%%
 flowchart TD
-    Start([Setiap Tanggal 1 Awal Bulan, 00:00]) --> TriggerScheduler[[Cron Job memicu perintah scheduler Laravel]]
-    TriggerScheduler --> RunBillingCommand[[Eksekusi command: php artisan billing:generate]]
+    Start([Setiap Tanggal 1 Awal Bulan, 00:05 WIB]) --> TriggerScheduler[[Cron Job memicu perintah scheduler Laravel]]
+    TriggerScheduler --> RunBillingCommand[[Eksekusi command: php artisan tagihan:generate-bulanan]]
     RunBillingCommand --> FetchPenyewaAktif[[Ambil semua data penyewa berstatus 'aktif' tipe 'bulanan']]
     
     FetchPenyewaAktif --> LoopPenyewa{"Apakah ada penyewa aktif berikutnya?"}
@@ -737,7 +974,7 @@ flowchart TD
   }
 }}%%
 flowchart TD
-    Start([Mulai]) --> PenyewaLogin[/Penyewa login & masuk Menu 'Tagihan Saya'/]
+    Start([Mulai]) --> PenyewaLogin[/Penyewa login & masuk Menu Tagihan Saya/]
     PenyewaLogin --> CekIDOR{"Verifikasi ID Penyewa == ID Sesi Auth?"}
     CekIDOR -- "Tidak (IDOR Attempt)" --> BlockIDOR[/Tolak akses & catat security warning log/]
     BlockIDOR --> Selesai([Selesai])
@@ -749,10 +986,10 @@ flowchart TD
     CekTerlambat -- "Tidak" --> TampilkanTotal[/Tampilkan nominal tagihan pokok/]
     
     CekTerlambat -- "Ya" --> CekBulanTunggakan{"Apakah menyeberang ke bulan kalender berikutnya?"}
-    CekBulanTunggakan -- "Tidak (Bulan Berjalan)" --> MasaKeringanan[[Bebas Denda Masa Keringanan & Kirim WA Reminder Penyewa]]
+    CekBulanTunggakan -- "Tidak - Bulan Berjalan" --> MasaKeringanan[[Bebas Denda Masa Keringanan & Kirim WA Reminder Penyewa]]
     MasaKeringanan --> TampilkanTotal
     
-    CekBulanTunggakan -- "Ya (Bulan Berikutnya)" --> HitungDendaFlat[[Terapkan Denda Flat 5% sekali saja]]
+    CekBulanTunggakan -- "Ya - Bulan Berikutnya" --> HitungDendaFlat[[Terapkan Denda Flat 5% sekali saja]]
     HitungDendaFlat --> KirimWAWarning[/Fonnte WA API: Kirim WA Warning ke Penyewa/]
     KirimWAWarning --> CekBulan2{"Tunggakan > 1 Bulan?"}
     CekBulan2 -- "Ya" --> KirimWAEskalasiWali[/Fonnte WA API: Kirim WA Eskalasi ke Nomor Wali/]
@@ -762,22 +999,22 @@ flowchart TD
     TampilkanTotal --> PilihMetode{"Pilih Metode Pembayaran?"}
     TampilkanTotalDenda --> PilihMetode
     
-    PilihMetode -- "Online (Midtrans Snap)" --> KlikBayarOnline[/Klik tombol 'Bayar Online'/]
+    PilihMetode -- "Online (Midtrans Snap)" --> KlikBayarOnline[/Klik tombol Bayar Online/]
     KlikBayarOnline --> ReqSnapToken[[Request Snap Token ke Midtrans API]]
     ReqSnapToken --> OpenSnap[/Render Pop-Up Midtrans Snap/]
     OpenSnap --> BayarOnline[/Penyewa menyelesaikan pembayaran online/]
     BayarOnline --> WebhookMidtrans[/Webhook Midtrans mengirim callback settlement/]
-    WebhookMidtrans --> DBTransOnline[[DB::transaction: Set tagihan 'lunas' & simpan pembayaran]]
+    WebhookMidtrans --> DBTransOnline[[DB::transaction: Set tagihan lunas & simpan pembayaran]]
     
-    PilihMetode -- "Offline (Cash / Transfer Bank)" --> TransferManual[/Penyewa menyerahkan cash fisik / bukti transfer manual/]
+    PilihMetode -- "Offline - Cash / Transfer Bank" --> TransferManual[/Penyewa menyerahkan cash fisik / bukti transfer manual/]
     TransferManual --> AdminVerifikasiKas[/Admin memverifikasi dana kas masuk/]
     AdminVerifikasiKas --> AdminValidasiUang{"Apakah dana fisik/transfer valid?"}
     
     AdminValidasiUang -- "Tidak" --> TolakPembayaranOffline[/Admin tolak pembayaran & kirim pesan koreksi/]
-    TolakPembayaranOffline --> Selesai
+    TolakPembayaranOffline --> PilihMetode
     
-    AdminValidasiUang -- "Ya" --> AdminKonfirmasiCash[/Admin klik 'Konfirmasi Cash'/]
-    AdminKonfirmasiCash --> DBTransOffline[[DB::transaction: Set tagihan 'lunas' dikonfirmasi_oleh = admin_id]]
+    AdminValidasiUang -- "Ya" --> AdminKonfirmasiCash[/Admin klik Konfirmasi Cash/]
+    AdminKonfirmasiCash --> DBTransOffline[[DB::transaction: Set tagihan lunas dikonfirmasi_oleh = admin_id]]
     
     DBTransOnline --> GenReceiptPDF[[Sistem memicu Dompdf men-generate nota kuitansi PDF]]
     DBTransOffline --> GenReceiptPDF
@@ -1323,10 +1560,11 @@ flowchart TD
     GetPayload --> ExtractFields[[Ambil field: order_id, status_code, gross_amount, signature_key]]
     GetPayload --> LoadServerKey[[Ambil serverKey dari config]]
     
-    LoadServerKey --> CalcSignature[[expectedSignature = hash sha512 payload]]
+    ExtractFields --> CalcSignature[[expectedSignature = SHA512 order_id + status_code + gross_amount + serverKey]]
+    LoadServerKey --> CalcSignature
     CalcSignature --> VerifySig{"expectedSignature == signature_key?"}
     
-    VerifySig -- "Tidak" --> RejectSig[[Log warning 'Signature mismatch' & HTTP 403 Unauthorized]]
+    VerifySig -- "Tidak" --> RejectSig[[Log warning Signature mismatch & HTTP 403 Unauthorized]]
     RejectSig --> Selesai([Selesai])
     
     VerifySig -- "Ya" --> RouteCallback{"Tujuan rute callback?"}
@@ -1335,18 +1573,21 @@ flowchart TD
     GetReservasi --> ReservasiStatus{"transaction_status?"}
     
     ReservasiStatus -- "settlement / capture" --> SetReservasiBayar[[1. Cek skema DP atau Lunas<br>2. Simpan record di tabel pembayaran<br>3. Pemicu stepper 5-Step di UI]]
-    ReservasiStatus -- "expire / cancel / deny" --> SetReservasiBatal[[1. Reservasi status -> 'batal'<br>2. Melepas kunci pemesanan kamar]]
+    ReservasiStatus -- "expire / cancel / deny" --> SetReservasiBatal[[1. Reservasi status -> batal<br>2. Melepas kunci pemesanan kamar]]
+    ReservasiStatus -- "pending" --> ResponPending[/Respon HTTP 200: Menunggu Pembayaran Selesai/]
     
     RouteCallback -- "/midtrans/callback" --> GetTagihan[[Cari data tagihan di database via order_id]]
     GetTagihan --> TagihanStatus{"transaction_status?"}
     
-    TagihanStatus -- "settlement / capture" --> SetTagihanLunas[[1. Update tagihan status -> 'lunas'<br>2. Simpan pembayaran<br>3. Generate nota PDF via Dompdf<br>4. Kirim WA receipt via Fonnte]]
-    TagihanStatus -- "expire / cancel / deny" --> SetTagihanGagal[[1. Update pembayaran status -> 'kadaluarsa'<br>2. Tagihan tetap 'pending' & snap_token direset untuk re-try]]
+    TagihanStatus -- "settlement / capture" --> SetTagihanLunas[[1. Update tagihan status -> lunas<br>2. Simpan pembayaran<br>3. Generate nota PDF via Dompdf<br>4. Kirim WA receipt via Fonnte]]
+    TagihanStatus -- "expire / cancel / deny" --> SetTagihanGagal[[1. Update pembayaran status -> kadaluarsa<br>2. Tagihan tetap pending & snap_token direset untuk re-try]]
+    TagihanStatus -- "pending" --> ResponPending
     
     SetReservasiBayar --> ResponSuccess[/Respon HTTP 200 Success/]
     SetReservasiBatal --> ResponSuccess
     SetTagihanLunas --> ResponSuccess
     SetTagihanGagal --> ResponSuccess
+    ResponPending --> Selesai
     
     ResponSuccess --> Selesai
 ```

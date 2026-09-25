@@ -14,7 +14,8 @@ flowchart TD
     GetPayload --> ExtractFields[[Ambil field: order_id, status_code, gross_amount, signature_key]]
     GetPayload --> LoadServerKey[[Ambil serverKey dari config]]
     
-    LoadServerKey --> CalcSignature[[expectedSignature = SHA512 order_id + status_code + gross_amount + serverKey]]
+    ExtractFields --> CalcSignature[[expectedSignature = SHA512 order_id + status_code + gross_amount + serverKey]]
+    LoadServerKey --> CalcSignature
     CalcSignature --> VerifySig{"expectedSignature == signature_key?"}
     
     VerifySig -- "Tidak" --> RejectSig[[Log warning Signature mismatch & HTTP 403 Unauthorized]]
@@ -27,16 +28,19 @@ flowchart TD
     
     ReservasiStatus -- "settlement / capture" --> SetReservasiBayar[[1. Cek skema DP atau Lunas<br>2. Simpan record di tabel pembayaran<br>3. Pemicu stepper 5-Step di UI]]
     ReservasiStatus -- "expire / cancel / deny" --> SetReservasiBatal[[1. Reservasi status -> batal<br>2. Melepas kunci pemesanan kamar]]
+    ReservasiStatus -- "pending" --> ResponPending[/Respon HTTP 200: Menunggu Pembayaran Selesai/]
     
     RouteCallback -- "/midtrans/callback" --> GetTagihan[[Cari data tagihan di database via order_id]]
     GetTagihan --> TagihanStatus{"transaction_status?"}
     
     TagihanStatus -- "settlement / capture" --> SetTagihanLunas[[1. Update tagihan status -> lunas<br>2. Simpan pembayaran<br>3. Generate nota PDF via Dompdf<br>4. Kirim WA receipt via Fonnte]]
     TagihanStatus -- "expire / cancel / deny" --> SetTagihanGagal[[1. Update pembayaran status -> kadaluarsa<br>2. Tagihan tetap pending & snap_token direset untuk re-try]]
+    TagihanStatus -- "pending" --> ResponPending
     
     SetReservasiBayar --> ResponSuccess[/Respon HTTP 200 Success/]
     SetReservasiBatal --> ResponSuccess
     SetTagihanLunas --> ResponSuccess
     SetTagihanGagal --> ResponSuccess
+    ResponPending --> Selesai
     
     ResponSuccess --> Selesai
