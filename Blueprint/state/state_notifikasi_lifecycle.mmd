@@ -1,7 +1,17 @@
 stateDiagram-v2
-    [*] --> pending_send : Event Terpicu / Queue Job Pushed
-    pending_send --> sukses : Kirim Sukses [HTTP 200]<br>/ Log Sukses
-    pending_send --> gagal : Kirim Gagal [Timeout/API Down]<br>/ Log Error
-    gagal --> pending_send : Klik Retry / kirimUlangNotifikasi()
-    gagal --> [*] : Selesai
-    sukses --> [*] : Selesai
+    direction TB
+
+    state "pending_send" as pending_send
+    state "sukses" as sukses
+    state "gagal" as gagal
+
+    [*] --> pending_send : DispatchJob<br>/ In-Memory Transient Queue
+
+    pending_send --> sukses : KirimPesan [HTTP 200 OK]<br>/ Simpan Log DB Sukses
+    pending_send --> gagal : KirimPesan [API Error / Timeout]<br>/ Simpan Log DB Gagal
+
+    gagal --> pending_send : RetryKirim<br>/ Admin Kirim Ulang via Dasbor
+
+    sukses --> [*] : SchedulerPurge<br>[created_at > Batas Retensi]<br>/ Bersihkan Log Berkala
+
+    gagal --> [*] : SchedulerPurge<br>[created_at > Batas Retensi]<br>/ Bersihkan Log Berkala

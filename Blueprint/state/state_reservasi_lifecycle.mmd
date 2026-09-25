@@ -1,16 +1,28 @@
 stateDiagram-v2
-    [*] --> pending : Submit Booking Kamar
-    
-    pending --> dp : Bayar DP 30%
-    pending --> lunas : Bayar Lunas 100%
-    pending --> batal : Timeout 24 Jam / Double-Booking
-    
-    dp --> dikonfirmasi : Konfirmasi [NIK & Wali OK]
-    lunas --> dikonfirmasi : Konfirmasi [NIK & Wali OK]
-    
-    dp --> batal : Batal Sebelum Konfirmasi
-    lunas --> batal : Batal Sebelum Konfirmasi
-    
-    dikonfirmasi --> selesai : Auto-Onboarding [User & Tenant]
-    selesai --> [*]
-    batal --> [*] : Hapus Permanen
+    direction TB
+
+    state "pending" as pending
+    state "dikonfirmasi" as dikonfirmasi
+    state "batal" as batal
+    state "selesai (Logical End)" as selesai
+
+    [*] --> pending : ReservasiDibuat<br>[Kamar Tersedia]<br>/ Virtual Lock Kamar
+
+    state "Menunggu Konfirmasi Admin" as Terbayar {
+        dp : DP 30% Terbayar
+        lunas : Lunas 100% Terbayar
+        state "Verifikasi Dokumen" as Verif
+        dp --> Verif
+        lunas --> Verif
+    }
+
+    pending --> dp : PembayaranDiterima<br>[Nominal == DP 30%]<br>/ Simpan Bukti DP
+    pending --> lunas : PembayaranDiterima<br>[Nominal == Lunas 100%]<br>/ Simpan Bukti Lunas
+    pending --> batal : Timeout24h / BatalMandiri<br>[Belum Bayar]<br>/ Lepas Virtual Lock
+
+    Verif --> dikonfirmasi : AdminKonfirmasi<br>[NIK & Data Valid]<br>/ Onboard Akun & Kamar
+    Verif --> batal : AdminTolak<br>[Data Invalid]<br>/ Bebaskan Kamar & Refund
+
+    dikonfirmasi --> selesai : OnboardingSelesai<br>[Akun & Billing Siap]<br>/ Handoff ke Tenant Lifecycle
+    selesai --> [*] : CheckoutTenant<br>[Selesai Sewa]
+    batal --> [*] : HapusPermanen<br>/ Hard Delete Record

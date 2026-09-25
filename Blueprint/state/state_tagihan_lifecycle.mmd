@@ -1,16 +1,34 @@
 stateDiagram-v2
-    [*] --> pending : Scheduler Tgl 1 / Sisa DP 70%
+    direction TB
+
+    state "pending" as pending
+    state "lunas" as lunas
+
+    state "terlambat" as terlambat {
+        terlambat_aktif : Menunggak (t > 10)
+        terlambat_aktif : [Anti-Regression Lock] Sesi Expire Tetap Terlambat
+    }
+
+    [*] --> pending : Scheduler Tgl 1 / Injeksi Sisa DP
     [*] --> lunas : Full Payment / Registrasi Manual
-    
-    pending --> lunas : Settlement / Cash [Valid]
-    pending --> terlambat : Lewat Jatuh Tempo [t > Tgl 10]
-    pending --> gagal : Deny / Gagal Bayar
-    pending --> kadaluarsa : Sesi Snap Expired
-    
-    terlambat --> lunas : Bayar Pokok + Denda 5%
-    terlambat --> terlambat : Snap Expired (Tetap Terlambat)
-    
-    gagal --> pending : Bayar Ulang (Regenerate SNAP)
-    kadaluarsa --> pending : Bayar Ulang (Regenerate SNAP)
-    
-    lunas --> [*] : Nota PDF & WA Sukses
+
+    pending --> lunas : Settlement / Validasi Cash<br>[Nominal Cocok] / Terbitkan Kuitansi
+    pending --> terlambat : SchedulerJatuhTempo<br>[t > Tgl 10] / Kirim WA Reminder
+
+    terlambat --> lunas : Settlement / Validasi Cash<br>[Pokok + Denda 5%] / Kuitansi & Reset Denda
+
+    state "Sesi Midtrans Tidak Berhasil" as SesiGagal {
+        kadaluarsa : Snap Expired (Sesi Habis)
+        gagal : Deny / Fraud (Transaksi Ditolak)
+        state "Bayar Ulang Dasbor" as Reorder
+        kadaluarsa --> Reorder
+        gagal --> Reorder
+    }
+
+    pending --> kadaluarsa : Midtrans Webhook<br>[Expire]
+    pending --> gagal : Midtrans Webhook<br>[Deny]
+    terlambat --> gagal : Midtrans Webhook [Deny]
+
+    Reorder --> pending : Generate Snap Baru
+
+    lunas --> [*] : Kuitansi PDF & Arsip Finansial
