@@ -686,6 +686,16 @@ classDiagram
     ProsesTransisiPenyewa ..> NotifikasiService : Calls Welcome Notif
 ```
 
+### Tabel 1.1. Taksonomi Pengelompokan Namespace Arsitektur Global
+
+| Namespace | Jumlah Komponen | Pola Desain (*Design Pattern*) | Deskripsi Arsitektural |
+| :--- | :---: | :--- | :--- |
+| **`Domain_Enums`** | 12 Enums | Type-Safe Value Constants | Merepresentasikan himpunan status legal yang terikat pada integritas kolom MySQL ENUM dan business logic domain. |
+| **`Domain_Models`** | 21 Models + 1 Pivot | Active Record (Eloquent ORM) | Mengelola persistensi data, enkapsulasi mutasi entitas, query scopes, dan relasi integritas antar tabel basis data. |
+| **`Service_Layer`** | 12 Services & Interfaces | Service-Oriented & Dependency Inversion | Memisahkan *business logic* murni dari HTTP Controllers demi mematuhi *Single Responsibility Principle* (SRP). |
+| **`Infra_Security`** | 5 Observers, 8 Middlewares/Rules, 4 Policies, 3 Notifications | Observer Pattern, Chain of Responsibility, Policy-Based Authorization, Template Method | Menjaga integritas data otomatis saat lifecycle mutasi record, memvalidasi request HTTP, otorisasi peran, dan reset kata sandi. |
+| **`Event_Driven`** | 11 Events, 12 Listeners, 8 Queue Jobs | Publish-Subscribe & Asynchronous Queue Worker | Menangani komputasi berat, transmisi WhatsApp Fonnte, dan pencatatan audit log secara asinkron tanpa memblokir respon pengguna. |
+
 ---
 
 ## 2. Peta Relasi Struktural Antar Layer (Structural Relationship Map)
@@ -828,15 +838,29 @@ classDiagram
     KamarObserver ..> Kamar : Observes
 ```
 
+### Tabel 2.1. Taksonomi Hubungan Struktural Antar-Layer
+
+| Layer Asal (*Caller*) | Layer Tujuan (*Callee*) | Jenis Relasi UML | Mekanisme Interaksi & Protokol | Peran & Alasan Desain |
+| :--- | :--- | :---: | :--- | :--- |
+| **Security & Middlewares** | **Data Persistence** | **Dependency (`..>`)** | Method Invocations via Eloquent (`User`, `Reservasi`, `Tagihan`) | Memvalidasi integritas data profil pengguna dan status hunian sebelum controller diizinkan memproses transaksi. |
+| **Business Services** | **Data Persistence** | **Dependency (`..>`)** | Transactional CRUD (`DB::transaction`) | Mengeksekusi penagihan masal bulanan, mutasi hunian kamar, dan pencatatan transaksi masuk/keluar secara atomik. |
+| **Business Services** | **Service Layer** | **Dependency Injection (`..>`)** | Constructor Injection | `TransisiPenyewaService` dan `AdminPenyewaService` menginjeksi `BillingService` untuk menjamin modularitas dan testability. |
+| **Service Implementations** | **Service Abstractions** | **Realization (`..|>`)** | Interface Realization | `DompdfGenerator` mengimplementasikan `PdfGeneratorInterface` agar controller laporan tidak bergantung pada library konkrit DomPDF. |
+| **Business Services / Controllers** | **Event-Driven Infrastructure** | **Event Dispatch (`..>`)** | `event(new EventClass($data))` | Memancarkan sinyal mutasi status sistem (seperti `TagihanDibuat`, `PembayaranBerhasil`) ke Event Bus Laravel. |
+| **Event-Driven Listeners** | **Queue Background Jobs** | **Job Dispatch (`..>`)** | `JobClass::dispatch($payload)` | Meneruskan beban kerja asinkron ke tabel antrean (`jobs`) untuk diproses worker background secara non-blocking. |
+| **Queue Background Jobs** | **External Gateways** | **HTTP REST API / Library** | cURL HTTP Request (Fonnte & Midtrans) | Mengirimkan pesan WhatsApp notifikasi resmi dan memverifikasi callback status payment gateway. |
+
 ---
 
 ## 3. Visualisasi Relasi Khusus & Tanggung Jawab Kelas (Dedicated Relationship Diagrams)
 
 Untuk memahami secara mendalam hubungan antar kelas pada setiap ranah (*domain context*), berikut adalah visualisasi terfokus beserta penjelasan rinci hubungan dan tanggung jawabnya:
 
+---
+
 ### A. Visualisasi Relasi Domain Models Inti (Association & Composition)
 
-Diagram ini mengilustrasikan asosiasi struktural, relasi kepemilikan siklus hidup (*Composition*), dan kardinalitas antar model:
+Diagram ini mengilustrasikan asosiasi struktural, relasi kepemilikan siklus hidup (*Composition*), dan kardinalitas antar model data:
 
 ![Relasi Domain Models](class/class_relasi_domain_models.png)
 
@@ -1040,6 +1064,55 @@ classDiagram
     GuestChatThread "1" *-- "*" GuestChatMessage : Composition
 ```
 
+#### Tabel 3.A.1. Matriks Relasi Antar-Model Domain (*Class Relationship Matrix*)
+
+| No | Kelas Asal | Kelas Tujuan | Jenis Relasi UML | Multiplicity | Foreign Key & Integritas | Makna Semantik Bisnis |
+| :---: | :--- | :--- | :---: | :---: | :--- | :--- |
+| 1 | **User** | **Penyewa** | **Association** | `1` : `0..1` | `penyewa.user_id` ➔ `users.id`<br>`ON DELETE CASCADE` | Satu akun pengguna memiliki tepat 0 atau 1 kontrak hunian aktif pada satu waktu (`User::penyewa()` HasOne). |
+| 2 | **Kamar** | **Penyewa** | **Association** | `1` : `*` | `penyewa.kamar_id` ➔ `kamar.id`<br>`ON DELETE RESTRICT` | Satu unit kamar fisik dapat dihuni oleh banyak penyewa sepanjang sejarah operasional kost (riwayat hunian). |
+| 3 | **Kamar** | **Fasilitas** | **Association** | `*` : `*` | Pivot: `kamar_fasilitas`<br>`ON DELETE CASCADE` | Satu kamar memiliki banyak fasilitas (AC, Wi-Fi, dll.), dan satu fasilitas tersedia pada banyak unit kamar. |
+| 4 | **Penyewa** | **Tagihan** | **Association** | `1` : `*` | `tagihan.penyewa_id` ➔ `penyewa.id`<br>`ON DELETE CASCADE` | Satu kontrak penyewa aktif diterbitkan banyak invoice tagihan sewa rutin bulanan serta tagihan sisa pelunasan DP. |
+| 5 | **Tagihan** | **Pembayaran** | **Association** | `1` : `*` | `pembayaran.tagihan_id` ➔ `tagihan.id`<br>`ON DELETE CASCADE` | Satu invoice tagihan dapat memiliki banyak riwayat transaksi pembayaran (percobaan online Midtrans / tunai kasir). |
+| 6 | **User** | **Reservasi** | **Association** | `1` : `*` | `reservasi.user_id` ➔ `users.id`<br>`ON DELETE CASCADE` | Satu akun calon penyewa dapat mengajukan banyak permohonan reservasi kamar online sepanjang waktu. |
+| 7 | **Kamar** | **Reservasi** | **Association** | `1` : `*` | `reservasi.kamar_id` ➔ `kamar.id`<br>`ON DELETE RESTRICT` | Satu kamar menjadi target dari banyak pengajuan booking reservasi yang dijadwalkan tanpa bentrok jadwal sewa. |
+| 8 | **Reservasi** | **ChatMessage** | **Composition** | `1` *-- `*` | `chat_messages.reservasi_id` ➔ `reservasi.id`<br>`ON DELETE CASCADE` | **Komposisi Penuh**: Pesan diskusi pra-bayar terikat mati pada reservasi. Jika reservasi dihapus, chat pesan ikut musnah. |
+| 9 | **User** | **ChatMessage** | **Association** | `1` : `*` | `chat_messages.sender_id` ➔ `users.id`<br>`ON DELETE CASCADE` | Setiap butir pesan chat dikaitkan dengan akun pengguna pengirimnya (calon penyewa atau admin kost). |
+| 10 | **Penyewa** | **Keluhan** | **Association** | `1` : `*` | `keluhan.penyewa_id` ➔ `penyewa.id`<br>`ON DELETE CASCADE` | Satu penyewa aktif dapat membuat banyak tiket pengaduan kerusakan fasilitas kamar kost. |
+| 11 | **GuestChatThread** | **GuestChatMessage** | **Composition** | `1` *-- `*` | `guest_chat_messages.guest_chat_thread_id`<br>`ON DELETE CASCADE` | **Komposisi Penuh**: Pesan live chat pengunjung terikat mati pada sesi thread token tamu landing page. |
+| 12 | **User** | **GuestChatMessage** | **Association** | `1` : `*` | `guest_chat_messages.sender_id` ➔ `users.id`<br>`ON DELETE SET NULL` | Mengaitkan balasan admin kost pada pesan tamu tanpa menghapus pesan tamu jika akun admin dimutasi. |
+| 13 | **Kamar** | **WhatsappClick** | **Association** | `1` : `*` | `whatsapp_clicks.kamar_id` ➔ `kamar.id`<br>`ON DELETE CASCADE` | Mencatat akumulasi klik tombol WhatsApp CTA per unit kamar untuk analitik konversi landing page. |
+| 14 | **Penyewa** | **LogNotifikasi** | **Association** | `1` : `*` | `log_notifikasi.penyewa_id` ➔ `penyewa.id`<br>`ON DELETE CASCADE` | Jejak audit riwayat pengiriman notifikasi WhatsApp tagihan, denda, dan kuitansi per penyewa. |
+| 15 | **Tagihan** | **LogNotifikasi** | **Association** | `1` : `*` | `log_notifikasi.tagihan_id` ➔ `tagihan.id`<br>`ON DELETE CASCADE` | Jejak audit log pengiriman pesan WhatsApp dan surel yang secara spesifik merujuk pada nomor invoice tagihan. |
+| 16 | **User** | **NotifikasiKhusus** | **Association** | `1` : `*` | `notifikasi_khusus.user_id` ➔ `users.id`<br>`ON DELETE CASCADE` | Jejak audit internal atas aktivitas mutasi kamar, persetujuan reservasi, dan keuangan yang dipicu user. |
+| 17 | **Reservasi** | **Penyewa** | **Association** | `1` : `0..1` | `reservasi.penyewa_id` ➔ `penyewa.id`<br>`ON DELETE SET NULL` | Referensi penelusuran balik (*back-reference*) dari reservasi ke kontrak hunian aktif pasca-persetujuan admin. |
+| 18 | **User** | **Pembayaran** | **Association** | `1` : `*` | `pembayaran.dikonfirmasi_oleh` ➔ `users.id`<br>`ON DELETE SET NULL` | Menandai admin kasir yang bertanggung jawab memvalidasi penerimaan setoran tunai (*cash manual*). |
+
+#### Tabel 3.A.2. Rincian Tanggung Jawab Seluruh 21 Model Domain (*Class Responsibilities*)
+
+| Nama Model | Kategori Domain | Tanggung Jawab Utama (*Single Responsibility*) | Method / Accessor Kunci |
+| :--- | :--- | :--- | :--- |
+| **[User](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/User.php)** | Identitas & Autentikasi | Mengelola kredensial akun, otorisasi peran (`admin`/`penyewa`), kelengkapan profil wali darurat, dan soft-delete aman. | `isProfileComplete()`, `isActiveTenant()`, `isAdmin()`, `anonymizeAndDelete()`, `penyewa()` |
+| **[Kamar](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Kamar.php)** | Inventaris Properti | Mengelola data fisik unit kamar, kalkulasi harga bertingkat (harian/mingguan/bulanan), dan batas minimal DP 30%. | `kalkulasiHargaDasar()`, `kalkulasiHargaSewa()`, `kalkulasiMinimalDp()`, `penyewaAktif()` |
+| **[Fasilitas](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Fasilitas.php)** | Master Katalog | Menyimpan daftar fasilitas kost (AC, Wi-Fi, KM Dalam) beserta pemetaan relasi pivot ke unit kamar. | `kamar()`, `scopeAktif()`, `getEmojiAttribute()` |
+| **[Penyewa](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Penyewa.php)** | Kontrak Hunian | Mengelola masa tinggal penghuni aktif, nomor billing bulanan, deposit jaminan, dan evaluasi masa sewa kedaluwarsa. | `getIsOverdueAttribute()`, `getDurasiFormattedAttribute()`, `tagihan()`, `keluhan()` |
+| **[Tagihan](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Tagihan.php)** | Finansial & Penagihan | Mengelola invoice pembayaran sewa bulanan dan sisa DP, jatuh tempo tgl 10, nominal pokok, denda, dan status tagihan. | `getComputedStatusAttribute()`, `scopeTerlambat()`, `canBeConfirmedManually()`, `pembayaran()` |
+| **[Pembayaran](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Pembayaran.php)** | Transaksi Kas | Mencatat riwayat transaksi masuk, jenis kanal bayar (VA/QRIS/Tunai), status webhook Midtrans, dan verifikator kasir. | `tagihan()`, `dikonfirmasiOleh()` |
+| **[Reservasi](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Reservasi.php)** | Pemesanan Kamar | Mengelola pengajuan sewa online, jadwal booking bebas tabrakan, token Snap Midtrans, dan status verifikasi DP/Lunas. | `static isKamarTerbooking()`, `chatMessages()`, `scopeOverlapDengan()`, `dikonfirmasiOleh()` |
+| **[ChatMessage](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/ChatMessage.php)** | Komunikasi Booking | Menyimpan pesan obrolan pra-pembayaran calon penyewa dengan administrator di bawah konteks reservasi. | `reservasi()`, `sender()` |
+| **[Keluhan](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Keluhan.php)** | Layanan Penghuni | Mengelola tiket pelaporan kerusakan fasilitas fisik oleh penghuni aktif, foto bukti kendala, dan tanggapan admin. | `penyewa()`, `getStatusBadgeClassAttribute()`, `getKategoriLabelAttribute()` |
+| **[Pengeluaran](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Pengeluaran.php)** | Beban Operasional | Mencatat biaya pengeluaran operasional dan pemeliharaan gedung kost beserta bukti dokumen nota fisik. | Digunakan oleh `PengeluaranObserver` dan `DashboardAnalyticsService` |
+| **[Setting](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Setting.php)** | Konfigurasi Sistem | Menyimpan konfigurasi dinamis berbasis key-value (kontak, rekening bank, copywriting, dan diskon durasi sewa). | `static get()`, `static getDiscountForDuration()`, `static formatWhatsapp()` |
+| **[LogNotifikasi](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/LogNotifikasi.php)** | Jejak Audit Notifikasi | Mencatat log pengiriman notifikasi WhatsApp Fonnte dan Surel untuk tagihan, jatuh tempo, dan kuitansi pembayaran. | `penyewa()`, `tagihan()`, `toModalPayload()` |
+| **[NotifikasiKhusus](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/NotifikasiKhusus.php)** | Audit Log Transaksi | Menyimpan riwayat audit terpusat atas aktivitas mutasi kamar, verifikasi booking, dan denda keterlambatan sewa. | `static log()`, `user()`, `toDetailPayload()` |
+| **[GuestChatThread](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/GuestChatThread.php)** | Komunikasi Tamu | Mengelola sesi obrolan *live chat* pengunjung beranda publik berdasarkan token sesi peramban web. | `messages()`, `latestMessage()` |
+| **[GuestChatMessage](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/GuestChatMessage.php)** | Pesan Obrolan Tamu | Menyimpan butir pesan interaksi antara pengunjung umum dan admin kost dalam sesi live chat aktif. | `thread()`, `sender()` |
+| **[WhatsappClick](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/WhatsappClick.php)** | Analitik Pemasaran | Mencatat metrik klik tombol WhatsApp CTA pada setiap unit kamar untuk laporan konversi marketing kost. | `kamar()` |
+| **[CustomerReview](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/CustomerReview.php)** | Pemasaran & Reputasi | Menyimpan ulasan rating bintang dan testimoni kepuasan pelanggan yang dipublikasikan di halaman landing page. | Digunakan pada katalog landing page publik |
+| **[Faq](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Faq.php)** | Informasi Publik | Mengelola daftar tanya jawab umum seputar fasilitas, aturan, dan prosedur kost pada halaman utama. | `scopeAktif()` |
+| **[Peraturan](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Peraturan.php)** | Tata Tertib Hunian | Mengelola daftar tata tertib dan tata krama kost yang ditampilkan di portal penyewa dan halaman publik. | `getBadgeColorClassAttribute()`, `getIkonLabelAttribute()` |
+| **[Gallery](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Gallery.php)** | Dokumentasi Visual | Menyimpan katalog dokumentasi foto lingkungan fisik, bangunan luar, dan fasilitas bersama kost putri. | `scopeAktif()` |
+| **[Pengumuman](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Pengumuman.php)** | Komunikasi Internal | Menyimpan pesan siaran pengumuman penting dari pemilik/pengelola kost kepada seluruh penghuni aktif. | Ditampilkan pada dashboard penyewa aktif |
+
 ---
 
 ### B. Visualisasi Relasi Service Layer & Dependency Inversion (DIP)
@@ -1137,6 +1210,38 @@ classDiagram
     NotifikasiService ..> FonnteService : Uses API Gateway
 ```
 
+#### Tabel 3.B.1. Matriks Relasi Dependensi & Realisasi Service Layer
+
+| No | Kelas Asal | Kelas Tujuan | Jenis Relasi UML | Alasan Arsitektural & Mekanisme Kerja |
+| :---: | :--- | :--- | :---: | :--- |
+| 1 | **DompdfGenerator** | **PdfGeneratorInterface** | **Realization (`..|>`)** | Penerapan prinsip **Dependency Inversion** (DIP): Controller hanya bergantung pada interface `PdfGeneratorInterface`, yang di-bind ke `DompdfGenerator` di `AppServiceProvider`. |
+| 2 | **TransisiPenyewaService** | **BillingService** | **Dependency (`..>`)** | Injeksi via constructor (`#billingService`): Memanggil `injectSisaDp()` atau `injectLunasPenuh()` saat admin mengonfirmasi reservasi menjadi penyewa aktif. |
+| 3 | **AdminPenyewaService** | **BillingService** | **Dependency (`..>`)** | Injeksi via constructor (`#billingService`): Memanggil `injectManualPenyewaLunas()` saat admin mendaftarkan penyewa offline walk-in langsung lunas di kasir. |
+| 4 | **NotifikasiService** | **NotificationTemplateBuilder** | **Composition (`*--`)** | **Komposisi Internal**: `NotifikasiService` membuat dan memiliki siklus hidup `NotificationTemplateBuilder` langsung di dalam constructor untuk formatting pesan WhatsApp/Surel. |
+| 5 | **NotifikasiService** | **FonnteService** | **Dependency (`..>`)** | Injeksi via constructor (`#fonnte`): Memanfaatkan wrapper API WhatsApp gateway untuk mengirim pesan berkas invoice, kuitansi, dan peringatan denda. |
+| 6 | **BillingService** | **Tagihan & Penyewa** | **Dependency (`..>`)** | Mengorkestrasi pembuatan tagihan masal bulanan tgl 1, evaluasi denda 5% tgl 10, dan perpanjangan kontrak sewa manual. |
+| 7 | **ReservasiService** | **Reservasi & Kamar** | **Dependency (`..>`)** | Mengalkulasi diskon durasi sewa, validasi bebas tabrakan jadwal (*anti-double booking*), dan menyimpan record booking baru. |
+| 8 | **TagihanService** | **Pembayaran** | **Dependency (`..>`)** | Menangani pencatatan transaksi pembayaran tunai kasir dalam transaksi database atomik (`DB::transaction`). |
+| 9 | **DashboardAnalyticsService**| **Pembayaran & Pengeluaran** | **Dependency (`..>`)** | Mengagregasi arus kas masuk, pengeluaran kas, tingkat okupansi kamar, dan grafik keuangan 12 bulan untuk dashboard admin. |
+| 10 | **MidtransService** | **Midtrans Snap API** | **Dependency (`..>`)** | Mengirimkan parameter transaksi ke server Midtrans untuk memperoleh token Snap popup pembayaran tagihan dan reservasi online. |
+
+#### Tabel 3.B.2. Rincian Tanggung Jawab Kelas Service Layer
+
+| Nama Kelas / Layanan | Tipe Kelas | Tanggung Jawab Utama (*Single Responsibility*) | Method Kunci |
+| :--- | :---: | :--- | :--- |
+| **[PdfGeneratorInterface](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/PdfGeneratorInterface.php)** | Interface | Kontrak abstraksi generator PDF berbasis view Blade, data payload, format kertas, dan orientasi halaman. | `generate(string $view, array $data, string $paper, string $orientation): string` |
+| **[DompdfGenerator](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/DompdfGenerator.php)** | Concrete Class | Implementasi nyata generator PDF menggunakan pustaka DomPDF untuk kebutuhan ekspor Laporan Keuangan admin. | `generate(string $view, array $data, string $paper, string $orientation): string` |
+| **[BillingService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/BillingService.php)** | Core Service | Eksekusi penagihan masal otomatis tgl 1, pemantauan grace period tgl 10, denda flat 5%, alokasi DP/lunas, dan perpanjangan kontrak. | `generateTagihanBulanan()`, `prosesKeterlambatan()`, `terapkanDendaDirect()`, `injectSisaDp()`, `perpanjangKontrakManual()` |
+| **[ReservasiService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/ReservasiService.php)** | Core Service | Validasi data booking, verifikasi pencegahan bentrok sewa (*double-booking guard*), kalkulasi tarif sewa, dan pembatalan sewa. | `hitungHarga()`, `cekDoubleBooking()`, `buatReservasi()`, `batalkanReservasi()` |
+| **[TransisiPenyewaService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/TransisiPenyewaService.php)** | Domain Orchestrator | Mengalihkan data reservasi terkonfirmasi menjadi kontrak penyewa aktif, routing tagihan sisa, dan pemulihan soft-delete mantan penyewa. | `transisi(Reservasi $reservasi, int $adminId, array $overrideData): Penyewa` |
+| **[AdminPenyewaService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/AdminPenyewaService.php)** | Domain Orchestrator | Pendaftaran manual penyewa offline/walk-in oleh admin, validasi status kamar, dan pembuatan tagihan awal lunas cash. | `registerPenyewa(array $data, int $adminId): Penyewa`, `getPenyewaQuery()` |
+| **[TagihanService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/TagihanService.php)** | Core Service | Validasi dan pencatatan pembayaran tunai kasir dalam transaksi atomik database serta penyediaan kueri paginasi berfilter. | `confirmCashPayment(Tagihan $tagihan, int $adminId, string $catatan): Pembayaran`, `getFilteredPaginatedTagihan()` |
+| **[DashboardAnalyticsService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/DashboardAnalyticsService.php)** | Analytics Service | Agregasi metrik analitik dashboard admin (laba bersih, total arus kas, tingkat okupansi kamar, dan grafik 12 bulan). | `getDashboardMetrics(): array`, `get12MonthsFinancialChart(): array` |
+| **[NotificationTemplateBuilder](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/Notifications/NotificationTemplateBuilder.php)** | Builder Service | Merakit copywriting terpusat untuk pesan tagihan, konfirmasi pembayaran, pengingat jatuh tempo, eskalasi wali, dan selamat datang. | `buildTagihanBaru()`, `buildPembayaranBerhasil()`, `buildReminderJatuhTempo()`, `buildNotifikasiWali()` |
+| **[NotifikasiService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/NotifikasiService.php)** | Orchestrator Service | Mengirimkan pesan WhatsApp dan Surel terformat ke penyewa/wali serta mencatat jejak audit ke tabel `log_notifikasi`. | `kirimNotifikasiTagihan()`, `kirimNotifikasiPembayaran()`, `kirimReminderJatuhTempo()`, `kirimNotifikasiWali()` |
+| **[FonnteService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/FonnteService.php)** | Gateway SDK | Klien wrapper HTTP API Fonnte WhatsApp Gateway dengan sanitasi nomor tujuan format internasional (`628xxx`). | `formatNomor(string $nomor): string`, `kirimPesan(string $target, string $pesan): bool` |
+| **[MidtransService](file:///c:/xampp/htdocs/asri-boarding-house/app/Services/MidtransService.php)** | Gateway SDK | Klien integrasi Midtrans Snap API untuk penerbitan token transaksi online tagihan rutin dan reservasi kamar. | `createSnapToken(Tagihan $tagihan): array`, `createSnapTokenReservasi(Reservasi $reservasi): array` |
+
 ---
 
 ### C. Visualisasi Alur Event-Driven Architecture (EDA) & Antrean Latar Belakang
@@ -1208,6 +1313,35 @@ classDiagram
     HandleNotifikasiWali ..> KirimNotifikasiWaliJob : Dispatches
     HandleDendaDikenakan ..> KirimReminderJatuhTempoJob : Dispatches
 ```
+
+#### Tabel 3.C.1. Matriks Alur Event, Listener, Queue Job & Gateway Eksternal
+
+| No | Peristiwa Bisnis (*Domain Event*) | Pendengar (*Event Listener*) | Pekerjaan Antrean (*Queue Job*) | Layanan / Gateway Target | Dampak & Tanggung Jawab Operasional |
+| :---: | :--- | :--- | :--- | :--- | :--- |
+| 1 | **TagihanDibuat** | **HandleTagihanDibuat** | `KirimNotifikasiTagihanJob` | `NotifikasiService` ➔ Fonnte WA | Mengirim invoice tagihan bulanan baru dan tautan pembayaran ke nomor WhatsApp penyewa aktif. |
+| 2 | **PembayaranCashDikonfirmasi**| **KirimEmailPembayaranCashListener**| `KirimNotifikasiPembayaranJob` | `NotifikasiService` ➔ Fonnte WA | Mengirim bukti pelunasan sewa tunai dan tautan kuitansi digital ke nomor WhatsApp penyewa. |
+| 3 | **PembayaranBerhasil** | **NotifikasiKhususSubscriber** | Langsung diproses listener | Database Persistence | Mencatat riwayat audit log transaksi pembayaran lunas Midtrans ke tabel `notifikasi_khusus` untuk pengawasan admin. |
+| 4 | **ReservasiDibuat** | **HandleReservasiDibuat** | `KirimNotifikasiAdminReservasiJob` | `NotifikasiService` ➔ Fonnte WA | Mengirimkan pesan alert pengajuan reservasi baru ke nomor WhatsApp pemilik/admin kost secara asinkron. |
+| 5 | **ReservasiDibayar** | **HandleReservasiDibayar** | `KirimNotifikasiUserReservasiJob` | `NotifikasiService` ➔ Fonnte WA | Mengirim konfirmasi pembayaran uang muka (DP) atau lunas ke WhatsApp calon penyewa. |
+| 6 | **ReservasiDikonfirmasi** | **ProsesTransisiPenyewa** & **HandleReservasiDikonfirmasi** | `KirimWelcomeMessageJob` | `NotifikasiService` ➔ Fonnte WA | Mengirim pesan selamat datang, rincian kamar, dan tata tertib kost ke penyewa yang baru diaktifkan. |
+| 7 | **ReminderPenyewa** | **HandleReminderPenyewa** | `KirimReminderJatuhTempoJob` | `NotifikasiService` ➔ Fonnte WA | Mengirim pesan pengingat jatuh tempo sewa pada rentang H-3 s/d H-1 sebelum tanggal 10. |
+| 8 | **NotifikasiWali** | **HandleNotifikasiWali** | `KirimNotifikasiWaliJob` | `NotifikasiService` ➔ Fonnte WA | Mengirimkan pesan eskalasi tunggakan sewa langsung ke kontak darurat orang tua/wali penyewa. |
+| 9 | **DendaDikenakan** | **HandleDendaDikenakan** | `KirimReminderJatuhTempoJob` | `NotifikasiService` ➔ Fonnte WA | Mengirimkan pemberitahuan pengenaan denda keterlambatan flat 5% pasca terlewati batas grace period tgl 10. |
+| 10 | **KeluhanDibuat** | **KirimNotifikasiKeluhanDibuat** | Langsung dipanggil listener | `NotifikasiService` ➔ Fonnte WA | Mengirim pesan darurat pelaporan kerusakan fasilitas kost ke nomor WhatsApp pengelola kost. |
+| 11 | **KeluhanDitanggapi** | **KirimNotifikasiKeluhanDitanggapi** | Langsung dipanggil listener | `NotifikasiService` ➔ Fonnte WA | Mengirim notifikasi penyelesaian perbaikan fasilitas dan tanggapan admin ke WhatsApp pelapor. |
+
+#### Tabel 3.C.2. Rincian Tanggung Jawab Komponen Event-Driven
+
+| Nama Komponen | Kategori | Payload Data | Tanggung Jawab Utama (*Single Responsibility*) | Driver Eksekusi |
+| :--- | :---: | :--- | :--- | :---: |
+| **TagihanDibuat** | Domain Event | `Tagihan $tagihan` | Membawa data invoice baru saat digenerate cron bulanan atau diinjeksi admin. | Sinkron (Event Bus) |
+| **HandleTagihanDibuat** | Listener | `TagihanDibuat $event` | Menerima event tagihan baru dan mendispatch job antrean pengiriman pesan WhatsApp. | Sinkron |
+| **KirimNotifikasiTagihanJob**| Queue Job | `Tagihan $tagihan` | Mengambil data penyewa dan mengeksekusi pengiriman pesan rincian tagihan via Fonnte. | Asinkron (`jobs`) |
+| **PembayaranCashDikonfirmasi**| Domain Event | `Pembayaran $pembayaran` | Membawa data pelunasan tunai kasir pasca transaksi database berhasil di-commit. | Sinkron (Event Bus) |
+| **KirimEmailPembayaranCashListener**| Listener | `PembayaranCashDikonfirmasi $event` | Menerima pelunasan cash dan mendispatch job notifikasi kuitansi pelunasan. | Sinkron |
+| **KirimNotifikasiPembayaranJob**| Queue Job | `Pembayaran $pembayaran` | Mengambil data transaksi dan mengirim tautan bukti nota digital ke WhatsApp penyewa. | Asinkron (`jobs`) |
+| **NotifikasiKhususSubscriber**| Subscriber | Beragam Events | Mendengarkan event mutasi status (bayar, hunian, denda) dan mencatat jejak audit admin. | Sinkron |
+| **ProsesTransisiPenyewa** | Listener | `ReservasiDikonfirmasi $event` | Mengorkestrasi pengiriman instruksi masuk kamar dan pesan selamat datang. | Sinkron |
 
 ---
 
@@ -1281,6 +1415,32 @@ classDiagram
     Policies ..> ProtectedModels : Authorizes User Actions
     ValidationRules ..> ProtectedModels : Validates Input State
 ```
+
+#### Tabel 3.D.1. Matriks Pewarisan (*Inheritance*) Notifikasi Reset Kata Sandi
+
+| Kelas Induk (*Superclass*) | Kelas Turunan (*Subclass*) | Tipe Relasi | Method Abstrak yang Di-override | Nilai Khusus Subclass |
+| :--- | :--- | :---: | :--- | :--- |
+| **[BaseResetPasswordNotification](file:///c:/xampp/htdocs/asri-boarding-house/app/Notifications/BaseResetPasswordNotification.php)** | **[AdminResetPasswordNotification](file:///c:/xampp/htdocs/asri-boarding-house/app/Notifications/AdminResetPasswordNotification.php)** | **Inheritance (`--|>`)** | `#getRoleName(): string`<br>`#resolveRouteName($notifiable): string` | `ROLE: 'admin'`<br>`ROUTE: 'admin.password.reset'` |
+| **[BaseResetPasswordNotification](file:///c:/xampp/htdocs/asri-boarding-house/app/Notifications/BaseResetPasswordNotification.php)** | **[PenyewaResetPasswordNotification](file:///c:/xampp/htdocs/asri-boarding-house/app/Notifications/PenyewaResetPasswordNotification.php)** | **Inheritance (`--|>`)** | `#getRoleName(): string`<br>`#resolveRouteName($notifiable): string` | `ROLE: 'penyewa'`<br>`ROUTE: 'password.reset'` |
+
+*Penerapan Pola Desain*: Menggunakan **Template Method Pattern**, di mana alur pembuatan email reset kata sandi (`toMail()`) dan konstruksi URL token (`resetUrl()`) ditentukan secara terpusat pada superclass, sementara penentuan nama rute dan konteks peran diserahkan kepada subclass masing-masing.
+
+#### Tabel 3.D.2. Rincian Tanggung Jawab Komponen Keamanan, Middleware & Policies
+
+| Nama Kelas | Kategori | Model / Target Pengawalan | Tanggung Jawab Utama (*Single Responsibility*) |
+| :--- | :---: | :--- | :--- |
+| **[RoleMiddleware](file:///c:/xampp/htdocs/asri-boarding-house/app/Http/Middleware/RoleMiddleware.php)** | Middleware | Seluruh Rute Terproteksi | Memvalidasi peran pengguna (`admin` atau `penyewa`) sebelum mengizinkan eksekusi rute controller. |
+| **[VerifyMidtransSignature](file:///c:/xampp/htdocs/asri-boarding-house/app/Http/Middleware/VerifyMidtransSignature.php)** | Middleware | Endpoint Callback Webhook | Memvalidasi keaslian webhook Midtrans menggunakan hashing SHA-512 `signature_key` anti-pemalsuan. |
+| **[EnsureTenantIsActive](file:///c:/xampp/htdocs/asri-boarding-house/app/Http/Middleware/EnsureTenantIsActive.php)** | Middleware | Rute Portal Penyewa (`/penyewa/*`) | Membatasi area fitur penghuni kost hanya untuk akun pengguna yang memiliki kontrak sewa aktif (`status === 'aktif'`). |
+| **[EnsureProfileIsComplete](file:///c:/xampp/htdocs/asri-boarding-house/app/Http/Middleware/EnsureProfileIsComplete.php)** | Middleware | Rute Reservasi Kamar | Memastikan calon penyewa telah melengkapi NIK, nomor HP, nama wali, dan nomor wali sebelum booking. |
+| **[EnsurePasswordChanged](file:///c:/xampp/htdocs/asri-boarding-house/app/Http/Middleware/EnsurePasswordChanged.php)** | Middleware | Rute Pasca-Login Pertama | Mewajibkan penggantian kata sandi default saat penyewa offline pertama kali login ke sistem. |
+| **[KamarTersediaRule](file:///c:/xampp/htdocs/asri-boarding-house/app/Rules/KamarTersediaRule.php)** | Custom Rule | Unit Kamar Terpilih | Memvalidasi ketersediaan unit kamar fisik agar tidak berstatus nonaktif atau sedang masa pemeliharaan. |
+| **[TanpaPenyewaAktifLainRule](file:///c:/xampp/htdocs/asri-boarding-house/app/Rules/TanpaPenyewaAktifLainRule.php)** | Custom Rule | Penetapan Kamar | Mencegah penetapan ganda kamar yang sama kepada lebih dari satu penyewa aktif pada waktu yang sama. |
+| **[ValidGoogleMapsEmbed](file:///c:/xampp/htdocs/asri-boarding-house/app/Rules/ValidGoogleMapsEmbed.php)** | Custom Rule | Pengaturan Landing Page | Memvalidasi struktur tag iframe Google Maps agar aman, responsif, dan bebas injeksi script XSS berbahaya. |
+| **[ReservasiPolicy](file:///c:/xampp/htdocs/asri-boarding-house/app/Policies/ReservasiPolicy.php)** | Authorization Policy | Model [Reservasi](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Reservasi.php) | Mengotorisasi izin melihat (`view`), berdiskusi chat (`chat`), membayar (`pay`), dan konfirmasi (`update`) reservasi. |
+| **[TagihanPolicy](file:///c:/xampp/htdocs/asri-boarding-house/app/Policies/TagihanPolicy.php)** | Authorization Policy | Model [Tagihan](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Tagihan.php) | Mengotorisasi hak akses melihat dan membayar invoice bulanan eksklusif hanya untuk pemilik sah tagihan tersebut. |
+| **[PembayaranPolicy](file:///c:/xampp/htdocs/asri-boarding-house/app/Policies/PembayaranPolicy.php)** | Authorization Policy | Model [Pembayaran](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Pembayaran.php) | Mengotorisasi pengunduhan kuitansi digital pembayaran resmi (`downloadNota`) hanya untuk pihak bersangkutan. |
+| **[KeluhanPolicy](file:///c:/xampp/htdocs/asri-boarding-house/app/Policies/KeluhanPolicy.php)** | Authorization Policy | Model [Keluhan](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Keluhan.php) | Mengotorisasi hak pelaporan dan penelusuran status pengaduan kerusakan kamar oleh penghuni aktif. |
 
 ---
 
