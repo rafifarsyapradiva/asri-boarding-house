@@ -15,6 +15,7 @@ flowchart TD
     UC28["UC-28: Otomasi Billing & Denda Eskalasi"]:::coreStyle
     UC15["UC-15: Resolusi Keluhan"]:::coreStyle
     UC20["UC-20: Broadcast Notifikasi"]:::coreStyle
+    UC18["UC-18: Login Google OAuth SSO"]:::coreStyle
 
     %% Extension Use Cases
     UC03["UC-03: Chat Reservasi Real-time"]:::extendStyle
@@ -24,19 +25,13 @@ flowchart TD
     UC27["UC-27: Ekspor Data & Laporan (PDF/Excel/CSV)"]:::extendStyle
     UC24["UC-24: Lupa & Reset Password"]:::extendStyle
 
-    %% External System Services (Includes / Invocations)
+    %% External System Services (Secondary Actors)
     Midtrans[["Layanan Payment Gateway (Midtrans)"]]:::externalStyle
     Fonnte[["Layanan WhatsApp Gateway (Fonnte)"]]:::externalStyle
+    Google[["Google Identity Services (OAuth)"]]:::externalStyle
+    MailServer[["SMTP Mail Server"]]:::externalStyle
 
-    %% Include Relations
-    UC02 -.-> |include| Midtrans
-    UC04 -.-> |include| Midtrans
-    UC06 -.-> |include| Fonnte
-    UC15 -.-> |include| Fonnte
-    UC20 -.-> |include| Fonnte
-    UC28 -.-> |include| Fonnte
-
-    %% Extend Relations
+    %% Extend Relations (Antar Use Case)
     UC03 -.-> |extend| UC01
     UC02 -.-> |extend| UC01
     UC25 -.-> |extend| UC04
@@ -45,3 +40,14 @@ flowchart TD
     UC27 -.-> |extend| UC14
     UC27 -.-> |extend| UC08
     UC24 -.-> |extend| UC22
+
+    %% Directed Associations ke Secondary Actors (UML 2.5 Standard)
+    UC02 --> Midtrans
+    UC04 --> Midtrans
+    UC06 --> Fonnte
+    UC15 --> Fonnte
+    UC20 --> Fonnte
+    UC28 --> Fonnte
+    UC18 --> Google
+    UC20 --> MailServer
+    UC24 --> MailServer

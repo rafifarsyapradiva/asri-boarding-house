@@ -3,23 +3,36 @@ flowchart LR
     classDef secondaryActor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
     classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
 
-    %% Primary Actor
-    Penyewa(["Penyewa Aktif"]):::primaryActor
+    %% Primary Actor (Left)
+    subgraph LeftActor ["Aktor Utama"]
+        Penyewa(["Penyewa Aktif"]):::primaryActor
+    end
 
-    %% Secondary Actors
-    Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
-    Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
-
-    %% System Boundary
+    %% System Boundary (Center)
     subgraph System ["Sistem Informasi Asri Boarding House (Modul Penyewa Aktif)"]
-        UC22_P(["UC-22: Login Portal Penyewa"]):::ucNode
-        UC18_P(["UC-18: Login Google OAuth SSO"]):::ucNode
-        UC16_P(["UC-16: Melihat Riwayat Tagihan & Transaksi"]):::ucNode
-        UC04(["UC-04: Membayar Tagihan Bulanan Rutin"]):::ucNode
-        UC25(["UC-25: Mengunduh Kuitansi Bukti Pembayaran PDF"]):::ucNode
-        UC05(["UC-05: Mengajukan Keluhan & Laporan Kerusakan"]):::ucNode
-        UC11(["UC-11: Mengakses Menu Peraturan & Tata Tertib"]):::ucNode
-        UC21(["UC-21: Melihat Pengumuman & Notifikasi"]):::ucNode
+        direction TB
+        subgraph BoxAkses ["Otentikasi & Riwayat"]
+            UC22_P(["UC-22: Login Portal Penyewa"]):::ucNode
+            UC18_P(["UC-18: Login Google OAuth SSO"]):::ucNode
+            UC16_P(["UC-16: Melihat Riwayat Tagihan & Transaksi"]):::ucNode
+        end
+        subgraph BoxFinansial ["Tagihan & Pembayaran"]
+            UC04(["UC-04: Membayar Tagihan Bulanan Rutin"]):::ucNode
+            UC25(["UC-25: Mengunduh Kuitansi Bukti PDF"]):::ucNode
+        end
+        subgraph BoxLayanan ["Layanan & Informasi Hunian"]
+            UC05(["UC-05: Mengajukan Keluhan & Laporan Kerusakan"]):::ucNode
+            UC11(["UC-11: Mengakses Menu Peraturan & Tata Tertib"]):::ucNode
+            UC21(["UC-21: Melihat Pengumuman & Notifikasi"]):::ucNode
+        end
+    end
+
+    %% Secondary Actors (Right)
+    subgraph RightActors ["Layanan Eksternal"]
+        direction TB
+        Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
+        Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
+        Google[["Google Identity Services (OAuth)"]]:::secondaryActor
     end
 
     %% Relations - Penyewa Aktif
@@ -32,7 +45,10 @@ flowchart LR
     Penyewa --> UC11
     Penyewa --> UC21
 
-    %% Relationships (Include & Extend)
+    %% Extend Dependency
     UC25 -.-> |extend| UC04
-    UC04 -.-> |include| Midtrans
-    UC05 -.-> |include| Fonnte
+
+    %% Secondary Associations
+    UC04 --> Midtrans
+    UC05 --> Fonnte
+    UC18_P --> Google

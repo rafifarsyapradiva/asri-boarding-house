@@ -3,32 +3,46 @@ flowchart LR
     classDef secondaryActor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
     classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
 
-    %% Primary Actors
-    Guest(["Tamu (Guest)"]):::primaryActor
-    Calon(["Calon Penyewa"]):::primaryActor
+    %% Primary Actors (Left Side)
+    subgraph LeftActors ["Aktor Utama"]
+        direction TB
+        Guest(["Tamu (Guest)"]):::primaryActor
+        Calon(["Calon Penyewa"]):::primaryActor
+    end
 
-    %% Secondary Actors
-    Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
-
-    %% System Boundary
+    %% System Boundary (Center)
     subgraph System ["Sistem Informasi Asri Boarding House (Modul Publik & Reservasi)"]
-        UC10(["UC-10: Pencarian & Cek Ketersediaan Kamar"]):::ucNode
-        UC12(["UC-12: Registrasi Akun Calon Penyewa"]):::ucNode
-        UC17(["UC-17: Diskusi via Guest Chat"]):::ucNode
-        UC18(["UC-18: Login & Registrasi Google OAuth"]):::ucNode
-        UC22(["UC-22: Login Akun Manual"]):::ucNode
-        UC24(["UC-24: Lupa & Reset Password"]):::ucNode
+        direction TB
         
-        UC01(["UC-01: Melakukan Reservasi Kamar"]):::ucNode
-        UC03(["UC-03: Chat Reservasi Real-time"]):::ucNode
-        UC02(["UC-02: Melakukan Pembayaran Reservasi (DP/Lunas)"]):::ucNode
-        UC16(["UC-16: Melihat Riwayat Pemesanan & Chat"]):::ucNode
+        subgraph GroupPublic ["Eksplorasi Publik & Otentikasi"]
+            UC10(["UC-10: Pencarian & Cek Ketersediaan Kamar"]):::ucNode
+            UC17(["UC-17: Diskusi via Guest Chat"]):::ucNode
+            UC12(["UC-12: Registrasi Akun Calon Penyewa"]):::ucNode
+            UC18(["UC-18: Login & Registrasi Google OAuth"]):::ucNode
+            UC22(["UC-22: Login Akun Manual"]):::ucNode
+            UC24(["UC-24: Lupa & Reset Password"]):::ucNode
+        end
+        
+        subgraph GroupBooking ["Pemesanan & Transaksi Reservasi"]
+            UC01(["UC-01: Melakukan Reservasi Kamar"]):::ucNode
+            UC03(["UC-03: Chat Reservasi Real-time"]):::ucNode
+            UC02(["UC-02: Melakukan Pembayaran Reservasi (DP/Lunas)"]):::ucNode
+            UC16(["UC-16: Melihat Riwayat Pemesanan & Chat"]):::ucNode
+        end
+    end
+
+    %% Secondary Actors (Right Side)
+    subgraph RightActors ["Layanan Eksternal"]
+        direction TB
+        Google[["Google Identity Services (OAuth)"]]:::secondaryActor
+        MailServer[["SMTP Mail Server"]]:::secondaryActor
+        Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
     end
 
     %% Relations - Guest
     Guest --> UC10
-    Guest --> UC12
     Guest --> UC17
+    Guest --> UC12
     Guest --> UC18
     Guest --> UC22
 
@@ -40,8 +54,12 @@ flowchart LR
     Calon --> UC02
     Calon --> UC16
 
-    %% Relationships (Include & Extend)
+    %% Extend Dependencies
+    UC24 -.-> |extend| UC22
     UC03 -.-> |extend| UC01
     UC02 -.-> |extend| UC01
-    UC24 -.-> |extend| UC22
-    UC02 -.-> |include| Midtrans
+
+    %% Secondary Actor Associations
+    UC18 --> Google
+    UC24 --> MailServer
+    UC02 --> Midtrans

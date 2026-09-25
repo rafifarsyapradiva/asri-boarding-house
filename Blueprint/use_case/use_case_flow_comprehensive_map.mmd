@@ -8,13 +8,15 @@ flowchart TB
     %% ACTORS
     Guest(["Tamu (Guest)"]):::actorNode
     Calon(["Calon Penyewa"]):::actorNode
-    Penyewa(["Penyewa Aktif"]):::primaryActor
+    Penyewa(["Penyewa Aktif"]):::actorNode
     Admin(["Administrator"]):::actorNode
     Cron[["System Scheduler (Timer/Cron)"]]:::timerNode
 
     %% EXTERNAL SERVICES
     Midtrans[["Payment Gateway (Midtrans Snap)"]]:::externalNode
     Fonnte[["WhatsApp Gateway (Fonnte)"]]:::externalNode
+    Google[["Google Identity Services (OAuth)"]]:::externalNode
+    MailServer[["SMTP Mail Server"]]:::externalNode
 
     %% FLOW PHASE 1: AUTHENTICATION & DISCOVERY
     subgraph Phase1 ["Fase 1: Penemuan & Otentikasi"]
@@ -64,28 +66,31 @@ flowchart TB
     Guest --> UC22
 
     UC24 -.-> |extend| UC22
+    UC24 --> MailServer
     UC12 --> Calon
     UC18 --> Calon
+    UC18 --> Google
 
     Calon --> UC01
     UC03 -.-> |extend| UC01
     UC02 -.-> |extend| UC01
-    UC02 -.-> |include| Midtrans
+    UC02 --> Midtrans
     Calon --> UC03
     Calon --> UC02
 
     Admin --> UC03
     Admin --> UC06
     Admin --> UC17
-    UC06 -.-> |include| Fonnte
+    UC06 --> Fonnte
     UC06 --> |Transisi Sukses -> Akun Terbit| Penyewa
 
     Cron --> UC28
-    UC28 -.-> |include| Fonnte
+    Cron --> |Auto-cancel 24 jam| UC01
+    UC28 --> Fonnte
     UC28 --> |Terbit Tagihan Rutin| UC04
 
     Penyewa --> UC04
-    UC04 -.-> |include| Midtrans
+    UC04 --> Midtrans
     Admin --> |Konfirmasi Kas Manual| UC06
     UC06 -.-> |Update Status Lunas| UC04
 
@@ -93,10 +98,10 @@ flowchart TB
     Penyewa --> UC25
 
     Penyewa --> UC05
-    UC05 -.-> |include| Fonnte
+    UC05 --> Fonnte
     Fonnte --> |Notifikasi WA Masuk| Admin
     Admin --> UC15
-    UC15 -.-> |include| Fonnte
+    UC15 --> Fonnte
     Fonnte --> |Notifikasi Status Selesai| Penyewa
 
     Admin --> UC14
@@ -106,7 +111,8 @@ flowchart TB
     Admin --> UC08
     Admin --> UC19
     Admin --> UC20
-    UC20 -.-> |include| Fonnte
+    UC20 --> Fonnte
+    UC20 --> MailServer
 
     UC27 -.-> |extend| UC07
     UC27 -.-> |extend| UC14
