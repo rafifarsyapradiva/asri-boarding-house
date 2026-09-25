@@ -15,10 +15,13 @@ erDiagram
     users {
         unsigned_bigint id PK
         string nama "varchar(100)"
-        string email "varchar(150) UK"
+        string email "varchar(150)"
+        string active_email "varchar(150) VIRTUAL, UK"
         string password "varchar(255)"
-        string no_hp "varchar(20) UK, Nullable"
-        string nik "varchar(20) UK, Nullable"
+        string no_hp "varchar(50), Nullable"
+        string active_no_hp "varchar(20) VIRTUAL, UK"
+        string nik "varchar(50), Nullable"
+        string active_nik "varchar(20) VIRTUAL, UK"
         string nama_wali "varchar(100), Nullable"
         string no_wali "varchar(20), Nullable"
         enum role "admin, penyewa"
@@ -32,7 +35,8 @@ erDiagram
 
     kamar {
         unsigned_bigint id PK
-        string nomor_kamar "varchar(50) UK"
+        string nomor_kamar "varchar(50)"
+        string active_nomor_kamar "varchar(50) VIRTUAL, UK"
         tinyint lantai "Default 1"
         enum tipe "standar, deluxe, vip"
         decimal luas_m2 "5,2"
@@ -64,8 +68,8 @@ erDiagram
         unsigned_bigint id PK
         unsigned_bigint user_id FK "1:1 Aktif / 1:N Historis"
         unsigned_bigint kamar_id FK
-        decimal harga_sewa "12,2, Nullable (Immutable copy)"
-        string nik "varchar(20) UK"
+        decimal harga_sewa "12,2, Nullable (Immutable snapshot)"
+        string nik "varchar(50)"
         date tanggal_masuk
         date tanggal_keluar "Nullable"
         date tanggal_keluar_seharusnya "Nullable"
@@ -114,7 +118,6 @@ erDiagram
         string signature_key "varchar(255), Nullable"
         json response_json "Nullable"
         datetime tanggal_bayar "Nullable"
-        string pdf_path "varchar(255), Nullable"
         timestamp created_at
         timestamp updated_at
     }
@@ -148,7 +151,8 @@ erDiagram
         decimal nominal_dp "12,2, Default 0"
         decimal nominal_sisa "12,2, Default 0"
         string snap_token "varchar(255), Nullable"
-        string order_id "varchar(100) UK, Nullable"
+        string order_id "varchar(100), Nullable"
+        string active_order_id "varchar(100) VIRTUAL, UK"
         string transaction_id "varchar(100), Nullable"
         text catatan_user "Nullable"
         text catatan_admin "Nullable"
@@ -167,22 +171,49 @@ erDiagram
         timestamp created_at "Append-only"
     }
 
-    pengumuman {
+    guest_chat_threads {
         unsigned_bigint id PK
-        string judul "varchar(150)"
-        text isi
-        boolean is_active "Default true"
+        string session_token "varchar(255) UK, Index"
+        string name "varchar(255)"
+        string no_hp "varchar(255)"
+        enum status "active, closed"
         timestamp created_at
         timestamp updated_at
     }
 
-    notifikasi_khusus {
+    guest_chat_messages {
         unsigned_bigint id PK
-        string sumber "varchar(255), Index"
-        string tipe_aktivitas "varchar(255), Index"
+        unsigned_bigint guest_chat_thread_id FK
+        enum sender_type "guest, admin"
+        unsigned_bigint sender_id FK "Nullable"
+        text message
+        boolean is_read "Default false"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    keluhan {
+        unsigned_bigint id PK
+        unsigned_bigint penyewa_id FK
+        string judul "varchar(150)"
+        enum kategori "kamar, fasilitas_bersama, kebersihan, keamanan, lainnya"
         text deskripsi
-        json data_detail "Nullable"
-        unsigned_bigint user_id FK "Nullable"
+        string foto_bukti "varchar(255), Nullable"
+        enum status "pending, diproses, selesai"
+        text tanggapan_admin "Nullable"
+        datetime tanggal_selesai "Nullable"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    pengeluaran {
+        unsigned_bigint id PK
+        string nama_pengeluaran "varchar(150)"
+        enum kategori "maintenance, utilitas, operasional, lainnya"
+        decimal nominal "12,2"
+        date tanggal_pengeluaran "Index"
+        string bukti_nota "varchar(255), Nullable"
+        text keterangan "Nullable"
         timestamp created_at
         timestamp updated_at
     }
@@ -205,38 +236,12 @@ erDiagram
         timestamp updated_at
     }
 
-    pengeluaran {
-        unsigned_bigint id PK
-        string nama_pengeluaran "varchar(150)"
-        enum kategori "maintenance, utilitas, operasional, lainnya"
-        decimal nominal "12,2"
-        date tanggal_pengeluaran "Index"
-        string bukti_nota "varchar(255), Nullable"
-        text keterangan "Nullable"
-        timestamp created_at
-        timestamp updated_at
-    }
-
     faqs {
         unsigned_bigint id PK
         text pertanyaan
         text jawaban
         tinyint urutan "Default 0"
         tinyint is_active "Default 1"
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    keluhan {
-        unsigned_bigint id PK
-        unsigned_bigint penyewa_id FK
-        string judul "varchar(150)"
-        enum kategori "kamar, fasilitas_bersama, kebersihan, keamanan, lainnya"
-        text deskripsi
-        string foto_bukti "varchar(255), Nullable"
-        enum status "pending, diproses, selesai"
-        text tanggapan_admin "Nullable"
-        datetime tanggal_selesai "Nullable"
         timestamp created_at
         timestamp updated_at
     }
@@ -262,30 +267,29 @@ erDiagram
         timestamp updated_at
     }
 
-    guest_chat_threads {
+    pengumuman {
         unsigned_bigint id PK
-        string session_token "varchar(255) UK, Index"
-        string name "varchar(255)"
-        string no_hp "varchar(255)"
-        enum status "active, closed"
+        string judul "varchar(150)"
+        text isi
+        boolean is_active "Default true"
         timestamp created_at
         timestamp updated_at
     }
 
-    guest_chat_messages {
+    notifikasi_khusus {
         unsigned_bigint id PK
-        unsigned_bigint guest_chat_thread_id FK
-        enum sender_type "guest, admin"
-        unsigned_bigint sender_id FK "Nullable"
-        text message
-        boolean is_read "Default false"
+        string sumber "varchar(255), Index"
+        string tipe_aktivitas "varchar(255), Index"
+        text deskripsi
+        json data_detail "Nullable"
+        unsigned_bigint user_id FK "Nullable"
         timestamp created_at
         timestamp updated_at
     }
 
     whatsapp_clicks {
         unsigned_bigint id PK
-        string sumber "varchar(50)"
+        string source "varchar(50)"
         unsigned_bigint kamar_id FK "Nullable"
         string ip_address "varchar(45), Nullable"
         text user_agent "Nullable"
@@ -293,7 +297,7 @@ erDiagram
         timestamp updated_at
     }
 
-    %% Relationship Definitions %%
+    %% Definisi Relasi & Kardinalitas Sistem %%
     users ||--o{ penyewa : "user_id (1:1 Aktif / 1:N Historis)"
     kamar ||--o{ penyewa : "kamar_id (1:N)"
     

@@ -5,38 +5,56 @@
     'primaryTextColor': '#1E293B',
     'primaryBorderColor': '#D97706',
     'lineColor': '#B45309',
-    'fontSize': '12px',
+    'fontSize': '13px',
     'fontFamily': 'Inter, system-ui, sans-serif'
   }
 }}%%
-flowchart LR
-    subgraph KAMAR_NODE["Tabel: kamar (Master Unit)"]
-        direction TB
-        K1["<b>id</b>: 101 [PK] (Kamar 101)"]
-        K2["<b>id</b>: 102 [PK] (Kamar 102)"]
+flowchart TB
+    TITLE["<b>DEKOMPOSISI RELASI MANY-TO-MANY (N:M PIVOT RESOLUTION)</b><br><i>Sistem Informasi Asri Boarding House</i>"]
+
+    subgraph MASTERS ["Entitas Master Relasional"]
+        direction LR
+        subgraph KAMAR_NODE["Tabel: kamar (Master Unit Kamar)"]
+            direction TB
+            K_TITLE["<b>Atribut Kunci & Contoh Data:</b>"]
+            K1["<b>id</b>: 101 [PK] (Kamar Standar A1)"]
+            K2["<b>id</b>: 102 [PK] (Kamar Deluxe B2)"]
+            K_NOTE["• 1 Kamar dapat memilih banyak fasilitas"]
+        end
+
+        subgraph FASILITAS_NODE["Tabel: fasilitas (Master Fasilitas)"]
+            direction TB
+            F_TITLE["<b>Atribut Kunci & Contoh Data:</b>"]
+            F1["<b>id</b>: 1 [PK] (Air Conditioner)"]
+            F2["<b>id</b>: 2 [PK] (Wi-Fi High Speed)"]
+            F3["<b>id</b>: 3 [PK] (Kamar Mandi Dalam)"]
+            F_NOTE["• 1 Fasilitas dapat dipasang pada banyak kamar"]
+        end
     end
 
-    subgraph PIVOT_NODE["Tabel Pivot: kamar_fasilitas"]
+    subgraph PIVOT_CONTAINER ["Tabel Pivot Dekomposisi Fisik: kamar_fasilitas"]
         direction TB
-        P_TITLE["<b>Composite Primary Key: (kamar_id, fasilitas_id)</b><br>Aksi: ON DELETE CASCADE"]
-        P1["(kamar_id: 101, fasilitas_id: 1) -> AC"]
-        P2["(kamar_id: 101, fasilitas_id: 2) -> Wi-Fi"]
-        P3["(kamar_id: 101, fasilitas_id: 4) -> Kamar Mandi Dalam"]
-        P4["(kamar_id: 102, fasilitas_id: 1) -> AC"]
-        P5["(kamar_id: 102, fasilitas_id: 2) -> Wi-Fi"]
+        P_HEADER["<b>Composite Primary Key: (kamar_id, fasilitas_id)</b><br>Integritas Referensial: ON DELETE CASCADE / ON UPDATE CASCADE"]
+        subgraph PIVOT_RECORDS ["Matriks Pemetaan Data Relasi Nyata"]
+            direction LR
+            P1["Record 1:<br><b>kamar_id</b>: 101<br><b>fasilitas_id</b>: 1 (AC)"]
+            P2["Record 2:<br><b>kamar_id</b>: 101<br><b>fasilitas_id</b>: 2 (WiFi)"]
+            P3["Record 3:<br><b>kamar_id</b>: 102<br><b>fasilitas_id</b>: 1 (AC)"]
+            P4["Record 4:<br><b>kamar_id</b>: 102<br><b>fasilitas_id</b>: 3 (KM Dalam)"]
+        end
     end
 
-    subgraph FASILITAS_NODE["Tabel: fasilitas (Master Fasilitas)"]
-        direction TB
-        F1["<b>id</b>: 1 [PK] (Air Conditioner)"]
-        F2["<b>id</b>: 2 [PK] (Wi-Fi High Speed)"]
-        F3["<b>id</b>: 3 [PK] (Free Listrik)"]
-        F4["<b>id</b>: 4 [PK] (Kamar Mandi Dalam)"]
-    end
+    TITLE --> MASTERS
+    KAMAR_NODE ==>|"1 : N (kamar_id) [CASCADE]"| PIVOT_CONTAINER
+    FASILITAS_NODE ==>|"1 : N (fasilitas_id) [CASCADE]"| PIVOT_CONTAINER
 
-    KAMAR_NODE ==>|"1 : N (kamar_id)<br>1 Kamar memiliki banyak fasilitas"| PIVOT_NODE
-    FASILITAS_NODE ==>|"1 : N (fasilitas_id)<br>1 Fasilitas terpasang di banyak kamar"| PIVOT_NODE
-
+    style TITLE fill:#1E293B,stroke:#0F172A,color:#F8FAFC,stroke-width:2px
+    style MASTERS fill:#FFFFFF,stroke:#CBD5E1,stroke-width:1px
     style KAMAR_NODE fill:#EFF6FF,stroke:#2563EB,stroke-width:2px
-    style PIVOT_NODE fill:#FEF3C7,stroke:#D97706,stroke-width:2px,stroke-dasharray: 5 5
     style FASILITAS_NODE fill:#ECFDF5,stroke:#059669,stroke-width:2px
+    style PIVOT_CONTAINER fill:#FEF3C7,stroke:#D97706,stroke-width:2px
+    style PIVOT_RECORDS fill:#FFFBEB,stroke:#F59E0B,stroke-width:1px,stroke-dasharray: 4 4
+    style P1 fill:#FFFFFF,stroke:#D97706,stroke-width:1.5px
+    style P2 fill:#FFFFFF,stroke:#D97706,stroke-width:1.5px
+    style P3 fill:#FFFFFF,stroke:#D97706,stroke-width:1.5px
+    style P4 fill:#FFFFFF,stroke:#D97706,stroke-width:1.5px

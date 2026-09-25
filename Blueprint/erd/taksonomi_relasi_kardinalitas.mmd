@@ -1,0 +1,59 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#F8FAFC',
+    'primaryTextColor': '#0F172A',
+    'primaryBorderColor': '#2563EB',
+    'lineColor': '#334155',
+    'secondaryColor': '#FEF3C7',
+    'tertiaryColor': '#ECFDF5',
+    'fontSize': '13px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    ROOT["<b>TAKSONOMI & KLASIFIKASI KARDINALITAS BASIS DATA (22 ENTITAS)</b><br><i>Sistem Informasi Asri Boarding House Terintegrasi Payment Gateway</i>"]
+
+    subgraph GRID ["Klasifikasi Terstruktur Menurut Pola Hubungan"]
+        direction LR
+        
+        %% KOLOM KIRI: Pola Asosiasi Khusus (1:1 dan N:M)
+        subgraph COL_LEFT ["Pola Asosiasi Khusus & Dekomposisi"]
+            direction TB
+            
+            subgraph S_OTO ["1. Hubungan One-to-One (1:1) - Integritas Akun & Kontrak"]
+                direction TB
+                OTO_1["<b>users ↔ penyewa (Sewa Aktif)</b><br>• FK: user_id [RESTRICT]<br>• Logis: 1 Akun hanya boleh memiliki 1 profil penyewa berstatus 'aktif'<br>• Fisik: 1:N untuk mempertahankan riwayat kontrak sewa terdahulu"]
+                OTO_2["<b>reservasi ↔ penyewa (Konversi)</b><br>• FK: reservasi.penyewa_id [SET NULL]<br>• 1 Reservasi terkonfirmasi menghasilkan tepat 1 profil kontrak sewa<br>• Melacak riwayat asal-usul booking online"]
+            end
+
+            subgraph S_MTM ["2. Hubungan Many-to-Many (N:M) - Pivot Dekomposisi"]
+                direction TB
+                MTM_1["<b>kamar ↔ kamar_fasilitas ↔ fasilitas</b><br>• Pivot: kamar_fasilitas [Composite PK: kamar_id, fasilitas_id]<br>• FK kamar_id [CASCADE] & FK fasilitas_id [CASCADE]<br>• 1 Kamar dapat memiliki banyak fasilitas penunjang<br>• 1 Fasilitas dapat dipasang pada banyak unit kamar"]
+            end
+        end
+
+        %% KOLOM KANAN: Pola Transaksional Berulang (1:N)
+        subgraph COL_RIGHT ["Pola Transaksional & Audit Trail (One-to-Many / 1:N)"]
+            direction TB
+            OTM_BILL["<b>Siklus Billing & Pembayaran</b><br>• penyewa ──(1:N)──> tagihan [RESTRICT]<br>• tagihan ──(1:N)──> pembayaran [RESTRICT]<br>• users (admin) ──(1:N)──> pembayaran [SET NULL]"]
+            OTM_RES["<b>Siklus Pemesanan & Obrolan Pre-Payment</b><br>• users ──(1:N)──> reservasi [RESTRICT]<br>• kamar ──(1:N)──> reservasi [RESTRICT]<br>• users (admin) ──(1:N)──> reservasi [SET NULL]<br>• reservasi ──(1:N)──> chat_messages [CASCADE]<br>• users ──(1:N)──> chat_messages [CASCADE]"]
+            OTM_HELP["<b>Layanan Penghuni & Live Chat Tamu</b><br>• penyewa ──(1:N)──> keluhan [CASCADE]<br>• guest_chat_threads ──(1:N)──> guest_chat_messages [CASCADE]<br>• users (admin) ──(1:N)──> guest_chat_messages [CASCADE]"]
+            OTM_LOG["<b>Audit Log & Analytics Impresi</b><br>• penyewa ──(1:N)──> log_notifikasi [CASCADE]<br>• tagihan ──(1:N)──> log_notifikasi [SET NULL]<br>• users ──(1:N)──> notifikasi_khusus [SET NULL]<br>• kamar ──(1:N)──> whatsapp_clicks [SET NULL]"]
+        end
+    end
+
+    ROOT --> GRID
+
+    %% Styling
+    classDef rootClass fill:#1E293B,stroke:#0F172A,stroke-width:2px,color:#F8FAFC;
+    classDef otoBox fill:#EFF6FF,stroke:#2563EB,stroke-width:2px,color:#1E3A8A;
+    classDef mtmBox fill:#FFFBEB,stroke:#D97706,stroke-width:2px,color:#78350F;
+    classDef otmBox fill:#F8FAFC,stroke:#475569,stroke-width:2px,color:#0F172A;
+    classDef subClass fill:#FFFFFF,stroke:#CBD5E1,stroke-width:1.5px,color:#334155;
+
+    class ROOT rootClass;
+    class S_OTO otoBox;
+    class S_MTM mtmBox;
+    class COL_RIGHT otmBox;
+    class OTO_1,OTO_2,MTM_1,OTM_BILL,OTM_RES,OTM_HELP,OTM_LOG subClass;
