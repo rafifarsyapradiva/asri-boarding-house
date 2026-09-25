@@ -1,44 +1,19 @@
 classDiagram
-    direction TB
-    class PenyewaObserver {
-        +creating(Penyewa) void
-        +created(Penyewa) void
-        +updating(Penyewa) void
-        +updated(Penyewa) void
-    }
-    class FasilitasObserver {
-        +saved(Fasilitas) void
-        +deleted(Fasilitas) void
-    }
-    class KamarObserver {
-        +created(Kamar) void
-        +updated(Kamar) void
-        +deleted(Kamar) void
-        +restored(Kamar) void
-        +forceDeleted(Kamar) void
-    }
-    class PengeluaranObserver {
-        +created(Pengeluaran) void
-        +deleted(Pengeluaran) void
-    }
-    class SettingObserver {
-        +saved(Setting) void
-        +deleted(Setting) void
-    }
+    direction LR
 
-    class EnsurePasswordChanged {
-        +handle(Request, Closure) Response
+    class RoleMiddleware {
+        +handle(Request, Closure, role) Response
     }
-    class EnsureProfileIsComplete {
+    class VerifyMidtransSignature {
         +handle(Request, Closure) Response
     }
     class EnsureTenantIsActive {
         +handle(Request, Closure) Response
     }
-    class RoleMiddleware {
-        +handle(Request, Closure, role) Response
+    class EnsureProfileIsComplete {
+        +handle(Request, Closure) Response
     }
-    class VerifyMidtransSignature {
+    class EnsurePasswordChanged {
         +handle(Request, Closure) Response
     }
 
@@ -52,13 +27,57 @@ classDiagram
         +passes(attribute, value) bool
     }
 
-    PenyewaObserver ..> Penyewa : "observes lifecycle"
-    PenyewaObserver ..> Kamar : "updates status 'terisi'"
-    FasilitasObserver ..> Fasilitas : "clears cache"
-    KamarObserver ..> Kamar : "observes & clears cache"
-    PengeluaranObserver ..> Pengeluaran : "observes"
-    SettingObserver ..> Setting : "observes & syncs cache"
+    class PenyewaObserver {
+        +creating(Penyewa) void
+        +created(Penyewa) void
+        +updating(Penyewa) void
+        +updated(Penyewa) void
+    }
+    class KamarObserver {
+        +created(Kamar) void
+        +updated(Kamar) void
+        +deleted(Kamar) void
+        +restored(Kamar) void
+        +forceDeleted(Kamar) void
+    }
+    class FasilitasObserver {
+        +saved(Fasilitas) void
+        +deleted(Fasilitas) void
+    }
+    class PengeluaranObserver {
+        +created(Pengeluaran) void
+        +deleted(Pengeluaran) void
+    }
+    class SettingObserver {
+        +saved(Setting) void
+        +deleted(Setting) void
+    }
 
-    PenyewaObserver ..> NotifikasiKhusus : "logs audit"
-    KamarObserver ..> NotifikasiKhusus : "logs audit"
-    PengeluaranObserver ..> NotifikasiKhusus : "logs audit"
+    class Penyewa
+    class Kamar
+    class Fasilitas
+    class Pengeluaran
+    class Setting
+    class NotifikasiKhusus
+
+    %% Inbound Security & Middlewares %%
+    RoleMiddleware ..> Penyewa : Guards Access
+    EnsureTenantIsActive ..> Penyewa : Verifies Active Status
+    EnsureProfileIsComplete ..> Penyewa : Checks Profile
+    EnsurePasswordChanged ..> Penyewa : Enforces Password Change
+
+    %% Validation Rules %%
+    KamarTersediaRule ..> Kamar : Validates Room
+    TanpaPenyewaAktifLainRule ..> Kamar : Validates Occupancy
+    ValidGoogleMapsEmbed ..> Setting : Validates Embed Map
+
+    %% Eloquent Lifecycle Observers %%
+    PenyewaObserver ..> Penyewa : Observes Lifecycle
+    PenyewaObserver ..> Kamar : Updates Status 'terisi'
+    PenyewaObserver ..> NotifikasiKhusus : Audit Log
+    KamarObserver ..> Kamar : Observes & Clears Cache
+    KamarObserver ..> NotifikasiKhusus : Audit Log
+    FasilitasObserver ..> Fasilitas : Clears Cache
+    PengeluaranObserver ..> Pengeluaran : Observes
+    PengeluaranObserver ..> NotifikasiKhusus : Audit Log
+    SettingObserver ..> Setting : Syncs Cache

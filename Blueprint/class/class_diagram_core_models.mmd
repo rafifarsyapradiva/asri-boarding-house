@@ -1,168 +1,178 @@
 classDiagram
     direction TB
 
-    %% Model Transaksional Inti %%
-    class User {
-        +int id
-        +string nama
-        +string email
-        +string no_hp
-        +string nik
-        +UserRole role
-        +isProfileComplete() bool
-        +isActiveTenant() bool
-        +anonymizeAndDelete() void
-    }
-    class Kamar {
-        +int id
-        +string nomor_kamar
-        +tinyint lantai
-        +TipeKamar tipe
-        +float luas_m2
-        +decimal harga_bulan
-        +KamarStatus status
-        +kalkulasiHargaSewa(tipe, durasi) float
-        +kalkulasiMinimalDp(total) float
-    }
-    class Fasilitas {
-        +int id
-        +string nama
-        +string ikon
-        +boolean is_active
-    }
-    class Penyewa {
-        +int id
-        +int user_id
-        +int kamar_id
-        +string nik
-        +decimal harga_sewa
-        +date tanggal_masuk
-        +date tanggal_keluar_seharusnya
-        +PenyewaStatus status
-        +getIsOverdueAttribute() bool
-    }
-    class Tagihan {
-        +int id
-        +int penyewa_id
-        +string order_id
-        +date tanggal_jatuh_tempo
-        +decimal nominal_pokok
-        +decimal nominal_denda
-        +decimal nominal_total
-        +TagihanStatus status
-        +scopeTerlambat() Builder
-    }
-    class Pembayaran {
-        +int id
-        +int tagihan_id
-        +string transaction_id
-        +string payment_type
-        +decimal nominal
-        +string status_midtrans
-        +int dikonfirmasi_oleh
-        +datetime tanggal_bayar
-    }
-    class Reservasi {
-        +bigint id
-        +int user_id
-        +int kamar_id
-        +date tanggal_mulai
-        +date tanggal_selesai
-        +decimal total_harga
-        +boolean is_dp
-        +ReservasiStatus status
-        +static isKamarTerbooking() bool
-    }
-    class ChatMessage {
-        +bigint id
-        +bigint reservasi_id
-        +int sender_id
-        +text message
-    }
-    class WhatsappClick {
-        +int id
-        +int kamar_id
-        +string source
-    }
-    class Keluhan {
-        +int id
-        +int penyewa_id
-        +string judul
-        +StatusKeluhan status
-    }
-    class Pengeluaran {
-        +int id
-        +string nama_pengeluaran
-        +decimal nominal
-    }
-    class GuestChatThread {
-        +bigint id
-        +string session_token
-        +GuestChatStatus status
-    }
-    class GuestChatMessage {
-        +bigint id
-        +bigint guest_chat_thread_id
-        +text message
-    }
-    class LogNotifikasi {
-        +int id
-        +int penyewa_id
-        +int tagihan_id
-        +StatusNotifikasi status
-    }
-    class NotifikasiKhusus {
-        +int id
-        +string sumber
-        +string tipe_aktivitas
-        +int user_id
-    }
-
-    %% Model Pendukung CMS Publik %%
-    class CustomerReview {
-        +int id
-        +string nama
-        +tinyint bintang
-        +text ulasan
-    }
-    class Faq {
-        +int id
-        +string pertanyaan
-        +text jawaban
-        +boolean is_active
-    }
-    class Peraturan {
-        +int id
-        +string judul
-        +text deskripsi
-    }
-    class Gallery {
-        +int id
-        +string judul
-        +string foto
-        +boolean is_active
-    }
-    class Pengumuman {
-        +int id
-        +string judul
-        +text isi
-        +boolean is_active
+    namespace Core_Transactional {
+        class User {
+            +int id
+            +string nama
+            +string email
+            +string no_hp
+            +string nik
+            +UserRole role
+            +isProfileComplete() bool
+            +isActiveTenant() bool
+            +anonymizeAndDelete() void
+        }
+        class Kamar {
+            +int id
+            +string nomor_kamar
+            +tinyint lantai
+            +TipeKamar tipe
+            +decimal harga_bulan
+            +KamarStatus status
+            +kalkulasiHargaSewa(tipe, durasi) float
+            +kalkulasiMinimalDp(total) float
+        }
+        class Fasilitas {
+            +int id
+            +string nama
+            +string ikon
+            +boolean is_active
+        }
+        class Penyewa {
+            +int id
+            +int user_id
+            +int kamar_id
+            +decimal harga_sewa
+            +date tanggal_masuk
+            +date tanggal_keluar_seharusnya
+            +PenyewaStatus status
+            +getIsOverdueAttribute() bool
+        }
+        class Tagihan {
+            +int id
+            +int penyewa_id
+            +string order_id
+            +date tanggal_jatuh_tempo
+            +decimal nominal_pokok
+            +decimal nominal_denda
+            +decimal nominal_total
+            +TagihanStatus status
+            +scopeTerlambat() Builder
+        }
+        class Pembayaran {
+            +int id
+            +int tagihan_id
+            +string transaction_id
+            +string payment_type
+            +decimal nominal
+            +string status_midtrans
+            +int dikonfirmasi_oleh
+            +datetime tanggal_bayar
+        }
+        class Reservasi {
+            +bigint id
+            +int user_id
+            +int kamar_id
+            +date tanggal_mulai
+            +date tanggal_selesai
+            +decimal total_harga
+            +boolean is_dp
+            +ReservasiStatus status
+            +static isKamarTerbooking() bool
+        }
+        class ChatMessage {
+            +bigint id
+            +bigint reservasi_id
+            +int sender_id
+            +text message
+        }
+        class Keluhan {
+            +int id
+            +int penyewa_id
+            +string judul
+            +StatusKeluhan status
+        }
+        class GuestChatThread {
+            +bigint id
+            +string session_token
+            +GuestChatStatus status
+        }
+        class GuestChatMessage {
+            +bigint id
+            +bigint guest_chat_thread_id
+            +string sender_type
+            +text message
+        }
+        class WhatsappClick {
+            +int id
+            +int kamar_id
+            +string source
+        }
+        class LogNotifikasi {
+            +int id
+            +int penyewa_id
+            +int tagihan_id
+            +StatusNotifikasi status
+        }
+        class NotifikasiKhusus {
+            +int id
+            +string tipe_aktivitas
+            +int user_id
+        }
+        class Pengeluaran {
+            +int id
+            +string nama_pengeluaran
+            +decimal nominal
+            +date tanggal_pengeluaran
+        }
+        class Setting {
+            +string key
+            +text value
+        }
     }
 
-    User "1" -- "0..1" Penyewa : "One-to-One (Profil Penyewa)"
-    User "1" -- "*" Reservasi : "One-to-Many (Customer)"
-    Kamar "1" -- "*" Penyewa : "One-to-Many (Riwayat Hunian)"
-    Kamar "*" -- "*" Fasilitas : "Many-to-Many (kamar_fasilitas)"
-    Kamar "1" -- "*" WhatsappClick : "One-to-Many (Klik CTA WA)"
-    Kamar "1" -- "*" Reservasi : "One-to-Many (Booking)"
-    Penyewa "1" -- "*" Tagihan : "One-to-Many (Invoice Bulanan)"
-    Tagihan "1" -- "*" Pembayaran : "One-to-Many (Percobaan Bayar)"
-    User "1" -- "*" Pembayaran : "One-to-Many (Dikonfirmasi Cash)"
-    Reservasi "1" *-- "*" ChatMessage : "Composition (Chat Pre-Bayar)"
-    User "1" -- "*" ChatMessage : "One-to-Many"
-    Penyewa "1" -- "*" Keluhan : "One-to-Many"
-    GuestChatThread "1" *-- "*" GuestChatMessage : "Composition (Chat Tamu)"
-    User "1" -- "*" GuestChatMessage : "One-to-Many"
-    Penyewa "1" -- "*" LogNotifikasi : "One-to-Many"
-    Tagihan "1" -- "*" LogNotifikasi : "One-to-Many"
-    User "1" -- "*" NotifikasiKhusus : "One-to-Many"
+    namespace CMS_Marketing {
+        class CustomerReview {
+            +int id
+            +string nama
+            +tinyint bintang
+            +text ulasan
+        }
+        class Faq {
+            +int id
+            +string pertanyaan
+            +text jawaban
+            +boolean is_active
+        }
+        class Peraturan {
+            +int id
+            +string judul
+            +text deskripsi
+        }
+        class Gallery {
+            +int id
+            +string judul
+            +string foto
+            +boolean is_active
+        }
+        class Pengumuman {
+            +int id
+            +string judul
+            +text isi
+            +boolean is_active
+        }
+    }
+
+    %% Relasi Asosiasi, Komposisi & Integritas %%
+    User "1" -- "0..1" Penyewa : One-to-One
+    User "1" -- "*" Reservasi : One-to-Many
+    User "1" -- "*" Pembayaran : Confirms Cash
+    User "1" -- "*" ChatMessage : One-to-Many
+    User "1" -- "*" GuestChatMessage : One-to-Many
+    User "1" -- "*" NotifikasiKhusus : One-to-Many
+
+    Kamar "1" -- "*" Penyewa : One-to-Many
+    Kamar "*" -- "*" Fasilitas : Many-to-Many
+    Kamar "1" -- "*" WhatsappClick : One-to-Many
+    Kamar "1" -- "*" Reservasi : One-to-Many
+
+    Penyewa "1" -- "*" Tagihan : One-to-Many
+    Penyewa "1" -- "*" Keluhan : One-to-Many
+    Penyewa "1" -- "*" LogNotifikasi : One-to-Many
+
+    Tagihan "1" -- "*" Pembayaran : One-to-Many
+    Tagihan "1" -- "*" LogNotifikasi : One-to-Many
+
+    Reservasi "1" *-- "*" ChatMessage : Composition
+    GuestChatThread "1" *-- "*" GuestChatMessage : Composition
