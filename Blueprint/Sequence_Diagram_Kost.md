@@ -134,7 +134,7 @@ sequenceDiagram
     autonumber
     actor U as Pengguna (Tamu / Penyewa)
     actor A as Admin Kost
-    actor S as Scheduler (Cron)
+    actor S as Scheduler (Cron Daemon)
     participant V as View (Blade UI & AJAX JS)
     participant C as Controller & Middleware
     participant Srv as Service & Queue Layer
@@ -142,155 +142,250 @@ sequenceDiagram
     participant API as External APIs (Midtrans & Fonnte WA)
 
     %% ==========================================
-    %% FASA 1: DISCOVERY & PEMBUATAN RESERVASI (SD 1 & SD 2)
+    %% FASA 1: DISCOVERY & RESERVASI (SD 1 & SD 2)
     %% ==========================================
-    Note over U, API: [FASA 1] DISCOVERY & PEMBUATAN RESERVASI (SD 1 & SD 2)
-    U->>V: 1. Buka katalog /kamar & lakukan simulasi harga
-    V->>C: AJAX POST /kamar/{id}/hitung-harga (tipe, durasi)
-    C->>Srv: ReservasiService::hitungHarga()
-    Srv-->>V: JSON Response (total_harga, dp_minimal)
-    U->>V: 2. Submit formulir reservasi unit kamar
-    V->>C: POST /penyewa/reservasi (data pemesanan)
-    C->>DB: DB::beginTransaction() & Kamar::lockForUpdate()
-    DB-->>C: Lock kamar diperoleh
-    C->>DB: INSERT INTO reservasis (status: 'pending') & commit()
-    C-->>V: Redirect ke Detail Reservasi (/penyewa/reservasi/{id})
+    Note over U, API: [FASA 1] PANCARIAN, CEK KETERSEDIAAN & PEMBUATAN RESERVASI
+    U->>+V: 1. Akses /kamar, cek tanggal & simulasi biaya
+    V->>+C: POST /cek-ketersediaan & /kamar/{id}/hitung-harga
+    C->>+Srv: ReservasiService::cekDoubleBooking() & hitungHarga()
+    Srv->>+DB: Query ketersediaan kamar & hitung tarif sewa
+    DB-->>-Srv: Status ketersediaan & nominal harga
+    Srv-->>-C: Rincian estimasi (total_harga, nominal_dp)
+    C-->>-V: JSON status kamar & rincian biaya
+    V-->>-U: Tampilkan formulir pemesanan siap diisi
+
+    U->>+V: 2. Submit formulir reservasi unit kamar
+    V->>+C: POST /penyewa/reservasi (data pemesanan)
+    C->>+Srv: ReservasiService::buatReservasi()
+    Srv->>+DB: DB::beginTransaction() & Kamar::lockForUpdate()
+    DB-->>-Srv: Lock kamar diperoleh secara pesimistik
+    Srv->>+DB: INSERT INTO reservasis (status: 'pending') & commit()
+    DB-->>-Srv: Record reservasi tersimpan
+    Srv-)API: Event ReservasiDibuat -> Queue -> Notifikasi WA ke Admin
+    Srv-->>-C: Reservasi instance
+    C-->>-V: Redirect ke Detail Reservasi (/penyewa/reservasi/{id}/pembayaran)
+    V-->>-U: Halaman Detail Reservasi terbuka (Sidebar, Stepper, & Chat Box)
 
     %% ==========================================
-    %% FASA 2: PEMBAYARAN ONLINE & PRE-PAYMENT CHAT (SD 3 & SD 17)
+    %% FASA 2: PRE-PAYMENT CHAT & PEMBAYARAN MIDTRANS (SD 3 & SD 17)
     %% ==========================================
-    Note over U, API: [FASA 2] PRE-PAYMENT CHAT & PEMBAYARAN GATEWAY (SD 3 & SD 17)
-    loop AJAX Polling Obrolan (Setiap 3-5 Detik)
-        U->>V: Kirim pesan di Chat Box detail reservasi
-        V->>C: AJAX POST /reservasi/{id}/chat/send
-        C->>DB: INSERT INTO chat_messages
-        C-->>V: JSON chat payload
+    Note over U, API: [FASA 2] PRE-PAYMENT CHAT & PEMBAYARAN ONLINE GATEWAY
+    loop Obrolan Real-time Pre-Pembayaran
+        U->>+V: Kirim pertanyaan di chat box
+        V->>+C: POST /chat-box/{reservasi}/send (pesan)
+        C->>+DB: INSERT INTO chat_messages
+        DB-->>-C: Chat tersimpan
+        C-->>-V: JSON success
+        V-->>-U: Balasan gelembung chat ter-update
+        A->>+V: Admin membalas pesan di panel admin
+        V->>+C: POST /chat-box/{reservasi}/send (balasan admin)
+        C->>+DB: INSERT INTO chat_messages
+        DB-->>-C: Balasan tersimpan
+        C-->>-V: JSON success
+        V-->>-A: Status balasan terkirim
     end
-    U->>V: 3. Klik "Bayar Sekarang" (DP 30% / Lunas 100%)
-    V->>C: GET Snap Token Request
-    C->>API: Request Midtrans Snap Token
-    API-->>C: Snap Token Payload
-    C-->>V: Render Snap Modal Pop-Up
-    U->>API: Selesaikan pembayaran (VA / E-Wallet)
-    API->>C: Webhook Callback POST /api/midtrans/callback-reservasi
-    Note over C: Verifikasi signature_key Midtrans
-    C->>DB: UPDATE reservasis SET status = 'dp' / 'lunas'
-    C-->>API: HTTP 200 OK
-    V-->>U: Stepper ter-update ke status Pembayaran Berhasil
+
+    U->>+V: 3. Klik "Bayar Sekarang" (Pilih DP 30% / Lunas 100%)
+    V->>+C: POST /penyewa/reservasi/{id}/token (AJAX Request)
+    C->>+Srv: SnapTokenController -> MidtransService::createSnapTokenReservasi()
+    Srv->>+API: Request Snap Token (Midtrans API)
+    API-->>-Srv: Return snap_token payload
+    Srv-->>-C: Token payload (Cached 24h)
+    C-->>-V: Return JSON success (snap_token)
+    V->>V: Panggil snap.pay(token) & buka popup Snap Midtrans
+    V-->>-U: Modal pembayaran Midtrans Snap muncul di layar
+
+    alt Skenario Pembayaran Sukses (Settlement)
+        U->>+API: Selesaikan pembayaran via Virtual Account / E-Wallet
+        API->>+C: Webhook Callback POST /api/midtrans/callback-reservasi
+        Note over C: Middleware verifikasi signature_key Midtrans
+        C->>+DB: DB::transaction() -> UPDATE reservasis SET status = 'dp' / 'lunas'
+        DB-->>-C: Data reservasi ter-update
+        C-->>-API: Return HTTP 200 OK
+        API-->>-U: Status pembayaran lunas di UI Midtrans
+        V-->>U: Stepper pembayaran ter-update ke status Berhasil
+    else Skenario Kadaluarsa / Batal (Timeout 24 Jam)
+        S->>+C: Scheduler per jam: php artisan reservasi:cancel-expired
+        C->>+DB: UPDATE reservasis SET status = 'batal' WHERE status = 'pending' AND usia > 24 jam
+        DB-->>-C: Status diubah ke batal
+        C-->>-S: Command Selesai (Kamar otomatis bebas kembali)
+    end
 
     %% ==========================================
-    %% FASA 3: VERIFIKASI ADMIN & ONBOARDING AKUN (SD 4, SD 13, SD 16)
+    %% FASA 3: KONFIRMASI ADMIN & ONBOARDING AKUN (SD 4 & SD 13)
     %% ==========================================
-    Note over A, API: [FASA 3] VERIFIKASI ADMIN & ONBOARDING AKUN (SD 4 & SD 13)
-    A->>V: 4. Buka Reservasi DP/Lunas & Klik "Konfirmasi"
-    V->>C: POST /admin/reservasi/{id}/konfirmasi
-    C->>Srv: TransisiPenyewaService::transisi()
-    Srv->>DB: DB::beginTransaction() -> INSERT penyewas (status: 'aktif')
-    Srv->>DB: UPDATE kamars SET status = 'terisi'
-    Srv->>DB: INSERT tagihans (sisa DP / lunas) & UPDATE reservasis 'dikonfirmasi'
+    Note over A, API: [FASA 3] VERIFIKASI ADMIN, ONBOARDING AKUN & KEAMANAN LOGIN
+    A->>+V: 4. Buka Reservasi DP/Lunas & Klik "Konfirmasi"
+    V->>+C: POST /admin/reservasi/{id}/konfirmasi
+    C->>+Srv: TransisiPenyewaService::transisi(reservasi, adminId)
+    Srv->>+DB: DB::beginTransaction()
+    Srv->>DB: Restore penyewa lama (jika ada) ATAU Insert penyewas baru (status: 'aktif')
+    Srv->>DB: UPDATE kamars SET status = 'terisi' (via PenyewaObserver)
+    Srv->>DB: Inject tagihan (sisa DP / lunas) & UPDATE reservasis 'dikonfirmasi'
     Srv->>DB: DB::commit()
-    Srv->>API: Kirim Kredensial Akun via WA (Fonnte API)
-    API-->>U: Pesan WA: "Akun Kost Aktif. Username & Password: ..."
-    U->>V: Login pertama kali ke portal
-    V->>C: Disaring Middleware EnsurePasswordChanged
-    C-->>V: Intercept & Force Redirect ke /admin/force-change-password
-    U->>V: Input sandi baru & konfirmasi
-    V->>C: POST /admin/force-change-password
-    C->>DB: UPDATE users SET require_password_change = 0
-    C-->>V: Akses Penuh Dashboard Penyewa Terbuka
+    DB-->>-Srv: Transaksi tersimpan utuh (ACID)
+    Srv-)API: Event ReservasiDikonfirmasi -> Queue Job -> Kirim Kredensial via WA
+    API--)U: WhatsApp: "Akun Kost Aktif. Kredensial Login: ..."
+    Srv-->>-C: Penyewa instance
+    C-->>-V: Return redirect() dengan Toast Success
+    V-->>-A: Status halaman diperbarui ke 'Dikonfirmasi'
+
+    U->>+V: 5. Login perdana ke portal penyewa
+    V->>+C: POST /penyewa/login (kredensial awal)
+    C->>+DB: SELECT * FROM users WHERE email/no_hp = ?
+    DB-->>-C: User Record (require_password_change = 1)
+    C-->>-V: Login Berhasil
+    V->>+C: Akses dashboard (/penyewa/dashboard)
+    Note over C: Middleware EnsurePasswordChanged mendeteksi bendera wajib ganti password
+    C-->>-V: Intercept & Force Redirect ke /admin/force-change-password
+    V-->>-U: Form Ubah Kata Sandi Wajib ditampilkan
+    U->>+V: Masukkan kata sandi baru & konfirmasi
+    V->>+C: POST /admin/force-change-password
+    C->>+DB: UPDATE users SET password = Hash::make(), require_password_change = 0
+    DB-->>-C: Password berhasil diperbarui
+    C-->>-V: Redirect ke Dashboard Penyewa
+    V-->>-U: Akses dashboard penyewa aktif terbuka penuh
 
     %% ==========================================
-    %% FASA 4: SIKLUS BILLING, REMINDER & BAYAR TAGIHAN (SD 5 & SD 6)
+    %% FASA 4: SIKLUS BILLING, DENDA & REMINDER (SD 5 & SD 6)
     %% ==========================================
-    Note over S, API: [FASA 4] SIKLUS BILLING BULANAN & PEMBAYARAN TAGIHAN (SD 5 & SD 6)
-    S->>C: 5. Scheduler Tgl 1: php artisan tagihan:generate-bulanan
-    C->>Srv: BillingService::generateTagihanBulanan()
-    Srv->>DB: INSERT tagihans (status: 'pending') per penyewa aktif (immutable rate)
-    Srv->>API: Kirim Invoice Tagihan Bulanan via Fonnte WA
-    API-->>U: Pesan WA: "Tagihan Bulanan Baru Periode Ini Telah Terbit"
-    
-    opt Deteksi Overdue Harian (Tgl > 10)
-        S->>C: php artisan tagihan:proses-keterlambatan
-        C->>DB: UPDATE tagihans SET nominal_denda = 5% (jika lewat bulan)
-        C->>API: Kirim WA Peringatan Denda ke Penyewa & Wali
+    Note over S, API: [FASA 4] SIKLUS BILLING RUTIN, DENDA KETERLAMBATAN & REMINDER
+    S->>+Srv: 6. Cron Tgl 1: php artisan tagihan:generate-bulanan
+    Srv->>+DB: SELECT * FROM penyewas WHERE status = 'aktif' AND tipe_sewa = 'bulanan'
+    DB-->>-Srv: Dataset penyewa aktif bulanan
+    loop Per Penyewa Aktif (Chunk 100)
+        Srv->>+DB: firstOrCreate tagihans (TGH-{id}-YYYYMM) dengan tarif tetap (harga_sewa)
+        DB-->>-Srv: Tagihan baru terbit
+        Srv-)API: Queue KirimNotifikasiTagihanJob -> WA Invoice Fonnte
+        API--)U: WhatsApp: "Tagihan Sewa Bulan Ini Telah Terbit (Jatuh Tempo Tgl 10)"
+    end
+    Srv-->>-S: Command Selesai
+
+    opt Melewati Jatuh Tempo & Memasuki Bulan Baru
+        S->>+Srv: Cron Harian: php artisan tagihan:proses-keterlambatan
+        Srv->>+DB: SELECT * FROM tagihans WHERE status = 'pending' AND tanggal_jatuh_tempo < TODAY
+        DB-->>-Srv: Dataset tagihan overdue
+        Srv->>+DB: DB::transaction() -> Terapkan denda flat 5% (hanya 1x jika lewat bulan)
+        DB-->>-Srv: Denda diperbarui
+        Srv-)API: Queue KirimNotifikasiWaliJob -> Kirim WA Peringatan ke Penyewa & Wali
+        API--)U: WhatsApp Peringatan Denda Keterlambatan
+        Srv-->>-S: Command Selesai
     end
 
-    U->>V: 6. Bayar Tagihan (Online Midtrans Snap / Offline Cash Admin)
-    V->>C: POST Bayar Tagihan (Online Webhook / Admin Konfirmasi Cash)
-    C->>DB: DB::transaction() -> UPDATE tagihans 'lunas' & INSERT pembayarans
-    C->>Srv: Dispatch GeneratePdfNotaJob & KirimNotifikasiPembayaranJob
-    Srv->>DB: Render Kuitansi PDF via Dompdf (storage/public/nota/)
-    Srv->>API: Kirim Kuitansi PDF via Fonnte WA
-    API-->>U: Terima Berkas PDF Kuitansi Pembayaran Lunas di WA
+    U->>+V: 7. Buka Detail Tagihan untuk Pembayaran
+    V->>+C: GET /penyewa/tagihan/{id}
+    Note over C: Validasi Anti-IDOR (tagihan milik penyewa yang login)
+    C-->>-V: Tampilkan rincian tagihan (Pokok + Denda) & info rekening
+    V-->>-U: Halaman Detail Tagihan siap dibayar
+
+    alt Pembayaran Online (Midtrans Snap)
+        U->>+V: Klik "Bayar Online"
+        V->>+C: POST /penyewa/pembayaran/{tagihan}/token
+        C->>+Srv: SnapTokenController -> MidtransService::createSnapToken()
+        Srv->>+API: Request Snap Token
+        API-->>-Srv: snap_token
+        Srv-->>-C: Cached snap token
+        C-->>-V: JSON success (snap_token)
+        V->>V: Render snap.pay()
+        V-->>-U: Popup Midtrans Snap
+        U->>+API: Selesaikan transfer bank / QRIS
+        API->>+C: Webhook Callback POST /api/midtrans/callback
+        Note over C: Skenario Auto-Waiving Denda jika token dibuat di bulan yang sama
+        C->>+DB: DB::transaction() -> UPDATE tagihans status 'lunas' & INSERT pembayarans
+        DB-->>-C: Tagihan lunas tersimpan
+        C-)Srv: Event PembayaranBerhasil -> Dispatch KirimNotifikasiPembayaranJob
+        C-->>-API: Return HTTP 200 OK
+        API-->>-U: Status lunas ditampilkan
+        Srv-)API: WhatsApp Fonnte: Bukti pelunasan & tautan kuitansi nota
+        API--)U: Terima Bukti Bayar di WhatsApp
+    else Pembayaran Offline (Cash / Transfer Manual ke Admin)
+        U->>A: Serahkan uang tunai fisik / bukti transfer manual
+        A->>+V: Panel Admin -> Buka Tagihan -> Klik "Konfirmasi Cash"
+        V->>+C: POST /admin/tagihan/{id}/konfirmasi-cash
+        C->>+DB: DB::transaction() -> UPDATE tagihans 'lunas' & INSERT pembayarans
+        DB-->>-C: Lunas tersimpan
+        C-)Srv: Event PembayaranCashDikonfirmasi -> KirimNotifikasiPembayaranJob
+        Srv-)API: Kirim WA bukti lunas ke Penyewa
+        C-->>-V: Redirect dengan Toast Success
+        V-->>-A: Status tagihan ter-update Lunas
+    end
+
+    U->>+V: Cetak Kuitansi Nota Pembayaran
+    V->>+C: GET /penyewa/nota/{pembayaran}/cetak
+    C->>+Srv: DompdfGenerator::generate() (On-demand PDF Render)
+    Srv-->>-C: PDF Binary Stream
+    C-->>-V: Response download/stream file kuitansi.pdf
+    V-->>-U: Unduhan berkas kuitansi PDF resmi
 
     %% ==========================================
-    %% FASA 5: OPERASIONAL, KELUHAN, BROADCAST & ARUS KAS (SD 7, 8, 10, 18)
+    %% FASA 5: OPERASIONAL KELUHAN & ARUS KAS (SD 7 & SD 8)
     %% ==========================================
-    Note over U, A: [FASA 5] OPERASIONAL, KELUHAN & ARUS KAS (SD 7, SD 8, SD 18)
-    U->>V: 7. Kirim Laporan Keluhan Fasilitas (+ Unggah Foto)
-    V->>C: POST /penyewa/keluhan
-    C->>DB: INSERT INTO keluhans (status: 'pending')
-    C->>API: Kirim Notifikasi Keluhan Baru ke WA Admin
-    API-->>A: Pesan WA: "Keluhan Fasilitas Baru dari Kamar X"
-    A->>V: Input tanggapan perbaikan & ubah status ke 'selesai'
-    V->>C: PUT /admin/keluhan/{id} (status: 'selesai')
-    C->>DB: UPDATE keluhans SET status = 'selesai'
-    C->>API: Kirim Notifikasi WA ke Penyewa
-    API-->>U: Pesan WA: "Keluhan Anda Telah Selesai Diperbaiki"
-    
-    A->>V: 8. Catat Pengeluaran Operasional (+ Nota Upload)
-    V->>C: POST /admin/pengeluaran
-    C->>DB: INSERT INTO pengeluarans (File::delete jika edit foto)
-    
-    A->>V: 9. Kirim Broadcast Pengumuman (Web, WA & Email)
-    V->>C: POST /admin/notifikasi/broadcast
-    C->>Srv: NotifikasiService::kirimNotifikasiKustom()
-    Srv->>DB: INSERT pengumumen & INSERT log_notifikasis
-    Srv->>API: Kirim Broadcast WA / SMTP Mail
+    Note over U, API: [FASA 5] PELAPORAN KELUHAN & PENCATATAN ARUS KAS PENGELUARAN
+    U->>+V: 8. Kirim Laporan Keluhan Fasilitas (+ Foto)
+    V->>+C: POST /penyewa/keluhan
+    C->>+DB: INSERT INTO keluhans (status: 'pending', foto_bukti)
+    DB-->>-C: Keluhan tersimpan
+    C-)API: Event KeluhanDibuat -> Kirim WA pemberitahuan ke Admin
+    API--)A: WhatsApp: "Laporan Kerusakan Baru dari Kamar X"
+    C-->>-V: Redirect dengan Toast Success
+    V-->>-U: Notifikasi status laporan terkirim
+
+    A->>+V: 9. Input tanggapan & ubah status keluhan
+    V->>+C: PUT /admin/keluhan/{id} (status: 'selesai', tanggapan_admin)
+    C->>+DB: UPDATE keluhans SET status = 'selesai', tanggal_selesai = NOW()
+    DB-->>-C: Update sukses
+    C-)API: Event KeluhanDitanggapi -> Kirim WA ke Penyewa
+    API--)U: WhatsApp: "Keluhan Fasilitas Anda Telah Selesai Diperbaiki"
+    C-->>-V: Redirect dengan Toast Success
+    V-->>-A: Status keluhan diperbarui menjadi Selesai
+
+    A->>+V: 10. Catat Pengeluaran Operasional / Perbaikan Kost
+    V->>+C: POST /admin/pengeluaran (nama, nominal, bukti_nota)
+    C->>+DB: INSERT INTO pengeluarans (File nota disimpan di storage/public)
+    DB-->>-C: Pengeluaran tercatat
+    C-->>-V: Redirect dengan Toast Success
+    V-->>-A: Buku kas pengeluaran ter-update
 
     %% ==========================================
-    %% FASA 6: REMINDER KONTRAK, CHECKOUT & INSPEKSI (SD 11, 15, 19)
+    %% FASA 6: REMINDER HABIS KONTRAK & CHECKOUT (SD 5 & SD 11)
     %% ==========================================
-    Note over S, A: [FASA 6] REMINDER KONTRAK, CHECKOUT & INSPEKSI (SD 5, SD 11, SD 15)
-    S->>C: 10. Scheduler Harian: php artisan kontrak:reminder-habis
-    C->>Srv: NotifikasiService::prosesReminderHabisKontrak()
-    Srv->>API: Kirim WA Reminder H-14 & H-7 Masa Sewa Berakhir
-    API-->>U: Pesan WA: "Masa Sewa Berakhir dalam X Hari. Opsi Perpanjang/Checkout"
-    
-    A->>V: 11. Proses Checkout Penyewa
-    V->>C: POST /admin/penyewa/{id}/checkout
-    C->>DB: UPDATE penyewas SET status = 'nonaktif', tanggal_keluar = TODAY()
-    Note over C, DB: Status Kamar tetap 'terisi' (Aturan Two-Step Inspection)
+    Note over S, API: [FASA 6] REMINDER HABIS KONTRAK, CHECKOUT & PENYELESAIAN DEPOSIT
+    S->>+Srv: 11. Cron Harian: php artisan kontrak:reminder-habis
+    Srv->>+DB: SELECT * FROM penyewas WHERE status = 'aktif' AND H-14 / H-7 habis kontrak
+    DB-->>-Srv: Dataset penyewa mendekati habis kontrak
+    Srv-)API: Kirim WA pengingat masa sewa berakhir + opsi perpanjang/checkout
+    API--)U: WhatsApp Pengingat Habis Kontrak
+    Srv-->>-S: Command Selesai
+
+    A->>+V: 12. Buka Form Checkout Penyewa
+    V->>+C: GET /admin/penyewa/{id}/checkout
+    C->>+DB: Cek tagihan tertunggak (status pending/terlambat)
+    DB-->>-C: Validasi 0 tunggakan lulus
+    C-->>-V: Tampilkan form checkout & kalkulasi deposit
+    V-->>-A: Tampilkan input kerusakan fisik & potongan jaminan
+
+    A->>+V: Submit Checkout (+ Data Potongan Kerusakan & Sisa Deposit)
+    V->>+C: POST /admin/penyewa/{id}/checkout
+    C->>+DB: DB::transaction()
+    C->>DB: Lock penyewa & UPDATE penyewas SET status = 'nonaktif', tanggal_keluar = TODAY()
+    opt Terdapat Kerusakan Kamar
+        C->>DB: INSERT INTO pengeluarans (kategori: 'maintenance', nominal: biaya_potongan)
+    end
+    opt Terdapat Sisa Deposit Dikembalikan
+        C->>DB: INSERT INTO pengeluarans (kategori: 'operasional', nominal: sisa_deposit)
+    end
+    C->>DB: UPDATE penyewas SET deposit = 0 & DB::commit()
+    DB-->>-C: Transaksi checkout & neraca kas tersimpan
+    C-->>-V: Redirect dengan Toast Success
+    V-->>-A: Prosedur checkout selesai. Kamar siap diinspeksi.
+
     A->>A: Melakukan inspeksi fisik kebersihan & fasilitas kamar kost
-    A->>V: Update Status Kamar Secara Manual
-    V->>C: PATCH /admin/kamar/{id}/status (status: 'tersedia' / 'maintenance')
-    C->>DB: UPDATE kamars SET status = ?
-    C-->>V: Kamar kembali siap dipesan pada Sequence Diagram 1
-
-    %% ==========================================
-    %% FASA 7: ACCOUNT RECOVERY & ANALYTICS DASBOR (SD 20 & SD 21)
-    %% ==========================================
-    Note over U, A: [FASA 7] PEMULIHAN AKUN & ANALITIK DASBOR (SD 20 & SD 21)
-    opt Pemulihan Akun Lupa Kata Sandi (SD 21)
-        U->>V: Lupa kata sandi -> Masukkan Email Terdaftar
-        V->>C: POST /forgot-password
-        C->>DB: INSERT INTO password_reset_tokens (hash_token, created_at)
-        C->>Srv: Dispatch BaseResetPasswordNotification (Queue)
-        Srv->>API: Kirim Email Tautan Reset Password
-        API-->>U: Terima Email Link Reset Password
-        U->>V: Buka URL Token & Submit Password Baru
-        V->>C: POST /reset-password
-        C->>DB: UPDATE users SET password = Hash::make() & DELETE token
-    end
-
-    A->>V: 12. Buka Dasbor Utama Administrator (/admin/dashboard)
-    V->>C: GET /admin/dashboard
-    C->>Srv: DashboardAnalyticsService::getDashboardMetrics()
-    Srv->>DB: Agregasi kueri okupansi, kas masuk, kas keluar & tren 12 bulan
-    DB-->>Srv: Dataset Keuangan & Okupansi
-    Srv-->>C: Metrics & Chart Data Object
-    C-->>V: Render Summary Cards Neo-Brutalisme & Chart.js Grouped Bar Chart
-    V-->>A: Dasbor Keuangan & Operasional Real-Time Ditampilkan Sempurna
+    A->>+V: Perbarui status kamar secara manual
+    V->>+C: PATCH /admin/kamar/{id}/status (status: 'tersedia')
+    C->>+DB: UPDATE kamars SET status = 'tersedia'
+    DB-->>-C: Kamar kembali aktif
+    C-->>-V: Redirect sukses
+    V-->>-A: Kamar kembali tersedia dan siap dipesan pada Sequence 1
 ```
 
 ---
@@ -557,9 +652,6 @@ sequenceDiagram
     CP->>V: Klik tombol "Bayar Sekarang"
     V->>V: Panggil snap.pay(snapToken)
     V-->>CP: Tampilkan Portal Pop-Up Midtrans Snap
-    CP->>Mid: Selesaikan Pembayaran (Virtual Account / E-Wallet)
-    Mid->>Web: Callback Webhook Midtrans POST /api/midtrans/callback-reservasi
-    Note over Web: Validasi signature_key & nominal transaksi
     
     alt Skenario Pembayaran Diselesaikan Pengguna
         CP->>Mid: Selesaikan Pembayaran (Virtual Account / E-Wallet)
@@ -928,7 +1020,6 @@ sequenceDiagram
                 AC-->>V: Return redirect() with Toast Success "Pembayaran cash berhasil dikonfirmasi"
             end
         end
-    end
     end
 ```
 
@@ -2294,8 +2385,8 @@ Aspek non-fungsional diintegrasikan langsung ke dalam alur pemanggilan metode:
 Untuk mempermudah pemahaman tim pengembang terhadap notasi visual diagram urutan di atas, berikut adalah glosarium istilahnya:
 
 * **Lifeline (Garis Hidup)**: Mewakili instansi objek, kelas, atau aktor yang berpartisipasi aktif dalam komunikasi selama durasi proses (misal: `PenyewaTagihanController`, `Database (MySQL)`).
-* **Synchronous Message (Pesan Sinkron)**: Digambarkan dengan panah solid berujung segitiga solid (`->i`). Menandakan bahwa pengirim pesan menunggu respons balik sebelum melanjutkan eksekusi langkah berikutnya.
-* **Asynchronous Message (Pesan Asinkron)**: Digambarkan dengan panah solid berujung terbuka (`->`). Pengirim mengirimkan pesan lalu langsung melanjutkan instruksi berikutnya tanpa harus menunggu respons objek penerima (misal: pengiriman API ke WhatsApp Fonnte).
+* **Synchronous Message (Pesan Sinkron)**: Digambarkan dengan panah solid berujung segitiga solid (`->>`). Menandakan bahwa pengirim pesan menunggu respons balik sebelum melanjutkan eksekusi langkah berikutnya.
+* **Asynchronous Message (Pesan Asinkron)**: Digambarkan dengan panah solid berujung terbuka (`-)`). Pengirim mengirimkan pesan lalu langsung melanjutkan instruksi berikutnya tanpa harus menunggu respons objek penerima (misal: pengiriman antrean Queue Job).
 * **Return Message (Pesan Kembalian)**: Digambarkan dengan panah putus-putus berujung terbuka (`-->>`). Mewakili pengembalian informasi atau kendali kembali ke objek pemanggil (misal: data JSON, status response, atau file view Blade).
 * **Alt/Else Fragment**: Mewakili logika percabangan kondisional (*Conditional Branching*) yang setara dengan struktur kode `if - else` di PHP/Laravel.
 * **Loop Fragment**: Mewakili blok perulangan (*Iteration*) yang setara dengan perulangan `loop` atau `foreach` di PHP untuk memproses sekumpulan data secara berulang.
