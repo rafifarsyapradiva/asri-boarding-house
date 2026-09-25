@@ -870,177 +870,160 @@ Diagram ini mengilustrasikan asosiasi struktural, relasi kepemilikan siklus hidu
 classDiagram
     direction TB
 
-    %% Model Transaksional Inti %%
-    class User {
-        +int id
-        +string nama
-        +string email
-        +string no_hp
-        +string nik
-        +UserRole role
-        +isProfileComplete() bool
-        +isActiveTenant() bool
+    namespace Core_Transactional {
+        class User {
+            +int id
+            +string nama
+            +string email
+            +string no_hp
+            +string nik
+            +UserRole role
+            +isProfileComplete() bool
+            +isActiveTenant() bool
+            +anonymizeAndDelete() void
+        }
+        class Kamar {
+            +int id
+            +string nomor_kamar
+            +tinyint lantai
+            +TipeKamar tipe
+            +decimal harga_bulan
+            +KamarStatus status
+            +kalkulasiHargaSewa(tipe, durasi) float
+            +kalkulasiMinimalDp(total) float
+        }
+        class Fasilitas {
+            +int id
+            +string nama
+            +string ikon
+            +boolean is_active
+        }
+        class Penyewa {
+            +int id
+            +int user_id
+            +int kamar_id
+            +decimal harga_sewa
+            +date tanggal_masuk
+            +date tanggal_keluar_seharusnya
+            +PenyewaStatus status
+            +getIsOverdueAttribute() bool
+        }
+        class Tagihan {
+            +int id
+            +int penyewa_id
+            +string order_id
+            +date tanggal_jatuh_tempo
+            +decimal nominal_pokok
+            +decimal nominal_denda
+            +decimal nominal_total
+            +TagihanStatus status
+            +scopeTerlambat() Builder
+        }
+        class Pembayaran {
+            +int id
+            +int tagihan_id
+            +string transaction_id
+            +string payment_type
+            +decimal nominal
+            +string status_midtrans
+            +int dikonfirmasi_oleh
+            +datetime tanggal_bayar
+        }
+        class Reservasi {
+            +bigint id
+            +int user_id
+            +int kamar_id
+            +date tanggal_mulai
+            +date tanggal_selesai
+            +decimal total_harga
+            +boolean is_dp
+            +ReservasiStatus status
+            +static isKamarTerbooking() bool
+        }
+        class ChatMessage {
+            +bigint id
+            +bigint reservasi_id
+            +int sender_id
+            +text message
+        }
+        class Keluhan {
+            +int id
+            +int penyewa_id
+            +string judul
+            +StatusKeluhan status
+        }
+        class GuestChatThread {
+            +bigint id
+            +string session_token
+            +GuestChatStatus status
+        }
+        class GuestChatMessage {
+            +bigint id
+            +bigint guest_chat_thread_id
+            +string sender_type
+            +text message
+        }
+        class WhatsappClick {
+            +int id
+            +int kamar_id
+            +string source
+        }
+        class LogNotifikasi {
+            +int id
+            +int penyewa_id
+            +int tagihan_id
+            +StatusNotifikasi status
+        }
+        class NotifikasiKhusus {
+            +int id
+            +string tipe_aktivitas
+            +int user_id
+        }
+        class Pengeluaran {
+            +int id
+            +string nama_pengeluaran
+            +decimal nominal
+            +date tanggal_pengeluaran
+        }
+        class Setting {
+            +string key
+            +text value
+        }
     }
 
-    class Kamar {
-        +int id
-        +string nomor_kamar
-        +tinyint lantai
-        +TipeKamar tipe
-        +decimal harga_bulan
-        +KamarStatus status
-        +kalkulasiHargaSewa() float
+    namespace CMS_Marketing {
+        class CustomerReview {
+            +int id
+            +string nama
+            +tinyint bintang
+            +text ulasan
+        }
+        class Faq {
+            +int id
+            +string pertanyaan
+            +text jawaban
+            +boolean is_active
+        }
+        class Peraturan {
+            +int id
+            +string judul
+            +text deskripsi
+        }
+        class Gallery {
+            +int id
+            +string judul
+            +string foto
+            +boolean is_active
+        }
+        class Pengumuman {
+            +int id
+            +string judul
+            +text isi
+            +boolean is_active
+        }
     }
 
-    class Fasilitas {
-        +int id
-        +string nama
-        +string ikon
-        +boolean is_active
-    }
-
-    class Penyewa {
-        +int id
-        +int user_id
-        +int kamar_id
-        +string nik
-        +decimal harga_sewa
-        +date tanggal_masuk
-        +date tanggal_keluar_seharusnya
-        +PenyewaStatus status
-        +getIsOverdueAttribute() bool
-    }
-
-    class Tagihan {
-        +int id
-        +int penyewa_id
-        +string order_id
-        +date tanggal_jatuh_tempo
-        +decimal nominal_pokok
-        +decimal nominal_denda
-        +decimal nominal_total
-        +TagihanStatus status
-        +scopeTerlambat() Builder
-    }
-
-    class Pembayaran {
-        +int id
-        +int tagihan_id
-        +string transaction_id
-        +string payment_type
-        +decimal nominal
-        +string status_midtrans
-        +int dikonfirmasi_oleh
-        +datetime tanggal_bayar
-    }
-
-    class Reservasi {
-        +bigint id
-        +int user_id
-        +int kamar_id
-        +date tanggal_mulai
-        +date tanggal_selesai
-        +decimal total_harga
-        +boolean is_dp
-        +ReservasiStatus status
-        +static isKamarTerbooking() bool
-    }
-
-    class ChatMessage {
-        +bigint id
-        +bigint reservasi_id
-        +int sender_id
-        +text message
-    }
-
-    class WhatsappClick {
-        +int id
-        +int kamar_id
-        +string source
-    }
-
-    class Keluhan {
-        +int id
-        +int penyewa_id
-        +string judul
-        +StatusKeluhan status
-    }
-
-    class Pengeluaran {
-        +int id
-        +string nama_pengeluaran
-        +decimal nominal
-        +date tanggal_pengeluaran
-    }
-
-    class Setting {
-        +string key
-        +text value
-    }
-
-    class GuestChatThread {
-        +bigint id
-        +string session_token
-        +GuestChatStatus status
-    }
-
-    class GuestChatMessage {
-        +bigint id
-        +bigint guest_chat_thread_id
-        +string sender_type
-        +text message
-    }
-
-    class LogNotifikasi {
-        +int id
-        +int penyewa_id
-        +int tagihan_id
-        +StatusNotifikasi status
-    }
-
-    class NotifikasiKhusus {
-        +int id
-        +string sumber
-        +string tipe_aktivitas
-        +int user_id
-    }
-
-    %% Model Pendukung CMS Publik %%
-    class CustomerReview {
-        +int id
-        +string nama
-        +tinyint bintang
-        +text ulasan
-    }
-
-    class Faq {
-        +int id
-        +string pertanyaan
-        +text jawaban
-        +boolean is_active
-    }
-
-    class Peraturan {
-        +int id
-        +string judul
-        +text deskripsi
-    }
-
-    class Gallery {
-        +int id
-        +string judul
-        +string foto
-        +boolean is_active
-    }
-
-    class Pengumuman {
-        +int id
-        +string judul
-        +text isi
-        +boolean is_active
-    }
-
-    %% Relasi Asosiasi & Komposisi %%
+    %% Relasi Asosiasi, Komposisi & Integritas %%
     User "1" -- "0..1" Penyewa : One-to-One
     User "1" -- "*" Reservasi : One-to-Many
     User "1" -- "*" Pembayaran : Confirms Cash
@@ -1254,64 +1237,78 @@ Diagram ini mengilustrasikan bagaimana peristiwa mutasi data (*Events*) memicu p
 
 ```mermaid
 classDiagram
-    direction TB
+    direction LR
 
-    class Events {
-        +ReservasiDibuat
-        +ReservasiDibayar
-        +ReservasiDikonfirmasi
-        +TagihanDibuat
-        +PembayaranBerhasil
-        +PembayaranCashDikonfirmasi
-        +ReminderPenyewa
-        +NotifikasiWali
-        +DendaDikenakan
-        +KeluhanDibuat
-        +KeluhanDitanggapi
-    }
+    class ReservasiDibuat { +Reservasi reservasi }
+    class ReservasiDibayar { +Reservasi reservasi }
+    class ReservasiDikonfirmasi { +Reservasi reservasi }
+    class TagihanDibuat { +Tagihan tagihan }
+    class PembayaranCashDikonfirmasi { +Pembayaran pembayaran }
+    class ReminderPenyewa { +Tagihan tagihan }
+    class NotifikasiWali { +Tagihan tagihan }
+    class DendaDikenakan { +Tagihan tagihan }
+    class KeluhanDibuat { +Keluhan keluhan }
+    class KeluhanDitanggapi { +Keluhan keluhan }
 
-    class Listeners {
-        +HandleReservasiDibuat
-        +HandleReservasiDibayar
-        +HandleReservasiDikonfirmasi
-        +ProsesTransisiPenyewa
-        +HandleTagihanDibuat
-        +HandleReminderPenyewa
-        +HandleNotifikasiWali
-        +HandleDendaDikenakan
-        +KirimEmailPembayaranCashListener
-        +KirimNotifikasiKeluhanDibuat
-        +KirimNotifikasiKeluhanDitanggapi
-        +NotifikasiKhususSubscriber
-    }
+    class HandleReservasiDibuat { +handle(ReservasiDibuat) void }
+    class HandleReservasiDibayar { +handle(ReservasiDibayar) void }
+    class HandleReservasiDikonfirmasi { +handle(ReservasiDikonfirmasi) void }
+    class ProsesTransisiPenyewa { +handle(ReservasiDikonfirmasi) void }
+    class HandleTagihanDibuat { +handle(TagihanDibuat) void }
+    class HandleReminderPenyewa { +handle(ReminderPenyewa) void }
+    class HandleNotifikasiWali { +handle(NotifikasiWali) void }
+    class HandleDendaDikenakan { +handle(DendaDikenakan) void }
+    class KirimEmailPembayaranCashListener { +handle(PembayaranCashDikonfirmasi) void }
+    class KirimNotifikasiKeluhanDibuat { +handle(KeluhanDibuat) void }
+    class KirimNotifikasiKeluhanDitanggapi { +handle(KeluhanDitanggapi) void }
 
-    class BackgroundJobs {
-        +KirimNotifikasiAdminReservasiJob
-        +KirimNotifikasiUserReservasiJob
-        +KirimNotifikasiTagihanJob
-        +KirimNotifikasiPembayaranJob
-        +KirimReminderJatuhTempoJob
-        +KirimNotifikasiWaliJob
-        +KirimWelcomeMessageJob
-        +KirimNotifikasiKustomJob
-    }
+    class KirimNotifikasiAdminReservasiJob { +handle(NotifikasiService) void }
+    class KirimNotifikasiUserReservasiJob { +handle(NotifikasiService) void }
+    class KirimWelcomeMessageJob { +handle(NotifikasiService) void }
+    class KirimNotifikasiTagihanJob { +handle(NotifikasiService) void }
+    class KirimNotifikasiPembayaranJob { +handle(NotifikasiService) void }
+    class KirimReminderJatuhTempoJob { +handle(NotifikasiService) void }
+    class KirimNotifikasiWaliJob { +handle(NotifikasiService) void }
 
-    class ExternalGateways {
-        +FonnteWhatsAppGateway
-        +MidtransPaymentGateway
-        +BrowserReceiptHtml2Pdf
-    }
+    class NotifikasiService { +kirimPesanWhatsApp() void }
 
-    Events ..> Listeners : Triggers via Event Bus
-    Listeners ..> BackgroundJobs : Dispatches to Queue
-    BackgroundJobs ..> ExternalGateways : Executes Async Request
-    HandleTagihanDibuat ..> KirimNotifikasiTagihanJob : Dispatches
-    KirimEmailPembayaranCashListener ..> KirimNotifikasiPembayaranJob : Dispatches
+    %% Pipeline Event -> Listener -> Queue Job -> Service %%
+    ReservasiDibuat ..> HandleReservasiDibuat : Triggers
     HandleReservasiDibuat ..> KirimNotifikasiAdminReservasiJob : Dispatches
+    KirimNotifikasiAdminReservasiJob ..> NotifikasiService : Executes
+
+    ReservasiDibayar ..> HandleReservasiDibayar : Triggers
     HandleReservasiDibayar ..> KirimNotifikasiUserReservasiJob : Dispatches
+    KirimNotifikasiUserReservasiJob ..> NotifikasiService : Executes
+
+    ReservasiDikonfirmasi ..> ProsesTransisiPenyewa : Triggers
+    ProsesTransisiPenyewa ..> KirimWelcomeMessageJob : Dispatches
+    KirimWelcomeMessageJob ..> NotifikasiService : Executes
+
+    TagihanDibuat ..> HandleTagihanDibuat : Triggers
+    HandleTagihanDibuat ..> KirimNotifikasiTagihanJob : Dispatches
+    KirimNotifikasiTagihanJob ..> NotifikasiService : Executes
+
+    PembayaranCashDikonfirmasi ..> KirimEmailPembayaranCashListener : Triggers
+    KirimEmailPembayaranCashListener ..> KirimNotifikasiPembayaranJob : Dispatches
+    KirimNotifikasiPembayaranJob ..> NotifikasiService : Executes
+
+    ReminderPenyewa ..> HandleReminderPenyewa : Triggers
     HandleReminderPenyewa ..> KirimReminderJatuhTempoJob : Dispatches
+
+    NotifikasiWali ..> HandleNotifikasiWali : Triggers
     HandleNotifikasiWali ..> KirimNotifikasiWaliJob : Dispatches
+
+    DendaDikenakan ..> HandleDendaDikenakan : Triggers
     HandleDendaDikenakan ..> KirimReminderJatuhTempoJob : Dispatches
+    KirimReminderJatuhTempoJob ..> NotifikasiService : Executes
+    KirimNotifikasiWaliJob ..> NotifikasiService : Executes
+
+    KeluhanDibuat ..> KirimNotifikasiKeluhanDibuat : Triggers
+    KirimNotifikasiKeluhanDibuat ..> NotifikasiService : Direct WhatsApp
+
+    KeluhanDitanggapi ..> KirimNotifikasiKeluhanDitanggapi : Triggers
+    KirimNotifikasiKeluhanDitanggapi ..> NotifikasiService : Direct WhatsApp
 ```
 
 #### Tabel 3.C.1. Matriks Alur Event, Listener, Queue Job & Gateway Eksternal

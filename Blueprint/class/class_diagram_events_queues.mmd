@@ -1,50 +1,73 @@
 classDiagram
-    direction TB
-    class DomainEvents {
-        +ReservasiDibuat
-        +ReservasiDibayar
-        +ReservasiDikonfirmasi
-        +TagihanDibuat
-        +PembayaranBerhasil
-        +PembayaranCashDikonfirmasi
-        +ReminderPenyewa
-        +NotifikasiWali
-        +DendaDikenakan
-        +KeluhanDibuat
-        +KeluhanDitanggapi
-    }
-    class EventListeners {
-        +HandleReservasiDibuat
-        +HandleReservasiDibayar
-        +HandleReservasiDikonfirmasi
-        +ProsesTransisiPenyewa
-        +HandleTagihanDibuat
-        +HandleReminderPenyewa
-        +HandleNotifikasiWali
-        +HandleDendaDikenakan
-        +KirimEmailPembayaranCashListener
-        +KirimNotifikasiKeluhanDibuat
-        +KirimNotifikasiKeluhanDitanggapi
-        +NotifikasiKhususSubscriber
-    }
-    class QueueJobs {
-        +KirimNotifikasiAdminReservasiJob
-        +KirimNotifikasiUserReservasiJob
-        +KirimNotifikasiTagihanJob
-        +KirimNotifikasiPembayaranJob
-        +KirimReminderJatuhTempoJob
-        +KirimNotifikasiWaliJob
-        +KirimWelcomeMessageJob
-        +KirimNotifikasiKustomJob
-    }
+    direction LR
 
-    DomainEvents ..> EventListeners : "triggers via Event Bus"
-    HandleReservasiDibuat ..> KirimNotifikasiAdminReservasiJob : "dispatches"
-    HandleReservasiDibayar ..> KirimNotifikasiUserReservasiJob : "dispatches"
-    HandleReservasiDikonfirmasi ..> KirimNotifikasiUserReservasiJob : "dispatches"
-    HandleTagihanDibuat ..> KirimNotifikasiTagihanJob : "dispatches"
-    HandleReminderPenyewa ..> KirimReminderJatuhTempoJob : "dispatches"
-    HandleNotifikasiWali ..> KirimNotifikasiWaliJob : "dispatches"
-    HandleDendaDikenakan ..> KirimReminderJatuhTempoJob : "dispatches"
-    KirimEmailPembayaranCashListener ..> KirimNotifikasiPembayaranJob : "dispatches"
-    ProsesTransisiPenyewa ..> NotifikasiService : "calls"
+    class ReservasiDibuat { +Reservasi reservasi }
+    class ReservasiDibayar { +Reservasi reservasi }
+    class ReservasiDikonfirmasi { +Reservasi reservasi }
+    class TagihanDibuat { +Tagihan tagihan }
+    class PembayaranCashDikonfirmasi { +Pembayaran pembayaran }
+    class ReminderPenyewa { +Tagihan tagihan }
+    class NotifikasiWali { +Tagihan tagihan }
+    class DendaDikenakan { +Tagihan tagihan }
+    class KeluhanDibuat { +Keluhan keluhan }
+    class KeluhanDitanggapi { +Keluhan keluhan }
+
+    class HandleReservasiDibuat { +handle(ReservasiDibuat) void }
+    class HandleReservasiDibayar { +handle(ReservasiDibayar) void }
+    class HandleReservasiDikonfirmasi { +handle(ReservasiDikonfirmasi) void }
+    class ProsesTransisiPenyewa { +handle(ReservasiDikonfirmasi) void }
+    class HandleTagihanDibuat { +handle(TagihanDibuat) void }
+    class HandleReminderPenyewa { +handle(ReminderPenyewa) void }
+    class HandleNotifikasiWali { +handle(NotifikasiWali) void }
+    class HandleDendaDikenakan { +handle(DendaDikenakan) void }
+    class KirimEmailPembayaranCashListener { +handle(PembayaranCashDikonfirmasi) void }
+    class KirimNotifikasiKeluhanDibuat { +handle(KeluhanDibuat) void }
+    class KirimNotifikasiKeluhanDitanggapi { +handle(KeluhanDitanggapi) void }
+
+    class KirimNotifikasiAdminReservasiJob { +handle(NotifikasiService) void }
+    class KirimNotifikasiUserReservasiJob { +handle(NotifikasiService) void }
+    class KirimWelcomeMessageJob { +handle(NotifikasiService) void }
+    class KirimNotifikasiTagihanJob { +handle(NotifikasiService) void }
+    class KirimNotifikasiPembayaranJob { +handle(NotifikasiService) void }
+    class KirimReminderJatuhTempoJob { +handle(NotifikasiService) void }
+    class KirimNotifikasiWaliJob { +handle(NotifikasiService) void }
+
+    class NotifikasiService { +kirimPesanWhatsApp() void }
+
+    %% Pipeline Event -> Listener -> Queue Job -> Service %%
+    ReservasiDibuat ..> HandleReservasiDibuat : Triggers
+    HandleReservasiDibuat ..> KirimNotifikasiAdminReservasiJob : Dispatches
+    KirimNotifikasiAdminReservasiJob ..> NotifikasiService : Executes
+
+    ReservasiDibayar ..> HandleReservasiDibayar : Triggers
+    HandleReservasiDibayar ..> KirimNotifikasiUserReservasiJob : Dispatches
+    KirimNotifikasiUserReservasiJob ..> NotifikasiService : Executes
+
+    ReservasiDikonfirmasi ..> ProsesTransisiPenyewa : Triggers
+    ProsesTransisiPenyewa ..> KirimWelcomeMessageJob : Dispatches
+    KirimWelcomeMessageJob ..> NotifikasiService : Executes
+
+    TagihanDibuat ..> HandleTagihanDibuat : Triggers
+    HandleTagihanDibuat ..> KirimNotifikasiTagihanJob : Dispatches
+    KirimNotifikasiTagihanJob ..> NotifikasiService : Executes
+
+    PembayaranCashDikonfirmasi ..> KirimEmailPembayaranCashListener : Triggers
+    KirimEmailPembayaranCashListener ..> KirimNotifikasiPembayaranJob : Dispatches
+    KirimNotifikasiPembayaranJob ..> NotifikasiService : Executes
+
+    ReminderPenyewa ..> HandleReminderPenyewa : Triggers
+    HandleReminderPenyewa ..> KirimReminderJatuhTempoJob : Dispatches
+
+    NotifikasiWali ..> HandleNotifikasiWali : Triggers
+    HandleNotifikasiWali ..> KirimNotifikasiWaliJob : Dispatches
+
+    DendaDikenakan ..> HandleDendaDikenakan : Triggers
+    HandleDendaDikenakan ..> KirimReminderJatuhTempoJob : Dispatches
+    KirimReminderJatuhTempoJob ..> NotifikasiService : Executes
+    KirimNotifikasiWaliJob ..> NotifikasiService : Executes
+
+    KeluhanDibuat ..> KirimNotifikasiKeluhanDibuat : Triggers
+    KirimNotifikasiKeluhanDibuat ..> NotifikasiService : Direct WhatsApp
+
+    KeluhanDitanggapi ..> KirimNotifikasiKeluhanDitanggapi : Triggers
+    KirimNotifikasiKeluhanDitanggapi ..> NotifikasiService : Direct WhatsApp

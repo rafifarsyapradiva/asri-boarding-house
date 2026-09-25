@@ -1,5 +1,6 @@
 classDiagram
-    direction TB
+    direction LR
+
     class BaseResetPasswordNotification {
         <<abstract>>
         #string token
@@ -19,6 +20,23 @@ classDiagram
         #resolveRouteName(notifiable) string
     }
 
+    class ReservasiPolicy {
+        +view(User, Reservasi) bool
+        +chat(User, Reservasi) bool
+        +pay(User, Reservasi) bool
+        +update(User, Reservasi) bool
+    }
+    class TagihanPolicy {
+        +view(User, Tagihan) bool
+        +pay(User, Tagihan) bool
+    }
+    class PembayaranPolicy {
+        +downloadNota(User, Pembayaran) bool
+    }
+    class KeluhanPolicy {
+        +view(User, Keluhan) bool
+    }
+
     class NotificationMail {
         +string subjectStr
         +string viewName
@@ -30,23 +48,6 @@ classDiagram
         +Tagihan tagihan
         +envelope() Envelope
         +content() Content
-    }
-
-    class ReservasiPolicy {
-        +view(User, Reservasi) bool
-        +chat(User, Reservasi) bool
-        +pay(User, Reservasi) bool
-        +update(User, Reservasi) bool
-    }
-    class KeluhanPolicy {
-        +view(User, Keluhan) bool
-    }
-    class PembayaranPolicy {
-        +downloadNota(User, Pembayaran) bool
-    }
-    class TagihanPolicy {
-        +view(User, Tagihan) bool
-        +pay(User, Tagihan) bool
     }
 
     class HandlesReservationSession {
@@ -64,11 +65,17 @@ classDiagram
         +static email(value) string
     }
 
-    AdminResetPasswordNotification --|> BaseResetPasswordNotification : "extends"
-    PenyewaResetPasswordNotification --|> BaseResetPasswordNotification : "extends"
+    class User
+    class Reservasi
+    class Tagihan
+    class Pembayaran
+    class Keluhan
 
-    ReservasiPolicy ..> User : "authorizes"
-    ReservasiPolicy ..> Reservasi : "authorizes"
-    KeluhanPolicy ..> Keluhan : "authorizes"
-    PembayaranPolicy ..> Pembayaran : "authorizes"
-    TagihanPolicy ..> Tagihan : "authorizes"
+    AdminResetPasswordNotification --|> BaseResetPasswordNotification : Extends
+    PenyewaResetPasswordNotification --|> BaseResetPasswordNotification : Extends
+
+    ReservasiPolicy ..> Reservasi : Authorizes
+    TagihanPolicy ..> Tagihan : Authorizes
+    PembayaranPolicy ..> Pembayaran : Authorizes
+    KeluhanPolicy ..> Keluhan : Authorizes
+    ReservasiPolicy ..> User : Subject
