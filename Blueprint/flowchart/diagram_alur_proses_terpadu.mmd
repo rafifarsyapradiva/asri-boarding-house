@@ -1,0 +1,205 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#0F172A',
+    'primaryBorderColor': '#0F172A',
+    'lineColor': '#0F172A',
+    'secondaryColor': '#FEF08A',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    %% ========================================================
+    %% FASE 1: PENEMUAN & KATALOG PUBLIK
+    %% ========================================================
+    subgraph FASE1["🌐 FASE 1: PENEMUAN & KATALOG PUBLIK (GUEST)"]
+        StartNode([Tamu Mengakses Web /kamar]) --> D1{"D1: Status Unit Kamar?"}
+        
+        D1 -- "Maintenance" --> P_Hide["Sembunyikan Unit dari Publik"]
+        D1 -- "Terisi" --> P_CTAWA[/Tampilkan Tombol 'Tanya Admin WA'/]
+        D1 -- "Tersedia" --> P_Detail[/Buka Detail Kamar & Estimasi Tarif/]
+        
+        StartNode -.-> P_GuestChat[/Widget Live Chat Anonim/]
+        P_GuestChat --> SubFC12[[Sub-FC 12: Live Chat Guest Session Token]]
+        
+        P_Hide --> TermF1_Hide([Selesai: Unit Disembunyikan])
+        P_CTAWA --> TermF1_WA([Selesai: Diarahkan ke WA])
+        SubFC12 --> TermF1_Chat([Selesai: Chat Guest Ditutup])
+    end
+
+    %% ========================================================
+    %% FASE 2: OTENTIKASI & FORM RESERVASI
+    %% ========================================================
+    subgraph FASE2["🔑 FASE 2: OTENTIKASI & RESERVASI (CALON PENYEWA)"]
+        P_Detail --> D2{"D2: Sesi Pengguna?"}
+        
+        D2 -- "Belum Login" --> ChoiceAuth{"Pilihan Masuk / Daftar?"}
+        ChoiceAuth -- "Form Manual" --> FormManual[/Register / Login Akun/]
+        ChoiceAuth -- "Google Login" --> SubFC17[[Sub-FC 17: Socialite OAuth & Complete Phone]]
+        
+        FormManual --> FormReservasi[/Pengisian NIK, No HP Wali, Tgl Mulai, & Durasi/]
+        SubFC17 --> FormReservasi
+        D2 -- "Sudah Login" --> FormReservasi
+        
+        FormReservasi --> D3{"D3: Validasi NIK & No Wali?"}
+        D3 -- "Format Tidak Valid" --> ToastError[/Toast Validation Error/]
+        ToastError --> FormReservasi
+        
+        D3 -- "Valid" --> LockDB[[DB Trans: Kamar lockForUpdate]]
+        LockDB --> D4{"D4: Kamar Masih Bebas?"}
+        
+        D4 -- "Bentrok / Terisi" --> RollbackDB[[Rollback DB Transaction & Munculkan Toast]]
+        RollbackDB --> P_Detail
+        
+        D4 -- "Aman / Tersedia" --> CreatePending[[Buat Reservasi Status 'pending' & Order ID]]
+    end
+
+    %% ========================================================
+    %% FASE 3: MIDTRANS SNAP & VERIFIKASI ADMIN
+    %% ========================================================
+    subgraph FASE3["💳 FASE 3: PAYMENT GATEWAY & VERIFIKASI ADMIN"]
+        CreatePending --> DetailReservasi[/Buka Portal Reservasi & Pre-Chat Box/]
+        
+        DetailReservasi --> D5{"D5: Aksi Calon Penyewa?"}
+        D5 -- "Diskusi Pre-Bayar" --> SubFC3_Chat[[Sub-FC 3: Diskusi Pre-Pembayaran via Chat]]
+        SubFC3_Chat --> D5
+        
+        D5 -- "Batalkan Pemesanan" --> UserBatal[[Update Status 'batal' & Lepas Kunci Kamar]]
+        UserBatal --> TermF3_Batal([Selesai: Pemesanan Dibatalkan])
+        
+        D5 -- "Bayar Sekarang" --> SnapReq[[Request Token Snap ke Midtrans API]]
+        SnapReq --> SnapPopup[/Render Snap Popup: VA / QRIS / E-Wallet/]
+        SnapPopup --> WebhookCall[[Midtrans Mengirim Webhook Callback POST]]
+        
+        WebhookCall --> D6{"D6: Verifikasi SHA512 Signature?"}
+        D6 -- "Signature Mismatch" --> RejectWH[[Tolak Request HTTP 403 Forbidden]]
+        RejectWH --> TermF3_Reject([Selesai: Callback Ditolak])
+        
+        D6 -- "Signature Valid" --> D7{"D7: Status Transaksi Midtrans?"}
+        D7 -- "Pending" --> WaitPay[/Menunggu Pembayaran Max 24 Jam/]
+        WaitPay --> TermF3_Wait([Selesai: Menunggu Pembayaran])
+        D7 -- "Expire / Cancel / Deny" --> AutoBatal[[Set Status 'batal' & Lepaskan Kunci Kamar]]
+        AutoBatal --> TermF3_Expired([Selesai: Reservasi Kadaluarsa])
+        
+        D7 -- "Settlement / Capture" --> D8{"D8: Skema Pembayaran?"}
+        D8 -- "DP 30%" --> SetDP[[Update Status 'dp' & Catat Pembayaran DP]]
+        D8 -- "Lunas 100%" --> SetLunas[[Update Status 'lunas' & Catat Pembayaran]]
+        
+        SetDP --> AdminReview[/Admin Meninjau Berkas NIK & Kontak Wali/]
+        SetLunas --> AdminReview
+        
+        AdminReview --> D9{"D9: Verifikasi Admin?"}
+        D9 -- "Minta Koreksi" --> ReqRevisi[/Kirim Pesan Revisi via Chat / WA/]
+        ReqRevisi --> AdminReview
+        D9 -- "Tolak / Batalkan" --> AdminReject[[Update Status 'batal' & Lepas Kamar]]
+        AdminReject --> TermF3_AdminBatal([Selesai: Ditolak Admin])
+        
+        D9 -- "Disetujui" --> ConfirmTx[[Sub-FC 4: TransisiPenyewaService Aktivasi Profil Penyewa]]
+    end
+
+    %% ========================================================
+    %% FASE 4: ONBOARDING & DASHBOARD PENYEWA
+    %% ========================================================
+    subgraph FASE4["🔐 FASE 4: ONBOARDING & KEAMANAN AKUN"]
+        ConfirmTx --> SendNotifAktif[/Fonnte WA: Kirim Notifikasi Reservasi Disetujui/]
+        
+        %% Jalur Alternatif Walk-in Offline %%
+        WalkInStart([Pendaftaran Walk-In]) -.-> SubFC15[[Sub-FC 15: Pendaftaran Offline & Default Pwd]]
+        SubFC15 --> SendWACreds[/Fonnte WA: Kirim Password Default No HP/]
+        
+        SendNotifAktif --> TenantLogin[/Penyewa Mengakses Halaman Login/]
+        SendWACreds --> TenantLogin
+        
+        TenantLogin --> D10{"D10: require_password_change?"}
+        D10 -- "True (Walk-In Pertama)" --> ForcePwd[/Sub-FC 13: Redirect Paksa ke Form Ganti Password/]
+        ForcePwd --> SaveNewPwd[[Simpan Hash Password Baru & Flag = false]]
+        SaveNewPwd --> DashboardPenyewa[/Dashboard Portal Penyewa Aktif/]
+        
+        D10 -- "False (Online / Rutin)" --> DashboardPenyewa
+        DashboardPenyewa --> MenuTataTertib[/Sub-FC 10: Menu Tata Tertib Kost Dark Mode/]
+        MenuTataTertib --> TermF4_TataTertib([Selesai: Peraturan Ditampilkan])
+    end
+
+    %% ========================================================
+    %% FASE 5: OPERASIONAL, BILLING & KELUHAN
+    %% ========================================================
+    subgraph FASE5["🔄 FASE 5: OPERASIONAL, BILLING & KELUHAN (PENYEWA AKTIF)"]
+        CronBulan([Cron Scheduler Tgl 1, 00:05 WIB]) --> SubFC5[[Sub-FC 5: Command tagihan:generate-bulanan]]
+        SubFC5 --> InvoicesGenerated[[Generate Invoice Jatuh Tempo Tgl 10]]
+        
+        InvoicesGenerated --> MenuTagihan[/Penyewa Buka Menu 'Tagihan Saya'/]
+        
+        MenuTagihan --> D11{"D11: Melewati Jatuh Tempo Tgl 10?"}
+        D11 -- "Tidak (Tepat Waktu)" --> TagihanPokok[/Tagihan Nominal Pokok/]
+        
+        D11 -- "Ya (Terlambat)" --> D12{"D12: Menyeberang ke Bulan Baru?"}
+        D12 -- "Bulan Berjalan" --> MasaKeringanan[[Masa Keringanan: Tanpa Denda & Kirim WA Reminder]]
+        MasaKeringanan --> TagihanPokok
+        
+        D12 -- "Bulan Berikutnya" --> ApplyDenda[[Terapkan Denda Flat 5% Sekali Saja]]
+        ApplyDenda --> D13{"D13: Tunggakan > 1 Bulan?"}
+        D13 -- "Ya" --> EskalasiWali[/Kirim WA Eskalasi ke Nomor Wali/]
+        D13 -- "Tidak" --> WarningTenant[/Kirim WA Peringatan ke Penyewa/]
+        EskalasiWali --> TagihanPlusDenda[/Nominal Pokok + Denda 5%/]
+        WarningTenant --> TagihanPlusDenda
+        
+        TagihanPokok --> D14{"D14: Saluran Metode Pembayaran?"}
+        TagihanPlusDenda --> D14
+        
+        D14 -- "Online Midtrans Snap" --> SnapBill[[Sub-FC 6: Bayar Snap & Webhook Settlement]]
+        D14 -- "Offline Cash / Transfer" --> InputManualDoc[/Serahkan Cash Fisik / Bukti Transfer/]
+        
+        InputManualDoc --> AdminCekFisik[/Admin Cek Penerimaan Kas Masuk/]
+        AdminCekFisik --> D15{"D15: Dana Fisik / Transfer Valid?"}
+        D15 -- "Tidak Valid" --> TolakOffline[/Tolak Pembayaran & Minta Bukti Valid/]
+        TolakOffline --> D14
+        
+        D15 -- "Valid" --> AdminKonfirmasiCash[[Set Tagihan Lunas & Catat Admin ID]]
+        
+        SnapBill --> GenPDF[[Dompdf: Cetak Nota Kuitansi PDF]]
+        AdminKonfirmasiCash --> GenPDF
+        GenPDF --> SendWAReceipt[/Fonnte WA: Kirim Kuitansi PDF/]
+        SendWAReceipt --> DashboardPenyewa
+        
+        %% Keluhan Fasilitas %%
+        DashboardPenyewa --> MenuKeluhan[/Menu Keluhan Fasilitas/]
+        MenuKeluhan --> SubFC7[[Sub-FC 7: Pelaporan & Resolusi Keluhan]]
+        SubFC7 --> DashboardPenyewa
+        
+        %% Integrasi Akuntansi %%
+        AdminKonfirmasiCash -.-> SubFC8[[Sub-FC 8: Pencatatan Arus Kas Masuk]]
+        SubFC8 --> TermF5_Akuntansi([Selesai: Kas Masuk Tercatat])
+    end
+
+    %% ========================================================
+    %% FASE 6: CHECKOUT, DEPOSIT & SIKLUS KAMAR
+    %% ========================================================
+    subgraph FASE6["🚪 FASE 6: CHECKOUT, DEPOSIT & SIKLUS KAMAR"]
+        DashboardPenyewa --> MasaHabis([Masa Kontrak Berakhir / Permintaan Checkout])
+        MasaHabis --> AdminCheckout[/Admin Klik Nonaktifkan Kontrak Penyewa/]
+        AdminCheckout --> LockKamarTetapTerisi[[Sub-FC 11: Kamar Tetap Terkunci Berstatus 'terisi']]
+        
+        LockKamarTetapTerisi --> InspeksiKamar[/Admin Melakukan Inspeksi Fisik Kamar/]
+        InspeksiKamar --> D16{"D16: Ditemukan Kerusakan Fasilitas?"}
+        
+        D16 -- "Tidak Ada" --> BalikDeposit100[[Kembalikan Deposit Jaminan 100% Penuh]]
+        D16 -- "Ada Kerusakan" --> D17{"D17: Estimasi Biaya > Nilai Deposit?"}
+        
+        D17 -- "Biaya <= Deposit" --> PotongSebagian[[Potong Biaya Perbaikan & Kembalikan Sisa Saldo]]
+        D17 -- "Biaya > Deposit" --> HangusKlaim[[Deposit Hangus 100% & Terbitkan Tagihan Klaim Tambahan]]
+        
+        BalikDeposit100 --> AdminKelolaKamar[/Admin Buka Menu Manajemen Kamar /admin/kamar/]
+        PotongSebagian --> AdminKelolaKamar
+        HangusKlaim --> AdminKelolaKamar
+        
+        AdminKelolaKamar --> D18{"D18: Kondisi Kamar Perlu Perbaikan?"}
+        D18 -- "Ya (Renovasi)" --> SetMaintenance[[Sub-FC 16: Ubah Status Kamar -> 'maintenance']]
+        D18 -- "Tidak (Siap Huni)" --> SetTersedia[[Sub-FC 16: Ubah Status Kamar -> 'tersedia']]
+        
+        SetMaintenance --> TermF6_Maint([Selesai: Unit Masuk Perbaikan])
+        SetTersedia --> StartNode
+    end

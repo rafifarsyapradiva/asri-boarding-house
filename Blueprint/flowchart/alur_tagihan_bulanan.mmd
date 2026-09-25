@@ -47,7 +47,7 @@ flowchart TD
     AdminVerifikasiKas --> AdminValidasiUang{"Apakah dana fisik/transfer valid?"}
     
     AdminValidasiUang -- "Tidak" --> TolakPembayaranOffline[/Admin tolak pembayaran & kirim pesan koreksi/]
-    TolakPembayaranOffline --> Selesai
+    TolakPembayaranOffline --> PilihMetode
     
     AdminValidasiUang -- "Ya" --> AdminKonfirmasiCash[/Admin klik Konfirmasi Cash/]
     AdminKonfirmasiCash --> DBTransOffline[[DB::transaction: Set tagihan lunas dikonfirmasi_oleh = admin_id]]

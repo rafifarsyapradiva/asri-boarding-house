@@ -19,7 +19,9 @@ flowchart TD
     AJAXPolling --> RenderBubble[/Render gelembung chat Neo-Brutalisme/]
     RenderBubble --> ChatSection
     
-    BukaDetailReservasi --> PilihAksi{"Pilih Aksi User?"}
+    %% Exit gate dari Chat Box menuju tindakan reservasi %%
+    ChatSection --> PilihAksi{"Pilih Aksi User?"}
+    BukaDetailReservasi --> PilihAksi
     
     PilihAksi -- "Batalkan Reservasi" --> KlikBatal[/User klik Batalkan Pemesanan/]
     KlikBatal --> KonfirmasiBatal{"Konfirmasi pembatalan?"}
