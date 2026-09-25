@@ -24,7 +24,7 @@ classDiagram
         +HandleReminderPenyewa
         +HandleNotifikasiWali
         +HandleDendaDikenakan
-        +GeneratePdfNotaListener
+        +KirimEmailPembayaranCashListener
         +KirimNotifikasiKeluhanDibuat
         +KirimNotifikasiKeluhanDitanggapi
         +NotifikasiKhususSubscriber
@@ -38,16 +38,22 @@ classDiagram
         +KirimReminderJatuhTempoJob
         +KirimNotifikasiWaliJob
         +KirimWelcomeMessageJob
-        +GeneratePdfNotaJob
+        +KirimNotifikasiKustomJob
     }
 
     class ExternalGateways {
         +FonnteWhatsAppGateway
         +MidtransPaymentGateway
-        +DompdfRenderingEngine
+        +BrowserReceiptHtml2Pdf
     }
 
     Events ..> Listeners : Triggers via Event Bus
     Listeners ..> BackgroundJobs : Dispatches to Queue
     BackgroundJobs ..> ExternalGateways : Executes Async Request
-    GeneratePdfNotaListener ..> DompdfRenderingEngine : Generates PDF
+    HandleTagihanDibuat ..> KirimNotifikasiTagihanJob : Dispatches
+    KirimEmailPembayaranCashListener ..> KirimNotifikasiPembayaranJob : Dispatches
+    HandleReservasiDibuat ..> KirimNotifikasiAdminReservasiJob : Dispatches
+    HandleReservasiDibayar ..> KirimNotifikasiUserReservasiJob : Dispatches
+    HandleReminderPenyewa ..> KirimReminderJatuhTempoJob : Dispatches
+    HandleNotifikasiWali ..> KirimNotifikasiWaliJob : Dispatches
+    HandleDendaDikenakan ..> KirimReminderJatuhTempoJob : Dispatches

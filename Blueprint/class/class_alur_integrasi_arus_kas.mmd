@@ -37,7 +37,7 @@ flowchart TD
     CalcOccupancyRate --> RenderView
     
     RenderView --> ExportAction{Aksi Ekspor Laporan Admin}
-    ExportAction -->|Ekspor PDF Laporan Keuangan| GeneratePdfLaporan[PdfNotaService -> DompdfGenerator<br>Download Laporan PDF]
+    ExportAction -->|Ekspor PDF Laporan Keuangan| GeneratePdfLaporan[LaporanController -> DompdfGenerator<br>Download Laporan PDF]
     ExportAction -->|Ekspor Spreadsheet| GenerateExcel[Download File CSV / Excel]
     
     GeneratePdfLaporan --> End([Selesai])

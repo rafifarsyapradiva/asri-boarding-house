@@ -2,7 +2,84 @@ classDiagram
     direction TB
 
     %% ==========================================
-    %% 1. DOMAIN MODELS & ENUMS
+    %% 1. ENUMERASI KONSEPTUAL DOMAIN (12 ENUMS)
+    %% ==========================================
+    namespace Domain_Enums {
+        class UserRole {
+            <<enumeration>>
+            ADMIN
+            PENYEWA
+        }
+        class KamarStatus {
+            <<enumeration>>
+            TERSEDIA
+            TERISI
+            MAINTENANCE
+        }
+        class TipeKamar {
+            <<enumeration>>
+            STANDAR
+            DELUXE
+            VIP
+        }
+        class PenyewaStatus {
+            <<enumeration>>
+            AKTIF
+            NONAKTIF
+        }
+        class TipeSewa {
+            <<enumeration>>
+            HARIAN
+            MINGGUAN
+            BULANAN
+        }
+        class TagihanStatus {
+            <<enumeration>>
+            PENDING
+            LUNAS
+            TERLAMBAT
+            GAGAL
+            KADALUARSA
+        }
+        class ReservasiStatus {
+            <<enumeration>>
+            PENDING
+            DP
+            LUNAS
+            DIKONFIRMASI
+            BATAL
+        }
+        class MetodePembayaran {
+            <<enumeration>>
+            MIDTRANS
+            CASH
+        }
+        class StatusKeluhan {
+            <<enumeration>>
+            PENDING
+            DIPROSES
+            SELESAI
+        }
+        class StatusNotifikasi {
+            <<enumeration>>
+            SUKSES
+            GAGAL
+        }
+        class ChannelNotifikasi {
+            <<enumeration>>
+            WHATSAPP
+            EMAIL
+            SYSTEM
+        }
+        class GuestChatStatus {
+            <<enumeration>>
+            ACTIVE
+            CLOSED
+        }
+    }
+
+    %% ==========================================
+    %% 2. DOMAIN MODELS (21 MODELS)
     %% ==========================================
     namespace Domain_Models {
         class User {
@@ -12,14 +89,20 @@ classDiagram
             +string password
             +string no_hp
             +string nik
+            +string nama_wali
+            +string no_wali
             +UserRole role
+            +string foto
+            +boolean is_active
             +boolean require_password_change
             +penyewa() HasOne
             +reservasi() HasMany
+            +chatMessages() HasMany
             +getNameAttribute() string
             +getDashboardRouteName() string
             +isProfileComplete() bool
             +isActiveTenant() bool
+            +isAdmin() bool
             +anonymizeAndDelete() void
         }
 
@@ -28,11 +111,16 @@ classDiagram
             +string nomor_kamar
             +tinyint lantai
             +TipeKamar tipe
+            +float luas_m2
             +decimal harga_bulan
+            +string deskripsi
+            +string foto
             +KamarStatus status
             +fasilitas() BelongsToMany
             +penyewaAktif() HasOne
             +reservasi() HasMany
+            +penyewa() HasMany
+            +kalkulasiHargaDasar(tipe, durasi) float
             +kalkulasiHargaSewa(tipe, durasi) float
             +kalkulasiMinimalDp(total) float
         }
@@ -41,22 +129,32 @@ classDiagram
             +int id
             +string nama
             +string ikon
+            +string deskripsi
             +boolean is_active
             +kamar() BelongsToMany
+            +scopeAktif(query) Builder
         }
 
         class Penyewa {
             +int id
             +int user_id
             +int kamar_id
+            +string nik
             +decimal harga_sewa
             +date tanggal_masuk
+            +date tanggal_keluar
             +date tanggal_keluar_seharusnya
             +PenyewaStatus status
             +tinyint tanggal_billing
+            +TipeSewa tipe_sewa
+            +int durasi
+            +decimal deposit
+            +string nama_wali
+            +string no_wali
             +tagihan() HasMany
             +keluhan() HasMany
             +getIsOverdueAttribute() bool
+            +getDurasiFormattedAttribute() string
         }
 
         class Tagihan {
@@ -65,35 +163,56 @@ classDiagram
             +string order_id
             +tinyint periode_bulan
             +smallint periode_tahun
+            +date tanggal_tagihan
+            +date tanggal_jatuh_tempo
+            +decimal nominal_pokok
+            +decimal nominal_denda
             +decimal nominal_total
+            +tinyint bulan_keterlambatan
             +TagihanStatus status
+            +MetodePembayaran metode_pembayaran
             +pembayaran() HasMany
+            +penyewa() BelongsTo
             +getComputedStatusAttribute() string
             +scopeTerlambat(query) Builder
+            +canBeConfirmedManually() bool
         }
 
         class Pembayaran {
             +int id
             +int tagihan_id
             +string transaction_id
+            +string payment_type
+            +string bank
+            +string va_number
             +decimal nominal
             +string status_midtrans
+            +int dikonfirmasi_oleh
             +datetime tanggal_bayar
-            +string pdf_path
             +tagihan() BelongsTo
+            +dikonfirmasiOleh() BelongsTo
         }
 
         class Reservasi {
             +bigint id
             +int user_id
             +int kamar_id
+            +int dikonfirmasi_oleh
+            +int penyewa_id
+            +TipeSewa tipe_sewa
+            +date tanggal_mulai
+            +date tanggal_selesai
+            +int durasi
             +decimal total_harga
             +boolean is_dp
             +decimal nominal_dp
             +decimal nominal_sisa
+            +string snap_token
+            +string order_id
+            +string transaction_id
             +ReservasiStatus status
             +chatMessages() HasMany
-            +isKamarTerbooking() bool
+            +static isKamarTerbooking(kamarId, tglMulai, tglSelesai, excludeId) bool
         }
 
         class ChatMessage {
@@ -102,34 +221,49 @@ classDiagram
             +int sender_id
             +text message
             +boolean is_read
+            +reservasi() BelongsTo
+            +sender() BelongsTo
         }
 
         class Keluhan {
             +int id
             +int penyewa_id
             +string judul
+            +string kategori
+            +text deskripsi
+            +string foto_bukti
             +StatusKeluhan status
             +text tanggapan_admin
+            +date tanggal_selesai
+            +penyewa() BelongsTo
         }
 
         class Pengeluaran {
             +int id
             +string nama_pengeluaran
+            +string kategori
             +decimal nominal
             +date tanggal_pengeluaran
+            +string bukti_nota
         }
 
         class Setting {
             +string key
             +text value
             +static get(key, default) string
+            +static getDiscountForDuration(tipe, durasi) float
         }
 
         class LogNotifikasi {
             +int id
             +int penyewa_id
             +int tagihan_id
+            +ChannelNotifikasi channel
+            +string event
             +StatusNotifikasi status
+            +text pesan
+            +penyewa() BelongsTo
+            +tagihan() BelongsTo
         }
 
         class NotifikasiKhusus {
@@ -137,23 +271,82 @@ classDiagram
             +string sumber
             +string tipe_aktivitas
             +int user_id
+            +user() BelongsTo
+            +static log(sumber, tipe, deskripsi, userId, data) void
         }
 
         class GuestChatThread {
             +bigint id
             +string session_token
-            +string status
+            +string name
+            +string no_hp
+            +GuestChatStatus status
+            +messages() HasMany
+            +latestMessage() HasOne
         }
 
         class GuestChatMessage {
             +bigint id
             +bigint guest_chat_thread_id
+            +string sender_type
+            +int sender_id
             +text message
+            +boolean is_read
+            +thread() BelongsTo
+            +sender() BelongsTo
+        }
+
+        class WhatsappClick {
+            +int id
+            +int kamar_id
+            +string source
+            +kamar() BelongsTo
+        }
+
+        class CustomerReview {
+            +int id
+            +string nama
+            +string pekerjaan
+            +tinyint bintang
+            +text ulasan
+            +string foto
+        }
+
+        class Faq {
+            +int id
+            +string pertanyaan
+            +text jawaban
+            +int urutan
+            +boolean is_active
+            +scopeAktif(query) Builder
+        }
+
+        class Peraturan {
+            +int id
+            +string judul
+            +text deskripsi
+            +string ikon
+            +int urutan
+        }
+
+        class Gallery {
+            +int id
+            +string judul
+            +string foto
+            +boolean is_active
+            +scopeAktif(query) Builder
+        }
+
+        class Pengumuman {
+            +int id
+            +string judul
+            +text isi
+            +boolean is_active
         }
     }
 
     %% ==========================================
-    %% 2. SERVICE LAYER & ABSTRACTIONS
+    %% 3. SERVICE LAYER & REPORT ENGINE
     %% ==========================================
     namespace Service_Layer {
         class PdfGeneratorInterface {
@@ -165,24 +358,21 @@ classDiagram
             +generate(view, data, paper, orientation) string
         }
 
-        class PdfNotaService {
-            #PdfGeneratorInterface pdfGenerator
-            +generate(Pembayaran) string
-            +getOrGeneratePdfPath(Pembayaran) string
-        }
-
         class BillingService {
             +generateTagihanBulanan() void
             +prosesKeterlambatan() void
             +terapkanDendaDirect(Tagihan) void
             +injectSisaDp(Penyewa, float) void
             +injectLunasPenuh(Penyewa, Reservasi, int) void
+            +injectManualPenyewaLunas(Penyewa, int) void
+            +perpanjangKontrakManual(Penyewa, int, int) Tagihan
         }
 
         class ReservasiService {
             +hitungHarga(Kamar, string, int) array
-            +buatReservasi(array) Reservasi
             +cekDoubleBooking(Kamar, string, string) bool
+            +buatReservasi(array) Reservasi
+            +batalkanReservasi(Reservasi) void
         }
 
         class TransisiPenyewaService {
@@ -197,6 +387,7 @@ classDiagram
 
         class TagihanService {
             +confirmCashPayment(Tagihan, int, string) Pembayaran
+            +getFilteredPaginatedTagihan(request, perPage) LengthAwarePaginator
         }
 
         class DashboardAnalyticsService {
@@ -206,6 +397,13 @@ classDiagram
         class NotificationTemplateBuilder {
             +buildTagihanBaru(Tagihan, Penyewa) string
             +buildPembayaranBerhasil(Pembayaran) string
+            +buildReminderJatuhTempo(Tagihan, Penyewa) string
+            +buildNotifikasiWali(Tagihan, Penyewa) string
+            +buildDenda(Tagihan, Penyewa) string
+            +buildWelcomePenyewa(Penyewa) string
+            +buildReservasiDibuat(Reservasi) string
+            +buildReservasiDibayar(Reservasi) string
+            +buildReservasiDikonfirmasi(Reservasi) string
         }
 
         class NotifikasiService {
@@ -214,6 +412,11 @@ classDiagram
             +kirimNotifikasiTagihan(Tagihan, bool) void
             +kirimNotifikasiPembayaran(Pembayaran, bool) void
             +kirimNotifikasiWelcomePenyewa(Penyewa, bool) void
+            +kirimNotifikasiTransisiPenyewa(Penyewa, bool) void
+            +kirimReminderJatuhTempo(Tagihan, bool) void
+            +kirimNotifikasiWali(Tagihan, bool) void
+            +kirimNotifikasiKeluhanDibuat(Keluhan, bool) void
+            +kirimNotifikasiKeluhanDitanggapi(Keluhan, bool) void
         }
 
         class FonnteService {
@@ -228,17 +431,37 @@ classDiagram
     }
 
     %% ==========================================
-    %% 3. OBSERVERS, MIDDLEWARES & POLICIES
+    %% 4. OBSERVERS, MIDDLEWARES, RULES & POLICIES
     %% ==========================================
     namespace Infra_Security {
         class PenyewaObserver {
+            +creating(Penyewa) void
             +created(Penyewa) void
+            +updating(Penyewa) void
             +updated(Penyewa) void
         }
 
         class KamarObserver {
-            +saved(Kamar) void
+            +created(Kamar) void
+            +updated(Kamar) void
             +deleted(Kamar) void
+            +restored(Kamar) void
+            +forceDeleted(Kamar) void
+        }
+
+        class FasilitasObserver {
+            +saved(Fasilitas) void
+            +deleted(Fasilitas) void
+        }
+
+        class PengeluaranObserver {
+            +created(Pengeluaran) void
+            +deleted(Pengeluaran) void
+        }
+
+        class SettingObserver {
+            +saved(Setting) void
+            +deleted(Setting) void
         }
 
         class RoleMiddleware {
@@ -249,11 +472,35 @@ classDiagram
             +handle(request, next) Response
         }
 
+        class EnsureTenantIsActive {
+            +handle(request, next) Response
+        }
+
+        class EnsureProfileIsComplete {
+            +handle(request, next) Response
+        }
+
+        class EnsurePasswordChanged {
+            +handle(request, next) Response
+        }
+
+        class KamarTersediaRule {
+            +validate(attribute, value, fail) void
+        }
+
+        class TanpaPenyewaAktifLainRule {
+            +validate(attribute, value, fail) void
+        }
+
+        class ValidGoogleMapsEmbed {
+            +passes(attribute, value) bool
+        }
+
         class BaseResetPasswordNotification {
             <<abstract>>
             #string token
-            #getRoleName() string
-            #resolveRouteName(notifiable) string
+            #getRoleName()* string
+            #resolveRouteName(notifiable)* string
             +toMail(notifiable) MailMessage
         }
 
@@ -267,83 +514,148 @@ classDiagram
 
         class ReservasiPolicy {
             +view(User, Reservasi) bool
+            +chat(User, Reservasi) bool
             +pay(User, Reservasi) bool
+            +update(User, Reservasi) bool
         }
 
         class TagihanPolicy {
             +view(User, Tagihan) bool
             +pay(User, Tagihan) bool
         }
+
+        class PembayaranPolicy {
+            +downloadNota(User, Pembayaran) bool
+        }
+
+        class KeluhanPolicy {
+            +view(User, Keluhan) bool
+        }
     }
 
     %% ==========================================
-    %% 4. EVENTS & QUEUES
+    %% 5. EVENTS, LISTENERS & QUEUE JOBS
     %% ==========================================
     namespace Event_Driven {
-        class ReservasiDikonfirmasi {
-            +Reservasi reservasi
-            +Penyewa penyewa
-        }
-
         class TagihanDibuat {
             +Tagihan tagihan
         }
-
-        class PembayaranBerhasil {
-            +Pembayaran pembayaran
+        class HandleTagihanDibuat {
+            +handle(TagihanDibuat) void
         }
-
         class KirimNotifikasiTagihanJob {
             +Tagihan tagihan
             +handle(NotifikasiService) void
         }
 
-        class GeneratePdfNotaJob {
+        class PembayaranCashDikonfirmasi {
             +Pembayaran pembayaran
-            +handle(PdfNotaService) void
+        }
+        class KirimEmailPembayaranCashListener {
+            +handle(PembayaranCashDikonfirmasi) void
+        }
+        class KirimNotifikasiPembayaranJob {
+            +Pembayaran pembayaran
+            +handle(NotifikasiService) void
+        }
+
+        class ReservasiDibuat {
+            +Reservasi reservasi
+        }
+        class HandleReservasiDibuat {
+            +handle(ReservasiDibuat) void
+        }
+        class KirimNotifikasiAdminReservasiJob {
+            +Reservasi reservasi
+            +handle(NotifikasiService) void
+        }
+
+        class ReservasiDibayar {
+            +Reservasi reservasi
+        }
+        class HandleReservasiDibayar {
+            +handle(ReservasiDibayar) void
+        }
+        class KirimNotifikasiUserReservasiJob {
+            +Reservasi reservasi
+            +handle(NotifikasiService) void
+        }
+
+        class ReservasiDikonfirmasi {
+            +Reservasi reservasi
+        }
+        class ProsesTransisiPenyewa {
+            +handle(ReservasiDikonfirmasi) void
+        }
+
+        class NotifikasiKhususSubscriber {
+            +subscribe(events) array
         }
     }
 
     %% Relasi Model Inti %%
-    User "1" -- "0..1" Penyewa : One to One
-    Kamar "1" -- "*" Penyewa : One to Many
-    Kamar "*" -- "*" Fasilitas : Many to Many
+    User "1" -- "0..1" Penyewa : One to One (Active Contract)
+    Kamar "1" -- "*" Penyewa : One to Many (Historical)
+    Kamar "*" -- "*" Fasilitas : Many to Many (Pivot kamar_fasilitas)
     Penyewa "1" -- "*" Tagihan : One to Many
     Tagihan "1" -- "*" Pembayaran : One to Many
-    User "1" -- "*" Reservasi : One to Many
+    User "1" -- "*" Reservasi : One to Many (Customer)
     Kamar "1" -- "*" Reservasi : One to Many
-    Reservasi "1" *-- "*" ChatMessage : Composition
+    Reservasi "1" *-- "*" ChatMessage : Composition (Lifecycle Dependent)
     Penyewa "1" -- "*" Keluhan : One to Many
-    GuestChatThread "1" *-- "*" GuestChatMessage : Composition
+    GuestChatThread "1" *-- "*" GuestChatMessage : Composition (Lifecycle Dependent)
     Penyewa "1" -- "*" LogNotifikasi : One to Many
     Tagihan "1" -- "*" LogNotifikasi : One to Many
     User "1" -- "*" NotifikasiKhusus : One to Many
+    Kamar "1" -- "*" WhatsappClick : One to Many
+    User "1" -- "*" ChatMessage : One to Many (Sender)
+    Reservasi "1" -- "0..1" Penyewa : References Activated Tenant
+    User "1" -- "*" Pembayaran : Confirmed Cash By Admin
 
     %% Relasi Service & Realization %%
     DompdfGenerator ..|> PdfGeneratorInterface : Implements
-    PdfNotaService ..> PdfGeneratorInterface : Uses
-    TransisiPenyewaService ..> BillingService : Uses
-    AdminPenyewaService ..> BillingService : Uses
+    TransisiPenyewaService ..> BillingService : Dependency Injection
+    AdminPenyewaService ..> BillingService : Dependency Injection
     NotifikasiService *-- NotificationTemplateBuilder : Composes
-    NotifikasiService ..> FonnteService : Uses
+    NotifikasiService ..> FonnteService : Uses API Gateway
 
-    BillingService ..> Tagihan : Creates
+    BillingService ..> Tagihan : Creates / Updates
     BillingService ..> Penyewa : Manages
     ReservasiService ..> Reservasi : Creates
     TransisiPenyewaService ..> Penyewa : Activates
-    TagihanService ..> Pembayaran : Confirms
+    TagihanService ..> Pembayaran : Records Cash Payment
 
     %% Relasi Observers & Security %%
-    PenyewaObserver ..> Penyewa : Observes
-    PenyewaObserver ..> Kamar : Locks room
-    KamarObserver ..> Kamar : Observes
+    PenyewaObserver ..> Penyewa : Observes Lifecycle
+    PenyewaObserver ..> Kamar : Locks Room 'terisi'
+    KamarObserver ..> Kamar : Observes & Clears Cache
+    FasilitasObserver ..> Fasilitas : Clears Cache
+    PengeluaranObserver ..> Pengeluaran : Observes
+    SettingObserver ..> Setting : Syncs Cache
+
     AdminResetPasswordNotification --|> BaseResetPasswordNotification : Extends
     PenyewaResetPasswordNotification --|> BaseResetPasswordNotification : Extends
     ReservasiPolicy ..> Reservasi : Authorizes
     TagihanPolicy ..> Tagihan : Authorizes
+    PembayaranPolicy ..> Pembayaran : Authorizes
+    KeluhanPolicy ..> Keluhan : Authorizes
 
-    %% Relasi Events & Queue Jobs %%
-    TagihanDibuat ..> KirimNotifikasiTagihanJob : Triggers
-    KirimNotifikasiTagihanJob ..> NotifikasiService : Calls
-    PembayaranBerhasil ..> GeneratePdfNotaJob : Triggers
-    GeneratePdfNotaJob ..> PdfNotaService : Calls
+    %% Relasi Event Pipeline Riil %%
+    TagihanDibuat ..> HandleTagihanDibuat : Triggers
+    HandleTagihanDibuat ..> KirimNotifikasiTagihanJob : Dispatches
+    KirimNotifikasiTagihanJob ..> NotifikasiService : Executes
+
+    PembayaranCashDikonfirmasi ..> KirimEmailPembayaranCashListener : Triggers
+    KirimEmailPembayaranCashListener ..> KirimNotifikasiPembayaranJob : Dispatches
+    KirimNotifikasiPembayaranJob ..> NotifikasiService : Executes
+
+    ReservasiDibuat ..> HandleReservasiDibuat : Triggers
+    HandleReservasiDibuat ..> KirimNotifikasiAdminReservasiJob : Dispatches
+    KirimNotifikasiAdminReservasiJob ..> NotifikasiService : Executes
+
+    ReservasiDibayar ..> HandleReservasiDibayar : Triggers
+    HandleReservasiDibayar ..> KirimNotifikasiUserReservasiJob : Dispatches
+    KirimNotifikasiUserReservasiJob ..> NotifikasiService : Executes
+
+    ReservasiDikonfirmasi ..> ProsesTransisiPenyewa : Triggers
+    ProsesTransisiPenyewa ..> NotifikasiService : Calls Welcome Notif

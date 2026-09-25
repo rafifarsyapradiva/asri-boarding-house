@@ -22,7 +22,7 @@ classDiagram
         +HandleReminderPenyewa
         +HandleNotifikasiWali
         +HandleDendaDikenakan
-        +GeneratePdfNotaListener
+        +KirimEmailPembayaranCashListener
         +KirimNotifikasiKeluhanDibuat
         +KirimNotifikasiKeluhanDitanggapi
         +NotifikasiKhususSubscriber
@@ -35,7 +35,6 @@ classDiagram
         +KirimReminderJatuhTempoJob
         +KirimNotifikasiWaliJob
         +KirimWelcomeMessageJob
-        +GeneratePdfNotaJob
         +KirimNotifikasiKustomJob
     }
 
@@ -47,5 +46,5 @@ classDiagram
     HandleReminderPenyewa ..> KirimReminderJatuhTempoJob : "dispatches"
     HandleNotifikasiWali ..> KirimNotifikasiWaliJob : "dispatches"
     HandleDendaDikenakan ..> KirimReminderJatuhTempoJob : "dispatches"
+    KirimEmailPembayaranCashListener ..> KirimNotifikasiPembayaranJob : "dispatches"
     ProsesTransisiPenyewa ..> NotifikasiService : "calls"
-    GeneratePdfNotaListener ..> PdfNotaService : "generates PDF"

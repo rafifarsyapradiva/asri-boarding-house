@@ -33,15 +33,19 @@ flowchart TD
     RecordMidtransPay --> UpdateTagihanLunas[Tagihan::update status = 'lunas']
     RecordCashPay --> UpdateTagihanLunas
     
-    UpdateTagihanLunas --> DispatchPayEvent[Dispatch Event: PembayaranBerhasil]
-    DispatchPayEvent --> ListenerPdf[Listener: GeneratePdfNotaListener]
+    UpdateTagihanLunas --> CashEventCheck{Jenis Pembayaran?}
+    CashEventCheck -->|Pembayaran Cash| DispatchCashEvent[Dispatch Event: PembayaranCashDikonfirmasi]
+    CashEventCheck -->|Pembayaran Midtrans| DispatchOnlineEvent[Dispatch Event: PembayaranBerhasil]
     
-    ListenerPdf --> QueuePdfJob[Queue Job: GeneratePdfNotaJob]
-    QueuePdfJob --> CallPdfService[PdfNotaService::generate]
-    CallPdfService --> CallEngine["DompdfGenerator implements PdfGeneratorInterface"]
-    CallEngine --> SavePdfFile[Simpan File PDF ke storage/app/public/nota/]
-    SavePdfFile --> UpdatePdfPath[Pembayaran::update pdf_path]
+    DispatchCashEvent --> ListenerCash[Listener: KirimEmailPembayaranCashListener]
+    ListenerCash --> QueueNotifJob[Queue Job: KirimNotifikasiPembayaranJob]
     
-    UpdatePdfPath --> DispatchNotifJob[Queue Job: KirimNotifikasiPembayaranJob]
-    DispatchNotifJob --> SendReceiptWA[FonnteService: Kirim WA Bukti Lunas + Link Download PDF]
-    SendReceiptWA --> EndSuccess([Selesai: Pembayaran & Kuitansi Selesai])
+    DispatchOnlineEvent --> SubscriberAudit[NotifikasiKhususSubscriber: Audit Log Keuangan]
+    DispatchOnlineEvent --> DirectNotif[NotifikasiService::kirimNotifikasiPembayaran]
+    
+    QueueNotifJob --> SendReceiptWA[FonnteService: Kirim WA Bukti Lunas + Link Kuitansi Web]
+    DirectNotif --> SendReceiptWA
+    
+    SendReceiptWA --> UserOpenReceipt[Penyewa / Admin Akses Halaman Kuitansi di Web Browser]
+    UserOpenReceipt --> ClientRender["Client-Side PDF Rendering (html2pdf.js)<br>Zero Server Load & Instant Download A5"]
+    ClientRender --> EndSuccess([Selesai: Pembayaran Berhasil & Kuitansi Tersedia])

@@ -8,14 +8,16 @@ classDiagram
         class PenyewaResetPasswordNotification
         class ReservasiPolicy
         class TagihanPolicy
+        class PembayaranPolicy
+        class KeluhanPolicy
         class Middlewares
+        class ValidationRules
     }
 
     %% Layer 2: Business Service Layer %%
     namespace Business_Services {
         class PdfGeneratorInterface { <<interface>> }
         class DompdfGenerator
-        class PdfNotaService
         class BillingService
         class ReservasiService
         class TransisiPenyewaService
@@ -23,17 +25,24 @@ classDiagram
         class TagihanService
         class DashboardAnalyticsService
         class NotifikasiService
+        class FonnteService
+        class MidtransService
     }
 
     %% Layer 3: Event-Driven Infrastructure %%
     namespace Event_Queues {
-        class ReservasiDibuat
         class TagihanDibuat
-        class PembayaranBerhasil
         class HandleTagihanDibuat
-        class GeneratePdfNotaListener
         class KirimNotifikasiTagihanJob
-        class GeneratePdfNotaJob
+        class PembayaranCashDikonfirmasi
+        class KirimEmailPembayaranCashListener
+        class KirimNotifikasiPembayaranJob
+        class ReservasiDibuat
+        class HandleReservasiDibuat
+        class KirimNotifikasiAdminReservasiJob
+        class ReservasiDikonfirmasi
+        class ProsesTransisiPenyewa
+        class NotifikasiKhususSubscriber
     }
 
     %% Layer 4: Data Models & Persistence %%
@@ -48,6 +57,12 @@ classDiagram
         class ChatMessage
         class Keluhan
         class Pengeluaran
+        class Setting
+        class LogNotifikasi
+        class NotifikasiKhusus
+        class GuestChatThread
+        class GuestChatMessage
+        class WhatsappClick
         class PenyewaObserver
         class KamarObserver
     }
@@ -56,36 +71,48 @@ classDiagram
     AdminResetPasswordNotification --|> BaseResetPasswordNotification : Extends
     PenyewaResetPasswordNotification --|> BaseResetPasswordNotification : Extends
     DompdfGenerator ..|> PdfGeneratorInterface : Implements
-    PdfNotaService ..> PdfGeneratorInterface : Uses
 
     %% Relasi Service Dependencies %%
     TransisiPenyewaService ..> BillingService : Uses
     AdminPenyewaService ..> BillingService : Uses
     TransisiPenyewaService ..> ReservasiService : Coordinates
+    NotifikasiService ..> FonnteService : Uses Gateway
 
     %% Relasi Policy & Middlewares to Models %%
     ReservasiPolicy ..> Reservasi : Authorizes
     TagihanPolicy ..> Tagihan : Authorizes
+    PembayaranPolicy ..> Pembayaran : Authorizes
+    KeluhanPolicy ..> Keluhan : Authorizes
     Middlewares ..> User : Guards
+    ValidationRules ..> Kamar : Validates
 
     %% Relasi Service to Models %%
     BillingService ..> Tagihan : Generates
     BillingService ..> Penyewa : Manages
     ReservasiService ..> Reservasi : Processes
-    TagihanService ..> Pembayaran : Records
+    TagihanService ..> Pembayaran : Records Cash
     DashboardAnalyticsService ..> Pembayaran : Aggregates
+    DashboardAnalyticsService ..> Pengeluaran : Aggregates
 
     %% Relasi Event & Queues %%
     TagihanDibuat ..> HandleTagihanDibuat : Triggers
     HandleTagihanDibuat ..> KirimNotifikasiTagihanJob : Dispatches
     KirimNotifikasiTagihanJob ..> NotifikasiService : Executes
-    PembayaranBerhasil ..> GeneratePdfNotaListener : Triggers
-    GeneratePdfNotaListener ..> GeneratePdfNotaJob : Dispatches
-    GeneratePdfNotaJob ..> PdfNotaService : Executes
+
+    PembayaranCashDikonfirmasi ..> KirimEmailPembayaranCashListener : Triggers
+    KirimEmailPembayaranCashListener ..> KirimNotifikasiPembayaranJob : Dispatches
+    KirimNotifikasiPembayaranJob ..> NotifikasiService : Executes
+
+    ReservasiDibuat ..> HandleReservasiDibuat : Triggers
+    HandleReservasiDibuat ..> KirimNotifikasiAdminReservasiJob : Dispatches
+    KirimNotifikasiAdminReservasiJob ..> NotifikasiService : Executes
+
+    ReservasiDikonfirmasi ..> ProsesTransisiPenyewa : Triggers
+    ProsesTransisiPenyewa ..> NotifikasiService : Calls Welcome Notif
 
     %% Relasi Domain Associations %%
-    User "1" -- "0..1" Penyewa : 1 to 0..1
-    Kamar "1" -- "*" Penyewa : 1 to N
+    User "1" -- "0..1" Penyewa : 1 to 0..1 Active
+    Kamar "1" -- "*" Penyewa : 1 to N Historical
     Kamar "*" -- "*" Fasilitas : N to M
     Penyewa "1" -- "*" Tagihan : 1 to N
     Tagihan "1" -- "*" Pembayaran : 1 to N
@@ -93,6 +120,8 @@ classDiagram
     Kamar "1" -- "*" Reservasi : 1 to N
     Reservasi "1" *-- "*" ChatMessage : Composition
     Penyewa "1" -- "*" Keluhan : 1 to N
+    GuestChatThread "1" *-- "*" GuestChatMessage : Composition
+    Kamar "1" -- "*" WhatsappClick : 1 to N
 
     %% Relasi Observers %%
     PenyewaObserver ..> Penyewa : Observes

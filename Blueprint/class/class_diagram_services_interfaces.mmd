@@ -7,11 +7,6 @@ classDiagram
     class DompdfGenerator {
         +generate(view, data, paper, orientation) string
     }
-    class PdfNotaService {
-        #PdfGeneratorInterface pdfGenerator
-        +generate(Pembayaran) string
-        +getOrGeneratePdfPath(Pembayaran) string
-    }
     class BillingService {
         +generateTagihanBulanan() void
         +prosesKeterlambatan() void
@@ -19,12 +14,13 @@ classDiagram
         +injectSisaDp(Penyewa, float) void
         +injectLunasPenuh(Penyewa, Reservasi, int) void
         +injectManualPenyewaLunas(Penyewa, int) void
-        +perpanjangKontrakManual(Penyewa, int, string) Tagihan
+        +perpanjangKontrakManual(Penyewa, int, int) Tagihan
     }
     class ReservasiService {
         +hitungHarga(Kamar, string, int) array
         +buatReservasi(array) Reservasi
         +cekDoubleBooking(Kamar, string, string) bool
+        +batalkanReservasi(Reservasi) void
     }
     class TransisiPenyewaService {
         #BillingService billingService
@@ -36,6 +32,7 @@ classDiagram
     }
     class TagihanService {
         +confirmCashPayment(Tagihan, int, string) Pembayaran
+        +getFilteredPaginatedTagihan(request, perPage) LengthAwarePaginator
     }
     class DashboardAnalyticsService {
         +getDashboardMetrics() array
@@ -52,6 +49,9 @@ classDiagram
         +buildTagihanBaru(Tagihan, Penyewa) string
         +buildPembayaranBerhasil(Pembayaran) string
         +buildReminderJatuhTempo(Tagihan, Penyewa) string
+        +buildNotifikasiWali(Tagihan, Penyewa) string
+        +buildDenda(Tagihan, Penyewa) string
+        +buildWelcomePenyewa(Penyewa) string
     }
     class NotifikasiService {
         #FonnteService fonnte
@@ -59,10 +59,12 @@ classDiagram
         +kirimNotifikasiTagihan(Tagihan, bool) void
         +kirimNotifikasiPembayaran(Pembayaran, bool) void
         +kirimNotifikasiWelcomePenyewa(Penyewa, bool) void
+        +kirimNotifikasiTransisiPenyewa(Penyewa, bool) void
+        +kirimReminderJatuhTempo(Tagihan, bool) void
+        +kirimNotifikasiWali(Tagihan, bool) void
     }
 
     DompdfGenerator ..|> PdfGeneratorInterface : "implements"
-    PdfNotaService ..> PdfGeneratorInterface : "injects & uses"
     TransisiPenyewaService ..> BillingService : "injects & uses"
     AdminPenyewaService ..> BillingService : "injects & uses"
     NotifikasiService *-- NotificationTemplateBuilder : "composition"

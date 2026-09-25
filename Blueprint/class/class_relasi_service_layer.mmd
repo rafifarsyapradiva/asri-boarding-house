@@ -10,12 +10,6 @@ classDiagram
         +generate(view, data, paper, orientation) string
     }
 
-    class PdfNotaService {
-        #PdfGeneratorInterface pdfGenerator
-        +generate(Pembayaran) string
-        +getOrGeneratePdfPath(Pembayaran) string
-    }
-
     class BillingService {
         +generateTagihanBulanan() void
         +prosesKeterlambatan() void
@@ -23,6 +17,7 @@ classDiagram
         +injectSisaDp(Penyewa, float) void
         +injectLunasPenuh(Penyewa, Reservasi, int) void
         +injectManualPenyewaLunas(Penyewa, int) void
+        +perpanjangKontrakManual(Penyewa, int, int) Tagihan
     }
 
     class TransisiPenyewaService {
@@ -39,10 +34,12 @@ classDiagram
         +hitungHarga(Kamar, string, int) array
         +buatReservasi(array) Reservasi
         +cekDoubleBooking(Kamar, string, string) bool
+        +batalkanReservasi(Reservasi) void
     }
 
     class TagihanService {
         +confirmCashPayment(Tagihan, int, string) Pembayaran
+        +getFilteredPaginatedTagihan(request, perPage) LengthAwarePaginator
     }
 
     class DashboardAnalyticsService {
@@ -53,6 +50,9 @@ classDiagram
         +buildTagihanBaru(Tagihan, Penyewa) string
         +buildPembayaranBerhasil(Pembayaran) string
         +buildReminderJatuhTempo(Tagihan, Penyewa) string
+        +buildNotifikasiWali(Tagihan, Penyewa) string
+        +buildDenda(Tagihan, Penyewa) string
+        +buildWelcomePenyewa(Penyewa) string
     }
 
     class NotifikasiService {
@@ -61,6 +61,9 @@ classDiagram
         +kirimNotifikasiTagihan(Tagihan, bool) void
         +kirimNotifikasiPembayaran(Pembayaran, bool) void
         +kirimNotifikasiWelcomePenyewa(Penyewa, bool) void
+        +kirimNotifikasiTransisiPenyewa(Penyewa, bool) void
+        +kirimReminderJatuhTempo(Tagihan, bool) void
+        +kirimNotifikasiWali(Tagihan, bool) void
     }
 
     class FonnteService {
@@ -75,7 +78,6 @@ classDiagram
 
     %% Dependency & Realization %%
     DompdfGenerator ..|> PdfGeneratorInterface : Implements
-    PdfNotaService ..> PdfGeneratorInterface : Dependency Injection
     TransisiPenyewaService ..> BillingService : Dependency Injection
     AdminPenyewaService ..> BillingService : Dependency Injection
     NotifikasiService *-- NotificationTemplateBuilder : Composition
