@@ -2,74 +2,91 @@ flowchart LR
     classDef primaryActor fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
     classDef secondaryActor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
     classDef timerActor fill:#e0f7fa,stroke:#00acc1,stroke-width:2px,font-weight:bold;
-    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:1.5px,color:#1b5e20;
+    classDef extNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1.5px,color:#01579b;
+    classDef subBox fill:#fcfdfd,stroke:#b0bec5,stroke-width:1.5px,stroke-dasharray: 4 4;
 
-    %% Actors
-    Guest(["Tamu (Guest)"]):::primaryActor
-    Calon(["Calon Penyewa"]):::primaryActor
-    Penyewa(["Penyewa Aktif"]):::primaryActor
-    Admin(["Administrator"]):::primaryActor
-
-    %% Systems & Timers
-    Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
-    Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
-    Cron[["System Scheduler (Timer/Cron)"]]:::timerActor
-
-    subgraph CoreSystem ["Sistem Informasi Asri Boarding House"]
+    %% Panel Kiri: Primary Actors
+    subgraph ColPrimary ["Aktor Utama (Pengguna Sistem)"]
         direction TB
-        
-        subgraph AuthMod ["Modul Otentikasi & Keamanan"]
+        Guest(["Tamu (Guest)"]):::primaryActor
+        Calon(["Calon Penyewa"]):::primaryActor
+        Penyewa(["Penyewa Aktif"]):::primaryActor
+        Admin(["Administrator"]):::primaryActor
+    end
+
+    %% Boundary Sistem Inti
+    subgraph CoreSystem ["Boundary Sistem: Sistem Informasi Asri Boarding House"]
+        direction TB
+
+        %% 1. Modul Otentikasi & Keamanan Akun
+        subgraph AuthMod ["1. Otentikasi & Keamanan Akun"]
             UC12(["UC-12: Registrasi Akun"]):::ucNode
-            UC18(["UC-18: Google OAuth SSO"]):::ucNode
-            UC22(["UC-22: Login Manual"]):::ucNode
-            UC24(["UC-24: Lupa & Reset Password"]):::ucNode
+            UC18(["UC-18: Login SSO Google OAuth"]):::ucNode
+            UC22(["UC-22: Login Kredensial Manual"]):::ucNode
+            UC24(["UC-24: Reset Password"]):::extNode
         end
 
-        subgraph PublicMod ["Modul Publik & Reservasi"]
-            UC10(["UC-10: Cek Katalog Kamar"]):::ucNode
-            UC17(["UC-17: Guest Chat"]):::ucNode
-            UC01(["UC-01: Reservasi Kamar"]):::ucNode
-            UC03(["UC-03: Chat Reservasi"]):::ucNode
-            UC02(["UC-02: Pembayaran Reservasi"]):::ucNode
+        %% 2. Modul Publik & Reservasi
+        subgraph PublicMod ["2. Eksplorasi Publik & Reservasi"]
+            UC10(["UC-10: Cek Katalog & Fasilitas"]):::ucNode
+            UC17(["UC-17: Guest Chat Interaktif"]):::ucNode
+            UC01(["UC-01: Booking Reservasi Kamar"]):::ucNode
+            UC03(["UC-03: Chat Diskusi Reservasi"]):::extNode
+            UC02(["UC-02: Pembayaran DP / Lunas Booking"]):::extNode
         end
 
-        subgraph TenantMod ["Modul Penyewa Aktif"]
-            UC04(["UC-04: Bayar Tagihan Bulanan"]):::ucNode
-            UC25(["UC-25: Unduh Kuitansi PDF"]):::ucNode
-            UC05(["UC-05: Pengaduan Keluhan"]):::ucNode
-            UC11(["UC-11: Peraturan Kost"]):::ucNode
-            UC21(["UC-21: Pengumuman Portal"]):::ucNode
-            UC16(["UC-16: Riwayat Transaksi"]):::ucNode
+        %% 3. Modul Penyewa Aktif
+        subgraph TenantMod ["3. Portal Layanan Penyewa Aktif"]
+            UC04(["UC-04: Bayar Tagihan Sewa & Denda"]):::ucNode
+            UC25(["UC-25: Unduh Kuitansi PDF"]):::extNode
+            UC05(["UC-05: Pengaduan Keluhan & Kerusakan"]):::ucNode
+            UC11(["UC-11: Cek Tata Tertib Kost"]):::ucNode
+            UC21(["UC-21: Baca Pengumuman Kost"]):::ucNode
+            UC16(["UC-16: Histori Riwayat Transaksi"]):::ucNode
         end
 
-        subgraph AutoMod ["Modul Otomasi Latar Belakang"]
-            UC28(["UC-28: Otomasi Billing, Denda & Eskalasi"]):::ucNode
-        end
-
-        subgraph AdminMod ["Modul Admin Operations"]
-            UC06(["UC-06: Konfirmasi Reservasi & Kas"]):::ucNode
-            UC13(["UC-13: Kelola Kamar & Fasilitas"]):::ucNode
-            UC14(["UC-14: Kelola Penyewa"]):::ucNode
-            UC26(["UC-26: Checkout & Perpanjang"]):::ucNode
-            UC15(["UC-15: Resolusi Keluhan"]):::ucNode
-            UC08(["UC-08: Kelola Pengeluaran"]):::ucNode
-            UC07(["UC-07: Laporan Arus Kas"]):::ucNode
-            UC27(["UC-27: Ekspor Data & Laporan"]):::ucNode
-            UC19(["UC-19: Kalender Kontrol"]):::ucNode
-            UC20(["UC-20: Broadcast Notifikasi"]):::ucNode
-            UC09(["UC-09: Kelola Konten Dinamis"]):::ucNode
-            UC23(["UC-23: Pengaturan Sistem"]):::ucNode
+        %% 4. Modul Admin Operations & Master Data
+        subgraph AdminMod ["4. Operasional Administrator & Master Data"]
+            UC06(["UC-06: Verifikasi Reservasi & Konfirmasi Kas"]):::ucNode
+            UC13(["UC-13: Manajemen Kamar & Fasilitas"]):::ucNode
+            UC14(["UC-14: Manajemen Penyewa"]):::ucNode
+            UC26(["UC-26: Process Checkout & Perpanjangan"]):::extNode
+            UC15(["UC-15: Tanggapi & Resolusi Keluhan"]):::ucNode
+            UC08(["UC-08: Pencatatan Biaya Operasional"]):::ucNode
+            UC07(["UC-07: Pencatatan & Evaluasi Arus Kas"]):::ucNode
+            UC27(["UC-27: Ekspor Data & Laporan PDF/Excel"]):::extNode
+            UC19(["UC-19: Kalender Kontrol Hunian"]):::ucNode
+            UC20(["UC-20: Broadcast Pengumuman Massal"]):::ucNode
+            UC09(["UC-09: Manajemen Konten Landing Page"]):::ucNode
+            UC23(["UC-23: Konfigurasi Pengaturan Sistem"]):::ucNode
             UC29(["UC-29: Log Audit & Error System"]):::ucNode
+        end
+
+        %% 5. Modul Otomasi Latar Belakang
+        subgraph AutoMod ["5. Otomasi Latar Belakang (Scheduled Tasks)"]
+            UC28(["UC-28: Otomasi Billing, Denda & Tugas Terjadwal"]):::ucNode
         end
     end
 
-    %% Connect Primary Actors
+    %% Panel Kanan: Secondary & Timer Actors
+    subgraph ColSecondary ["Aktor Pendukung (Layanan Eksternal & Timer)"]
+        direction TB
+        Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
+        Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
+        Google[["Google Identity Services (OAuth)"]]:::secondaryActor
+        MailServer[["SMTP Mail Server"]]:::secondaryActor
+        Cron[["System Scheduler (Cron Job)"]]:::timerActor
+    end
+
+    %% Relasi Aktor Tamu (Guest)
     Guest --> UC10
-    Guest --> UC12
     Guest --> UC17
+    Guest --> UC12
     Guest --> UC18
     Guest --> UC22
 
+    %% Relasi Aktor Calon Penyewa
     Calon --> UC22
     Calon --> UC18
     Calon --> UC01
@@ -77,6 +94,7 @@ flowchart LR
     Calon --> UC02
     Calon --> UC16
 
+    %% Relasi Aktor Penyewa Aktif
     Penyewa --> UC22
     Penyewa --> UC18
     Penyewa --> UC04
@@ -86,6 +104,7 @@ flowchart LR
     Penyewa --> UC21
     Penyewa --> UC16
 
+    %% Relasi Aktor Administrator
     Admin --> UC22
     Admin --> UC03
     Admin --> UC06
@@ -103,19 +122,27 @@ flowchart LR
     Admin --> UC17
     Admin --> UC29
 
-    %% Connect Timer Actor
+    %% Relasi Timer Actor
     Cron --> UC28
+    Cron --> |"Auto-cancel 24 jam"| UC01
 
-    %% Core Extension Dependencies
-    UC24 -.-> |extend| UC22
-    UC03 -.-> |extend| UC01
-    UC02 -.-> |extend| UC01
-    UC25 -.-> |extend| UC04
+    %% Relasi Extend Antar Use Case (Extension -> Base)
+    UC24 -.-> |"&laquo;extend&raquo;"| UC22
+    UC03 -.-> |"&laquo;extend&raquo;"| UC01
+    UC02 -.-> |"&laquo;extend&raquo;"| UC01
+    UC25 -.-> |"&laquo;extend&raquo;"| UC04
+    UC26 -.-> |"&laquo;extend&raquo;"| UC14
+    UC27 -.-> |"&laquo;extend&raquo;"| UC07
+    UC27 -.-> |"&laquo;extend&raquo;"| UC14
+    UC27 -.-> |"&laquo;extend&raquo;"| UC08
 
-    %% Connect Secondary Actors
-    UC02 -.-> |include| Midtrans
-    UC04 -.-> |include| Midtrans
-    UC06 -.-> |include| Fonnte
-    UC15 -.-> |include| Fonnte
-    UC20 -.-> |include| Fonnte
-    UC28 -.-> |include| Fonnte
+    %% Directed Associations ke Secondary Actors
+    UC18 --> Google
+    UC02 --> Midtrans
+    UC04 --> Midtrans
+    UC06 --> Fonnte
+    UC15 --> Fonnte
+    UC20 --> Fonnte
+    UC28 --> Fonnte
+    UC20 --> MailServer
+    UC24 --> MailServer

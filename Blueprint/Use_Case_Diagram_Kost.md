@@ -8,33 +8,38 @@ Semua spesifikasi dalam dokumen ini selaras dengan dokumen [Blueprint_Projek_Web
 
 ## 1. Identifikasi Aktor (Actors)
 
-Sistem Asri Boarding House melibatkan **4 (empat) Aktor Utama (Primary Actors)**, **2 (dua) Aktor Sekunder / Sistem Eksternal (Secondary Actors)**, dan **1 (satu) Aktor Otomasi Waktu (Time-based System Actor)**:
+Sistem Asri Boarding House melibatkan **4 (empat) Aktor Utama (Primary Actors)**, **4 (empat) Aktor Sekunder / Sistem Eksternal (Secondary Actors)**, dan **1 (satu) Aktor Otomasi Waktu (Time-based System Actor)**:
 
 ### 1.1. Aktor Utama (Primary Actors)
 
-| No | Aktor | Deskripsi |
-| :--- | :--- | :--- |
-| 1 | **Tamu (Guest)** | Pengunjung umum website/landing page yang belum mendaftarkan akun. Dapat menjelajahi informasi kost, melakukan pencarian kamar, dan berinteraksi via Guest Chat tanpa login. |
-| 2 | **Calon Penyewa** | Pengguna yang terdaftar dan masuk ke sistem, tetapi belum berstatus sebagai penyewa aktif (dalam proses pengajuan reservasi kamar, diskusi pra-pembayaran via chat reservasi, dan pembayaran DP/Lunas). |
-| 3 | **Penyewa Aktif** | Pengguna kost yang kontrak sewanya telah dikonfirmasi oleh admin. Memiliki akses penuh ke portal internal penyewa (pembayaran tagihan, unduh kuitansi PDF, pengajuan keluhan, peraturan kost, dan riwayat transaksi). |
-| 4 | **Administrator** | Pengelola operasional kost (Bapak Asep & tim) yang bertanggung jawab atas manajemen data master kamar, verifikasi & konfirmasi reservasi, konfirmasi pembayaran kas tunai, penanganan keluhan, checkout/perpanjang kontrak, ekspor laporan, dan pembalasan chat reservasi/tamu. |
+| No | Aktor | Deskripsi | Hak Akses Utama |
+| :--- | :--- | :--- | :--- |
+| 1 | **Tamu (Guest)** | Pengunjung umum website/landing page yang belum mendaftarkan akun. | Menjelajahi informasi kost, pencarian & filter kamar, konsultasi via Guest Chat tanpa login, dan inisiasi registrasi/login. |
+| 2 | **Calon Penyewa** | Pengguna yang terdaftar dan masuk ke sistem, tetapi belum berstatus sebagai penyewa aktif kontrak. | Pengajuan formulir reservasi kamar, chat diskusi pra-pembayaran, pembayaran DP/Lunas via Midtrans Snap, dan monitoring riwayat pemesanan. |
+| 3 | **Penyewa Aktif** | Pengguna kost yang kontrak sewanya telah diverifikasi dan disetujui oleh admin. | Akses penuh ke portal internal penyewa: pelunasan tagihan bulanan, unduh kuitansi PDF, pengajuan keluhan fasilitas, tata tertib hunian, dan notifikasi. |
+| 4 | **Administrator** | Pengelola operasional kost (Bapak Asep & tim pengelola). | Manajemen kamar & fasilitas, verifikasi & konfirmasi reservasi/kasir tunai, resolusi keluhan, checkout/perpanjang kontrak, pencatatan pengeluaran, kalender visual, ekspor laporan, dan broadcast notifikasi. |
 
 > **Catatan Konseptual Wali / Orang Tua Penyewa**:
-> Wali penyewa **bukan merupakan Aktor sistem interaktif**, karena tidak memiliki hak akses/login langsung ke aplikasi. Wali diposisikan sebagai **pihak penerima pasif (recipient contact)** yang menerima eskalasi notifikasi persuasif WhatsApp via `WhatsApp Gateway (Fonnte)` saat keterlambatan pembayaran memasuki bulan kedua.
+> Wali penyewa **bukan merupakan Aktor sistem interaktif**, karena tidak memiliki hak akses/login langsung ke aplikasi web. Wali diposisikan sebagai **pihak penerima pasif (recipient contact)** yang menerima eskalasi notifikasi persuasif WhatsApp via `WhatsApp Gateway (Fonnte)` saat keterlambatan pembayaran tagihan memasuki bulan kedua.
 
 ### 1.2. Aktor Sekunder & Otomasi Sistem (Secondary & Time-based Actors)
 
-| No | Aktor Eksternal / System | Deskripsi |
-| :--- | :--- | :--- |
-| 1 | **Payment Gateway (Midtrans)** | Sistem pihak ketiga yang memproses transaksi pembayaran nontunai secara otomatis via Snap API dan mengirimkan callback webhook status pembayaran (Virtual Account, E-Wallet, QRIS). |
-| 2 | **WhatsApp Gateway (Fonnte)** | Layanan pihak ketiga yang mengirimkan pesan pemberitahuan WhatsApp otomatis (kredensial login, notifikasi tagihan bulanan, denda keterlambatan ke penyewa & wali, pengumuman broadcast, dan update status keluhan). |
-| 3 | **System Scheduler (Timer/Cron)** | Layanan jadwal otomatis Laravel Console Engine yang mengeksekusi tugas penerbitan tagihan rutin (tgl 1 jam 00:05), denda flat 5% idempoten & eskalasi wali harian (jam 01:00), serta pelepasan kunci reservasi kedaluwarsa. |
+| No | Aktor Eksternal / System | Deskripsi | Standar Integrasi |
+| :--- | :--- | :--- | :--- |
+| 1 | **Payment Gateway (Midtrans)** | Sistem pihak ketiga yang memproses transaksi pembayaran digital nontunai secara otomatis. | Midtrans Snap API (Frontend Popup) & Server-to-Server Webhook Notification (Verifikasi SHA-512 Signature Key). |
+| 2 | **WhatsApp Gateway (Fonnte)** | Layanan pihak ketiga yang mendistribusikan pesan notifikasi WhatsApp otomatis secara terprogram. | REST API Fonnte via HTTP POST (`Authorization: Token`), dilengkapi pencatatan status pengiriman pada tabel `log_notifikasi`. |
+| 3 | **Google Identity Services (OAuth 2.0)** | Layanan penyedia otentikasi identitas pihak ketiga (*Third-party Identity Provider*). | Laravel Socialite SSO, memvalidasi identitas akun Google dan mengisi data profil awal pengguna secara aman. |
+| 4 | **SMTP Mail Server** | Layanan server surat elektronik untuk pengiriman email transaksional sistem. | Protokol SMTP (Laravel Mailer), digunakan untuk pengiriman token tautan reset password (`UC-24`) dan broadcast notifikasi email. |
+| 5 | **System Scheduler (Timer/Cron)** | Layanan jadwal otomatis Laravel Console Engine yang mengeksekusi tugas latar belakang berkala tanpa intervensi manusia. | Laravel Task Scheduler (`routes/console.php`), menjalankan billing bulanan tgl 1, denda flat 5% harian, auto-cancel reservasi 24 jam, dan pembersihan log. |
 
 ---
 
 ## 2. Diagram Use Case & Visualisasi Alur Proses (Mermaid UML 2.5)
 
 Berikut adalah visualisasi diagram Use Case sistem yang disusun secara terstruktur per modul, **Master Unified Boundary**, **Graph Keterkaitan Include & Extend**, **Peta Alur Keterkaitan Inter-Use Case**, serta **Visualisasi Alur Proses Interaksi End-to-End**.
+
+> **Standar Kepatuhan Notasi UML 2.5**:
+> Sesuai spesifikasi formal OMG UML 2.5, relasi `<<extend>>` menghubungkan *Extension Use Case* ke *Base Use Case* ($Extension \xrightarrow{\ll extend \gg} Base$). Seluruh hubungan antara Use Case dengan Aktor Sekunder dimodelkan menggunakan **Asosiasi Berarah (*Directed Association*)** garis solid (`-->`), bukan stereotype `<<include>>`.
 
 ### 2.1. Diagram Use Case - Modul Publik & Calon Penyewa
 
@@ -44,32 +49,46 @@ flowchart LR
     classDef secondaryActor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
     classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
 
-    %% Primary Actors
-    Guest(["Tamu (Guest)"]):::primaryActor
-    Calon(["Calon Penyewa"]):::primaryActor
+    %% Primary Actors (Left Side)
+    subgraph LeftActors ["Aktor Utama"]
+        direction TB
+        Guest(["Tamu (Guest)"]):::primaryActor
+        Calon(["Calon Penyewa"]):::primaryActor
+    end
 
-    %% Secondary Actors
-    Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
-
-    %% System Boundary
+    %% System Boundary (Center)
     subgraph System ["Sistem Informasi Asri Boarding House (Modul Publik & Reservasi)"]
-        UC10(["UC-10: Pencarian & Cek Ketersediaan Kamar"]):::ucNode
-        UC12(["UC-12: Registrasi Akun Calon Penyewa"]):::ucNode
-        UC17(["UC-17: Diskusi via Guest Chat"]):::ucNode
-        UC18(["UC-18: Login & Registrasi Google OAuth"]):::ucNode
-        UC22(["UC-22: Login Akun Manual"]):::ucNode
-        UC24(["UC-24: Lupa & Reset Password"]):::ucNode
+        direction TB
         
-        UC01(["UC-01: Melakukan Reservasi Kamar"]):::ucNode
-        UC03(["UC-03: Chat Reservasi Real-time"]):::ucNode
-        UC02(["UC-02: Melakukan Pembayaran Reservasi (DP/Lunas)"]):::ucNode
-        UC16(["UC-16: Melihat Riwayat Pemesanan & Chat"]):::ucNode
+        subgraph GroupPublic ["Eksplorasi Publik & Otentikasi"]
+            UC10(["UC-10: Pencarian & Cek Ketersediaan Kamar"]):::ucNode
+            UC17(["UC-17: Diskusi via Guest Chat"]):::ucNode
+            UC12(["UC-12: Registrasi Akun Calon Penyewa"]):::ucNode
+            UC18(["UC-18: Login & Registrasi Google OAuth"]):::ucNode
+            UC22(["UC-22: Login Akun Manual"]):::ucNode
+            UC24(["UC-24: Lupa & Reset Password"]):::ucNode
+        end
+        
+        subgraph GroupBooking ["Pemesanan & Transaksi Reservasi"]
+            UC01(["UC-01: Melakukan Reservasi Kamar"]):::ucNode
+            UC03(["UC-03: Chat Reservasi Real-time"]):::ucNode
+            UC02(["UC-02: Melakukan Pembayaran Reservasi (DP/Lunas)"]):::ucNode
+            UC16(["UC-16: Melihat Riwayat Pemesanan & Chat"]):::ucNode
+        end
+    end
+
+    %% Secondary Actors (Right Side)
+    subgraph RightActors ["Layanan Eksternal"]
+        direction TB
+        Google[["Google Identity Services (OAuth)"]]:::secondaryActor
+        MailServer[["SMTP Mail Server"]]:::secondaryActor
+        Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
     end
 
     %% Relations - Guest
     Guest --> UC10
-    Guest --> UC12
     Guest --> UC17
+    Guest --> UC12
     Guest --> UC18
     Guest --> UC22
 
@@ -81,11 +100,15 @@ flowchart LR
     Calon --> UC02
     Calon --> UC16
 
-    %% Relationships (Include & Extend)
-    UC03 -.-> |extend| UC01
-    UC02 -.-> |extend| UC01
-    UC24 -.-> |extend| UC22
-    UC02 -.-> |include| Midtrans
+    %% Extend Dependencies
+    UC24 -.-> |"&laquo;extend&raquo;"| UC22
+    UC03 -.-> |"&laquo;extend&raquo;"| UC01
+    UC02 -.-> |"&laquo;extend&raquo;"| UC01
+
+    %% Secondary Actor Associations
+    UC18 --> Google
+    UC24 --> MailServer
+    UC02 --> Midtrans
 ```
 
 ![Diagram Use Case Modul Publik & Reservasi](use_case/use_case_publik_reservasi.png)
@@ -98,28 +121,48 @@ flowchart LR
 flowchart LR
     classDef primaryActor fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
     classDef secondaryActor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
-    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:1.5px,color:#1b5e20;
+    classDef extNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1.5px,color:#01579b;
 
-    %% Primary Actor
-    Penyewa(["Penyewa Aktif"]):::primaryActor
-
-    %% Secondary Actors
-    Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
-    Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
-
-    %% System Boundary
-    subgraph System ["Sistem Informasi Asri Boarding House (Modul Penyewa Aktif)"]
-        UC22_P(["UC-22: Login Portal Penyewa"]):::ucNode
-        UC18_P(["UC-18: Login Google OAuth SSO"]):::ucNode
-        UC16_P(["UC-16: Melihat Riwayat Tagihan & Transaksi"]):::ucNode
-        UC04(["UC-04: Membayar Tagihan Bulanan Rutin"]):::ucNode
-        UC25(["UC-25: Mengunduh Kuitansi Bukti Pembayaran PDF"]):::ucNode
-        UC05(["UC-05: Mengajukan Keluhan & Laporan Kerusakan"]):::ucNode
-        UC11(["UC-11: Mengakses Menu Peraturan & Tata Tertib"]):::ucNode
-        UC21(["UC-21: Melihat Pengumuman & Notifikasi"]):::ucNode
+    %% Panel Kiri: Primary Actor
+    subgraph ColPenyewa ["Aktor Utama"]
+        Penyewa(["Penyewa Aktif"]):::primaryActor
     end
 
-    %% Relations - Penyewa Aktif
+    %% Boundary Sistem Modul Penyewa
+    subgraph BoundaryTenant ["Sistem Informasi Asri Boarding House (Modul Penyewa Aktif)"]
+        direction TB
+
+        %% Sub-klaster 1: Akses Portal
+        subgraph SubAksesTenant ["Akses Portal & Profil"]
+            UC22_P(["UC-22: Login Portal Penyewa"]):::ucNode
+            UC18_P(["UC-18: Login Google OAuth SSO"]):::ucNode
+        end
+
+        %% Sub-klaster 2: Tagihan & Pembayaran
+        subgraph SubKeuanganTenant ["Tagihan & Transaksi Finansial"]
+            UC16_P(["UC-16: Riwayat Tagihan & Transaksi"]):::ucNode
+            UC04(["UC-04: Membayar Tagihan Bulanan Rutin"]):::ucNode
+            UC25(["UC-25: Mengunduh Kuitansi PDF"]):::extNode
+        end
+
+        %% Sub-klaster 3: Layanan & Informasi Hunian
+        subgraph SubLayananTenant ["Layanan & Informasi Kost"]
+            UC05(["UC-05: Pengaduan Keluhan & Fasilitas"]):::ucNode
+            UC11(["UC-11: Akses Menu Tata Tertib Kost"]):::ucNode
+            UC21(["UC-21: Melihat Pengumuman Kost"]):::ucNode
+        end
+    end
+
+    %% Panel Kanan: Secondary Actors
+    subgraph ColEksternalTenant ["Layanan Eksternal"]
+        direction TB
+        Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
+        Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
+        Google[["Google Identity Services (OAuth)"]]:::secondaryActor
+    end
+
+    %% Asosiasi Penyewa ke Use Cases
     Penyewa --> UC22_P
     Penyewa --> UC18_P
     Penyewa --> UC16_P
@@ -129,10 +172,13 @@ flowchart LR
     Penyewa --> UC11
     Penyewa --> UC21
 
-    %% Relationships (Include & Extend)
-    UC25 -.-> |extend| UC04
-    UC04 -.-> |include| Midtrans
-    UC05 -.-> |include| Fonnte
+    %% Relasi Extend Antar Use Case (Extension -> Base)
+    UC25 -.-> |"&laquo;extend&raquo;"| UC04
+
+    %% Asosiasi ke Layanan Eksternal
+    UC18_P --> Google
+    UC04 --> Midtrans
+    UC05 --> Fonnte
 ```
 
 ![Diagram Use Case Modul Penyewa Aktif](use_case/use_case_penyewa_aktif.png)
@@ -145,60 +191,89 @@ flowchart LR
 flowchart LR
     classDef primaryActor fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
     classDef secondaryActor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
-    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:1.5px,color:#1b5e20;
+    classDef extNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1.5px,color:#01579b;
 
-    %% Primary Actor
-    Admin(["Administrator"]):::primaryActor
-
-    %% Secondary Actor
-    Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
-
-    %% System Boundary
-    subgraph System ["Sistem Informasi Asri Boarding House (Modul Admin Panel)"]
-        UC22_A(["UC-22: Login Admin Panel"]):::ucNode
-        UC13(["UC-13: Manajemen Kamar & Fasilitas (CRUD)"]):::ucNode
-        UC14(["UC-14: Manajemen Penyewa (CRUD)"]):::ucNode
-        UC26(["UC-26: Process Checkout & Perpanjangan Kontrak"]):::ucNode
-        UC06(["UC-06: Verifikasi Reservasi & Konfirmasi Kas"]):::ucNode
-        UC03_A(["UC-03: Chat Diskusi Reservasi"]):::ucNode
-        UC15(["UC-15: Memproses & Menanggapi Keluhan"]):::ucNode
-        UC08(["UC-08: Pencatatan Pengeluaran Operasional (CRUD)"]):::ucNode
-        UC07(["UC-07: Pencatatan & Evaluasi Laporan Arus Kas"]):::ucNode
-        UC27(["UC-27: Mengekspor Laporan & Data (PDF/Excel/CSV)"]):::ucNode
-        UC09(["UC-09: Manajemen Konten Dinamis"]):::ucNode
-        UC23(["UC-23: Manajemen Pengaturan Sistem"]):::ucNode
-        UC19(["UC-19: Memantau Kalender Kontrol Visual"]):::ucNode
-        UC20(["UC-20: Broadcast Notifikasi & Pengumuman"]):::ucNode
-        UC17_A(["UC-17: Pengelolaan Guest Chat Tamu"]):::ucNode
-        UC29(["UC-29: Memantau Log Audit & Error System"]):::ucNode
+    %% Panel Kiri: Primary Actor
+    subgraph ColAdmin ["Aktor Utama"]
+        Admin(["Administrator"]):::primaryActor
     end
 
-    %% Relations - Admin
+    %% Boundary Sistem Utama
+    subgraph BoundaryAdmin ["Sistem Informasi Asri Boarding House (Modul Administrasi)"]
+        direction TB
+
+        %% Sub-Modul 1: Akses & Pengaturan Sistem
+        subgraph SubAkses ["1. Akses, Konfigurasi & Pengawasan"]
+            UC22_A(["UC-22: Login Admin Panel"]):::ucNode
+            UC23(["UC-23: Manajemen Pengaturan Sistem"]):::ucNode
+            UC09(["UC-09: Manajemen Konten Dinamis"]):::ucNode
+            UC19(["UC-19: Memantau Kalender Kontrol Visual"]):::ucNode
+            UC29(["UC-29: Memantau Log Audit & Error System"]):::ucNode
+        end
+
+        %% Sub-Modul 2: Master Data & Manajemen Hunian
+        subgraph SubMaster ["2. Master Data & Hunian"]
+            UC13(["UC-13: Manajemen Kamar & Fasilitas"]):::ucNode
+            UC14(["UC-14: Manajemen Penyewa"]):::ucNode
+            UC26(["UC-26: Process Checkout & Perpanjangan Kontrak"]):::extNode
+        end
+
+        %% Sub-Modul 3: Operasional Reservasi & Layanan
+        subgraph SubOperasional ["3. Reservasi & Layanan Komunikasi"]
+            UC06(["UC-06: Verifikasi Reservasi & Konfirmasi Kas"]):::ucNode
+            UC03_A(["UC-03: Chat Diskusi Reservasi"]):::ucNode
+            UC15(["UC-15: Memproses & Menanggapi Keluhan"]):::ucNode
+            UC17_A(["UC-17: Pengelolaan Guest Chat Tamu"]):::ucNode
+            UC20(["UC-20: Broadcast Notifikasi & Pengumuman"]):::ucNode
+        end
+
+        %% Sub-Modul 4: Manajemen Finansial & Laporan
+        subgraph SubFinansial ["4. Finansial & Pelaporan Arus Kas"]
+            UC08(["UC-08: Pencatatan Pengeluaran Operasional"]):::ucNode
+            UC07(["UC-07: Pencatatan & Evaluasi Arus Kas"]):::ucNode
+            UC27(["UC-27: Mengekspor Laporan & Data PDF/Excel"]):::extNode
+        end
+    end
+
+    %% Panel Kanan: Secondary Actors
+    subgraph ColEksternalAdmin ["Layanan Eksternal (Secondary Actors)"]
+        Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
+        MailServer[["SMTP Mail Server"]]:::secondaryActor
+    end
+
+    %% Asosiasi Admin ke Use Cases
     Admin --> UC22_A
+    Admin --> UC23
+    Admin --> UC09
+    Admin --> UC19
+    Admin --> UC29
+
     Admin --> UC13
     Admin --> UC14
     Admin --> UC26
+
     Admin --> UC06
     Admin --> UC03_A
     Admin --> UC15
+    Admin --> UC17_A
+    Admin --> UC20
+
     Admin --> UC08
     Admin --> UC07
     Admin --> UC27
-    Admin --> UC09
-    Admin --> UC23
-    Admin --> UC19
-    Admin --> UC20
-    Admin --> UC17_A
-    Admin --> UC29
 
-    %% Relationships (Include & Extend)
-    UC26 -.-> |extend| UC14
-    UC27 -.-> |extend| UC07
-    UC27 -.-> |extend| UC14
-    UC27 -.-> |extend| UC08
-    UC06 -.-> |include| Fonnte
-    UC15 -.-> |include| Fonnte
-    UC20 -.-> |include| Fonnte
+    %% Relasi Extend Antar Use Case (Extension -> Base)
+    UC26 -.-> |"&laquo;extend&raquo;"| UC14
+    UC27 -.-> |"&laquo;extend&raquo;"| UC07
+    UC27 -.-> |"&laquo;extend&raquo;"| UC08
+    UC27 -.-> |"&laquo;extend&raquo;"| UC14
+
+    %% Asosiasi ke Layanan Eksternal
+    UC06 --> Fonnte
+    UC15 --> Fonnte
+    UC20 --> Fonnte
+    UC20 --> MailServer
 ```
 
 ![Diagram Use Case Modul Administrator](use_case/use_case_admin.png)
@@ -212,74 +287,90 @@ flowchart LR
     classDef primaryActor fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
     classDef secondaryActor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
     classDef timerActor fill:#e0f7fa,stroke:#00acc1,stroke-width:2px,font-weight:bold;
-    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:1.5px,color:#1b5e20;
+    classDef extNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1.5px,color:#01579b;
 
-    %% Actors
-    Guest(["Tamu (Guest)"]):::primaryActor
-    Calon(["Calon Penyewa"]):::primaryActor
-    Penyewa(["Penyewa Aktif"]):::primaryActor
-    Admin(["Administrator"]):::primaryActor
-
-    %% Systems & Timers
-    Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
-    Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
-    Cron[["System Scheduler (Timer/Cron)"]]:::timerActor
-
-    subgraph CoreSystem ["Sistem Informasi Asri Boarding House"]
+    %% Panel Kiri: Primary Actors
+    subgraph ColPrimary ["Aktor Utama (Pengguna Sistem)"]
         direction TB
-        
-        subgraph AuthMod ["Modul Otentikasi & Keamanan"]
+        Guest(["Tamu (Guest)"]):::primaryActor
+        Calon(["Calon Penyewa"]):::primaryActor
+        Penyewa(["Penyewa Aktif"]):::primaryActor
+        Admin(["Administrator"]):::primaryActor
+    end
+
+    %% Boundary Sistem Inti
+    subgraph CoreSystem ["Boundary Sistem: Sistem Informasi Asri Boarding House"]
+        direction TB
+
+        %% 1. Modul Otentikasi & Keamanan Akun
+        subgraph AuthMod ["1. Otentikasi & Keamanan Akun"]
             UC12(["UC-12: Registrasi Akun"]):::ucNode
-            UC18(["UC-18: Google OAuth SSO"]):::ucNode
-            UC22(["UC-22: Login Manual"]):::ucNode
-            UC24(["UC-24: Lupa & Reset Password"]):::ucNode
+            UC18(["UC-18: Login SSO Google OAuth"]):::ucNode
+            UC22(["UC-22: Login Kredensial Manual"]):::ucNode
+            UC24(["UC-24: Reset Password"]):::extNode
         end
 
-        subgraph PublicMod ["Modul Publik & Reservasi"]
-            UC10(["UC-10: Cek Katalog Kamar"]):::ucNode
-            UC17(["UC-17: Guest Chat"]):::ucNode
-            UC01(["UC-01: Reservasi Kamar"]):::ucNode
-            UC03(["UC-03: Chat Reservasi"]):::ucNode
-            UC02(["UC-02: Pembayaran Reservasi"]):::ucNode
+        %% 2. Modul Publik & Reservasi
+        subgraph PublicMod ["2. Eksplorasi Publik & Reservasi"]
+            UC10(["UC-10: Cek Katalog & Fasilitas"]):::ucNode
+            UC17(["UC-17: Guest Chat Interaktif"]):::ucNode
+            UC01(["UC-01: Booking Reservasi Kamar"]):::ucNode
+            UC03(["UC-03: Chat Diskusi Reservasi"]):::extNode
+            UC02(["UC-02: Pembayaran DP / Lunas Booking"]):::extNode
         end
 
-        subgraph TenantMod ["Modul Penyewa Aktif"]
-            UC04(["UC-04: Bayar Tagihan Bulanan"]):::ucNode
-            UC25(["UC-25: Unduh Kuitansi PDF"]):::ucNode
-            UC05(["UC-05: Pengaduan Keluhan"]):::ucNode
-            UC11(["UC-11: Peraturan Kost"]):::ucNode
-            UC21(["UC-21: Pengumuman Portal"]):::ucNode
-            UC16(["UC-16: Riwayat Transaksi"]):::ucNode
+        %% 3. Modul Penyewa Aktif
+        subgraph TenantMod ["3. Portal Layanan Penyewa Aktif"]
+            UC04(["UC-04: Bayar Tagihan Sewa & Denda"]):::ucNode
+            UC25(["UC-25: Unduh Kuitansi PDF"]):::extNode
+            UC05(["UC-05: Pengaduan Keluhan & Kerusakan"]):::ucNode
+            UC11(["UC-11: Cek Tata Tertib Kost"]):::ucNode
+            UC21(["UC-21: Baca Pengumuman Kost"]):::ucNode
+            UC16(["UC-16: Histori Riwayat Transaksi"]):::ucNode
         end
 
-        subgraph AutoMod ["Modul Otomasi Latar Belakang"]
-            UC28(["UC-28: Otomasi Billing, Denda & Eskalasi"]):::ucNode
-        end
-
-        subgraph AdminMod ["Modul Admin Operations"]
-            UC06(["UC-06: Konfirmasi Reservasi & Kas"]):::ucNode
-            UC13(["UC-13: Kelola Kamar & Fasilitas"]):::ucNode
-            UC14(["UC-14: Kelola Penyewa"]):::ucNode
-            UC26(["UC-26: Checkout & Perpanjang"]):::ucNode
-            UC15(["UC-15: Resolusi Keluhan"]):::ucNode
-            UC08(["UC-08: Kelola Pengeluaran"]):::ucNode
-            UC07(["UC-07: Laporan Arus Kas"]):::ucNode
-            UC27(["UC-27: Ekspor Data & Laporan"]):::ucNode
-            UC19(["UC-19: Kalender Kontrol"]):::ucNode
-            UC20(["UC-20: Broadcast Notifikasi"]):::ucNode
-            UC09(["UC-09: Kelola Konten Dinamis"]):::ucNode
-            UC23(["UC-23: Pengaturan Sistem"]):::ucNode
+        %% 4. Modul Admin Operations & Master Data
+        subgraph AdminMod ["4. Operasional Administrator & Master Data"]
+            UC06(["UC-06: Verifikasi Reservasi & Konfirmasi Kas"]):::ucNode
+            UC13(["UC-13: Manajemen Kamar & Fasilitas"]):::ucNode
+            UC14(["UC-14: Manajemen Penyewa"]):::ucNode
+            UC26(["UC-26: Process Checkout & Perpanjangan"]):::extNode
+            UC15(["UC-15: Tanggapi & Resolusi Keluhan"]):::ucNode
+            UC08(["UC-08: Pencatatan Biaya Operasional"]):::ucNode
+            UC07(["UC-07: Pencatatan & Evaluasi Arus Kas"]):::ucNode
+            UC27(["UC-27: Ekspor Data & Laporan PDF/Excel"]):::extNode
+            UC19(["UC-19: Kalender Kontrol Hunian"]):::ucNode
+            UC20(["UC-20: Broadcast Pengumuman Massal"]):::ucNode
+            UC09(["UC-09: Manajemen Konten Landing Page"]):::ucNode
+            UC23(["UC-23: Konfigurasi Pengaturan Sistem"]):::ucNode
             UC29(["UC-29: Log Audit & Error System"]):::ucNode
+        end
+
+        %% 5. Modul Otomasi Latar Belakang
+        subgraph AutoMod ["5. Otomasi Latar Belakang (Scheduled Tasks)"]
+            UC28(["UC-28: Otomasi Billing, Denda & Tugas Terjadwal"]):::ucNode
         end
     end
 
-    %% Connect Primary Actors
+    %% Panel Kanan: Secondary & Timer Actors
+    subgraph ColSecondary ["Aktor Pendukung (Layanan Eksternal & Timer)"]
+        direction TB
+        Midtrans[["Payment Gateway (Midtrans)"]]:::secondaryActor
+        Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
+        Google[["Google Identity Services (OAuth)"]]:::secondaryActor
+        MailServer[["SMTP Mail Server"]]:::secondaryActor
+        Cron[["System Scheduler (Cron Job)"]]:::timerActor
+    end
+
+    %% Relasi Aktor Tamu (Guest)
     Guest --> UC10
-    Guest --> UC12
     Guest --> UC17
+    Guest --> UC12
     Guest --> UC18
     Guest --> UC22
 
+    %% Relasi Aktor Calon Penyewa
     Calon --> UC22
     Calon --> UC18
     Calon --> UC01
@@ -287,14 +378,17 @@ flowchart LR
     Calon --> UC02
     Calon --> UC16
 
+    %% Relasi Aktor Penyewa Aktif
     Penyewa --> UC22
     Penyewa --> UC18
     Penyewa --> UC04
+    Penyewa --> UC25
     Penyewa --> UC05
     Penyewa --> UC11
     Penyewa --> UC21
     Penyewa --> UC16
 
+    %% Relasi Aktor Administrator
     Admin --> UC22
     Admin --> UC03
     Admin --> UC06
@@ -312,29 +406,37 @@ flowchart LR
     Admin --> UC17
     Admin --> UC29
 
-    %% Connect Timer Actor
+    %% Relasi Timer Actor
     Cron --> UC28
+    Cron --> |"Auto-cancel 24 jam"| UC01
 
-    %% Core Extension Dependencies
-    UC24 -.-> |extend| UC22
-    UC03 -.-> |extend| UC01
-    UC02 -.-> |extend| UC01
-    UC25 -.-> |extend| UC04
+    %% Relasi Extend Antar Use Case (Extension -> Base)
+    UC24 -.-> |"&laquo;extend&raquo;"| UC22
+    UC03 -.-> |"&laquo;extend&raquo;"| UC01
+    UC02 -.-> |"&laquo;extend&raquo;"| UC01
+    UC25 -.-> |"&laquo;extend&raquo;"| UC04
+    UC26 -.-> |"&laquo;extend&raquo;"| UC14
+    UC27 -.-> |"&laquo;extend&raquo;"| UC07
+    UC27 -.-> |"&laquo;extend&raquo;"| UC14
+    UC27 -.-> |"&laquo;extend&raquo;"| UC08
 
-    %% Connect Secondary Actors
-    UC02 -.-> |include| Midtrans
-    UC04 -.-> |include| Midtrans
-    UC06 -.-> |include| Fonnte
-    UC15 -.-> |include| Fonnte
-    UC20 -.-> |include| Fonnte
-    UC28 -.-> |include| Fonnte
+    %% Directed Associations ke Secondary Actors
+    UC18 --> Google
+    UC02 --> Midtrans
+    UC04 --> Midtrans
+    UC06 --> Fonnte
+    UC15 --> Fonnte
+    UC20 --> Fonnte
+    UC28 --> Fonnte
+    UC20 --> MailServer
+    UC24 --> MailServer
 ```
 
 ![Master Unified Use Case Diagram](use_case/use_case_master_unified.png)
 
 ---
 
-### 2.5. Visualisasi Keterkaitan Antar Use Case (Graph Relasi Include & Extend)
+### 2.5. Visualisasi Keterkaitan Antar Use Case (Graph Relasi UML 2.5)
 
 ```mermaid
 flowchart TD
@@ -354,6 +456,7 @@ flowchart TD
     UC28["UC-28: Otomasi Billing & Denda Eskalasi"]:::coreStyle
     UC15["UC-15: Resolusi Keluhan"]:::coreStyle
     UC20["UC-20: Broadcast Notifikasi"]:::coreStyle
+    UC18["UC-18: Login Google OAuth SSO"]:::coreStyle
 
     %% Extension Use Cases
     UC03["UC-03: Chat Reservasi Real-time"]:::extendStyle
@@ -363,19 +466,13 @@ flowchart TD
     UC27["UC-27: Ekspor Data & Laporan (PDF/Excel/CSV)"]:::extendStyle
     UC24["UC-24: Lupa & Reset Password"]:::extendStyle
 
-    %% External System Services
+    %% External System Services (Secondary Actors)
     Midtrans[["Layanan Payment Gateway (Midtrans)"]]:::externalStyle
     Fonnte[["Layanan WhatsApp Gateway (Fonnte)"]]:::externalStyle
+    Google[["Google Identity Services (OAuth)"]]:::externalStyle
+    MailServer[["SMTP Mail Server"]]:::externalStyle
 
-    %% Include Relations
-    UC02 -.-> |include| Midtrans
-    UC04 -.-> |include| Midtrans
-    UC06 -.-> |include| Fonnte
-    UC15 -.-> |include| Fonnte
-    UC20 -.-> |include| Fonnte
-    UC28 -.-> |include| Fonnte
-
-    %% Extend Relations
+    %% Extend Relations (Antar Use Case)
     UC03 -.-> |extend| UC01
     UC02 -.-> |extend| UC01
     UC25 -.-> |extend| UC04
@@ -384,6 +481,17 @@ flowchart TD
     UC27 -.-> |extend| UC14
     UC27 -.-> |extend| UC08
     UC24 -.-> |extend| UC22
+
+    %% Directed Associations ke Secondary Actors (UML 2.5 Standard)
+    UC02 --> Midtrans
+    UC04 --> Midtrans
+    UC06 --> Fonnte
+    UC15 --> Fonnte
+    UC20 --> Fonnte
+    UC28 --> Fonnte
+    UC18 --> Google
+    UC20 --> MailServer
+    UC24 --> MailServer
 ```
 
 ![Graph Relasi Include dan Extend](use_case/use_case_relations_graph.png)
@@ -391,8 +499,6 @@ flowchart TD
 ---
 
 ### 2.6. Peta Alur Keterkaitan Antar Use Case (Master Inter-Use Case Process Flow Map)
-
-Diagram alir berikut menyatukan seluruh siklus hidup sistem ke dalam satu peta proses logis, menggambarkan titik percabangan keputusan (*decision gates*), kondisi batas (*guards*), keterkaitan relasi `<<include>>` dan `<<extend>>`, serta transisi status entitas utama:
 
 ```mermaid
 flowchart TB
@@ -412,6 +518,8 @@ flowchart TB
     %% EXTERNAL SERVICES
     Midtrans[["Payment Gateway (Midtrans Snap)"]]:::externalNode
     Fonnte[["WhatsApp Gateway (Fonnte)"]]:::externalNode
+    Google[["Google Identity Services (OAuth)"]]:::externalNode
+    MailServer[["SMTP Mail Server"]]:::externalNode
 
     %% FLOW PHASE 1: AUTHENTICATION & DISCOVERY
     subgraph Phase1 ["Fase 1: Penemuan & Otentikasi"]
@@ -461,28 +569,31 @@ flowchart TB
     Guest --> UC22
 
     UC24 -.-> |extend| UC22
+    UC24 --> MailServer
     UC12 --> Calon
     UC18 --> Calon
+    UC18 --> Google
 
     Calon --> UC01
     UC03 -.-> |extend| UC01
     UC02 -.-> |extend| UC01
-    UC02 -.-> |include| Midtrans
+    UC02 --> Midtrans
     Calon --> UC03
     Calon --> UC02
 
     Admin --> UC03
     Admin --> UC06
     Admin --> UC17
-    UC06 -.-> |include| Fonnte
+    UC06 --> Fonnte
     UC06 --> |Transisi Sukses -> Akun Terbit| Penyewa
 
     Cron --> UC28
-    UC28 -.-> |include| Fonnte
+    Cron --> |Auto-cancel 24 jam| UC01
+    UC28 --> Fonnte
     UC28 --> |Terbit Tagihan Rutin| UC04
 
     Penyewa --> UC04
-    UC04 -.-> |include| Midtrans
+    UC04 --> Midtrans
     Admin --> |Konfirmasi Kas Manual| UC06
     UC06 -.-> |Update Status Lunas| UC04
 
@@ -490,10 +601,10 @@ flowchart TB
     Penyewa --> UC25
 
     Penyewa --> UC05
-    UC05 -.-> |include| Fonnte
+    UC05 --> Fonnte
     Fonnte --> |Notifikasi WA Masuk| Admin
     Admin --> UC15
-    UC15 -.-> |include| Fonnte
+    UC15 --> Fonnte
     Fonnte --> |Notifikasi Status Selesai| Penyewa
 
     Admin --> UC14
@@ -503,7 +614,8 @@ flowchart TB
     Admin --> UC08
     Admin --> UC19
     Admin --> UC20
-    UC20 -.-> |include| Fonnte
+    UC20 --> Fonnte
+    UC20 --> MailServer
 
     UC27 -.-> |extend| UC07
     UC27 -.-> |extend| UC14
@@ -515,11 +627,229 @@ flowchart TB
 
 ---
 
-### 2.7. Visualisasi Alur Proses Interaksi End-to-End per Siklus Bisnis
+### 2.7. Diagram Alur Proses Interaksi Terpadu Lintas Aktor & Sistem (Master Cross-Functional Interaction Flow)
 
-Berikut adalah 5 (lima) diagram alur interaksi terinci (*End-to-End User Journeys*) yang menghubungkan **Aktor**, **Sistem Web Laravel**, **Database**, dan **Layanan Pihak Ketiga (Midtrans & Fonnte)**.
+Diagram alur berikut menyajikan integrasi komprehensif antara **Aktor Pengguna (Primary Actors)**, **Boundary Sistem Web Laravel**, **Keterkaitan Relasi Use Case (`<<extend>>` dan alur prasyarat)**, **Layanan Pihak Ketiga (Secondary Actors & Timer)**, serta **Transisi Status Entitas Utama** dalam satu representasi proses bisnis terpadu:
 
-#### 2.7.1. Alur Siklus 1: Registrasi, Reservasi Kamar, Chat Pre-Payment, Pembayaran Snap, dan Transisi Akun Otomatis
+```mermaid
+flowchart TD
+    classDef primaryActor fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
+    classDef baseUC fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20,font-weight:bold;
+    classDef extendUC fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100,font-weight:bold;
+    classDef secondaryActor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
+    classDef timerActor fill:#e0f7fa,stroke:#00acc1,stroke-width:2px,font-weight:bold;
+    classDef decisionNode fill:#fffde7,stroke:#fbc02d,stroke-width:2px;
+    classDef stateNode fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,font-weight:bold;
+
+    %% ==========================================
+    %% 1. ACTORS & EXTERNAL SYSTEM LANES
+    %% ==========================================
+    subgraph AktorPengguna ["👤 AKTOR PENGGUNA (PRIMARY ACTORS)"]
+        Guest(["Tamu (Guest)"]):::primaryActor
+        Calon(["Calon Penyewa"]):::primaryActor
+        Penyewa(["Penyewa Aktif"]):::primaryActor
+        Admin(["Administrator Kost"]):::primaryActor
+    end
+
+    subgraph LayananEksternal ["🔌 LAYANAN EKSTERNAL & TIMER (SECONDARY & TIME ACTORS)"]
+        Google[["Google Identity Services (OAuth)"]]:::secondaryActor
+        Midtrans[["Payment Gateway (Midtrans Snap)"]]:::secondaryActor
+        Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
+        MailServer[["SMTP Mail Server"]]:::secondaryActor
+        Cron[["Laravel Task Scheduler (Cron Engine)"]]:::timerActor
+    end
+
+    %% ==========================================
+    %% 2. SYSTEM BOUNDARY & DETAILED INTERACTION FLOW
+    %% ==========================================
+    subgraph BoundarySystem ["🖥️ SISTEM INFORMASI ASRI BOARDING HOUSE (INTERACTION & USE CASE FLOW)"]
+        
+        %% FASE 1: DISCOVERY & OTENTIKASI
+        subgraph F1 ["Fase 1: Penemuan Hunian & Otentikasi Pengguna"]
+            direction TB
+            UC10(["UC-10: Cek Katalog & Filter Ketersediaan"]):::baseUC
+            UC17(["UC-17: Diskusi via Guest Chat Publik"]):::baseUC
+            UC12(["UC-12: Registrasi Akun Calon Penyewa"]):::baseUC
+            UC18(["UC-18: Login / SSO Google OAuth"]):::baseUC
+            UC22(["UC-22: Login Akun Manual"]):::baseUC
+            UC24(["UC-24: Lupa & Reset Password"]):::extendUC
+
+            UC24 -.-> |extend: bila lupa password| UC22
+        end
+
+        %% FASE 2: RESERVASI & PRE-PAYMENT
+        subgraph F2 ["Fase 2: Reservasi Unit, Diskusi Pra-Bayar & Pembayaran Snap"]
+            direction TB
+            UC01(["UC-01: Melakukan Reservasi Kamar"]):::baseUC
+            UC03(["UC-03: Chat Reservasi Real-Time"]):::extendUC
+            UC02(["UC-02: Pembayaran Reservasi Online"]):::extendUC
+            StatePending[("Status: 'pending' & Kamar Terkunci")]:::stateNode
+            StatePaid[("Status: 'dp' / 'lunas'")]:::stateNode
+
+            UC03 -.-> |extend: negosiasi & tanya kamar| UC01
+            UC02 -.-> |extend: bayar DP / Lunas| UC01
+        end
+
+        %% FASE 3: VERIFIKASI ADMIN & TRANSISI AKUN
+        subgraph F3 ["Fase 3: Verifikasi Dokumen, Konfirmasi & Transisi Penyewa"]
+            direction TB
+            UC06(["UC-06: Verifikasi Reservasi & Konfirmasi Kas"]):::baseUC
+            DecVerif{Admin Setujui Identitas NIK?}:::decisionNode
+            StateBatal[("Status: 'dibatalkan' & Kamar Bebas")]:::stateNode
+            StateConfirmed[("Status: 'dikonfirmasi', Kamar 'terisi', Akun Penyewa Terbit")]:::stateNode
+        end
+
+        %% FASE 4: OPERASIONAL HUNIAN, AUTO-BILLING & KELUHAN
+        subgraph F4 ["Fase 4: Masa Sewa Aktif, Penagihan Otomatis, Keluhan & Kuitansi"]
+            direction TB
+            UC28(["UC-28: Otomasi Billing, Denda & Tugas Terjadwal"]):::baseUC
+            UC04(["UC-04: Membayar Tagihan Bulanan Rutin"]):::baseUC
+            UC25(["UC-25: Mengunduh Kuitansi Bukti PDF"]):::extendUC
+            UC05(["UC-05: Mengajukan Keluhan Fasilitas"]):::baseUC
+            UC15(["UC-15: Memproses & Menanggapi Keluhan"]):::baseUC
+            UC11(["UC-11: Mengakses Peraturan & Tata Tertib"]):::baseUC
+            UC21(["UC-21: Melihat Pengumuman & Notifikasi"]):::baseUC
+
+            UC25 -.-> |extend: tagihan status 'lunas'| UC04
+        end
+
+        %% FASE 5: OPERASIONAL ADMIN, PELAPORAN & CHECKOUT
+        subgraph F5 ["Fase 5: Operasional Lanjutan, Visual Control, Pelaporan & Pengakhiran Sewa"]
+            direction TB
+            UC13(["UC-13: Kelola Kamar & Fasilitas"]):::baseUC
+            UC14(["UC-14: Manajemen Data Master Penyewa"]):::baseUC
+            UC26(["UC-26: Process Checkout & Perpanjangan"]):::extendUC
+            UC08(["UC-08: Pencatatan Pengeluaran Operasional"]):::baseUC
+            UC07(["UC-07: Laporan Arus Kas & Evaluasi Keuangan"]):::baseUC
+            UC27(["UC-27: Ekspor Data & Laporan"]):::extendUC
+            UC19(["UC-19: Memantau Kalender Kontrol Visual"]):::baseUC
+            UC20(["UC-20: Broadcast Notifikasi Massal"]):::baseUC
+            UC09(["UC-09: Manajemen Konten Dinamis"]):::baseUC
+            UC23(["UC-23: Pengaturan Sistem"]):::baseUC
+            UC29(["UC-29: Memantau Log Audit & Error"]):::baseUC
+
+            UC26 -.-> |extend: aksi kontrak penyewa| UC14
+            UC27 -.-> |extend: ekspor PDF/Excel/CSV| UC07
+            UC27 -.-> |extend: ekspor data penyewa| UC14
+            UC27 -.-> |extend: ekspor data pengeluaran| UC08
+        end
+    end
+
+    %% ==========================================
+    %% 3. INTER-STAGE & ACTOR-SYSTEM FLOW MAPPING
+    %% ==========================================
+    
+    %% Alur Fase 1
+    Guest --> UC10
+    Guest --> UC17
+    Guest --> UC12
+    Guest --> UC18
+    Guest --> UC22
+    UC12 --> |Registrasi Sukses| Calon
+    UC18 --> |OAuth Berhasil| Calon
+    UC18 --> Google
+    UC24 --> MailServer
+
+    %% Alur Fase 2
+    Calon --> UC01
+    Calon --> UC03
+    Calon --> UC02
+    UC01 --> StatePending
+    UC02 --> Midtrans
+    Midtrans --> |Webhook Callback| StatePaid
+
+    %% Alur Otomasi Pembatalan Timeout
+    Cron --> |Tugas: cancel-expired >24 jam| StatePending
+    StatePending --> |Timeout 24 Jam| StateBatal
+
+    %% Alur Fase 3
+    StatePaid --> UC06
+    Admin --> UC06
+    Admin --> UC03
+    UC06 --> DecVerif
+    DecVerif -- Ditolak NIK Palsu --> StateBatal
+    DecVerif -- Disetujui Admin --> StateConfirmed
+    StateConfirmed --> Fonnte
+    Fonnte --> |Kirim WA Kredensial Akun| Penyewa
+
+    %% Alur Fase 4
+    Cron --> |Tgl 1 Jam 00:05 Terbitkan Tagihan| UC28
+    Cron --> |Harian Jam 01:00 Denda Flat 5%| UC28
+    UC28 --> Fonnte
+    Fonnte --> |WA Tagihan & Eskalasi Wali| Penyewa
+
+    Penyewa --> UC22
+    Penyewa --> UC18
+    Penyewa --> UC04
+    Penyewa --> UC25
+    Penyewa --> UC05
+    Penyewa --> UC11
+    Penyewa --> UC21
+
+    UC04 --> Midtrans
+    Admin --> |Konfirmasi Kasir Tunai| UC06
+    UC06 -.-> |Update Status Lunas| UC04
+
+    UC05 --> Fonnte
+    Fonnte --> |Notifikasi WA Masuk| Admin
+    Admin --> UC15
+    UC15 --> Fonnte
+    Fonnte --> |Notifikasi Selesai| Penyewa
+
+    %% Alur Fase 5
+    Admin --> UC13
+    Admin --> UC14
+    Admin --> UC26
+    Admin --> UC08
+    Admin --> UC07
+    Admin --> UC27
+    Admin --> UC19
+    Admin --> UC20
+    Admin --> UC09
+    Admin --> UC23
+    Admin --> UC17
+    Admin --> UC29
+    UC20 --> Fonnte
+    UC20 --> MailServer
+```
+
+![Diagram Alur Interaksi Terpadu Lintas Aktor dan Sistem](use_case/use_case_interaction_flow.png)
+
+#### Matriks Pemetaan Interaksi Aktor vs Use Case vs Keterkaitan Relasi vs Sistem Eksternal
+
+| No | Fase Siklus Hidup | Aktor Pemrakarsa | Use Case Pemicu (Base UC) | Relasi Keterkaitan (`<<extend>>` / Pre-condition) | Layanan Eksternal / Timer | Respon Sistem & Mutasi Data |
+| :---: | :--- | :--- | :--- | :--- | :--- | :--- |
+| **1** | Penemuan Hunian | Tamu (*Guest*) | **UC-10** (Cek Katalog) | Standar Asosiasi | - | Query katalog kamar aktif, kamar maintenance disembunyikan. |
+| **2** | Diskusi Awal | Tamu (*Guest*) | **UC-17** (Guest Chat) | Standar Asosiasi | - | Inisialisasi token cookie UUID & buat thread `guest_chat_threads`. |
+| **3** | Registrasi Akun | Tamu (*Guest*) | **UC-12** (Registrasi Manual) | Mentransformasi Tamu $\rightarrow$ Calon Penyewa | - | Insert ke tabel `users` dengan peran `'penyewa'`. |
+| **4** | Login Akun | Tamu / Calon / Penyewa / Admin | **UC-22** (Login Manual) | Pre-condition seluruh modul internal | - | Validasi kredensial hash bcrypt & buat session cookie. |
+| **5** | Reset Sandi | Pengguna Terdaftar | **UC-22** (Login Manual) | `UC-24 -.-> \|extend\| UC-22` (bila lupa sandi) | **SMTP Mail Server** | Generate token reset di `password_reset_tokens` & kirim link email. |
+| **6** | Single Sign-On | Tamu / Calon / Penyewa | **UC-18** (Google OAuth) | Alternatif autentikasi UC-22 | **Google OAuth API** | Handshake Socialite, middleware `EnsureProfileIsComplete` no HP. |
+| **7** | Reservasi Kamar | Calon Penyewa | **UC-01** (Reservasi Kamar) | Syarat: Calon sudah login (Pre-condition) | - | Insert `reservasi` status `'pending'`, kunci status kamar. |
+| **8** | Chat Pra-Bayar | Calon Penyewa & Admin | **UC-01** (Reservasi Kamar) | `UC-03 -.-> \|extend\| UC-01` (opsi diskusi) | - | Polling AJAX 3 detik via tabel `chat_messages`. |
+| **9** | Bayar Reservasi | Calon Penyewa | **UC-01** (Reservasi Kamar) | `UC-02 -.-> \|extend\| UC-01` (opsi bayar) | **Midtrans Snap API** | Generate snap token, webhook memvalidasi SHA-512 $\rightarrow$ `'dp'` / `'lunas'`. |
+| **10** | Timeout Reservasi | Otomasi Waktu | **UC-01** (Reservasi Kamar) | Scheduler trigger `reservasi:cancel-expired` | **Laravel Scheduler (Cron)** | Melepas kamar menjadi `'tersedia'`, update status `'dibatalkan'`. |
+| **11** | Verifikasi & Transisi | Administrator | **UC-06** (Verifikasi Reservasi) | Mentransformasi Calon $\rightarrow$ Penyewa Aktif | **WhatsApp Gateway (Fonnte)** | `DB::transaction`: status `'dikonfirmasi'`, kamar `'terisi'`, buat record `penyewa`, kirim WA kredensial. |
+| **12** | Tolak Reservasi | Administrator | **UC-06** (Verifikasi Reservasi) | Exception Flow penolakan dokumen | - | Update status reservasi `'dibatalkan'`, lepas status kamar. |
+| **13** | Auto-Billing Bulanan | Otomasi Waktu | **UC-28** (Tugas Terjadwal) | Scheduler tgl 1 jam 00:05 WIB | **WhatsApp Gateway (Fonnte)** | Filter penyewa bulanan, generate `tagihan` tempo tgl 10, kirim WA rincian. |
+| **14** | Denda & Eskalasi | Otomasi Waktu | **UC-28** (Tugas Terjadwal) | Scheduler harian jam 01:00 WIB | **WhatsApp Gateway (Fonnte)** | Idempotency guard: denda flat 5% saat ganti bulan; eskalasi WA ke wali di bulan ke-2. |
+| **15** | Bayar Tagihan Online | Penyewa Aktif | **UC-04** (Bayar Tagihan Bulanan) | Standar Asosiasi Pembayaran | **Midtrans Snap API** | Webhook callback $\rightarrow$ update status tagihan `'lunas'`, insert `pembayaran`. |
+| **16** | Bayar Tagihan Tunai | Penyewa & Admin | **UC-04** (Bayar Tagihan Bulanan) | Diverifikasi oleh Admin via **UC-06** | - | `DB::transaction`: Admin klik konfirmasi cash $\rightarrow$ tagihan `'lunas'`. |
+| **17** | Unduh Kuitansi | Penyewa Aktif | **UC-04** (Bayar Tagihan Bulanan) | `UC-25 -.-> \|extend\| UC-04` (hanya jika lunas) | - | Stream unduhan berkas PDF kuitansi resmi berbasis Dompdf. |
+| **18** | Pengaduan Keluhan | Penyewa Aktif | **UC-05** (Mengajukan Keluhan) | Standar Asosiasi Layanan Hunian | **WhatsApp Gateway (Fonnte)** | Simpan ke `keluhan` status `'pending'`, trigger WA ke nomor admin kost. |
+| **19** | Resolusi Keluhan | Administrator | **UC-15** (Memproses Keluhan) | Menindaklanjuti data dari **UC-05** | **WhatsApp Gateway (Fonnte)** | Admin ubah status `'diproses'` $\rightarrow$ `'selesai'`, trigger WA ke penyewa. |
+| **20** | Checkout Penyewa | Administrator | **UC-14** (Manajemen Penyewa) | `UC-26 -.-> \|extend\| UC-14` (aksi selesai sewa) | - | Status penyewa `'nonaktif'`, kamar tetap `'terisi'` untuk inspeksi fisik. |
+| **21** | Perpanjang Sewa | Administrator | **UC-14** (Manajemen Penyewa) | `UC-26 -.-> \|extend\| UC-14` (aksi lanjut sewa) | - | Update `tanggal_selesai` dan terbitkan tagihan sewa periode baru. |
+| **22** | Ekspor Laporan | Administrator | **UC-07** / **UC-14** / **UC-08** | `UC-27 -.-> \|extend\| UC-07/14/08` | - | Ekspor berkas cetak PDF atau spreadsheet Excel/CSV (BOM UTF-8). |
+| **23** | Visual Kalender | Administrator | **UC-19** (Kalender Visual) | Standar Asosiasi Kontrol | - | Render event survei, check-in, check-out, jatuh tempo tagihan & denda. |
+| **24** | Broadcast Pesan | Administrator | **UC-20** (Broadcast Notifikasi) | Standar Asosiasi Komunikasi | **Fonnte (WA)** & **SMTP (Mail)** | Dispatch notifikasi massal ke seluruh penyewa dan simpan ke `log_notifikasi`. |
+| **25** | Audit & Error Log | Administrator | **UC-29** (Log Audit Sistem) | Standar Asosiasi Maintenance | - | Tinjauan rekam jejak error teknis, perubahan data, dan otentikasi. |
+
+---
+
+### 2.8. Visualisasi Alur Proses Interaksi End-to-End per Siklus Bisnis
+
+#### 2.8.1. Alur Siklus 1: Registrasi, Reservasi Kamar, Chat Pre-Payment, Pembayaran Snap, dan Transisi Akun Otomatis
 
 ```mermaid
 flowchart TD
@@ -551,8 +881,9 @@ flowchart TD
     C3 --> D1
     C1 -- Tidak --> D1[4. Klik Tombol 'Bayar Sekarang' - UC-02]:::sysNode
 
-    D1 --> D2[Sistem Request Snap Token - include Midtrans]:::sysNode
-    D2 --> D3[Render Popup Midtrans Snap di Browser]:::sysNode
+    D1 --> D2[Sistem Request Snap Token - Midtrans API]:::sysNode
+    D2 --> Midtrans
+    Midtrans --> D3[Render Popup Midtrans Snap di Browser]:::sysNode
     D3 --> D4{Calon Selesaikan Pembayaran?}:::decisionNode
     
     D4 -- Gagal / Batal / Timeout 24 Jam --> D5[Sistem Ubah status: 'dibatalkan' & Lepas Kamar]:::sysNode
@@ -563,12 +894,13 @@ flowchart TD
     
     E2 --> F1[5. Admin Verifikasi NIK & Data Wali - UC-06]:::sysNode
     F1 --> F2{Disetujui Admin?}:::decisionNode
-    F2 -- Tolak --> D5
+    F2 -- Tolak / Batal Admin --> D5
 
     F2 -- Setujui --> G1[Admin Klik 'Konfirmasi Reservasi' - UC-06]:::sysNode
     G1 --> G2[DB::transaction: Status 'dikonfirmasi', Kamar 'terisi', Buat Akun Penyewa]:::sysNode
-    G2 --> G3[Sistem Kirim WA Kredensial via Fonnte - include Fonnte]:::sysNode
-    G3 --> G4[Calon Terima WA Kredensial & Resmi Jadi Penyewa Aktif]:::actorNode
+    G2 --> G3[Sistem Kirim WA Kredensial via Fonnte]:::sysNode
+    G3 --> Fonnte
+    Fonnte --> G4[Calon Terima WA Kredensial & Resmi Jadi Penyewa Aktif]:::actorNode
     G4 --> EndSuccess([Transisi Sukses]):::terminalNode
 ```
 
@@ -576,7 +908,7 @@ flowchart TD
 
 ---
 
-#### 2.7.2. Alur Siklus 2: Penagihan Bulanan Otomatis, Denda Flat 5% Idempoten, Eskalasi WhatsApp Wali, Pembayaran, dan Unduh Kuitansi PDF
+#### 2.8.2. Alur Siklus 2: Penagihan Bulanan Otomatis, Denda Flat 5% Idempoten, Eskalasi WhatsApp Wali, Pembayaran, dan Unduh Kuitansi PDF
 
 ```mermaid
 flowchart TD
@@ -596,8 +928,9 @@ flowchart TD
     %% PHASE 1: GENERATE INVOICE
     Start([Pemicu: Tgl 1 Jam 00:05 WIB]):::terminalNode --> A1[Command 'tagihan:generate-bulanan' - UC-28]:::sysNode
     A1 --> A2[Query Penyewa Aktif Tipe Bulanan & Terbitkan Tagihan Jatuh Tempo Tgl 10]:::sysNode
-    A2 --> A3[Broadcast WhatsApp Rincian Tagihan via Fonnte - include Fonnte]:::sysNode
-    A3 --> A4[Penyewa Terima WA Notifikasi Tagihan]:::actorNode
+    A2 --> A3[Broadcast WhatsApp Rincian Tagihan via Fonnte]:::sysNode
+    A3 --> Fonnte
+    Fonnte --> A4[Penyewa Terima WA Notifikasi Tagihan]:::actorNode
 
     %% PHASE 2: DAILY PENALTY & GUARDIAN ESCALATION
     A4 --> B1([Pemicu: Harian Jam 01:00 WIB]):::terminalNode
@@ -609,16 +942,16 @@ flowchart TD
 
     B5 -- Bulan Berjalan --> B6[Kirim Pengingat Rutin WA Tanpa Denda]:::sysNode
     B6 --> B7{Bulan Keterlambatan == 2?}:::decisionNode
-    B7 -- Ya --> B8[Kirim Notifikasi Eskalasi ke WA Wali - include Fonnte]:::sysNode
+    B7 -- Ya --> B8[Kirim Notifikasi Eskalasi ke WA Wali via Fonnte]:::sysNode
+    B8 --> C1
     B7 -- Tidak --> C1
 
     B5 -- Menyeberang Bulan Kalender --> B9[Kenakan Denda Flat 5% tepat 1x via Idempotency Guard]:::sysNode
     B9 --> B10[Update total di DB::transaction lockForUpdate & Kirim WA Denda]:::sysNode
+    B10 --> C1
 
     %% PHASE 3: PAYMENT
-    B8 --> C1[Penyewa Bayar Tagihan - UC-04]:::sysNode
-    B10 --> C1
-    B4 --> C1
+    B4 --> C1[Penyewa Bayar Tagihan - UC-04]:::sysNode
     
     C1 --> C2{Jalur Pembayaran?}:::decisionNode
     C2 -- Online (Snap) --> D1[Bayar via Midtrans -> Webhook Update status 'lunas']:::sysNode
@@ -634,7 +967,7 @@ flowchart TD
 
 ---
 
-#### 2.7.3. Alur Siklus 3: Pengaduan Keluhan Fasilitas, Penanganan Operasional, dan Notifikasi WA
+#### 2.8.3. Alur Siklus 3: Pengaduan Keluhan Fasilitas, Penanganan Operasional, dan Notifikasi WA
 
 ```mermaid
 flowchart TD
@@ -650,19 +983,21 @@ flowchart TD
 
     %% FLOW
     Start([Penyewa Temukan Fasilitas Rusak]):::terminalNode --> A1[1. Buka Menu 'Keluhan' & Input Foto - UC-05]:::sysNode
-    A1 --> A2[2. Simpan status: 'pending' & Kirim WA Dispatch ke Admin - include Fonnte]:::sysNode
-    A2 --> A3[3. Admin Terima WA & Buka Menu 'Daftar Keluhan' - UC-15]:::sysNode
+    A1 --> A2[2. Simpan status: 'pending' & Kirim WA Dispatch ke Admin via Fonnte]:::sysNode
+    A2 --> Fonnte
+    Fonnte --> A3[3. Admin Terima WA & Buka Menu 'Daftar Keluhan' - UC-15]:::sysNode
     A3 --> A4[4. Admin Ubah Status Menjadi 'diproses' & Eksekusi Perbaikan Fisik]:::sysNode
     A4 --> A5[5. Admin Input Catatan Solusi & Klik 'Selesaikan' status: 'selesai']:::sysNode
-    A5 --> A6[6. Sistem Kirim WA Pemberitahuan Selesai ke Penyewa - include Fonnte]:::sysNode
-    A6 --> End([Keluhan Selesai]):::terminalNode
+    A5 --> A6[6. Sistem Kirim WA Pemberitahuan Selesai ke Penyewa via Fonnte]:::sysNode
+    A6 --> Fonnte
+    Fonnte --> End([Keluhan Selesai]):::terminalNode
 ```
 
 ![Alur Siklus Pengaduan dan Resolusi Keluhan](use_case/use_case_flow_keluhan_resolusi.png)
 
 ---
 
-#### 2.7.4. Alur Siklus 4: Pengakhiran Kontrak (Checkout & Refund Deposit) vs Perpanjangan Sewa
+#### 2.8.4. Alur Siklus 4: Pengakhiran Kontrak (Checkout & Refund Deposit) vs Perpanjangan Sewa
 
 ```mermaid
 flowchart TD
@@ -700,7 +1035,7 @@ flowchart TD
 
 ---
 
-#### 2.7.5. Alur Siklus 5: Interaksi Guest Chat Publik Tanpa Login & Pelacakan Tombol WhatsApp
+#### 2.8.5. Alur Siklus 5: Interaksi Guest Chat Publik Tanpa Login & Pelacakan Tombol WhatsApp
 
 ```mermaid
 flowchart TD
@@ -727,7 +1062,7 @@ flowchart TD
 
 ---
 
-## 3. Spesifikasi Detail 29 Use Case
+## 3. Spesifikasi Detail 29 Use Case Fungsional
 
 Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 29 use case utama sistem.
 
@@ -735,35 +1070,36 @@ Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 
 
 #### UC-01: Melakukan Reservasi Kamar
 * **Aktor Utama**: Calon Penyewa
-* **Deskripsi**: Calon penyewa memesan unit kamar kost tertentu secara online dengan menentukan tanggal masuk, durasi sewa, dan skema pembayaran.
-* **Kondisi Awal (Pre-condition)**: Calon penyewa sudah terdaftar dan masuk log masuk (login). Kamar yang dipilih berstatus `'tersedia'`.
+* **Aktor Otomasi**: System Scheduler (Timer/Cron) untuk batas kedaluwarsa
+* **Deskripsi**: Calon penyewa memesan unit kamar kost tertentu secara online dengan menentukan tanggal masuk, durasi sewa, tipe sewa, dan skema pembayaran.
+* **Kondisi Awal (Pre-condition)**: Calon penyewa sudah terdaftar dan melakukan login ke sistem. Kamar yang dipilih berstatus `'tersedia'`.
 * **Alur Utama (Main Flow)**:
   1. Calon penyewa membuka halaman katalog kamar (`/kamar`) atau detail kamar.
   2. Sistem menampilkan spesifikasi kamar, harga sewa, foto, dan status ketersediaan.
-  3. Calon penyewa mengisi form pemesanan: Tanggal Mulai, Durasi Sewa, Tipe Sewa (harian, mingguan, bulanan), Catatan Khusus, dan memilih Opsi Pembayaran (DP 30% atau Lunas 100%).
+  3. Calon penyewa mengisi formulir pemesanan: Tanggal Mulai, Durasi Sewa, Tipe Sewa (harian, mingguan, bulanan), Catatan Khusus, dan memilih Opsi Pembayaran (DP 30% atau Lunas 100%).
   4. Calon penyewa menekan tombol **"Pesan Unit"**.
-  5. Sistem menghitung estimasi total harga secara otomatis di client-side.
+  5. Sistem menghitung estimasi total harga secara otomatis.
   6. Calon penyewa mengonfirmasi pemesanan.
-  7. Sistem membuat entri baru di tabel `reservasi` dengan status `'pending'` dan menerbitkan nomor transaksi (`order_id`).
-  8. Sistem membuka akses chat room diskusi untuk reservasi tersebut.
-* **Alur Alternatif (Alternative Flow - Pembatalan Reservasi)**:
-  * *Alur 1A (Self-Cancel)*: Calon penyewa dapat menekan tombol **"Batalkan Pemesanan"** pada halaman detail reservasi pending (`POST /penyewa/reservasi/{id}/batal`). Sistem mengubah status reservasi menjadi `'dibatalkan'` dan melepas penguncian kamar.
-  * *Alur 1B (Auto-Expire Timeout)*: Jika calon penyewa tidak menyelesaikan pembayaran dalam batas waktu (24 jam), tugas terjadwal `reservasi:cancel-expired` secara otomatis mengubah status menjadi `'dibatalkan'`.
-* **Kondisi Akhir (Post-condition)**: Reservasi baru tersimpan di database dengan status `'pending'`, dan kamar dikunci agar tidak dipesan pengguna lain dalam jangka waktu tertentu.
+  7. Sistem membuat entri baru di tabel `reservasi` dengan status `'pending'` dan menerbitkan nomor transaksi unik (`order_id`).
+  8. Sistem mengunci kamar sementara dan membuka akses chat room diskusi reservasi (`UC-03`).
+* **Alur Alternatif (Alternative Flow)**:
+  * *Alur 1A (Pembatalan Mandiri oleh Calon)*: Calon penyewa dapat menekan tombol **"Batalkan Pemesanan"** pada halaman detail reservasi pending (`POST /penyewa/reservasi/{id}/batal`). Sistem mengubah status reservasi menjadi `'dibatalkan'` dan melepas penguncian kamar menjadi `'tersedia'`.
+  * *Alur 1B (Auto-Expire Timeout 24 Jam via Scheduler)*: Jika calon penyewa tidak menyelesaikan pembayaran dalam batas waktu (24 jam), tugas terjadwal `reservasi:cancel-expired` secara otomatis mengubah status menjadi `'dibatalkan'` dan melepas kunci kamar.
+* **Kondisi Akhir (Post-condition)**: Reservasi baru tersimpan di database dengan status `'pending'`, dan kamar terkunci dari pemesanan pengguna lain.
 
 #### UC-02: Melakukan Pembayaran Reservasi (Midtrans Snap)
 * **Aktor Utama**: Calon Penyewa
 * **Aktor Sekunder**: Payment Gateway (Midtrans)
-* **Deskripsi**: Calon penyewa membayar uang muka (DP 30%) atau pelunasan (100%) reservasi secara online melalui Payment Gateway Midtrans.
-* **Kondisi Awal (Pre-condition)**: Reservasi tersimpan dengan status `'pending'` dan `snap_token` berhasil digenerasi.
+* **Deskripsi**: Calon penyewa membayar uang muka (DP 30%) atau pelunasan (100%) reservasi secara online melalui Payment Gateway Midtrans Snap.
+* **Kondisi Awal (Pre-condition)**: Reservasi tersimpan dengan status `'pending'` dan `snap_token` berhasil digenerasi oleh sistem.
 * **Alur Utama (Main Flow)**:
-  1. Calon penyewa membuka halaman detail reservasi.
+  1. Calon penyewa membuka halaman detail reservasi (`/penyewa/reservasi/{id}`).
   2. Sistem menampilkan detail pesanan, rincian biaya, stepper alur pembayaran, dan tombol **"Bayar Sekarang"**.
   3. Calon penyewa menekan tombol **"Bayar Sekarang"**.
-  4. Sistem memicu pop-up portal Midtrans Snap.
-  5. Calon penyewa memilih metode pembayaran (Virtual Account, E-wallet, dll.) dan menyelesaikan transfer.
-  6. Webhook Midtrans mengirim callback notifikasi status transaksi ke sistem.
-  7. Sistem memverifikasi kecocokan `signature_key` dan nominal bayar.
+  4. Sistem memicu pop-up portal Midtrans Snap di antarmuka browser.
+  5. Calon penyewa memilih metode pembayaran (Virtual Account, E-wallet QRIS, dll.) dan menyelesaikan transfer.
+  6. Webhook Midtrans mengirim callback notifikasi status transaksi ke sistem (`/api/midtrans/callback-reservasi`).
+  7. Sistem memverifikasi kecocokan `signature_key` SHA-512 dan nominal bayar.
   8. Sistem memperbarui status reservasi menjadi `'dp'` atau `'lunas'` di tabel `reservasi`.
   9. Sistem mencatat log transaksi keuangan ke tabel `pembayaran`.
 * **Kondisi Akhir (Post-condition)**: Status reservasi di database berubah menjadi `'dp'` atau `'lunas'`, dan tercatat transaksi pembayaran yang sah.
@@ -798,7 +1134,7 @@ Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 
 * **Alur Utama (Main Flow)**:
   1. Tamu membuka halaman registrasi (`/reservasi/register`).
   2. Sistem menampilkan formulir registrasi (Nama Lengkap, Email, Password, Konfirmasi Password, No HP opsional).
-  3. Tamu mengisi formulir.
+  3. Tamu mengisi formulir dan menekan daftar.
   4. Sistem melakukan validasi isian.
   5. Jika nomor HP kosong, sistem menghasilkan HP bayangan sementara (`temp_[timestamp]_[rand]`).
   6. Sistem membuat entri di tabel `users` dengan peran `'penyewa'`.
@@ -812,7 +1148,7 @@ Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 
   1. Pengguna membuka sidebar navigasi portal penyewa.
   2. **Riwayat Pemesanan**: Mengakses `/penyewa/reservasi/pemesanan`.
   3. **Riwayat Pembayaran**: Mengakses `/penyewa/reservasi/pembayaran`.
-  4. **Riwayat Log Chat**: Mengakses `/penyewa/reservasi/{reservasi}/chat`.
+  4. **Riwayat Log Chat**: Mengakses `/penyewa/reservasi/{reservasi}/chat` atau `/penyewa/reservasi/riwayat-chat`.
 * **Kondisi Akhir (Post-condition)**: Pengguna melihat daftar riwayat transaksi dan log chat secara transparan.
 
 #### UC-17: Diskusi via Guest Chat (Tamu & Admin)
@@ -824,21 +1160,22 @@ Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 
   2. Tamu mengisi formulir awal (Nama Lengkap dan Nomor WhatsApp).
   3. Sistem memvalidasi input, membuat token sesi UUID, menyimpannya di cookie, dan mendaftarkan thread di `guest_chat_threads`.
   4. Tamu mengetik pesan obrolan. Sistem menyimpan ke `guest_chat_messages`.
-  5. Admin membuka dashboard **"Manajemen Chat Tamu"** (`/admin/guest-chats`) untuk membalas atau menutup sesi.
+  5. Admin membuka dashboard **"Manajemen Chat Tamu"** (`/admin/guest-chats`) untuk membalas atau menutup sesi obrolan.
 * **Kondisi Akhir (Post-condition)**: Riwayat obrolan tamu tersimpan di database dan terkelola secara interaktif.
 
 #### UC-18: Login & Registrasi via Google OAuth (SSO) & Kelengkapan Profil
 * **Aktor Utama**: Tamu (Guest), Calon Penyewa, Penyewa Aktif
+* **Aktor Sekunder**: Google Identity Services (OAuth 2.0)
 * **Deskripsi**: Membantu pengguna mendaftar atau masuk ke sistem menggunakan akun Google secara instan, lengkap dengan pengisian nomor WhatsApp dan filter keamanan email admin.
 * **Kondisi Awal (Pre-condition)**: Pengguna memiliki akun Google aktif dan belum login ke sistem.
 * **Alur Utama (Main Flow)**:
   1. Pengguna mengklik tombol **"Masuk dengan Google"**.
-  2. Sistem mengalihkan ke halaman autentikasi Google OAuth.
-  3. Google mengembalikan callback data profil pengguna (Nama, Email) ke server Laravel via Socialite.
-  4. Sistem memproses registrasi/login user baru.
-  5. **Middleware EnsureProfileIsComplete**: Jika nomor HP kosong, sistem mengalihkan user ke `/profil/complete`.
+  2. Sistem mengalihkan pengguna ke consent screen Google OAuth.
+  3. Google mengembalikan callback data profil pengguna (Nama, Email, Avatar) ke server Laravel via Socialite.
+  4. Sistem memeriksa apakah email terdaftar; jika belum, dibuat entri baru di tabel `users` dengan peran `'penyewa'`.
+  5. **Middleware EnsureProfileIsComplete**: Jika nomor HP masih format sementara/kosong, sistem mengalihkan user ke form kelengkapan profil (`/profil/complete`).
   6. Pengguna menginput nomor WhatsApp berformat Indonesia yang valid dan sistem menyimpan profil lengkap.
-* **Kondisi Akhir (Post-condition)**: Pengguna berhasil login/registrasi, dan seluruh profil wajib tersimpan di database.
+* **Kondisi Akhir (Post-condition)**: Pengguna berhasil login/registrasi dan seluruh profil wajib tersimpan di database.
 
 #### UC-22: Login Akun Manual (Portal Admin, Calon Penyewa, & Penyewa Aktif)
 * **Aktor Utama**: Calon Penyewa, Penyewa Aktif, Administrator
@@ -852,15 +1189,16 @@ Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 
 * **Kondisi Akhir (Post-condition)**: Sesi aktor aktif dan pengguna mendapatkan akses ke fungsionalitas internal portal.
 
 #### UC-24: Lupa & Reset Kata Sandi (Forgot & Reset Password)
-* **Aktor Utama**: Tamu (Guest), Calon Penyewa, Penyewa Aktif, Administrator
+* **Aktor Utama**: Calon Penyewa, Penyewa Aktif, Administrator
+* **Aktor Sekunder**: SMTP Mail Server
 * **Deskripsi**: Pengguna yang lupa kata sandi mengajukan permohonan reset password melalui tautan verifikasi email berbatas waktu (memperluas Use Case Login UC-22).
 * **Kondisi Awal (Pre-condition)**: Pengguna memiliki email terdaftar di database dan mengakses form login.
 * **Alur Utama (Main Flow)**:
   1. Pengguna mengklik tautan **"Lupa Password?"** di halaman login.
   2. Pengguna memasukkan alamat email yang terdaftar.
   3. Sistem memverifikasi email dan membuat token reset password di `password_reset_tokens`.
-  4. Sistem mengirimkan email berisi link reset password.
-  5. Pengguna mengklik tautan email dan memasukkan password baru.
+  4. Sistem memicu SMTP Mail Server untuk mengirimkan surel berisi tautan reset password unik.
+  5. Pengguna mengklik tautan di email dan memasukkan password baru.
   6. Sistem memperbarui password terenkripsi di tabel `users`.
 * **Kondisi Akhir (Post-condition)**: Password berhasil diperbarui dan pengguna dapat login dengan password baru.
 
@@ -888,18 +1226,18 @@ Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 
 * **Kondisi Awal (Pre-condition)**: Penyewa memiliki kontrak aktif di sistem.
 * **Alur Utama (Main Flow)**:
   1. Penyewa membuka halaman **"Keluhan & Pengaduan"** di portal penyewa.
-  2. Penyewa mengisi form: Judul, Kategori, Deskripsi Detail, dan Foto Bukti.
+  2. Penyewa mengisi form: Judul, Kategori Fasilitas, Deskripsi Detail Kerusakan, dan Unggah Foto Bukti ($\le$ 2MB).
   3. Penyewa mengirim laporan.
   4. Sistem menyimpan pengaduan ke tabel `keluhan` dengan status `'pending'`.
-  5. Sistem memicu Fonnte WA API untuk mengirimkan notifikasi otomatis ke nomor WhatsApp Admin Kost.
-* **Kondisi Akhir (Post-condition)**: Keluhan tersimpan di database dan admin menerima pemberitahuan WhatsApp.
+  5. Sistem memicu Fonnte WhatsApp API untuk mengirimkan notifikasi otomatis ke nomor WhatsApp Admin Kost.
+* **Kondisi Akhir (Post-condition)**: Keluhan tersimpan di database dan admin menerima pemberitahuan WhatsApp secara instan.
 
 #### UC-11: Mengakses Menu Peraturan & Tata Tertib
 * **Aktor Utama**: Penyewa Aktif
 * **Deskripsi**: Penyewa kost putri mengakses tata tertib hunian kost yang terdata dinamis di database.
 * **Kondisi Awal (Pre-condition)**: Penyewa aktif login ke portal penyewa.
 * **Alur Utama (Main Flow)**:
-  1. Penyewa membuka sidebar menu portal penyewa dan memilih **"Peraturan Kost"**.
+  1. Penyewa membuka sidebar menu portal penyewa dan memilih **"Peraturan Kost"** (`/penyewa/peraturan`).
   2. Sistem mengambil daftar peraturan dari tabel `peraturan` diurutkan berdasarkan kolom `urutan`.
   3. Sistem merender halaman dengan list tata tertib.
 * **Kondisi Akhir (Post-condition)**: Penyewa melihat tata tertib kost terbaru secara transparan.
@@ -932,17 +1270,20 @@ Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 
 #### UC-06: Verifikasi Reservasi Baru & Konfirmasi Pembayaran Tagihan Tunai (Cash)
 * **Aktor Utama**: Administrator
 * **Aktor Sekunder**: WhatsApp Gateway (Fonnte)
-* **Deskripsi**: Admin meninjau data pengajuan reservasi, mencocokkan kelengkapan identitas KTP (NIK 16 digit), dan mengonfirmasi reservasi menjadi akun penyewa resmi, serta memverifikasi pembayaran tunai tagihan bulanan.
+* **Deskripsi**: Admin meninjau data pengajuan reservasi, mencocokkan kelengkapan identitas KTP (NIK 16 digit), dan mengonfirmasi reservasi menjadi akun penyewa resmi, atau membatalkan reservasi, serta memverifikasi pembayaran tunai tagihan bulanan.
 * **Kondisi Awal (Pre-condition)**: Terdapat data reservasi berstatus `'dp'`/`'lunas'` atau tagihan tunai yang menunggu konfirmasi.
 * **Alur Utama (Main Flow)**:
   1. **Sub-Alur 1 (Konfirmasi Reservasi)**:
      - Admin membuka menu **"Daftar Reservasi"** (`/admin/reservasi`).
      - Admin memverifikasi NIK dan Data Wali, lalu menekan **"Konfirmasi Reservasi"**.
-     - Sistem membungkus transaksi dalam `DB::transaction()`: status reservasi `'dikonfirmasi'`, kamar `'terisi'`, membuat profil penyewa, dan memicu pengiriman kredensial login via Fonnte WhatsApp API.
+     - Sistem membungkus transaksi dalam `DB::transaction()`: status reservasi `'dikonfirmasi'`, kamar `'terisi'`, membuat profil penyewa, menyalin tarif sewa kamar ke `penyewa.harga_sewa`, menginjeksi tagihan sisa (jika DP), dan memicu pengiriman kredensial login via Fonnte WhatsApp API.
   2. **Sub-Alur 2 (Konfirmasi Pembayaran Kas Tunai)**:
      - Admin membuka menu **"Manajemen Tagihan"** (`/admin/tagihan`).
      - Admin memeriksa bukti transfer/uang tunai fisik dari penyewa, lalu menekan tombol **"Konfirmasi Cash"** (`POST /admin/tagihan/{id}/konfirmasi-cash`).
      - Sistem mengubah status tagihan menjadi `'lunas'` dan mencatat transaksi ke tabel `pembayaran`.
+* **Alur Alternatif (Alternative Flow)**:
+  * *Alur Alternatif 2A (Penolakan Reservasi oleh Admin)*: Admin menolak reservasi jika data identitas palsu atau kamar bermasalah teknis. Sistem mengubah status reservasi menjadi `'dibatalkan'` dan mengembalikan status kamar menjadi `'tersedia'`.
+  * *Alur Alternatif 2B (Penghapusan Permanen Reservasi Batal)*: Pada reservasi yang telah dibatalkan, admin dapat menekan tombol **"Hapus Permanen"** untuk membersihkan record dari database beserta cascade riwayat chat-nya demi efisiensi storage.
 * **Kondisi Akhir (Post-condition)**: Akun penyewa aktif terbuat atau tagihan tunai tervalidasi lunas secara atomik.
 
 #### UC-07: Pencatatan & Evaluasi Laporan Arus Kas
@@ -994,13 +1335,13 @@ Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 
 * **Alur Utama (Main Flow)**:
   1. Admin membuka menu **"Manajemen Penyewa"** (`/admin/penyewa`).
   2. Admin mengedit data penyewa, deposit, NIK, dan data wali.
-  3. **Safety Constraint**: Jika penyewa memiliki riwayat tagihan, akun tidak dapat dihapus permanen.
+  3. **Safety Constraint**: Jika penyewa memiliki riwayat tagihan, akun tidak dapat dihapus permanen melainkan soft delete.
 * **Kondisi Akhir (Post-condition)**: Data penyewa terkelola dengan aman dan integritas basis data terjaga.
 
 #### UC-15: Memproses & Menanggapi Keluhan (CRUD)
 * **Aktor Utama**: Administrator
 * **Aktor Sekunder**: WhatsApp Gateway (Fonnte)
-* **Deskripsi**: Admin meninjau laporan keluhan kerusakan dari penyewa aktif, memproses perbaikan, dan memberikan tanggapan.
+* **Deskripsi**: Admin meninjau laporan keluhan kerusakan dari penyewa aktif, memproses perbaikan, dan memberikan tanggapan status selesai.
 * **Kondisi Awal (Pre-condition)**: Ada laporan keluhan masuk dengan status `'pending'`.
 * **Alur Utama (Main Flow)**:
   1. Admin membuka menu **"Daftar Keluhan"** (`/admin/keluhan`).
@@ -1011,24 +1352,24 @@ Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 
 
 #### UC-19: Memantau Kalender Kontrol Visual (Visual Control Center)
 * **Aktor Utama**: Administrator
-* **Deskripsi**: Admin memantau seluruh jadwal aktivitas reservasi, rencana kunjungan survei, jadwal check-in/out, serta tagihan denda keterlambatan penyewa dalam format kalender terintegrasi.
+* **Deskripsi**: Admin memantau seluruh jadwal aktivitas reservasi, rencana kunjungan survei, jadwal check-in/out, serta tagihan denda keterlambatan penyewa dalam format kalender visual Alpine.js.
 * **Kondisi Awal (Pre-condition)**: Admin telah login ke panel admin.
 * **Alur Utama (Main Flow)**:
   1. Admin membuka rute `/admin/kalender`.
   2. Sistem memuat kalender berbasis Alpine.js yang mengambil event dari endpoint `/api/kalender/events`.
-  3. System menyajikan visual event (Survei, Check-in, Check-out, Tagihan & Denda).
+  3. Sistem menyajikan visual event berkode warna (Survei, Check-in, Check-out, Tagihan & Denda).
 * **Kondisi Akhir (Post-condition)**: Seluruh jadwal operasional tervisualisasikan secara presisi.
 
 #### UC-20: Broadcast Notifikasi & Pengumuman Kustom
 * **Aktor Utama**: Administrator
-* **Aktor Sekunder**: WhatsApp Gateway (Fonnte)
+* **Aktor Sekunder**: WhatsApp Gateway (Fonnte), SMTP Mail Server
 * **Deskripsi**: Admin membuat pesan pengumuman kustom dan mendistribusikannya secara langsung kepada penyewa via WhatsApp, Email, dan web portal.
 * **Kondisi Awal (Pre-condition)**: Admin login ke panel admin.
 * **Alur Utama (Main Flow)**:
   1. Admin masuk ke menu **"Manajemen Notifikasi"** (`/admin/notifikasi`).
-  2. Admin memilih penerima, menginput judul & isi pesan, dan memilih media pengiriman.
-  3. Sistem memproses pengiriman dan mencatat log di `log_notifikasi`.
-* **Kondisi Akhir (Post-condition)**: Pengumuman terkirim ke penyewa dan log terdistribusi.
+  2. Admin memilih penerima, menginput judul & isi pesan, dan memilih media pengiriman (WhatsApp / Email).
+  3. Sistem memproses pengiriman asinkron dan mencatat log di `log_notifikasi`.
+* **Kondisi Akhir (Post-condition)**: Pengumuman terkirim ke penyewa dan log pengiriman tersimpan.
 
 #### UC-23: Manajemen Pengaturan Sistem (Settings)
 * **Aktor Utama**: Administrator
@@ -1046,39 +1387,45 @@ Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 
 * **Kondisi Awal (Pre-condition)**: Penyewa berstatus `'aktif'`.
 * **Alur Utama (Main Flow)**:
   1. Admin membuka halaman detail penyewa di panel admin.
-  2. **Sub-Alur Checkout**: Admin menekan tombol **"Checkout Penyewa"**, mengonfirmasi tanggal keluar dan kondisi deposit. Sistem mengubah status penyewa menjadi `'nonaktif'` dan mengosongkan status kamar.
-  3. **Sub-Alur Perpanjang**: Admin menekan tombol **"Perpanjang Kontrak"**, memilih tambahan durasi bulan. Sistem memperbarui tanggal selesai sewa dan menerbitkan tagihan perpanjangan.
+  2. **Sub-Alur Checkout**: Admin menekan tombol **"Checkout Penyewa"**, mengonfirmasi tanggal keluar dan kondisi deposit. Sistem mengubah status penyewa menjadi `'nonaktif'`. Kamar tetap berstatus `'terisi'` untuk inspeksi fisik, sebelum diubah manual oleh admin ke `'tersedia'` (`UC-13`).
+  3. **Sub-Alur Perpanjang**: Admin menekan tombol **"Perpanjang Kontrak"**, memilih tambahan durasi bulan. Sistem memperbarui tanggal selesai sewa dan menerbitkan tagihan perpanjangan baru.
 * **Kondisi Akhir (Post-condition)**: Status penyewa dan kamar ter-update sesuai tindakan checkout/perpanjang.
 
 #### UC-27: Mengekspor Laporan & Data (PDF / Excel / CSV)
 * **Aktor Utama**: Administrator
-* **Deskripsi**: Admin mengekspor dokumen fisik cetak atau berkas spreadsheet untuk data Laporan Arus Kas, Daftar Penyewa, dan Pengeluaran Operasional.
+* **Deskripsi**: Admin mengekspor dokumen fisik cetak atau berkas spreadsheet untuk data Laporan Arus Kas, Daftar Penyewa, dan Pengeluaran Operasional yang melestarikan status filter pencarian aktif.
 * **Kondisi Awal (Pre-condition)**: Data terkait tersedia pada modul laporan atau data master admin.
 * **Alur Utama (Main Flow)**:
   1. Admin masuk ke halaman Laporan Keuangan, Manajemen Penyewa, atau Manajemen Pengeluaran.
   2. Admin memilih filter rentang tanggal/status data.
-  3. Admin menekan tombol **"Ekspor PDF"**, **"Ekspor Excel"**, atau **"Ekspor CSV"**.
-  4. Sistem memproses file stream (Dompdf / CSV Generator) dan mengunduh berkas ke perangkat admin.
+  3. Admin menekan tombol **"Ekspor PDF"**, **"Ekspor Excel"**, atau **"Ekspor CSV"** (BOM UTF-8).
+  4. Sistem memproses file stream dan mengunduh berkas ke perangkat admin.
 * **Kondisi Akhir (Post-condition)**: Berkas ekspor terunduh secara aman di perangkat admin.
 
-#### UC-28: Otomasi Billing Bulanan, Denda Keterlambatan Flat 5%, dan Eskalasi WhatsApp ke Wali
+#### UC-28: Otomasi Billing Bulanan, Denda Keterlambatan Flat 5%, dan Tugas Terjadwal
 * **Aktor Otomasi**: System Scheduler (Timer/Cron)
 * **Aktor Sekunder**: WhatsApp Gateway (Fonnte)
-* **Deskripsi**: Proses latar belakang otomatis yang mengeksekusi dua siklus penting: penerbitan tagihan bulanan pada tanggal 1 awal bulan dan evaluasi denda keterlambatan flat 5% idempoten beserta eskalasi notifikasi ke wali secara harian.
+* **Deskripsi**: Proses latar belakang otomatis Laravel Scheduler yang mengeksekusi 4 siklus penting secara berkala tanpa intervensi manusia.
 * **Kondisi Awal (Pre-condition)**: Waktu server mencapai jadwal eksekusi Laravel Scheduler.
 * **Alur Utama (Main Flow)**:
-  1. **Siklus Bulanan (Setiap Tanggal 1 Jam 00:05 WIB)**:
+  1. **Siklus 1: Penerbitan Tagihan Bulanan (Setiap Tanggal 1 Jam 00:05 WIB)**:
      - Scheduler memicu command `tagihan:generate-bulanan`.
      - Sistem mengambil penyewa aktif bertipe bulanan (`whereNotIn('tipe_sewa', ['harian', 'mingguan'])`).
-     - Sistem menerbitkan tagihan baru dengan `nominal_pokok = penyewa.harga_sewa` dan jatuh tempo tanggal 10.
-     - Sistem memicu Fonnte WA API untuk mengirimkan notifikasi tagihan ke nomor WhatsApp penyewa.
-  2. **Siklus Harian Denda & Eskalasi (Setiap Hari Jam 01:00 WIB)**:
+     - Sistem menerbitkan tagihan baru dengan `nominal_pokok = penyewa.harga_sewa` dan jatuh tempo seragam tanggal 10.
+     - Sistem memicu Fonnte WA API untuk mengirimkan notifikasi rincian tagihan ke penyewa.
+  2. **Siklus 2: Denda Keterlambatan Flat 5% & Eskalasi Wali (Setiap Hari Jam 01:00 WIB)**:
      - Scheduler memicu command `tagihan:proses-keterlambatan`.
      - Sistem mengambil tagihan pending yang melewati jatuh tempo tanggal 10.
-     - Jika keterlambatan masih dalam bulan berjalan, sistem mengirim pengingat reguler tanpa denda.
-     - Jika keterlambatan memasuki bulan kedua, sistem mengirim notifikasi persuasif ke nomor Wali (`no_wali`).
-     - Jika keterlambatan melewati batas bulan kalender, sistem mengenakan denda flat 5% tepat satu kali melalui *Idempotency Guard* di dalam `DB::transaction()` dengan `lockForUpdate()`.
-* **Kondisi Akhir (Post-condition)**: Tagihan bulanan terbit atau denda keterlambatan terhitung secara idempoten dan pesan WhatsApp terkirim ke penyewa/wali.
+     - Jika masih dalam bulan berjalan, kirim pengingat reguler tanpa denda.
+     - Jika keterlambatan memasuki bulan kedua, kirim notifikasi persuasif ke nomor Wali (`no_wali`).
+     - Jika keterlambatan menyeberang batas bulan kalender, kenakan denda flat 5% tepat satu kali melalui *Idempotency Guard* di dalam `DB::transaction()` dengan `lockForUpdate()`.
+  3. **Siklus 3: Pembatalan Reservasi Kedaluwarsa (Setiap Jam / Harian)**:
+     - Scheduler memicu command `reservasi:cancel-expired`.
+     - Mengubah status reservasi pending yang melebihi batas toleransi 24 jam menjadi `'dibatalkan'` dan melepas kunci kamar.
+  4. **Siklus 4: Pembersihan Log Notifikasi (Harian)**:
+     - Scheduler memicu command `log-notifikasi:clear`.
+     - Menghapus log pengiriman berumur $> 90$ hari demi menjaga efisiensi database produksi.
+* **Kondisi Akhir (Post-condition)**: Tagihan rutin terbit, denda terhitung idempoten, dan tugas housekeeping sistem berjalan bersih.
 
 #### UC-29: Memantau Log Audit & Activity System
 * **Aktor Utama**: Administrator
@@ -1094,12 +1441,12 @@ Berikut adalah penjabaran langkah-langkah, kondisi batas, serta alur kerja dari 
 
 ## 4. Kepatuhan Aturan Bisnis (Business Rules Compliance)
 
-Seluruh 29 use case wajib mematuhi aturan bisnis database berikut:
+Seluruh use case wajib mematuhi aturan bisnis database berikut:
 
 1. **Keamanan Transaksi Finansial (Atomic Transactions)**:
    Setiap pencatatan pelunasan tagihan manual cash wajib dibungkus dalam transaksi database (`DB::transaction`) untuk memastikan status tagihan menjadi `'lunas'` dan baris log pada tabel `pembayaran` dibuat secara atomik.
 2. **Imutabilitas Tarif Sewa (`penyewa.harga_sewa`)**:
-   Saat konfirmasi reservasi berhasil, tarif bulanan dasar disalin permanen dari `kamar.harga_bulan` ke `penyewa.harga_sewa`.
+   Saat konfirmasi reservasi berhasil, tarif bulanan dasar disalin permanen dari `kamar.harga_bulan` ke `penyewa.harga_sewa`. Tarif ini personal dan dapat disesuaikan admin di masa depan tanpa mengubah harga kamar umum.
 3. **Eskalasi Denda Keterlambatan Flat Kalender**:
    Tagihan bulanan diterbitkan tanggal 1 dengan jatuh tempo tanggal 10. Denda flat 5% diberlakukan secara otomatis tepat satu kali saat menyeberang bulan kalender berikutnya melalui *Idempotency Guard*. Notifikasi eskalasi dikirim ke wali saat keterlambatan memasuki bulan ke-2.
 4. **Keamanan Hapus (Safety Deletion Constraints & Soft Deletes)**:
@@ -1107,7 +1454,7 @@ Seluruh 29 use case wajib mematuhi aturan bisnis database berikut:
    * Kamar tidak dapat dihapus jika terikat dengan data `penyewa` atau `reservasi` aktif.
    * Profil **Penyewa** tidak dapat dihapus jika memiliki riwayat transaksi/tagihan di database.
 5. **Konsistensi Check-Out**:
-   Saat status penyewa diubah menjadi `'nonaktif'`, kamar tetap dalam inspeksi fisik sebelum statusnya dikembalikan manual ke `'tersedia'`.
+   Saat status penyewa diubah menjadi `'nonaktif'`, kamar tetap dalam status `'terisi'` (dalam inspeksi fisik) sebelum statusnya dikembalikan manual oleh admin ke `'tersedia'`.
 
 ---
 

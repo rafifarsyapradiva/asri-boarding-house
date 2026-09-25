@@ -1,57 +1,87 @@
 flowchart LR
     classDef primaryActor fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
     classDef secondaryActor fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
-    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
+    classDef ucNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:1.5px,color:#1b5e20;
+    classDef extNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1.5px,color:#01579b;
+    classDef subBox fill:#fcfdfd,stroke:#cfd8dc,stroke-width:1.5px,stroke-dasharray: 4 4;
 
-    %% Primary Actor
-    Admin(["Administrator"]):::primaryActor
-
-    %% Secondary Actor
-    Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
-
-    %% System Boundary
-    subgraph System ["Sistem Informasi Asri Boarding House (Modul Admin Panel)"]
-        UC22_A(["UC-22: Login Admin Panel"]):::ucNode
-        UC13(["UC-13: Manajemen Kamar & Fasilitas (CRUD)"]):::ucNode
-        UC14(["UC-14: Manajemen Penyewa (CRUD)"]):::ucNode
-        UC26(["UC-26: Process Checkout & Perpanjangan Kontrak"]):::ucNode
-        UC06(["UC-06: Verifikasi Reservasi & Konfirmasi Pembayaran Kas"]):::ucNode
-        UC03_A(["UC-03: Chat Diskusi Reservasi"]):::ucNode
-        UC15(["UC-15: Memproses & Menanggapi Keluhan"]):::ucNode
-        UC08(["UC-08: Pencatatan Pengeluaran Operasional (CRUD)"]):::ucNode
-        UC07(["UC-07: Pencatatan & Evaluasi Laporan Arus Kas"]):::ucNode
-        UC27(["UC-27: Mengekspor Laporan & Data (PDF/Excel/CSV)"]):::ucNode
-        UC09(["UC-09: Manajemen Konten Dinamis"]):::ucNode
-        UC23(["UC-23: Manajemen Pengaturan Sistem"]):::ucNode
-        UC19(["UC-19: Memantau Kalender Kontrol Visual"]):::ucNode
-        UC20(["UC-20: Broadcast Notifikasi & Pengumuman"]):::ucNode
-        UC17_A(["UC-17: Pengelolaan Guest Chat Tamu"]):::ucNode
-        UC29(["UC-29: Memantau Log Audit & Error System"]):::ucNode
+    %% Panel Kiri: Primary Actor
+    subgraph ColAdmin ["Aktor Utama"]
+        Admin(["Administrator"]):::primaryActor
     end
 
-    %% Relations - Admin
+    %% Boundary Sistem Utama
+    subgraph BoundaryAdmin ["Sistem Informasi Asri Boarding House (Modul Administrasi)"]
+        direction TB
+
+        %% Sub-Modul 1: Akses & Pengaturan Sistem
+        subgraph SubAkses ["1. Akses, Konfigurasi & Pengawasan"]
+            UC22_A(["UC-22: Login Admin Panel"]):::ucNode
+            UC23(["UC-23: Manajemen Pengaturan Sistem"]):::ucNode
+            UC09(["UC-09: Manajemen Konten Dinamis"]):::ucNode
+            UC19(["UC-19: Memantau Kalender Kontrol Visual"]):::ucNode
+            UC29(["UC-29: Memantau Log Audit & Error System"]):::ucNode
+        end
+
+        %% Sub-Modul 2: Master Data & Manajemen Hunian
+        subgraph SubMaster ["2. Master Data & Hunian"]
+            UC13(["UC-13: Manajemen Kamar & Fasilitas"]):::ucNode
+            UC14(["UC-14: Manajemen Penyewa"]):::ucNode
+            UC26(["UC-26: Process Checkout & Perpanjangan Kontrak"]):::extNode
+        end
+
+        %% Sub-Modul 3: Operasional Reservasi & Layanan
+        subgraph SubOperasional ["3. Reservasi & Layanan Komunikasi"]
+            UC06(["UC-06: Verifikasi Reservasi & Konfirmasi Kas"]):::ucNode
+            UC03_A(["UC-03: Chat Diskusi Reservasi"]):::ucNode
+            UC15(["UC-15: Memproses & Menanggapi Keluhan"]):::ucNode
+            UC17_A(["UC-17: Pengelolaan Guest Chat Tamu"]):::ucNode
+            UC20(["UC-20: Broadcast Notifikasi & Pengumuman"]):::ucNode
+        end
+
+        %% Sub-Modul 4: Manajemen Finansial & Laporan
+        subgraph SubFinansial ["4. Finansial & Pelaporan Arus Kas"]
+            UC08(["UC-08: Pencatatan Pengeluaran Operasional"]):::ucNode
+            UC07(["UC-07: Pencatatan & Evaluasi Arus Kas"]):::ucNode
+            UC27(["UC-27: Mengekspor Laporan & Data PDF/Excel"]):::extNode
+        end
+    end
+
+    %% Panel Kanan: Secondary Actors
+    subgraph ColEksternalAdmin ["Layanan Eksternal (Secondary Actors)"]
+        Fonnte[["WhatsApp Gateway (Fonnte)"]]:::secondaryActor
+        MailServer[["SMTP Mail Server"]]:::secondaryActor
+    end
+
+    %% Asosiasi Admin ke Use Cases
     Admin --> UC22_A
+    Admin --> UC23
+    Admin --> UC09
+    Admin --> UC19
+    Admin --> UC29
+
     Admin --> UC13
     Admin --> UC14
     Admin --> UC26
+
     Admin --> UC06
     Admin --> UC03_A
     Admin --> UC15
+    Admin --> UC17_A
+    Admin --> UC20
+
     Admin --> UC08
     Admin --> UC07
     Admin --> UC27
-    Admin --> UC09
-    Admin --> UC23
-    Admin --> UC19
-    Admin --> UC20
-    Admin --> UC17_A
-    Admin --> UC29
 
-    %% Relationships (Include & Extend)
-    UC26 -.-> |extend| UC14
-    UC27 -.-> |extend| UC07
-    UC27 -.-> |extend| UC14
-    UC27 -.-> |extend| UC08
-    UC06 -.-> |include| Fonnte
-    UC15 -.-> |include| Fonnte
-    UC20 -.-> |include| Fonnte
+    %% Relasi Extend Antar Use Case (Extension -> Base)
+    UC26 -.-> |"&laquo;extend&raquo;"| UC14
+    UC27 -.-> |"&laquo;extend&raquo;"| UC07
+    UC27 -.-> |"&laquo;extend&raquo;"| UC08
+    UC27 -.-> |"&laquo;extend&raquo;"| UC14
+
+    %% Asosiasi ke Layanan Eksternal
+    UC06 --> Fonnte
+    UC15 --> Fonnte
+    UC20 --> Fonnte
+    UC20 --> MailServer

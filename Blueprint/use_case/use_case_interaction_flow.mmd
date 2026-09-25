@@ -1,0 +1,189 @@
+flowchart TD
+    classDef actorStyle fill:#fff8e1,stroke:#ffa000,stroke-width:2px,font-weight:bold;
+    classDef baseUC fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20,font-weight:bold;
+    classDef extendUC fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#d84315,font-weight:bold;
+    classDef extService fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,font-weight:bold;
+    classDef timerStyle fill:#e0f7fa,stroke:#00838f,stroke-width:2px,font-weight:bold;
+    classDef decisionStyle fill:#fffde7,stroke:#fbc02d,stroke-width:2px,font-weight:bold;
+    classDef stateStyle fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,font-weight:bold;
+
+    %% ========================================================
+    %% FASE 1: DISCOVERY, GUEST CHAT & OTENTIKASI
+    %% ========================================================
+    subgraph S1 ["FASE 1: PENEMUAN HUNIAN & OTENTIKASI PENGGUNA"]
+        direction TB
+        Actor_Guest(["👤 Tamu (Guest)"]):::actorStyle
+        Ext_Google[["🌐 Google Identity Services (OAuth)"]]:::extService
+        Ext_Mail1[["✉️ SMTP Mail Server"]]:::extService
+        
+        UC10(["UC-10: Cek Katalog & Filter Ketersediaan"]):::baseUC
+        UC17_Pub(["UC-17: Diskusi via Guest Chat Publik"]):::baseUC
+        UC12(["UC-12: Registrasi Akun Calon Penyewa"]):::baseUC
+        UC18_Auth(["UC-18: Login / SSO Google OAuth"]):::baseUC
+        UC22_Auth(["UC-22: Login Akun Manual"]):::baseUC
+        UC24_Auth(["UC-24: Lupa & Reset Password"]):::extendUC
+
+        Actor_Guest --> UC10
+        Actor_Guest --> UC17_Pub
+        Actor_Guest --> UC12
+        Actor_Guest --> UC18_Auth
+        Actor_Guest --> UC22_Auth
+
+        UC18_Auth --> Ext_Google
+        UC24_Auth -.-> |extend: bila lupa kata sandi| UC22_Auth
+        UC24_Auth --> Ext_Mail1
+    end
+
+    %% ========================================================
+    %% FASE 2: RESERVASI KAMAR & PRE-PAYMENT
+    %% ========================================================
+    subgraph S2 ["FASE 2: RESERVASI KAMAR, CHAT PRE-PAYMENT & PEMBAYARAN SNAP"]
+        direction TB
+        Actor_Calon(["👤 Calon Penyewa"]):::actorStyle
+        Ext_Midtrans1[["💳 Midtrans Snap API"]]:::extService
+        Timer_Cron1[["⏰ System Scheduler (Cron Engine)"]]:::timerStyle
+
+        UC01(["UC-01: Melakukan Reservasi Kamar"]):::baseUC
+        UC03_Res(["UC-03: Chat Reservasi Real-Time"]):::extendUC
+        UC02(["UC-02: Pembayaran Reservasi Online"]):::extendUC
+
+        Status_Pending[("Status: 'pending' & Kamar Terkunci")]:::stateStyle
+        Status_Paid[("Status: 'dp' / 'lunas'")]:::stateStyle
+        Status_BatalAuto[("Status: 'dibatalkan' & Kamar Bebas")]:::stateStyle
+
+        Actor_Calon --> UC01
+        UC01 --> Status_Pending
+        
+        %% Extend Relations
+        UC03_Res -.-> |extend: negosiasi pra-bayar| UC01
+        UC02 -.-> |extend: pembayaran online| UC01
+        
+        Actor_Calon --> UC03_Res
+        Actor_Calon --> UC02
+
+        UC02 --> Ext_Midtrans1
+        Ext_Midtrans1 --> |Webhook Callback| Status_Paid
+
+        %% Auto-cancel
+        Timer_Cron1 --> |Auto-cancel expired >24 jam| Status_Pending
+        Status_Pending --> |Bila Lewat 24 Jam| Status_BatalAuto
+    end
+
+    %% ========================================================
+    %% FASE 3: VERIFIKASI ADMIN & TRANSISI PENYEWA
+    %% ========================================================
+    subgraph S3 ["FASE 3: VERIFIKASI ADMIN, KONFIRMASI KAS & TRANSISI AKUN"]
+        direction TB
+        Actor_Admin1(["👤 Administrator Kost"]):::actorStyle
+        Ext_Fonnte1[["💬 WhatsApp Gateway (Fonnte)"]]:::extService
+
+        UC06_Verif(["UC-06: Verifikasi Reservasi & Konfirmasi Kas"]):::baseUC
+        Dec_Admin{Admin Setujui NIK & Bukti?}:::decisionStyle
+
+        Status_BatalAdmin[("Status: 'dibatalkan' & Kamar Bebas")]:::stateStyle
+        Status_ActiveTenant[("Status: 'dikonfirmasi' & Akun Penyewa Aktif")]:::stateStyle
+
+        Actor_Admin1 --> UC06_Verif
+        Actor_Admin1 --> |Balas Chat| UC03_Res
+        
+        UC06_Verif --> Dec_Admin
+        Dec_Admin -- Tolak / Batal --> Status_BatalAdmin
+        Dec_Admin -- Setujui --> Status_ActiveTenant
+
+        Status_ActiveTenant --> Ext_Fonnte1
+        Ext_Fonnte1 --> |Kirim WA Kredensial Login| Actor_PenyewaActive(["👤 Penyewa Aktif"]):::actorStyle
+    end
+
+    %% ========================================================
+    %% FASE 4: HUNIAN AKTIF, AUTO-BILLING & KELUHAN
+    %% ========================================================
+    subgraph S4 ["FASE 4: MASA HUNIAN AKTIF, AUTO-BILLING, DENDA & KELUHAN"]
+        direction TB
+        Actor_Tenant(["👤 Penyewa Aktif"]):::actorStyle
+        Actor_Admin2(["👤 Administrator"]):::actorStyle
+        Timer_Cron2[["⏰ System Scheduler (Cron)"]]:::timerStyle
+        Ext_Midtrans2[["💳 Midtrans Snap API"]]:::extService
+        Ext_Fonnte2[["💬 WhatsApp Gateway (Fonnte)"]]:::extService
+
+        UC28(["UC-28: Otomasi Billing, Denda & Tugas Terjadwal"]):::baseUC
+        UC04(["UC-04: Membayar Tagihan Bulanan Rutin"]):::baseUC
+        UC25(["UC-25: Mengunduh Kuitansi Bukti PDF"]):::extendUC
+        UC05(["UC-05: Mengajukan Keluhan Fasilitas"]):::baseUC
+        UC15(["UC-15: Memproses & Menanggapi Keluhan"]):::baseUC
+        UC11(["UC-11: Mengakses Tata Tertib Kost"]):::baseUC
+        UC21(["UC-21: Melihat Pengumuman & Notifikasi"]):::baseUC
+
+        %% Cron Trigger
+        Timer_Cron2 --> |Tgl 1: Generate Billing & Tgl 10+: Denda 5%| UC28
+        UC28 --> Ext_Fonnte2
+        Ext_Fonnte2 --> |Broadcast Tagihan & Eskalasi Wali| Actor_Tenant
+
+        %% Tenant Interactions
+        Actor_Tenant --> UC04
+        Actor_Tenant --> UC05
+        Actor_Tenant --> UC11
+        Actor_Tenant --> UC21
+
+        %% Payment & Extend Receipt
+        UC04 --> Ext_Midtrans2
+        Actor_Admin2 --> |Konfirmasi Kas Manual UC-06| UC04
+        UC25 -.-> |extend: setelah status lunas| UC04
+        Actor_Tenant --> UC25
+
+        %% Complaint Resolution
+        UC05 --> Ext_Fonnte2
+        Ext_Fonnte2 --> |Notifikasi WA Masuk| Actor_Admin2
+        Actor_Admin2 --> UC15
+        UC15 --> Ext_Fonnte2
+        Ext_Fonnte2 --> |Notifikasi Selesai| Actor_Tenant
+    end
+
+    %% ========================================================
+    %% FASE 5: OPERASIONAL ADMIN, PELAPORAN & CHECKOUT
+    %% ========================================================
+    subgraph S5 ["FASE 5: OPERASIONAL LANJUTAN, KONTROL VISUAL, LAPORAN & CHECKOUT"]
+        direction TB
+        Actor_Admin3(["👤 Administrator"]):::actorStyle
+        Ext_Fonnte3[["💬 WhatsApp Gateway (Fonnte)"]]:::extService
+        Ext_Mail2[["✉️ SMTP Mail Server"]]:::extService
+
+        UC14(["UC-14: Manajemen Penyewa (CRUD)"]):::baseUC
+        UC26(["UC-26: Process Checkout & Perpanjangan"]):::extendUC
+        UC13(["UC-13: Kelola Kamar & Fasilitas"]):::baseUC
+        UC07(["UC-07: Laporan Arus Kas"]):::baseUC
+        UC08(["UC-08: Pencatatan Pengeluaran Operasional"]):::baseUC
+        UC27(["UC-27: Ekspor Data & Laporan (PDF/Excel)"]):::extendUC
+        UC19(["UC-19: Memantau Kalender Kontrol Visual"]):::baseUC
+        UC20(["UC-20: Broadcast Notifikasi Massal"]):::baseUC
+        UC09(["UC-09: Manajemen Konten Dinamis"]):::baseUC
+        UC23(["UC-23: Pengaturan Sistem"]):::baseUC
+        UC29(["UC-29: Memantau Log Audit Sistem"]):::baseUC
+
+        %% Admin Actions
+        Actor_Admin3 --> UC14
+        Actor_Admin3 --> UC13
+        Actor_Admin3 --> UC07
+        Actor_Admin3 --> UC08
+        Actor_Admin3 --> UC19
+        Actor_Admin3 --> UC20
+        Actor_Admin3 --> UC09
+        Actor_Admin3 --> UC23
+        Actor_Admin3 --> UC29
+
+        %% Extend Actions
+        UC26 -.-> |extend: aksi pengakhiran / perpanjang| UC14
+        UC27 -.-> |extend: unduh rekap arus kas| UC07
+        UC27 -.-> |extend: unduh data penyewa| UC14
+        UC27 -.-> |extend: unduh buku kas keluar| UC08
+
+        UC20 --> Ext_Fonnte3
+        UC20 --> Ext_Mail2
+    end
+
+    %% ========================================================
+    %% TRANSISI ANTAR FASE LOGIS
+    %% ========================================================
+    UC12 ==> |Akun Calon Terdaftar| Actor_Calon
+    Status_Paid ==> |Data Siap Diverifikasi| UC06_Verif
+    Status_ActiveTenant ==> |Akses Portal Aktif| Actor_Tenant
+    Actor_Tenant -.-> |Masa Sewa Berakhir| UC14
