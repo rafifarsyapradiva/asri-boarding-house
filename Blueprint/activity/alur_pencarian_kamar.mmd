@@ -18,7 +18,7 @@ flowchart TD
         BukaKatalog --> InputFilter["Masukkan kriteria pencarian (Filter Lantai, Tipe Kamar, Tanggal Masuk, & Durasi Sewa)"]
         TampilEmptyState["Melihat pesan 'Tidak ada kamar yang sesuai kriteria' & tombol Reset Filter"] --> InputFilter
         TanyaWA["Klik 'Tanya WA' & dialihkan ke WA Direct Link (URL-encoded message)"] --> SelesaiWA([Selesai])
-        KlikPesan["Klik tombol 'Pesan Unit' pada katalog"] --> DetailKamar["Sistem memuat halaman detail kamar (/kamar/{id}) beserta query string"]
+        KlikPesan["Klik tombol 'Pesan Unit' pada katalog"]
         TampilForm["Pengunjung melihat Form Reservasi & rincian kalkulasi estimasi harga"] --> SelesaiForm([Selesai])
     end
 
@@ -41,6 +41,7 @@ flowchart TD
         CekStatus -- "tersedia" --> TombolPesan["Sistem menampilkan tombol 'Pesan Unit' terintegrasi parameter URL"]
         TombolPesan --> KlikPesan
         
-        DetailKamar --> KalkulasiOtomatis["Sistem secara otomatis mengeksekusi JS hitungEstimasi() total tarif"]
+        KlikPesan --> MemuatDetailKamar["Sistem memuat halaman detail kamar (/kamar/{id}) beserta query string"]
+        MemuatDetailKamar --> KalkulasiOtomatis["Sistem mengeksekusi JS hitungEstimasi() total tarif"]
         KalkulasiOtomatis --> TampilForm
     end

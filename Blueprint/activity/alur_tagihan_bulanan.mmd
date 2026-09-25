@@ -15,8 +15,8 @@
 flowchart TD
     subgraph Swimlane_Penyewa ["Swimlane: Penyewa Aktif"]
         Start([Mulai]) --> BukaTagihan["Penyewa Aktif login & membuka halaman 'Tagihan Saya'"]
-        BukaTagihan --> DetailTagihan["Sistem memuat daftar tagihan bulanan & penyewa memilih satu tagihan"]
-        DetailTagihan --> TampilkanTotal["Tampilkan total tagihan (Nominal Pokok + Denda Keterlambatan)"]
+        BukaTagihan --> DetailTagihan["Sistem memuat daftar tagihan (Sewa Bulanan / Sisa DP 70%) & penyewa memilih satu"]
+        DetailTagihan --> TampilkanTotal["Tampilkan total tagihan (Nominal Pokok + Denda Keterlambatan jika ada)"]
         TampilkanTotal --> PilihOpsiBayar{"Pilih metode pembayaran?"}
         
         PilihOpsiBayar -- "Online (Midtrans Snap)" --> KlikBayarOnline["Penyewa klik 'Bayar Online'"]
@@ -43,7 +43,7 @@ flowchart TD
         KlikBayarOnline --> RequestToken["Sistem meminta Snap Token ke Midtrans Snap API"]
         RequestToken --> RenderSnapModal["Render pop-up portal pembayaran Midtrans Snap"]
         
-        WebhookSuccess["Webhook Midtrans mengirim callback lunas ke Laravel"] --> UpdateLunasOnline["Update status tagihan menjadi 'lunas' & simpan data pembayaran"]
+        WebhookSuccess["Dual-Channel Webhook Midtrans / Sync Callback mengirim status settlement"] --> UpdateLunasOnline["Update status tagihan menjadi 'lunas' & simpan data pembayaran"]
         
         UpdateLunasOnline --> GeneratePDFReceipt["Sistem generate Kuitansi Bukti Pembayaran PDF via Dompdf"]
         CommitTx --> GeneratePDFReceipt

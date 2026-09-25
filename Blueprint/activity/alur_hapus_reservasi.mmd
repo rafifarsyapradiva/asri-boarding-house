@@ -17,15 +17,23 @@ flowchart TD
         Start([Mulai]) --> PilihTindakan{"Aktor memilih tindakan?"}
         
         %% Alur Pembatalan
-        PilihTindakan -- "Batalkan Reservasi (Penyewa / Admin)" --> KlikTombolBatal["Penyewa / Admin klik 'Batalkan Reservasi'"]
+        PilihTindakan -- "Batalkan Reservasi" --> KlikTombolBatal["Penyewa / Admin klik 'Batalkan Reservasi'"]
         
         %% Alur Hapus Permanen
         PilihTindakan -- "Hapus Permanen (Hanya Admin)" --> BukaDetailReservasiBatal["Admin membuka rincian reservasi berstatus 'batal'"]
         BukaDetailReservasiBatal --> KlikHapusPermanen["Admin klik tombol 'Hapus' & menyetujui konfirmasi modal"]
+        
+        TolakBatalMandiri["Tolak Batal Mandiri: Reservasi berbayar wajib koordinasi pengembalian dana via Admin"] --> KoordinasiAdmin["Penyewa menghubungi Admin via WhatsApp / Chat untuk verifikasi refund"]
+        KoordinasiAdmin --> AdminSetBatal["Admin memproses persetujuan pembatalan & transfer refund manual"]
     end
 
     subgraph Swimlane_Backend ["Swimlane: Backend System & Database MySQL"]
-        KlikTombolBatal --> UpdateStatusBatal["Sistem memperbarui status reservasi menjadi 'batal' di DB"]
+        KlikTombolBatal --> CekStatusBatal{"Status Pembayaran Reservasi?"}
+        
+        CekStatusBatal -- "pending (Belum Bayar)" --> UpdateStatusBatal["Sistem memperbarui status reservasi menjadi 'batal' di DB"]
+        CekStatusBatal -- "dp / lunas (Sudah Bayar)" --> TolakBatalMandiri
+        AdminSetBatal --> UpdateStatusBatal
+        
         UpdateStatusBatal --> LepasKunciKamar["Sistem mengembalikan status Kamar terkait menjadi 'tersedia'"]
         LepasKunciKamar --> SelesaiBatal([Selesai Batal])
         

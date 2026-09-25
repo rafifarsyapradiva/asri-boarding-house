@@ -18,24 +18,25 @@ flowchart TD
         TampilForm --> IsiForm["Calon Penyewa mengisi Tanggal Mulai, Durasi Sewa, Tipe Sewa, Catatan, & Opsi Pembayaran (DP 30% / Lunas 100%)"]
         IsiForm --> KlikPesan["Calon Penyewa klik tombol 'Pesan Unit'"]
         
-        RedirectLogin["Sistem mengarahkan ke halaman login (/reservasi/login)"] --> RegisterOpsi{"Sudah punya akun?"}
+        BukaHalamanLogin["Membuka antarmuka login (/reservasi/login)"] --> RegisterOpsi{"Sudah punya akun?"}
         RegisterOpsi -- Tidak --> BukaRegister["Buka halaman registrasi & buat akun baru"]
         BukaRegister --> LoginSukses["Berhasil Login"]
         RegisterOpsi -- Ya --> LoginSukses
-        LoginSukses --> KlikPesan
+        LoginSukses --> IsiForm
         
-        TampilError["Sistem memuat pesan kesalahan (Format NIK, Nomor HP Wali, Tanggal Lampau, dll)"] --> IsiForm
+        TampilError["Sistem memuat pesan kesalahan validasi (Kamar tidak valid, Tanggal lampau, Durasi melebihi batas)"] --> IsiForm
     end
 
     subgraph Swimlane_System ["Swimlane: Sistem Backend Laravel & Database MySQL"]
         KlikPesan --> CekLogin{"Apakah pengguna sudah login?"}
-        CekLogin -- Tidak --> RedirectLogin
+        CekLogin -- Tidak --> RedirectLogin["Sistem mengarahkan pengguna ke halaman login"]
+        RedirectLogin --> BukaHalamanLogin
         
         CekLogin -- Ya --> CekRoleAdmin{"Apakah peran pengguna adalah 'admin'?"}
         CekRoleAdmin -- Ya --> BlockAdmin["Sistem menampilkan pesan error Toast: 'Admin tidak dapat melakukan reservasi'"]
         BlockAdmin --> SelesaiAdmin([Selesai])
         
-        CekRoleAdmin -- Tidak --> ValidasiInput{"Apakah input form valid?"}
+        CekRoleAdmin -- Tidak --> ValidasiInput{"Apakah input form valid sesuai StoreReservasiRequest?"}
         ValidasiInput -- Tidak --> TampilError
         
         ValidasiInput -- Ya --> DbTransactionStart["Sistem memulai DB::transaction() dengan lockForUpdate()"]

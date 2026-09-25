@@ -21,14 +21,17 @@ flowchart TD
         
         %% Jalur 1: Diskusi Chat
         ForkParalel --> ChatBox["Calon Penyewa masuk ke tab Chat Diskusi"]
-        ChatBox --> KirimPesan["Mengetik & mengirim pesan ke Admin"]
+        ChatBox --> KirimPesan["Mengetik & mengirim pesan pertanyaan ke Admin"]
         
-        %% Jalur 2: Pembayaran
+        %% Jalur 2: Pembayaran Snap
         ForkParalel --> KlikBayar["Calon Penyewa klik tombol 'Bayar Sekarang'"]
         RenderPopUp["Render portal Pop-Up Midtrans Snap di browser"] --> UserAksiSnap{"Aksi Pengguna di Pop-Up Snap?"}
         
         UserAksiSnap -- "Tutup Pop-Up / Batal" --> CloseSnap["Penyewa menutup modal Snap (Status reservasi tetap 'pending')"]
-        UserAksiSnap -- "Selesaikan Pembayaran" --> SelesaikanBayar["Calon Penyewa memilih metode & menyelesaikan pembayaran"]
+        UserAksiSnap -- "Selesaikan Pembayaran" --> SelesaikanBayar["Calon Penyewa memilih metode & menyelesaikan pembayaran di Snap"]
+        
+        %% Dual-Channel Callback Klien
+        SelesaikanBayar --> SnapClientCallback["Browser memicu callback JS onSuccess / onPending -> window.location.reload()"]
     end
 
     subgraph Swimlane_Backend ["Swimlane: Sistem Backend Laravel & Scheduler Engine"]
@@ -45,12 +48,18 @@ flowchart TD
         AutoCancelCron --> SelesaiBatalCron([Selesai Batal Expired])
         CekTimer24Jam -- Tidak --> HalamanReservasi
         
-        WebhookMidtrans["Webhook Midtrans mengirim callback notification POST ke Laravel"] --> VerifikasiSignature{"Apakah signature_key & nominal valid?"}
+        %% Jalur 1 Dual-Channel: Sinkronisasi Saat Show Halaman (Fallback Check)
+        SnapClientCallback --> ShowReload["Controller show() dieksekusi saat reload"]
+        ShowReload --> SyncMidtransCheck["Sistem mengeksekusi syncStatusFromMidtrans() API Check ke Server Midtrans"]
+        
+        %% Jalur 2 Dual-Channel: Asynchronous Webhook
+        WebhookMidtrans["Webhook Midtrans mengirim callback notification POST ke /api/midtrans-reservasi-callback"] --> VerifikasiSignature{"Apakah signature_key & nominal valid?"}
         
         VerifikasiSignature -- Tidak --> RejectCallback["Tolak callback notifikasi & catat log error (HTTP 403)"]
         RejectCallback --> SelesaiErr([Selesai Error])
         
-        VerifikasiSignature -- Ya --> EvaluasiTransaksi{"Bagaimana status transaksi?"}
+        VerifikasiSignature -- Ya --> EvaluasiTransaksi{"Bagaimana status transaksi Midtrans?"}
+        SyncMidtransCheck --> EvaluasiTransaksi
         
         EvaluasiTransaksi -- "Success / Settlement" --> CekSkema{"Skema Pembayaran?"}
         CekSkema -- "DP 30%" --> SetDP["Ubah status reservasi ke 'dp' & catat data pembayaran"]
