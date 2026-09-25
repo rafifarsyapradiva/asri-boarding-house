@@ -1,5 +1,7 @@
 classDiagram
     direction TB
+
+    %% Model Transaksional Inti %%
     class User {
         +int id
         +string nama
@@ -16,6 +18,7 @@ classDiagram
         +string nomor_kamar
         +tinyint lantai
         +TipeKamar tipe
+        +float luas_m2
         +decimal harga_bulan
         +KamarStatus status
         +kalkulasiHargaSewa(tipe, durasi) float
@@ -31,6 +34,7 @@ classDiagram
         +int id
         +int user_id
         +int kamar_id
+        +string nik
         +decimal harga_sewa
         +date tanggal_masuk
         +date tanggal_keluar_seharusnya
@@ -41,6 +45,7 @@ classDiagram
         +int id
         +int penyewa_id
         +string order_id
+        +date tanggal_jatuh_tempo
         +decimal nominal_pokok
         +decimal nominal_denda
         +decimal nominal_total
@@ -51,18 +56,22 @@ classDiagram
         +int id
         +int tagihan_id
         +string transaction_id
+        +string payment_type
         +decimal nominal
         +string status_midtrans
+        +int dikonfirmasi_oleh
         +datetime tanggal_bayar
     }
     class Reservasi {
         +bigint id
         +int user_id
         +int kamar_id
+        +date tanggal_mulai
+        +date tanggal_selesai
         +decimal total_harga
         +boolean is_dp
         +ReservasiStatus status
-        +isKamarTerbooking() bool
+        +static isKamarTerbooking() bool
     }
     class ChatMessage {
         +bigint id
@@ -89,7 +98,7 @@ classDiagram
     class GuestChatThread {
         +bigint id
         +string session_token
-        +string status
+        +GuestChatStatus status
     }
     class GuestChatMessage {
         +bigint id
@@ -107,6 +116,37 @@ classDiagram
         +string sumber
         +string tipe_aktivitas
         +int user_id
+    }
+
+    %% Model Pendukung CMS Publik %%
+    class CustomerReview {
+        +int id
+        +string nama
+        +tinyint bintang
+        +text ulasan
+    }
+    class Faq {
+        +int id
+        +string pertanyaan
+        +text jawaban
+        +boolean is_active
+    }
+    class Peraturan {
+        +int id
+        +string judul
+        +text deskripsi
+    }
+    class Gallery {
+        +int id
+        +string judul
+        +string foto
+        +boolean is_active
+    }
+    class Pengumuman {
+        +int id
+        +string judul
+        +text isi
+        +boolean is_active
     }
 
     User "1" -- "0..1" Penyewa : "One-to-One (Profil Penyewa)"

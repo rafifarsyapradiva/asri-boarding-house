@@ -4,20 +4,20 @@ classDiagram
     class BaseResetPasswordNotification {
         <<abstract>>
         #string token
-        #getRoleName() string
-        #resolveRouteName(notifiable) string
+        #getRoleName()* string
+        #resolveRouteName(notifiable)* string
         +resetUrl(notifiable) string
         +toMail(notifiable) MailMessage
     }
 
     class AdminResetPasswordNotification {
-        +ROUTE_NAME string
+        +ROUTE_NAME string = "admin.password.reset"
         #getRoleName() string
         #resolveRouteName(notifiable) string
     }
 
     class PenyewaResetPasswordNotification {
-        +ROUTE_NAME string
+        +ROUTE_NAME string = "password.reset"
         #getRoleName() string
         #resolveRouteName(notifiable) string
     }
@@ -37,12 +37,19 @@ classDiagram
         +EnsurePasswordChanged
     }
 
+    class ValidationRules {
+        +KamarTersediaRule
+        +TanpaPenyewaAktifLainRule
+        +ValidGoogleMapsEmbed
+    }
+
     class ProtectedModels {
         +User
         +Reservasi
         +Tagihan
         +Pembayaran
         +Keluhan
+        +Kamar
     }
 
     AdminResetPasswordNotification --|> BaseResetPasswordNotification : Extends
@@ -50,3 +57,4 @@ classDiagram
 
     Middlewares ..> ProtectedModels : Guards HTTP Requests
     Policies ..> ProtectedModels : Authorizes User Actions
+    ValidationRules ..> ProtectedModels : Validates Input State

@@ -1,11 +1,13 @@
 classDiagram
     direction TB
 
+    %% Model Transaksional Inti %%
     class User {
         +int id
         +string nama
         +string email
         +string no_hp
+        +string nik
         +UserRole role
         +isProfileComplete() bool
         +isActiveTenant() bool
@@ -32,8 +34,10 @@ classDiagram
         +int id
         +int user_id
         +int kamar_id
+        +string nik
         +decimal harga_sewa
         +date tanggal_masuk
+        +date tanggal_keluar_seharusnya
         +PenyewaStatus status
         +getIsOverdueAttribute() bool
     }
@@ -42,6 +46,9 @@ classDiagram
         +int id
         +int penyewa_id
         +string order_id
+        +date tanggal_jatuh_tempo
+        +decimal nominal_pokok
+        +decimal nominal_denda
         +decimal nominal_total
         +TagihanStatus status
         +scopeTerlambat() Builder
@@ -51,8 +58,10 @@ classDiagram
         +int id
         +int tagihan_id
         +string transaction_id
+        +string payment_type
         +decimal nominal
         +string status_midtrans
+        +int dikonfirmasi_oleh
         +datetime tanggal_bayar
     }
 
@@ -60,10 +69,12 @@ classDiagram
         +bigint id
         +int user_id
         +int kamar_id
+        +date tanggal_mulai
+        +date tanggal_selesai
         +decimal total_harga
         +boolean is_dp
         +ReservasiStatus status
-        +isKamarTerbooking() bool
+        +static isKamarTerbooking() bool
     }
 
     class ChatMessage {
@@ -90,17 +101,24 @@ classDiagram
         +int id
         +string nama_pengeluaran
         +decimal nominal
+        +date tanggal_pengeluaran
+    }
+
+    class Setting {
+        +string key
+        +text value
     }
 
     class GuestChatThread {
         +bigint id
         +string session_token
-        +string status
+        +GuestChatStatus status
     }
 
     class GuestChatMessage {
         +bigint id
         +bigint guest_chat_thread_id
+        +string sender_type
         +text message
     }
 
@@ -118,10 +136,45 @@ classDiagram
         +int user_id
     }
 
+    %% Model Pendukung CMS Publik %%
+    class CustomerReview {
+        +int id
+        +string nama
+        +tinyint bintang
+        +text ulasan
+    }
+
+    class Faq {
+        +int id
+        +string pertanyaan
+        +text jawaban
+        +boolean is_active
+    }
+
+    class Peraturan {
+        +int id
+        +string judul
+        +text deskripsi
+    }
+
+    class Gallery {
+        +int id
+        +string judul
+        +string foto
+        +boolean is_active
+    }
+
+    class Pengumuman {
+        +int id
+        +string judul
+        +text isi
+        +boolean is_active
+    }
+
     %% Relasi Asosiasi & Komposisi %%
     User "1" -- "0..1" Penyewa : One-to-One
     User "1" -- "*" Reservasi : One-to-Many
-    User "1" -- "*" Pembayaran : One-to-Many
+    User "1" -- "*" Pembayaran : Confirms Cash
     User "1" -- "*" ChatMessage : One-to-Many
     User "1" -- "*" GuestChatMessage : One-to-Many
     User "1" -- "*" NotifikasiKhusus : One-to-Many
