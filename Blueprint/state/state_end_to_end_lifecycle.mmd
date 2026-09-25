@@ -1,55 +1,120 @@
-stateDiagram-v2
-    state "Siklus Hidup Reservasi (Calon Penyewa)" as ReservasiLifecycle {
-        [*] --> Res_Pending : Checkout Booking Kamar
-        Res_Pending --> Res_DP : Settlement / Cash [DP 30%]
-        Res_Pending --> Res_Lunas : Settlement / Cash [Lunas 100%]
-        Res_Pending --> Res_Batal : Timeout 24 Jam / Double-Booking
-        
-        Res_DP --> Res_Dikonfirmasi : Admin Konfirmasi [NIK & Wali OK]
-        Res_Lunas --> Res_Dikonfirmasi : Admin Konfirmasi [NIK & Wali OK]
-        Res_DP --> Res_Batal : Batalkan Sebelum Konfirmasi
-        Res_Lunas --> Res_Batal : Batalkan Sebelum Konfirmasi
-        
-        Res_Dikonfirmasi --> Res_Selesai : Auto-Onboarding [User & Tenant]
-        Res_Batal --> [*] : Kunci Kamar Dilepas
-        Res_Selesai --> [*]
-    }
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#F8FAFC',
+    'primaryTextColor': '#0F172A',
+    'primaryBorderColor': '#334155',
+    'lineColor': '#334155',
+    'secondaryColor': '#FEF3C7',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    classDef initialNode fill:#E2E8F0,stroke:#475569,stroke-width:2px,color:#0F172A,font-weight:bold;
+    classDef pendingNode fill:#FEF3C7,stroke:#D97706,stroke-width:2px,color:#78350F,font-weight:bold;
+    classDef activeNode fill:#E0E7FF,stroke:#4F46E5,stroke-width:2px,color:#312E81,font-weight:bold;
+    classDef successNode fill:#DCFCE7,stroke:#16A34A,stroke-width:2px,color:#14532D,font-weight:bold;
+    classDef dangerNode fill:#FEE2E2,stroke:#DC2626,stroke-width:2px,color:#7F1D1D,font-weight:bold;
+    classDef warningNode fill:#FFEDD5,stroke:#EA580C,stroke-width:2px,color:#7C2D12,font-weight:bold;
+    classDef terminalNode fill:#334155,stroke:#0F172A,stroke-width:2px,color:#FFFFFF,font-weight:bold;
 
-    state "Siklus Hidup Penyewa Aktif (Tenant)" as PenyewaLifecycle {
-        [*] --> Pen_Aktif : Konfirmasi Reservasi / Registrasi Manual
-        Pen_Aktif --> Pen_Aktif : Perpanjang Sewa [Harian/Mingguan]
-        Pen_Aktif --> Pen_Nonaktif : Checkout [Potong Deposit jika Rusak]
-        Pen_Nonaktif --> Pen_Aktif : Reaktivasi [Kamar 'tersedia']
-        Pen_Nonaktif --> [*] : Selesai Menghuni
-    }
+    subgraph TOP_ROW [" "]
+        direction LR
 
-    state "Siklus Hidup Tagihan Bulanan (Billing)" as TagihanLifecycle {
-        [*] --> Tag_Pending : Scheduler Tgl 1 / Sisa DP 70%
-        [*] --> Tag_Lunas : Full Payment / Registrasi Manual
-        
-        Tag_Pending --> Tag_Lunas : Settlement / Cash [Valid]
-        Tag_Pending --> Tag_Terlambat : Scheduler [t > Tgl 10]
-        Tag_Pending --> Tag_Gagal : Webhook Deny / Fraud
-        Tag_Pending --> Tag_Kadaluarsa : Sesi Snap Expired
-        
-        Tag_Terlambat --> Tag_Lunas : Bayar Pokok + Denda 5%
-        Tag_Terlambat --> Tag_Terlambat : Sesi Snap Expire [Anti-Regression]
-        
-        Tag_Gagal --> Tag_Pending : Klik Bayar / Regenerate SNAP
-        Tag_Kadaluarsa --> Tag_Pending : Klik Bayar / Regenerate SNAP
-        Tag_Lunas --> [*] : Kuitansi PDF & WA Sukses
-    }
+        subgraph SUB_RES ["📋 1. Siklus Hidup Reservasi (Calon Penyewa)"]
+            direction TB
+            InitRes(["● Start Reservasi"]):::initialNode
+            Res_Pending["pending<br><i>Virtual Lock Kamar</i>"]:::pendingNode
+            Res_DP["dp<br><i>Terbayar DP 30%</i>"]:::warningNode
+            Res_Lunas["lunas<br><i>Terbayar Penuh 100%</i>"]:::activeNode
+            Res_Dikonfirmasi["dikonfirmasi<br><i>Disetujui Admin</i>"]:::successNode
+            Res_Selesai["selesai<br><i>Logical End State</i>"]:::successNode
+            Res_Batal["batal<br><i>Dibatalkan / Expired</i>"]:::dangerNode
+            TermRes(["◉ End Reservasi"]):::terminalNode
 
-    state "Siklus Status Kamar Fisik (Room Allocation)" as KamarLifecycle {
-        [*] --> Kam_Tersedia : Kamar Baru Ditambahkan
-        Kam_Tersedia --> Kam_Terisi : Konfirmasi / Registrasi Penyewa
-        Kam_Terisi --> Kam_Terisi : Checkout [Kunci Kamar Tetap 'terisi']
-        Kam_Terisi --> Kam_Tersedia : Inspeksi Fisik OK / Set Tersedia
-        Kam_Terisi --> Kam_Maintenance : Kerusakan Ditemukan / Set Perawatan
-        Kam_Maintenance --> Kam_Tersedia : Perbaikan Selesai / Set Tersedia
-    }
+            InitRes -->|"ReservasiDibuat<br>/ Virtual Lock"| Res_Pending
+            Res_Pending -->|"Midtrans DP 30%"| Res_DP
+            Res_Pending -->|"Midtrans Lunas 100%"| Res_Lunas
+            Res_Pending -->|"Timeout / Batal Mandiri"| Res_Batal
 
-    ReservasiLifecycle --> PenyewaLifecycle : Auto-Onboarding
-    PenyewaLifecycle --> TagihanLifecycle : Tagihan Bulanan
-    ReservasiLifecycle --> KamarLifecycle : Alokasi Unit
-    PenyewaLifecycle --> KamarLifecycle : Menghuni Unit
+            Res_DP -->|"AdminKonfirmasi [NIK & Wali OK]"| Res_Dikonfirmasi
+            Res_Lunas -->|"AdminKonfirmasi [NIK & Wali OK]"| Res_Dikonfirmasi
+            Res_DP -->|"AdminTolak / Refund"| Res_Batal
+            Res_Lunas -->|"AdminTolak / Refund"| Res_Batal
+
+            Res_Dikonfirmasi -->|"Onboarding Selesai"| Res_Selesai
+            Res_Selesai --> TermRes
+            Res_Batal --> TermRes
+        end
+
+        subgraph SUB_KAM ["🚪 2. Siklus Status Kamar Fisik (Room Allocation)"]
+            direction TB
+            InitKam(["● Start Kamar"]):::initialNode
+            Kam_Tersedia["tersedia<br><i>Siap Ditempati</i>"]:::successNode
+            Kam_Terisi["terisi<br><i>Dihuni / Hold Inspeksi</i>"]:::activeNode
+            Kam_Maintenance["maintenance<br><i>Dalam Perbaikan</i>"]:::dangerNode
+            TermKam(["◉ End Kamar"]):::terminalNode
+
+            InitKam -->|"Tambah Kamar Baru"| Kam_Tersedia
+            Kam_Tersedia -->|"Konfirmasi / Registrasi"| Kam_Terisi
+            Kam_Terisi -->|"Checkout [Wajib Cek Fisik]"| Kam_Terisi
+            Kam_Terisi -->|"Inspeksi OK / Bebaskan"| Kam_Tersedia
+            Kam_Terisi -->|"Kerusakan Ditemukan"| Kam_Maintenance
+            Kam_Tersedia -->|"Perawatan Rutin"| Kam_Maintenance
+            Kam_Maintenance -->|"Perbaikan Selesai"| Kam_Tersedia
+            Kam_Tersedia -->|"Hapus Kamar"| TermKam
+        end
+    end
+
+    subgraph BOTTOM_ROW [" "]
+        direction LR
+
+        subgraph SUB_PEN ["👤 3. Siklus Hidup Penyewa Aktif (Tenant)"]
+            direction TB
+            InitPen(["● Start Penyewa"]):::initialNode
+            Pen_Aktif["aktif<br><i>Akses Portal Kost</i>"]:::successNode
+            Pen_Nonaktif["nonaktif<br><i>Selesai Sewa / Checkout</i>"]:::warningNode
+            TermPen(["◉ End Penyewa"]):::terminalNode
+
+            InitPen -->|"Onboard / Daftar Manual"| Pen_Aktif
+            Pen_Aktif -->|"Perpanjang [Harian/Mingguan]"| Pen_Aktif
+            Pen_Aktif -->|"Checkout [Potong Deposit]"| Pen_Nonaktif
+            Pen_Nonaktif -->|"Reaktivasi [Kamar OK]"| Pen_Aktif
+            Pen_Nonaktif -->|"Hapus Data [Tagihan Lunas]"| TermPen
+        end
+
+        subgraph SUB_TAG ["💰 4. Siklus Hidup Tagihan Bulanan (Billing)"]
+            direction TB
+            InitTag(["● Start Tagihan"]):::initialNode
+            Tag_Pending["pending<br><i>Menunggu Pelunasan</i>"]:::pendingNode
+            Tag_Terlambat["terlambat<br><i>Lewat Tgl 10</i>"]:::warningNode
+            Tag_Lunas["lunas<br><i>Terbayar & Kuitansi PDF</i>"]:::successNode
+            Tag_Gagal["gagal / kadaluarsa<br><i>Sesi Midtrans Gagal</i>"]:::dangerNode
+            TermTag(["◉ End Tagihan"]):::terminalNode
+
+            InitTag -->|"Scheduler Tgl 1 / Sisa DP"| Tag_Pending
+            InitTag -->|"Full Payment di Muka"| Tag_Lunas
+
+            Tag_Pending -->|"Settlement / Cash"| Tag_Lunas
+            Tag_Pending -->|"Scheduler [t > Tgl 10]"| Tag_Terlambat
+            Tag_Pending -->|"Webhook Deny / Expire"| Tag_Gagal
+
+            Tag_Terlambat -->|"Bayar Pokok + Denda 5%"| Tag_Lunas
+            Tag_Terlambat -->|"Snap Expire [Anti-Regression]"| Tag_Terlambat
+            Tag_Terlambat -->|"Webhook Deny"| Tag_Gagal
+
+            Tag_Gagal -->|"Klik Bayar di Dasbor"| Tag_Pending
+            Tag_Lunas --> TermTag
+        end
+    end
+
+    TOP_ROW ~~~ BOTTOM_ROW
+
+    %% Cross-Domain Links
+    Res_Dikonfirmasi ==>|"1. Onboard Akun"| Pen_Aktif
+    Res_Dikonfirmasi ==>|"2. Alokasi Kamar"| Kam_Terisi
+    Pen_Aktif -.->|"3. Terbitkan Tagihan Tgl 1"| Tag_Pending
+    Pen_Nonaktif -.->|"4. Tahan Kamar 'terisi'"| Kam_Terisi

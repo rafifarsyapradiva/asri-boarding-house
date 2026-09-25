@@ -1,7 +1,17 @@
 stateDiagram-v2
-    [*] --> pending : Submit Keluhan [Foto < 2MB]<br>/ WA ke Admin
-    pending --> diproses : Klik Proses / Mulai Perbaikan
-    pending --> selesai : Klik Selesai [Tanggapan Diisi]<br>/ Kirim WA Solusi
-    diproses --> selesai : Klik Selesai [Tanggapan Diisi]<br>/ Kirim WA Solusi
-    selesai --> diproses : Klik Reopen / Tiket Dibuka Kembali
-    selesai --> [*] : Arsip Keluhan
+    direction TB
+
+    state "pending" as pending
+    state "diproses" as diproses
+    state "selesai" as selesai
+
+    [*] --> pending : SubmitKeluhan [Foto <= 2MB]<br>/ Notifikasi WA Admin
+
+    pending --> diproses : MulaiProses<br>/ Jadwalkan Penanganan
+    pending --> selesai : SelesaikanLangsung<br>[Tanggapan Diisi]<br>/ Kirim WA Solusi
+
+    diproses --> selesai : KonfirmasiSelesai<br>[Tanggapan Diisi]<br>/ Kirim WA Solusi
+
+    selesai --> diproses : ReopenTiket<br>[Belum Tuntas]<br>/ Buka Tiket
+
+    selesai --> [*] : ArsipKeluhan<br>/ Riwayat Disimpan

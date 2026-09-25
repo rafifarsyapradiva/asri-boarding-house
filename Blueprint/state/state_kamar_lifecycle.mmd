@@ -1,8 +1,23 @@
 stateDiagram-v2
-    [*] --> tersedia : Tambah Kamar Baru
-    tersedia --> terisi : Reservasi / Registrasi Penyewa
-    terisi --> terisi : Checkout [Kamar Tetap 'terisi']
-    terisi --> tersedia : Set Tersedia [Inspeksi Fisik OK]
-    terisi --> maintenance : Set Perawatan [Kerusakan Fasilitas]
-    tersedia --> maintenance : Set Perawatan [Rutin]
-    maintenance --> tersedia : Set Tersedia [Perbaikan Selesai]
+    direction TB
+
+    state "tersedia" as tersedia
+    state "maintenance" as maintenance
+
+    [*] --> tersedia : Tambah Kamar Baru<br>[Data Valid] / Simpan Unit
+
+    state "terisi" as terisi {
+        Dihuni : Dihuni Penyewa Aktif
+        InspeksiFisik : Hold Inspeksi Fisik Kamar
+        Dihuni --> InspeksiFisik : Checkout Penyewa<br>[Tahan Status 'terisi']
+    }
+
+    tersedia --> Dihuni : Reservasi / Registrasi<br>/ Pindah Masuk
+
+    InspeksiFisik --> tersedia : Inspeksi OK<br>[Fasilitas Utuh]<br>/ Bebaskan Unit
+    InspeksiFisik --> maintenance : Ditemukan Kerusakan<br>/ Unit Diperbaiki
+
+    tersedia --> maintenance : Perawatan Rutin<br>/ Pemeliharaan Fasilitas
+    maintenance --> tersedia : Perbaikan Selesai<br>/ Buka Unit Tersedia
+
+    tersedia --> [*] : Hapus Kamar [Tanpa Penyewa]<br>/ Soft Delete Unit

@@ -1,5 +1,16 @@
 stateDiagram-v2
-    [*] --> aktif : Onboarding Online / Manual
-    aktif --> nonaktif : Checkout (Potong Deposit)
-    nonaktif --> aktif : Reaktivasi (Kamar OK)
-    aktif --> aktif : Perpanjang Sewa (Harian/Mingguan)
+    direction TB
+
+    state "aktif" as aktif {
+        [*] --> Menghuni : Akun & Kontrak Aktif
+        Menghuni --> Perpanjang : PerpanjangSewa<br>[Tipe Harian/Mingguan]
+        Perpanjang --> Menghuni : Akumulasi Durasi<br>& Terbit Tagihan
+    }
+
+    [*] --> aktif : OnboardReservasi / RegistrasiManual<br>[NIK & Kontak Valid]<br>/ Buat Akun & WA Kredensial
+
+    aktif --> nonaktif : ProsesCheckout<br>[Masa Sewa Berakhir]<br>/ Potong Kerusakan / Refund Deposit<br>& Nonaktifkan Akun
+
+    nonaktif --> aktif : ReaktivasiSewa<br>[Kamar Tujuan 'tersedia']<br>/ Set Kamar Terisi & Buka Akses
+
+    nonaktif --> [*] : HapusPenyewa<br>[Seluruh Tagihan Lunas]<br>/ Anonimisasi NIK/Email/HP<br>& Soft Delete
