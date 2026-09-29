@@ -1,3 +1,16 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FEF3C7',
+    'tertiaryColor': '#FFFFFF',
+    'fontSize': '14px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
 stateDiagram-v2
     [*] --> TransaksiDibuat: User Klik "Bayar Sekarang" (Midtrans Snap Popup)
     TransaksiDibuat --> PendingPayment: Snap Token Generated & Order Created

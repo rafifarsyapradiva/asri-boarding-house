@@ -1,0 +1,58 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '14px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    subgraph FlowA["🔐 Alur A: Penegakan Ganti Password Awal (EnsurePasswordChanged)"]
+        direction TB
+        A1([Penyewa Baru Terima Kredensial WA Fonnte]) --> A2["Login dengan Email & Password Bawaan (No HP)"]
+        A2 --> A3["Auth Controller Otentikasi Pengguna"]
+        A3 --> A4{"Cek Nilai Flag<br>require_password_change?"}
+        
+        A4 -- "true (Akun Baru / Belum Ganti)" --> A5["Middleware 'EnsurePasswordChanged' Mencegat"]
+        A5 --> A6["Redirect Paksa ke /ganti-password<br>(Kunci Akses Dashboard)"]
+        A6 --> A7["Penyewa Mengisi Password Baru & Konfirmasi"]
+        A7 --> A8{"Validasi Form:<br>Min 8 Karakter & Cocok?"}
+        A8 -- Tidak Cocok / Lemah --> A7
+        A8 -- Valid & Kuat --> A9["Update Hash Password Baru<br>Set require_password_change = false"]
+        A9 --> A10["Flash Toast Sukses & Buka Akses Portal"]
+        
+        A4 -- "false (Sudah Pernah Ganti)" --> A10
+        A10 --> A11([Dashboard Portal Penyewa Aktif])
+    end
+
+    subgraph FlowB["📧 Alur B: Pemulihan Akun Lupa Sandi Mandiri (Self-Service Reset)"]
+        direction TB
+        B1([Pengguna Klik 'Lupa Kata Sandi?']) --> B2["Buka Halaman /forgot-password"]
+        B2 --> B3["Input Alamat Email Terdaftar"]
+        B3 --> B4{"Apakah Email Ada di Database?"}
+        
+        B4 -- Tidak Ada --> B5["Tampilkan Pesan Error: Email Tidak Terdaftar"]
+        B5 --> B3
+        
+        B4 -- Terdaftar --> B6["Generate Secure Token 64-karakter<br>Simpan ke 'password_reset_tokens' (TTL: 60 Menit)"]
+        B6 --> B7["Kirim Email via SMTP Mailer (Mailable Template)"]
+        B7 --> B8["Pengguna Buka Email & Klik Tautan Reset Password"]
+        B8 --> B9{"Validasi Token & Cek Kedaluwarsa (<60 Menit)?"}
+        
+        B9 -- Kedaluwarsa / Tidak Valid --> B10["Tampilkan Peringatan: Tautan Tidak Berlaku Lagi"]
+        B10 --> B1
+        
+        B9 -- Token Sah --> B11["Buka Halaman /reset-password/{token}"]
+        B11 --> B12["Input Password Baru & Konfirmasi"]
+        B12 --> B13["Update Password di Tabel 'users'<br>Hapus Token dari 'password_reset_tokens'"]
+        B13 --> B14([Redirect ke Login dengan Pesan Sukses])
+    end
+
+    classDef panelBox fill:#FAFAFA,stroke:#000000,stroke-width:2px;
+    class FlowA,FlowB panelBox;
