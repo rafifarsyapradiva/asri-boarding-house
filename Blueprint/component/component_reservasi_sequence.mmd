@@ -2,7 +2,7 @@ sequenceDiagram
     autonumber
     actor Guest as Calon Penyewa (Browser)
     participant PublicUI as Tier 1: Public Views & Alpine.js
-    participant ReservasiCtrl as Tier 2: ReservasiAuthController & PenyewaCtrl
+    participant ReservasiCtrl as Tier 2: Reservasi Controllers<br/>(Penyewa\Reservasi & SnapToken)
     participant ReservasiServ as Tier 2: ReservasiService
     participant MidtransServ as Tier 2: MidtransService
     participant TransisiServ as Tier 2: TransisiPenyewaService
@@ -11,24 +11,37 @@ sequenceDiagram
     participant Midtrans as External API: Midtrans Gateway
     participant Fonnte as External API: Fonnte WA Gateway
 
-    Guest->>PublicUI: Pilih Kamar & Isi Form Reservasi
-    PublicUI->>ReservasiCtrl: POST /reservasi/store
-    ReservasiCtrl->>ReservasiServ: processBookingData($input)
-    ReservasiServ->>ModelDB: Simpan Reservasi (Status: Pending)
+    %% Phase 1: Buat Reservasi & Token
+    Guest->>PublicUI: Pilih Kamar & Submit Form Reservasi
+    PublicUI->>ReservasiCtrl: POST /penyewa/reservasi (StoreReservasiRequest)
+    ReservasiCtrl->>ReservasiServ: buatReservasi($validatedData)
+    ReservasiServ->>ModelDB: DB::transaction & lockForUpdate() -> Simpan Reservasi (Status: 'pending')
+    ReservasiServ->>EventBus: Dispatch Event ReservasiDibuat
+    EventBus->>EventBus: HandleReservasiDibuat -> KirimNotifikasiAdminReservasiJob
+    EventBus->>Fonnte: WhatsApp Notifikasi Reservasi Baru ke Admin Kost
+    ReservasiCtrl-->>PublicUI: Redirect ke Halaman Stepper Pembayaran
+    
+    PublicUI->>ReservasiCtrl: AJAX POST /penyewa/reservasi/{id}/token
     ReservasiCtrl->>MidtransServ: createSnapToken($reservasi)
     MidtransServ->>Midtrans: POST /snap/v1/transactions
     Midtrans-->>MidtransServ: Return snap_token
-    ReservasiCtrl-->>PublicUI: Render Halaman Stepper Status Reservasi + Snap Modal
+    ReservasiCtrl-->>PublicUI: Return JSON {snap_token: token}
+    PublicUI->>Guest: snap.pay(token) -> Buka Modal Snap Popup
     
-    Guest->>Midtrans: Bayar DP / Full Via Snap Popup
-    Midtrans->>ReservasiCtrl: Midtrans Webhook Callback (Settlement)
-    ReservasiCtrl->>ModelDB: Update Reservasi Status = 'dibayar'
+    %% Phase 2: Pembayaran & Webhook Callback
+    Guest->>Midtrans: Bayar DP / Lunas via Snap Popup
+    Midtrans->>ReservasiCtrl: Webhook POST /api/midtrans/callback-reservasi
+    ReservasiCtrl->>ReservasiCtrl: VerifyMidtransSignature (SHA-512)
+    ReservasiCtrl->>ModelDB: Update status='dp' / 'lunas' & log transaksi
     ReservasiCtrl->>EventBus: Dispatch Event ReservasiDibayar
-    EventBus->>Fonnte: Kirim WhatsApp Alert Pembayaran Reservasi
+    EventBus->>EventBus: HandleReservasiDibayar -> KirimNotifikasiUserReservasiJob
+    EventBus->>Fonnte: WhatsApp Konfirmasi Pembayaran ke Calon Penyewa
     
-    Note over ReservasiCtrl, TransisiServ: Admin Review & Konfirmasi Reservasi
+    %% Phase 3: Konfirmasi Admin & Aktivasi Hunian
+    Note over ReservasiCtrl, TransisiServ: Admin Review Berkas & Konfirmasi
     ReservasiCtrl->>TransisiServ: aktivasiPenyewaDariReservasi($reservasi)
-    TransisiServ->>ModelDB: Buat Data Penyewa, Akun User, & Kontrak Sewa
-    ModelDB->>ModelDB: Trigger PenyewaObserver -> Update Kamar Status = 'terisi'
+    TransisiServ->>ModelDB: Buat Record Penyewa, Akun User, & Kontrak Sewa
+    ModelDB->>ModelDB: Trigger PenyewaObserver -> Set Kamar Status = 'terisi'
     TransisiServ->>EventBus: Dispatch Event ReservasiDikonfirmasi
-    EventBus->>Fonnte: Kirim WhatsApp Welcome Message & Credential Account
+    EventBus->>EventBus: HandleReservasiDikonfirmasi -> KirimWelcomeMessageJob
+    EventBus->>Fonnte: WhatsApp Welcome Message & Kredensial Login

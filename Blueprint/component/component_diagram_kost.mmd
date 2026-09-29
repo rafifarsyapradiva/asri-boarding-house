@@ -5,78 +5,87 @@ flowchart TB
     subgraph PresentationTier["Tier 1: Presentation Layer (Client / Browser Interface)"]
         direction TB
         subgraph Views["Blade Templates (HTML Views)"]
-            AdminViews["Admin Views<br/>(Dashboard, Kamar, Penyewa, Tagihan, Keluhan, Laporan, FAQ, Kalender, Galeri, Pengeluaran, Notifikasi)"]
+            AdminViews["Admin Views<br/>(Dashboard, Kamar, Penyewa, Tagihan, Keluhan, Laporan, Kalender, FAQ, Galeri, Pengeluaran)"]
             PenyewaViews["Penyewa Views<br/>(Dashboard, Tagihan, Keluhan, Profil, Notifikasi)"]
-            PublicViews["Public Views<br/>(Landing Page, Katalog Kamar, FAQ, Ulasan, Galeri)"]
-            ReservasiViews["Reservasi Views<br/>(Form Booking, Stepper Status, Dynamic Price Breakdown)"]
-            AuthViews["Auth Views<br/>(Login Admin/Penyewa, Register, Password Reset, Verify Email)"]
-            PdfViews["PDF Export Views<br/>(Nota Kuitansi & Laporan Keuangan Blade Templates)"]
+            PublicViews["Public Views<br/>(Landing Page, Fasilitas, FAQ, Testimoni, Galeri)"]
+            ReservasiViews["Reservasi Views<br/>(Booking Form, Stepper Tracking, Detail Kamar)"]
+            AuthViews["Auth Views<br/>(Multi-portal Login, Register, Password Reset, Verifikasi Email)"]
+            NotaView["Nota Receipt View<br/>(resources/views/nota/cetak.blade.php)"]
+            PdfExportViews["PDF Report Views<br/>(resources/views/pdf/ Laporan Keuangan, Pengeluaran & Rekap Penyewa)"]
         end
         
         subgraph ReusableComp["Blade Components, Layouts & Composers"]
             LayoutComp["Layouts: app, landing, guest, navigation, admin-sidebar, admin-topbar"]
             ViewComposer["LayoutSettingComposer<br/>(Global Setting Data Injector)"]
-            ChatBox["guest-chat-widget.blade.php"]
-            WAButton["wa-float-button.blade.php"]
-            Toast["toast.blade.php & flash-message.blade.php"]
-            ChatBoxReserv["chat-box.blade.php & modal-confirm.blade.php"]
+            ChatWidget["guest-chat-widget.blade.php & wa-float-button.blade.php"]
+            ToastComp["toast.blade.php & flash-message.blade.php"]
         end
         
         subgraph ClientScript["Client-Side Scripting & Styling"]
             Tailwind["TailwindCSS<br/>(Neo-Brutalisme Style Layouts)"]
-            AlpineJS["Alpine.js<br/>(Dynamic Modals, Steppers, Dropdowns, Toggles)"]
-            AJAXPoll["Smart Adaptive Polling<br/>(Page Visibility API & Delta Chat Poller)"]
-            ChartJS["Chart.js Component<br/>(Visual Cash Flow & Revenue Analytics)"]
+            AlpineJS["Alpine.js<br/>(Modals, Steppers, Dropdowns, Reactivity)"]
+            Html2Pdf["html2pdf.js<br/>(Client-Side A5 Receipt PDF Generator)"]
+            AdaptivePoll["Smart Adaptive Polling<br/>(Page Visibility API & Delta Chat Fetcher)"]
+            ChartJS["Chart.js<br/>(Visual Cash Flow & Occupancy Analytics)"]
         end
         
-        subgraph ExtClient["Third-Party Client UI Component"]
-            MidtransSnap["Midtrans Snap JS Popup<br/>(Client Payment Modal)"]
+        subgraph ExtClient["Third-Party Client SDK"]
+            MidtransSnap["Midtrans Snap JS Popup<br/>(Client Multi-Payment Modal)"]
         end
     end
 
     %% =========================================================================
     %% TIER 2: APPLICATION LAYER
     %% =========================================================================
-    subgraph ApplicationTier["Tier 2: Application Layer (Laravel 11 PHP Backend)"]
+    subgraph ApplicationTier["Tier 2: Application Layer (Laravel 11 Backend)"]
         direction TB
-        subgraph RoutingMiddleware["Routing & Middleware Security Stack"]
+        subgraph RoutingMiddleware["Routing, Middleware & Ingress Security"]
             Routes["web.php, api.php & console.php Routes<br/>(Stateful Web & Stateless Guest API)"]
-            Middleware["Middleware Pipeline<br/>(Auth, Role:admin/penyewa, VerifyMidtransSignature, EnsureTenantIsActive, EnsurePasswordChanged, GuestChatLimiter SHA-256)"]
+            Middleware["Middleware Pipeline<br/>(Auth, Role:admin/penyewa, VerifyMidtransSignature, EnsureTenantIsActive, EnsurePasswordChanged, EnsureProfileIsComplete, RateLimiter SHA-256)"]
+            PortalRedirect["PortalRedirectResolver<br/>(Dynamic Multi-Portal Redirections)"]
         end
         
-        subgraph Controllers["Laravel Controllers"]
-            AdminCtrl["Admin Controllers (19 Class)<br/>(Dashboard, Kamar, Penyewa, Tagihan, Keluhan, Laporan, Calendar, Setting, Fasilitas, dll.)"]
-            PenyewaCtrl["Penyewa Controllers (5 Class)<br/>(Dashboard, Tagihan, Keluhan, Reservasi, Notifikasi)"]
-            ApiCtrl["Api Controllers (5 Class)<br/>(MidtransCallback, MidtransReservasiCallback, SnapToken, GuestChatApi, Chat)"]
-            PublicCtrl["LandingController"]
-            AuthCtrl["Auth Controllers (11 Class)<br/>(Login, Socialite Google OAuth, ReservasiAuth, PasswordReset)"]
-        end
-        
-        subgraph Services["Service Layer & Interface Abstractions (SOLID)"]
-            BillingServ["BillingService<br/>(Siklus Billing Bulanan & Hitung Denda Keterlambatan)"]
-            MidtransServ["MidtransService<br/>(Generate Snap Token & Verifikasi Status Transaksi)"]
-            FonnteServ["FonnteService<br/>(WhatsApp Notification REST Client)"]
-            NotifServ["NotifikasiService<br/>(Multi-channel Alert & Sanitasi Nomor HP '62')"]
-            ReservasiServ["ReservasiService<br/>(Booking Kamar, Dynamic Pricing & Voucher Check)"]
-            TransisiServ["TransisiPenyewaService<br/>(Check-in, Check-out & Audit Deposit)"]
-            DashboardServ["DashboardAnalyticsService<br/>(Agregasi Data Arus Kas & Okupansi untuk Chart.js)"]
-            TemplateServ["NotificationTemplateBuilder<br/>(WhatsApp & Email Dynamic Text Builder)"]
-            PdfNotaServ["PdfNotaService<br/>(Invoice Generator Service)"]
-            PdfInterface["« Interface »<br/>PdfGeneratorInterface"]
-            DompdfImpl["DompdfGenerator<br/>(Dompdf Concrete Implementation)"]
-            CalendarStyle["CalendarStyleHelper<br/>(Calendar Visual Event Styling)"]
-        end
-        
-        subgraph EventsListeners["Event/Listener & Queue Job System"]
-            Events["Laravel Events (11 Events)<br/>(PembayaranBerhasil, PembayaranCashDikonfirmasi, TagihanDibuat, DendaDikenakan, KeluhanDibuat, KeluhanDitanggapi, ReservasiDibuat, ReservasiDibayar, ReservasiDikonfirmasi, NotifikasiWali, ReminderPenyewa)"]
-            Listeners["Laravel Listeners (14 Listeners)<br/>(GeneratePdfNotaListener, ProsesTransisiPenyewa, NotifikasiKhususSubscriber, HandleTagihanDibuat, HandleDendaDikenakan, KirimNotifikasiPembayaranReservasi, dll.)"]
-            Jobs["Laravel Queue Jobs (9 Jobs)<br/>(GeneratePdfNotaJob, KirimWelcomeMessageJob, KirimNotifikasiTagihanJob, KirimNotifikasiWaliJob, KirimNotifikasiPembayaranJob, KirimReminderJatuhTempoJob, dll.)"]
-            MailNotif["Mailables & Notifications<br/>(TagihanBulanMail, NotificationMail, ResetPasswordNotification)"]
-            Observers["Model Observers (5 Observers)<br/>(PenyewaObserver, KamarObserver, FasilitasObserver, PengeluaranObserver, SettingObserver)"]
+        subgraph Controllers["Laravel Controllers (41 Classes)"]
+            AdminCtrl["Admin Controllers (19 Class)<br/>(Dashboard, Kamar, Penyewa, Tagihan, Keluhan, Laporan, Setting, Kalender, dll.)"]
+            PenyewaCtrl["Penyewa Controllers (5 Class)<br/>(Dashboard, Tagihan, Reservasi, Keluhan, Notifikasi)"]
+            ApiCtrl["API Controllers (5 Class)<br/>(MidtransCallback, ReservasiCallback, SnapToken, GuestChatApi, Chat)"]
+            PublicCtrl["Public Controllers<br/>(LandingController)"]
+            AuthCtrl["Auth & Profile Controllers (11 Class)<br/>(Socialite Google, ReservasiAuth, Multi-Login, ProfileCompletion)"]
         end
 
-        subgraph SystemScheduler["Scheduler & CLI Commands (routes/console.php)"]
-            ConsoleKernel["Laravel 11 Scheduler<br/>(tagihan:generate-bulanan, tagihan:proses-keterlambatan, kontrak:reminder-habis, reservasi:cancel-expired, chat-guest:prune, log-notifikasi:clear, session:cleanup, abh:purge-trash, log:truncate)"]
+        subgraph SecurityPolicies["Eloquent Policies (Anti-IDOR Authorization)"]
+            Policies["Policies: KeluhanPolicy, PembayaranPolicy, ReservasiPolicy, TagihanPolicy"]
+        end
+        
+        subgraph Services["Service Layer & SOLID Interface Abstraction"]
+            BillingServ["BillingService<br/>(Siklus Tagihan & Denda Keterlambatan)"]
+            MidtransServ["MidtransService<br/>(Snap Token & Webhook Verification)"]
+            FonnteServ["FonnteService<br/>(WhatsApp REST Gateway Client)"]
+            NotifServ["NotifikasiService<br/>(Multi-channel Alert & Nomor HP Sanitizer)"]
+            ReservasiServ["ReservasiService<br/>(Booking Kamar & Dynamic Pricing)"]
+            TransisiServ["TransisiPenyewaService<br/>(Check-in, Check-out & Audit Deposit)"]
+            TagihanServ["TagihanService<br/>(Cash Confirmation & Filtered Billing Query)"]
+            AdminPenyewaServ["AdminPenyewaService<br/>(Tenant Query Filter & Export Processor)"]
+            DashboardServ["DashboardAnalyticsService<br/>(Cash Flow & Occupancy Aggregator)"]
+            TemplateServ["NotificationTemplateBuilder<br/>(WA & Email Dynamic Text Builder)"]
+            CalendarHelper["CalendarStyleHelper<br/>(Occupancy Badge Styling)"]
+            SanitizerHelper["SanitizerService<br/>(Data Cleansing & Format Normalizer)"]
+            
+            %% Abstraksi DIP untuk Laporan Manajerial
+            PdfInterface["« Interface »<br/>PdfGeneratorInterface"]
+            DompdfAdapter["DompdfGenerator<br/>(Dompdf Stream Download Implementation)"]
+        end
+        
+        subgraph EventsListeners["Event-Driven Bus, Listeners & Queue System"]
+            Events["11 Domain Events<br/>(PembayaranBerhasil, TagihanDibuat, DendaDikenakan, ReservasiDibuat, ReservasiDibayar, ReservasiDikonfirmasi, dll.)"]
+            Listeners["12 Event Listeners & Subscribers<br/>(HandleTagihanDibuat, KirimEmailPembayaranCashListener, NotifikasiKhususSubscriber, ProsesTransisiPenyewa, dll.)"]
+            Jobs["8 Database Queue Jobs<br/>(KirimNotifikasiTagihanJob, KirimNotifikasiWaliJob, KirimWelcomeMessageJob, KirimNotifikasiPembayaranJob, dll.)"]
+            Mailables["Mailables & Notifications<br/>(TagihanBulanMail, NotificationMail, PasswordReset)"]
+            Observers["5 Model Observers<br/>(Penyewa, Kamar, Fasilitas, Pengeluaran, Setting)"]
+        end
+
+        subgraph SystemScheduler["Scheduler & CLI Tasks (routes/console.php)"]
+            Scheduler["Laravel 11 Scheduler (9 Commands)<br/>(tagihan:generate-bulanan, tagihan:proses-keterlambatan, kontrak:reminder-habis, reservasi:cancel-expired, session:cleanup, dll.)"]
         end
     end
 
@@ -85,80 +94,86 @@ flowchart TB
     %% =========================================================================
     subgraph DataTier["Tier 3: Data Layer (Persistence & Storage)"]
         direction TB
-        subgraph EloquentORM["Eloquent Models (Data Access - 21 Models)"]
+        subgraph EloquentORM["Eloquent ORM Models (21 Models)"]
             UserModel["User Model"]
-            KamarModel["Kamar, Fasilitas & Gallery Models"]
-            PenyewaModel["Penyewa & Reservasi Models"]
-            TagihanModel["Tagihan & Pembayaran Models"]
+            KamarGroup["Kamar, Fasilitas & Gallery Models"]
+            PenyewaGroup["Penyewa & Reservasi Models"]
+            TagihanGroup["Tagihan & Pembayaran Models"]
             KeluhanModel["Keluhan Model"]
-            ChatModel["ChatMessage, GuestChatMessage & GuestChatThread Models"]
-            LogNotifModel["LogNotifikasi & NotifikasiKhusus Models"]
+            ChatGroup["ChatMessage, GuestChatMessage & GuestChatThread Models"]
+            AuditGroup["LogNotifikasi & NotifikasiKhusus Models"]
             SettingModel["Setting Model"]
-            AuxModel["CustomerReview, Faq, Pengeluaran, Pengumuman, Peraturan, WhatsappClick Models"]
+            AuxGroup["CustomerReview, Faq, Pengeluaran, Pengumuman, Peraturan, WhatsappClick"]
         end
         
-        subgraph RelationalDB["MySQL 8.x Database"]
-            Tables[("MySQL Tables<br/>(users, kamar, penyewa, tagihan, keluhan, jobs, failed_jobs, sessions, cache, dll.)")]
+        subgraph RelationalDB["MySQL 8.x Database Engine"]
+            Tables[("MySQL Relational Tables<br/>- Master Data & Transactions<br/>- Soft Deletes & Composite Indexes<br/>- Queue: jobs & failed_jobs<br/>- Sessions & Cache")]
         end
         
-        subgraph FileStorage["Storage System"]
-            Disk["Local Disk File System (storage/app/public/)<br/>(PDF Notes, Room Photos, User Avatars, Gallery)"]
+        subgraph FileStorage["Physical File Storage (storage/app/public/)"]
+            Disk[("Local Storage Disk<br/>- Foto Unit Kamar (kamar/)<br/>- Foto Avatar Pengguna (avatars/)<br/>- Foto Galeri Kost (gallery/)<br/>- Bukti Kuitansi Kasir (nota_pengeluaran/)")]
         end
     end
 
     %% =========================================================================
     %% EXTERNAL GATEWAYS
     %% =========================================================================
-    subgraph ExternalSystems["External Third-Party APIs"]
+    subgraph ExternalSystems["External Third-Party APIs & Services"]
         direction LR
-        MidtransAPI["Midtrans Snap API<br/>(Payment Gateway Services)"]
-        FonnteAPI["Fonnte WhatsApp API<br/>(WA Gateway Services)"]
-        GoogleOAuth["Google OAuth API<br/>(Socialite Authentication)"]
+        MidtransAPI["Midtrans Snap API<br/>(Payment Gateway & Webhook Notifications)"]
+        FonnteAPI["Fonnte WhatsApp API<br/>(Automated WhatsApp Gateway)"]
+        GoogleOAuth["Google Identity Services<br/>(OAuth 2.0 Socialite Authentication)"]
+        SMTPGateway["SMTP Mail Server<br/>(Symfony Mailer TLS Delivery)"]
     end
 
     %% =========================================================================
-    %% INTERCONNECTIONS & DEPENDENCIES
+    %% DEPENDENCIES & DATA FLOW CONNECTIONS
     %% =========================================================================
-    Views -->|"HTTP Requests / Forms"| Routes
+    Views -->|"HTTP Request / Form Submit"| Routes
     ReusableComp -->|"AJAX Polling / Fetch API"| Routes
-    ViewComposer -.->|"Injects Settings Data"| Views
-    ClientScript -->|"Enhances & Styles"| Views
+    NotaView -->|"Client-Side Render via"| Html2Pdf
+    ViewComposer -.->|"Injects Dynamic Setting Data"| Views
+    ClientScript -->|"Styles & Enhances"| Views
     
     Routes --> Middleware
-    Middleware --> Controllers
+    Middleware --> PortalRedirect
+    PortalRedirect --> Controllers
     
+    Controllers -->|"Authorizes via"| Policies
     Controllers -->|"Invokes Business Logic"| Services
-    Controllers -->|"Direct Read/Write"| EloquentORM
+    Controllers -->|"Direct Read / Query"| EloquentORM
     
-    %% Dependency Inversion Link (DIP)
-    PdfNotaServ -->|"Depends On Abstraction"| PdfInterface
-    DompdfImpl -.->|"Implements"| PdfInterface
+    %% Dependency Inversion Principle (DIP) Connection
+    AdminCtrl -->|"Depends on Abstraction"| PdfInterface
+    DompdfAdapter -.->|"Implements"| PdfInterface
+    PdfExportViews -.->|"Template rendered by"| DompdfAdapter
     
-    Services -->|"Queries Data"| EloquentORM
-    Services -->|"Integrates APIs"| ExternalSystems
-    Services -->|"Dispatches Events & Pushes Jobs"| EventsListeners
-    DashboardServ -->|"Supplies Metrics"| ChartJS
-    TemplateServ -->|"Builds Message Body"| FonnteServ
+    Services -->|"Queries & Mutates"| EloquentORM
+    Services -->|"Dispatches Domain Events"| Events
+    Services -->|"Calls REST Gateways"| ExternalSystems
     
-    EventsListeners -->|"Pushes / Pops Queue Records"| Tables
-    EventsListeners -->|"Calls Notification Services"| Services
-    EventsListeners -->|"Writes Audit Logs"| EloquentORM
-    Observers -->|"Hooks Model Lifecycle"| EventsListeners
+    Events -->|"Triggers"| Listeners
+    Listeners -->|"Dispatches Asynchronous Tasks"| Jobs
+    Listeners -->|"Logs Internal Audits"| EloquentORM
+    Jobs <-->|"Enqueue / Dequeue (Database Queue Driver)"| Tables
+    Jobs -->|"Sends Alerts via Services"| Services
+    Jobs -->|"Sends Emails via"| SMTPGateway
+    Observers -->|"Lifecycle Hooks Mutate & Audit"| EloquentORM
     
-    ConsoleKernel -->|"Periodic Trigger"| Services
+    Scheduler -->|"Periodic Automated Triggers"| Services
     
-    EloquentORM -->|"SQL Queries (PDO)"| Tables
-    DompdfImpl -->|"Generates & Stores PDF Invoices"| Disk
+    EloquentORM <-->|"PDO SQL Transactions & Row Locking"| Tables
+    AdminCtrl -->|"Uploads / Deletes Photos & Receipts"| Disk
     
-    MidtransSnap <-->|"Client-Side Web Token Validation"| MidtransAPI
+    MidtransSnap <-->|"Client Token & Payment Handshake"| MidtransAPI
     AuthCtrl <-->|"OAuth Token Exchange"| GoogleOAuth
-    
+
     classDef tier1 fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
     classDef tier2 fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
     classDef tier3 fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
     classDef ext fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#4A148C;
     
-    class PresentationTier,Views,ReusableComp,ClientScript,ExtClient,AdminViews,PenyewaViews,PublicViews,ReservasiViews,AuthViews,PdfViews,LayoutComp,ViewComposer,ChatBox,WAButton,Toast,ChatBoxReserv,Tailwind,AlpineJS,AJAXPoll,ChartJS,MidtransSnap tier1;
-    class ApplicationTier,RoutingMiddleware,Controllers,Services,EventsListeners,SystemScheduler,Routes,Middleware,AdminCtrl,PenyewaCtrl,ApiCtrl,PublicCtrl,AuthCtrl,BillingServ,MidtransServ,FonnteServ,NotifServ,ReservasiServ,TransisiServ,DashboardServ,TemplateServ,PdfNotaServ,PdfInterface,DompdfImpl,CalendarStyle,Events,Listeners,Jobs,MailNotif,Observers,ConsoleKernel tier2;
-    class DataTier,EloquentORM,RelationalDB,FileStorage,UserModel,KamarModel,PenyewaModel,TagihanModel,KeluhanModel,ChatModel,LogNotifModel,SettingModel,AuxModel,Tables,Disk tier3;
-    class ExternalSystems,MidtransAPI,FonnteAPI,GoogleOAuth ext;
+    class PresentationTier,Views,ReusableComp,ClientScript,ExtClient,AdminViews,PenyewaViews,PublicViews,ReservasiViews,AuthViews,NotaView,PdfExportViews,LayoutComp,ViewComposer,ChatWidget,ToastComp,Tailwind,AlpineJS,Html2Pdf,AdaptivePoll,ChartJS,MidtransSnap tier1;
+    class ApplicationTier,RoutingMiddleware,Controllers,SecurityPolicies,Services,EventsListeners,SystemScheduler,Routes,Middleware,PortalRedirect,AdminCtrl,PenyewaCtrl,ApiCtrl,PublicCtrl,AuthCtrl,Policies,BillingServ,MidtransServ,FonnteServ,NotifServ,ReservasiServ,TransisiServ,TagihanServ,AdminPenyewaServ,DashboardServ,TemplateServ,CalendarHelper,SanitizerHelper,PdfInterface,DompdfAdapter,Events,Listeners,Jobs,Mailables,Observers,Scheduler tier2;
+    class DataTier,EloquentORM,RelationalDB,FileStorage,UserModel,KamarGroup,PenyewaGroup,TagihanGroup,KeluhanModel,ChatGroup,AuditGroup,SettingModel,AuxGroup,Tables,Disk tier3;
+    class ExternalSystems,MidtransAPI,FonnteAPI,GoogleOAuth,SMTPGateway ext;

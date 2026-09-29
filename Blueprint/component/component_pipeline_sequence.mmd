@@ -1,29 +1,33 @@
 sequenceDiagram
     autonumber
     actor Client as User / Browser (Tier 1)
-    participant Views as Tier 1: Views & Scripts<br/>(Blade / Alpine.js)
-    participant Router as Tier 2: Routes & Middleware<br/>(web.php / api.php)
+    participant Views as Tier 1: Views & Scripts<br/>(Blade / Alpine.js / html2pdf.js)
+    participant Router as Tier 2: Routes & Middleware<br/>(web.php / api.php / Ingress)
     participant Controller as Tier 2: Controller<br/>(Admin / Penyewa / Api)
+    participant Policy as Tier 2: Eloquent Policy<br/>(Anti-IDOR Authorization Gate)
     participant Service as Tier 2: Service Layer<br/>(Billing / Reservasi / Notif)
     participant Interface as Tier 2: Interface Abstraction<br/>(PdfGeneratorInterface)
     participant Events as Tier 2: Event Bus & Queue<br/>(Events / Listeners / Jobs)
     participant ORM as Tier 3: Eloquent ORM<br/>(Models & Observers)
     participant DB as Tier 3: Database & Disk<br/>(MySQL 8.x / Storage)
-    participant External as External Gateway<br/>(Midtrans / Fonnte / Google)
+    participant External as External Gateway<br/>(Midtrans / Fonnte / Google / Mail)
 
     Client->>Views: User Interaction (Form Submit / Click)
     Views->>Router: HTTP Request / AJAX Fetch
-    Router->>Router: Run Middleware (Auth, CSRF, RateLimit, Role)
+    Router->>Router: Run Middleware Pipeline (Auth, CSRF, RateLimit, Role, Profile)
     Router->>Controller: Dispatch Request to Controller Method
     
+    Controller->>Policy: Authorize User Action ($this->authorize)
+    Policy-->>Controller: Access Granted (200 OK) / Forbidden (403)
+
     alt Interaksi Bisnis / Logika Transaksi
         Controller->>Service: Execute Business Logic Function
-        opt Penggunaan Interface SOLID
-            Service->>Interface: Call Interface Abstraction (e.g. generate PDF)
-            Interface->>Service: Return Executed Result
+        opt Penggunaan Interface SOLID (DIP)
+            Controller->>Interface: Call PdfGeneratorInterface::generate() (Laporan Export)
+            Interface-->>Controller: Return Streamed PDF Binary
         end
         opt Integrasi API Eksternal
-            Service->>External: Outbound REST API Call
+            Service->>External: Outbound REST API Call (Midtrans / Fonnte)
             External-->>Service: Return API Response Payload
         end
         Service->>ORM: Read / Write Data Objects
@@ -31,13 +35,17 @@ sequenceDiagram
         Controller->>ORM: Query Eloquent Builder
     end
 
-    ORM->>DB: Execute PDO SQL Queries / File Storage Write
+    ORM->>DB: Execute PDO SQL Transactions & Locking (lockForUpdate)
     DB-->>ORM: Return Query Result Records
     
     opt Asynchronous Processing
-        Controller->>Events: Dispatch Event (e.g. TagihanDibuat)
-        Events->>Events: Trigger Listener & Push Job to Queue
+        Controller->>Events: Dispatch Domain Event (e.g. TagihanDibuat, PembayaranCashDikonfirmasi)
+        Events->>Events: Trigger Listener & Enqueue Job (jobs table)
+        Events-->>External: Worker Execute Job -> WhatsApp / Email Delivery
     end
 
     Controller-->>Views: Render HTML Blade View / Return JSON Payload
-    Views-->>Client: Dynamic DOM Update / UI Notification
+    opt Client-Side PDF Generation (Nota)
+        Views->>Views: html2pdf.js compiles DOM to A5 Receipt PDF
+    end
+    Views-->>Client: Dynamic DOM Update / Download Prompt / Notification

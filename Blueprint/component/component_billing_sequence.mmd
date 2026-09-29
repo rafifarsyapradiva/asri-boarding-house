@@ -3,31 +3,40 @@ sequenceDiagram
     participant Cron as Cron Daemon / Task Scheduler
     participant Artisan as Laravel Command<br/>(routes/console.php)
     participant Service as Tier 2: BillingService
+    participant EventBus as Tier 2: Event Bus & Listeners
+    participant Queue as Tier 2: Queue Workers (jobs)
     participant Model as Tier 3: Eloquent ORM<br/>(Penyewa / Tagihan)
-    participant DB as Tier 3: Database<br/>(MySQL)
-    participant Fonnte as Tier 2: FonnteService
-    participant WA as External API:<br/>Fonnte WhatsApp API
+    participant DB as Tier 3: Database<br/>(MySQL 8.x)
+    participant Fonnte as External API:<br/>Fonnte WhatsApp API
 
-    Cron->>Artisan: Eksekusi schedule harian
-    Artisan->>Service: Panggil BillingService::prosesSiklusBilling()
-    Service->>Model: Query penyewa aktif & tanggal billing hari ini
+    %% 1. Generate Bulanan
+    Cron->>Artisan: Eksekusi schedule bulanan (tgl 1, 00:05 WIB)
+    Artisan->>Service: Panggil BillingService::generateTagihanBulanan()
+    Service->>Model: Query penyewa aktif & tanggal billing
     Model->>DB: SELECT * FROM penyewa WHERE status='aktif'
     DB-->>Model: Return data penyewa
     
-    loop Per Penyewa Jatuh Tempo
-        Service->>Model: Buat Tagihan Baru (TagihanDibuat)
+    loop Per Penyewa Aktif
+        Service->>Model: Buat Tagihan Baru (status='pending')
         Model->>DB: INSERT INTO tagihan (periode, nominal, status='pending')
-        Service->>Fonnte: Kirim Notifikasi Tagihan (FonnteService::kirimPesan)
-        Fonnte->>WA: HTTP POST Send Message to Tenant & Wali
+        Service->>EventBus: Dispatch Event TagihanDibuat
+        EventBus->>EventBus: Trigger HandleTagihanDibuat & NotifikasiKhususSubscriber
+        EventBus->>Queue: Push KirimNotifikasiTagihanJob ke database queue
+        Queue->>Fonnte: Worker eksekusi NotifikasiService -> Fonnte WA API
     end
 
-    Service->>Model: Query tagihan jatuh tempo belum dibayar (Overdue)
-    Model->>DB: SELECT * FROM tagihan WHERE status='pending' AND tanggal_jatuh_tempo < hari_ini
+    %% 2. Proses Keterlambatan & Denda
+    Cron->>Artisan: Eksekusi schedule harian (pk 01:00 WIB)
+    Artisan->>Service: Panggil BillingService::prosesKeterlambatan()
+    Service->>Model: Query tagihan jatuh tempo (tanggal_jatuh_tempo < hari_ini)
+    Model->>DB: SELECT * FROM tagihan WHERE status='pending' AND tanggal_jatuh_tempo < NOW()
     DB-->>Model: Return tagihan overdue
 
     loop Per Tagihan Overdue
-        Service->>Model: Terapkan Denda Harian (DendaDikenakan)
-        Model->>DB: UPDATE tagihan SET denda = denda + nilai_denda
-        Service->>Fonnte: Kirim WhatsApp Pengingat & Denda
-        Fonnte->>WA: HTTP POST Send Overdue Alert
+        Service->>Model: lockForUpdate() & Hitung Denda Harian
+        Model->>DB: UPDATE tagihan SET nominal_denda = ..., status='terlambat'
+        Service->>EventBus: Dispatch Event DendaDikenakan
+        EventBus->>EventBus: Trigger HandleDendaDikenakan & NotifikasiKhususSubscriber
+        EventBus->>Queue: Push KirimReminderJatuhTempoJob ke database queue
+        Queue->>Fonnte: Worker eksekusi NotifikasiService -> WhatsApp Pengingat Denda
     end

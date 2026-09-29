@@ -1,49 +1,50 @@
 sequenceDiagram
     autonumber
     actor Tenant as Penyewa (Browser)
-    participant Tier1 as Tier 1: Presentation<br/>(Blade / Alpine.js)
+    participant Tier1 as Tier 1: Presentation<br/>(Blade / Alpine.js / html2pdf.js)
     participant Routes as Routes & Middleware<br/>(web.php / api.php)
-    participant Controller as Tier 2: Controllers<br/>(TagihanController / Callback)
-    participant Service as Tier 2: Services & Interface<br/>(Midtrans / PdfGeneratorInterface / Fonnte)
+    participant Controller as Tier 2: Controllers<br/>(SnapToken / Callback / Tagihan)
+    participant Service as Tier 2: Services<br/>(MidtransService)
     participant Model as Tier 3: Eloquent ORM<br/>(Tagihan / Pembayaran)
-    participant DB as Tier 3: Database<br/>(MySQL)
-    participant Disk as Tier 3: Storage<br/>(Local Storage)
+    participant DB as Tier 3: Database<br/>(MySQL 8.x)
     participant Midtrans as External API:<br/>Midtrans Gateway
-    participant Fonnte as External API:<br/>Fonnte WA Gateway
 
     %% Phase 1: Request Snap Token
-    Tenant->>Tier1: Klik "Bayar Sekarang"
-    Tier1->>Routes: AJAX POST /penyewa/tagihan/{id}/pay
-    Routes->>Controller: Route to TagihanController@pay
+    Tenant->>Tier1: Klik "Bayar Sekarang" di Portal Penyewa
+    Tier1->>Routes: AJAX POST /penyewa/pembayaran/{tagihan}/token
+    Routes->>Controller: Route to SnapTokenController@generate
     Controller->>Service: MidtransService::createSnapToken($tagihan)
     Service->>Midtrans: HTTP POST /snap/v1/transactions
     Midtrans-->>Service: Return snap_token
     Service-->>Controller: Return snap_token
-    Controller-->>Tier1: Return JSON {token: snap_token}
-    Tier1->>Tenant: snap.pay(token) -> Tampilkan Snap Popup
+    Controller-->>Tier1: Return JSON {snap_token: token}
+    Tier1->>Tenant: snap.pay(token) -> Munculkan Modal Snap Popup
 
-    %% Phase 2: Payment Execution & Callback
-    Tenant->>Midtrans: Selesaikan Pembayaran di UI Snap
-    Midtrans-->>Tenant: Pembayaran Sukses / Pending
-    Note over Midtrans, Routes: Midtrans Callback (Server-to-Server)
+    %% Phase 2: Payment Execution & Webhook Callback
+    Tenant->>Midtrans: Selesaikan Pembayaran di UI Modal Snap
+    Midtrans-->>Tenant: Notifikasi Sukses di Layar Snap
+    Note over Midtrans, Routes: Midtrans Webhook Callback (Server-to-Server)
     Midtrans->>Routes: POST /api/midtrans/callback
-    Routes->>Routes: VerifyMidtransSignature Middleware
+    Routes->>Routes: VerifyMidtransSignature Middleware (Validasi SHA-512 Hash)
     Routes->>Controller: Route to MidtransCallbackController@handle
     Controller->>Service: MidtransService::handleCallback($payload)
     
-    %% Phase 3: DB Update & Events
-    Service->>Model: Update status pembayaran & tagihan
-    Model->>DB: UPDATE pembayaran, tagihan SET status='lunas'
-    Controller->>Controller: Dispatch PembayaranBerhasil Event
+    %% Phase 3: DB Update & Domain Event
+    Service->>Model: DB::transaction & lockForUpdate()
+    Model->>DB: UPDATE tagihan, pembayaran SET status='lunas'
+    Controller->>Controller: Dispatch Event PembayaranBerhasil
     
-    %% Phase 4: Async Listeners
-    Note over Controller, Disk: Event Listeners Triggered
-    Controller->>Service: Trigger GeneratePdfNotaListener
-    Service->>Disk: PdfNotaService -> PdfGeneratorInterface::generate() -> Simpan berkas PDF nota
-    Controller->>Service: Trigger KirimNotifikasi (FonnteService)
-    Service->>Fonnte: Kirim Notifikasi WhatsApp via Fonnte API
-    
+    %% Phase 4: Audit Trail Logging
+    Note over Controller, DB: Subscriber Hooks Event
+    Controller->>Model: NotifikasiKhususSubscriber mencatat log audit
+    Model->>DB: INSERT INTO notifikasi_khusus
     Controller-->>Midtrans: Return HTTP 200 OK
     
-    %% Phase 5: Client Update
-    Tier1->>Tenant: Tampilan Halaman Diperbarui (Lunas + Tombol Unduh PDF)
+    %% Phase 5: Client Update & Client-Side Receipt Rendering
+    Tier1->>Tenant: Tampilan Dasbor Diperbarui (Status Lunas)
+    Tenant->>Tier1: Klik "Cetak Nota Kuitansi"
+    Tier1->>Routes: GET /penyewa/nota/{pembayaran}/cetak
+    Routes->>Controller: Route to TagihanController@cetakNota
+    Controller-->>Tier1: Render Blade View (resources/views/nota/cetak.blade.php)
+    Tier1->>Tier1: html2pdf.js compile DOM ke PDF Kuitansi A5 Resmi
+    Tier1->>Tenant: Berkas PDF Kuitansi Siap Diunduh / Dicetak (Zero Server Load)

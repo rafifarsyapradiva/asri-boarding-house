@@ -16,7 +16,7 @@ sequenceDiagram
     ApiCtrl-->>Widget: Return JSON {success: true, message: data}
     
     loop Dynamic Adaptive Polling (Interval 4s - 12s)
-        Poller->>ApiCtrl: GET /api/guest-chat/poll?last_id={id}
+        Poller->>ApiCtrl: GET /api/guest-chat/messages
         ApiCtrl->>ModelDB: Query Delta Pesan Baru (created_at > last_time)
         ModelDB-->>ApiCtrl: Return Pesan Baru
         ApiCtrl-->>Poller: Return JSON Delta Messages
