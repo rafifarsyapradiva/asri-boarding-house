@@ -1,0 +1,38 @@
+stateDiagram-v2
+    [*] --> Tagihan_Diterbitkan: Tanggal 1 Pukul 00:05 WIB (Cron tagihan:generate-bulanan)
+
+    state Tagihan_Diterbitkan {
+        [*] --> Setup_Nominal
+        Setup_Nominal --> Nur_Haliza: Kamar 101 VIP (Tarif Aktif Rp 1.283.380/bln)
+        Setup_Nominal --> Tyas: Kamar 104 Deluxe (Tarif Pokok Rp 950.000/bln)
+        Nur_Haliza --> Menunggu_Pembayaran
+        Tyas --> Menunggu_Pembayaran
+    }
+
+    Tagihan_Diterbitkan --> Grace_Period: Notifikasi WhatsApp Fonnte Terkirim
+    
+    state Grace_Period {
+        [*] --> Tanggal_1_sd_10
+        Tanggal_1_sd_10 --> Bayar_Disiplin: Nur Haliza Bayar Tgl 1 - 5 (GoPay / Mandiri VA)
+    }
+
+    Grace_Period --> Lunas: Pembayaran Diverifikasi Midtrans Webhook (Settlement)
+    
+    Grace_Period --> Masa_Toleransi: Melewati Tanggal 10 (Jatuh Tempo)
+
+    state Masa_Toleransi {
+        [*] --> Tanggal_11_sd_Akhir_Bulan
+        Tanggal_11_sd_Akhir_Bulan --> Reminder_WA: Scheduler tagihan:proses-keterlambatan
+        Reminder_WA --> Denda_Nol: Nominal Denda Tetap Rp 0 (Bulan Kalender Sama)
+        Denda_Nol --> Bayar_Susulan: Tyas Bayar Tanggal 15 via QRIS Snap
+    }
+
+    Masa_Toleransi --> Lunas: Pembayaran Terkonfirmasi di Midtrans
+
+    state Lunas {
+        [*] --> Update_Database_Status
+        Update_Database_Status --> Cetak_Kuitansi: Render Browser via html2pdf.js (Zero Server Load)
+        Cetak_Kuitansi --> Status_Penyewa_Tetap_Aktif: Hunian Berlanjut (Status: Masih Aktif)
+    }
+
+    Lunas --> [*]: Siklus Berulang pada Bulan Berikutnya

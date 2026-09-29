@@ -1,0 +1,30 @@
+flowchart TD
+    A[Admin Pak Asep Buka /admin/reservasi] --> B{Identifikasi Reservasi Masuk}
+
+    subgraph TRACK_NUR_HALIZA [Jalur 1: Nur Haliza - Kamar 101 VIP]
+        B -->|Status Reservasi: LUNAS| C1[Periksa NIK 3374115212030001 & Wali Kusuma]
+        C1 --> D1[Verifikasi Pembayaran Penuh Rp 15.400.560 Mandiri VA]
+        D1 --> E1[Klik Tombol 'Konfirmasi & Aktifkan Penyewa']
+        E1 --> F1[TransisiPenyewaService Eksekusi injectLunasPenuh]
+        F1 --> G1[Kamar 101 Terkunci 'terisi'<br/>Tarif Aktif: Rp 1.283.380/bln<br/>Deposit: Rp 0<br/>Tagihan Bulan 1: LUNAS]
+    end
+
+    subgraph TRACK_TYAS [Jalur 2: Tyas - Kamar 104 Deluxe]
+        B -->|Status Reservasi: DP| C2[Periksa NIK 3374114112030111 & Wali Nur]
+        C2 --> D2[Verifikasi Pembayaran DP 30% Rp 1.710.000 QRIS]
+        D2 --> E2[Klik Tombol 'Konfirmasi & Aktifkan Penyewa']
+        E2 --> F2[TransisiPenyewaService Eksekusi injectSisaDp]
+        F2 --> G2[Kamar 104 Terkunci 'terisi'<br/>Tarif Aktif: Rp 950.000/bln<br/>Deposit: Rp 0<br/>Terbit Tagihan Sisa: Rp 3.990.000]
+        G2 --> H2[Monitoring Portal: Tyas Lunasi Sisa Rp 3.990.000 via Snap]
+        H2 --> I2[Status Tagihan Sisa Berubah Menjadi LUNAS]
+    end
+
+    G1 --> J[Otomasi Sistem Terpadu]
+    I2 --> J
+
+    subgraph KELANJUTAN_OPERASIONAL [Siklus Hunian Aktif & Tagihan Rutin]
+        J --> K[Fonnte API Kirim Pesan WA Selamat Datang]
+        K --> L[Kuitansi Pembayaran Format A5 Siap Cetak via html2pdf.js]
+        L --> M[Status Kedua Penghuni: Masih Aktif Menempati Kamar]
+        M --> N[Hostinger Cron Tanggal 1 Pukul 00:05 WIB:<br/>Penerbitan Tagihan Rutin Bulanan Baru]
+    end

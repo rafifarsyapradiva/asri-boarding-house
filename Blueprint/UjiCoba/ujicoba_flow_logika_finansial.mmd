@@ -1,0 +1,23 @@
+flowchart TD
+    subgraph TAHAP_1 [TAHAP 1: Pembayaran Awal Kontrak & Aktivasi Hunian]
+        A[Calon Penyewa Reservasi Kamar di weatso.id] --> B{Pilih Skema Pembayaran}
+        
+        B -->|Opsi 1: Nur Haliza - Full Payment 100%| C[Kamar 101 VIP 12 Bulan<br/>Diskon Durasi Tahunan: Rp 15.400.560<br/>Deposit: Rp 0<br/>Bayar Penuh via Midtrans Snap Mandiri VA]
+        B -->|Opsi 2: Tyas - Uang Muka DP 30%| D[Kamar 104 Deluxe 6 Bulan<br/>Total Pokok: Rp 5.700.000<br/>Deposit: Rp 0<br/>Bayar DP 30%: Rp 1.710.000 via Snap QRIS]
+        
+        C --> E[Admin Pak Asep Verifikasi Dokumen & Klik Konfirmasi]
+        D --> E
+        
+        E -->|Jika Pelunasan Penuh 100%| F[injectLunasPenuh: Kamar 101 TERISI<br/>Tagihan Bulan 1 Otomatis LUNAS<br/>Tarif Aktif Tersimpan: Rp 1.283.380/bln<br/>Unduh Kuitansi A5 html2pdf.js]
+        E -->|Jika Skema Uang Muka DP 30%| G[injectSisaDp: Kamar 104 TERISI<br/>Tagihan Sisa 70% Rp 3.990.000 Terbit<br/>Penyewa Lunasi Sisa di Dashboard via Snap<br/>Unduh Kuitansi A5 html2pdf.js]
+    end
+
+    subgraph TAHAP_2 [TAHAP 2: Siklus Tagihan Rutin Bulanan - Status Masih Aktif]
+        F --> H[Tanggal 1 Setiap Bulan Baru Pukul 00:05 WIB<br/>Hostinger Cron: tagihan:generate-bulanan]
+        G --> H
+        H --> I["Tagihan Sewa Reguler Terbit Otomatis di Dashboard<br/>Nur Haliza: Rp 1.283.380 & Tyas: Rp 950.000"]
+        I --> J[Penyewa Bayar via Midtrans Snap / GoPay / QRIS]
+        J --> K[Webhook Cloud Otomatis Update Status Jadi LUNAS]
+        K --> L[Cetak Kuitansi Resmi Format A5 via html2pdf.js<br/>Prinsip Zero Server Load]
+        L --> M[Kedua Penyewa Status: Masih Aktif Menempati Kamar]
+    end
