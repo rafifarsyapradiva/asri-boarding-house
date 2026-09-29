@@ -8,7 +8,7 @@ flowchart LR
     end
 
     subgraph HostingerZone["Hostinger Shared Hosting Node (Isolated CloudLinux LVE)"]
-        HostingerServer["LiteSpeed Enterprise Web Server<br/>IP: Public Shared IP<br/>Port: 80 (HTTP) / 443 (HTTPS)"]
+        HostingerServer["LiteSpeed Enterprise Web Server<br/>Domain: asriboardinghouse.weatso.id<br/>Port: 80 (HTTP 301) / 443 (HTTPS TLS 1.3)"]
         HostingerDB["MySQL Database Server<br/>IP: localhost (127.0.0.1)<br/>Port: 3306 (Blocked External)"]
         HostingerSSH["Hostinger SSH/SFTP Gateway<br/>Port: 65002"]
         HostingerPanel["Hostinger hPanel Management<br/>Port: 443 (HTTPS)"]
@@ -21,7 +21,7 @@ flowchart LR
     end
 
     %% Connections
-    Browser <-->|"HTTPS (Port 443)<br/>SSL Let's Encrypt / Sectigo"| HostingerServer
+    Browser <-->|"HTTPS (Port 443)<br/>SSL Let's Encrypt / Sectigo<br/>asriboardinghouse.weatso.id"| HostingerServer
     HostingerServer <-->|"TCP/IP (Port 3306)<br/>MySQL Native Driver (PDO)"| HostingerDB
     DevPC -->|"SFTP / SSH Terminal<br/>(Port 65002)"| HostingerSSH
     DevPC -->|"hPanel Admin Web<br/>(Port 443)"| HostingerPanel

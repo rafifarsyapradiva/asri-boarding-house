@@ -1,36 +1,43 @@
 flowchart TB
     subgraph SharedHostingNode["Hostinger Shared Hosting Node (CloudLinux u123456789)"]
-        subgraph WebServer["Web Server Layer (Managed LiteSpeed)"]
+        
+        subgraph PublicFolder["«directory» public_html/ (Public Web Root)"]
             LiteSpeed["LiteSpeed Enterprise Web Server<br/>(Configured via .htaccess & SSL Sectigo)"]
-            PHPRuntime["PHP 8.2+ Process Runtime<br/>(mod_lsapi)"]
-            StaticAssets["Direct Static Assets Serving<br/>(public/build/, public/storage/, public/images/)"]
-            LiteSpeed -->|"Executes Dynamic Script"| PHPRuntime
+            StaticAssets["Direct Static Assets Serving<br/>• build/ (Compiled Vite JS/CSS)<br/>• images/ & favicon.ico<br/>• storage/ (Symlink)"]
+            IndexPHP["index.php<br/>(Entry point ke ../asri-core/)"]
             LiteSpeed -->|"Direct Serve (Bypass PHP)"| StaticAssets
+            LiteSpeed -->|"Routes Traffic"| IndexPHP
         end
 
-        subgraph LaravelApp["Laravel 11 Application Container"]
-            LaravelEngine["Laravel 11 Core Engine"]
-            Services["Laravel Services & Business Logic<br/>• BillingService (Siklus Billing & Denda)<br/>• ReservasiService (Booking & Dynamic Pricing)<br/>• MidtransService (Snap Token & Webhook)<br/>• FonnteService (WhatsApp Gateway)<br/>• NotifikasiService (Multi-channel Alerts)<br/>• TransisiPenyewaService (Check-in/out)<br/>• PdfNotaService (Dompdf Invoice)<br/>• Socialite (Google OAuth 2.0)<br/>• Symfony Mailer (SMTP TLS)"]
-            Schedulers["Cron Jobs (hPanel Task Scheduler)<br/>• schedule:run (Setiap Menit)<br/>• queue:work --once (Setiap Menit)"]
+        subgraph CoreFolder["«directory» asri-core/ (Protected Application Core)"]
+            PHPRuntime["PHP 8.2+ Process Runtime<br/>(mod_lsapi FastCGI Handler)"]
             
-            LaravelEngine --- Services
-            LaravelEngine --- Schedulers
-        end
+            subgraph LaravelApp["Laravel Application Container (v11/v12 Core)"]
+                LaravelEngine["Laravel Framework Engine"]
+                Services["Laravel Services & Business Logic<br/>• BillingService (Siklus Billing & Denda Flat)<br/>• ReservasiService (Booking & Dynamic Pricing)<br/>• MidtransService (Snap Token & Dynamic Webhook)<br/>• FonnteService (WhatsApp Gateway & Sanitizer)<br/>• NotifikasiService (Multi-channel Alerts)<br/>• TransisiPenyewaService (Check-in/out & Deposit)<br/>• PdfNotaService / DompdfGenerator (Nota PDF)<br/>• Socialite (Google Cloud OAuth 2.0)<br/>• Symfony Mailer (SMTP TLS 587)"]
+                Schedulers["Task Schedulers & Background Workers<br/>• schedule:run (hPanel Cron Setiap Menit)<br/>• queue:work --stop-when-empty (Database Worker)"]
+                
+                LaravelEngine --- Services
+                LaravelEngine --- Schedulers
+            end
 
-        subgraph Storage["File Storage (SSD)"]
-            PublicSSD["Public Storage (storage/app/public/)<br/>├── kamar/ (Foto Kamar Kost)<br/>├── nota/ (Invoice/Kuitansi PDF)<br/>├── nota_pengeluaran/ (Bukti Kas Keluar)<br/>├── galleries/ (Aset Foto Galeri)<br/>├── reviews/ (Foto Testimoni)<br/>├── settings/ (Aset Brand/Logo Kost)<br/>└── keluhan/ (Foto Bukti Komplain)"]
-            PrivateSSD["Private Storage (storage/app/private/)<br/>└── Temp exports & internal framework caches"]
+            subgraph Storage["File Storage (NVMe SSD)"]
+                PublicSSD["Public Storage (storage/app/public/)<br/>├── kamar/ (Foto Kamar Kost)<br/>├── nota/ (Invoice/Kuitansi PDF)<br/>├── nota_pengeluaran/ (Bukti Kas Keluar)<br/>├── galleries/ (Aset Foto Galeri)<br/>├── reviews/ (Foto Testimoni)<br/>├── settings/ (Aset Brand/Logo Kost)<br/>└── keluhan/ (Foto Bukti Komplain)"]
+                PrivateSSD["Private Storage (storage/app/private/)<br/>└── Temp exports & internal framework caches"]
+                EnvSecret[".env (Protected Configuration)"]
+            end
         end
 
         subgraph DatabaseLayer["Database Layer (Shared MySQL)"]
-            MySQLDB["MySQL Database Server<br/>(Host: localhost, Port: 3306)<br/>• InnoDB Engine & UTF8mb4 Charset"]
+            MySQLDB["MySQL Database Server<br/>(Host: localhost, Port: 3306)<br/>• InnoDB Engine & UTF8mb4 Charset<br/>• Business & Framework Tables"]
         end
 
-        PHPRuntime -->|"Launches"| LaravelEngine
+        IndexPHP -->|"Dispatches to mod_lsapi"| PHPRuntime
+        PHPRuntime -->|"Executes"| LaravelEngine
         LaravelEngine -->|"Read/Write Files"| PublicSSD
         LaravelEngine -->|"Read/Write Private Data"| PrivateSSD
-        PublicSSD -.->|"Symlink (php artisan storage:link)"| StaticAssets
-        LaravelEngine -->|"Query Data (PDO Driver)"| MySQLDB
+        PublicSSD -.->|"Symlink (ln -s .../storage/app/public .../public_html/storage)"| StaticAssets
+        LaravelEngine -->|"Query Data (PDO MySQL Driver)"| MySQLDB
     end
 
     %% Styling
@@ -38,6 +45,6 @@ flowchart TB
     classDef db fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
     classDef storage fill:#FCE4EC,stroke:#C2185B,stroke-width:1.5px,color:#880E4F;
 
-    class SharedHostingNode,LiteSpeed,PHPRuntime,StaticAssets,LaravelEngine,Services,Schedulers server;
+    class SharedHostingNode,PublicFolder,CoreFolder,LiteSpeed,PHPRuntime,StaticAssets,IndexPHP,LaravelApp,LaravelEngine,Services,Schedulers server;
     class MySQLDB db;
-    class Storage,PublicSSD,PrivateSSD storage;
+    class Storage,PublicSSD,PrivateSSD,EnvSecret storage;
