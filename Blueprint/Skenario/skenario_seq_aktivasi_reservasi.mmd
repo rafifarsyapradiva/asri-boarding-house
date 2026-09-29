@@ -1,0 +1,49 @@
+sequenceDiagram
+    autonumber
+    actor Admin as Pak Asep (Admin Kost)
+    participant Portal as Portal Admin (weatso.id)
+    participant Service as TransisiPenyewaService
+    participant Billing as BillingService
+    participant DB as Basis Data MySQL 8.x
+    participant WA as Fonnte WhatsApp API
+    actor Tenant as Penyewa (Nur Haliza / Tyas)
+
+    Note over Admin,Tenant: TAHAP 1: Verifikasi Berkas & Eksekusi Aktivasi Kontrak
+    Admin->>Portal: Akses Menu Manajemen Reservasi & Pilih Data Pemesanan
+    Portal-->>Admin: Tampilkan Detail Calon Penyewa & Riwayat Pembayaran
+
+    alt KASUS 1: Nur Haliza (Kamar 101 VIP - 12 Bulan Lunas Rp 15.400.560)
+        Admin->>Portal: Audit NIK 3374115212030001 & Wali Kusuma (082219575575)
+        Admin->>Portal: Klik Tombol "Konfirmasi & Aktifkan Penyewa"
+        Portal->>Service: POST /admin/reservasi/1/konfirmasi
+        Service->>DB: DB::transaction + lockForUpdate (Kamar 101)
+        Service->>DB: INSERT INTO penyewa (status: 'aktif', tarif_aktif: 1283380, deposit: 0)
+        Service->>DB: UPDATE kamars SET status = 'terisi' WHERE id = 101
+        Service->>Billing: injectLunasPenuh(penyewa, reservasi)
+        Billing->>DB: INSERT INTO tagihans (nominal: 15400560, status: 'lunas')
+        Billing->>DB: INSERT INTO pembayarans (status: 'settlement')
+        Service->>DB: UPDATE reservasis SET status = 'dikonfirmasi' WHERE id = 1
+        Service->>WA: Event ReservasiDikonfirmasi -> Kirim Pesan Selamat Datang
+        WA-->>Tenant: WA ke 089524569335: "Akun Aktif, Kamar 101 VIP Siap Huni"
+        Portal-->>Admin: Alert Sukses: "Penyewa Nur Haliza Berhasil Diaktifkan"
+
+    else KASUS 2: Tyas (Kamar 104 Deluxe - 6 Bulan DP Rp 1.710.000 + Sisa Rp 3.990.000)
+        Admin->>Portal: Audit NIK 3374114112030111 & Wali Nur (082219575575)
+        Admin->>Portal: Klik Tombol "Konfirmasi & Aktifkan Penyewa"
+        Portal->>Service: POST /admin/reservasi/2/konfirmasi
+        Service->>DB: DB::transaction + lockForUpdate (Kamar 104)
+        Service->>DB: INSERT INTO penyewa (status: 'aktif', tarif_aktif: 950000, deposit: 0)
+        Service->>DB: UPDATE kamars SET status = 'terisi' WHERE id = 104
+        Service->>Billing: injectSisaDp(penyewa, reservasi)
+        Billing->>DB: INSERT INTO tagihans (nominal: 3990000, status: 'pending', sisa_dp: true)
+        Service->>DB: UPDATE reservasis SET status = 'dikonfirmasi' WHERE id = 2
+        Service->>WA: Event TagihanDibuat -> Kirim Link Pelunasan Sisa DP 70%
+        WA-->>Tenant: WA ke 085940810105: "Akun Aktif & Tagihan Sisa Rp 3.990.000 Terbit"
+        Portal-->>Admin: Alert Sukses: "Penyewa Tyas Berhasil Diaktifkan"
+
+        Note over Tenant,Portal: Pelunasan Mandiri Sisa DP oleh Tyas
+        Tenant->>Portal: Buka Dashboard Penyewa -> Muncul Banner Tagihan Sisa
+        Tenant->>Portal: Klik "Bayar Sekarang" -> Lunasi via Midtrans Snap QRIS
+        Portal->>DB: UPDATE tagihans SET status = 'lunas' WHERE id = sisa_dp
+        Tenant->>Tenant: Unduh Kuitansi Pelunasan A5 (Render html2pdf.js)
+    end

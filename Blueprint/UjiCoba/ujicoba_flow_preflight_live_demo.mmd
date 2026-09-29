@@ -1,0 +1,31 @@
+flowchart TD
+    A[Mulai Persiapan Demo Sidang Skripsi] --> B{Pemeriksaan Koneksi Internet}
+
+    B -->|Tersambung Stabil| C1[Opsi Utama: Akses Live Produksi weatso.id<br/>Sertifikat SSL/TLS 1.3 Let's Encrypt Aktif]
+    B -->|Darurat / Offline| C2[Fallback Cadangan: Localhost XAMPP<br/>Jalankan Apache & MySQL]
+
+    C1 --> D[Buka 2 Jendela Peramban Terpisah]
+
+    subgraph SETUP_BROWSER [Setup Lingkungan Peramban]
+        D --> E1[Jendela 1: Incognito Mode<br/>Portal Publik / Calon Penyewa]
+        D --> E2[Jendela 2: Regular Mode<br/>Panel Admin: /admin/login]
+        D --> E3[Tab Eksternal:<br/>Midtrans Sandbox Simulator VA & QRIS]
+    end
+
+    SETUP_BROWSER --> F[Eksekusi Dual Demo Tracks Riil]
+
+    subgraph PRESENTASI_SIDANG [Peragaan di Depan Dosen Penguji]
+        F --> G1[TRACK 1: Nur Haliza<br/>1. Google OAuth SSO<br/>2. Intercept EnsureProfileIsComplete<br/>3. Lunas 12 Bln Rp 15.400.560<br/>4. Admin injectLunasPenuh<br/>5. Tagihan Rutin Bulanan Rp 1.283.380]
+        F --> G2[TRACK 2: Tyas<br/>1. Registrasi Manual Form Web<br/>2. Sewa 6 Bln DP 30% Rp 1.710.000<br/>3. Admin injectSisaDp<br/>4. Pelunasan Sisa Rp 3.990.000 di Dashboard<br/>5. Tagihan Rutin Bulanan Rp 950.000]
+    end
+
+    G1 --> H[Fitur Pembuktian Kunci Rekayasa Perangkat Lunak]
+    G2 --> H
+
+    subgraph VALIDASI_AKHIR [Highlight Keunggulan Sistem]
+        H --> I1[Cetak Kuitansi Resmi Format A5 Instan di Browser<br/>Pustaka html2pdf.js - Zero Server Load]
+        H --> I2[Status Kedua Penghuni: Masih Aktif di Hunian<br/>Kamar 101 & 104 Terkunci Status 'terisi']
+        H --> I3[Idempotensi Callback Midtrans Cloud & Fonnte WA]
+    end
+
+    VALIDASI_AKHIR --> J[Tanya Jawab Dosen Penguji & Selesai dengan Sukses]

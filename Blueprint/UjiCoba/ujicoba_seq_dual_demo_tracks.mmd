@@ -1,0 +1,42 @@
+sequenceDiagram
+    autonumber
+    actor User as Calon Penyewa
+    participant Web as Portal Produksi (weatso.id)
+    participant Google as Google Identity OAuth
+    participant Midtrans as Midtrans Snap Cloud
+    actor Admin as Pengelola Kost (Pak Asep)
+    participant Tenant as Dashboard Penyewa
+
+    alt TRACK 1: Nur Haliza (Google OAuth + Lunas 12 Bulan + Rutin Bulanan)
+        User->>Web: Akses Katalog & Pilih Kamar 101 (Lantai 1 VIP)
+        User->>Google: Klik Masuk dengan Google (nrhzaa02@gmail.com)
+        Google-->>Web: Callback OAuth -> Intercept EnsureProfileIsComplete
+        User->>Web: Lengkapi No. WhatsApp: 089524569335
+        User->>Web: Input NIK 3374115212030001 & Wali Kusuma (082219575575)
+        User->>Web: Pilih Bulanan 12 Bulan (Diskon Durasi -> Rp 15.400.560, Deposit Rp 0)
+        User->>Midtrans: Bayar Penuh via Midtrans Snap (Mandiri VA)
+        Midtrans-->>Web: Webhook Live Cloud -> Status Reservasi LUNAS
+        Admin->>Web: Buka Panel Admin -> Audit Berkas NIK & Wali
+        Admin->>Web: Klik "Konfirmasi & Aktifkan Penyewa"
+        Web-->>Web: injectLunasPenuh -> Kamar 101 TERISI & Penyewa AKTIF (Rp 1.283.380/bln)
+        Note over Tenant,Midtrans: Kelanjutan Siklus Tagihan Rutin (Status: Masih Aktif)
+        Tenant->>Web: Buka Dashboard -> Terbit Tagihan Rutin Bulanan Baru
+        Tenant->>Midtrans: Bayar via Snap -> Status LUNAS
+        Tenant->>Web: Unduh Kuitansi Resmi A5 (Render html2pdf.js)
+    else TRACK 2: Tyas (Registrasi Manual + DP 6 Bulan + Sisa DP + Rutin Bulanan)
+        User->>Web: Akses Katalog & Pilih Kamar 104 (Lantai 1 Deluxe)
+        User->>Web: Registrasi Akun Manual Form Web (nurhalizakusumaningtyas22@gmail.com)
+        User->>Web: Input NIK 3374114112030111 & Wali Nur (082219575575)
+        User->>Web: Pilih Bulanan 6 Bulan (Total: Rp 5.700.000, Skema DP 30%, Deposit Rp 0)
+        User->>Midtrans: Bayar Uang Muka DP 30% (Rp 1.710.000) via Snap (QRIS)
+        Midtrans-->>Web: Webhook Live Cloud -> Status Reservasi DP
+        Admin->>Web: Buka Panel Admin -> Audit Berkas NIK & Wali
+        Admin->>Web: Klik "Konfirmasi & Aktifkan Penyewa"
+        Web-->>Web: injectSisaDp -> Kamar 104 TERISI & Tagihan Sisa Rp 3.990.000 Terbit
+        Tenant->>Web: Login Penyewa -> Muncul Banner Tagihan Sisa Rp 3.990.000
+        Tenant->>Midtrans: Klik Bayar Sekarang -> Lunasi Sisa via Snap
+        Midtrans-->>Web: Status Tagihan Sisa Jadi LUNAS + Kuitansi html2pdf.js
+        Note over Tenant,Midtrans: Kelanjutan Siklus Tagihan Rutin (Status: Masih Aktif)
+        Tenant->>Web: Buka Dashboard -> Tagihan Bulanan Baru Terbit & Dibayar
+        Tenant->>Web: Unduh Kuitansi Resmi A5 (Render html2pdf.js)
+    end

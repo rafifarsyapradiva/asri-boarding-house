@@ -1,0 +1,38 @@
+flowchart LR
+    subgraph SHARED_CORE [Arsitektur Inti Terpadu - weatso.id]
+        SC1[Domain: https://asriboardinghouse.weatso.id/<br/>Hostinger Cloud LiteSpeed + SSL TLS 1.3]
+        SC2[Kuitansi Pembayaran Format A5<br/>Pustaka Client-Side html2pdf.js - Zero Server Load]
+        SC3[Transaksi Atomik & Pessimistic Lock<br/>DB::transaction + lockForUpdate Anti-Overbooking]
+        SC4[Hostinger Cron Scheduler Tanggal 1<br/>php artisan tagihan:generate-bulanan]
+        SC5[Status Hunian di Database:<br/>Kedua Penyewa Status 'Masih aktif']
+    end
+
+    subgraph TRACK_1 [Track 1: Nur Haliza - Google OAuth]
+        T1_A[Autentikasi:<br/>Google OAuth 2.0 + EnsureProfileIsComplete]
+        T1_B[Unit Kamar:<br/>Kamar 101 Lantai 1 VIP]
+        T1_C[Durasi Kontrak:<br/>12 Bulan: 26 Sep 2026 s/d 26 Sep 2027]
+        T1_D[Skema Finansial Awal:<br/>Full Payment 100% Upfront]
+        T1_E[Nilai Transaksi:<br/>Rp 15.400.560 - Diskon Tahunan]
+        T1_F[Metode Midtrans:<br/>Virtual Account Mandiri Snap]
+        T1_G[Layanan Aktivasi Admin:<br/>BillingService::injectLunasPenuh]
+        T1_H[Tarif Sewa Aktif:<br/>Rp 1.283.380 / bulan]
+        T1_I[Uang Deposit:<br/>Rp 0]
+    end
+
+    subgraph TRACK_2 [Track 2: Tyas - Manual Registration]
+        T2_A[Autentikasi:<br/>Registrasi Formulir Web Manual]
+        T2_B[Unit Kamar:<br/>Kamar 104 Lantai 1 Deluxe]
+        T2_C[Durasi Kontrak:<br/>6 Bulan: 26 Sep 2026 s/d 26 Mar 2027]
+        T2_D[Skema Finansial Awal:<br/>Uang Muka DP 30% + Sisa DP 70%]
+        T2_E["Nilai Transaksi:<br/>DP: Rp 1.710.000 & Sisa: Rp 3.990.000"]
+        T2_F[Metode Midtrans:<br/>QRIS Dinamis Snap]
+        T2_G[Layanan Aktivasi Admin:<br/>BillingService::injectSisaDp]
+        T2_H[Tarif Sewa Aktif:<br/>Rp 950.000 / bulan]
+        T2_I[Uang Deposit:<br/>Rp 0]
+    end
+
+    T1_A --- T1_B --- T1_C --- T1_D --- T1_E --- T1_F --- T1_G --- T1_H --- T1_I
+    T2_A --- T2_B --- T2_C --- T2_D --- T2_E --- T2_F --- T2_G --- T2_H --- T2_I
+
+    TRACK_1 ==> SHARED_CORE
+    TRACK_2 ==> SHARED_CORE
