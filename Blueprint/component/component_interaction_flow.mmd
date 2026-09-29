@@ -6,9 +6,10 @@ flowchart TD
         direction TB
         User(["Pengguna: Admin / Penyewa / Tamu Publik"])
         
-        subgraph UI_Components["Antarmuka & Komponen UI (Blade + Tailwind + Alpine.js)"]
+        subgraph UI_Components["Antarmuka & Komponen UI (Blade + Tailwind + Alpine.js + html2pdf.js)"]
             BladeViews["Blade HTML Templates<br/>(Admin, Penyewa, Landing, Reservasi, Auth)"]
             AlpineState["Alpine.js Reactivity<br/>(State Binding, Modals, Steppers, Dropdowns)"]
+            Html2PdfJS["html2pdf.js<br/>(Client-Side A5 PDF Nota Generator)"]
             Poller["Smart Adaptive Polling (JS)<br/>(Interval 4s-12s, Page Visibility API)"]
             SnapModal["Midtrans Snap JS Popup<br/>(Modal Checkout Pembayaran)"]
         end
@@ -25,9 +26,11 @@ flowchart TD
             CSRF["VerifyCsrfToken<br/>(Proteksi Form Web)"]
             AuthCheck["Authenticate & RoleMiddleware<br/>(Cek Sesi & Role: admin/penyewa)"]
             TenantCheck["EnsureTenantIsActive & EnsurePasswordChanged<br/>(Validasi Status Sewa & Password)"]
+            ProfileCheck["EnsureProfileIsComplete<br/>(Validasi Kelengkapan NIK & Profil)"]
             SigCheck["VerifyMidtransSignature<br/>(Validasi Hash SHA-512 Webhook)"]
             RateLimit["GuestChatLimiter<br/>(Throttle 30 req/min via SHA-256 Token)"]
         end
+        PortalResolver["PortalRedirectResolver<br/>(Dynamic Multi-Portal Redirects)"]
     end
 
     %% =========================================================================
@@ -35,10 +38,11 @@ flowchart TD
     %% =========================================================================
     subgraph AppControllers["Laravel Controllers Layer"]
         direction TB
-        AdminController["Admin Controllers<br/>(Dashboard, Kamar, Penyewa, Tagihan, Keluhan, Laporan, Setting, dll.)"]
-        PenyewaController["Penyewa Controllers<br/>(Dashboard, Tagihan, Reservasi, Keluhan, Notifikasi)"]
-        ApiController["API Controllers<br/>(MidtransCallback, ReservasiCallback, SnapToken, GuestChatApi)"]
-        AuthController["Auth & Public Controllers<br/>(Login, Socialite Google, ReservasiAuth, Landing)"]
+        AdminController["Admin Controllers (19 Class)<br/>(Dashboard, Kamar, Penyewa, Tagihan, Keluhan, Laporan, Setting, dll.)"]
+        PenyewaController["Penyewa Controllers (5 Class)<br/>(Dashboard, Tagihan, Reservasi, Keluhan, Notifikasi)"]
+        ApiController["API Controllers (5 Class)<br/>(MidtransCallback, ReservasiCallback, SnapToken, GuestChatApi)"]
+        AuthController["Auth & Public Controllers (12 Class)<br/>(Login, Socialite Google, ReservasiAuth, Landing, Profile)"]
+        Policies["Eloquent Policies (Anti-IDOR)<br/>(Keluhan, Pembayaran, Reservasi, Tagihan)"]
     end
 
     %% =========================================================================
@@ -50,13 +54,14 @@ flowchart TD
         MidtransSvc["MidtransService<br/>(Request Snap Token & Verifikasi Payload)"]
         ReservasiSvc["ReservasiService<br/>(Booking Kamar, Pricing & Voucher)"]
         TransisiSvc["TransisiPenyewaService<br/>(Check-in, Check-out & Deposit)"]
+        TagihanSvc["TagihanService<br/>(Konfirmasi Cash & Filter Tagihan)"]
+        AdminPenyewaSvc["AdminPenyewaService<br/>(Query Penyewa & Export Preparation)"]
         NotifSvc["NotifikasiService & FonnteService<br/>(Multi-channel Alert & WhatsApp REST)"]
         AnalyticsSvc["DashboardAnalyticsService<br/>(Kalkulasi Arus Kas & Okupansi)"]
         
         subgraph DIP_Section["Dependency Inversion Principle (DIP)"]
-            PdfNotaSvc["PdfNotaService<br/>(Invoice Generation Logic)"]
             PdfInterface["« Interface »<br/>PdfGeneratorInterface"]
-            DompdfAdapter["DompdfGenerator<br/>(Concrete Adapter / Library)"]
+            DompdfAdapter["DompdfGenerator<br/>(Concrete Implementation / Stream PDF)"]
         end
     end
 
@@ -66,9 +71,9 @@ flowchart TD
     subgraph EventQueueSystem["Event-Driven Bus & Asynchronous Queue Workers"]
         direction TB
         EventBus["Laravel Event Dispatcher<br/>(PembayaranBerhasil, TagihanDibuat, ReservasiDibayar, KeluhanDibuat, dll.)"]
-        Listeners["Event Listeners & Subscribers<br/>(GeneratePdfNotaListener, NotifikasiKhususSubscriber, HandleTagihanDibuat, dll.)"]
-        QueueJobs["Database Queue Jobs (Worker Daemon)<br/>(GeneratePdfNotaJob, KirimNotifikasiPembayaranJob, KirimWelcomeMessageJob, dll.)"]
-        ModelObservers["Model Observers (Lifecycle Hooks)<br/>(PenyewaObserver, KamarObserver, FasilitasObserver, dll.)"]
+        Listeners["12 Event Listeners & Subscribers<br/>(HandleTagihanDibuat, KirimEmailPembayaranCashListener, NotifikasiKhususSubscriber, dll.)"]
+        QueueJobs["8 Database Queue Jobs (Worker Daemon)<br/>(KirimNotifikasiTagihanJob, KirimNotifikasiWaliJob, KirimWelcomeMessageJob, KirimNotifikasiPembayaranJob, dll.)"]
+        ModelObservers["Model Observers (Lifecycle Hooks)<br/>(PenyewaObserver, KamarObserver, FasilitasObserver, PengeluaranObserver, SettingObserver)"]
     end
 
     %% =========================================================================
@@ -76,9 +81,9 @@ flowchart TD
     %% =========================================================================
     subgraph DataPersistence["Tier 3: Data Layer & Persistence"]
         direction TB
-        EloquentORM["Eloquent ORM Models<br/>(User, Kamar, Penyewa, Tagihan, Pembayaran, Reservasi, Keluhan, Notifikasi, dll.)"]
+        EloquentORM["Eloquent ORM Models (21 Models)<br/>(User, Kamar, Penyewa, Tagihan, Pembayaran, Reservasi, Keluhan, Notifikasi, Setting, dll.)"]
         MySQL_DB[("MySQL 8.x Database Engine<br/>- Tabel Relasional & Foreign Keys<br/>- Queue: jobs & failed_jobs<br/>- Session: sessions & cache<br/>- Soft Deletes & Composite Indexes")]
-        LocalDisk[("Physical Disk Storage (storage/app/public/)<br/>- Berkas PDF Nota Kuitansi<br/>- Foto Unit Kamar & Galeri<br/>- Avatar Profil Pengguna")]
+        LocalDisk[("Physical Disk Storage (storage/app/public/)<br/>- Foto Unit Kamar (kamar/)<br/>- Foto Avatar Pengguna (avatars/)<br/>- Foto Galeri Kost (gallery/)<br/>- Bukti Kuitansi Kasir (nota_pengeluaran/)")]
     end
 
     %% =========================================================================
@@ -89,72 +94,72 @@ flowchart TD
         MidtransGW["Midtrans Payment Gateway<br/>(Snap Payment & Webhook Notification)"]
         FonnteGW["Fonnte WhatsApp API Gateway<br/>(Automated WhatsApp Notifications)"]
         GoogleGW["Google Identity Services<br/>(OAuth 2.0 Authentication)"]
+        MailGW["SMTP Mail Server<br/>(Transactional Email Delivery)"]
     end
 
     %% =========================================================================
     %% INTERACTION CONNECTIONS & REQUEST-RESPONSE FLOWS
     %% =========================================================================
-    
-    %% User to UI
     User -->|"1. Interaksi Pengguna (Form Submit / Click / Chat)"| BladeViews
     BladeViews <-->|"2. Reactive State & DOM Binding"| AlpineState
-    Poller -->|"3. Stateless Polling Fetch (Delta Msg)"| RouteDispatch
-    AlpineState -->|"4. Inisialisasi Snap Popup"| SnapModal
-    SnapModal <-->|"5. Client Token & Payment Handshake"| MidtransGW
+    BladeViews -->|"3. Unduh Kuitansi A5 Client-Side"| Html2PdfJS
+    Poller -->|"4. Stateless Polling Fetch (Delta Msg)"| RouteDispatch
+    AlpineState -->|"5. Inisialisasi Snap Popup"| SnapModal
+    SnapModal <-->|"6. Client Token & Payment Handshake"| MidtransGW
 
-    %% UI to Route & Middleware
-    BladeViews -->|"6. HTTP POST/GET (Stateful Web)"| RouteDispatch
-    RouteDispatch -->|"7. Web Request Pipeline"| CSRF
+    BladeViews -->|"7. HTTP POST/GET (Stateful Web)"| RouteDispatch
+    RouteDispatch -->|"8. Web Request Pipeline"| CSRF
     CSRF --> AuthCheck
     AuthCheck --> TenantCheck
-    TenantCheck --> AppControllers
+    TenantCheck --> ProfileCheck
+    ProfileCheck --> PortalResolver
+    PortalResolver --> AppControllers
 
-    RouteDispatch -->|"8. Webhook / API Request"| SigCheck
+    RouteDispatch -->|"9. Webhook Signature Check"| SigCheck
     SigCheck --> ApiController
-    RouteDispatch -->|"9. Guest Chat Request"| RateLimit
+    RouteDispatch -->|"10. Guest Chat Limiter"| RateLimit
     RateLimit --> ApiController
 
-    %% Controllers to Services / ORM
-    AdminController -->|"10. Panggil Logika Bisnis"| ServiceLayer
-    PenyewaController -->|"10. Panggil Logika Bisnis"| ServiceLayer
-    AuthController -->|"10. Panggil Logika Bisnis"| ServiceLayer
-    ApiController -->|"10. Panggil Logika Bisnis"| ServiceLayer
+    AdminController -->|"11. Anti-IDOR Authorization"| Policies
+    PenyewaController -->|"11. Anti-IDOR Authorization"| Policies
+
+    AdminController -->|"12. Panggil Logika Bisnis"| ServiceLayer
+    PenyewaController -->|"12. Panggil Logika Bisnis"| ServiceLayer
+    AuthController -->|"12. Panggil Logika Bisnis"| ServiceLayer
+    ApiController -->|"12. Panggil Logika Bisnis"| ServiceLayer
 
     AdminController -->|"Direct Query / View Binding"| EloquentORM
     PenyewaController -->|"Direct Query"| EloquentORM
 
-    %% Service Layer Internal & DIP
-    PdfNotaSvc -->|"Depends on"| PdfInterface
+    %% DIP Connection
+    AdminController -->|"13. Export Laporan Manajerial"| PdfInterface
     DompdfAdapter -.->|"Implements"| PdfInterface
-    DompdfAdapter -->|"11. Simpan Berkas PDF Nota"| LocalDisk
+    DompdfAdapter -->|"14. Stream Download PDF Laporan"| BladeViews
 
-    ServiceLayer -->|"12. Query & Mutasi Data"| EloquentORM
-    ServiceLayer <-->|"13. Request Token / Verification"| MidtransGW
-    NotifSvc -->|"14. HTTP POST WhatsApp Alert"| FonnteGW
-    AuthController <-->|"15. OAuth Token Exchange"| GoogleGW
+    ServiceLayer -->|"15. Query & Mutasi Data"| EloquentORM
+    ServiceLayer <-->|"16. Request Token / Verification"| MidtransGW
+    NotifSvc -->|"17. HTTP POST WhatsApp Alert"| FonnteGW
+    AuthController <-->|"18. OAuth Token Exchange"| GoogleGW
 
-    %% Event Bus & Queue Flow
-    ServiceLayer -->|"16. Trigger Domain Event"| EventBus
-    AdminController -->|"16. Trigger Domain Event"| EventBus
-    ApiController -->|"16. Trigger Domain Event"| EventBus
+    ServiceLayer -->|"19. Trigger Domain Event"| EventBus
+    AdminController -->|"19. Trigger Domain Event"| EventBus
+    ApiController -->|"19. Trigger Domain Event"| EventBus
 
-    EventBus -->|"17. Dispatch Listener"| Listeners
-    Listeners -->|"18. Push Task Asinkron ke Queue"| QueueJobs
-    QueueJobs <-->|"19. Enqueue / Dequeue Jobs"| MySQL_DB
-    QueueJobs -->|"20. Background Execute Service"| ServiceLayer
+    EventBus -->|"20. Dispatch Listener"| Listeners
+    Listeners -->|"21. Push Task Asinkron ke Queue"| QueueJobs
+    QueueJobs <-->|"22. Enqueue / Dequeue Jobs"| MySQL_DB
+    QueueJobs -->|"23. Background Execute Service"| ServiceLayer
+    QueueJobs -->|"24. Kirim Email Notifikasi"| MailGW
 
-    %% Observers Hook
-    EloquentORM -->|"21. Model Lifecycle Trigger"| ModelObservers
-    ModelObservers -->|"22. Catat Audit Log & Update Status"| EloquentORM
+    EloquentORM -->|"25. Model Lifecycle Trigger"| ModelObservers
+    ModelObservers -->|"26. Catat Audit Log & Update Status"| EloquentORM
 
-    %% Database Queries
-    EloquentORM <-->|"23. PDO SQL Transactions & Lockings"| MySQL_DB
+    EloquentORM <-->|"27. PDO SQL Transactions & Lockings"| MySQL_DB
+    AdminController -->|"28. Upload / Delete Physical Files"| LocalDisk
 
-    %% Response Back to Client
-    AppControllers -->|"24. Render Blade View / Return JSON Payload"| BladeViews
-    BladeViews -->|"25. Tampilan Diperbarui / Notifikasi UI"| User
+    AppControllers -->|"29. Render Blade View / Return JSON Payload"| BladeViews
+    BladeViews -->|"30. Tampilan Diperbarui / Notifikasi UI"| User
 
-    %% Styling Classes
     classDef client fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
     classDef security fill:#FCE4EC,stroke:#C2185B,stroke-width:2px,color:#880E4F;
     classDef app fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
@@ -163,10 +168,10 @@ flowchart TD
     classDef data fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
     classDef ext fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#4A148C;
 
-    class ClientLayer,UI_Components,BladeViews,AlpineState,Poller,SnapModal client;
-    class SecurityPipeline,MiddlewareStack,CSRF,AuthCheck,TenantCheck,SigCheck,RateLimit security;
-    class AppControllers,AdminController,PenyewaController,ApiController,AuthController app;
-    class ServiceLayer,BillingSvc,MidtransSvc,ReservasiSvc,TransisiSvc,NotifSvc,AnalyticsSvc,DIP_Section,PdfNotaSvc,PdfInterface,DompdfAdapter service;
+    class ClientLayer,UI_Components,BladeViews,AlpineState,Html2PdfJS,Poller,SnapModal client;
+    class SecurityPipeline,MiddlewareStack,CSRF,AuthCheck,TenantCheck,ProfileCheck,SigCheck,RateLimit,PortalResolver security;
+    class AppControllers,AdminController,PenyewaController,ApiController,AuthController,Policies app;
+    class ServiceLayer,BillingSvc,MidtransSvc,ReservasiSvc,TransisiSvc,TagihanSvc,AdminPenyewaSvc,NotifSvc,AnalyticsSvc,DIP_Section,PdfInterface,DompdfAdapter service;
     class EventQueueSystem,EventBus,Listeners,QueueJobs,ModelObservers event;
     class DataPersistence,EloquentORM,MySQL_DB,LocalDisk data;
-    class ExternalGateways,MidtransGW,FonnteGW,GoogleGW ext;
+    class ExternalGateways,MidtransGW,FonnteGW,GoogleGW,MailGW ext;
