@@ -1,0 +1,50 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FEF3C7',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '14px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    Daemon["⚙️ System Crontab Daemon (* * * * * php artisan schedule:run)<br/><b>routes/console.php</b> — Pusat Orkestrasi Otomasi Sistem"]
+
+    subgraph Tier1["⏰ SIKLUS OPERASIONAL TIAP JAM & PAGI"]
+        direction LR
+        subgraph HourlyJobs["⏱️ Siklus Tiap Jam (Hourly)"]
+            direction TB
+            JobHourly["<b>reservasi:cancel-expired</b><br/>• Batal otomatis reservasi pending > 24 jam<br/>• Buka kembali kunci kamar menjadi 'Tersedia'"]
+        end
+        subgraph DailyMorningJobs["☀️ Siklus Pagi Hari (08:00 WIB)"]
+            direction TB
+            Job0800["<b>kontrak:reminder-habis</b><br/>• Deteksi H-14 & H-7 masa sewa berakhir<br/>• Kirim pesan WhatsApp & Email proaktif"]
+        end
+    end
+
+    subgraph Tier2["🌙 SIKLUS BATCH DINI HARI (00:00 - 03:00 WIB)"]
+        direction TB
+        Job0005["<b>00:05 WIB (Tgl 1 Tiap Bulan) — tagihan:generate-bulanan</b><br/>• Terbitkan invoice rutin bulanan bagi seluruh penyewa aktif"]
+        Job0100["<b>01:00 WIB (Harian) — tagihan:proses-keterlambatan</b><br/>• Tgl 11 s/d Akhir Bulan: Reminder WA denda Rp0 (Jatuh Tempo)<br/>• Tgl 1 Bulan Baru: Terapkan denda flat 5% + eskalasi notifikasi ke wali"]
+        JobMaintenanceNight["<b>01:30 - 03:00 WIB (Pembersihan Sesi & Log)</b><br/>• 01:30 WIB: <b>session:cleanup</b> (Pembersihan sesi login kadaluarsa)<br/>• 02:00 WIB: <b>log-notifikasi:clear</b> (Arsipkan log notifikasi > 180 hari)<br/>• 03:00 WIB: <b>chat-guest:prune</b> (Arsipkan riwayat chat tamu inaktif)"]
+    end
+
+    subgraph Tier3["📅 SIKLUS BERKALA MINGGUAN & BULANAN (MAINTENANCE)"]
+        direction LR
+        JobWeekly["<b>Tiap Minggu — log:truncate</b><br/>• Rotasi & kompresi berkas log di storage/logs"]
+        JobMonthly["<b>Tiap Bulan — abh:purge-trash</b><br/>• Purge permanen record soft-deleted usang"]
+    end
+
+    Daemon ==> Tier1
+    Tier1 ==> Tier2
+    Tier2 ==> Tier3
+
+    classDef daemonBox fill:#FEF08A,stroke:#000000,stroke-width:2px;
+    classDef jobBox fill:#FFFFFF,stroke:#000000,stroke-width:1.5px;
+    class Daemon daemonBox;
+    class JobHourly,Job0800,Job0005,Job0100,JobMaintenanceNight,JobWeekly,JobMonthly jobBox;

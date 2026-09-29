@@ -15,6 +15,7 @@
 | **1.4.0** | 2026-08-19 | Principal Enterprise Solutions Architect | **Finalisasi Komprehensif & Standarisasi Produksi**: Penambahan spesifikasi Google OAuth 2.0 (Socialite) & `EnsureProfileIsComplete`, isolasi arsitektur Dual-Chat, protokol Transfer Bank Manual, aturan Prorata Sewa & Potongan Deposit Kerusakan, perluasan Acceptance Criteria (AC-AUTH, AC-CHAT, AC-PAY, AC-KEL, AC-EXP, AC-NOTIF), tabel KPI & SLA kuantitatif, Fault Tolerance/Fallback API, Log Pruning, serta sinkronisasi berkas `.mmd` ke folder `Blueprint/prd/`. |
 | **1.5.0** | 2026-08-19 | Lead Solutions & Enterprise Architect | **Ekspansi Visualisasi Terstruktur (User & System Flows)**: Penambahan 5 diagram visual pendukung baru: Diagram 5.8 (Google OAuth & Complete Profile User Flow), Diagram 5.9 (Dual-Chat Architecture System Flow), Diagram 5.10 (Protokol Verifikasi Transfer Manual Flow), Diagram 5.11 (Siklus Penanganan Keluhan Resolusi Flow), dan Diagram 5.12 (Multi-Channel Broadcast Notification Engine Flow). |
 | **1.6.0** | 2026-08-19 | Lead Enterprise Solutions Architect | **Rendering & Embedding Gambar PNG Lengkap**: Kompilasi dan penautan 13 berkas visual diagram PNG resolusi tinggi secara 1:1 ke dalam seluruh sub-bab diagram PRD di folder `Blueprint/prd/`. |
+| **1.7.0** | 2026-09-29 | Principal Enterprise Solutions Architect | **Harmonisasi Menyeluruh Produksi & Finalisasi Blueprint**: Penambahan spesifikasi penegakan ganti password awal (`EnsurePasswordChanged` & `require_password_change`), alur lupa & reset password mandiri via email SMTP, otomatisasi pengingat masa sewa habis H-14 & H-7 (`kontrak:reminder-habis`), kebijakan perpanjangan kontrak sewa (*contract renewal*), modul kalender okupansi visual (`CalendarController`), manajemen konfigurasi dinamis (`settings`), klarifikasi arsitektur cetak kuitansi *client-side rendering* (`html2pdf.js`) vs server-side `Dompdf` laporan, penambahan entitas ke-21 `whatsapp_clicks` pada skema basis data, harmonisasi perintah artisan scheduler, perluasan Acceptance Criteria (AC-AUTH-02, AC-SEC-01, AC-KON-01, AC-KON-02, AC-SET-01), serta penambahan 3 diagram visual baru: Diagram 5.13 (Auth Security Flow), Diagram 5.14 (Contract Lifecycle & Renewal Flow), dan Diagram 5.15 (Scheduler Automation Map) lengkap dengan berkas `.mmd` & `.png` di subfolder `Blueprint/prd/`. |
 
 ---
 
@@ -32,6 +33,7 @@
    - 3.2 [Portal Reservasi Calon Penyewa & Google OAuth](#32-portal-reservasi-calon-penyewa--google-oauth)
    - 3.3 [Portal Penyewa Aktif](#33-portal-penyewa-aktif)
    - 3.4 [Portal Admin & Manager](#34-portal-admin--manager)
+   - 3.5 [Pengaturan Sistem & Fitur Pendukung Operasional Tambahan](#35-pengaturan-sistem--fitur-pendukung-operasional-tambahan)
 4. [Aturan Bisnis Utama (Core Business Rules)](#4-aturan-bisnis-utama-core-business-rules)
    - 4.1 [Kebijakan Siklus Billing & Prorata Sewa Awal](#41-kebijakan-siklus-billing--prorata-sewa-awal)
    - 4.2 [Kebijakan Denda Flat Kalender & Idempotency Guard](#42-kebijakan-denda-flat-kalender--idempotency-guard)
@@ -39,6 +41,7 @@
    - 4.4 [Fleksibilitas Tipe Sewa (Harian, Mingguan, Bulanan)](#44-fleksibilitas-tipe-sewa-harian-mingguan-bulanan)
    - 4.5 [Status Kamar Pasca Check-Out (Manual Inspection Hold)](#45-status-kamar-pasca-check-out-manual-inspection-hold)
    - 4.6 [Protokol Pembayaran Transfer Bank Manual](#46-protokol-pembayaran-transfer-bank-manual)
+   - 4.7 [Kebijakan Pengingat Akhir Masa Sewa, Perpanjangan Kontrak & Penegakan Password Pertama](#47-kebijakan-pengingat-akhir-masa-sewa-perpanjangan-kontrak--penegakan-password-pertama)
 5. [Alur dan Diagram Alir Proses Bisnis (Visual Workflows)](#5-alur-dan-diagram-alir-proses-bisnis-visual-workflows)
    - [Diagram 5.1: High-Level System Architecture & Topologi Diagram](#diagram-51-high-level-system-architecture--topologi-diagram)
    - [Diagram 5.2: Peta Siklus Perjalanan Pengguna (End-to-End Tenant Lifecycle State Diagram)](#diagram-52-peta-siklus-perjalanan-pengguna-end-to-end-tenant-lifecycle-state-diagram)
@@ -52,6 +55,9 @@
    - [Diagram 5.10: System Flow - Protokol Verifikasi Pembayaran Transfer Bank Manual](#diagram-510-system-flow---protokol-verifikasi-pembayaran-transfer-bank-manual)
    - [Diagram 5.11: User & System Flow - Siklus Penanganan Keluhan Fasilitas](#diagram-511-user--system-flow---siklus-penanganan-keluhan-fasilitas)
    - [Diagram 5.12: System Flow - Multi-Channel Broadcast Notification Engine](#diagram-512-system-flow---multi-channel-broadcast-notification-engine)
+   - [Diagram 5.13: User Flow - Penegakan Pergantian Password Pertama & Alur Lupa Sandi Mandiri](#diagram-513-user-flow---penegakan-pergantian-password-pertama--alur-lupa-sandi-mandiri)
+   - [Diagram 5.14: User & System Flow - Siklus Pengingat Masa Sewa, Perpanjangan Kontrak & Check-Out Deposit](#diagram-514-user--system-flow---siklus-pengingat-masa-sewa-perpanjangan-kontrak--check-out-deposit)
+   - [Diagram 5.15: System Flow - Peta Otomasi Siklus Scheduler & Perawatan Berkala Sistem](#diagram-515-system-flow---peta-otomasi-siklus-scheduler--perawatan-berkala-sistem)
 6. [Kebutuhan Non-Fungsional & Keamanan (Non-Functional Requirements)](#6-kebutuhan-non-fungsional--keamanan-non-functional-requirements)
    - 6.1 [Keamanan, Otorisasi & Audit Trail](#61-keamanan-otorisasi--audit-trail)
    - 6.2 [Performa, Skalabilitas & Kebijakan Siklus Hidup Data (Data Lifecycle)](#62-performa-skalabilitas--kebijakan-siklus-hidup-data-data-lifecycle)
@@ -61,7 +67,7 @@
    - 8.1 [Asumsi Utama Properti & Teknis](#81-asumsi-utama-properti--teknis)
    - 8.2 [Matriks Identifikasi Risiko & Mitigasi Arsitektural](#82-matriks-identifikasi-risiko--mitigasi-arsitektural)
    - 8.3 [Protokol Penanganan Kegagalan Layanan Eksternal (Fault Tolerance & Fallback)](#83-protokol-penanganan-kegagalan-layanan-eksternal-fault-tolerance--fallback)
-9. [Matriks Skema Database (Database Entity Mapping - 20 Entitas)](#9-matriks-skema-database-database-entity-mapping---20-entitas)
+9. [Matriks Skema Database (Database Entity Mapping - 21 Entitas)](#9-matriks-skema-database-database-entity-mapping---21-entitas)
 10. [Arsitektur Komponen Sistem (Component Diagram 3-Tier)](#10-arsitektur-komponen-sistem-component-diagram-3-tier)
 
 ---
@@ -122,17 +128,27 @@ Sistem ini menerapkan pemisahan hak akses menggunakan tiga rute otentikasi yang 
 | Mengakses Landing Page & Room Tour Video | ✔ | ✔ | ✔ | ✔ |
 | Mengirim Pesan di Floating Live Chat Tamu | ✔ (Cookie Token) | ✔ | ✔ | ✔ (Balas Pesan) |
 | Login via Google OAuth (Laravel Socialite) | ❌ | ✔ | ✔ | ❌ (Guard: Form Admin Only) |
+| Lupa & Reset Password Mandiri via Email SMTP | ❌ | ✔ | ✔ | ✔ |
+| Ganti Password Awal Wajib (`EnsurePasswordChanged`)| ❌ | ❌ | ✔ (Login Perdana) | ❌ |
 | Melakukan Reservasi Kamar & Cek Ketersediaan | ✔ | ✔ | ✔ | ✔ (Walk-in Entry) |
 | Pre-Payment Chat Box di Detail Reservasi | ❌ | ✔ (Khusus Reservasinya) | ❌ | ✔ (Semua Reservasi) |
 | Bayar DP/Lunas (Midtrans Snap & Transfer Manual)| ❌ | ✔ (Khusus Reservasinya) | ❌ | ✔ (Verifikasi Manual) |
 | Mengakses Dashboard Portal Penyewa Aktif | ❌ | ❌ | ✔ | ❌ |
 | Mengakses Halaman Tagihan Saya & Stepper Denda | ❌ | ❌ | ✔ (Milik Sendiri) | ✔ (Semua Tagihan) |
+| Cetak / Unduh Kuitansi Nota Pembayaran (`html2pdf.js`)| ❌ | ❌ | ✔ (Milik Sendiri) | ✔ (Semua Nota) |
+| Menerima Reminder Habis Kontrak (H-14 & H-7) | ❌ | ❌ | ✔ (WA & Email) | ✔ (Monitoring) |
+| Mengajukan & Memproses Perpanjangan Kontrak (Renewal)| ❌ | ❌ | ✔ (Konfirmasi) | ✔ (Perbarui Kontrak) |
 | Mengirim Pengaduan & Keluhan Kerusakan Berfoto| ❌ | ❌ | ✔ | ✔ (Tanggapi & Selesaikan)|
 | Mengakses Halaman Peraturan Kost | ❌ | ✔ (Read-only) | ✔ (Read-only) | ✔ (CRUD Peraturan) |
+| Memantau Kalender Okupansi Visual (`CalendarController`)| ❌ | ❌ | ❌ | ✔ (Visual Room Board) |
 | Mengelola Master Kamar, Fasilitas, & Pengguna | ❌ | ❌ | ❌ | ✔ (CRUD Lengkap) |
 | Mengelola Akuntansi Kas Keluar & Nota Bukti | ❌ | ❌ | ❌ | ✔ (CRUD & Rekap) |
-| Mengunduh Laporan Keuangan (PDF / Excel) | ❌ | ❌ | ❌ | ✔ (Export Filtered) |
+| Mengunduh Laporan Keuangan & Rekap (Dompdf / Excel) | ❌ | ❌ | ❌ | ✔ (Export Filtered) |
+| Mengelola Pengaturan Sistem (`settings` Bank & Kontak)| ❌ | ❌ | ❌ | ✔ (CRUD Settings) |
 | Mengirim Broadcast Notifikasi Massal | ❌ | ❌ | ❌ | ✔ (Web, WA, Email) |
+
+> 📌 **Catatan Teknis Representasi Role Basis Data**:
+> Pada skema basis data tabel `users`, kolom role bertipe `enum('admin', 'penyewa')`. Entitas **"Calon Penyewa"** merupakan *state bisnis logis/konseptual* bagi pengguna terotentikasi yang telah memiliki relasi pemesanan pada tabel `reservasi`, namun belum memiliki profil kontrak aktif pada tabel `penyewa`. Pengguna secara otomatis bertransformasi menjadi **"Penyewa Aktif"** segera setelah Administrator menyetujui reservasi dan sistem membentuk record profil di tabel `penyewa`.
 
 ---
 
@@ -174,6 +190,9 @@ Sistem ini menerapkan pemisahan hak akses menggunakan tiga rute otentikasi yang 
   * Calon penyewa dapat masuk/mendaftar secara instan menggunakan akun Google.
   * *Role Protection Guard*: Akun ber-role `admin` dilarang login via Google OAuth (ditolak dengan notifikasi error).
   * *Middleware `EnsureProfileIsComplete`*: Jika akun baru Google belum memiliki nomor WhatsApp, pengguna diarahkan ke halaman [complete-profile.blade.php](file:///c:/xampp/htdocs/asri-boarding-house/resources/views/auth/complete-profile.blade.php) untuk melengkapi nomor kontak sebelum diizinkan membuat reservasi.
+* **Lupa & Reset Sandi Mandiri (Self-Service Password Reset)**:
+  * Pengguna yang lupa kata sandi dapat mengajukan reset mandiri melalui input email.
+  * Sistem men-generate *secure reset token* unik (kedaluwarsa 60 menit) dan mengirimkan tautan pemulihan via email menggunakan protokol SMTP (Laravel Mailer).
 * **Pre-Payment Chat Box (Obrolan Khusus Reservasi)**:
   * Ruang diskusi real-time (AJAX Polling) aktif pada status reservasi `pending` (sebelum pembayaran) pada tabel `chat_messages` agar calon penyewa dapat berkomunikasi langsung dengan admin.
 * **5-Step Stepper Dinamis**: Panduan visual langkah reservasi berbasis status database (`pending` ➔ `dp` / `lunas` ➔ `dikonfirmasi` ➔ `selesai/aktif`).
@@ -183,13 +202,19 @@ Sistem ini menerapkan pemisahan hak akses menggunakan tiga rute otentikasi yang 
 * **Auto-Cancel & Fallback**: Reservasi berstatus `pending` yang melewati batas 24 jam otomatis dibatalkan sistem, melepaskan kunci kamar kembali ke status `tersedia`.
 
 ### 3.3 Portal Penyewa Aktif
-* **Dashboard Finansial**: Grafik status riwayat tagihan bulanan (Chart.js), indikator kamar dihuni, dan sisa masa sewa.
+* **Penegakan Pergantian Password Awal (`EnsurePasswordChanged`)**:
+  * Pengguna baru hasil konfirmasi reservasi otomatis memiliki flag `require_password_change = true`.
+  * Saat pertama kali login dengan password default (nomor HP), sistem mencegat akses melalui middleware `EnsurePasswordChanged` dan mewajibkan pengguna menetapkan kata sandi baru sebelum dapat membuka dashboard.
+* **Dashboard Finansial & Hunian**: Grafik status riwayat tagihan bulanan (Chart.js), indikator kamar dihuni, sisa masa sewa, dan notifikasi banner.
 * **Tagihan Saya & Stepper Keterlambatan**:
   * Daftar tagihan bulanan rutin dengan **Stepper Indikator Keterlambatan 3-Tahap**:
     1. *Tahap 1 (Tgl 1–10)*: Masa Pembayaran Lancar (Bebas Denda).
     2. *Tahap 2 (Tgl 11–Akhir Bulan)*: Masa Toleransi (Reminder WhatsApp, Denda Rp0).
     3. *Tahap 3 (Bulan Baru)*: Masa Menunggak (Denda Flat 5% Pokok + Eskalasi WA Wali).
   * Opsi pelunasan tagihan melalui Midtrans Snap atau Transfer Bank Manual.
+  * **Cetak Kuitansi Nota Pembayaran (`html2pdf.js`)**: Penyewa dapat mencetak atau mengunduh kuitansi resmi pelunasan sewa langsung dari browser melalui *client-side PDF rendering* (`html2pdf.js`), mengeliminasi beban CPU server dan kebutuhan penyimpanan fisik file nota.
+* **Pengingat Masa Kontrak Habis (H-14 & H-7)**:
+  * Penyewa menerima notifikasi proaktif otomatis via WhatsApp & Email pada H-14 dan H-7 sebelum masa kontrak berakhir guna mengonfirmasi perpanjangan sewa atau persiapan check-out.
 * **Keluhan & Pengaduan Fasilitas**:
   * Form pelaporan kerusakan (kategori: kamar, fasilitas bersama, kebersihan, keamanan) dengan kewajiban melampirkan foto bukti (JPG/PNG maks 2MB).
   * Timeline status penanganan interaktif: `diajukan` ➔ `diproses` ➔ `selesai` disertai tanggapan catatan perbaikan dari admin.
@@ -200,18 +225,31 @@ Sistem ini menerapkan pemisahan hak akses menggunakan tiga rute otentikasi yang 
   * Ringkasan statistik (Kamar terisi, Kamar kosong, Reservasi baru masuk, Keluhan aktif).
   * Summary Cards Keuangan (Total Pemasukan Bersih, Total Pengeluaran Kas, Laba Bersih Operasional).
   * Grouped Bar Chart Keuangan (Tren pemasukan vs pengeluaran 12 bulan terakhir).
+* **Kalender Okupansi Visual (Visual Room & Booking Calendar)**:
+  * Modul kalender interaktif ([CalendarController.php](file:///c:/xampp/htdocs/asri-boarding-house/app/Http/Controllers/Admin/CalendarController.php)) untuk memetakan ketersediaan unit kamar, jadwal tanggal check-in, dan estimasi check-out per kamar secara visual berbasis kode warna (*color-coded*).
 * **Manajemen Kamar & Safety Constraints**:
   * CRUD Kamar dengan filter lantai dan fasilitas.
   * *Constraint Pengaman Hapus*: Kamar yang sedang dihuni penyewa aktif atau memiliki riwayat reservasi terkunci dilarang dihapus (menampilkan Toast error visual).
 * **Manajemen Penyewa & Tarif Personal (Immutable)**:
   * Pendaftaran penyewa baru mewajibkan pengisian data Wali (Nama & No HP Wali) serta deposit jaminan sewa.
   * *Tarif Sewa Personal (Immutable Price)*: Nilai sewa disimpan pada kolom `harga_sewa` tabel `penyewa` saat registrasi/konfirmasi. Tagihan bulanan ditarik dari nilai personal ini (sehingga kenaikan harga kamar umum di kemudian hari tidak membebani penyewa lama).
+  * *Perpanjangan Kontrak Sewa (Renewal)*: Admin dapat memperpanjang masa tinggal penyewa aktif dengan memperbarui `tanggal_keluar_seharusnya` dan menerbitkan tagihan periode lanjutan tanpa perlu registrasi ulang atau pemotongan deposit.
 * **Manajemen Reservasi & Auto-Create Tenant**:
   * Admin meninjau data reservasi masuk (`dp` atau `lunas`).
-  * Saat admin menekan tombol "Konfirmasi", sistem secara otomatis: (1) Mengubah status kamar menjadi `terisi`, (2) Membuat profil user & penyewa baru di database, (3) Menerbitkan tagihan pelunasan sisa sewa (jika skema DP), dan (4) Mengirimkan kredensial login (Email & Password nomor HP) via WhatsApp API Fonnte.
+  * Saat admin menekan tombol "Konfirmasi", sistem secara otomatis: (1) Mengubah status kamar menjadi `terisi`, (2) Membuat profil user & penyewa baru di database dengan flag `require_password_change = true`, (3) Menerbitkan tagihan pelunasan sisa sewa (jika skema DP), dan (4) Mengirimkan kredensial login (Email & Password nomor HP) via WhatsApp API Fonnte.
 * **Manajemen Pengeluaran & Kas Keluar**: CRUD pengeluaran operasional kost lengkap dengan unggah foto nota/struk (maks 2MB, auto-delete berkas lama saat diedit/dihapus).
-* **Laporan Arus Kas Terintegrasi**: Fitur ekspor neraca kas masuk vs kas keluar ke format PDF (Dompdf A4 Landscape) dan Excel/CSV dengan preservasi filter pencarian dan periode bulan/tahun.
+* **Laporan Arus Kas Terintegrasi (Dompdf Server-Side)**: Fitur ekspor neraca kas masuk vs kas keluar ke format PDF (Dompdf A4 Landscape) dan Excel/CSV dengan preservasi filter pencarian dan periode bulan/tahun.
 * **Broadcast Notifikasi Massal**: Form untuk mengirim pengumuman broadcast serentak ke penyewa aktif melalui platform Web, Email SMTP, dan WhatsApp Fonnte.
+
+### 3.5 Pengaturan Sistem & Fitur Pendukung Operasional Tambahan
+* **Pengaturan Sistem Dinamis (`settings`)**: Pengelolaan konfigurasi kost fleksibel tanpa perubahan kode program (*zero hardcoding*), meliputi:
+  * Nomor kontak WhatsApp Admin pengelola (tujuan forward alert reservasi/keluhan).
+  * Daftar rekening bank resmi untuk transfer manual (BCA, Mandiri, BRI) beserta nomor rekening dan atas nama pemilik.
+  * Besaran standar uang jaminan sewa (security deposit).
+* **Manajemen Konten Dinamis (FAQ & Galeri)**:
+  * CRUD FAQ publik dengan pengelompokan kategori pertanyaan seputar aturan kost.
+  * CRUD Foto Galeri ([galleries](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/Gallery.php)) untuk menampilkan visualisasi sudut kost terkini pada beranda.
+  * Moderasi ulasan dan testimoni pelanggan ([customer_reviews](file:///c:/xampp/htdocs/asri-boarding-house/app/Models/CustomerReview.php)).
 
 ---
 
@@ -249,6 +287,17 @@ Sistem penegakan denda menerapkan aturan **Denda Flat Kalender** dengan **Idempo
   - *Disetujui*: Status tagihan/reservasi berubah menjadi `lunas` / `dp`.
   - *Ditolak*: Status diubah menjadi `ditolak` disertai catatan alasan penolakan, dan pengguna diberi kesempatan mengunggah ulang bukti bayar yang sah.
 
+### 4.7 Kebijakan Pengingat Akhir Masa Sewa, Perpanjangan Kontrak & Penegakan Password Pertama
+1. **Peringatan Otomatis Akhir Kontrak (H-14 & H-7)**:
+   * Sistem otomatis memantau kolom `tanggal_keluar_seharusnya` di tabel `penyewa` setiap hari pukul 08:00 WIB melalui command `kontrak:reminder-habis`.
+   * Pada H-14 dan H-7 sebelum masa kontrak usai, sistem secara otomatis mendistribusikan notifikasi via WhatsApp dan Email ke penyewa aktif untuk memberikan konfirmasi opsi perpanjangan atau persiapan check-out.
+2. **Prosedur Perpanjangan Kontrak Sewa (Renewal)**:
+   * Jika penyewa memilih melanjutkan sewa, Administrator membuka detail penyewa dan mengeksekusi opsi "Perpanjang Kontrak".
+   * Admin menetapkan durasi tambahan, sistem menggeser `tanggal_keluar_seharusnya`, dan menerbitkan tagihan periode baru tanpa mengharuskan input ulang profil atau pemotongan deposit sewa.
+3. **Kebijakan Wajib Ganti Password Pertama Kali (*First-Login Password Policy*)**:
+   * Seluruh akun yang diterbitkan melalui otomasi sistem saat konfirmasi reservasi memiliki kata sandi sementara berupa nomor HP dan ditandai dengan flag `require_password_change = true`.
+   * Middleware `EnsurePasswordChanged` mencegat seluruh upaya akses ke dashboard portal penyewa hingga pengguna menyelesaikan form penggantian kata sandi personal yang kuat.
+
 ---
 
 ## 5. Alur dan Diagram Alir Proses Bisnis (Visual Workflows)
@@ -256,7 +305,7 @@ Sistem penegakan denda menerapkan aturan **Denda Flat Kalender** dengan **Idempo
 ### Diagram 5.1: High-Level System Architecture & Topologi Diagram
 Diagram ini memetakan arsitektur infrastruktur sistem tingkat tinggi yang menghubungkan antarmuka pengguna, web server Laravel 11, storage internal, dan API eksternal.
 
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_1_architecture.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_1_architecture.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_1_architecture.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_1_architecture.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_1_architecture.png)
 
 ![High-Level System Architecture](prd/prd_diagram_1_architecture.png)
 
@@ -319,7 +368,7 @@ graph TB
 ### Diagram 5.2: Peta Siklus Perjalanan Pengguna (End-to-End Tenant Lifecycle State Diagram)
 Diagram ini menggambarkan transisi status pengguna sejak pertama kali berkunjung sebagai tamu hingga check-out dari kost.
 
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_2_lifecycle.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_2_lifecycle.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_2_lifecycle.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_2_lifecycle.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_2_lifecycle.png)
 
 ![Peta Siklus Perjalanan Pengguna](prd/prd_diagram_2_lifecycle.png)
 
@@ -366,7 +415,7 @@ stateDiagram-v2
 ---
 
 ### Diagram 5.3: Alur Reservasi Online & Pembayaran Ganda
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_3_reservasi.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_3_reservasi.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_3_reservasi.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_3_reservasi.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_3_reservasi.png)
 
 ![Alur Reservasi Online & Pembayaran Ganda](prd/prd_diagram_3_reservasi.png)
 
@@ -423,7 +472,7 @@ flowchart TD
 ### Diagram 5.4: State Machine Transaksi & Webhook Verification Midtrans
 Diagram ini menggambarkan siklus perubahan status transaksi pembayaran online dan validasi signature key webhook Midtrans.
 
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_4_midtrans.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_4_midtrans.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_4_midtrans.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_4_midtrans.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_4_midtrans.png)
 
 ![State Machine Transaksi Midtrans Snap](prd/prd_diagram_4_midtrans.png)
 
@@ -458,7 +507,7 @@ stateDiagram-v2
 ---
 
 ### Diagram 5.5: Siklus Billing Bulanan & Perhitungan Denda Flat Kalender
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_5_billing.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_5_billing.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_5_billing.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_5_billing.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_5_billing.png)
 
 ![Siklus Billing Bulanan & Perhitungan Denda Flat](prd/prd_diagram_5_billing.png)
 
@@ -512,7 +561,7 @@ flowchart TD
 ### Diagram 5.6: Manajemen Keluhan & WhatsApp Notification Dispatcher
 Diagram urutan (Sequence Diagram) menunjukkan alur pemrosesan event asinkron pengiriman pesan WhatsApp via Laravel Queue & Fonnte Service.
 
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_6_keluhan.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_6_keluhan.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_6_keluhan.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_6_keluhan.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_6_keluhan.png)
 
 ![Manajemen Keluhan & WhatsApp Notification Dispatcher](prd/prd_diagram_6_keluhan.png)
 
@@ -549,7 +598,7 @@ sequenceDiagram
 ---
 
 ### Diagram 5.7: Akuntansi Keuangan & Konsolidasi Arus Kas
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_7_aruskas.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_7_aruskas.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_7_aruskas.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_7_aruskas.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_7_aruskas.png)
 
 ![Akuntansi Keuangan & Konsolidasi Arus Kas](prd/prd_diagram_7_aruskas.png)
 
@@ -605,7 +654,7 @@ flowchart TD
 ### Diagram 5.8: User Flow - Otentikasi Google OAuth 2.0 & Penapisan Profil
 Diagram ini memetakan perjalanan calon penyewa saat masuk melalui Google OAuth 2.0 (Socialite), penolakan peran Admin, serta filter middleware `EnsureProfileIsComplete`.
 
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_9_google_oauth_flow.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_9_google_oauth_flow.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_9_google_oauth_flow.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_9_google_oauth_flow.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_9_google_oauth_flow.png)
 
 ![User Flow Otentikasi Google OAuth 2.0 & Penapisan Profil](prd/prd_diagram_9_google_oauth_flow.png)
 
@@ -662,7 +711,7 @@ flowchart TD
 ### Diagram 5.9: System Flow - Arsitektur & Siklus Hidup Dual-Chat
 Diagram ini membedakan secara arsitektural dua kanal obrolan real-time: **Guest Live Chat Publik** (anonim via cookie token UUID) dan **Pre-Payment Chat Box** (portal reservasi).
 
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_10_dual_chat_flow.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_10_dual_chat_flow.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_10_dual_chat_flow.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_10_dual_chat_flow.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_10_dual_chat_flow.png)
 
 ![System Flow Arsitektur & Siklus Hidup Dual-Chat](prd/prd_diagram_10_dual_chat_flow.png)
 
@@ -727,7 +776,7 @@ flowchart TB
 ### Diagram 5.10: System Flow - Protokol Verifikasi Pembayaran Transfer Bank Manual
 Diagram alir proses pengunggahan bukti bayar fisik, audit mutasi bank oleh admin, dan atomisitas status transaksi.
 
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_11_manual_transfer_flow.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_11_manual_transfer_flow.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_11_manual_transfer_flow.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_11_manual_transfer_flow.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_11_manual_transfer_flow.png)
 
 ![System Flow Protokol Verifikasi Pembayaran Transfer Bank Manual](prd/prd_diagram_11_manual_transfer_flow.png)
 
@@ -776,7 +825,7 @@ flowchart TD
 ### Diagram 5.11: User & System Flow - Siklus Penanganan Keluhan Fasilitas
 Diagram alir proses pelaporan keluhan kerusakan kamar, notifikasi status bertahap via WhatsApp, hingga verifikasi penyelesaian.
 
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_12_keluhan_resolution_flow.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_12_keluhan_resolution_flow.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_12_keluhan_resolution_flow.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_12_keluhan_resolution_flow.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_12_keluhan_resolution_flow.png)
 
 ![User & System Flow Siklus Penanganan Keluhan Fasilitas](prd/prd_diagram_12_keluhan_resolution_flow.png)
 
@@ -829,7 +878,7 @@ flowchart TD
 ### Diagram 5.12: System Flow - Multi-Channel Broadcast Notification Engine
 Diagram alir kerja pengiriman pesan broadcast massal secara asinkron melalui tiga kanal komunikasi (Web In-App, WhatsApp API, dan Email SMTP).
 
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_13_broadcast_dispatcher_flow.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_13_broadcast_dispatcher_flow.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_13_broadcast_dispatcher_flow.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_13_broadcast_dispatcher_flow.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_13_broadcast_dispatcher_flow.png)
 
 ![System Flow Multi-Channel Broadcast Notification Engine](prd/prd_diagram_13_broadcast_dispatcher_flow.png)
 
@@ -883,6 +932,201 @@ flowchart TD
 
 ---
 
+### Diagram 5.13: User Flow - Penegakan Pergantian Password Pertama & Alur Lupa Sandi Mandiri
+Diagram ini memetakan dua alur pengamanan otentikasi akun: (1) Penegakan pergantian kata sandi default nomor HP saat login perdana via middleware `EnsurePasswordChanged`, dan (2) Alur pemulihan akun mandiri bagi pengguna yang lupa sandi via *signed token* SMTP email.
+
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_14_auth_security_flow.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_14_auth_security_flow.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_14_auth_security_flow.png)
+
+![User Flow Penegakan Pergantian Password Pertama & Alur Lupa Sandi](prd/prd_diagram_14_auth_security_flow.png)
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    subgraph FlowA["🔐 Alur A: Penegakan Ganti Password Awal (EnsurePasswordChanged)"]
+        direction TB
+        A1([Penyewa Baru Terima Kredensial WA Fonnte]) --> A2["Login dengan Email & Password Bawaan (No HP)"]
+        A2 --> A3["Auth Controller Otentikasi Pengguna"]
+        A3 --> A4{"Cek Nilai Flag<br>require_password_change?"}
+        
+        A4 -- "true (Akun Baru / Belum Ganti)" --> A5["Middleware 'EnsurePasswordChanged' Mencegat"]
+        A5 --> A6["Redirect Paksa ke /ganti-password<br>(Kunci Akses Dashboard)"]
+        A6 --> A7["Penyewa Mengisi Password Baru & Konfirmasi"]
+        A7 --> A8{"Validasi Form:<br>Min 8 Karakter & Cocok?"}
+        A8 -- Tidak Cocok / Lemah --> A7
+        A8 -- Valid & Kuat --> A9["Update Hash Password Baru<br>Set require_password_change = false"]
+        A9 --> A10["Flash Toast Sukses & Buka Akses Portal"]
+        
+        A4 -- "false (Sudah Pernah Ganti)" --> A10
+        A10 --> A11([Dashboard Portal Penyewa Aktif])
+    end
+
+    subgraph FlowB["📧 Alur B: Pemulihan Akun Lupa Sandi Mandiri (Self-Service Reset)"]
+        direction TB
+        B1([Pengguna Klik 'Lupa Kata Sandi?']) --> B2["Buka Halaman /forgot-password"]
+        B2 --> B3["Input Alamat Email Terdaftar"]
+        B3 --> B4{"Apakah Email Ada di Database?"}
+        
+        B4 -- Tidak Ada --> B5["Tampilkan Pesan Error: Email Tidak Terdaftar"]
+        B5 --> B3
+        
+        B4 -- Terdaftar --> B6["Generate Secure Token 64-karakter<br>Simpan ke 'password_reset_tokens' (TTL: 60 Menit)"]
+        B6 --> B7["Kirim Email via SMTP Mailer (Mailable Template)"]
+        B7 --> B8["Pengguna Buka Email & Klik Tautan Reset Password"]
+        B8 --> B9{"Validasi Token & Cek Kedaluwarsa (<60 Menit)?"}
+        
+        B9 -- Kedaluwarsa / Tidak Valid --> B10["Tampilkan Peringatan: Tautan Tidak Berlaku Lagi"]
+        B10 --> B1
+        
+        B9 -- Token Sah --> B11["Buka Halaman /reset-password/{token}"]
+        B11 --> B12["Input Password Baru & Konfirmasi"]
+        B12 --> B13["Update Password di Tabel 'users'<br>Hapus Token dari 'password_reset_tokens'"]
+        B13 --> B14([Redirect ke Login dengan Pesan Sukses])
+    end
+
+    classDef panelBox fill:#FAFAFA,stroke:#000000,stroke-width:2px;
+    class FlowA,FlowB panelBox;
+```
+
+---
+
+### Diagram 5.14: User & System Flow - Siklus Pengingat Masa Sewa, Perpanjangan Kontrak & Check-Out Deposit
+Diagram alir proses pengingat masa kontrak habis (H-14 & H-7) secara asinkron, opsi perpanjangan sewa (*renewal*) oleh admin, serta penahanan status kamar pasca check-out (*Manual Inspection Hold*) dan rekonsiliasi potongan deposit kerusakan.
+
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_15_contract_lifecycle_flow.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_15_contract_lifecycle_flow.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_15_contract_lifecycle_flow.png)
+
+![User & System Flow Siklus Pengingat Masa Sewa, Perpanjangan Kontrak & Check-Out](prd/prd_diagram_15_contract_lifecycle_flow.png)
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '12px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Cron Harian 08:00 WIB: 'kontrak:reminder-habis']) --> CheckExpiry["Query Penyewa Aktif:<br>DATEDIFF(tanggal_keluar_seharusnya, NOW()) = 14 atau 7"]
+    CheckExpiry --> FoundTenant{"Apakah Ada Penyewa Mendekati Akhir Masa Sewa?"}
+    
+    FoundTenant -- Tidak Ada --> EndNoOp([Selesai: Tidak Ada Aksi])
+    FoundTenant -- Ada --> SendNotif["Kirim Notifikasi Proaktif via WhatsApp Fonnte & Email SMTP<br>(Memberikan Pilihan: Perpanjang Sewa atau Selesai/Check-Out)"]
+    
+    SendNotif --> TenantDecision{"Keputusan Penyewa"}
+    
+    %% Cabang 1: Perpanjangan Sewa (Renewal)
+    TenantDecision -- Ingin Perpanjang Sewa --> ContactAdmin["Penyewa Konfirmasi Perpanjangan ke Admin"]
+    ContactAdmin --> AdminRenewAction["Admin Buka Menu 'Manajemen Penyewa' & Klik 'Perpanjang Sewa'"]
+    AdminRenewAction --> InputDuration["Admin Input Durasi Tambahan (Bulan/Hari)"]
+    InputDuration --> DBRenew["DB::transaction()<br>1. Perpanjang 'tanggal_keluar_seharusnya'<br>2. Generate Tagihan Sewa Periode Baru (nominal_pokok = harga_sewa personal)<br>3. Pertahankan Kamar & Uang Jaminan Deposit"]
+    DBRenew --> SendInvoiceWA["Kirim Invoice Periode Baru via WA Fonnte"]
+    SendInvoiceWA --> TenantPay["Penyewa Membayar Tagihan Baru (Midtrans Snap / Transfer)"]
+    TenantPay --> RenewSuccess([Masa Sewa Berlanjut: Kontrak Diperpanjang])
+    
+    %% Cabang 2: Check-Out & Refund Deposit
+    TenantDecision -- Selesai Sewa (Check-Out) --> FinalDate["Memasuki Tanggal Selesai Sewa"]
+    FinalDate --> AdminCheckout["Admin Klik 'Check-Out Penyewa' pada Sistem"]
+    AdminCheckout --> SetNonAktif["Update Status Penyewa: 'nonaktif'"]
+    SetNonAktif --> RoomHold["Status Kamar DITAHAN: Tetap 'terisi' / Terkunci<br>(MANUAL INSPECTION HOLD)"]
+    
+    RoomHold --> PhysicalInspection["Pengelola Melakukan Inspeksi Fisik Kamar Langsung<br>(Cek Kebersihan, Kelengkapan Inventaris, & Kerusakan Fasilitas)"]
+    
+    PhysicalInspection --> CheckDamage{"Apakah Ada Kerusakan Fasilitas?"}
+    
+    CheckDamage -- Tidak Ada (Kondisi Bersih & Utuh) --> FullRefund["Kembalikan Uang Deposit 100% Penuh ke Penyewa"]
+    FullRefund --> ReleaseRoom
+    
+    CheckDamage -- Ada Kerusakan Fasilitas --> CalcDeduction["Estimasi Biaya Perbaikan Fasilitas<br>Potong Uang Jaminan Deposit"]
+    CalcDeduction --> RecordAdjustment["DB::transaction()<br>1. Catat Nilai Potongan sebagai Kas Masuk Penyesuaian<br>2. Buat Entri Biaya Perbaikan di Tabel 'pengeluaran'<br>3. Kembalikan Sisa Deposit (jika ada) ke Penyewa"]
+    RecordAdjustment --> TechRepair["Teknisi Menyelesaikan Perbaikan Fisik Kamar"]
+    TechRepair --> ReleaseRoom["Admin Mengubah Status Kamar ke 'TERSEDIA' secara Manual"]
+    
+    ReleaseRoom --> EndSuccess([Selesai: Unit Siap Dipesan Kembali])
+```
+
+---
+
+### Diagram 5.15: System Flow - Peta Otomasi Siklus Scheduler & Perawatan Berkala Sistem
+Diagram alir ini merangkum seluruh otomasi tugas latar belakang (*Cron Schedule Engine*) pada `routes/console.php` yang menjamin kesehatan, keteraturan billing, ketepatan denda, serta kebersihan basis data dan sesi pengguna.
+
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_16_scheduler_automation_map.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_16_scheduler_automation_map.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_16_scheduler_automation_map.png)
+
+![System Flow Peta Otomasi Siklus Scheduler & Perawatan Berkala](prd/prd_diagram_16_scheduler_automation_map.png)
+
+```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FEF3C7',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '14px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TB
+    Daemon["⚙️ System Crontab Daemon (* * * * * php artisan schedule:run)<br/><b>routes/console.php</b> — Pusat Orkestrasi Otomasi Sistem"]
+
+    subgraph Tier1["⏰ SIKLUS OPERASIONAL TIAP JAM & PAGI"]
+        direction LR
+        subgraph HourlyJobs["⏱️ Siklus Tiap Jam (Hourly)"]
+            direction TB
+            JobHourly["<b>reservasi:cancel-expired</b><br/>• Batal otomatis reservasi pending > 24 jam<br/>• Buka kembali kunci kamar menjadi 'Tersedia'"]
+        end
+        subgraph DailyMorningJobs["☀️ Siklus Pagi Hari (08:00 WIB)"]
+            direction TB
+            Job0800["<b>kontrak:reminder-habis</b><br/>• Deteksi H-14 & H-7 masa sewa berakhir<br/>• Kirim pesan WhatsApp & Email proaktif"]
+        end
+    end
+
+    subgraph Tier2["🌙 SIKLUS BATCH DINI HARI (00:00 - 03:00 WIB)"]
+        direction TB
+        Job0005["<b>00:05 WIB (Tgl 1 Tiap Bulan) — tagihan:generate-bulanan</b><br/>• Terbitkan invoice rutin bulanan bagi seluruh penyewa aktif"]
+        Job0100["<b>01:00 WIB (Harian) — tagihan:proses-keterlambatan</b><br/>• Tgl 11 s/d Akhir Bulan: Reminder WA denda Rp0 (Jatuh Tempo)<br/>• Tgl 1 Bulan Baru: Terapkan denda flat 5% + eskalasi notifikasi ke wali"]
+        JobMaintenanceNight["<b>01:30 - 03:00 WIB (Pembersihan Sesi & Log)</b><br/>• 01:30 WIB: <b>session:cleanup</b> (Pembersihan sesi login kadaluarsa)<br/>• 02:00 WIB: <b>log-notifikasi:clear</b> (Arsipkan log notifikasi > 180 hari)<br/>• 03:00 WIB: <b>chat-guest:prune</b> (Arsipkan riwayat chat tamu inaktif)"]
+    end
+
+    subgraph Tier3["📅 SIKLUS BERKALA MINGGUAN & BULANAN (MAINTENANCE)"]
+        direction LR
+        JobWeekly["<b>Tiap Minggu — log:truncate</b><br/>• Rotasi & kompresi berkas log di storage/logs"]
+        JobMonthly["<b>Tiap Bulan — abh:purge-trash</b><br/>• Purge permanen record soft-deleted usang"]
+    end
+
+    Daemon ==> Tier1
+    Tier1 ==> Tier2
+    Tier2 ==> Tier3
+
+    classDef daemonBox fill:#FEF08A,stroke:#000000,stroke-width:2px;
+    classDef jobBox fill:#FFFFFF,stroke:#000000,stroke-width:1.5px;
+    class Daemon daemonBox;
+    class JobHourly,Job0800,Job0005,Job0100,JobMaintenanceNight,JobWeekly,JobMonthly jobBox;
+```
+
+---
+
 ## 6. Kebutuhan Non-Fungsional & Keamanan (Non-Functional Requirements)
 
 ### 6.1 Keamanan, Otorisasi & Audit Trail
@@ -891,6 +1135,8 @@ flowchart TD
 3. **Midtrans Webhook Security**: Endpoint callback pembayaran mewajibkan *Signature Key Verification* (`sha512(order_id + status_code + gross_amount + ServerKey)`) untuk memverifikasi keabsahan payload webhook dari Midtrans.
 4. **Validasi & Proteksi File Upload**: File bukti bayar, bukti nota, dan bukti keluhan divalidasi format gambar (`jpg, jpeg, png`), ukuran maksimal `2MB`, dan auto-delete file lama dari storage saat terjadi perubahan/penghapusan.
 5. **Role Protection & Complete Profile**: Proteksi akses rute berdasarkan role (`admin` vs `penyewa`), pencegahan login Admin via Google OAuth, serta penapisan profil via middleware `EnsureProfileIsComplete`.
+6. **Penegakan Pergantian Password Pertama (`EnsurePasswordChanged`)**: Akun penyewa yang dibuat otomatis via konfirmasi reservasi diberi kata sandi sementara (nomor HP) dengan flag `require_password_change = true`. Seluruh request dialihkan paksa ke halaman pergantian kata sandi sebelum pengguna diizinkan mengakses menu dashboard.
+7. **Kedaluwarsa Token Reset Password Mandiri**: Tautan reset password mandiri yang dikirimkan via SMTP Mail Server dilindungi dengan *signed secure token* dengan masa berlaku (*Time-to-Live*) maksimal 60 menit dan otomatis kedaluwarsa setelah dipakai.
 
 ### 6.2 Performa, Skalabilitas & Kebijakan Siklus Hidup Data (Data Lifecycle)
 1. **Optimasi Query & Eager Loading**: Penegakan `Model::preventLazyLoading(!app()->isProduction())` untuk mendeteksi N+1 query sejak dini. Pemuatan relasi wajib menggunakan Eager Loading (`with()`).
@@ -900,8 +1146,17 @@ flowchart TD
    * Scheduler Denda: `tagihan(status, tanggal_jatuh_tempo)`
    * Idempotensi Tagihan: Unique key `tagihan(penyewa_id, periode_bulan, periode_tahun)`
 3. **Queue & Resilience Notifikasi**: Pengiriman notifikasi Fonnte WA dan Email dikirimkan secara asinkron via Laravel Queue Job agar tidak membebani respon HTTP antarmuka pengguna.
-4. **Kebijakan Pembersihan Log (Log Pruning)**: Sistem menjalankan scheduler pembersihan berkala `php artisan log:prune` untuk mengarsipkan rekaman `log_notifikasi` yang berumur lebih dari 180 hari secara otomatis.
+4. **Otomasi Pembersihan & Perawatan Sistem (Console Task Scheduling)**: Sistem menjalankan scheduler terencana pada [routes/console.php](file:///c:/xampp/htdocs/asri-boarding-house/routes/console.php) tanpa overlap (`withoutOverlapping`):
+   * `tagihan:generate-bulanan`: Dijalankan bulanan tiap tanggal 1 pukul 00:05 WIB.
+   * `tagihan:proses-keterlambatan`: Dijalankan harian pukul 01:00 WIB (menegakkan toleransi & denda flat 5%).
+   * `kontrak:reminder-habis`: Dijalankan harian pukul 08:00 WIB (pengingat H-14 dan H-7 via WA & Email).
+   * `reservasi:cancel-expired`: Dijalankan tiap jam (*hourly*) untuk membatalkan reservasi pending > 24 jam.
+   * `log-notifikasi:clear`: Dijalankan harian pukul 02:00 WIB untuk memotong rekaman log berumur > 180 hari.
+   * `chat-guest:prune`: Dijalankan harian pukul 03:00 WIB untuk mengarsipkan thread obrolan tamu lama.
+   * `session:cleanup`: Dijalankan harian pukul 01:30 WIB.
+   * `abh:purge-trash`: Dijalankan bulanan untuk pembersihan data *soft-deleted*.
 5. **Pembersihan Storage Yatim (Storage Orphan Cleanup)**: Model observer (`KamarObserver`, `KeluhanObserver`, `PengeluaranObserver`) bertugas menghapus berkas fisik lama dari disk storage ketika data gambar diperbarui atau entitas dihapus.
+6. **Zero-Server-Load PDF Rendering untuk Kuitansi Pembayaran**: Pencetakan kuitansi nota sewa diproses langsung pada browser penyewa melalui pustaka `html2pdf.js`, mengeliminasi beban server dan kebutuhan kapasitas disk penyimpanan berkas nota. Server-side Dompdf dialokasikan khusus untuk kompilasi rekapitulasi laporan tabular administrator.
 
 ### 6.3 Desain Visual & Aksesibilitas (WCAG 2.1)
 1. **Dual-Theme Architecture**:
@@ -918,6 +1173,16 @@ flowchart TD
 * **When** Calon penyewa menekan tombol "Masuk dengan Google" dan menyetujui otorisasi akun.
 * **Then** Jika akun baru belum memiliki nomor WhatsApp, sistem mengalihkan ke form `complete-profile`. Setelah nomor WA disimpan, akun aktif dan diarahkan kembali ke alur reservasi.
 
+### AC-AUTH-02: Lupa & Reset Password Mandiri via Token Email
+* **Given** Calon penyewa atau penyewa aktif lupa kata sandi dan berada di halaman *Forgot Password*.
+* **When** Pengguna menginput alamat email yang terdaftar dan menekan "Kirim Tautan Reset".
+* **Then** Sistem memvalidasi keberadaan email, men-generate *secure reset token* unik (kedaluwarsa 60 menit), mengirimkan email berisi tautan reset via SMTP Mail Server, dan menampilkan pesan konfirmasi. Saat tautan diakses dan password baru disimpan, pengguna dapat login menggunakan password baru.
+
+### AC-SEC-01: Penegakan Penggantian Password Awal (EnsurePasswordChanged)
+* **Given** Penyewa menerima kredensial akun baru dari WhatsApp Fonnte (dengan password default nomor HP dan flag `require_password_change = true`).
+* **When** Penyewa berhasil melakukan login untuk pertama kali dan mencoba mengakses menu dashboard.
+* **Then** Middleware `EnsurePasswordChanged` mencegat permintaan, mengalihkan pengguna ke form `Ganti Password Baru`, dan mengunci akses fitur lain hingga pengguna berhasil menyimpan kata sandi baru.
+
 ### AC-CHAT-01: Guest Live Chat Rate Limiting
 * **Given** Pengunjung anonim membuka landing page publik.
 * **When** Pengunjung mengirim lebih dari 30 pesan dalam 1 menit via floating live chat.
@@ -931,7 +1196,7 @@ flowchart TD
 ### AC-PAY-01: Pembayaran Transfer Bank Manual & Verifikasi Admin
 * **Given** Calon penyewa atau penyewa aktif memilih metode "Transfer Bank Manual".
 * **When** Pengguna mentransfer ke rekening kost dan mengunggah berkas foto bukti bayar (< 2MB).
-* **Then** Sistem menyimpan bukti bayar dengan status `menunggu_konfirmasi`. Saat Admin menekan "Verifikasi Setuju", status otomatis berubah menjadi `lunas` / `dp`.
+* **Then** Sistem menyimpan bukti bayar dengan status `menunggu_konfirmasi`. Saat Admin menekan "Verifikasi Setuju", status otomatis berubah menjadi `lunas` / `dp`, dan pengguna dapat langsung mengunduh kuitansi resmi via client-side PDF rendering.
 
 ### AC-RES-02: Auto-Cancel Reservasi Expired
 * **Given** Ada data reservasi berstatus `pending` yang dibuat > 24 jam lalu tanpa konfirmasi pembayaran.
@@ -943,6 +1208,16 @@ flowchart TD
 * **When** Kalender berganti ke tanggal 1 bulan berikutnya dan Cron Job `billing:apply-fines` mengeksekusi pemeriksaan denda.
 * **Then** Sistem menambahkan denda flat 5% dari sewa pokok tepat 1 kali, memperbarui `bulan_keterlambatan`, dan mengunggah pesan WhatsApp Warning ke penyewa (serta ke Wali jika keterlambatan > 1 bulan).
 
+### AC-KON-01: Notifikasi Pengingat Masa Sewa Berakhir (H-14 dan H-7)
+* **Given** Penyewa aktif memiliki kontrak sewa dengan `tanggal_keluar_seharusnya` tersisa tepat 14 hari atau 7 hari.
+* **When** Scheduler harian mengeksekusi command `kontrak:reminder-habis` pada pukul 08:00 WIB.
+* **Then** Sistem secara otomatis mengirimkan pesan pengingat ke nomor WhatsApp penyewa dan email penyewa, menginformasikan batas akhir masa tinggal serta panduan konfirmasi perpanjangan sewa ke pengelola.
+
+### AC-KON-02: Perpanjangan Kontrak Sewa oleh Admin (Contract Renewal)
+* **Given** Penyewa aktif mengajukan perpanjangan masa sewa dan disetujui oleh admin.
+* **When** Admin membuka menu Manajemen Penyewa, memilih opsi "Perpanjang Sewa", menginput durasi perpanjangan baru, dan menekan simpan.
+* **Then** Sistem memperbarui kolom `tanggal_keluar_seharusnya` di tabel `penyewa`, menerbitkan entri tagihan sewa periode baru, dan mempertahankan data kamar serta deposit lama tanpa perlu pendaftaran ulang.
+
 ### AC-KEL-01: Pelaporan Keluhan & Respon Penanganan
 * **Given** Penyewa aktif berada di halaman Keluhan Fasilitas.
 * **When** Penyewa mengisi kategori keluhan, deskripsi, dan melampirkan foto kerusakan kamar (< 2MB).
@@ -951,7 +1226,7 @@ flowchart TD
 ### AC-ACC-01: Konfirmasi Reservasi & Auto-Create Tenant Account
 * **Given** Admin meninjau data reservasi masuk dengan status `dp` atau `lunas`.
 * **When** Admin mengklik tombol "Konfirmasi Reservasi".
-* **Then** Sistem secara otomatis: (1) Membuat akun `User` & `Penyewa` baru, (2) Mengubah status kamar menjadi `terisi`, (3) Menerbitkan tagihan pelunasan sisa sewa (jika skema DP), dan (4) Mengirimkan kredensial login (Email & Password nomor HP) ke WhatsApp penyewa via Fonnte API.
+* **Then** Sistem secara otomatis: (1) Membuat akun `User` & `Penyewa` baru dengan flag `require_password_change = true`, (2) Mengubah status kamar menjadi `terisi`, (3) Menerbitkan tagihan pelunasan sisa sewa (jika skema DP), dan (4) Mengirimkan kredensial login (Email & Password nomor HP) ke WhatsApp penyewa via Fonnte API.
 
 ### AC-EXP-01: Pencatatan Kas Keluar & Unggah Nota
 * **Given** Admin berada di menu Manajemen Pengeluaran.
@@ -962,6 +1237,11 @@ flowchart TD
 * **Given** Admin berada di menu Master Kamar.
 * **When** Admin mengklik tombol "Hapus" pada kamar yang sedang dihuni penyewa aktif atau memiliki riwayat reservasi.
 * **Then** Sistem membatalkan perintah hapus, menampilkan Toast error "Kamar tidak dapat dihapus karena memiliki relasi penyewa/reservasi", dan data kamar tetap aman.
+
+### AC-SET-01: Pembaruan Pengaturan Rekening Bank & Kontak Pengelola
+* **Given** Admin berada di menu Pengaturan Sistem (`/admin/settings`).
+* **When** Admin mengubah nomor WhatsApp konfirmasi, daftar bank tujuan transfer, nomor rekening, atau nama penerima, lalu menekan "Simpan Pengaturan".
+* **Then** Sistem memperbarui data pada tabel `settings` dan seluruh tampilan dinamis (form pembayaran transfer manual, tombol floating chat, dan footer website) seketika merefleksikan nomor rekening serta kontak baru tersebut.
 
 ### AC-NOTIF-01: Broadcast Pengumuman Massal
 * **Given** Admin membuat draf pengumuman bertarget "Semua Penyewa Aktif".
@@ -993,9 +1273,9 @@ flowchart TD
 
 ---
 
-## 9. Matriks Skema Database (Database Entity Mapping - 20 Entitas)
+## 9. Matriks Skema Database (Database Entity Mapping - 21 Entitas)
 
-Daftar 20 entitas utama pada database MySQL `asri_kost_db`:
+Daftar 21 entitas utama pada database MySQL `asri_kost_db`:
 
 1. **`users`**: Kredensial otentikasi login pengguna (Admin, Penyewa Aktif, Calon Penyewa).
 2. **`penyewa`**: Profil penyewa, tarif sewa personal (`harga_sewa`), deposit jaminan, dan kontak Wali.
@@ -1017,12 +1297,13 @@ Daftar 20 entitas utama pada database MySQL `asri_kost_db`:
 18. **`pengumuman`**: Draf pengumuman massal buatan admin.
 19. **`notifikasi_khusus`**: Data notifikasi individual penyewa di portal.
 20. **`log_notifikasi`**: Log pengiriman notifikasi Fonnte WA dan SMTP Email.
+21. **`whatsapp_clicks`**: Pencatatan riwayat dan analitik klik tombol WhatsApp publik pada katalog kamar (sumber tombol, kamar diminati, IP address, user agent).
 
 ---
 
 ## 10. Arsitektur Komponen Sistem (Component Diagram 3-Tier)
 
-*Berkas Sumber Mermaid*: [Blueprint/prd/prd_diagram_8_component_3tier.mmd](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_8_component_3tier.mmd)
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_8_component_3tier.mmd) | [Buka Vektor Tajam (.svg)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_8_component_3tier.svg) | [Format PNG HD (300 DPI)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/prd/prd_diagram_8_component_3tier.png)
 
 ![Visual Component Diagram 3-Tier Kost](prd/prd_diagram_8_component_3tier.png)
 
@@ -1048,6 +1329,7 @@ flowchart TB
             Tailwind["TailwindCSS<br/>(Neo-Brutalisme Style Layouts)"]
             AlpineJS["Alpine.js<br/>(Dynamic Modals, Dropdowns, Toggles)"]
             AJAXPoll["Smart Adaptive Polling<br/>(Focus & Delta Chat Poller)"]
+            Html2Pdf["html2pdf.js<br/>(Client-Side PDF Invoice Generator)"]
             ChartJS["Chart.js Component<br/>(Visual Cash Flow Chart)"]
         end
         
@@ -1061,7 +1343,7 @@ flowchart TB
         direction TB
         subgraph RoutingMiddleware["Routing & Middleware Stack"]
             Routes["web.php & api.php Routes<br/>(Stateless API for Guest Chat)"]
-            Middleware["Middleware Pipeline<br/>(Auth, Role:admin/penyewa, VerifyMidtransSignature, CSRF, Throttle)"]
+            Middleware["Middleware Pipeline<br/>(Auth, Role:admin/penyewa, VerifyMidtransSignature, EnsurePasswordChanged, EnsureProfileIsComplete, CSRF, Throttle)"]
         end
         
         subgraph Controllers["Laravel Controllers"]
@@ -1079,19 +1361,19 @@ flowchart TB
             NotifServ["NotifikasiService<br/>(Multi-channel Alert & HP Sanitizer)"]
             ReservasiServ["ReservasiService<br/>(Booking Kamar & Voucher Check)"]
             TransisiServ["TransisiPenyewaService<br/>(Check-in, Check-out & Deposit)"]
-            PdfNotaServ["PdfNotaService<br/>(Dompdf Invoice Generator)"]
+            PdfReportServ["DompdfGenerator<br/>(Admin PDF Reports Generator)"]
         end
         
         subgraph EventsListeners["Event/Listener & Job Queue System"]
             Events["Laravel Events<br/>(PembayaranBerhasil, TagihanDibuat, DendaDikenakan, KeluhanDibuat, KeluhanDitanggapi, ReservasiDibuat, ReservasiDibayar, ReservasiDikonfirmasi, NotifikasiWali, ReminderPenyewa)"]
-            Listeners["Laravel Listeners<br/>(GeneratePdfNotaListener, KirimNotifikasi, ProsesTransisiPenyewa, NotifikasiKhususSubscriber, HandleDendaDikenakan, HandleNotifikasiWali, HandleReminderPenyewa, HandleTagihanDibuat, KirimNotifikasiPembayaranReservasi, KirimNotifikasiReservasiBaru)"]
-            Jobs["Laravel Queue Jobs<br/>(GeneratePdfNotaJob, KirimWelcomeMessageJob, KirimNotifikasiTagihanJob, KirimNotifikasiWaliJob, KirimNotifikasiAdminReservasiJob, KirimNotifikasiPembayaranJob, KirimNotifikasiUserReservasiJob, KirimReminderJatuhTempoJob)"]
+            Listeners["Laravel Listeners<br/>(KirimNotifikasi, ProsesTransisiPenyewa, NotifikasiKhususSubscriber, HandleDendaDikenakan, HandleNotifikasiWali, HandleReminderPenyewa, HandleTagihanDibuat, KirimNotifikasiPembayaranReservasi, KirimNotifikasiReservasiBaru)"]
+            Jobs["Laravel Queue Jobs<br/>(KirimWelcomeMessageJob, KirimNotifikasiTagihanJob, KirimNotifikasiWaliJob, KirimNotifikasiAdminReservasiJob, KirimNotifikasiPembayaranJob, KirimNotifikasiUserReservasiJob, KirimReminderJatuhTempoJob)"]
             MailNotif["Mailables & Notifications<br/>(TagihanBulanMail, TagihanReminderMail, ResetPasswordNotification)"]
             Observers["Model Observers<br/>(KamarObserver, PenyewaObserver, FasilitasObserver, PengeluaranObserver, SettingObserver)"]
         end
 
         subgraph SystemScheduler["Scheduler & CLI Commands"]
-            ConsoleKernel["Laravel Scheduler<br/>(Daily Automatic Billing & Overdue Checks)"]
+            ConsoleKernel["Laravel Scheduler<br/>(Daily Billing, Fine Check, Expiry Reminder, Log Clear)"]
         end
     end
 
@@ -1107,15 +1389,15 @@ flowchart TB
             ChatModel["ChatMessage, GuestChatMessage & GuestChatThread Models"]
             LogNotifModel["LogNotifikasi & NotifikasiKhusus Models"]
             SettingModel["Setting Model"]
-            AuxModel["CustomerReview, Faq, Pengeluaran, Pengumuman, Peraturan Models"]
+            AuxModel["CustomerReview, Faq, Pengeluaran, Pengumuman, Peraturan, WhatsappClick Models"]
         end
         
         subgraph RelationalDB["MySQL 8.x Database"]
-            Tables[("MySQL Tables<br/>(users, kamar, penyewa, tagihan, keluhan, dll.)")]
+            Tables[("MySQL Tables<br/>(users, kamar, penyewa, tagihan, keluhan, whatsapp_clicks, dll.)")]
         end
         
         subgraph FileStorage["Storage System"]
-            Disk["Local Disk File System<br/>(PDF Notes, Room Photos, User Avatars, Gallery)"]
+            Disk["Local Disk File System<br/>(PDF Admin Reports, Room Photos, User Avatars, Gallery)"]
         end
     end
 

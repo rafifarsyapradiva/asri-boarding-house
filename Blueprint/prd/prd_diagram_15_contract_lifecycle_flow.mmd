@@ -1,0 +1,51 @@
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#FFFBEB',
+    'primaryTextColor': '#000000',
+    'primaryBorderColor': '#000000',
+    'lineColor': '#000000',
+    'secondaryColor': '#FDE047',
+    'tertiaryColor': '#FFFFFF',
+    'edgeLabelBackground': '#FFFFFF',
+    'fontSize': '14px',
+    'fontFamily': 'Inter, system-ui, sans-serif'
+  }
+}}%%
+flowchart TD
+    Start([Cron Harian 08:00 WIB: 'kontrak:reminder-habis']) --> CheckExpiry["Query Penyewa Aktif:<br>DATEDIFF(tanggal_keluar_seharusnya, NOW()) = 14 atau 7"]
+    CheckExpiry --> FoundTenant{"Apakah Ada Penyewa Mendekati Akhir Masa Sewa?"}
+    
+    FoundTenant -- Tidak Ada --> EndNoOp([Selesai: Tidak Ada Aksi])
+    FoundTenant -- Ada --> SendNotif["Kirim Notifikasi Proaktif via WhatsApp Fonnte & Email SMTP<br>(Memberikan Pilihan: Perpanjang Sewa atau Selesai/Check-Out)"]
+    
+    SendNotif --> TenantDecision{"Keputusan Penyewa"}
+    
+    %% Cabang 1: Perpanjangan Sewa (Renewal)
+    TenantDecision -- Ingin Perpanjang Sewa --> ContactAdmin["Penyewa Konfirmasi Perpanjangan ke Admin"]
+    ContactAdmin --> AdminRenewAction["Admin Buka Menu 'Manajemen Penyewa' & Klik 'Perpanjang Sewa'"]
+    AdminRenewAction --> InputDuration["Admin Input Durasi Tambahan (Bulan/Hari)"]
+    InputDuration --> DBRenew["DB::transaction()<br>1. Perpanjang 'tanggal_keluar_seharusnya'<br>2. Generate Tagihan Sewa Periode Baru (nominal_pokok = harga_sewa personal)<br>3. Pertahankan Kamar & Uang Jaminan Deposit"]
+    DBRenew --> SendInvoiceWA["Kirim Invoice Periode Baru via WA Fonnte"]
+    SendInvoiceWA --> TenantPay["Penyewa Membayar Tagihan Baru (Midtrans Snap / Transfer)"]
+    TenantPay --> RenewSuccess([Masa Sewa Berlanjut: Kontrak Diperpanjang])
+    
+    %% Cabang 2: Check-Out & Refund Deposit
+    TenantDecision -- Selesai Sewa (Check-Out) --> FinalDate["Memasuki Tanggal Selesai Sewa"]
+    FinalDate --> AdminCheckout["Admin Klik 'Check-Out Penyewa' pada Sistem"]
+    AdminCheckout --> SetNonAktif["Update Status Penyewa: 'nonaktif'"]
+    SetNonAktif --> RoomHold["Status Kamar DITAHAN: Tetap 'terisi' / Terkunci<br>(MANUAL INSPECTION HOLD)"]
+    
+    RoomHold --> PhysicalInspection["Pengelola Melakukan Inspeksi Fisik Kamar Langsung<br>(Cek Kebersihan, Kelengkapan Inventaris, & Kerusakan Fasilitas)"]
+    
+    PhysicalInspection --> CheckDamage{"Apakah Ada Kerusakan Fasilitas?"}
+    
+    CheckDamage -- Tidak Ada (Kondisi Bersih & Utuh) --> FullRefund["Kembalikan Uang Deposit 100% Penuh ke Penyewa"]
+    FullRefund --> ReleaseRoom
+    
+    CheckDamage -- Ada Kerusakan Fasilitas --> CalcDeduction["Estimasi Biaya Perbaikan Fasilitas<br>Potong Uang Jaminan Deposit"]
+    CalcDeduction --> RecordAdjustment["DB::transaction()<br>1. Catat Nilai Potongan sebagai Kas Masuk Penyesuaian<br>2. Buat Entri Biaya Perbaikan di Tabel 'pengeluaran'<br>3. Kembalikan Sisa Deposit (jika ada) ke Penyewa"]
+    RecordAdjustment --> TechRepair["Teknisi Menyelesaikan Perbaikan Fisik Kamar"]
+    TechRepair --> ReleaseRoom["Admin Mengubah Status Kamar ke 'TERSEDIA' secara Manual"]
+    
+    ReleaseRoom --> EndSuccess([Selesai: Unit Siap Dipesan Kembali])
