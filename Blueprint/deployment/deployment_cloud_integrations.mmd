@@ -1,16 +1,17 @@
 flowchart LR
     subgraph Browser["Web Browser (Client Device)"]
         SnapJS["Midtrans Snap.js UI"]
-        OAuthUI["OAuth Web Consent"]
+        OAuthUI["Google OAuth Consent UI"]
         InAppBell["In-App Notifications UI"]
+        ClientPdf["html2pdf.js Client Generator"]
     end
 
-    subgraph LaravelApp["Laravel 11 Backend (Hostinger Server)"]
-        MidtransServ["MidtransService"]
-        FonnteServ["FonnteService"]
-        SocialiteServ["Socialite Service"]
-        MailServ["Symfony Mailer"]
-        NotifServ["NotifikasiService (In-App)"]
+    subgraph LaravelApp["Laravel Application (Hostinger asri-core)"]
+        MidtransServ["MidtransService<br/>(Dynamic X-Override-Notification)"]
+        FonnteServ["FonnteService<br/>(Sanitasi Nomor HP Internasional)"]
+        SocialiteServ["Socialite Service<br/>(Google OAuth 2.0)"]
+        MailServ["Symfony Mailer<br/>(Google SMTP TLS)"]
+        NotifServ["NotifikasiService<br/>(Multi-channel & In-App)"]
     end
 
     subgraph DatabaseLayer["MySQL Database (localhost:3306)"]
@@ -18,13 +19,13 @@ flowchart LR
     end
 
     subgraph ExternalServices["External Cloud & API Services"]
-        Midtrans["Midtrans Cloud API Gateway"]
-        Fonnte["Fonnte WhatsApp API Gateway"]
-        GoogleAuth["Google Cloud Identity API"]
-        SMTPServer["Google SMTP Server (Gmail)"]
+        Midtrans["Midtrans Cloud API Gateway<br/>(api.midtrans.com:443)"]
+        Fonnte["Fonnte WhatsApp API Gateway<br/>(api.fonnte.com:443)"]
+        GoogleAuth["Google Identity OAuth 2.0<br/>(accounts.google.com:443)"]
+        SMTPServer["Google SMTP Server (Gmail)<br/>(smtp.gmail.com:587)"]
     end
 
-    subgraph Receivers["End Users / Notification Receivers"]
+    subgraph Receivers["End Users / Terminals"]
         Subscriber["📱 Tenant / Wali Smartphone (WhatsApp)"]
         MailBox["📬 Tenant Mailbox (Email Inbox)"]
     end
@@ -54,6 +55,6 @@ flowchart LR
     classDef db fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#E65100;
 
     class LaravelApp,MidtransServ,FonnteServ,SocialiteServ,MailServ,NotifServ server;
-    class Browser,SnapJS,OAuthUI,InAppBell client;
+    class Browser,SnapJS,OAuthUI,InAppBell,ClientPdf client;
     class ExternalServices,Midtrans,Fonnte,GoogleAuth,SMTPServer,Receivers,Subscriber,MailBox ext;
     class DatabaseLayer,NotifTable db;

@@ -3,87 +3,98 @@ flowchart TB
     %% CLIENT & DEVELOPER WORKSTATION NODES
     %% =========================================================================
     subgraph ClientDevice["«device» Client Device (Desktop / Mobile)"]
-        BrowserApp["«executionEnvironment» Web Browser<br/>• Blade HTML Views & Tailwind CSS<br/>• Alpine.js Runtime (Adaptive Polling Chat)<br/>• Midtrans Snap.js SDK Modal<br/>• Chart.js Financial Visualizer"]
+        BrowserApp["«executionEnvironment» Web Browser<br/>• Blade HTML Views & Tailwind CSS (Neo-Brutalism)<br/>• Alpine.js Runtime (Adaptive Polling & Modals)<br/>• Axios Client & html2pdf.js Client Engine<br/>• Midtrans Snap.js SDK Payment Modal<br/>• Chart.js Financial Cash-Flow Visualizer"]
     end
 
     subgraph DevDevice["«device» Developer / Admin Workstation"]
-        DevTools["«software» Administration & Dev Tools<br/>• Git Client & SSH Terminal (Port 65002)<br/>• FileZilla SFTP Client (.env sync)<br/>• Web Browser (Hostinger hPanel HTTPS)"]
+        DevTools["«software» Administration & Dev Tools<br/>• Git Client & SSH Terminal (Port 65002)<br/>• FileZilla SFTP Client (.env sync)<br/>• Web Browser (Hostinger hPanel HTTPS Port 443)"]
     end
 
     %% =========================================================================
     %% HOSTINGER SHARED HOSTING SERVER NODE
     %% =========================================================================
     subgraph HostingerNode["«device» Hostinger Server (CloudLinux OS - LVE Isolated Container)"]
+        direction TB
         
-        subgraph WebServerEnv["«executionEnvironment» Web Server Layer (LiteSpeed / Apache / Nginx)"]
-            LiteSpeedEngine["LiteSpeed Enterprise Web Server (Port 80 / 443)<br/>• .htaccess URL Rewrite Engine<br/>• SSL/TLS Termination (Let's Encrypt / Sectigo)<br/>• Direct Static File Serving (Gzip / Brotli)"]
-            StaticAssets["«artifact» Static Assets Layer<br/>• public/build/ (Compiled Vite JS/CSS)<br/>• public/storage/ (Symlinked Media Files)<br/>• public/images/ & favicon.ico"]
+        %% PUBLIC DIRECTORY LAYER
+        subgraph PublicHtmlDir["«directory» public_html/ (Public Web Root)"]
+            LiteSpeedEngine["LiteSpeed Enterprise Web Server (Port 80 / 443)<br/>• .htaccess URL Rewrite Engine (Forced HTTPS)<br/>• SSL/TLS Termination (Sectigo / Let's Encrypt)<br/>• Direct Static File Serving (Gzip / Brotli)"]
+            StaticAssets["«artifact» Static Assets Layer<br/>• build/ (Compiled Vite JS/CSS minified)<br/>• images/ & favicon.ico<br/>• storage/ (Symlink ke asri-core/storage/app/public)"]
         end
 
-        subgraph PHPEnv["«executionEnvironment» Application Runtime (PHP 8.2+ via mod_lsapi)"]
-            subgraph LaravelApp["«artifact» Laravel 11 Application Container"]
-                RoutingCore["Routing & Security Middleware<br/>(VerifyMidtransSignature, Role:admin/penyewa, GuestChatLimiter)"]
-                
-                ServicesLayer["Core Application Business Services<br/>• BillingService (Siklus Billing & Denda Otomatis)<br/>• ReservasiService (Booking & Dynamic Pricing)<br/>• MidtransService (Snap Token & Dual Webhook Handler)<br/>• FonnteService (WhatsApp Notification Gateway)<br/>• NotifikasiService (Multi-Channel Alerts: WA, Email, In-App)<br/>• TransisiPenyewaService (Check-in, Check-out & Deposit)<br/>• PdfNotaService (Dompdf Invoice/Kuitansi Generator)<br/>• Socialite (Google Cloud OAuth 2.0)"]
-                
-                SchedulerWorker["Task Schedulers & Background Workers<br/>• schedule:run (hPanel Cron Setiap Menit)<br/>• queue:work --once (Database Queue Worker)<br/>• Scheduled Tasks: tagihan:generate, denda, prune"]
+        %% SECURED APPLICATION CORE DIRECTORY
+        subgraph CoreDir["«directory» asri-core/ (Protected Non-Public Core)"]
+            direction TB
+            subgraph PHPEnv["«executionEnvironment» Application Runtime (PHP 8.2+ via mod_lsapi)"]
+                subgraph LaravelApp["«artifact» Laravel Framework (v11/v12 Engine)"]
+                    RoutingCore["Routing & Security Middleware<br/>(VerifyMidtransSignature, Role:admin/penyewa, GuestChatLimiter)"]
+                    
+                    ServicesLayer["Core Application Business Services<br/>• BillingService (Siklus Tagihan & Denda Flat Idempoten)<br/>• ReservasiService (Booking & Dynamic Pricing)<br/>• MidtransService (Snap Token & Dynamic Notification Override)<br/>• FonnteService (WA Gateway & Sanitasi No HP Internasional)<br/>• NotifikasiService (Multi-Channel: WA, SMTP Email, In-App)<br/>• TransisiPenyewaService (Check-in/out & Deposit Audit)<br/>• PdfNotaService / DompdfGenerator (Kuitansi PDF Generator)<br/>• Socialite (Google Cloud Identity OAuth 2.0)"]
+                    
+                    SchedulerWorker["Task Schedulers & Background Workers (hPanel Cron)<br/>• schedule:run (Setiap Menit)<br/>• queue:work --stop-when-empty (Database Queue Worker)<br/>• Scheduled Tasks: tagihan:generate, denda, prune"]
+                end
+            end
+
+            subgraph StorageEnv["«storage» Internal Storage Layer"]
+                direction LR
+                PublicDisk["«artifact» storage/app/public/<br/>├── kamar/ (Foto Kamar Kost)<br/>├── nota/ (Kuitansi PDF Transaksi)<br/>├── nota_pengeluaran/ (Bukti Kas Keluar)<br/>├── galleries/ & reviews/<br/>├── settings/ (Logo Brand)<br/>└── keluhan/ (Foto Komplain)"]
+                PrivateDisk["«artifact» storage/app/private/<br/>└── Temp exports & framework cache"]
+                EnvFile["«artifact» .env<br/>(Protected DB Pass & API Keys)"]
             end
         end
 
-        subgraph StorageEnv["«storage» Shared SSD File Storage Layer"]
-            PublicDisk["«artifact» storage/app/public/<br/>├── kamar/ (Foto Kamar Kost)<br/>├── nota/ (PDF Kuitansi Transaksi)<br/>├── nota_pengeluaran/ (Bukti Kas Keluar)<br/>├── galleries/ (Foto Galeri Landing Page)<br/>├── reviews/ (Foto Testimoni Pelanggan)<br/>├── settings/ (Logo & Favicon Brand)<br/>└── keluhan/ (Foto Bukti Komplain)"]
-            PrivateDisk["«artifact» storage/app/private/<br/>└── cache & temporary exported files"]
-        end
-
+        %% DATABASE SERVER LAYER
         subgraph DBEnv["«executionEnvironment» Database Server Layer"]
-            MySQLServer["«database» MySQL 8.x / MariaDB Shared Instance (Port 3306)<br/>• Business Tables: users, kamars, reservasis, tagihans, pembayarans, keluhans<br/>• Framework Tables: sessions, jobs, job_batches, failed_jobs, cache_locks"]
+            MySQLServer["«database» MySQL 8.x / MariaDB Shared Instance<br/>Host: localhost (127.0.0.1) | Port: 3306 (Blocked External)<br/>• Business Tables (22 Tables 3NF: users, kamars, tagihans, dll.)<br/>• Framework Tables: sessions, jobs, job_batches, failed_jobs"]
         end
     end
 
     %% =========================================================================
     %% EXTERNAL CLOUD SERVICES & REPOSITORIES
     %% =========================================================================
-    subgraph ExternalServices["«cloud» External Cloud Services & APIs"]
+    subgraph ExternalServices["«cloud» External Cloud Services & Gateways"]
+        direction TB
         MidtransAPI["«service» Midtrans Cloud API Gateway<br/>(api.midtrans.com:443 / sandbox)"]
         FonnteAPI["«service» Fonnte WhatsApp API Gateway<br/>(api.fonnte.com:443)"]
         GoogleOAuthAPI["«service» Google Identity OAuth 2.0<br/>(accounts.google.com:443)"]
         GoogleSMTPAPI["«service» Google SMTP Mail Server<br/>(smtp.gmail.com:587 TLS)"]
-        GitHubVCS["«service» GitHub VCS Repository<br/>(github.com:443 / Port: 22)"]
+        GitHubVCS["«service» GitHub VCS Platform<br/>(github.com:443 / Port 22)"]
     end
 
-    subgraph EndUserRecipients["«devices» End-User Message Receivers"]
-        UserPhone["📲 Smartphone (WhatsApp Client App)"]
-        UserMail["📬 Tenant Mailbox (Email Client)"]
+    subgraph EndUserRecipients["«device» End-User Terminals"]
+        direction LR
+        UserPhone["📲 Smartphone Penyewa/Wali (WhatsApp Official App)"]
+        UserMail["📬 Tenant Mailbox (Email Inbox)"]
     end
 
     %% =========================================================================
     %% PROTOCOL CONNECTIONS & COMMUNICATION PATHS
     %% =========================================================================
-    BrowserApp <-->|"HTTPS (Port 443 - TLS 1.3 / SSL)"| LiteSpeedEngine
+    BrowserApp <-->|"HTTPS (Port 443 - TLS 1.3)<br/>asriboardinghouse.weatso.id"| LiteSpeedEngine
     LiteSpeedEngine -->|"Direct Static Serve"| StaticAssets
-    LiteSpeedEngine <-->|"Internal IPC (mod_lsapi FastCGI)"| RoutingCore
+    LiteSpeedEngine <-->|"mod_lsapi FastCGI IPC"| RoutingCore
     
     RoutingCore --- ServicesLayer
     ServicesLayer --- SchedulerWorker
     
-    ServicesLayer <-->|"TCP/IP (Port 3306 - PDO MySQL Driver)"| MySQLServer
-    ServicesLayer <-->|"File I/O Read/Write"| PublicDisk
-    PublicDisk -.->|"Symlink Bridge (php artisan storage:link)"| StaticAssets
+    ServicesLayer <-->|"TCP/IP (Port 3306) PDO"| MySQLServer
+    ServicesLayer <-->|"POSIX File I/O"| PublicDisk
+    PublicDisk -.->|"Symlink Bridge"| StaticAssets
     
-    DevTools -->|"SFTP / SSH (Port 65002) & hPanel HTTPS (Port 443)"| HostingerNode
-    GitHubVCS -->|"Auto-Deploy Webhook (Port 443 HTTPS)"| LiteSpeedEngine
+    DevTools -->|"SFTP (65002) & hPanel (443)"| HostingerNode
+    GitHubVCS -->|"Auto-Deploy Webhook (443)"| LiteSpeedEngine
 
-    ServicesLayer <-->|"HTTPS REST POST Token Request (Port 443)"| MidtransAPI
-    MidtransAPI -->|"Webhook POST /api/midtrans/callback & /callback-reservasi (Port 443)"| LiteSpeedEngine
-    BrowserApp <-->|"Direct Snap Payment Modal (HTTPS Port 443)"| MidtransAPI
+    ServicesLayer <-->|"HTTPS REST POST Token (443)"| MidtransAPI
+    MidtransAPI -->|"Dual Webhook POST (443) + SHA512"| LiteSpeedEngine
+    BrowserApp <-->|"Snap.js Payment Modal (443)"| MidtransAPI
 
-    ServicesLayer -->|"HTTPS POST Bearer Auth (Port 443)"| FonnteAPI
-    FonnteAPI -->|"Cellular / WhatsApp Protocol"| UserPhone
+    ServicesLayer -->|"Push WA Bearer (443)"| FonnteAPI
+    FonnteAPI -->|"WhatsApp Mobile Protocol"| UserPhone
 
-    ServicesLayer <-->|"OAuth 2.0 Auth Code Exchange (HTTPS Port 443)"| GoogleOAuthAPI
-    BrowserApp <-->|"OAuth Consent UI (HTTPS Port 443)"| GoogleOAuthAPI
+    ServicesLayer <-->|"OAuth 2.0 Token Exchange (443)"| GoogleOAuthAPI
+    BrowserApp <-->|"OAuth Web Consent UI (443)"| GoogleOAuthAPI
 
-    ServicesLayer -->|"SMTP TLS (Port 587 + App Password)"| GoogleSMTPAPI
+    ServicesLayer -->|"SMTP TLS Dispatch (587)"| GoogleSMTPAPI
     GoogleSMTPAPI -->|"SMTP / IMAP Mail Delivery"| UserMail
 
     %% =========================================================================
@@ -99,4 +110,4 @@ flowchart TB
     class LiteSpeedEngine,StaticAssets,RoutingCore,ServicesLayer,SchedulerWorker server;
     class MySQLServer db;
     class MidtransAPI,FonnteAPI,GoogleOAuthAPI,GoogleSMTPAPI,GitHubVCS,UserPhone,UserMail ext;
-    class PublicDisk,PrivateDisk storage;
+    class PublicDisk,PrivateDisk,EnvFile storage;

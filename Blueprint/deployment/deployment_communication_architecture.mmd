@@ -4,8 +4,8 @@ flowchart TD
     %% =========================================================================
     subgraph Tier1["📱 TIER 1: CLIENT & MANAGEMENT LAYER (PUBLIC INTERNET)"]
         direction LR
-        Browser["🌐 User Web Browser<br/><b>(Desktop & Smartphone)</b><br/>• Blade HTML Views & Tailwind CSS<br/>• Alpine.js Runtime (Adaptive Chat Polling)<br/>• Midtrans Snap.js Modal SDK"]
-        DevAdmin["💻 Developer / Admin Station<br/>• Git Client & SSH Terminal<br/>• FileZilla SFTP Client<br/>• Web Browser (Hostinger hPanel)"]
+        Browser["🌐 User Web Browser<br/><b>(Desktop & Smartphone)</b><br/>• Blade HTML Views & Tailwind CSS<br/>• Alpine.js Runtime & Axios Client<br/>• html2pdf.js & Snap.js Modal SDK"]
+        DevAdmin["💻 Developer / Admin Station<br/>• Git Client & SSH Terminal (Port 65002)<br/>• FileZilla SFTP Client (.env sync)<br/>• Web Browser (Hostinger hPanel HTTPS)"]
     end
 
     %% =========================================================================
@@ -13,13 +13,13 @@ flowchart TD
     %% =========================================================================
     subgraph Tier2["🌐 TIER 2: WEB & APPLICATION SERVER (HOSTINGER CLOUDLINUX LVE)"]
         direction TB
-        subgraph WebServerSub["Web Server Gateway (LiteSpeed Enterprise)"]
+        subgraph WebServerSub["Web Root (public_html/)"]
             LiteSpeed["🚀 LiteSpeed Web Server (Port 80 / 443)<br/>• SSL/TLS Termination (Sectigo / Let's Encrypt)<br/>• .htaccess Rewrite & Compression Engine"]
-            StaticCache["📦 Direct Static Asset Engine<br/>• public/build/ (Vite JS/CSS)<br/>• public/storage/ (Symlinked Media Files)<br/>• public/images/ & favicon.ico"]
+            StaticCache["📦 Direct Static Asset Engine<br/>• build/ (Compiled Vite JS/CSS)<br/>• storage/ (Symlinked Media Files)<br/>• images/ & favicon.ico"]
         end
 
-        subgraph AppRuntimeSub["Application Engine (PHP 8.2+ Runtime via mod_lsapi)"]
-            LaravelApp["⚙️ Laravel 11 Application Container<br/>• Security Middleware (VerifyMidtransSignature, Role:admin/penyewa)<br/>• Core Services (BillingService, ReservasiService, TransisiPenyewaService)<br/>• Integration Clients (MidtransService, FonnteService, Socialite, Mailer)<br/>• Task Schedulers & Background Workers (Cron Setiap Menit)"]
+        subgraph AppRuntimeSub["Protected Application Core (asri-core/)"]
+            LaravelApp["⚙️ Laravel Application Container (v11/v12 Engine)<br/>• Security Middleware (VerifyMidtransSignature, Role:admin/penyewa)<br/>• Core Services (BillingService, ReservasiService, TransisiPenyewaService)<br/>• Integration Clients (MidtransService, FonnteService, Socialite, Mailer)<br/>• Task Schedulers & Workers (hPanel Cron: schedule & queue)"]
         end
         
         LiteSpeed -->|"1. Static Assets Direct Serving (Bypass PHP)"| StaticCache
@@ -31,8 +31,8 @@ flowchart TD
     %% =========================================================================
     subgraph Tier3["🗄️ TIER 3: DATA PERSISTENCE & FILE STORAGE LAYER"]
         direction LR
-        MySQLDB[("🗄️ MySQL 8.x Database Server<br/><b>IP: 127.0.0.1 | Port: 3306 (Internal)</b><br/>• Relational Data (users, kamars, reservasis, tagihans, pembayarans)<br/>• Framework Data (sessions, jobs, job_batches, cache_locks)")]
-        SSDDisk[("💾 Shared SSD File System<br/><b>storage/app/public/ & private/</b><br/>• Foto Kamar, PDF Nota, Bukti Pengeluaran, Keluhan")]
+        MySQLDB[("🗄️ MySQL 8.x Database Server<br/><b>IP: 127.0.0.1 | Port: 3306 (Internal)</b><br/>• Relational Data (22 Tables 3NF)<br/>• Framework Data (sessions, jobs, job_batches)")]
+        SSDDisk[("💾 Shared NVMe SSD File System<br/><b>asri-core/storage/app/public/ & private/</b><br/>• Foto Kamar, PDF Nota, Bukti Kas, Keluhan")]
     end
 
     %% =========================================================================
@@ -60,14 +60,14 @@ flowchart TD
     %% COMMUNICATION FLOWS & PROTOCOLS
     %% =========================================================================
     %% 1. Web Traffic & Management
-    Browser <-->|"① HTTPS (Port 443 - TLS 1.3) GET / POST"| LiteSpeed
+    Browser <-->|"① HTTPS (Port 443 - TLS 1.3) GET / POST<br/>asriboardinghouse.weatso.id"| LiteSpeed
     DevAdmin -->|"② SFTP / SSH (Port 65002) & hPanel HTTPS (Port 443)"| Tier2
     GitHub -->|"③ Auto-Deploy Webhook (HTTPS Port 443)"| LiteSpeed
 
     %% 2. Internal Database & Storage
     LaravelApp <-->|"④ TCP/IP (Port 3306 - PDO MySQL Driver)"| MySQLDB
     LaravelApp <-->|"⑤ File I/O Read / Write (storage/app/)"| SSDDisk
-    SSDDisk -.->|"Symlink Bridge"| StaticCache
+    SSDDisk -.->|"Symlink (ln -s /storage/app/public /public_html/storage)"| StaticCache
 
     %% 3. Midtrans Payment Flow
     LaravelApp -->|"⑥a Outbound Token Request (HTTPS POST :443 | Basic Auth)"| Midtrans
