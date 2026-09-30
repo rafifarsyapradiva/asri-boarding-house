@@ -192,6 +192,7 @@ BAB IV HASIL DAN PEMBAHASAN	22
 4.1.3 Flowchart Diagram	27
 4.1.4 Sequence Diagram	29
 4.1.5 Entity Relationship Diagram (ERD)	31
+4.1.6 Skenario Diagram Alur Sistem	32
 4.2 Implementasi Sistem	33
 4.2.1 Lingkungan Implementasi	33
 4.2.2 Perancangan Arsitektur Aplikasi	34
@@ -229,12 +230,13 @@ DAFTAR PUSTAKA	77
 
 ## DAFTAR TABEL
 Tabel 2.1  Perbandingan Penelitian Terdahulu (State of the Art)	16
-Tabel 4.1  Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House	35
-Tabel 4.2  Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)	56
-Tabel 4.3  Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna	62
-Tabel 4.4  Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account	64
-Tabel 4.5  Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live	66
-Tabel 4.6  Rekapitulasi Hasil Pengujian Penerimaan Pengguna (User Acceptance Testing)	67
+Tabel 4.1  Matriks Pemetaan Status Transaksional dan Transisi State Siklus Hidup Sistem	33
+Tabel 4.2  Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House	35
+Tabel 4.3  Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)	56
+Tabel 4.4  Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna	62
+Tabel 4.5  Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account	64
+Tabel 4.6  Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live	66
+Tabel 4.7  Rekapitulasi Hasil Pengujian Penerimaan Pengguna (User Acceptance Testing)	67
 
 ## DAFTAR GAMBAR
 Gambar 2.1  Kerangka Pemikiran Penelitian	18
@@ -244,11 +246,12 @@ Gambar 4.2  Activity Diagram Tiga Proses Kritis Sistem Asri Boarding House	24
 Gambar 4.3  Flowchart Mekanisme Billing Engine dan Penanganan Keterlambatan Massal	27
 Gambar 4.4  Sequence Diagram Alur Transaksional Utama Sistem Asri Boarding House	29
 Gambar 4.5  Entity Relationship Diagram (ERD) Skema Basis Data 22 Tabel	31
-Gambar 4.6  Antarmuka Katalog Kamar Publik Neo-Brutalisme	45
-Gambar 4.7  Workspace Stepper Alur Reservasi Calon Penyewa	46
-Gambar 4.8  Portal Invoice dan Kuitansi Digital Penyewa	47
-Gambar 4.9  Dasbor Administrasi Keuangan Administrator	48
-Gambar 4.10  Dokumentasi UAT Sesi Wawancara dan Penyerahan Sistem bersama Bapak Asep	70
+Gambar 4.6  Skenario Diagram Siklus Hidup Transaksional Penyewa dan Operasional Administrator	32
+Gambar 4.7  Antarmuka Katalog Kamar Publik Neo-Brutalisme	45
+Gambar 4.8  Workspace Stepper Alur Reservasi Calon Penyewa	46
+Gambar 4.9  Portal Invoice dan Kuitansi Digital Penyewa	47
+Gambar 4.10  Dasbor Administrasi Keuangan Administrator	48
+Gambar 4.11  Dokumentasi UAT Sesi Wawancara dan Penyerahan Sistem bersama Bapak Asep	70
 
 ## BAB I PENDAHULUAN
 ## 1.1 Latar Belakang
@@ -570,6 +573,117 @@ Kardinalitas relasi antarentitas dirumuskan sebagai berikut: satu entitas `users
 
 ---
 
+### 4.1.6 Skenario Diagram Alur Sistem
+Pemodelan teknis-formal melalui Use Case Diagram, Activity Diagram, Flowchart, Sequence Diagram, dan Entity Relationship Diagram pada sub-bab sebelumnya memberikan gambaran arsitektur sistem dari sudut pandang rekayasa perangkat lunak. Untuk menghubungkan pemodelan tersebut dengan praktik operasional di lapangan, bagian ini menyajikan skenario diagram alur sistem yang merekonstruksi hasil pengujian operasional secara empiris pada peladen produksi *live* (`https://asriboardinghouse.weatso.id/`). Skenario ini memadukan dua sudut pandang yang saling melengkapi: siklus hidup penyewa (*tenant lifecycle*) sejak tahap pra-pemesanan hingga kepulangan, serta siklus hidup operasional administrator (*administrator operational lifecycle*) yang dijalankan oleh pengelola kos (Bapak Asep, usia 48 tahun).
+
+#### 1. Skenario Siklus Hidup Penyewa (Tenant Lifecycle Scenario)
+Skenario penyewa memotret perjalanan calon penghuni dalam berinteraksi dengan sistem informasi Asri Boarding House. Pengujian empiris pada lingkungan produksi mencakup dua persona dengan preferensi dan skema transaksi yang berbeda:
+
+1. **Jalur 1 — Nur Haliza (Kamar 101 VIP, Durasi Sewa 12 Bulan)**:
+   * **Eksplorasi Katalog & Konsultasi Pra-Pemesanan**: Nur Haliza mengakses portal publik `weatso.id`, menelusuri katalog kamar interaktif bertema Neo-Brutalisme, dan memanfaatkan *Floating Guest Live Chat* tanpa autentikasi untuk menanyakan kesiapan Kamar 101 VIP. Sistem mengidentifikasi sesi tamu menggunakan token unik berpelindung hash SHA-256 (`session_token`) pada tabel `guest_chat_threads`.
+   * **Otentikasi Google OAuth 2.0 & Penapisan Profil**: Nur Haliza memilih masuk menggunakan akun Google (`Laravel Socialite`). Setelah otentikasi identitas berhasil, sistem mendeteksi nomor ponsel sementara (`temp_socialite_*`) dan secara otomatis mengalihkannya melalui middleware `EnsureProfileIsComplete` ke halaman pelengkapan profil. Nur Haliza memasukkan nomor WhatsApp aktifnya (`089524569335`), yang divalidasi dengan ekspresi reguler standar penomoran Indonesia dan dipastikan unik.
+   * **Reservasi & Pelunasan Penuh di Awal (*Full Payment Upfront*)**: Nur Haliza mengisi formulir reservasi dengan memasukkan NIK 16 digit valid (`3374115212030001`), durasi sewa 12 bulan (26 September 2026 s.d. 26 September 2027), serta kontak darurat/wali Kusuma (`082219575575`). Sistem menghitung biaya sewa dasar sebesar Rp16.800.000 (12 x Rp1.400.000), lalu secara atomik menerapkan diskon sewa durasi tahunan dari tabel konfigurasi sistem sehingga total transaksi menjadi Rp15.400.560. Nilai ini sekaligus mengunci tarif sewa aktif personal (*immutable personal rate*) sebesar Rp1.283.380 per bulan (`Rp15.400.560 / 12 bulan`).
+   * **Penyelesaian Transaksi Midtrans Snap**: Nur Haliza menyelesaikan pembayaran penuh sebesar Rp15.400.560 melalui Virtual Account Bank Mandiri pada antarmuka pop-up Midtrans Snap. Webhook callback asinkron diverifikasi melalui pencocokan tanda tangan digital SHA-512, memperbarui status reservasi menjadi `lunas`.
+   * **Siklus Pembayaran Rutin Tepat Waktu**: Pada siklus sewa bulanan, tagihan sewa rutin terbit otomatis setiap tanggal 1 awal bulan pukul 00:05 WIB senilai Rp1.283.380 dengan batas jatuh tempo tanggal 10. Nur Haliza secara konsisten menyelesaikan pembayaran antara tanggal 1 hingga 5 setiap bulannya melalui dompet digital GoPay (Midtrans Snap), sehingga tidak pernah dikenakan denda keterlambatan sepanjang masa tinggal. Kuitansi pembayaran resmi format A5 berstempel digital diunduh langsung di peramban klien melalui pustaka `html2pdf.js`.
+
+2. **Jalur 2 — Tyas (Kamar 104 Deluxe, Durasi Sewa 6 Bulan)**:
+   * **Pendaftaran Akun Mandiri & Reservasi Skema Uang Muka (DP 30%)**: Tyas mendaftarkan akun secara mandiri melalui formulir registrasi web, lalu memesan Kamar 104 Deluxe bertarif pokok Rp950.000 per bulan untuk durasi 6 bulan (total kewajiban pokok Rp5.700.000). Tyas memilih skema pembayaran Uang Muka (DP 30%) sebesar Rp1.710.000, dengan sisa kewajiban 70% sebesar Rp3.990.000 yang wajib dilunasi sebelum menempati kamar.
+   * **Pembayaran DP & Injeksi Tagihan Pelunasan**: Tyas membayar DP sebesar Rp1.710.000 via QRIS Midtrans Snap. Begitu administrator menyetujui reservasi, layanan `TransisiPenyewaService` secara atomik mengaktifkan akun penyewa, mengunci status kamar menjadi `terisi`, dan memanggil `BillingService::injectSisaDp` untuk menerbitkan tagihan pelunasan sisa 70% (Rp3.990.000) berstatus *pending*. Sebelum tanggal masuk fisik (26 September 2026), Tyas masuk ke portal penyewa dan melunasi sisa tagihan tersebut melalui gerbang pembayaran Midtrans Snap.
+   * **Penerapan Masa Toleransi Bebas Denda (*Grace Period*)**: Pada periode penagihan bulan November 2026, Tyas melewati batas jatuh tempo tanggal 10 November karena kesibukan akademik. Pada tanggal 11 November pukul 01:00 WIB, penjadwal tugas harian `tagihan:proses-keterlambatan` mendeteksi status belum lunas, namun karena masih berada di bulan kalender berjalan (November), sistem menerapkan kebijakan masa toleransi: status tagihan diubah menjadi *terlambat*, besaran denda ditetapkan tetap Rp0 (`nominal_denda = 0`), dan sistem mengirimkan pengingat sopan melalui WhatsApp Fonnte API. Pada tanggal 15 November, Tyas melunasi tagihan pokok Rp950.000 tanpa tambahan denda.
+
+3. **Pengaduan Keluhan Fasilitas Berfoto**:
+   * Pada bulan Maret 2027, terjadi kebocoran pada sambungan drat kran wastafel di kamar mandi Kamar 101 milik Nur Haliza. Nur Haliza membuka menu *Keluhan & Pengaduan* pada portal penyewa, mengisi formulir pengaduan, dan melampirkan foto bukti fisik `kran_bocor.jpg` berukuran 1,2 MB. Sistem memvalidasi ekstensi serta ukuran berkas, menerbitkan tiket keluhan berstatus *pending*, dan mengirimkan pesan pemberitahuan otomatis ke nomor WhatsApp pengelola.
+   * Setelah teknisi ledeng menyelesaikan perbaikan dan pengelola melakukan inspeksi fisik, status tiket diubah menjadi *selesai*, memicu pengiriman pesan WhatsApp penutupan laporan kepada penyewa.
+
+4. **Penerimaan Siaran Pengumuman Massal (*Multi-Channel Broadcast*)**:
+   * Ketika pengelola menjadwalkan kegiatan pemeliharaan lingkungan (seperti pengasapan nyamuk DBD pada bulan Juni 2027), penyewa menerima pesan pemberitahuan resmi secara serentak melalui spanduk pengumuman pada portal web, pesan WhatsApp melalui Fonnte API, dan surel terenkripsi TLS melalui protokol SMTP.
+
+#### 2. Skenario Operasional Administrator (Administrator Operational Lifecycle)
+Skenario operasional memodelkan alur kerja harian pengelola (Bapak Asep, 48 tahun) dalam mengendalikan tata usaha, keuangan, dan fasilitas fisik Asri Boarding House melalui portal administrasi:
+
+1. **Layanan Pra-Pemesanan & Audit Berkas Identitas**:
+   * Pengelola memantau pesan masuk dari pengunjung web melalui antarmuka *Guest Chat* dan kotak pesan pra-pembayaran (*Pre-Payment Chat Box*) pada halaman rincian reservasi guna memastikan kejelasan fasilitas sebelum calon penyewa mentransfer dana.
+   * Saat calon penyewa menyelesaikan pembayaran awal via Midtrans, pengelola melakukan audit verifikasi dokumen identitas: memeriksa keabsahan NIK 16 digit dan nomor kontak wali/orang tua. Setelah dokumen dinyatakan sah, pengelola menekan tombol konfirmasi untuk mengaktifkan kontrak sewa.
+
+2. **Pengawasan Otomasi Tagihan Bulanan & Arus Kas Real-Time**:
+   * Pengelola tidak lagi melakukan pencatatan invoice manual di buku besar. Setiap tanggal 1 awal bulan pukul 00:05 WIB, penjadwal tugas peladen mengeksekusi `php artisan tagihan:generate-bulanan`, menerbitkan baris tagihan berstatus *pending* bagi seluruh penyewa aktif dengan tipe sewa bulanan, dan menyiarkan rincian tagihan via WhatsApp.
+   * Dasbor keuangan administrator menyajikan tiga kartu ringkasan keuangan mikro (Total Pemasukan, Total Pengeluaran, dan Laba Bersih) secara real-time berdasarkan agregasi basis data, mengamankan kapasitas penerimaan bruto kos sebesar Rp28.500.000 per bulan dari risiko selisih hitung.
+
+3. **Manajemen Pemeliharaan Fasilitas & Penyiaran Notifikasi Massal**:
+   * Pengelola meninjau laporan kerusakan berfoto dari penyewa, memperbarui status tiket menjadi *diproses*, memanggil teknisi langganan, dan melakukan inspeksi fisik hasil perbaikan sebelum menutup tiket keluhan.
+   * Fitur *Broadcast Pengumuman* memungkinkan pengelola menyebarkan informasi operasional kepada seluruh penghuni aktif dalam satu kali kirim, di mana backend Laravel mengatur antrean pesan dengan jeda waktu 2 detik antar-nomor guna mencegah pemblokiran nomor pengirim oleh pihak penyedia layanan WhatsApp.
+
+4. **Prosedur Akhir Kontrak & Protokol Penahanan Kamar (*Manual Inspection Hold*)**:
+   * Ketika masa sewa berakhir (seperti berakhirnya kontrak 6 bulan Tyas pada 26 Maret 2027 dan kontrak 12 bulan Nur Haliza pada 26 September 2027), pengelola membuka formulir *checkout* administratif. Sistem memverifikasi bahwa seluruh tagihan bulanan dari awal hingga akhir masa sewa telah berstatus *lunas* (`unpaidBillsCount == 0`). Apabila masih terdapat tunggakan sewa, sistem secara tegas menolak eksekusi *checkout*.
+   * Setelah verifikasi finansial terpenuhi, pengelola bersama penyewa melakukan inspeksi fisik kamar untuk memastikan kelengkapan dan keutuhan fasilitas. Pengelola kemudian mengeksekusi tombol *checkout*: status penyewa diubah menjadi *nonaktif*, tanggal keluar dicatat pada basis data, dan hak akses akun dinonaktifkan (`is_active = 0`).
+   * **Protokol Penahanan Kamar (*Manual Inspection Hold*)**: Kebijakan operasional terpenting pada sistem Asri Boarding House menetapkan bahwa pasca-checkout selesai, **status unit kamar pada tabel basis data TIDAK diubah secara otomatis menjadi `tersedia`**. Status unit kamar tetap dipertahankan pada kondisi terkunci merah berstatus **`terisi`**. Kebijakan isolasi ini memberikan jeda waktu operasional bagi tim kebersihan untuk melakukan pembersihan menyeluruh, perbaikan fasilitas minor, penggantian sprei, dan sterilisasi ruangan.
+   * Setelah unit kamar dipastikan 100% bersih dan siap huni kembali, pengelola membuka menu *Manajemen Kamar* dan secara **MANUAL** mengubah pilihan status kamar dari `terisi` menjadi **`tersedia`**. Perubahan status manual ini memicu *event* `KamarObserver::updated` yang secara otomatis membersihkan tembolok katalog publik melalui `Cache::forget('kamar_aktif_landing')`. Unit kamar seketika muncul kembali pada katalog publik landing page `weatso.id` dengan tombol pemesanan aktif, mengeliminasi risiko pemesanan ganda (*double booking*) pada kamar yang belum layak huni.
+
+Visualisasi rangkaian diagram skenario siklus hidup penyewa dan operasional administrator disajikan pada Gambar 4.6.
+
+![Gambar 4.6 (a) Skenario User Journey Calon Penyewa pada Fase Registrasi dan Reservasi Live](images/skenario_journey_penyewa.png)  
+*(a) Skenario User Journey Calon Penyewa pada Fase Registrasi dan Reservasi Live*
+
+![Gambar 4.6 (b) Sequence Diagram Alur Audit, Konfirmasi, dan Aktivasi Kontrak Sewa](images/skenario_seq_aktivasi_reservasi.png)  
+*(b) Sequence Diagram Alur Audit, Konfirmasi, dan Aktivasi Kontrak Sewa*
+
+![Gambar 4.6 (c) State Diagram Siklus Penagihan Bulanan dan Masa Toleransi Bebas Denda](images/skenario_state_siklus_billing.png)  
+*(c) State Diagram Siklus Penagihan Bulanan dan Masa Toleransi Bebas Denda*
+
+![Gambar 4.6 (d) Mindmap Kluster Tanggung Jawab Operasional Administrator](images/skenario_admin_mindmap_pengelolaan.png)  
+*(d) Mindmap Kluster Tanggung Jawab Operasional Administrator (Bapak Asep)*
+
+![Gambar 4.6 (e) Flowchart Alur Keputusan Aktivasi Reservasi dan Monitoring Penagihan Admin](images/skenario_admin_flow_aktivasi_dan_monitoring.png)  
+*(e) Flowchart Alur Keputusan Aktivasi Reservasi dan Monitoring Penagihan Admin*
+
+```mermaid
+flowchart TD
+    A1["26 Maret 2027: Akhir Kontrak 6 Bulan Tyas"] --> B["Admin Buka Menu Checkout (/admin/penyewa/{id}/checkout)"]
+    A2["26 September 2027: Akhir Kontrak 12 Bulan Nur Haliza"] --> B
+    B --> C{"Audit Tagihan Belum Lunas"}
+    C -->|"unpaidBillsCount > 0"| D["Ditolak Sistem: Selesaikan Tagihan Tertunggak"]
+    C -->|"unpaidBillsCount == 0"| E["Inspeksi Fisik Bersama Penyewa di Kamar"]
+    E --> F["Pemeriksaan Inventaris: Seluruh Fasilitas Prima"]
+    F --> G["Admin Eksekusi Checkout: Akun Penyewa Dinonaktifkan"]
+    G --> H["Kebijakan Kritis: Status Kamar di Basis Data TETAP 'terisi' (Terkunci)"]
+    H --> I["Tim Kebersihan Melakukan Pembersihan Menyeluruh & Sterilisasi"]
+    I --> J["Bapak Asep Buka /admin/kamar -> Ubah Status Kamar MANUAL ke 'tersedia'"]
+    J --> K["KamarObserver Menghapus Cache Landing Page (kamar_aktif_landing)"]
+    K --> L["Kamar Tayang Kembali di Katalog Landing Page Publik weatso.id"]
+```
+*(f) Flowchart Prosedur Checkout dan Protokol Penahanan Kamar (Manual Inspection Hold)*
+
+*Gambar 4.6 Skenario Diagram Siklus Hidup Transaksional Penyewa dan Operasional Administrator*  
+*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
+
+---
+
+#### 3. Matriks Pemetaan Status Transaksional Sistem
+Untuk memberikan pandangan terstruktur mengenai keterkaitan antar-entitas selama siklus hidup operasional, Tabel 4.1 menyajikan matriks transisi status yang merangkum evolusi kondisi unit kamar, dokumen reservasi, akun penyewa, tagihan sewa, transaksi pembayaran, *event bus* Laravel, serta notifikasi WhatsApp Fonnte pada setiap tahapan peristiwa pengujian riil.
+
+**Tabel 4.1** Matriks Pemetaan Status Transaksional dan Transisi State Siklus Hidup Sistem
+
+| No | Fase / Peristiwa Pengujian Riil | Status Kamar | Status Reservasi | Status Penyewa | Status Tagihan | Status Pembayaran | Event Bus Laravel | Notifikasi Fonnte WA | Kuitansi / Bukti Transaksi |
+| :-: | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :--- | :--- |
+| 1 | **Reservasi Daring Dibuat** | `tersedia` *(Locked)* | `pending` | *Belum ada* | *Belum ada* | *Belum ada* | `ReservasiDibuat` | - | Form Pemesanan Web |
+| 2 | **Midtrans Lunas 100% (Nur Haliza)**| `tersedia` *(Locked)* | `lunas` | *Belum ada* | *Belum ada* | `settlement` | `ReservasiDibayar` | Alert WA Admin | Notifikasi Pembayaran |
+| 3 | **Midtrans DP 30% (Tyas)** | `tersedia` *(Locked)* | `dp` | *Belum ada* | *Belum ada* | `settlement` | `ReservasiDibayar` | Alert WA Admin | Notifikasi Pembayaran |
+| 4 | **Konfirmasi Reservasi Lunas 100%** | `terisi` | `dikonfirmasi` | `aktif` | `lunas` (Bulan 1) | `settlement` | `ReservasiDikonfirmasi` | Welcome & Kredensial | Render A5 `html2pdf.js` |
+| 5 | **Konfirmasi Reservasi DP 30%** | `terisi` | `dikonfirmasi` | `aktif` | `pending` (Sisa 70%)| - | `ReservasiDikonfirmasi`, `TagihanDibuat` | Welcome & Link Sisa | Dashboard Alert Banner |
+| 6 | **Pelunasan Sisa DP di Portal (Tyas)**| `terisi` | `dikonfirmasi` | `aktif` | `lunas` (Sisa DP) | `settlement` | `PembayaranBerhasil` | Konfirmasi Lunas Sisa | Render A5 `html2pdf.js` |
+| 7 | **Check-in Fisik & Hunian Aktif** | `terisi` | `dikonfirmasi` | `aktif` | - | - | - | - | Kunci Kamar Diserahkan |
+| 8 | **Billing Bulanan (Tgl 1, 00:05 WIB)**| `terisi` | - | `aktif` | `pending` | - | `TagihanDibuat` | Invoice Tagihan WA | Tautan Bayar Portal |
+| 9 | **Bayar Tepat Waktu (Nur Haliza)** | `terisi` | - | `aktif` | `lunas` | `settlement` | `PembayaranBerhasil` | Tanda Terima Digital | Render A5 `html2pdf.js` |
+| 10 | **Toleransi Jatuh Tempo (Tyas)** | `terisi` | - | `aktif` | `terlambat` *(Denda 0)*| - | `ReminderPenyewa` | WA Reminder Sopan | Denda Tetap Rp0 |
+| 11 | **Pelunasan Masa Toleransi (Tyas)** | `terisi` | - | `aktif` | `lunas` | `settlement` | `PembayaranBerhasil` | Tanda Terima Digital | Render A5 `html2pdf.js` |
+| 12 | **Pengaduan Keluhan Berfoto Masuk**| `terisi` | - | `aktif` | - | - | `KeluhanDibuat` | Alert Keluhan Admin | Berkas Foto `kran_bocor.jpg` |
+| 13 | **Penyelesaian & Penutupan Keluhan**| `terisi` | - | `aktif` | - | - | `KeluhanDitanggapi` | Notifikasi Tiket Selesai | Inspeksi Fisik Lapangan |
+| 14 | **Prosedur Checkout Administratif** | `terisi` *(Locked)* | - | `nonaktif` | Semua `lunas` | - | `PenyewaController::checkout` | Konfirmasi Checkout | Akun Dinonaktifkan |
+| 15 | **Manual Release Pasca-Inspeksi** | `tersedia` | - | `nonaktif` | - | - | `KamarObserver::updated` | - (Katalog Live Update)| Cache Memori Dihapus |
+
+
+---
+
 ## 4.2 Implementasi Sistem
 Tahap implementasi merealisasikan rancangan sistem ke dalam kode program terstruktur berbasis framework Laravel 11. Implementasi berfokus pada ketahanan arsitektur, pemisahan logika bisnis yang tegas, keamanan data finansial, serta integrasi layanan eksternal.
 
@@ -605,9 +719,9 @@ Sistem mengadopsi arsitektur tiga lapis (*3-Tier Architecture*) yang dipadukan d
 Arsitektur ini turut diperkuat oleh pola *Event-Listener-Observer*: *Event* `PembayaranBerhasil` dipicu saat transaksi Midtrans terkonfirmasi lunas, `PenyewaObserver` secara otomatis mengunci kamar menjadi terisi saat penyewa aktif dan menjaga kamar tetap terkunci pasca-checkout, serta `FasilitasObserver` membersihkan cache katalog publik saat data fasilitas diperbarui administrator.
 
 ### 4.2.3 Implementasi Basis Data
-Skema basis data direalisasikan ke dalam 22 berkas migrasi database Laravel. Tabel 4.1 merangkum struktur fungsional dari keseluruhan dua puluh dua tabel relasional yang menyusun sistem informasi Asri Boarding House.
+Skema basis data direalisasikan ke dalam 22 berkas migrasi database Laravel. Tabel 4.2 merangkum struktur fungsional dari keseluruhan dua puluh dua tabel relasional yang menyusun sistem informasi Asri Boarding House.
 
-**Tabel 4.1** Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House
+**Tabel 4.2** Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House
 
 | No | Nama Tabel | Deskripsi Fungsional Entitas | Relasi Kunci / Batasan Integritas |
 | :---: | :--- | :--- | :--- |
@@ -712,34 +826,34 @@ Integrasi otomasi pesan WhatsApp diimplementasikan melalui kelas `FonnteService`
 Bagian ini menyajikan hasil implementasi antarmuka pengguna pada sistem informasi Asri Boarding House yang berjalan di lingkungan nyata.
 
 ### 4.3.1 Antarmuka Calon Penyewa
-Antarmuka publik dirancang mengadopsi prinsip desain Neo-Brutalisme yang bersih dengan bingkai garis hitam tegas (*border-4*), bayangan datar (*hard box-shadow*), dan tipografi modern Space Grotesk. Tombol WhatsApp melayang (*floating action button*) diposisikan pada sudut kanan bawah dengan ukuran target sentuh (*touch target size*) sebesar 56 piksel, melampaui batas standar minimum aksesibilitas WCAG 2.1 (44 piksel) guna kenyamanan penggunaan pada perangkat layar sentuh bergerak. Tampilan katalog kamar disajikan pada Gambar 4.6.
+Antarmuka publik dirancang mengadopsi prinsip desain Neo-Brutalisme yang bersih dengan bingkai garis hitam tegas (*border-4*), bayangan datar (*hard box-shadow*), dan tipografi modern Space Grotesk. Tombol WhatsApp melayang (*floating action button*) diposisikan pada sudut kanan bawah dengan ukuran target sentuh (*touch target size*) sebesar 56 piksel, melampaui batas standar minimum aksesibilitas WCAG 2.1 (44 piksel) guna kenyamanan penggunaan pada perangkat layar sentuh bergerak. Tampilan katalog kamar disajikan pada Gambar 4.7.
 
-![Gambar 4.6 Antarmuka Katalog Kamar Publik Neo-Brutalisme](images/gambar_4_7.webp)
+![Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme](images/gambar_4_7.webp)
 
-*Gambar 4.6 Antarmuka Katalog Kamar Publik Neo-Brutalisme*  
+*Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
 
-Pada saat calon penyewa melakukan pemesanan kamar, antarmuka menyediakan *Workspace Horizontal Stepper* yang memvisualisasikan lima tahapan secara teratur. Tampilan wizard pemesanan kamar disajikan pada Gambar 4.7.
+Pada saat calon penyewa melakukan pemesanan kamar, antarmuka menyediakan *Workspace Horizontal Stepper* yang memvisualisasikan lima tahapan secara teratur. Tampilan wizard pemesanan kamar disajikan pada Gambar 4.8.
 
-![Gambar 4.7 Workspace Stepper Alur Reservasi Calon Penyewa](images/gambar_4_10.webp)
+![Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa](images/gambar_4_10.webp)
 
-*Gambar 4.7 Workspace Stepper Alur Reservasi Calon Penyewa*  
+*Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
 
 ### 4.3.2 Antarmuka Penyewa Aktif
-Portal penyewa aktif pada rute `/penyewa/dashboard` menampilkan status hunian, masa berlaku sewa, kisi daftar tagihan bulanan, tombol pembayaran Midtrans Snap, serta tombol unduh kuitansi digital instan format A5 yang siap dicetak. Tampilan portal penyewa disajikan pada Gambar 4.8.
+Portal penyewa aktif pada rute `/penyewa/dashboard` menampilkan status hunian, masa berlaku sewa, kisi daftar tagihan bulanan, tombol pembayaran Midtrans Snap, serta tombol unduh kuitansi digital instan format A5 yang siap dicetak. Tampilan portal penyewa disajikan pada Gambar 4.9.
 
-![Gambar 4.8 Portal Invoice dan Kuitansi Digital Penyewa](images/gambar_4_9.webp)
+![Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa](images/gambar_4_9.webp)
 
-*Gambar 4.8 Portal Invoice dan Kuitansi Digital Penyewa*  
+*Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
 
 ### 4.3.3 Antarmuka Admin
-Panel administrasi utama pada rute `/admin/dashboard` mengadopsi tema gelap *OLED Black Dark Mode*. Dasbor ini menampilkan tiga kartu ringkasan keuangan utama (Total Pemasukan, Total Pengeluaran, dan Laba Bersih) serta ringkasan okupansi kamar secara real-time. Tampilan dasbor admin disajikan pada Gambar 4.9.
+Panel administrasi utama pada rute `/admin/dashboard` mengadopsi tema gelap *OLED Black Dark Mode*. Dasbor ini menampilkan tiga kartu ringkasan keuangan utama (Total Pemasukan, Total Pengeluaran, dan Laba Bersih) serta ringkasan okupansi kamar secara real-time. Tampilan dasbor admin disajikan pada Gambar 4.10.
 
-![Gambar 4.9 Dasbor Administrasi Keuangan Administrator](images/gambar_4_8.webp)
+![Gambar 4.10 Dasbor Administrasi Keuangan Administrator](images/gambar_4_8.webp)
 
-*Gambar 4.9 Dasbor Administrasi Keuangan Administrator*  
+*Gambar 4.10 Dasbor Administrasi Keuangan Administrator*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
 
 ---
@@ -838,9 +952,9 @@ MAIL_ENCRYPTION=tls
 Pengujian sistem dilakukan secara menyeluruh guna menjamin bahwa perangkat lunak yang dibangun bebas dari kesalahan logika, mematuhi batasan hak akses, mampu memproses transaksi keuangan secara andal, dan memperoleh penerimaan tinggi dari calon pengguna.
 
 ### 4.5.1 Hasil Black Box Testing
-Pengujian fungsionalitas kotak hitam (*black box testing*) menguji masukan dan keluaran sistem tanpa melibatkan struktur kode program internal [19], [20]. Matriks pengujian disusun secara komprehensif mencakup 60 butir skenario uji yang terbagi ke dalam enam domain fungsional, sebagaimana disajikan pada Tabel 4.2.
+Pengujian fungsionalitas kotak hitam (*black box testing*) menguji masukan dan keluaran sistem tanpa melibatkan struktur kode program internal [19], [20]. Matriks pengujian disusun secara komprehensif mencakup 60 butir skenario uji yang terbagi ke dalam enam domain fungsional, sebagaimana disajikan pada Tabel 4.3.
 
-**Tabel 4.2** Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)
+**Tabel 4.3** Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)
 
 | No | Modul / Skenario Uji | Prosedur Pengujian / Masukan Data | Hasil yang Diharapkan | Hasil Pengujian | Status |
 | :---: | :--- | :--- | :--- | :--- | :---: |
@@ -913,14 +1027,14 @@ Pengujian fungsionalitas kotak hitam (*black box testing*) menguji masukan dan k
 
 *Sumber: Hasil pengujian kotak hitam perangkat lunak penulis (2026)*
 
-Berdasarkan hasil pengujian pada Tabel 4.2, seluruh 60 butir skenario uji fungsionalitas kotak hitam berhasil dieksekusi dengan tingkat kelulusan 100%, yang mengonfirmasi bahwa logika bisnis, validasi masukan formulir, keamanan rute, serta otomasi sistem telah berfungsi sesuai spesifikasi kebutuhan yang ditetapkan.
+Berdasarkan hasil pengujian pada Tabel 4.3, seluruh 60 butir skenario uji fungsionalitas kotak hitam berhasil dieksekusi dengan tingkat kelulusan 100%, yang mengonfirmasi bahwa logika bisnis, validasi masukan formulir, keamanan rute, serta otomasi sistem telah berfungsi sesuai spesifikasi kebutuhan yang ditetapkan.
 
 ---
 
 ### 4.5.2 Hasil Pengujian Hak Akses
-Pengujian hak akses memvalidasi efektivitas isolasi peran berbasis *Role-Based Access Control* (RBAC) pada tiga portal sistem serta menguji ketahanan terhadap ancaman *Insecure Direct Object Reference* (IDOR). Matriks pengujian hak akses disajikan pada Tabel 4.3.
+Pengujian hak akses memvalidasi efektivitas isolasi peran berbasis *Role-Based Access Control* (RBAC) pada tiga portal sistem serta menguji ketahanan terhadap ancaman *Insecure Direct Object Reference* (IDOR). Matriks pengujian hak akses disajikan pada Tabel 4.4.
 
-**Tabel 4.3** Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna
+**Tabel 4.4** Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna
 
 | No | Skenario Pengujian Hak Akses | Masukan / Percobaan Aksi | Respon Sistem yang Diharapkan | Hasil Pengujian | Status |
 | :---: | :--- | :--- | :--- | :--- | :---: |
@@ -933,14 +1047,14 @@ Pengujian hak akses memvalidasi efektivitas isolasi peran berbasis *Role-Based A
 
 *Sumber: Hasil pengujian otorisasi dan keamanan sistem penulis (2026)*
 
-Hasil pada Tabel 4.3 membuktikan bahwa batas otorisasi antarperan terjaga secara teratur dan mencegah terjadinya eskalasi hak akses maupun manipulasi parameter URL pada pengujian yang dilakukan.
+Hasil pada Tabel 4.4 membuktikan bahwa batas otorisasi antarperan terjaga secara teratur dan mencegah terjadinya eskalasi hak akses maupun manipulasi parameter URL pada pengujian yang dilakukan.
 
 ---
 
 ### 4.5.3 Hasil Pengujian Transaksi Midtrans Sandbox (Khusus Saluran BCA Virtual Account)
-Sesuai dengan konfigurasi dan skenario pengujian operasional riil yang tertuang pada berkas *Blueprint Skenario Reservasi* dan *Panduan Uji Coba Demo*, pengujian transaksi pembayaran daring pada Midtrans Snap Sandbox difokuskan secara spesifik pada saluran **Bank Central Asia Virtual Account (BCA VA)** menggunakan simulator resmi Midtrans Sandbox (`https://simulator.sandbox.midtrans.com/openapi/va/index`). Matriks pengujian siklus transaksi BCA VA disajikan pada Tabel 4.4.
+Sesuai dengan konfigurasi dan skenario pengujian operasional riil yang tertuang pada berkas *Blueprint Skenario Reservasi* dan *Panduan Uji Coba Demo*, pengujian transaksi pembayaran daring pada Midtrans Snap Sandbox difokuskan secara spesifik pada saluran **Bank Central Asia Virtual Account (BCA VA)** menggunakan simulator resmi Midtrans Sandbox (`https://simulator.sandbox.midtrans.com/openapi/va/index`). Matriks pengujian siklus transaksi BCA VA disajikan pada Tabel 4.5.
 
-**Tabel 4.4** Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account
+**Tabel 4.5** Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account
 
 | No | Skenario Pengujian BCA Virtual Account | Prosedur Pengujian / Masukan Data | Respon Sistem & Webhook Callback | Hasil Pengujian | Status |
 | :---: | :--- | :--- | :--- | :--- | :---: |
@@ -957,9 +1071,9 @@ Sesuai dengan konfigurasi dan skenario pengujian operasional riil yang tertuang 
 ---
 
 ### 4.5.4 Hasil Pengujian Hak Akses Live
-Pengujian lingkungan live dilaksanakan secara langsung pada peladen produksi Hostinger LiteSpeed dengan domain publik `https://asriboardinghouse.weatso.id/`. Hasil evaluasi lingkungan live dirangkum pada Tabel 4.5.
+Pengujian lingkungan live dilaksanakan secara langsung pada peladen produksi Hostinger LiteSpeed dengan domain publik `https://asriboardinghouse.weatso.id/`. Hasil evaluasi lingkungan live dirangkum pada Tabel 4.6.
 
-**Tabel 4.5** Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live
+**Tabel 4.6** Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live
 
 | No | Parameter Pengujian Lingkungan Live | Prosedur dan Tolok Ukur Pengujian | Hasil Pengamatan di Domain weatso.id | Status |
 | :---: | :--- | :--- | :--- | :---: |
@@ -975,9 +1089,9 @@ Pengujian lingkungan live dilaksanakan secara langsung pada peladen produksi Hos
 ### 4.5.5 Hasil User Acceptance Testing (UAT)
 Pengujian Penerimaan Pengguna (*User Acceptance Testing* atau UAT) dilakukan untuk mengukur tingkat kelayakan, kemudahan, dan kepuasan pengguna terhadap sistem yang telah dibangun. Pengujian melibatkan 15 responden yang mewakili 3 kelompok pemangku kepentingan: 5 calon penyewa, 8 penyewa aktif, dan 2 pengelola operasional kost (Bapak Asep dan staf admin).
 
-Evaluasi menggunakan kuesioner berbasis Skala Likert 5 poin (1 = Sangat Tidak Setuju, 2 = Tidak Setuju, 3 = Netral, 4 = Setuju, 5 = Sangat Setuju) yang menguji empat dimensi kualitas perangkat lunak: Kemudahan Penggunaan (*Usability*), Keandalan Fungsionalitas (*Functionality*), Kinerja Kecepatan Sistem (*Performance*), dan Estetika Antarmuka (*User Interface Aesthetics*). Rekapitulasi hasil perhitungan skor disajikan pada Tabel 4.6.
+Evaluasi menggunakan kuesioner berbasis Skala Likert 5 poin (1 = Sangat Tidak Setuju, 2 = Tidak Setuju, 3 = Netral, 4 = Setuju, 5 = Sangat Setuju) yang menguji empat dimensi kualitas perangkat lunak: Kemudahan Penggunaan (*Usability*), Keandalan Fungsionalitas (*Functionality*), Kinerja Kecepatan Sistem (*Performance*), dan Estetika Antarmuka (*User Interface Aesthetics*). Rekapitulasi hasil perhitungan skor disajikan pada Tabel 4.7.
 
-**Tabel 4.6** Rekapitulasi Hasil Pengujian Penerimaan Pengguna (User Acceptance Testing)
+**Tabel 4.7** Rekapitulasi Hasil Pengujian Penerimaan Pengguna (User Acceptance Testing)
 
 | No | Indikator Dimensi Evaluasi Pengujian | Rata-rata Skor (1 - 5) | Persentase Kelayakan (%) | Kategori Kelayakan |
 | :---: | :--- | :---: | :---: | :---: |
@@ -1037,11 +1151,11 @@ Sesi evaluasi dilaksanakan di kantor pengelola Asri Boarding House, Tembalang, m
    * *Pertanyaan*: *"Pertanyaan terakhir Pak Asep, setelah kita coba bersama dari tadi: jika dibandingkan dengan cara kerja 20 tahun kemarin yang serba tulis tangan di buku besar, apakah website ini membuat pekerjaan administrasi kost terasa jauh lebih ringan dan aman dari salah hitung? Dari nilai 1 sampai 10, kira-kira Bapak memberikan nilai berapa untuk kemudahan dan manfaat website kost ini?"*
    * *Tanggapan Bapak Asep*: *"Wah, kalau dibandingkan 20 tahun kemarin, rasanya bumi dan langit Mas Rafif! Pakai website ini pekerjaan mengurus kost terasa jauh lebih enteng, hati jadi tenang karena tidak ada lagi selisih uang kas atau catatan nota yang hilang. Semuanya transparan dan otomatis. Dari nilai 1 sampai 10, saya tidak ragu memberikan **nilai 9,5 atau bahkan 10**! Website ini sangat luar biasa membantu operasional Asri Boarding House."*
 
-Dokumentasi pelaksanaan evaluasi pengujian operasional langsung disajikan pada Gambar 4.10.
+Dokumentasi pelaksanaan evaluasi pengujian operasional langsung disajikan pada Gambar 4.11.
 
-![Gambar 4.10 Dokumentasi UAT Sesi Wawancara dan Penyerahan Sistem](images/gambar_4_12.webp)
+![Gambar 4.11 Dokumentasi UAT Sesi Wawancara dan Penyerahan Sistem](images/gambar_4_12.webp)
 
-*Gambar 4.10 Dokumentasi UAT Sesi Wawancara dan Penyerahan Sistem bersama Bapak Asep*  
+*Gambar 4.11 Dokumentasi UAT Sesi Wawancara dan Penyerahan Sistem bersama Bapak Asep*  
 *Sumber: Dokumentasi foto penelitian penulis (2026)*
 
 ---

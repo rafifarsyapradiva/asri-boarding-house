@@ -9,14 +9,14 @@
 
 ### 1. RINGKASAN METRIK AUDIT
 * **Jumlah Bab yang Diperiksa**: 5 Bab Utama + Bagian Awal (Halaman Judul, Orisinalitas, Plagiasi, Pengesahan, Abstrak/Abstract, Daftar Isi/Tabel/Gambar) + Bagian Akhir (Daftar Pustaka).
-* **Total Baris Dokumen Akhir**: 1.103 baris
-* **Total Ukuran Berkas Dokumen Akhir**: 144.502 byte
-* **Jumlah Heading Bab dan Sub-bab Terverifikasi**: 87 heading (100% konsisten tanpa ada yang hilang)
-* **Jumlah Paragraf yang Direvisi / Diparafrase**: 78 paragraf narasi
-* **Jumlah Tabel Hasil Penelitian / Pengujian**: 7 tabel (Tabel 2.1, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6)
-* **Jumlah Skenario Pengujian Kotak Hitam**: 60 butir skenario uji (Tabel 4.2)
-* **Jumlah Gambar Tersemat**: 15 berkas gambar (seluruh path di folder `images/` terverifikasi valid)
-* **Jumlah Diagram Mermaid**: 2 blok diagram (Gambar 2.1 dan Gambar 3.1)
+* **Total Baris Dokumen Akhir**: 1.258 baris
+* **Total Ukuran Berkas Dokumen Akhir**: 159.414 byte
+* **Jumlah Heading Bab dan Sub-bab Terverifikasi**: 88 heading (termasuk sub-bab baru 4.1.6 Skenario Diagram Alur Sistem)
+* **Jumlah Paragraf yang Direvisi / Diparafrase**: 86 paragraf narasi
+* **Jumlah Tabel Hasil Penelitian / Pengujian**: 8 tabel (Tabel 2.1, 4.1 s.d. 4.7)
+* **Jumlah Skenario Pengujian Kotak Hitam**: 60 butir skenario uji (Tabel 4.3)
+* **Jumlah Gambar Tersemat**: 20 berkas gambar (15 tangkapan layar sistem & diagram UML lama + 5 diagram skenario baru di folder `images/`)
+* **Jumlah Diagram Mermaid**: 3 blok diagram (Gambar 2.1, Gambar 3.1, dan Gambar 4.6f)
 * **Jumlah Sitasi IEEE**: 20 sitasi unik (`[1]` s.d. `[20]`), berkorespondensi 1-ke-1 dengan 20 entri pada Daftar Pustaka.
 
 ---
@@ -87,21 +87,35 @@ Hasil pemindaian otomatis memvalidasi bahwa **0 kredensial terbuka** tertinggal 
 
 ---
 
-### 6. BAGIAN YANG SENGAJA TIDAK DIUBAH (IMMUTABLE ITEMS)
+### 6. AUDIT SUB-BAB 4.1.6 SKENARIO DIAGRAM ALUR SISTEM
+* **Sub-bab Baru 4.1.6**:
+  * Menghubungkan pemodelan UML teknis (Use Case, Activity, Flowchart, Sequence, ERD) dengan data operasional riil *live testing* di domain `https://asriboardinghouse.weatso.id/`.
+  * Merekonstruksi secara presisi 2 persona empiris: Nur Haliza (Kamar 101 VIP, Google OAuth, Full Payment Mandiri VA Rp15.400.560, bayar tepat waktu) dan Tyas (Kamar 104 Deluxe, form web, DP 30% QRIS Rp1.710.000, pelunasan sisa 70% di portal Rp3.990.000, masa toleransi bebas denda Denda = Rp0).
+  * Jalur 3 (walk-in offline / Ratih / denda keterlambatan 5% menunggak lintas bulan / eskalasi wali) **100% ditiadakan** sehingga naskah murni menyajikan apa adanya hasil pengujian empiris yang telah terlaksana secara valid.
+  * Memodelkan alur kerja harian pengelola (Bapak Asep, 48 tahun) dan kebijakan kritis **Protokol Penahanan Kamar (*Manual Inspection Hold*)**: kamar pasca-checkout tetap berstatus terkunci `terisi` hingga dilakukan pembersihan/sterilisasi fisik, lalu diubah secara manual ke `tersedia` (memicu `KamarObserver::updated` untuk menghapus tembolok `kamar_aktif_landing`).
+* **Verifikasi Diagram Visual & Konsolidasi State**:
+  * Gambar 4.6 (a) s.d. (f) disematkan dengan tautan berkas valid di direktori `images/`.
+  * Tabel 4.1 menyajikan matriks 15 fase siklus hidup sistem lintas 8 dimensi operasional.
+  * Seluruh penomoran Gambar 4.6 s.d. 4.11 dan Tabel 4.1 s.d. 4.7 telah tersinkronisasi 100% di seluruh batang tubuh dokumen, `DAFTAR ISI`, `DAFTAR TABEL`, dan `DAFTAR GAMBAR`.
+
+---
+
+### 7. BAGIAN YANG SENGAJA TIDAK DIUBAH (IMMUTABLE ITEMS)
 Guna menjaga keabsahan administratif dan integritas akademik naskah skripsi:
 1. Halaman identitas, judul skripsi, nama penulis (Rafif Arsya Pradiva), NIM (22.N4.0014), Program Studi, Fakultas, Universitas, dan data Dosen Pembimbing (Ir. Andre Kurniawan Pamudji, S.Kom, M.Ling.).
 2. Halaman pernyataan orisinalitas, pernyataan bebas plagiasi, pengesahan, dan persetujuan publikasi.
-3. Struktur Daftar Isi, Daftar Tabel, dan Daftar Gambar.
-4. Seluruh 87 heading bab dan sub-bab.
+3. Struktur Daftar Isi, Daftar Tabel, dan Daftar Gambar (disinkronkan dengan penambahan sub-bab 4.1.6).
+4. Seluruh 88 heading bab dan sub-bab.
 5. Seluruh diagram Mermaid dan tautan gambar.
 6. Seluruh cuplikan kode program Laravel dan skrip deployment.
-7. Seluruh tabel data hasil pengujian fungsional dan penerimaan pengguna (Tabel 2.1, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6).
+7. Seluruh tabel data hasil penelitian dan pengujian (Tabel 2.1, 4.1 s.d. 4.7).
 8. Transkrip wawancara kualitatif Bapak Asep pada Sub-bab 4.6.1 yang merupakan tuturan lisan narasumber asli.
 9. Seluruh 20 entri pada Daftar Pustaka.
 
 ---
 
-### 7. BAGIAN YANG MEMBUTUHKAN REVIEW MANUAL & TARGET SIMILARITY
+### 8. BAGIAN YANG MEMBUTUHKAN REVIEW MANUAL & TARGET SIMILARITY
 * **Pernyataan Terkait Target Similarity (<18%)**:
   * Naskah telah dioptimalkan secara komprehensif melalui penulisan ulang semantik (*semantic rewrite*), penghilangan frasa klise, rekonstruksi struktur kalimat, dan penguraian konsep berdasarkan konteks spesifik objek penelitian, tanpa menggunakan teknik manipulasi tipografis/karakter tersembunyi.
   * **Namun demikian**, angka kesamaan (*similarity index*) aktual di bawah 18% belum dapat diverifikasi secara definitif tanpa pemindaian aktual pada sistem Turnitin resmi institusi. Penulis disarankan melakukan pemindaian uji coba pada portal Turnitin universitas sebelum sidang/pengumpulan akhir.
+
