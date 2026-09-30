@@ -158,5 +158,39 @@
 
 ---
 
-### 7. BAGIAN YANG MEMBUTUHKAN PEMERIKSAAN MANUAL
+### 7. PEMBARUAN SUB-BAB 4.1.6 SKENARIO DIAGRAM ALUR SISTEM (REVISI EMPIRIS)
+* **Penambahan Sub-bab 4.1.6**: Menambahkan sub-bab *Skenario Diagram Alur Sistem* yang menyintesis hasil pengujian operasional riil (*live testing*) dari dua sudut pandang:
+  1. *Siklus Hidup Penyewa (Tenant Lifecycle)*: Dua persona pengujian empiris (Nur Haliza - Kamar 101 VIP, Google OAuth, Full Payment Rp15.400.560 via Midtrans Mandiri VA; Tyas - Kamar 104 Deluxe, Form Web, DP 30% Rp1.710.000 via QRIS Snap, pelunasan sisa 70% di portal sebelum check-in, dan masa toleransi bebas denda Denda = Rp0). Jalur 3 (walk-in/offline Ratih) ditiadakan sesuai arahan agar 100% merefleksikan hasil pengujian sistem nyata.
+  2. *Siklus Operasional Administrator (Bapak Asep, 48 tahun)*: Layanan *Guest Chat*, audit berkas NIK 16 digit & kontak wali, pengawasan billing otomatis tanggal 1 via Laravel Scheduler, disposisi komplain fasilitas berfoto, siaran pengumuman multi-saluran, serta penegakan **Protokol Penahanan Kamar (*Manual Inspection Hold*)** di mana unit kamar tetap berstatus `terisi` pasca-checkout hingga dibersihkan dan diubah manual ke `tersedia` (membersihkan tembolok `Cache::forget('kamar_aktif_landing')`).
+* **Visualisasi Diagram (Gambar 4.6 a s.d. f)**:
+  * Gambar 4.6 (a) Skenario User Journey Calon Penyewa pada Fase Registrasi dan Reservasi Live
+  * Gambar 4.6 (b) Sequence Diagram Alur Audit, Konfirmasi, dan Aktivasi Kontrak Sewa
+  * Gambar 4.6 (c) State Diagram Siklus Penagihan Bulanan dan Masa Toleransi Bebas Denda
+  * Gambar 4.6 (d) Mindmap Kluster Tanggung Jawab Operasional Administrator (Bapak Asep)
+  * Gambar 4.6 (e) Flowchart Alur Keputusan Aktivasi Reservasi dan Monitoring Penagihan Admin
+  * Gambar 4.6 (f) Flowchart Prosedur Checkout dan Protokol Penahanan Kamar (Manual Inspection Hold)
+* **Penomoran Gambar Bergeser**:
+  * Gambar 4.6 Baru: Skenario Diagram Siklus Hidup Transaksional Penyewa dan Operasional Administrator
+  * Gambar 4.7 (Lama 4.6): Antarmuka Katalog Kamar Publik Neo-Brutalisme
+  * Gambar 4.8 (Lama 4.7): Workspace Stepper Alur Reservasi Calon Penyewa
+  * Gambar 4.9 (Lama 4.8): Portal Invoice dan Kuitansi Digital Penyewa
+  * Gambar 4.10 (Lama 4.9): Dasbor Administrasi Keuangan Administrator
+  * Gambar 4.11 (Lama 4.10): Dokumentasi UAT Sesi Wawancara bersama Bapak Asep
+* **Penomoran Tabel Bergeser**:
+  * Tabel 4.1 Baru: Matriks Pemetaan Status Transaksional dan Transisi State Siklus Hidup Sistem (15 fase)
+  * Tabel 4.2 (Lama 4.1): Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House
+  * Tabel 4.3 (Lama 4.2): Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir)
+  * Tabel 4.4 (Lama 4.3): Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna
+  * Tabel 4.5 (Lama 4.4): Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account
+  * Tabel 4.6 (Lama 4.5): Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live
+  * Tabel 4.7 (Lama 4.6): Rekapitulasi Hasil Pengujian Penerimaan Pengguna (UAT)
+* **Sinkronisasi Halaman Depan**:
+  * `DAFTAR ISI`: Menambahkan entri `4.1.6 Skenario Diagram Alur Sistem\t32`
+  * `DAFTAR TABEL`: Menambahkan entri Tabel 4.1 dan memperbarui nomor Tabel 4.2 s.d. 4.7
+  * `DAFTAR GAMBAR`: Menambahkan entri Gambar 4.6 dan memperbarui nomor Gambar 4.7 s.d. 4.11
+
+---
+
+### 8. BAGIAN YANG MEMBUTUHKAN PEMERIKSAAN MANUAL
 * Nilai kesamaan indeks (*similarity index*) aktual wajib diverifikasi secara mandiri melalui pemindaian resmi aplikasi Turnitin di perguruan tinggi bersangkutan.
+
