@@ -185,67 +185,70 @@ BAB III  METODOLOGI PENELITIAN	20
 3.3 Metode Pengembangan Sistem	21
 
 
-BAB IV HASIL DAN PEMBAHASAN	44
-4.1 Analisis dan Perancangan Sistem	22
-4.1.1 Analisis Kebutuhan Fungsional dan Non-Fungsional	22
-4.1.2 Use Case Diagram	24
-4.1.3 Activity Diagram Proses Kritis	27
-4.1.4 Sequence Diagram	31
-4.1.5 Class Diagram	33
-4.1.6 Perancangan Skema Basis Data Relasional 3NF dan ERD	34
-4.1.7 Arsitektur Sistem 3-Tier MVC	37
-4.2 Implementasi Kode Program Backend dan Logika Bisnis	44
-4.2.1 Arsitektur 3-Tier MVC dan Service Layer Decoupling	44
-4.2.2 Cronjob Pembangkitan Invoice Bulanan dan Idempotency Guard Late Fee	46
-4.2.3 Penanganan Webhook Callback Payment Gateway Midtrans Snap API	49
-4.2.4 Otentikasi Google OAuth API via Laravel Socialite dan Complete Profile	52
-4.2.5 Subsistem Notifikasi Asinkron Fonnte WhatsApp API dan SMTP TLS Mailer	55
-4.2.6 Penanganan Konflik Unique Constraint Soft Deletes Berbasis Virtual Generated Columns	57
-4.3 Hasil Implementasi Antarmuka Lingkungan Lokal (Localhost)	58
-4.3.1 Pengecekan Server Lokal dan Kompilasi Bundel Aset	58
-4.3.2 Halaman Publik Portal Informasi dan Detail Unit Kamar	59
-4.3.3 Panel Kontrol Dasbor Administrasi Utama Kost	60
-4.3.4 Portal Mandiri Transaksional dan Unduh Dokumen Penyewa Kost	61
-4.3.5 Workspace Alur Pemesanan (5-Step Stepper & Middleware)	62
-4.4 Konfigurasi Penyiapan Perangkat Peladen Produksi (Shared Hosting Production)	63
-4.4.1 Integrasi Server Produksi (Hostinger LiteSpeed Enterprise)	63
-4.4.2 Analisis Komparasi Parameter Lingkungan Perangkat Peladen	64
-4.5 Pengujian Sistem (Testing, Validasi, dan Quality Assurance)	66
-4.5.1 Hasil Eksekusi Automated Testing Suite Framework PHPUnit	66
-4.5.2 Hasil Pengujian Validasi Fungsionalitas Kotak Hitam (Black-Box Testing)	67
-4.6 Sesi Wawancara Evaluasi Pengguna (Pemilik Kost)	70
-4.6.1 Hasil Tanya Jawab (Q&A) Evaluasi Operasional Aplikasi Bersama Bapak Asep	70
-4.6.2 Implikasi Penggunaan Sistem Terhadap Efisiensi Operasional Kost	71
-DAFTAR PUSTAKA	73
+BAB IV HASIL DAN PEMBAHASAN	22
+4.1 Perancangan Sistem	22
+4.1.1 Use Case Diagram	22
+4.1.2 Activity Diagram	24
+4.1.3 Flowchart Diagram	27
+4.1.4 Sequence Diagram	29
+4.1.5 Entity Relationship Diagram (ERD)	31
+4.2 Implementasi Sistem	33
+4.2.1 Lingkungan Implementasi	33
+4.2.2 Perancangan Arsitektur Aplikasi	34
+4.2.3 Implementasi Basis Data	35
+4.2.4 Implementasi Autentikasi dan Hak Akses	38
+4.2.5 Implementasi Fitur Calon Penyewa	39
+4.2.6 Implementasi Fitur Penyewa Aktif	40
+4.2.7 Implementasi Fitur Admin	41
+4.2.8 Implementasi Integrasi Payment Gateway	42
+4.2.9 Implementasi Notifikasi Email SMTP	43
+4.2.10 Implementasi Notifikasi WhatsApp FONNTE	44
+4.3 Tampilan Antarmuka Sistem	45
+4.3.1 Antarmuka Calon Penyewa	45
+4.3.2 Antarmuka Penyewa Aktif	47
+4.3.3 Antarmuka Admin	48
+4.4 Hasil Deployment	50
+4.4.1 Skrip Kompilasi Bundel Aset Produksi	50
+4.4.2 Konfigurasi Peladen Web LiteSpeed/Apache	51
+4.4.3 Konfigurasi Penjadwal Tugas Peladen (Cron Job)	52
+4.4.4 Perintah Optimasi Kinerja Produksi Laravel	53
+4.4.5 Konfigurasi Variabel Lingkungan Produksi	54
+4.5 Hasil Pengujian Sistem	56
+4.5.1 Hasil Black Box Testing	56
+4.5.2 Hasil Pengujian Hak Akses	62
+4.5.3 Hasil Pengujian Transaksi Midtrans Sandbox (BCA VA)	64
+4.5.4 Hasil Pengujian Hak Akses Live	66
+4.5.5 Hasil User Acceptance Testing (UAT)	67
+4.6 Sesi Wawancara (Penjaga Kost atau Admin)	69
+4.6.1 Hasil Tanya Jawab dengan Bapak Asep	69
+4.7 Pembahasan	72
+BAB V KESIMPULAN DAN SARAN	74
+5.1 Kesimpulan	74
+5.2 Saran	75
+DAFTAR PUSTAKA	77
 
 ## DAFTAR TABEL
 Tabel 2.1  Perbandingan Penelitian Terdahulu (State of the Art)	16
-Tabel 4.1  Kebutuhan Non-Fungsional Sistem	22
-Tabel 4.2  Struktur Tabel Utama Basis Data Sistem	34
-Tabel 4.3  Perbandingan Parameter Konfigurasi Lingkungan Server	64
-Tabel 4.4  Matriks Hasil Pengujian Kotak Hitam (Black-Box Testing)	67
-Tabel 4.5  Rangkuman Hasil Wawancara Evaluasi Operasional	70
-Tabel 4.6  Komparasi Evaluasi Side-by-Side Efisiensi Operasional Kos	72
+Tabel 4.1  Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House	35
+Tabel 4.2  Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)	56
+Tabel 4.3  Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna	62
+Tabel 4.4  Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account	64
+Tabel 4.5  Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live	66
+Tabel 4.6  Rekapitulasi Hasil Pengujian Penerimaan Pengguna (User Acceptance Testing)	67
 
 ## DAFTAR GAMBAR
 Gambar 2.1  Kerangka Pemikiran Penelitian	18
 Gambar 3.1  Diagram Model Waterfall Pengembangan Sistem	20
-Gambar 4.1  Use Case Diagram Sistem Asri Boarding House	25
-Gambar 4.2  Activity Diagram Tiga Proses Kritis Sistem	27
-Gambar 4.3  Sequence Diagram Alur Utama Sistem	32
-Gambar 4.4  Class Diagram Model, Service, dan Observer Sistem	33
-Gambar 4.5  Entity Relationship Diagram (ERD) Skema Basis Data Lengkap 22 Tabel	35
-Gambar 4.6  Mekanisme Billing Engine Massal	46
-Gambar 4.7  Middleware Validasi Webhook Signature	49
-Gambar 4.8  Alur Interseptor Profil Google OAuth	52
-Gambar 4.9  Sistem Notifikasi Fonnte WA Service	55
-Gambar 4.10  Kompilasi Bundel Aset Vite Produksi	58
-Gambar 4.11  Antarmuka Katalog Kamar Publik Neo-Brutalisme	59
-Gambar 4.12  Dasbor Administrasi Keuangan Administrator	60
-Gambar 4.13  Portal Invoice and Kuitansi PDF Penyewa	61
-Gambar 4.14  Workspace Stepper Alur Reservasi Calon Penyewa	62
-Gambar 4.15  Output Terminal php artisan test Passed	66
-Gambar 4.16  Dokumentasi UAT Sesi Wawancara dan Penyerahan Sistem	71
+Gambar 4.1  Use Case Diagram Terpadu Sistem Asri Boarding House	22
+Gambar 4.2  Activity Diagram Tiga Proses Kritis Sistem Asri Boarding House	24
+Gambar 4.3  Flowchart Mekanisme Billing Engine dan Penanganan Keterlambatan Massal	27
+Gambar 4.4  Sequence Diagram Alur Transaksional Utama Sistem Asri Boarding House	29
+Gambar 4.5  Entity Relationship Diagram (ERD) Skema Basis Data 22 Tabel	31
+Gambar 4.6  Antarmuka Katalog Kamar Publik Neo-Brutalisme	45
+Gambar 4.7  Workspace Stepper Alur Reservasi Calon Penyewa	46
+Gambar 4.8  Portal Invoice dan Kuitansi Digital Penyewa	47
+Gambar 4.9  Dasbor Administrasi Keuangan Administrator	48
+Gambar 4.10  Dokumentasi UAT Sesi Wawancara dan Penyerahan Sistem bersama Bapak Asep	70
 
  
 ## BAB I PENDAHULUAN
@@ -283,7 +286,7 @@ A. Ruang Lingkup Fungsional (yang dikerjakan). Sistem yang dibangun mencakup lim
 •	Modul Penyewa/Pengguna, meliputi dasbor informasi kamar, tampilan tagihan aktif beserta status keterlambatan, pembayaran melalui Midtrans Snap, riwayat pembayaran, unduhan nota PDF, pelacakan status reservasi, serta kanal chat real-time dengan administrator yang aktif pada status reservasi pending.
 •	Modul Publik, meliputi landing page dengan grid kamar, halaman detail kamar dan formulir pemesanan, login Google OAuth, tombol WhatsApp Direct Link melayang, dan kalkulasi harga real-time berbasis AJAX, halaman informasi mandiri Tentang Kami (profil pemilik, visi, dan misi), halaman Galeri terpisah, section pemutaran video room tour via YouTube Embed, serta paket promo pemasaran dinamis (Dynamic Marketing Promo Packages) pada halaman detail kamar yang menerapkan persentase diskon dinamis lintas tipe sewa harian, mingguan, dan bulanan.
 •	Modul Otomasi, meliputi cron job pembangkitan tagihan setiap tanggal 1, scheduler harian pemrosesan keterlambatan dan denda, queue job notifikasi asinkron (WhatsApp dan surel), serta pembangkitan nota PDF otomatis.
-•	Integrasi Eksternal, dibatasi pada layanan: Midtrans Snap v2 (gerbang pembayaran), Fonnte WhatsApp API v2 (notifikasi sisi peladen), SMTP TLS (surel), Laravel Socialite untuk Google OAuth (autentikasi), Dompdf (cetak PDF), Chart.js (visualisasi data), Google Maps Embed API (peta lokasi fisik kos pada halaman publik), YouTube Player/Embed API (pemutaran video room tour), dan WhatsApp Direct Link sisi klien.
+•	Integrasi Eksternal, dibatasi pada layanan: Midtrans Snap v2 (gerbang pembayaran saluran Bank BCA Virtual Account), Fonnte WhatsApp API v2 (notifikasi sisi peladen), SMTP TLS (surel), Laravel Socialite untuk Google OAuth (autentikasi), Dompdf (cetak PDF laporan manajerial), html2pdf.js (pencetakan kuitansi transaksi digital instan format A5 di sisi peramban klien), Chart.js (visualisasi data), Google Maps Embed API (peta lokasi fisik kos pada halaman publik), YouTube Player/Embed API (pemutaran video room tour), dan WhatsApp Direct Link sisi klien.
 B. Batasan Operasional, Platform, dan Asumsi (yang tidak dikerjakan/dibatasi).
 •	Objek penelitian tunggal. Sistem dirancang untuk satu lokasi, yakni Asri Boarding House di Tembalang, Kota Semarang (32 unit kamar). Dukungan multilokasi (multi-branch) diposisikan sebagai rekomendasi pengembangan lanjutan dan berada di luar lingkup.
 •	Platform berbasis web responsif. Sistem diakses melalui peramban dengan desain mobile-first yang responsif, dan bukan berupa aplikasi native Android/iOS.
@@ -294,7 +297,7 @@ B. Batasan Operasional, Platform, dan Asumsi (yang tidak dikerjakan/dibatasi).
 •	Modul akuntansi sederhana. Pelaporan keuangan dibatasi pada arus kas sederhana (pemasukan, pengeluaran, dan laba bersih); tidak mencakup pembukuan akrual penuh, perhitungan pajak, atau integrasi dengan perangkat lunak akuntansi pihak ketiga.
 •	Batas linimasa riset. Penelitian berhenti pada fase pengujian dan penyerahan laporan; fase pemeliharaan (maintenance) jangka panjang berada di luar linimasa enam bulan sebagaimana ditegaskan pada Sub-bab 3.3.
 •	Penghapusan logis (soft delete) terstruktur. Integritas historis data — termasuk jejak keuangan — dijaga melalui mekanisme Soft Deletes dengan kolom deleted_at pada tabel master maupun transaksional (antara lain users, kamar, penyewa, dan reservasi), sehingga penghapusan bersifat reversibel dan dapat dipulihkan (restore) tanpa menghilangkan data historis; kebijakan kunci asing RESTRICT/CASCADE tetap diberlakukan untuk mencegah penghapusan permanen yang merusak integritas referensial.
-•	Cakupan pengujian. Pengujian dibatasi pada black box testing, validasi formulir, serta automated unit/feature testing berbasis PHPUnit untuk mengunci alur penagihan, denda flat, dan mitigasi race condition; pengujian tidak mencakup uji penetrasi keamanan menyeluruh maupun uji beban (load test) skala besar di luar pembatasan laju (rate limiting).
+•	Cakupan pengujian. Pengujian dibatasi pada 60 butir skenario uji fungsionalitas kotak hitam (black box testing), pengujian hak akses RBAC, simulasi transaksi Midtrans Sandbox saluran BCA Virtual Account, pengujian live SSL, pengujian penerimaan pengguna (UAT) Skala Likert bersama pemilik kost (Bapak Asep), serta automated feature testing berbasis PHPUnit untuk mengunci alur penagihan, denda flat, dan mitigasi race condition; pengujian tidak mencakup uji penetrasi keamanan menyeluruh maupun uji beban (load test) skala besar di luar pembatasan laju (rate limiting).
 ## 1.5 Manfaat Penelitian
 ### 1.5.1 Manfaat Teoretis
 Secara teoretis, penelitian ini diharapkan menyumbang kontribusi terhadap khazanah literatur ilmiah di bidang e-commerce model Business-to-Consumer (B2C), manajemen basis data relasional, serta rekayasa perangkat lunak berbasis framework modern. Kajian ini turut memperkaya pembahasan mengenai integrasi automated messaging gateway dan payment gateway dalam konteks digitalisasi usaha properti skala menengah, dengan penekanan khusus pada pemodelan kebijakan denda keterlambatan flat yang idempoten (idempotent flat late fee) dan alur kerja hibrida (hybrid workflow) yang sejauh ini belum banyak diuraikan pada penelitian sejenis. Dokumentasi rancangan arsitektur tiga lapis berpola MVC yang dilengkapi Service Layer serta mekanisme Event–Listener–Observer juga dapat menjadi rujukan konseptual bagi pengembangan sistem transaksional serupa.
@@ -710,7 +713,7 @@ Panel administrasi utama pada rute `/admin/dashboard` mengadopsi tema gelap *OLE
 ## 4.4 Hasil Deployment
 Sistem informasi manajemen kost Asri Boarding House telah berhasil dideploy dan beroperasi secara penuh di lingkungan produksi peladen *Hostinger Cloud Shared Hosting LiteSpeed Enterprise* dengan domain publik resmi `https://asriboardinghouse.weatso.id/`. Seluruh konfigurasi penerapan sistem disajikan dalam bentuk blok kode konfigurasi teknis berikut:
 
-### 1. Skrip Kompilasi Bundel Aset Produksi (Vite & Storage Link)
+### 4.4.1 Skrip Kompilasi Bundel Aset Produksi (Vite & Storage Link)
 Sebelum dipublikasikan ke peladen produksi, aset CSS dan JavaScript dikompilasi ke format minifikasi terenkripsi untuk efisiensi transfer data peramban, serta tautan simbolis penyimpanan publik dibuat:
 ```bash
 # Menjalankan kompilasi produksi bundel aset Vite
@@ -722,7 +725,7 @@ php artisan storage:link
 
 Keluaran manifes hasil kompilasi produksi tersimpan pada direktori `public/build/manifest.json` yang dibaca secara otomatis oleh direktif `@vite` peladen Laravel saat aplikasi berjalan.
 
-### 2. Konfigurasi Peladen Web LiteSpeed/Apache (`.htaccess` Routing & Security Hardening)
+### 4.4.2 Konfigurasi Peladen Web LiteSpeed/Apache (`.htaccess` Routing & Security Hardening)
 Peladen web dikonfigurasi melalui berkas `.htaccess` pada akar direktori publik untuk mengatur perutean URL tunggal (*front-controller pattern*) serta menerapkan *HTTP Security Headers* ketat guna menangkal serangan XSS, Clickjacking, dan MIME-sniffing:
 ```apache
 <IfModule mod_rewrite.c>
@@ -746,14 +749,14 @@ Peladen web dikonfigurasi melalui berkas `.htaccess` pada akar direktori publik 
 </IfModule>
 ```
 
-### 3. Konfigurasi Penjadwal Tugas Peladen (*Cron Job Scheduler*)
+### 4.4.3 Konfigurasi Penjadwal Tugas Peladen (*Cron Job Scheduler*)
 Otomatisasi mesin penagihan bulanan tanggal 1 dan evaluasi keterlambatan denda harian dijalankan melalui penjadwalan tugas *cron* pada panel cPanel Hostinger yang berjalan setiap satu menit:
 ```bash
 # Menjalankan Laravel Task Scheduler setiap menit tanpa jeda
 * * * * * cd /home/u1234567/public_html && /usr/bin/php82 artisan schedule:run >> /dev/null 2>&1
 ```
 
-### 4. Perintah Optimasi Kinerja Produksi Laravel
+### 4.4.4 Perintah Optimasi Kinerja Produksi Laravel
 Guna memaksimalkan kecepatan pembacaan konfigurasi dan rute di lingkungan produksi, seluruh berkas konfigurasi, rute, dan templat Blade di-cache secara permanen ke memori:
 ```bash
 # Mempersiapkan cache konfigurasi, rute, templat, dan peristiwa
@@ -763,7 +766,7 @@ php artisan view:cache
 php artisan event:cache
 ```
 
-### 5. Konfigurasi Variabel Lingkungan Produksi (`.env.production`)
+### 4.4.5 Konfigurasi Variabel Lingkungan Produksi (`.env.production`)
 Konfigurasi parameter produksi diamankan melalui berkas variabel lingkungan terisolasi:
 ```ini
 APP_NAME="Asri Boarding House"
@@ -801,7 +804,7 @@ MAIL_ENCRYPTION=tls
 Pengujian sistem dilakukan secara menyeluruh guna menjamin bahwa perangkat lunak yang dibangun bebas dari kesalahan logika, mematuhi batasan hak akses, mampu memproses transaksi keuangan secara andal, dan memperoleh penerimaan tinggi dari calon pengguna.
 
 ### 4.5.1 Hasil Black Box Testing
-Pengujian fungsionalitas kotak hitam (*black box testing*) menguji masukan dan keluaran sistem tanpa melibatkan struktur kode program internal. Matriks pengujian disusun secara komprehensif mencakup 60 butir skenario uji yang terbagi ke dalam enam domain fungsional, sebagaimana disajikan pada Tabel 4.2.
+Pengujian fungsionalitas kotak hitam (*black box testing*) menguji masukan dan keluaran sistem tanpa melibatkan struktur kode program internal [19], [20]. Matriks pengujian disusun secara komprehensif mencakup 60 butir skenario uji yang terbagi ke dalam enam domain fungsional, sebagaimana disajikan pada Tabel 4.2.
 
 **Tabel 4.2** Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)
 
