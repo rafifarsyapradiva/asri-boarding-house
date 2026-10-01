@@ -25,11 +25,11 @@ def set_cell_margins(cell, top=100, bottom=100, left=150, right=150):
         tcMar.append(node)
     tcPr.append(tcMar)
 
-def add_formatted_text(paragraph, text):
+def add_formatted_text(paragraph, text, base_font_size=None, default_italic=False):
     """
-    Parses **bold**, *italic*, `code`, and plain text and adds runs to paragraph.
+    Parses **bold**, *italic*, `code`, $^{superscript}$, $_{subscript}$
+    and adds runs to paragraph.
     """
-    # Regex to find **bold**, *italic*, `code`, $^{superscript}$, $_{subscript}$
     pattern = re.compile(r'(\*\*.*?\*\*|\*.*?\*|`.*?`|\$\^\{.*?\}\$|\$_\{.*?\}\$|\$.*?\$|[^`\*$]+)')
     tokens = pattern.findall(text)
     
@@ -37,6 +37,8 @@ def add_formatted_text(paragraph, text):
         if token.startswith('**') and token.endswith('**') and len(token) >= 4:
             run = paragraph.add_run(token[2:-2])
             run.bold = True
+            if default_italic:
+                run.italic = True
         elif token.startswith('*') and token.endswith('*') and len(token) >= 2:
             run = paragraph.add_run(token[1:-1])
             run.italic = True
@@ -55,9 +57,13 @@ def add_formatted_text(paragraph, text):
             run = paragraph.add_run(token[1:])
             run.font.superscript = True
         else:
-            # Clean any remaining latex math markers if any
             clean = token.replace('$', '')
-            paragraph.add_run(clean)
+            run = paragraph.add_run(clean)
+            if default_italic:
+                run.italic = True
+                
+        if base_font_size and len(paragraph.runs) > 0:
+            paragraph.runs[-1].font.size = Pt(base_font_size)
 
 def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
     doc = Document()
@@ -70,7 +76,7 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
         section.left_margin = Inches(1.0)
         section.right_margin = Inches(1.0)
         
-    # Configure Default Style
+    # Configure Default Normal Style
     style_normal = doc.styles['Normal']
     font = style_normal.font
     font.name = 'Times New Roman'
@@ -91,10 +97,8 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
             in_table = False
             return
         
-        # Filter out separator rows like |---|---|
         filtered_rows = []
         for r in table_rows:
-            # check if row is just dashes/colons
             cells = [c.strip() for c in r.strip('|').split('|')]
             if all(re.match(r'^:?-+:?$', c) for c in cells if c):
                 continue
@@ -106,7 +110,6 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
             return
             
         col_count = max(len(r) for r in filtered_rows)
-        # Pad shorter rows
         for r in filtered_rows:
             while len(r) < col_count:
                 r.append('')
@@ -119,7 +122,6 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
             is_header = (r_idx == 0)
             row = table.rows[r_idx]
             
-            # CantSplit property
             trPr = row._tr.get_or_add_trPr()
             trPr.append(OxmlElement('w:cantSplit'))
             
@@ -139,13 +141,11 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
                     set_cell_background(cell, 'F2F4F8')
                     p = cell.paragraphs[0]
                     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-                    # Bold header
-                    add_formatted_text(p, f"**{cell_value}**")
+                    add_formatted_text(p, f"**{cell_value}**", base_font_size=10)
                 else:
                     p = cell.paragraphs[0]
-                    add_formatted_text(p, cell_value)
+                    add_formatted_text(p, cell_value, base_font_size=9.5)
                     
-        # Add space after table
         p_spacer = doc.add_paragraph()
         p_spacer.paragraph_format.space_before = Pt(0)
         p_spacer.paragraph_format.space_after = Pt(6)
@@ -174,7 +174,7 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
         
         run = cp.add_run(full_code.rstrip('\n'))
         run.font.name = 'Consolas'
-        run.font.size = Pt(9)
+        run.font.size = Pt(8.5)
         run.font.color.rgb = RGBColor(40, 40, 40)
         
         p_spacer = doc.add_paragraph()
@@ -187,7 +187,7 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
     for line in lines:
         stripped = line.strip()
         
-        # Check code fence
+        # Code fence
         if stripped.startswith('```'):
             if in_code_block:
                 flush_code()
@@ -202,7 +202,7 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
             code_lines.append(line)
             continue
             
-        # Check table line
+        # Table row
         if stripped.startswith('|') and stripped.endswith('|'):
             if not in_table:
                 in_table = True
@@ -220,42 +220,57 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
         # Horizontal rule
         if re.match(r'^[-*_]{3,}$', stripped):
             p = doc.add_paragraph()
-            p.paragraph_format.space_before = Pt(6)
-            p.paragraph_format.space_after = Pt(6)
+            p.paragraph_format.space_before = Pt(4)
+            p.paragraph_format.space_after = Pt(4)
             p_border = p.add_run("_______________________________________________________________________________")
-            p_border.font.color.rgb = RGBColor(180, 180, 180)
+            p_border.font.color.rgb = RGBColor(190, 190, 190)
             p_border.font.size = Pt(8)
             continue
             
-        # Headings
+        # Title (# Heading 1)
         if stripped.startswith('# ') and not stripped.startswith('## '):
             h = doc.add_heading(level=1)
-            h.paragraph_format.space_before = Pt(14)
+            h.paragraph_format.space_before = Pt(16)
             h.paragraph_format.space_after = Pt(8)
             h.paragraph_format.keep_with_next = True
             h.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            add_formatted_text(h, stripped[2:].strip())
+            add_formatted_text(h, stripped[2:].strip(), base_font_size=15)
             continue
+            
+        # Heading 2 (## I. INTRODUCTION, II. Method, etc.)
         elif stripped.startswith('## '):
             h = doc.add_heading(level=2)
             h.paragraph_format.space_before = Pt(12)
             h.paragraph_format.space_after = Pt(6)
             h.paragraph_format.keep_with_next = True
-            add_formatted_text(h, stripped[3:].strip())
+            add_formatted_text(h, stripped[3:].strip(), base_font_size=12)
             continue
+            
+        # Heading 3 (### A. RESULT, etc.)
         elif stripped.startswith('### '):
             h = doc.add_heading(level=3)
             h.paragraph_format.space_before = Pt(10)
             h.paragraph_format.space_after = Pt(4)
             h.paragraph_format.keep_with_next = True
-            add_formatted_text(h, stripped[4:].strip())
+            add_formatted_text(h, stripped[4:].strip(), base_font_size=11)
             continue
+            
+        # Heading 4 (#### 1. Topology, etc.)
         elif stripped.startswith('#### '):
             h = doc.add_heading(level=4)
             h.paragraph_format.space_before = Pt(8)
             h.paragraph_format.space_after = Pt(3)
             h.paragraph_format.keep_with_next = True
-            add_formatted_text(h, stripped[5:].strip())
+            add_formatted_text(h, stripped[5:].strip(), base_font_size=11)
+            continue
+            
+        # Heading 5 (##### a) Black Box, etc.)
+        elif stripped.startswith('##### '):
+            h = doc.add_heading(level=5)
+            h.paragraph_format.space_before = Pt(6)
+            h.paragraph_format.space_after = Pt(2)
+            h.paragraph_format.keep_with_next = True
+            add_formatted_text(h, stripped[6:].strip(), base_font_size=10.5)
             continue
             
         # Bullet list
@@ -277,7 +292,7 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
             add_formatted_text(p, num_match.group(2).strip())
             continue
             
-        # Math block
+        # Math block ($$ ... $$)
         if stripped.startswith('$$') and stripped.endswith('$$'):
             p = doc.add_paragraph()
             p.paragraph_format.space_before = Pt(6)
@@ -290,19 +305,81 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
             run.font.size = Pt(11)
             continue
             
+        # Abstract block (Sisforma template standard)
+        if stripped.startswith('Abstract—'):
+            p = doc.add_paragraph()
+            p.paragraph_format.space_before = Pt(8)
+            p.paragraph_format.space_after = Pt(4)
+            p.paragraph_format.line_spacing = 1.1
+            p.paragraph_format.left_indent = Inches(0.2)
+            p.paragraph_format.right_indent = Inches(0.2)
+            # Add bold italic run for Abstract—
+            run_abs = p.add_run("Abstract— ")
+            run_abs.bold = True
+            run_abs.italic = True
+            run_abs.font.size = Pt(10)
+            
+            abs_body = stripped[len('Abstract—'):].strip()
+            add_formatted_text(p, abs_body, base_font_size=10, default_italic=False)
+            continue
+            
+        # Keywords block (Sisforma template standard)
+        if stripped.startswith('Keywords—'):
+            p = doc.add_paragraph()
+            p.paragraph_format.space_before = Pt(4)
+            p.paragraph_format.space_after = Pt(10)
+            p.paragraph_format.line_spacing = 1.1
+            p.paragraph_format.left_indent = Inches(0.2)
+            p.paragraph_format.right_indent = Inches(0.2)
+            # Add bold italic run for Keywords—
+            run_kw = p.add_run("Keywords— ")
+            run_kw.bold = True
+            run_kw.italic = True
+            run_kw.font.size = Pt(10)
+            
+            kw_body = stripped[len('Keywords—'):].strip()
+            add_formatted_text(p, kw_body, base_font_size=10, default_italic=False)
+            continue
+            
+        # Table captions: **Table X. ...**
+        if stripped.startswith('**Table ') and stripped.endswith('**'):
+            p = doc.add_paragraph()
+            p.paragraph_format.space_before = Pt(10)
+            p.paragraph_format.space_after = Pt(3)
+            p.paragraph_format.keep_with_next = True
+            p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+            add_formatted_text(p, stripped, base_font_size=10)
+            continue
+            
+        # Figure captions: Figure X. ...
+        if stripped.startswith('Figure '):
+            p = doc.add_paragraph()
+            p.paragraph_format.space_before = Pt(3)
+            p.paragraph_format.space_after = Pt(8)
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            run = p.add_run(stripped)
+            run.italic = True
+            run.font.size = Pt(9.5)
+            continue
+            
         # Normal paragraph
         p = doc.add_paragraph()
         p.paragraph_format.space_before = Pt(0)
         p.paragraph_format.space_after = Pt(6)
         p.paragraph_format.line_spacing = 1.15
         
-        # Check if author line or centered metadata
-        if stripped.startswith('**Rafif Arsya Pradiva**') or stripped.startswith('Department of Information Systems') or stripped.startswith('Email:'):
+        # Centered author metadata check
+        if (stripped.startswith('1Rafif Arsya Pradiva') or 
+            stripped.startswith('Department of Information Systems') or 
+            stripped.startswith('Universitas Katolik Soegijapranata') or 
+            stripped.startswith('122n40014@student.unika.ac.id')):
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p.paragraph_format.space_after = Pt(2)
+            add_formatted_text(p, stripped, base_font_size=10.5)
+            continue
             
         add_formatted_text(p, stripped)
         
-    # Flush remaining table or code
     if in_table:
         flush_table()
     if in_code_block:
@@ -314,11 +391,11 @@ def convert_markdown_to_docx(md_path, docx_path, doc_title="Academic Document"):
 if __name__ == '__main__':
     base_dir = r"c:\xampp\htdocs\asri-boarding-house\Skripsi"
     
-    # 1. Convert Journal Paper
+    # 1. Convert Sisforma Journal Paper
     journal_md = os.path.join(base_dir, "Journal_Rafif_Arsya_Pradiva_22_N4_0014.md")
     journal_docx = os.path.join(base_dir, "Journal_Rafif_Arsya_Pradiva_22_N4_0014.docx")
-    print(f"Converting Journal to Word: {journal_md} -> {journal_docx}")
-    convert_markdown_to_docx(journal_md, journal_docx, "IEEE Academic Journal")
+    print(f"Converting Journal to Word (Sisforma Format): {journal_md} -> {journal_docx}")
+    convert_markdown_to_docx(journal_md, journal_docx, "Sisforma Journal")
     
     # 2. Convert Humanized Skripsi Full
     skripsi_md = os.path.join(base_dir, "Skripsi_Rafif_Arsya_Pradiva_22N40014_HUMANIZED.md")

@@ -1,15 +1,15 @@
-# DESIGN AND IMPLEMENTATION OF AN INTEGRATED BOARDING HOUSE MANAGEMENT INFORMATION SYSTEM WITH PAYMENT GATEWAY: A CASE STUDY OF ASRI BOARDING HOUSE
+# DESIGN AND IMPLEMENTATION OF AN INTEGRATED BOARDING HOUSE MANAGEMENT INFORMATION SYSTEM WITH MIDTRANS PAYMENT GATEWAY: A CASE STUDY OF ASRI BOARDING HOUSE
 
-**Rafif Arsya Pradiva**$^{1}$, **Andre Kurniawan Pamudji**$^{2}$  
-Department of Information Systems, Faculty of Computer Science, Universitas Katolik Soegijapranata, Semarang, Indonesia  
-Email: $^{1}$22n40014@student.unika.ac.id, $^{2}$andre@unika.ac.id  
+1Rafif Arsya Pradiva, 2Andre Kurniawan Pamudji  
+Department of Information Systems, Faculty of Computer Science  
+Universitas Katolik Soegijapranata, Semarang, Indonesia  
+122n40014@student.unika.ac.id, 2andre@unika.ac.id  
 
 ---
 
-### Abstract
-Student housing operators across developing university districts frequently depend on manual paper logbooks and fragmented messaging channels. This reliance incurs persistent revenue leakage, room double-booking during peak admissions, uncoordinated debt collection, and protracted monthly reconciliation cycles. This study presents the architectural engineering and empirical deployment of an integrated boarding house management information system with automated payment processing tailored for Asri Boarding House in Tembalang, Semarang, Indonesia. Governed by the Waterfall software development life cycle, the web platform unifies Laravel 11, a 3NF-normalized MySQL 8.0 relational schema spanning 22 entities, Midtrans Snap API v2 specializing in Bank BCA Virtual Accounts, and Fonnte WhatsApp automation. Concurrency control is enforced through pessimistic row-level locking (`lockForUpdate()`) coupled with an operational post-checkout sanitation quarantine protocol. Recurring billing operates through an automated Linux cron pipeline enforcing an idempotent flat 5% calendar rollover fee and tiered legal guardian escalation. Black box testing across 60 functional scenarios demonstrated a 100% pass rate, corroborated by 510 automated PHPUnit feature tests containing 2,211 assertions. Qualitative on-site usability and think-aloud evaluation with the senior resident manager (20 years of operational tenure), validated via continuous digital audio recording (`REKAMAN_UX_ADMIN_KOST_2026.m4a`, duration 23m 14s), verified practical operational feasibility, compressing monthly financial balancing from 3–5 business days to instantaneous reporting, securing an IDR 28,500,000 monthly revenue capacity with an operational satisfaction rating of 9.5/10.
+Abstract— Student housing providers in developing university clusters frequently rely on manual ledgers and unstructured messaging, leading to revenue leakage, room double-booking during admissions, and multi-day financial reconciliation delays. This study presents the engineering and deployment of an integrated boarding house management system for Asri Boarding House, Semarang, Indonesia. Governed by the Waterfall software development life cycle, the web platform unifies Laravel 11, a 3NF-normalized MySQL 8.0 schema across 22 entities, Midtrans Snap API v2 specializing in Bank BCA Virtual Accounts, and Fonnte WhatsApp automation. Concurrency control is enforced through pessimistic row-level locking (`lockForUpdate()`) coupled with an operational post-checkout quarantine protocol. Automated billing operates via Linux cron schedules enforcing an idempotent flat 5% calendar rollover fee with guardian escalation. Black box testing across 60 functional scenarios achieved a 100% pass rate, corroborated by 510 automated PHPUnit feature tests comprising 2,211 assertions. On-site usability evaluation with the senior resident manager (20 years of operational tenure), validated via continuous digital audio recording (`REKAMAN_UX_ADMIN_KOST_2026.m4a`, duration 23m 14s), confirmed practical operational feasibility, compressing monthly financial balancing from 3–5 days to instant reporting with a 9.5/10 satisfaction rating.
 
-**Keywords:** Automated billing, Concurrency control, Laravel 11, Management information system, Payment gateway
+Keywords— Automated billing, Concurrency control, Laravel 11, Management information system, Payment gateway
 
 ---
 
@@ -17,7 +17,7 @@ Student housing operators across developing university districts frequently depe
 
 The rapid expansion of higher education institutions has accelerated demand for residential student accommodations within university peripheries. In secondary Indonesian educational centers such as the Tembalang district of Semarang, accommodation providers (*kost*) support thousands of students seeking long-term lodging adjacent to universities such as Universitas Diponegoro and Politeknik Negeri Semarang. Despite the commercial maturity of digital property technology (*proptech*), the vast majority of local boarding houses operate through manual paper ledgers, fragmented bank transfer receipts, and informal communication channels. Consequently, property managers grapple with pervasive operational friction, including unrecorded revenue, balance discrepancies, room assignment race conditions, and uncoordinated debt collection.
 
-Asri Boarding House, situated on Jl. Maera Sari, Tembalang, Semarang, exemplifies these structural vulnerabilities. The property comprises 32 rental units distributed across two floors, categorized into three distinct accommodation tiers: VIP (6 rooms priced at IDR 1,400,000 monthly), Deluxe (3 rooms at IDR 950,000 monthly), and Standard (23 rooms at IDR 750,000 monthly). At full occupancy, the facility commands a gross monthly revenue capacity of IDR 28,500,000. For over two decades, operational governance has rested upon the resident manager, Mr. Asep (48 years of age, possessing 20 years of operational experience), who maintained physical logbooks and paper carbon receipts. 
+Asri Boarding House, situated on Jl. Maera Sari No. 1 / No. 12, Tembalang, Semarang (Postal Code 50275), exemplifies these structural vulnerabilities. The property comprises 32 rental units distributed across two floors, categorized into three distinct accommodation tiers: VIP (6 rooms priced at IDR 1,400,000 monthly), Deluxe (3 rooms at IDR 950,000 monthly), and Standard (23 rooms at IDR 750,000 monthly). At full occupancy, the facility commands a gross monthly revenue capacity of IDR 28,500,000. For over two decades, operational governance has rested upon the resident manager, Mr. Asep (48 years of age, possessing 20 years of operational experience), who maintained physical logbooks and paper carbon receipts. 
 
 Field observation and operational auditing revealed four critical vulnerabilities within this manual paradigm:
 1. *Financial Leakage and Invoicing Delays*: Monthly rent collection relied on manual memory and paper notations. Because billing cycles were tracked manually, collection deadlines slipped, resulting in persistent payment defaults and uncollected arrears.
@@ -27,7 +27,7 @@ Field observation and operational auditing revealed four critical vulnerabilitie
 
 To contextualize these operational challenges within contemporary software engineering literature, a systematic review of existing boarding house management and payment systems was conducted. Table 1 synthesizes the landscape of related empirical works.
 
-**Table 1.** Systematic Comparative Analysis of Related Works
+**Table 1. SYSTEMATIC COMPARATIVE ANALYSIS OF RELATED WORKS**
 
 | Author & Year | Methodology | Focus & Architectural Scope | Research Gap Identified |
 | :--- | :--- | :--- | :--- |
@@ -53,7 +53,7 @@ To resolve this gap, this paper introduces an integrated boarding house manageme
 
 ---
 
-## II. METHOD
+## II. Method
 
 ### A. Research Paradigm
 This investigation adopts a Software Engineering Research and Development (R&D) methodology governed by the classical Waterfall Software Development Life Cycle (SDLC) [16], [17], [18]. The linear-sequential phases—comprising Requirements Analysis, System and Architectural Design, Programmatic Implementation, Verification Testing, and Operational Deployment—ensured rigorous traceability between factual operational constraints and software artifacts.
@@ -93,6 +93,8 @@ The system is constructed upon a 3-Tier Model-View-Controller (MVC) architectura
 |       Pessimistic Row Locking | Virtual Generated Columns     |
 +---------------------------------------------------------------+
 ```
+
+Figure 1. Three-tier architectural decoupling and service layer topology.
 
 The presentation layer employs modern Neo-Brutalist styling principles, establishing high-contrast visual hierarchies, defined borders, and a touch-target size of 56 pixels for primary action controls, exceeding the Web Content Accessibility Guidelines (WCAG 2.1) minimum of 44 pixels. The administrative dashboard employs an OLED Black dark mode specifically configured to reduce visual fatigue for operational staff during extended monitoring sessions.
 
@@ -172,7 +174,7 @@ The operational lifecycle enforces three distinct chronological phases:
 2. *Persuasive Due-Date Phase (11th to Month-End)*: If the tenant has not settled payment by the 10th, the status transitions to `terlambat`. In accordance with Asri Boarding House's established communal guidelines, the penalty remains strictly **IDR 0** throughout the remainder of the calendar month. Courteous automated reminders are delivered every three days.
 3. *Calendar Rollover and Late Fee Application (1st of Month $M+1$)*: If an invoice remains unsettled when the calendar rolls into the subsequent month, a flat late fee of **5% of the base monthly rent** is evaluated. To prevent repeated compounding penalties across multiple job iterations, the system enforces an **Idempotency Guard**:
 
-$$\text{Late Fee} = \begin{cases} 0.05 \times \text{Tarif Pokok}, & \text{if } \text{status} = \text{'terlambat'} \land \text{nominal\_denda} = 0 \land \Delta\text{Month} \ge 1 \\ 0, & \text{otherwise} \end{cases}$$
+$$\text{Late Fee} = \begin{cases} 0.05 \times \text{Tarif Pokok}, & \text{if } \text{status} = \text{'terlambat'} \land \text{nominal\_denda} = 0 \land \Delta\text{Month} \ge 1 \\ 0, & \text{otherwise} \end{cases} \quad (1)$$
 
 If the tenant accumulates two consecutive months of unpaid invoices, the billing engine triggers a critical notification tier that dispatches an automated escalation message directly to the registered parent or guardian's WhatsApp phone number.
 
@@ -185,14 +187,14 @@ The software platform underwent a four-tier verification protocol:
 
 ---
 
-## III. RESULTS AND DISCUSSION
+## III. Results and Discussion
 
 ### A. RESULT
 
 #### 1. Relational Database Cluster Topology
 The persistence architecture comprises 22 relational entities organized into six functional clusters, as summarized in Table 2.
 
-**Table 2.** Relational Database Schema Topology (22 Normalized Entities)
+**Table 2. RELATIONAL DATABASE SCHEMA TOPOLOGY (22 NORMALIZED ENTITIES)**
 
 | Functional Cluster | Entity Name | Primary Role & Business Invariants |
 | :--- | :--- | :--- |
@@ -227,7 +229,7 @@ The platform bridges online self-service reservations and physical walk-in custo
 #### 3. Cryptographic Webhook Security and Signature Matching
 To mitigate transaction spoofing and man-in-the-middle manipulation on the public webhook endpoint, inbound payloads from the Midtrans payment notification service are verified cryptographically. The server computes a SHA-512 digital signature based on payload parameters and the secret server key:
 
-$$\text{Signature}_{\text{calc}} = \text{SHA-512}(\text{order\_id} + \text{status\_code} + \text{gross\_amount} + \text{ServerKey})$$
+$$\text{Signature}_{\text{calc}} = \text{SHA-512}(\text{order\_id} + \text{status\_code} + \text{gross\_amount} + \text{ServerKey}) \quad (2)$$
 
 The computed hash is compared against the `signature_key` delivered in the HTTP POST body. If the signatures do not match identically, the request is terminated with an HTTP 403 Forbidden response, and transaction status mutation is aborted.
 
@@ -255,7 +257,7 @@ The production platform was deployed to Hostinger LiteSpeed Enterprise Cloud inf
 ##### a) Black Box Verification Suite
 The functional integrity of the platform was evaluated using 60 test cases divided across six operational domains. Table 3 presents the testing summary.
 
-**Table 3.** Functional Black Box Testing Suite Matrix (60 Test Scenarios)
+**Table 3. FUNCTIONAL BLACK BOX TESTING SUITE MATRIX (60 TEST SCENARIOS)**
 
 | Domain Code | Functional Testing Scope | Test Scenarios | Passed | Failed | Pass Rate (%) |
 | :---: | :--- | :---: | :---: | :---: | :---: |
@@ -272,7 +274,7 @@ All 60 scenarios executed successfully without runtime errors, confirming that a
 ##### b) Role-Based Access Control and IDOR Immunity
 Security testing evaluated Role-Based Access Control (RBAC) boundaries across the three isolated portal gates (`/admin`, `/penyewa`, and `/reservasi`) and tested for Insecure Direct Object Reference (IDOR) vulnerabilities. Table 4 compiles the empirical security results.
 
-**Table 4.** Security, RBAC, and IDOR Hardening Verification
+**Table 4. SECURITY, RBAC, AND IDOR HARDENING VERIFICATION**
 
 | No. | Security Test Vector | Simulated Inbound Request | Expected System Behavior | Empirical Outcome | Status |
 | :---: | :--- | :--- | :--- | :--- | :---: |
@@ -286,7 +288,7 @@ Security testing evaluated Role-Based Access Control (RBAC) boundaries across th
 ##### c) Midtrans BCA Virtual Account Sandbox Lifecycle Verification
 The digital payment pipeline was validated using Midtrans's official sandbox environment and BCA Virtual Account simulator. Table 5 details the transactional states verified.
 
-**Table 5.** Midtrans BCA Virtual Account Transaction Lifecycle Verification
+**Table 5. MIDTRANS BCA VIRTUAL ACCOUNT TRANSACTION LIFECYCLE VERIFICATION**
 
 | Step | Lifecycle Phase | Inbound / Outbound Action | System & Webhook Response | Transaction State | Result |
 | :---: | :--- | :--- | :--- | :---: | :---: |
@@ -303,7 +305,7 @@ To evaluate real-world operational feasibility, interface ergonomics, and domain
 
 Rather than administering detached quantitative Likert surveys across non-administrative proxies, the evaluation adopted a qualitative case methodology grounded in direct operational execution. The entire session was captured via continuous digital audio recording (`REKAMAN_UX_ADMIN_KOST_2026.m4a`, duration: 23 minutes 14 seconds), initiated following recorded verbal informed consent. The testing protocol followed a structured 10-module evaluation matrix adapted from the standardized operational testing guide, capturing manager assessments and spontaneous interface reactions across four testing stages: Public Catalog, Administrator Console, Active Tenant Portal, and 20-Year Operational Retrospective. Table 6 synthesizes the empirical qualitative findings.
 
-**Table 6.** Qualitative Usability and Operational Acceptance Matrix with Senior Resident Manager
+**Table 6. QUALITATIVE USABILITY AND OPERATIONAL ACCEPTANCE MATRIX WITH SENIOR RESIDENT MANAGER**
 
 | No. | Evaluated Functional Module | Manager Assessment & Verbatim Reflection (Mr. Asep) | Spontaneous On-Screen Reaction | Operational Feasibility |
 | :---: | :--- | :--- | :--- | :---: |
@@ -322,6 +324,8 @@ Rather than administering detached quantitative Likert surveys across non-admini
 
 When reflecting upon the transition from two decades of manual bookkeeping, Mr. Asep concluded: *"Compared to the last twenty years of handwritten books, the difference is night and day. Managing the boarding house is immensely lighter, and my mind is at ease because cash discrepancies and missing receipts are completely eliminated."*
 
+Figure 2. Side-by-side operational testing and think-aloud evaluation with senior resident manager.
+
 ---
 
 ### B. DISCUSSION
@@ -336,7 +340,7 @@ Finally, schema engineering utilizing Virtual Generated Columns addresses a prev
 
 ---
 
-## IV. CONCLUSION
+## IV. Conclusion
 
 This research engineered and deployed an integrated management information system for Asri Boarding House, resolving long-standing operational challenges associated with manual record-keeping. Built upon Laravel 11 and a 3NF-normalized MySQL 8.0 schema, the platform delivers automated recurring billing, real-time payment gateway integration via Midtrans Snap v2, and multi-channel WhatsApp alerts via Fonnte. The application of pessimistic row locking (`lockForUpdate()`) and post-checkout room quarantine holds eliminated room reservation collisions, while client-side `html2pdf.js` compilation removed server storage overhead for tenant receipts.
 
