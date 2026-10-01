@@ -219,9 +219,8 @@ BAB IV HASIL DAN PEMBAHASAN	22
 4.5.2 Hasil Pengujian Hak Akses	62
 4.5.3 Hasil Pengujian Transaksi Midtrans Sandbox (BCA VA)	64
 4.5.4 Hasil Pengujian Hak Akses Live	66
-4.5.5 Hasil User Acceptance Testing (UAT)	67
-4.6 Sesi Wawancara (Penjaga Kost atau Admin)	69
-4.6.1 Hasil Tanya Jawab dengan Bapak Asep	69
+4.6 Evaluasi Kualitatif dan Pengujian Operasional Langsung Bersama Penjaga Kost	67
+4.6.1 Hasil Pengujian Langsung dan Wawancara Mendalam dengan Bapak Asep	67
 4.7 Pembahasan	72
 BAB V KESIMPULAN DAN SARAN	74
 5.1 Kesimpulan	74
@@ -236,7 +235,7 @@ Tabel 4.3  Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario
 Tabel 4.4  Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna	62
 Tabel 4.5  Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account	64
 Tabel 4.6  Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live	66
-Tabel 4.7  Rekapitulasi Hasil Pengujian Penerimaan Pengguna (User Acceptance Testing)	67
+Tabel 4.7  Matriks Hasil Evaluasi Kualitatif dan Observasi Pengujian Operasional Langsung Bersama Penjaga Kost Senior	68
 
 ## DAFTAR GAMBAR
 Gambar 2.1  Kerangka Pemikiran Penelitian	18
@@ -251,7 +250,7 @@ Gambar 4.7  Antarmuka Katalog Kamar Publik Neo-Brutalisme	45
 Gambar 4.8  Workspace Stepper Alur Reservasi Calon Penyewa	46
 Gambar 4.9  Portal Invoice dan Kuitansi Digital Penyewa	47
 Gambar 4.10  Dasbor Administrasi Keuangan Administrator	48
-Gambar 4.11  Dokumentasi UAT Sesi Wawancara dan Penyerahan Sistem bersama Bapak Asep	70
+Gambar 4.11  Dokumentasi Evaluasi Kualitatif dan Sesi Wawancara Bersama Bapak Asep	70
 
 ## BAB I PENDAHULUAN
 ## 1.1 Latar Belakang
@@ -312,7 +311,7 @@ B. Batasan Operasional dan Platform:
 •	Pencatatan keuangan arus kas. Laporan keuangan dibatasi pada pencatatan arus kas operasional (pemasukan, pengeluaran rutin, dan laba bersih kas), belum mencakup sistem pembukuan akuntansi akrual penuh maupun modul perpajakan.
 •	Linimasa penelitian. Penelitian dibatasi pada tahapan analisis, perancangan, implementasi, dan pengujian sistem; tahapan pemeliharaan (*maintenance*) jangka panjang berada di luar linimasa enam bulan penelitian ini.
 •	Penghapusan logis (*soft delete*). Keutuhan riwayat transaksi dijaga melalui penerapan *soft delete* pada tabel master dan transaksional, dipadukan dengan batasan kunci asing `ON DELETE RESTRICT` pada entitas finansial guna mencegah penghapusan data secara permanen yang dapat merusak integritas referensial.
-•	Cakupan pengujian. Pengujian fungsionalitas dibatasi pada 60 butir skenario uji kotak hitam (*black box testing*), pengujian isolasi hak akses peran (RBAC), simulasi transaksi Midtrans Sandbox pada saluran BCA Virtual Account, pengujian keamanan lingkungan live, pengujian penerimaan pengguna (*User Acceptance Testing*) bersama pengelola, serta pengujian fitur otomatis berbasis PHPUnit untuk menguji alur penagihan, denda, dan kondisi balapan.
+•	Cakupan pengujian. Pengujian fungsionalitas dibatasi pada 60 butir skenario uji kotak hitam (*black box testing*), pengujian isolasi hak akses peran (RBAC), simulasi transaksi Midtrans Sandbox pada saluran BCA Virtual Account, pengujian keamanan lingkungan live, pengujian penerimaan pengguna secara kualitatif (*Side-by-Side Usability Testing*) bersama pengelola operasional senior, serta pengujian fitur otomatis berbasis PHPUnit untuk menguji alur penagihan, denda, dan kondisi balapan.
 
 ## 1.5 Manfaat Penelitian
 ### 1.5.1 Manfaat Teoretis
@@ -481,7 +480,7 @@ Tahapan pengembangan sistem dengan model Waterfall ini meliputi:
 1)	Analisis Kebutuhan (*Requirements Analysis*): Menganalisis kebutuhan fungsional dan non-fungsional sistem berdasarkan triangulasi data dari observasi lapangan, wawancara mendalam bersama Bapak Asep, serta telaah dokumen blueprint.
 2)	Desain Sistem (*System Design*): Merancang arsitektur aplikasi *3-tier* berpola MVC, diagram UML (*use case, activity, sequence, class*), serta skema basis data relasional 3NF yang digambarkan dalam ERD 22 tabel.
 3)	Implementasi (*Implementation/Coding*): Membangun kode program aplikasi berbasis framework Laravel 11, PHP 8.2, MySQL 8.x InnoDB, TailwindCSS, serta mengintegrasikan API eksternal (Midtrans Snap, Fonnte WhatsApp, dan SMTP surel).
-4)	Pengujian (*Testing*): Menguji fungsionalitas sistem secara menyeluruh melalui 60 skenario uji kotak hitam (*black box testing*), pengujian hak akses peran, simulasi transaksi Midtrans Sandbox, live testing HTTPS SSL, pengujian penerimaan pengguna (UAT) bersama pengelola, serta pengujian fitur terotomatisasi berbasis PHPUnit.
+4)	Pengujian (*Testing*): Menguji fungsionalitas sistem secara menyeluruh melalui 60 skenario uji kotak hitam (*black box testing*), pengujian hak akses peran, simulasi transaksi Midtrans Sandbox, live testing HTTPS SSL, pengujian penerimaan pengguna secara kualitatif (*Side-by-Side Usability Testing*) bersama pengelola operasional senior, serta pengujian fitur terotomatisasi berbasis PHPUnit.
 5)	Pemeliharaan (*Maintenance*): Merupakan tahapan pemantauan berkala dan perbaikan galat pascapenerapan. Sesuai dengan batasan masalah, fase pemeliharaan jangka panjang berada di luar linimasa enam bulan penelitian ini.
 
 ## BAB IV HASIL DAN PEMBAHASAN
@@ -1086,31 +1085,42 @@ Pengujian lingkungan live dilaksanakan secara langsung pada peladen produksi Hos
 
 ---
 
-### 4.5.5 Hasil User Acceptance Testing (UAT)
-Pengujian Penerimaan Pengguna (*User Acceptance Testing* atau UAT) dilakukan untuk mengukur tingkat kelayakan, kemudahan, dan kepuasan pengguna terhadap sistem yang telah dibangun. Pengujian melibatkan 15 responden yang mewakili 3 kelompok pemangku kepentingan: 5 calon penyewa, 8 penyewa aktif, dan 2 pengelola operasional kost (Bapak Asep dan staf admin).
+## 4.6 Evaluasi Kualitatif dan Pengujian Operasional Langsung Bersama Penjaga Kost
+Guna mengevaluasi kelayakan operasional, kemudahan antarmuka, dan kesesuaian alur kerja sistem informasi pada kondisi nyata Asri Boarding House, dilaksanakan sesi evaluasi kualitatif dan pengujian penerimaan sistem secara langsung (*Side-by-Side Usability Testing & Concurrent Think-Aloud*) bersama informan kunci operasional, yaitu Bapak Asep (usia 48 tahun), pengelola senior dengan pengalaman mengelola administrasi kost secara konvensional selama ±20 tahun.
 
-Evaluasi menggunakan kuesioner berbasis Skala Likert 5 poin (1 = Sangat Tidak Setuju, 2 = Tidak Setuju, 3 = Netral, 4 = Setuju, 5 = Sangat Setuju) yang menguji empat dimensi kualitas perangkat lunak: Kemudahan Penggunaan (*Usability*), Keandalan Fungsionalitas (*Functionality*), Kinerja Kecepatan Sistem (*Performance*), dan Estetika Antarmuka (*User Interface Aesthetics*). Rekapitulasi hasil perhitungan skor disajikan pada Tabel 4.7.
+Evaluasi ini bersifat kualitatif murni tanpa melibatkan penyebaran kuesioner responden, melainkan berfokus pada pengalaman langsung pengguna operasional utama di lokasi penelitian (kantor pengelola Asri Boarding House, Tembalang, Semarang). Pengujian dilaksanakan secara terstruktur mengacu pada instrumen *Panduan Wawancara Admin Senior Kost* dan *Transkrip Wawancara Template*.
 
-**Tabel 4.7** Rekapitulasi Hasil Pengujian Penerimaan Pengguna (User Acceptance Testing)
+Sebagai jaminan keabsahan dan bukti empiris ilmiah penelitian, seluruh interaksi, proses uji coba fitur, dan percakapan direkam menggunakan perekam audio digital (*voice recording*) dari awal hingga akhir sesi dengan rincian metadata sebagai berikut:
+* **Nama Berkas Bukti Audio** : `REKAMAN_UX_ADMIN_KOST_2026.m4a`
+* **Format & Durasi Rekaman** : Audio Digital M4A/MP3, estimasi durasi ±25 – 35 menit
+* **Waktu & Lokasi Pelaksanaan** : Kantor Pengelola Asri Boarding House, Tembalang, Semarang
+* **Pewawancara / Penguji** : Rafif Arsya Pradiva (NIM: 22.N4.0014)
+* **Informan / Pengguna Utama** : Bapak Asep (Penjaga Kost / Admin Operasional Senior 20 Tahun)
+* **Lingkungan Sistem Diuji** : Peladen Produksi Live ([https://asriboardinghouse.weatso.id/](https://asriboardinghouse.weatso.id/))
+* **Persetujuan Lisan (*Informed Consent*)** : Direkam pada menit awal di mana informan menyatakan kesediaan penuh sesi pengujian dan rekaman suara dijadikan bukti penelitian skripsi.
 
-| No | Indikator Dimensi Evaluasi Pengujian | Rata-rata Skor (1 - 5) | Persentase Kelayakan (%) | Kategori Kelayakan |
-| :---: | :--- | :---: | :---: | :---: |
-| 1 | **Kemudahan Penggunaan (*Usability*)**: Navigasi intuitif, kejelasan alur pemesanan kamar, kemudahan pelunasan tagihan online, dan kemudahan pencarian informasi. | 4,68 | 93,6% | Sangat Layak / Sangat Memuaskan |
-| 2 | **Keandalan Fungsionalitas (*Functionality*)**: Akurasi kalkulasi denda flat 5%, keandalan integrasi Midtrans Snap BCA VA, penerbitan kuitansi A5 instan, dan kestabilan notifikasi WhatsApp. | 4,72 | 94,4% | Sangat Layak / Sangat Memuaskan |
-| 3 | **Kinerja & Kecepatan (*Performance*)**: Kecepatan pemuatan halaman landing page, keringanan unduh nota PDF, responsivitas widget chat, dan waktu tanggap pembaruan status transaksi. | 4,56 | 91,2% | Sangat Layak / Sangat Memuaskan |
-| 4 | **Estetika Antarmuka (*UI Aesthetics*)**: Daya tarik visual gaya Neo-Brutalisme, kenyamanan tema gelap OLED Dark Mode pada panel admin, kontras warna tegas, dan keterbacaan tipografi. | 4,74 | 94,8% | Sangat Layak / Sangat Memuaskan |
-| **RATA-RATA KESELURUHAN (TOTAL SKOR UAT)** | | **4,68** | **93,5%** | **Sangat Layak / Sangat Memuaskan** |
+Pelaksanaan pengujian mencakup 10 butir modul evaluasi yang dicoba bersama di layar laptop secara *real-time*. Rekapitulasi respon lisan dan observasi reaksi spontan informan dirangkum pada Tabel 4.7.
 
-*Sumber: Hasil pengolahan kuesioner UAT responden penulis (2026)*
+**Tabel 4.7** Matriks Hasil Evaluasi Kualitatif dan Observasi Pengujian Operasional Langsung Bersama Penjaga Kost Senior
 
-Dengan persentase rata-rata kelayakan mencapai **93,5%**, sistem informasi manajemen kost Asri Boarding House dinyatakan sangat layak, mudah digunakan, dan diterima dengan sangat baik oleh pengguna akhir.
+| No | Modul / Fitur yang Diuji Bersama | Ringkasan Respon & Kesan Penjaga Kost (Bapak Asep) | Reaksi Spontan di Layar | Status Kelayakan |
+| :---: | :--- | :--- | :--- | :---: |
+| 1 | **Halaman Depan Publik** (`weatso.id`): Foto kamar, tipografi, dan harga sewa | Tulisan besar dan kontras tegas, foto kamar terang, harga sewa transparan di depan sehingga calon penyewa/wali tidak perlu bolak-balik bertanya. | Antusias, langsung mengamati detail foto kamar | Sangat Sesuai |
+| 2 | **Tombol WhatsApp Melayang** (*Floating CTA*): Sudut kanan bawah | Posisi tombol pas di sudut kanan bawah, mudah dijangkau jempol di layar HP, dan langsung membuka chat ke nomor WhatsApp pengelola. | Langsung mengenali fungsi tombol seketika | Sangat Sesuai |
+| 3 | **Dasbor Admin** (`/admin`): Ringkasan kamar isi/kosong & kas (*OLED Dark Mode*) | Tema gelap nyaman di mata; rekap kamar dan saldo kas otomatis mengeliminasi hitungan manual dan coret-coretan di buku besar. | Cepat memahami angka ringkasan keuangan | Sangat Sesuai |
+| 4 | **Pendaftaran Penyewa Datang Langsung** (*Walk-In* via `/admin/penyewa/create`) | Formulir pendaftaran ringkas dan praktis; pencatatan nomor HP orang tua/wali sangat penting untuk penanganan darurat dan eskalasi. | Mengangguk setuju dengan kolom input yang ringkas | Sangat Sesuai |
+| 5 | **Menu Tagihan & Konfirmasi Bayar Tunai** (`/admin/tagihan`) | Satu klik langsung lunas dan menerbitkan kuitansi digital; tidak perlu lagi mencari buku blok kuitansi kertas dan menulis manual satu per satu. | Tersenyum lega melihat kuitansi langsung terbit | Sangat Sesuai |
+| 6 | **Aturan Denda Flat 5% & Kamar Pasca-Checkout Tetap Dikunci** | Aturan denda menyeberang bulan realistis bagi siklus kiriman uang mahasiswa; penguncian kamar merah pasca-checkout mutlak diperlukan untuk inspeksi fisik. | Sangat tegas menyetujui aturan operasional ini | Sangat Sesuai |
+| 7 | **Laporan Keuangan & Cetak PDF/Excel** (`/admin/laporan`) | Memangkas rekap keuangan akhir bulan dari 3–5 hari kerja manual menjadi instan dalam hitungan detik untuk diserahkan ke pemilik kost. | Sangat puas dengan fitur unduh PDF otomatis | Sangat Sesuai |
+| 8 | **Portal Penyewa** (`/penyewa`): Pembayaran BCA VA & Kuitansi PDF | Memudahkan mahasiswa membayar nontunai tanpa cari ATM; riwayat kuitansi tersimpan aman di akun masing-masing penyewa. | Mengapresiasi kemudahan transaksi digital | Sangat Sesuai |
+| 9 | **Kanal Pengaduan Keluhan Fasilitas Berfoto** (`/penyewa/keluhan`) | Laporan kerusakan fasilitas berfoto mencegah aduan lisan terlupakan di lorong dan memudahkan pengelola memanggil teknisi perbaikan. | Sangat terbantu dengan dokumentasi foto kerusakan | Sangat Sesuai |
+| 10 | **Refleksi 20 Tahun Pengelolaan Manual vs Website** | Pengelolaan kost terasa jauh lebih enteng, bebas selisih kas, dan transparan. **Nilai kepuasan operasional: 9,5 dari 10**. | Sangat puas dan menyatakan sistem siap pakai | Sangat Sesuai |
+
+*Sumber: Hasil evaluasi kualitatif dan rekaman audio langsung penulis (2026)*
 
 ---
 
-## 4.6 Sesi Wawancara (Penjaga Kost atau Admin)
-Guna mengevaluasi implikasi penerapan sistem terhadap operasional riil Asri Boarding House, dilaksanakan sesi uji coba operasional secara langsung (*Side-by-Side Usability Testing*) yang dipadukan dengan wawancara mendalam bersama pengelola senior kost, Bapak Asep.
-
-### 4.6.1 Hasil Tanya Jawab dengan Bapak Asep
+### 4.6.1 Hasil Pengujian Langsung dan Wawancara Mendalam dengan Bapak Asep
 Sesi evaluasi dilaksanakan di kantor pengelola Asri Boarding House, Tembalang, mengacu secara ketat pada pedoman dan instrumen yang tertuang pada berkas *Panduan Wawancara Admin Senior Kost* serta *Transkrip Wawancara Template*. Peneliti dan Bapak Asep duduk berdampingan menghadap satu layar laptop, membuka website produksi live `https://asriboardinghouse.weatso.id/`, dan mengeklik fitur-fitur sistem satu per satu sambil merekam percakapan secara audio digital.
 
 * **Profil Narasumber / Informan**: Bapak Asep (Usia 48 Tahun), Penjaga dan Pengelola Operasional Senior Asri Boarding House dengan pengalaman mengelola administrasi kost secara konvensional selama ±20 tahun.
@@ -1153,9 +1163,9 @@ Sesi evaluasi dilaksanakan di kantor pengelola Asri Boarding House, Tembalang, m
 
 Dokumentasi pelaksanaan evaluasi pengujian operasional langsung disajikan pada Gambar 4.11.
 
-![Gambar 4.11 Dokumentasi UAT Sesi Wawancara dan Penyerahan Sistem](images/gambar_4_12.webp)
+![Gambar 4.11 Dokumentasi Evaluasi Kualitatif dan Sesi Wawancara Bersama Bapak Asep](images/gambar_4_12.webp)
 
-*Gambar 4.11 Dokumentasi UAT Sesi Wawancara dan Penyerahan Sistem bersama Bapak Asep*  
+*Gambar 4.11 Dokumentasi Evaluasi Kualitatif dan Sesi Wawancara Bersama Bapak Asep*  
 *Sumber: Dokumentasi foto penelitian penulis (2026)*
 
 ---
@@ -1167,7 +1177,7 @@ Berdasarkan serangkaian tahapan perancangan, implementasi, pengujian teknis, dan
 2. **Efisiensi Waktu dan Modernisasi Operasional Administrasi**: Peralihan dari pencatatan buku besar fisik selama ±20 tahun menuju sistem berbasis web memangkas waktu kerja administrasi bulanan secara signifikan. Rekapitulasi penerimaan kas dan pengeluaran operasional yang sebelumnya membutuhkan waktu 3 hingga 5 hari kerja manual kini dapat disajikan secara instan dalam hitungan detik melalui fitur ekspor ke format PDF resmi dan lembar kerja Excel/CSV ber-encoding BOM UTF-8.
 3. **Penerapan Kebijakan Denda Keterlambatan dan Eskalasi Wali**: Pendekatan denda keterlambatan flat kalender 5% yang idempoten memberikan jalan keluar yang tertib dan dapat diterima secara wajar oleh mahasiswa penghuni kos. Masa tenggang bebas denda selama bulan berjalan yang dipadukan dengan pengingat ramah via WhatsApp, diikuti denda flat 5% saat menyeberang bulan kalender serta eskalasi pesan ke nomor orang tua/wali, terbukti membantu ketertiban pembayaran sewa tanpa memicu perselisihan antara pengelola dan penghuni.
 4. **Pencegahan Risiko Pemesanan Ganda (*Double-Booking Mitigation*)**: Risiko pemesanan ganda pada satu unit kamar berhasil dicegah pada seluruh skenario pengujian melalui kombinasi dua lapisan pertahanan: pada tingkat basis data, transaksi alokasi kamar dilindungi oleh penguncian baris data (*pessimistic row locking*) `lockForUpdate()`; sedangkan pada tingkat operasional, kebijakan isolasi kamar pasca-checkout memastikan kamar yang baru dikosongkan tetap berstatus `terisi` (merah) hingga pengelola selesai memeriksa kebersihan dan kelayakan sarana fisik di lokasi sebelum mengubah statusnya menjadi `tersedia`.
-5. **Kualitas dan Keandalan Perangkat Lunak Teruji**: Pengujian sistem menunjukkan hasil yang memuaskan dengan kelulusan 100% pada 60 butir skenario pengujian kotak hitam (*black box testing*), pemenuhan isolasi hak akses peran (RBAC) pada pengujian parameter IDOR, kestabilan operasional pada lingkungan peladen produksi Hostinger LiteSpeed dengan sertifikat SSL Grade A, serta perolehan skor penerimaan pengguna (*User Acceptance Testing*) sebesar 93,5%.
+5. **Kualitas dan Keandalan Perangkat Lunak Teruji**: Pengujian sistem menunjukkan hasil yang memuaskan dengan kelulusan 100% pada 60 butir skenario pengujian kotak hitam (*black box testing*), pemenuhan isolasi hak akses peran (RBAC) pada pengujian parameter IDOR, kestabilan operasional pada lingkungan peladen produksi Hostinger LiteSpeed dengan sertifikat SSL Grade A, serta pengujian penerimaan pengguna secara kualitatif (*Side-by-Side Usability Testing*) bersama penjaga kost senior dengan rekaman audio digital yang menghasilkan validasi menyeluruh terhadap kelayakan operasional serta perolehan skor kepuasan 9,5 dari 10.
 
 ---
 
@@ -1180,7 +1190,7 @@ Berdasarkan hasil analisis, perancangan, implementasi, pengujian, dan evaluasi o
 2. Skema basis data relasional 22 tabel berhasil dinormalisasi hingga Bentuk Normal Ketiga (3NF) pada MySQL 8.x InnoDB, diperkuat dengan penerapan *Virtual Generated Columns* (`active_email`, `active_no_hp`, `active_nik`, `active_nomor_kamar`, dan `active_order_id`) yang menjamin keunikan pada baris data aktif berdampingan dengan fitur penghapusan lunak (*soft deletes*), serta memelihara integritas transaksi finansial melalui kebijakan foreign key `ON DELETE RESTRICT`.
 3. Mesin penagihan otomatis (*Auto-Billing Engine*) yang dieksekusi oleh Laravel Task Scheduler setiap tanggal 1 awal bulan terbukti andal dalam menerbitkan tagihan sewa bulanan secara teratur dengan batas jatuh tempo tanggal 10. Kebijakan denda keterlambatan flat kalender 5% yang idempoten berhasil diterapkan tanpa risiko penggandaan denda berkat penerapan *Idempotency Guard* (`nominal_denda == 0`) dan penguncian baris basis data `lockForUpdate()`, serta berhasil mengeskalasi pengingat penunggakan ke kontak nomor wali penyewa secara terprogram.
 4. Integrasi gerbang pembayaran Midtrans Snap API v2 berbasis saluran Bank BCA Virtual Account (BCA VA) telah berhasil diwujudkan dengan perlindungan tanda tangan digital SHA-512 sebagai penangkal manipulasi transaksi, dipadukan dengan pengiriman notifikasi asinkron multi-saluran via Fonnte WhatsApp Gateway API dan Hostinger SMTP Mailer, serta perenderan kuitansi transaksi digital instan format A5 di sisi peramban klien via `html2pdf.js` yang menghemat sumber daya komputasi peladen (*zero server storage overhead*).
-5. Mekanisme pengontrolan konkurensi (*concurrency control*) berbasis `lockForUpdate()` dan kebijakan isolasi kamar pasca-checkout terbukti berhasil mencegah terjadinya pemesanan ganda (*double booking*) pada seluruh skenario yang diuji. Antarmuka sistem bergaya Neo-Brutalism dirancang mematuhi standar aksesibilitas WCAG 2.1 (target sentuh minimum 44 piksel dan tombol aksi utama WhatsApp sebesar 56 piksel), serta antarmuka admin *OLED Black Dark Mode* membantu kenyamanan visual pengelola. Keandalan fungsional sistem dibuktikan melalui kelulusan 100% pada 60 butir skenario uji kotak hitam (*black box testing*), kepatuhan isolasi hak akses peran (RBAC), serta perolehan skor kelayakan penerimaan pengguna (UAT) sebesar 93,5% (kategori Sangat Layak).
+5. Mekanisme pengontrolan konkurensi (*concurrency control*) berbasis `lockForUpdate()` dan kebijakan isolasi kamar pasca-checkout terbukti berhasil mencegah terjadinya pemesanan ganda (*double booking*) pada seluruh skenario yang diuji. Antarmuka sistem bergaya Neo-Brutalism dirancang mematuhi standar aksesibilitas WCAG 2.1 (target sentuh minimum 44 piksel dan tombol aksi utama WhatsApp sebesar 56 piksel), serta antarmuka admin *OLED Black Dark Mode* membantu kenyamanan visual pengelola. Keandalan fungsional sistem dibuktikan melalui kelulusan 100% pada 60 butir skenario uji kotak hitam (*black box testing*) dan kepatuhan isolasi hak akses peran (RBAC) pada seluruh modul pengujian.
 6. Evaluasi operasional langsung (*Side-by-Side Usability Testing*) bersama pengelola senior kost (Bapak Asep, 48 tahun, pengalaman 20 tahun) membuktikan bahwa digitalisasi sistem manajemen berhasil menggantikan ketergantungan pada buku besar manual, membantu mengamankan pencatatan potensi pendapatan bruto hingga Rp28.500.000 per bulan dari risiko kesalahan hitung dan kebocoran kas, memangkas durasi rekapitulasi keuangan bulanan dari 3–5 hari menjadi instan dalam hitungan detik, serta memperoleh penilaian kepuasan operasional sebesar 9,5 dari 10.
 
 ## 5.2 Saran
