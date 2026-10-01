@@ -1102,7 +1102,7 @@ Pengujian lingkungan nyata (*live environment testing*) dilaksanakan secara lang
 ## 4.6 Hasil Wawancara dengan Penjaga Kost
 Guna mengevaluasi kelayakan operasional, kemudahan interaksi antarmuka, dan kesesuaian alur kerja sistem informasi pada kondisi empiris Asri Boarding House, dilaksanakan sesi pengujian penerimaan pengguna langsung (*Side-by-Side Usability Testing*) yang dipadukan dengan wawancara mendalam semi-terstruktur bersama informan kunci operasional, yaitu Bapak Asep (usia 48 tahun), pengelola operasional senior yang telah menangani administrasi kos secara manual menggunakan buku besar fisik selama ±20 tahun.
 
-Sesi evaluasi dilaksanakan secara tatap muka bertempat di kantor pengelola Asri Boarding House, kawasan Tembalang, Semarang, seraya menguji secara langsung seluruh modul sistem informasi pada peladen produksi live ([https://asriboardinghouse.weatso.id/](https://asriboardinghouse.weatso.id/)). Seluruh interaksi navigasi layar, ekspresi verbal, dan respon lisan didokumentasikan menggunakan perekam audio digital dengan berkas rekaman `REKAMAN_UX_ADMIN_KOST_2026.m4a` (durasi ±25–35 menit) setelah narasumber menyatakan persetujuan lisan (*informed consent*) pada pembukaan sesi.
+Sesi evaluasi dilaksanakan secara tatap muka bertempat di kantor pengelola Asri Boarding House, kawasan Tembalang, Semarang, seraya menguji secara langsung seluruh modul sistem informasi pada peladen produksi live ([https://asriboardinghouse.weatso.id/](https://asriboardinghouse.weatso.id/)). Seluruh interaksi navigasi layar, ekspresi verbal, dan respon lisan didokumentasikan menggunakan perekam audio digital dengan berkas rekaman `REKAMAN_UX_ADMIN_KOST_2026.m4a` (durasi 23 menit 14 detik) setelah narasumber menyatakan persetujuan lisan (*informed consent*) pada pembukaan sesi.
 
 Daftar pertanyaan terstruktur beserta respon verbatim dari narasumber dirangkum secara komprehensif pada Tabel 4.7.
 
@@ -1150,7 +1150,7 @@ Berdasarkan serangkaian tahapan analisis kebutuhan, perancangan arsitektur, impl
 5. **Triangulasi Validasi dan Mutu Perangkat Lunak**: Keandalan dan akseptabilitas sistem dibuktikan melalui triangulasi metode evaluasi yang komprehensif:
    * *Verifikasi Fungsional*: Kelulusan sempurna (100%) pada seluruh 60 butir skenario uji kotak hitam (*black box testing*) [19], [20] serta pengujian unit internal Laravel (510 tests passed dengan 2.211 assertions).
    * *Keamanan dan Isolasi Hak Akses*: Kepatuhan otorisasi berbasis peran (RBAC) yang berhasil menangkal serangan manipulasi parameter IDOR, didukung oleh pengerasan keamanan peladen pada lingkungan peladen produksi Hostinger LiteSpeed dengan sertifikat enkripsi TLS 1.3 Grade A.
-   * *Evaluasi Empiris Pengguna*: Uji coba operasional langsung (*Side-by-Side Usability Testing*) bersama pengelola senior kost (Bapak Asep, 48 tahun, pengalaman ±20 tahun) yang terdokumentasi dalam rekaman audio digital berdurasi 25–35 menit, menghasilkan konfirmasi kelayakan praktis yang sangat tinggi serta perolehan skor kepuasan operasional sebesar 9,5 dari skala 10.
+   * *Evaluasi Empiris Pengguna*: Uji coba operasional langsung (*Side-by-Side Usability Testing*) bersama pengelola senior kost (Bapak Asep, 48 tahun, pengalaman ±20 tahun) yang terdokumentasi dalam rekaman audio digital berdurasi 23 menit 14 detik, menghasilkan konfirmasi kelayakan praktis yang sangat tinggi serta perolehan skor kepuasan operasional sebesar 9,5 dari skala 10.
 
 ## BAB V KESIMPULAN DAN SARAN
 
