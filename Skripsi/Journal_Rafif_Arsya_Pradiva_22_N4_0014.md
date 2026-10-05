@@ -15,7 +15,7 @@ Keywords—Automated billing, Concurrency control, Laravel 11, Management inform
 
 ## I. INTRODUCTION
 
-Student accommodations near university campuses face sustained demand, particularly in expanding Indonesian education districts such as Tembalang, Semarang. There, privately operated boarding houses (*kost*) provide multi-month residential lodging for thousands of students enrolled at neighboring institutions, including Universitas Diponegoro and Politeknik Negeri Semarang. Although property management software (*proptech*) and modern management information systems [1], [2] have matured commercially, independent boarding houses in this region continue to depend on physical paper records, informal cash transfers, and unstructured messaging apps. This reliance introduces persistent operational friction: uncollected rent, reconciliation errors, room reservation conflicts during peak admission periods, and unmonitored resident arrears.
+Student accommodations near university campuses face sustained demand, particularly in expanding Indonesian education districts such as Tembalang, Semarang. There, privately operated boarding houses (*kost*) provide multi-month residential lodging for thousands of students enrolled at neighboring higher education institutions within the Tembalang university district. Although property management software (*proptech*) and modern management information systems [1], [2] have matured commercially, independent boarding houses in this region continue to depend on physical paper records, informal cash transfers, and unstructured messaging apps. This reliance introduces persistent operational friction: uncollected rent, reconciliation errors, room reservation conflicts during peak admission periods, and unmonitored resident arrears.
 
 Asri Boarding House, located at Jl. Maera Sari No. 1 / No. 12, Tembalang, Semarang (Postal Code 50275), reflects these operational constraints. The property consists of 32 rooms arranged across two floors and organized into three tiers: VIP (6 rooms at IDR 1,400,000/month), Deluxe (3 rooms at IDR 950,000/month), and Standard (23 rooms at IDR 750,000/month). At full capacity, the facility generates a gross monthly revenue baseline of IDR 28,500,000. For over twenty years, daily operations have been administered by a single resident manager, Mr. Asep (48 years old, 20 years of operational tenure), through carbon receipt books and handwritten cash journals.
 
@@ -55,7 +55,7 @@ To resolve these limitations, this paper presents an integrated management infor
 This work follows a Software Engineering Research and Development (R&D) methodology based on the classical Waterfall Software Development Life Cycle (SDLC) [16], [17], [18]. A sequential progression—encompassing requirements analysis, architectural design, implementation, verification testing, and operational deployment—was chosen to guarantee strict traceability between field operational rules and software components. Baseline functional requirements were gathered through a three-pronged empirical triangulation process:
 1. *Physical Facility Inspection*: An exhaustive survey of all 32 rooms across 2 floors, utilities, and front-desk workflows at Asri Boarding House, documenting unit layouts, amenities, and pricing bands.
 2. *Semi-Structured Operational Interviews*: In-depth sessions with resident manager Mr. Asep (48 years old, 20 years of experience) to elicit unwritten operational practices, grace periods, remittance habits, and cash balancing routines.
-3. *Archival Ledger Audit*: A quantitative audit of carbon receipt books, handwritten ledgers, and bank passbooks recorded between 2021 and 2025.
+3. *Archival Ledger Audit*: An empirical audit of physical cash journals, carbon receipt archives, master tenant logs, and technical blueprint specifications.
 
 ### B. Software Architecture and Presentation Layer
 The platform employs a 3-tier Model-View-Controller (MVC) architecture built with Laravel 11 on PHP 8.2. Domain operations are decoupled into dedicated service classes in `app/Services/` (`BillingService`, `MidtransService`, `ReservasiService`, `TransisiPenyewaService`, `FonnteService`), maintaining lean controllers and isolating transactional logic from HTTP routing. The presentation tier follows Neo-Brutalist design principles with high-contrast borders and an OLED Black administrative theme. Interactive elements feature a 56-pixel touch target, exceeding Web Content Accessibility Guidelines (WCAG 2.1) minimum recommendations (44 pixels).
@@ -80,21 +80,31 @@ During peak admission periods, simultaneous booking requests create race conditi
 
 ```php
 // Listing 2. Pessimistic Locking Implementation in ReservasiService
-return DB::transaction(function () use ($validatedData, $userId) {
-    $room = Kamar::where('id', $validatedData['kamar_id'])
-                 ->lockForUpdate()->firstOrFail();
-    if ($room->status !== 'tersedia') {
-        throw new RoomUnavailableException("Room already reserved or occupied.");
+return DB::transaction(function () use ($data) {
+    $kamar = Kamar::lockForUpdate()->findOrFail($data['kamar_id']);
+
+    if ($this->cekDoubleBooking($kamar, $data['tanggal_mulai'], $data['tanggal_selesai'])) {
+        throw ValidationException::withMessages([
+            'kamar_id' => 'Kamar sudah ter-booking pada rentang tanggal tersebut.'
+        ]);
     }
-    $room->update(['status' => 'terisi']);
-    return Reservasi::create([...$validatedData, 'user_id' => $userId, 'status' => 'pending']);
+
+    $rincianHarga = $this->hitungHarga($kamar, $data['tipe_sewa'], $data['durasi']);
+
+    return Reservasi::create(array_merge($data, [
+        'order_id'     => "RSV-{$data['user_id']}-" . time(),
+        'total_harga'  => $rincianHarga['total_harga'],
+        'nominal_dp'   => $rincianHarga['nominal_dp'],
+        'nominal_sisa' => $rincianHarga['nominal_sisa'],
+        'status'       => 'pending',
+    ]));
 });
 ```
 
 ### E. Autonomous Billing Pipeline and Late Fee Algorithm
 Billing schedules are orchestrated by host cron invoking Laravel's task scheduler every minute (`* * * * * php artisan schedule:run`). The monthly billing job executes on the 1st day of each month at 00:05 WIB in `BillingService`:
 1. *Invoice Generation (1st of Month)*: Active agreements (`penyewa.status = 'aktif'`) are evaluated, creating `pending` invoices due on the 10th. WhatsApp payment notices containing virtual account numbers are dispatched via Fonnte.
-2. *Grace Period Phase (11th to Month-End)*: Overdue invoices transition to `terlambat`, carrying an **IDR 0** penalty during the current month, with automated reminders sent every three days.
+2. *Grace Period Phase (11th to Month-End)*: Overdue invoices transition to `terlambat`, carrying an **IDR 0** penalty during the current month, accompanied by periodic automated WhatsApp payment reminders.
 3. *Calendar-Rollover Penalty Application (1st of Month $M+1$)*: If unpaid at the start of the subsequent calendar month, an idempotent flat 5% fee is applied:
 
 $$\text{Late Fee} = \begin{cases} 0.05 \times \text{Tarif Pokok}, & \text{if } \text{status} = \text{'terlambat'} \land \text{nominal\_denda} = 0 \land \Delta\text{Month} \ge 1 \\ 0, & \text{otherwise} \end{cases} \quad (1)$$
@@ -142,7 +152,7 @@ Vacated rooms undergo a physical quarantine workflow: when a checkout is process
 For payment receipts, the active tenant portal compiles A5 digital payment receipts client-side using `html2pdf.js`. Constructing receipts in the browser canvas eliminates server CPU bottlenecks and persistent storage consumption on shared hosting. Server-side PDF generation via Dompdf is reserved strictly for monthly administrative balance sheets.
 
 #### 5. Production Deployment and Security Hardening
-The platform was deployed on Hostinger LiteSpeed Enterprise Cloud infrastructure (`https://asriboardinghouse.weatso.id/`). Hardening measures included enforcing TLS 1.3 encryption (SSL Grade A), Vite 5.x asset minification (total initial payload under 1.2 MB), `.htaccess` rules restricting access to sensitive configuration files (`.env`, `.git`), and enforcing routing strictly through `/public`.
+The platform was deployed on Hostinger LiteSpeed Enterprise Cloud infrastructure (`https://asriboardinghouse.weatso.id/`). Hardening measures included enforcing TLS 1.3 encryption (SSL Grade A), Vite 5.x asset minification and compression, `.htaccess` rules restricting access to sensitive configuration files (`.env`, `.git`), and enforcing routing strictly through `/public`.
 
 #### 6. Empirical Quantitative Evaluation
 The functional integrity of the platform was evaluated across 60 test scenarios spanning six operational domains, as summarized in Table 3. All 60 scenarios executed with a 100% pass rate. Security testing evaluated Role-Based Access Control (RBAC) across portal gates (`/admin`, `/penyewa`, `/reservasi`) and OAuth compliance [9], confirming Insecure Direct Object Reference (IDOR) immunity as detailed in Table 4. The digital payment pipeline was validated using Midtrans's sandbox and BCA Virtual Account simulator across all seven lifecycle states, as summarized in Table 5.
@@ -151,12 +161,12 @@ The functional integrity of the platform was evaluated across 60 test scenarios 
 
 | Domain Code | Functional Testing Scope | Scenarios | Passed | Failed | Pass Rate |
 | :---: | :--- | :---: | :---: | :---: | :---: |
-| **DOM-01** | Identity Authentication, Socialite Google OAuth, & Profile Gates | 8 | 8 | 0 | 100% |
-| **DOM-02** | Public Catalog, Neo-Brutalist Layout, & WCAG 2.1 Touch Targets | 9 | 9 | 0 | 100% |
-| **DOM-03** | 5-Step Reservation Stepper, Discounts, & Concurrency Locks | 12 | 12 | 0 | 100% |
-| **DOM-04** | Active Tenant Portal, Self-Service VA, & html2pdf.js Receipts | 10 | 10 | 0 | 100% |
+| **DOM-01** | Identity Authentication, Socialite Google OAuth, & Profile Gates | 12 | 12 | 0 | 100% |
+| **DOM-02** | Public Catalog, Neo-Brutalist Layout, & WCAG 2.1 Touch Targets | 10 | 10 | 0 | 100% |
+| **DOM-03** | 5-Step Reservation Stepper, Discounts, & Concurrency Locks | 10 | 10 | 0 | 100% |
+| **DOM-04** | Active Tenant Portal, Self-Service VA, & html2pdf.js Receipts | 9 | 9 | 0 | 100% |
 | **DOM-05** | Admin Console, Walk-In Onboarding, & Inspection Quarantine | 13 | 13 | 0 | 100% |
-| **DOM-06** | Task Scheduler, Auto-Billing Cron, 5% Late Fees, & Guardian Alerts | 8 | 8 | 0 | 100% |
+| **DOM-06** | Task Scheduler, Auto-Billing Cron, 5% Late Fees, & Guardian Alerts | 6 | 6 | 0 | 100% |
 | **Total** | **Comprehensive Functional Platform Testing** | **60** | **60** | **0** | **100%** |
 
 **Table 4. SECURITY, RBAC, AND IDOR HARDENING VERIFICATION**
