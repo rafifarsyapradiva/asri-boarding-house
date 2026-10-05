@@ -7,7 +7,7 @@ Universitas Katolik Soegijapranata, Semarang, Indonesia
 
 ---
 
-Abstract—Student accommodation providers in developing higher education clusters frequently rely on physical logbooks and informal messaging. This administrative reliance causes persistent revenue leakage, room double-booking during admission cycles, and prolonged monthly financial reconciliation. This paper details the design, implementation, and empirical evaluation of an integrated management information system for Asri Boarding House in Semarang, Indonesia. Structured under a Waterfall software engineering lifecycle, the web platform integrates Laravel 11, a third-normal-form (3NF) MySQL 8.0 relational schema across 22 entities, the Midtrans Snap v2 payment gateway tailored for Bank BCA Virtual Accounts, and Fonnte WhatsApp automation. Concurrency control is achieved using pessimistic row-level database locks (`lockForUpdate()`), supported by a physical post-checkout quarantine protocol. An automated cron billing pipeline calculates idempotent monthly invoices and applies a flat 5% calendar-rollover late fee alongside automated guardian escalation. Functional evaluation across 60 black box test scenarios yielded a 100% pass rate, backed by 510 automated PHPUnit feature tests executing 2,211 assertions. In-situ operational evaluation with the facility's resident manager (20 years of operational experience), recorded via digital audio (`REKAMAN_UX_ADMIN_KOST_2026.m4a`, duration 23m 14s), showed that the system compressed the monthly accounting cycle from 3–5 days to instant reporting, attaining a 9.5/10 usability rating.
+Abstract—Student accommodation providers in developing higher education clusters frequently rely on physical logbooks and informal messaging. This administrative reliance causes persistent revenue leakage, room double-booking during admission cycles, and prolonged monthly financial reconciliation. This paper details the design, implementation, and empirical evaluation of an integrated management information system for Asri Boarding House in Semarang, Indonesia. Structured under a Waterfall software engineering lifecycle, the web platform integrates Laravel 11, a third-normal-form (3NF) MySQL 8.0 relational schema across 22 entities, the Midtrans Snap v2 payment gateway tailored for Bank BCA Virtual Accounts, and Fonnte WhatsApp automation. Concurrency control is achieved using pessimistic row-level database locks (`lockForUpdate()`), supported by a physical post-checkout quarantine protocol. An automated cron billing pipeline calculates idempotent monthly invoices and applies a flat 5% calendar-rollover late fee alongside automated guardian escalation. Functional evaluation across 60 black box test scenarios yielded a 100% pass rate, backed by 510 automated PHPUnit feature tests executing 2,211 assertions. In-situ operational evaluation with the facility's senior resident manager (20 years of operational experience), recorded via digital audio (`REKAMAN_UX_ADMIN_KOST_2026.m4a`, duration 23m 14s), showed that the system compressed the monthly accounting cycle from 3–5 days to instant reporting, attaining a 9.5/10 usability rating.
 
 Keywords—Automated billing, Concurrency control, Laravel 11, Management information system, Payment gateway
 
@@ -15,334 +15,210 @@ Keywords—Automated billing, Concurrency control, Laravel 11, Management inform
 
 ## I. INTRODUCTION
 
-Student accommodations near university campuses face sustained demand, particularly in expanding Indonesian education districts such as Tembalang, Semarang. There, privately operated boarding houses (*kost*) provide multi-month residential lodging for thousands of students enrolled at neighboring institutions, including Universitas Diponegoro and Politeknik Negeri Semarang. Although property management software (*proptech*) has matured commercially, independent boarding houses in this region continue to depend on physical paper records, informal cash transfers, and unstructured messaging apps. This reliance on fragmented administrative habits introduces persistent operational friction: uncollected rent, reconciliation errors, room reservation conflicts during peak admission periods, and unmonitored resident arrears.
+Student accommodations near university campuses face sustained demand, particularly in expanding Indonesian education districts such as Tembalang, Semarang. There, privately operated boarding houses (*kost*) provide multi-month residential lodging for thousands of students enrolled at neighboring institutions, including Universitas Diponegoro and Politeknik Negeri Semarang. Although property management software (*proptech*) and modern management information systems [1], [2] have matured commercially, independent boarding houses in this region continue to depend on physical paper records, informal cash transfers, and unstructured messaging apps. This reliance introduces persistent operational friction: uncollected rent, reconciliation errors, room reservation conflicts during peak admission periods, and unmonitored resident arrears.
 
-Asri Boarding House, located at Jl. Maera Sari No. 1 / No. 12, Tembalang, Semarang (Postal Code 50275), clearly reflects these operational constraints. The property consists of 32 rooms arranged across two floors and organized into three tiers: VIP (6 rooms at IDR 1,400,000 per month), Deluxe (3 rooms at IDR 950,000 per month), and Standard (23 rooms at IDR 750,000 per month). At full capacity, the facility generates a gross monthly revenue baseline of IDR 28,500,000. For more than twenty years, daily operations have been managed by a single resident manager, Mr. Asep (48 years old, with 20 years of managerial experience), who historically administered tenancy records through physical carbon receipt books and handwritten cash journals.
+Asri Boarding House, located at Jl. Maera Sari No. 1 / No. 12, Tembalang, Semarang (Postal Code 50275), reflects these operational constraints. The property consists of 32 rooms arranged across two floors and organized into three tiers: VIP (6 rooms at IDR 1,400,000/month), Deluxe (3 rooms at IDR 950,000/month), and Standard (23 rooms at IDR 750,000/month). At full capacity, the facility generates a gross monthly revenue baseline of IDR 28,500,000. For over twenty years, daily operations have been administered by a single resident manager, Mr. Asep (48 years old, 20 years of operational tenure), through carbon receipt books and handwritten cash journals.
 
-Direct field observation and archival auditing identified four primary operational bottlenecks in this manual workflow:
-1. *Payment Tracking and Billing Delays*: Rent schedules depended on individual recall and handwritten logs. Without automated billing triggers, collection dates routinely lapsed, creating cumulative arrears and cash flow disruptions.
-2. *Room Reservation Collisions*: During university admission cycles, room inquiries were settled through verbal conversations or ad-hoc messaging. Remote applicants frequently selected units that had already been promised to walk-in visitors, causing double-booking conflicts and administrative disputes.
-3. *Unstructured Arrears Escalation*: When student accounts fell seriously overdue, the property had no reliable protocol to contact registered parents or guardians, permitting unpaid balances to grow across multiple academic terms without parental awareness.
-4. *Labor-Intensive Financial Reconciliation*: Preparing the monthly cash balance required cross-referencing physical paper slips against loose drawer cash. This manual accounting process absorbed 3 to 5 working days each month and frequently produced bookkeeping discrepancies.
+Direct field observation and archival auditing identified four primary operational bottlenecks:
+1. *Billing Delays*: Rent collection depended on individual recall and paper records, causing routine collection lapses and cash flow disruptions.
+2. *Reservation Collisions*: During admission cycles, inquiries were handled via verbal promises or ad-hoc chats. Remote applicants frequently selected units already promised to walk-in visitors, causing double bookings.
+3. *Unstructured Arrears Escalation*: When accounts fell overdue, the property lacked protocols to alert registered guardians, allowing unpaid balances to accumulate undetected.
+4. *Labor-Intensive Reconciliation*: Preparing monthly balances required manual cross-referencing of paper slips against cash drawers, absorbing 3 to 5 working days and introducing bookkeeping discrepancies.
 
-To situate these practical challenges within the software engineering literature, we evaluated existing boarding house management platforms and payment integrations. Table 1 summarizes related empirical studies across methodologies, architectural scopes, and identified gaps.
+To contextualize these practical challenges within the software engineering literature, we evaluated existing boarding house management platforms and payment integrations. Prior works explored web catalogs [4], promotional portals [5], [6], and mobile rental marketplaces [11], but consistently omitted integrated payment channels. Table 1 summarizes related empirical studies.
 
 **Table 1. SYSTEMATIC COMPARATIVE ANALYSIS OF RELATED WORKS**
 
-| Author & Year | Methodology | Focus & Architectural Scope | Research Gap Identified |
+| Author & Year | Domain & Method | Key Architectural Scope | Identified Gap / Limitation |
 | :--- | :--- | :--- | :--- |
-| Cornellya & Afriyadi (2025) [3] | Waterfall (SDLC) | Laravel-based room reservation, tenant recording, and administrative reporting. Tested via black box. | Lacks automated recurring billing schedules, late fee calculation engines, and guardian escalation. |
-| Nizar (2021) [4] | Web Engineering | E-Kost web application for accommodation catalogs and reservation inquiries. | Omits payment gateway integration; relies on manual bank transfer slip verification; no concurrency locking. |
-| Jannah et al. (2020) [5] | Prototyping | Marketing portal for boarding house discovery and basic listing information. | Restricted to promotional listings; completely lacks transactional billing, room state machines, and payment APIs. |
-| Malaikosa & Mokola (2024) [10] | RAD | Web-based room monitoring and manual rent collection tracking. | No hybrid walk-in/online synchronization; lacks database row locking to prevent reservation collisions. |
-| Purnia et al. (2021) [11] | Prototyping | Mobile-based marketplace for boarding house search and discovery. | Retail-oriented directory; lacks recurring tenancy lifecycle management and multi-channel parental alerts. |
-| Sutisna & Aziz (2025) [7] | Waterfall | Event equipment rental platform integrating Midtrans Snap API. Tested via GTmetrix and Sucuri. | Transient e-commerce retail model; lacks monthly recurring billing cycles, tenancy states, and arrears escalation. |
-| Fatman et al. (2023) [8] | Web Development | Midtrans payment gateway implementation for MSME retail transactions. | Limited to simple point-of-sale checkout; does not model room occupancy states or long-term lease contracts. |
-| Surya Pratama (2025) [12] | Prototyping | ReactJS Point of Sales (POS) integration with payment gateway API. | Domain mismatch; does not address room availability race conditions, calendar late fees, or tenant lifecycle. |
-| Pramita et al. (2024) [13] | Agile | Android-based tuition payment application using Midtrans. | Education fee context; lacks room state machines, soft-delete identity preservation, and walk-in reconciliation. |
-| Hakim et al. (2021) [15] | Web Development | Cash flow recording system coupled with Fonnte WhatsApp gateway. | Focused solely on general ledger cash; disconnected from automated billing engines and digital payment channels. |
+| Cornellya & Afriyadi (2025) [3] | Kost Management (Waterfall) | Laravel room booking, tenant logs, administrative reporting; black box tested. | Lacks automated recurring billing schedules, late fee calculations, and guardian escalation. |
+| Nizar (2021) [4] | E-Kost Portal (Web Eng.) | Web catalog for accommodation listings and reservation inquiries. | Omits payment gateway integration; relies on manual bank transfer slips; no concurrency locking. |
+| Malaikosa & Mokola (2024) [10] | Kost Monitoring (RAD) | Web-based room monitoring and manual rent collection tracking. | No hybrid walk-in/online synchronization; lacks database row locking to prevent booking collisions. |
+| Sutisna & Aziz (2025) [7] | Rental Commerce (Waterfall) | Event equipment rental platform integrating Midtrans Snap API. | Transient e-commerce retail model; lacks monthly recurring billing cycles and arrears escalation. |
+| Fatman et al. (2023) [8] | Retail POS (Web Dev.) | Midtrans payment gateway implementation for MSME retail transactions. | Limited to point-of-sale checkout; does not model room occupancy states or cyclical lease contracts. |
+| Hakim et al. (2021) [15] | Cash Ledger (Web Dev.) | Cash flow recording coupled with Fonnte WhatsApp gateway. | Focused solely on cash recording; disconnected from automated billing engines and payment gateways. |
 
-A critical evaluation of Table 1 reveals an identifiable research gap in the literature. Most existing systems treat payment gateways as one-off e-commerce checkout mechanisms or offer informational catalogs that lack ongoing lifecycle governance. Prior software architectures do not account for cyclical tenancy billing across monthly calendar boundaries, omit database-level concurrency controls needed to prevent reservation collisions under concurrent booking requests, overlook physical room-sanitization holds post-checkout, and lack automated parental escalation protocols for prolonged defaults.
+As shown in Table 1, prior systems treat payment gateways as one-off retail checkouts or provide informational catalogs lacking lifecycle governance. Existing architectures omit cyclical tenancy billing across calendar boundaries, database concurrency controls against reservation collisions, physical post-checkout quarantine holds, and automated guardian escalation protocols.
 
-To address these limitations, we designed and deployed an integrated management information system tailored to the operational realities of Asri Boarding House. The primary engineering contributions of this work are:
-1. An automated cron-driven billing engine that enforces an idempotent flat 5% calendar-rollover late fee secured by pessimistic database transactions;
-2. An automated two-stage arrears notification pipeline that alerts tenants and escalates severe arrears to registered guardians via WhatsApp;
-3. Strict prevention of room reservation collisions through atomic database transactions and pessimistic `SELECT ... FOR UPDATE` row locks;
-4. An operational quarantine workflow that holds vacated rooms in an occupied state until physical staff inspection and maintenance are completed;
-5. A client-side receipt rendering architecture utilizing `html2pdf.js`, generating downloadable payment proofs in the browser without server CPU or persistent storage consumption.
+To resolve these limitations, this paper presents an integrated management information system for Asri Boarding House. The primary engineering contributions are:
+1. An automated cron billing engine enforcing an idempotent flat 5% calendar-rollover late fee secured by database transactions;
+2. An automated two-stage arrears notification pipeline alerting tenants and escalating severe arrears to registered guardians via WhatsApp;
+3. Elimination of room reservation collisions via atomic database transactions and pessimistic `SELECT ... FOR UPDATE` row locks;
+4. An operational quarantine workflow retaining vacated rooms in an occupied state until physical staff sanitization is completed;
+5. A client-side receipt compilation architecture utilizing `html2pdf.js`, generating downloadable payment proofs without server CPU or storage overhead.
 
 ---
 
-## II. Method
+## II. METHOD
 
-### A. Research Paradigm
-This work follows a Software Engineering Research and Development (R&D) methodology based on the classical Waterfall Software Development Life Cycle (SDLC) [16], [17], [18]. A linear-sequential sequence—comprising requirements analysis, architectural and system design, implementation, verification testing, and operational deployment—was chosen to guarantee strict traceability between field operational rules and the corresponding software models.
+### A. Research Paradigm and Data Triangulation
+This work follows a Software Engineering Research and Development (R&D) methodology based on the classical Waterfall Software Development Life Cycle (SDLC) [16], [17], [18]. A sequential progression—encompassing requirements analysis, architectural design, implementation, verification testing, and operational deployment—was chosen to guarantee strict traceability between field operational rules and software components. Baseline functional requirements were gathered through a three-pronged empirical triangulation process:
+1. *Physical Facility Inspection*: An exhaustive survey of all 32 rooms across 2 floors, utilities, and front-desk workflows at Asri Boarding House, documenting unit layouts, amenities, and pricing bands.
+2. *Semi-Structured Operational Interviews*: In-depth sessions with resident manager Mr. Asep (48 years old, 20 years of experience) to elicit unwritten operational practices, grace periods, remittance habits, and cash balancing routines.
+3. *Archival Ledger Audit*: A quantitative audit of carbon receipt books, handwritten ledgers, and bank passbooks recorded between 2021 and 2025.
 
-### B. Data Collection and Operational Triangulation
-Baseline functional requirements were gathered through a three-pronged empirical triangulation process:
-1. *Physical Facility Inspection*: An exhaustive survey of all 32 rooms across both floors, communal utility connections, and front-desk workflows at Asri Boarding House, documenting unit layouts, amenities, and pricing bands.
-2. *Semi-Structured Operational Interviews*: In-depth interviews with the resident manager, Mr. Asep (48 years of age, 20 years of operational tenure). These sessions elicited unwritten operational practices, customary payment grace periods, typical student remittance schedules, and manual cash balancing routines.
-3. *Physical Document and Ledger Audit*: A quantitative review of carbon-copy receipt books, handwritten cash ledgers, bank passbooks, and administrative logs recorded between 2021 and 2025.
+### B. Software Architecture and Presentation Layer
+The platform employs a 3-tier Model-View-Controller (MVC) architecture built with Laravel 11 on PHP 8.2. Domain operations are decoupled into dedicated service classes in `app/Services/` (`BillingService`, `MidtransService`, `ReservasiService`, `TransisiPenyewaService`, `FonnteService`), maintaining lean controllers and isolating transactional logic from HTTP routing. The presentation tier follows Neo-Brutalist design principles with high-contrast borders and an OLED Black administrative theme. Interactive elements feature a 56-pixel touch target, exceeding Web Content Accessibility Guidelines (WCAG 2.1) minimum recommendations (44 pixels).
 
-### C. Software Architecture and Component Decoupling
-The platform is organized around a 3-tier Model-View-Controller (MVC) architecture using the Laravel 11 framework on PHP 8.2. To maintain lean controllers and isolate transactional business logic from HTTP transport concerns, domain operations are separated into dedicated service classes in `app/Services/`.
-
-```
-+---------------------------------------------------------------+
-|                      Presentation Tier                        |
-|  TailwindCSS 3.4 Neo-Brutalist Blade Views | Alpine.js UX     |
-+-------------------------------+-------------------------------+
-                                | HTTP Requests / REST Payloads
-                                v
-+---------------------------------------------------------------+
-|                       Application Tier                        |
-|   Route Controllers (Slim HTTP Validation & Route Scoping)   |
-|   ---------------------------------------------------------   |
-|                         Service Layer                         |
-|   - BillingService        : Auto-invoicing, 5% late fees      |
-|   - MidtransService       : Snap tokens, SHA-512 verification |
-|   - ReservasiService      : Concurrency locking, room booking |
-|   - TransisiPenyewaService: Atomic multi-table tenant moves   |
-|   - FonnteService         : Async multi-channel WhatsApp API  |
-+-------------------------------+-------------------------------+
-                                | Eloquent ORM / Query Builder
-                                v
-+---------------------------------------------------------------+
-|                          Data Tier                            |
-|       MySQL 8.0 InnoDB (22 Normalized Relational Tables)      |
-|       Pessimistic Row Locking | Virtual Generated Columns     |
-+---------------------------------------------------------------+
-```
-
-Figure 1. Three-tier architectural decoupling and service layer topology.
-
-The user interface follows Neo-Brutalist design principles, using high-contrast borders and clear visual boundaries. Primary interactive elements feature a 56-pixel touch target, surpassing the Web Content Accessibility Guidelines (WCAG 2.1) minimum target recommendation of 44 pixels. In addition, the administrative console incorporates an OLED Black dark theme to reduce eye strain during extended administrative sessions.
-
-### D. Relational Schema Engineering and Virtual Generated Columns
-The persistence tier runs on MySQL 8.0 with the InnoDB storage engine to preserve ACID guarantees. The relational schema is normalized to Third Normal Form (3NF), comprising 22 entities.
-
-To support historical auditing, core records use soft deletes via a `deleted_at` timestamp. Standard relational unique constraints conflict with soft deletion because discarded rows remain in the table, preventing legitimate re-registration of previously used values (such as national identity numbers [NIK], email addresses, telephone numbers, or room numbers). Rather than relaxing constraints to application-level checks, we resolved this conflict at the database level using **Virtual Generated Columns** paired with unique indexes. As shown in Listing 1, each virtual column evaluates to the original identifier only when `deleted_at IS NULL`, returning `NULL` once soft-deleted. Under standard relational index semantics, multiple `NULL` values are permitted in unique indexes, enforcing uniqueness strictly across currently active records while retaining historical rows for audit trails.
+### C. Relational Schema and Soft-Delete Unicity
+The persistence tier runs on MySQL 8.0 InnoDB (normalized to 3NF across 22 entities). Core entities utilize soft deletes (`deleted_at` timestamp) for audit compliance. Because standard unique constraints conflict with soft deletion by blocking re-registration of archived values (e.g., NIK, email, room numbers), we enforced unicity at the database engine level using **Virtual Generated Columns** paired with unique indexes. As shown in Listing 1, virtual columns evaluate to the original value only when `deleted_at IS NULL`, returning `NULL` once deleted. Under standard SQL semantics, multiple `NULL` entries do not violate uniqueness, maintaining integrity strictly across active records.
 
 ```php
-// Listing 1. Implementation of Virtual Generated Columns for Soft-Delete Unicity
+// Listing 1. Virtual Generated Columns for Soft-Delete Unicity
 Schema::create('users', function (Blueprint $table) {
     $table->id();
-    $table->string('nama', 100);
     $table->string('email', 100);
-    $table->string('no_hp', 20)->nullable();
-    $table->string('nik', 16)->nullable();
     $table->softDeletes();
-    $table->timestamps();
-
-    // Virtual columns evaluated dynamically based on deletion status
     $table->string('active_email')
           ->virtualAs('CASE WHEN deleted_at IS NULL THEN email ELSE NULL END');
-    $table->string('active_no_hp')
-          ->virtualAs('CASE WHEN deleted_at IS NULL THEN no_hp ELSE NULL END');
-    $table->string('active_nik')
-          ->virtualAs('CASE WHEN deleted_at IS NULL THEN nik ELSE NULL END');
-
     $table->unique('active_email', 'uq_users_active_email');
-    $table->unique('active_no_hp', 'uq_users_active_no_hp');
-    $table->unique('active_nik', 'uq_users_active_nik');
 });
 ```
 
-### E. Concurrency Control and Transactional Invariants
-Concurrent room selection during university admission periods presents a race condition. If two prospective tenants attempt to reserve the same unit simultaneously, non-locking architectures can allow both requests to read the room as available, resulting in a double-booking anomaly.
-
-To prevent this condition, the system uses **pessimistic row locking** through MySQL's `SELECT ... FOR UPDATE` directive inside an atomic transaction. Upon receiving a booking submission, `ReservasiService` places an exclusive lock on the requested room record. Any competing transaction attempting to inspect or modify the same room is blocked until the active transaction commits or rolls back, serializing access to shared inventory. Listing 2 details this locking implementation.
+### D. Concurrency Control and Transactional Invariants
+During peak admission periods, simultaneous booking requests create race conditions that permit double bookings. To prevent this anomaly, the system enforces **pessimistic row locking** via `SELECT ... FOR UPDATE` within atomic database transactions. As shown in Listing 2, `ReservasiService` locks the target room row upon booking initiation. Competing transactions are blocked until the active transaction commits or rolls back, serializing access to inventory.
 
 ```php
 // Listing 2. Pessimistic Locking Implementation in ReservasiService
-public function reserveRoom(array $validatedData, int $userId): Reservasi
-{
-    return DB::transaction(function () use ($validatedData, $userId) {
-        // Enforce exclusive pessimistic lock on the target room row
-        $room = Kamar::where('id', $validatedData['kamar_id'])
-                     ->lockForUpdate()
-                     ->firstOrFail();
-
-        // Invariant guard: verify operational availability
-        if ($room->status !== 'tersedia') {
-            throw new RoomUnavailableException(
-                "Room {$room->nomor_kamar} has already been reserved or occupied."
-            );
-        }
-
-        // Lock room state to prevent concurrent selection
-        $room->update(['status' => 'terisi']);
-
-        // Persist reservation record
-        return Reservasi::create([
-            'user_id'         => $userId,
-            'kamar_id'        => $room->id,
-            'status'          => 'pending',
-            'skema_pembayaran'=> $validatedData['skema_pembayaran'], // 'dp' or 'full'
-            'tanggal_mulai'   => $validatedData['tanggal_mulai'],
-            'durasi_sewa'     => $validatedData['durasi_sewa'],
-        ]);
-    });
-}
+return DB::transaction(function () use ($validatedData, $userId) {
+    $room = Kamar::where('id', $validatedData['kamar_id'])
+                 ->lockForUpdate()->firstOrFail();
+    if ($room->status !== 'tersedia') {
+        throw new RoomUnavailableException("Room already reserved or occupied.");
+    }
+    $room->update(['status' => 'terisi']);
+    return Reservasi::create([...$validatedData, 'user_id' => $userId, 'status' => 'pending']);
+});
 ```
 
-### F. Autonomous Billing Pipeline and Idempotent Late Fee Algorithm
-Billing schedules are executed by the host operating system's cron daemon invoking Laravel's task scheduler every minute (`* * * * * php artisan schedule:run`). The core monthly billing job executes on the 1st day of each month at 00:05 WIB within `BillingService`.
-
-The billing process is divided into three consecutive phases:
-1. *Invoice Generation (1st of Month)*: The scheduler iterates through active lease agreements (`penyewa.status = 'aktif'`). It calculates the base rental balance, applies any amortized advance-payment deductions, and generates a new `tagihan` entry in `pending` status with a payment deadline on the 10th. A payment notice containing virtual account details is immediately sent to the resident's WhatsApp via Fonnte.
-2. *Grace Period Phase (11th to Month-End)*: If an invoice remains unpaid past the 10th, its status transitions to `terlambat`. In keeping with local operational policy, the penalty remains set to **IDR 0** for the duration of the current calendar month. Friendly automated reminders are sent every three days.
-3. *Calendar-Rollover Penalty Application (1st of Month $M+1$)*: If the invoice is still unsettled at the start of the following calendar month, the engine applies a one-time late fee of **5% of the baseline monthly rent**. An idempotency condition prevents the fee from being evaluated or compounded multiple times if the scheduler re-executes:
+### E. Autonomous Billing Pipeline and Late Fee Algorithm
+Billing schedules are orchestrated by host cron invoking Laravel's task scheduler every minute (`* * * * * php artisan schedule:run`). The monthly billing job executes on the 1st day of each month at 00:05 WIB in `BillingService`:
+1. *Invoice Generation (1st of Month)*: Active agreements (`penyewa.status = 'aktif'`) are evaluated, creating `pending` invoices due on the 10th. WhatsApp payment notices containing virtual account numbers are dispatched via Fonnte.
+2. *Grace Period Phase (11th to Month-End)*: Overdue invoices transition to `terlambat`, carrying an **IDR 0** penalty during the current month, with automated reminders sent every three days.
+3. *Calendar-Rollover Penalty Application (1st of Month $M+1$)*: If unpaid at the start of the subsequent calendar month, an idempotent flat 5% fee is applied:
 
 $$\text{Late Fee} = \begin{cases} 0.05 \times \text{Tarif Pokok}, & \text{if } \text{status} = \text{'terlambat'} \land \text{nominal\_denda} = 0 \land \Delta\text{Month} \ge 1 \\ 0, & \text{otherwise} \end{cases} \quad (1)$$
 
-When a resident defaults on two consecutive monthly cycles, the billing engine triggers an escalation protocol, dispatching an automated alert to the registered parent or legal guardian's phone number.
+When a resident defaults across two consecutive billing cycles, the engine triggers guardian escalation, dispatching an automated alert to the registered parent or guardian's phone number.
 
-### G. Verification Framework
-The platform was evaluated through four complementary verification methods:
-1. *Behavioral Black Box Testing*: A 60-scenario functional test battery assessing six operational domains: authentication, public storefront catalog, 5-step booking wizard, tenant self-service portal, administrative control console, and background task scheduling.
-2. *Automated Feature Testing*: A suite of 510 automated PHPUnit integration tests containing 2,211 assertions, verifying route responses, session handling, database state transitions, and edge cases.
-3. *Payment Gateway Sandbox Validation*: End-to-end verification within the Midtrans Snap v2 sandbox environment using the Bank BCA Virtual Account simulator, checking virtual account creation, inquiry callbacks, settlement notifications, expiration handling, and cryptographic hash verification.
-4. *In-Situ Usability Acceptance*: A live operational walkthrough and structured interview conducted on-site with the senior resident manager (20 years of experience). The entire session was recorded on digital audio (`REKAMAN_UX_ADMIN_KOST_2026.m4a`, duration 23m 14s) across 10 functional inquiry modules.
+### F. Verification Framework
+The platform was evaluated via four complementary verification methods: (1) a 60-scenario behavioral black box test suite adhering to established software testing standards [19], [20]; (2) 510 automated PHPUnit integration tests containing 2,211 assertions; (3) end-to-end sandbox verification using the Midtrans Snap v2 Bank BCA Virtual Account simulator; and (4) an on-site operational evaluation and structured interview with the senior resident manager (20 years of experience), recorded via digital audio (`REKAMAN_UX_ADMIN_KOST_2026.m4a`, duration 23m 14s).
 
 ---
 
-## III. Results and Discussion
+## III. RESULTS AND DISCUSSION
 
 ### A. RESULT
 
 #### 1. Relational Database Cluster Topology
-The persistence architecture comprises 22 relational entities organized into six functional clusters, as summarized in Table 2.
+The persistence architecture comprises 22 relational entities normalized to 3NF, organized into six functional clusters as summarized in Table 2.
 
-**Table 2. RELATIONAL DATABASE SCHEMA TOPOLOGY (22 NORMALIZED ENTITIES)**
+**Table 2. CONSOLIDATED RELATIONAL DATABASE SCHEMA TOPOLOGY (22 ENTITIES)**
 
-| Functional Cluster | Entity Name | Primary Role & Business Invariants |
+| Functional Cluster | Associated Entities | Key Invariants & Relational Constraints |
 | :--- | :--- | :--- |
-| **Identity & Access** | `users` | Core credentials, authentication roles, soft deletes, and virtual columns (`active_email`, `active_no_hp`, `active_nik`). |
-| **Room Master** | `kamar` | Unit inventory (32 rooms, 2 floors, 3 pricing tiers) with virtual unicity `active_nomor_kamar`. |
-| | `fasilitas` | Catalog of internal amenities (Wi-Fi, AC, ensuite bathroom, water heater). |
-| | `kamar_fasilitas` | Many-to-many associative pivot resolving room-amenity mapping (`kamar_id`, `fasilitas_id`). |
-| **Tenancy Lifecycle** | `penyewa` | Active lease contracts, base pricing, rental duration, deposit tracking, and guardian contacts. |
-| | `reservasi` | Prospective booking documents, payment schema flags (DP 30% or 100% full), and expiration timers. |
-| **Finance & Billing** | `tagihan` | Monthly rental obligations, compound invoice numbers, due dates, and late fee markers. |
-| | `pembayaran` | Transactional receipts, payment channel identifiers, settlement timestamps, and staff confirmation links. |
-| | `pengeluaran` | Operational expenditure records (electricity tokens, municipal water, structural maintenance). |
-| **Communication** | `chat_messages` | Live pre-payment discussion channel between pending reservation applicants and administrators. |
-| | `guest_chat_threads` | Unauthenticated public visitor discussion threads bound to browser session cookies. |
-| | `guest_chat_messages` | Inbound and outbound message payloads for unauthenticated public inquiries. |
-| | `log_notifikasi` | Immutable audit trail of dispatched WhatsApp (Fonnte) and SMTP notifications with delivery status. |
-| | `pengumuman` | Administrative broadcast announcements distributed to active residents. |
-| | `notifikasi_khusus` | High-priority transactional event log and internal system audit triggers. |
-| **Operations & Content** | `keluhan` | Maintenance ticketing module capturing tenant issue descriptions and physical photographic evidence. |
-| | `peraturan` | Official residential rules and disciplinary guidelines published for tenant onboarding. |
-| | `customer_reviews` | Moderated resident satisfaction testimonials displayed on the public landing page. |
-| | `faqs` | Knowledge-base entries resolving recurring inquiries from prospective tenants. |
-| | `galleries` | Property visual assets, architectural exterior photographs, and interior room showcases. |
-| | `settings` | Dynamic property configuration parameters (banking details, contact numbers, promotional banners). |
-| | `whatsapp_clicks` | Analytics telemetry logging user interactions with floating WhatsApp landing page controls. |
+| **Identity & Access** | `users` | Roles, soft deletes, virtual unicity (`active_email`, `active_no_hp`, `active_nik`). |
+| **Room Master** | `kamar`, `fasilitas`, `kamar_fasilitas` | 32 units, 2 floors, 3 pricing tiers; M:N amenities; `active_nomor_kamar` unicity. |
+| **Tenancy Lifecycle** | `penyewa`, `reservasi` | Active contracts, base rates, deposits, guardian contacts; DP (30%) or full payment. |
+| **Finance & Billing** | `tagihan`, `pembayaran`, `pengeluaran` | Monthly obligations, invoice numbers, late fees; payment channels; operational logs. |
+| **Communication** | `chat_messages`, `guest_chat_threads`, `guest_chat_messages`, `log_notifikasi`, `pengumuman`, `notifikasi_khusus` | Pre-payment chat, public guest inquiry threads, immutable WhatsApp/email logs, broadcasts, priority transactional alerts. |
+| **Operations & Content** | `keluhan`, `peraturan`, `customer_reviews`, `faqs`, `galleries`, `settings`, `whatsapp_clicks` | Maintenance tickets with photos, boarding house rules, moderated reviews, FAQs, photo galleries, system config, landing CTA analytics. |
 
 #### 2. Hybrid Dual-Channel Booking Synchronization
-The platform unifies online self-service reservations and on-premise walk-in customer intake into a single operational workflow:
-- *Online Self-Service Stepper*: Prospective tenants navigate a 5-step horizontal wizard: (1) Unit Verification, (2) 16-Digit National Identity Number (NIK) Validation, (3) Tenancy Term Selection (Daily, Weekly, Monthly) with automated annual duration discounts, (4) Payment Schema Selection (30% down-payment or 100% full settlement), and (5) Midtrans Snap modal checkout.
-- *Administrative Walk-In Registration*: For walk-in applicants visiting the premises without prior online bookings, the administrator uses an onboarding portal (`/admin/penyewa/create`). The manager enters identity details, records manual cash or bank deposits, uploads physical receipt scans, and assigns room units. The system creates the user profile, lease contract, and initial invoice within a single atomic database transaction.
+The platform unifies online self-service reservations and on-premise walk-in onboarding:
+- *Online Self-Service Stepper*: Prospective tenants complete a 5-step wizard: (1) Unit Selection, (2) 16-Digit NIK Validation, (3) Tenancy Term Selection (Daily, Weekly, Monthly) with duration discounts, (4) Payment Schema Selection (30% DP or 100% full), and (5) Midtrans Snap modal checkout.
+- *Administrative Walk-In Registration*: For visitors registering on-premise (`/admin/penyewa/create`), the manager inputs tenant and guardian details, logs cash/bank deposits, and assigns rooms. The system creates the user profile, lease contract, and initial invoice within a single atomic database transaction.
 
 #### 3. Cryptographic Webhook Security and Signature Matching
-To guard against request tampering and spoofing on the public webhook endpoint, inbound notifications from Midtrans are verified cryptographically. The server computes a SHA-512 digital signature based on transaction parameters and the shared secret server key:
+Inbound webhook notifications from Midtrans are verified cryptographically via SHA-512 hashing:
 
 $$\text{Signature}_{\text{calc}} = \text{SHA-512}(\text{order\_id} + \text{status\_code} + \text{gross\_amount} + \text{ServerKey}) \quad (2)$$
 
-The computed hash is matched against the `signature_key` received in the HTTP POST body. If the hashes differ, the request is immediately terminated with an HTTP 403 Forbidden response, and transaction state changes are blocked.
+The computed hash is compared against the received `signature_key`. Mismatched signatures trigger an immediate HTTP 403 Forbidden response. Upon receiving a verified `settlement` payload, `MidtransCallbackController` executes database mutations inside a transaction using `lockForUpdate()`. If duplicate webhooks arrive, the system detects the settled invoice state and bypasses redundant ledger insertions, guaranteeing ledger idempotency.
 
-When a verified `settlement` payload is received, `MidtransCallbackController` executes the database update inside a transaction using `lockForUpdate()`. If duplicate webhook calls arrive for the same `order_id`, the system detects that the invoice is already marked as `lunas` and bypasses duplicate ledger insertion, ensuring ledger idempotency.
+#### 4. Operational Quarantine and Digital Receipts
+Vacated rooms undergo a physical quarantine workflow: when a checkout is processed administratively (`/admin/penyewa/checkout`), tenant status shifts to `nonaktif` while room status remains locked as `terisi` (displayed in red). The unit remains unbookable until staff complete physical sanitization, fixture repairs, and manually execute 'Release Room', resetting status to `tersedia` and invalidating cache via `Cache::forget('kamar_aktif_landing')`.
 
-#### 4. Post-Checkout Operational Quarantine Protocol
-Field observations highlighted that rooms vacated by departing tenants require cleaning, linen replacement, and facility repairs before new occupants arrive.
+For payment receipts, the active tenant portal compiles A5 digital payment receipts client-side using `html2pdf.js`. Constructing receipts in the browser canvas eliminates server CPU bottlenecks and persistent storage consumption on shared hosting. Server-side PDF generation via Dompdf is reserved strictly for monthly administrative balance sheets.
 
-To prevent premature re-booking, the system implements an operational quarantine hold: when a resident's checkout is processed administratively (`/admin/penyewa/checkout`), the system updates the tenant's status to `nonaktif` while retaining the room's status as `terisi` (displayed in red). The unit remains locked against public reservation until staff perform on-site cleaning, inspect fixtures, and manually trigger the 'Release Room' action in the administrative console. This release switches the room status to `tersedia` and clears the room availability cache via `Cache::forget('kamar_aktif_landing')`.
+#### 5. Production Deployment and Security Hardening
+The platform was deployed on Hostinger LiteSpeed Enterprise Cloud infrastructure (`https://asriboardinghouse.weatso.id/`). Hardening measures included enforcing TLS 1.3 encryption (SSL Grade A), Vite 5.x asset minification (total initial payload under 1.2 MB), `.htaccess` rules restricting access to sensitive configuration files (`.env`, `.git`), and enforcing routing strictly through `/public`.
 
-#### 5. Zero-Server-Storage Digital Receipt Compilation
-Standard web applications frequently generate PDF invoices using server-side rendering libraries such as Dompdf or Snappy. In shared hosting environments with constrained CPU and RAM quotas, compiling large PDF documents degrades server responsiveness and consumes persistent disk storage.
+#### 6. Empirical Quantitative Evaluation
+The functional integrity of the platform was evaluated across 60 test scenarios spanning six operational domains, as summarized in Table 3. All 60 scenarios executed with a 100% pass rate. Security testing evaluated Role-Based Access Control (RBAC) across portal gates (`/admin`, `/penyewa`, `/reservasi`) and OAuth compliance [9], confirming Insecure Direct Object Reference (IDOR) immunity as detailed in Table 4. The digital payment pipeline was validated using Midtrans's sandbox and BCA Virtual Account simulator across all seven lifecycle states, as summarized in Table 5.
 
-To resolve this bottleneck, the active tenant portal compiles A5 digital payment receipts entirely within the user's browser using `html2pdf.js`. When a tenant requests a receipt, the client DOM constructs an official stamped receipt containing transaction metadata, QR verification markers, and formal typography. The receipt is rendered directly to an A5 canvas and downloaded as a PDF without allocating memory or storage on the hosting server. Server-side PDF generation via Dompdf is used only for monthly administrative balance sheets.
+**Table 3. FUNCTIONAL BLACK BOX TESTING SUITE MATRIX (60 SCENARIOS)**
 
-#### 6. Production Deployment and Security Hardening
-The production platform was deployed on Hostinger LiteSpeed Enterprise Cloud infrastructure mapped to `https://asriboardinghouse.weatso.id/`. Production hardening measures included:
-- Enforcing TLS 1.3 encryption, achieving an SSL Grade A rating with automated HTTP-to-HTTPS canonical redirects;
-- Minifying CSS and JavaScript assets via Vite 5.x, keeping the total initial page load payload under 1.2 MB;
-- Hardening `.htaccess` directives to block public HTTP access to sensitive root-level files, including `.env`, `.git`, composer configuration files, and local SQLite/log files;
-- Restricting application entry routing strictly through the `/public` root directory.
-
-#### 7. Empirical Quantitative Evaluation
-
-##### a) Black Box Verification Suite
-The functional integrity of the platform was evaluated using 60 test cases divided across six operational domains. Table 3 presents the testing summary.
-
-**Table 3. FUNCTIONAL BLACK BOX TESTING SUITE MATRIX (60 TEST SCENARIOS)**
-
-| Domain Code | Functional Testing Scope | Test Scenarios | Passed | Failed | Pass Rate (%) |
+| Domain Code | Functional Testing Scope | Scenarios | Passed | Failed | Pass Rate |
 | :---: | :--- | :---: | :---: | :---: | :---: |
-| **DOM-01** | Identity Authentication, Socialite Google OAuth, & Profile Gates | 8 | 8 | 0 | 100.0% |
-| **DOM-02** | Public Catalog, Neo-Brutalist Layout, & WCAG 2.1 Touch Elements | 9 | 9 | 0 | 100.0% |
-| **DOM-03** | 5-Step Reservation Stepper, Discounting, & Concurrency Locks | 12 | 12 | 0 | 100.0% |
-| **DOM-04** | Active Resident Portal, Self-Service VA, & html2pdf.js Receipts | 10 | 10 | 0 | 100.0% |
-| **DOM-05** | Administrative Console, Walk-In Onboarding, & Inspection Quarantine | 13 | 13 | 0 | 100.0% |
-| **DOM-06** | Task Scheduler, Auto-Billing Cron, 5% Late Fees, & Guardian Alerts | 8 | 8 | 0 | 100.0% |
-| **Total** | **Comprehensive Functional Platform Testing** | **60** | **60** | **0** | **100.0%** |
-
-All 60 scenarios executed successfully without runtime errors, confirming that application logic, input validation, and asynchronous handlers perform strictly to specification.
-
-##### b) Role-Based Access Control and IDOR Immunity
-Security testing evaluated Role-Based Access Control (RBAC) boundaries across the three isolated portal gates (`/admin`, `/penyewa`, and `/reservasi`) and tested for Insecure Direct Object Reference (IDOR) vulnerabilities. Table 4 compiles the empirical security results.
+| **DOM-01** | Identity Authentication, Socialite Google OAuth, & Profile Gates | 8 | 8 | 0 | 100% |
+| **DOM-02** | Public Catalog, Neo-Brutalist Layout, & WCAG 2.1 Touch Targets | 9 | 9 | 0 | 100% |
+| **DOM-03** | 5-Step Reservation Stepper, Discounts, & Concurrency Locks | 12 | 12 | 0 | 100% |
+| **DOM-04** | Active Tenant Portal, Self-Service VA, & html2pdf.js Receipts | 10 | 10 | 0 | 100% |
+| **DOM-05** | Admin Console, Walk-In Onboarding, & Inspection Quarantine | 13 | 13 | 0 | 100% |
+| **DOM-06** | Task Scheduler, Auto-Billing Cron, 5% Late Fees, & Guardian Alerts | 8 | 8 | 0 | 100% |
+| **Total** | **Comprehensive Functional Platform Testing** | **60** | **60** | **0** | **100%** |
 
 **Table 4. SECURITY, RBAC, AND IDOR HARDENING VERIFICATION**
 
 | No. | Security Test Vector | Simulated Inbound Request | Expected System Behavior | Empirical Outcome | Status |
 | :---: | :--- | :--- | :--- | :--- | :---: |
-| 1 | Unauthenticated Admin Access | Anonymous visitor requests `/admin/dashboard` | Redirect request to `/admin/login` | Redirected to administrative login | Passed |
-| 2 | Privilege Escalation by Tenant | Active resident requests `/admin/laporan` | Deny authorization; return HTTP 403 Forbidden | HTTP 403 Forbidden response | Passed |
-| 3 | Public Access to Tenant Portal | Anonymous visitor requests `/penyewa/tagihan` | Intercept request; redirect to `/penyewa/login` | Redirected to tenant login | Passed |
-| 4 | Pending Tenant Early Access | Pending applicant requests `/penyewa/dashboard` | Middleware blocks route; display activation modal | Intercepted with activation warning | Passed |
-| 5 | IDOR Invoice Parameter Tampering | Tenant A alters URL parameter to view Tenant B's invoice | Scope Eloquent query to active user; return 403 | HTTP 403 Forbidden returned | Passed |
-| 6 | IDOR Receipt Tampering | User alters transaction receipt ID in download route | Validate tenant-payment relationship; return 403 | HTTP 403 Forbidden returned | Passed |
-
-##### c) Midtrans BCA Virtual Account Sandbox Lifecycle Verification
-The digital payment pipeline was validated using Midtrans's official sandbox environment and BCA Virtual Account simulator. Table 5 details the transactional states verified.
+| 1 | Unauthenticated Admin Access | Anonymous visitor requests `/admin/dashboard` | Redirect to `/admin/login` | Redirected to administrative login | Passed |
+| 2 | Privilege Escalation by Tenant | Active resident requests `/admin/laporan` | Deny authorization; return HTTP 403 | HTTP 403 Forbidden returned | Passed |
+| 3 | Public Access to Tenant Portal | Anonymous visitor requests `/penyewa/tagihan` | Intercept; redirect to `/penyewa/login` | Redirected to tenant login | Passed |
+| 4 | Pending Tenant Early Access | Pending applicant requests `/penyewa/dashboard` | Middleware blocks; display modal | Intercepted with activation warning | Passed |
+| 5 | IDOR Invoice Tampering | Tenant A alters URL parameter to view Tenant B invoice | Scope Eloquent query to active user | HTTP 403 Forbidden returned | Passed |
+| 6 | IDOR Receipt Tampering | User alters transaction receipt ID in download route | Validate tenant-payment relationship | HTTP 403 Forbidden returned | Passed |
 
 **Table 5. MIDTRANS BCA VIRTUAL ACCOUNT TRANSACTION LIFECYCLE VERIFICATION**
 
 | Step | Lifecycle Phase | Inbound / Outbound Action | System & Webhook Response | Transaction State | Result |
-| :---: | :--- | :--- | :--- | :---: | :---: |
-| 1 | VA Number Issuance | Tenant selects Bank Transfer $\rightarrow$ BCA VA | Snap API returns 16-digit VA code; expiry set to 24 hours | `pending` | Passed |
-| 2 | Bank Simulator Inquiry | Manager inputs VA number into BCA Simulator | Midtrans Cloud returns bill matching Asri Boarding House | `pending` | Passed |
-| 3 | Payment Settlement | User triggers payment on BCA Simulator | Webhook dispatches; SHA-512 validated; invoice settled | `settlement` | Passed |
-| 4 | Payment Expiration | 24-hour settlement window elapses | Webhook dispatches `expire`; system releases reservation | `expire` | Passed |
+| :---: | :--- | :--- | :--- | :--- | :---: |
+| 1 | VA Number Issuance | Tenant selects Bank Transfer $\rightarrow$ BCA VA | Snap API returns 16-digit VA code; 24h expiry | `pending` | Passed |
+| 2 | Bank Simulator Inquiry | Manager inputs VA into BCA Simulator | Midtrans Cloud returns Asri Boarding House bill | `pending` | Passed |
+| 3 | Payment Settlement | User triggers payment on BCA Simulator | Webhook dispatches; SHA-512 validated; settled | `settlement` | Passed |
+| 4 | Payment Expiration | 24-hour settlement window elapses | Webhook dispatches `expire`; room released | `expire` | Passed |
 | 5 | User Cancellation | User aborts checkout on Snap UI | Webhook dispatches `cancel`; reservation unheld | `cancel` | Passed |
-| 6 | Signature Tamper Attack | Webhook delivered with forged SHA-512 signature | Server detects hash mismatch; rejects with HTTP 403 | Discarded | Passed |
-| 7 | Duplicate Webhook Delivery | Identical `settlement` payload sent twice | Lock detects `lunas` status; second mutation bypassed | `settlement` | Passed |
+| 6 | Signature Tamper Attack | Webhook delivered with forged SHA-512 signature | Server detects hash mismatch; rejects with 403 | Discarded | Passed |
+| 7 | Duplicate Webhook Delivery | Identical `settlement` payload sent twice | Lock detects `lunas` status; mutation bypassed | `settlement` | Passed |
 
-#### 8. Resident Manager Operational Interview and Usability Acceptance
-To assess real-world operational feasibility, interface ergonomics, and domain workflow alignment, an in-depth operational interview and live system walkthrough was conducted with the primary operational stakeholder, Mr. Asep (48 years of age, 20 years of continuous boarding house management experience). The evaluation took place at the on-site property management office in Tembalang, using live workflows on the production deployment (`https://asriboardinghouse.weatso.id/`).
+#### 7. Empirical Operational Usability & Stakeholder Evaluation
+Operational feasibility and ergonomics were evaluated on-site at Asri Boarding House with senior resident manager Mr. Asep (48 years old, 20 years of operational tenure), using the production deployment (`https://asriboardinghouse.weatso.id/`). The entire session was recorded via continuous digital audio (`REKAMAN_UX_ADMIN_KOST_2026.m4a`, duration 23m 14s) following verbal informed consent. Ten operational inquiry modules were systematically tested, synthesized into Table 6.
 
-Rather than administering detached Likert surveys to non-administrative proxies, the evaluation adopted a qualitative case methodology grounded in direct operational execution. The entire session was captured via continuous digital audio recording (`REKAMAN_UX_ADMIN_KOST_2026.m4a`, duration 23 minutes 14 seconds), initiated following recorded verbal informed consent. The interview systematically examined 10 functional modules across the public storefront, administrative operations, billing policies, and tenant services. Table 6 compiles the structured interview questions and the verbatim responses provided by the senior resident manager.
+**Table 6. EMPIRICAL OPERATIONAL VALIDATION AND RESIDENT MANAGER ASSESSMENT**
 
-**Table 6. STRUCTURED INTERVIEW QUESTIONS AND SENIOR RESIDENT MANAGER RESPONSES (MR. ASEP)**
+| Evaluated Module | Previous Manual Operational Condition | Post-Deployment Assessment (Mr. Asep, 20 Yrs Experience) | Operational Impact |
+| :--- | :--- | :--- | :--- |
+| **Public Storefront & Media** | Inquiries answered via repetitive phone calls; rates unlisted. | High-contrast typography is clear for older eyes; upfront pricing eliminates repetitive rate inquiries from out-of-town parents. | Information transparency; reduced redundant inquiries. |
+| **Docked WhatsApp CTA** | Contact info buried in offline business cards or ad-hoc chats. | Perfectly positioned for mobile thumbs; connects directly to manager for instant prospective tenant inquiries. | Streamlined inquiry conversion. |
+| **OLED Dark Admin Console** | Manual tallying of occupied/vacant rooms in paper books. | Gentle on eyes during long sessions; auto-calculates room occupancy and net monthly cashflow with zero arithmetic error. | Eliminated ledger calculation errors. |
+| **Walk-In Intake Form** | Manual paper intake forms; guardian contacts frequently lost. | Concise intake fields; permanently registers guardian numbers for immediate emergency and payment coordination. | Established immutable guardian records. |
+| **Cash Settlement & Receipts** | Carbon receipt books; manual writing and tearing of paper slips. | Settles invoices and issues stamped digital receipts in one click; no risk of lost paper slips or handwriting disputes. | Instant digital proof; zero paper waste. |
+| **Flat 5% Late Fee Policy** | Vague oral reminders; arbitrary penalties creating friction. | Fair and appropriate; IDR 0 grace period during the month accommodates delayed allowances; flat 5% on rollover enforces discipline. | Predictable billing enforcement. |
+| **Post-Checkout Quarantine** | Vacated rooms verbally promised before physical cleaning. | Vital operational necessity; red-lock prevents premature booking while linens and bathrooms are sanitized, avoiding complaints. | Protected service quality and hospitality standards. |
+| **One-Click Financial Reports** | 3 to 5 business days spent gathering drawer receipts. | Compiles complete monthly revenue, expense, and net profit PDF/Excel reports instantly for owner submission. | Cycle compressed from 3–5 days to instant. |
+| **Tenant Self-Service & Tickets** | Verbal maintenance reports forgotten or lost in chat apps. | Students pay via BCA VA without visiting ATMs; photo-documented tickets allow immediate dispatch of plumbers or electricians. | Faster maintenance resolution; zero ATM travel. |
+| **Overall Retrospective** | 20 years of manual books with periodic cash discrepancies. | *"Compared to the last twenty years of handwritten books, the difference is night and day! Managing the boarding house feels immensely lighter, and my mind is at ease because cash discrepancies and misplaced paper notes are completely eliminated."* Score: **9.5/10**. | Confirmed production readiness and operational adoption. |
 
-| No. | Evaluated Aspect / Module | Structured Interview Question | Resident Manager Response (Mr. Asep) |
-| :---: | :--- | :--- | :--- |
-| 1 | **Public Storefront** (`weatso.id`): Typography, room media, & tariff transparency | *"Mr. Asep, this is the public front page of our boarding house website accessible to anyone via smartphone or laptop. Here are photos of the 32 rooms, amenities, and rental rates. In your view, is the typography sufficiently clear and do the photos accurately represent our boarding house?"* | *"The display is very clear, Mr. Rafif. The typography is large and the contrast is sharp, so my aging eyes do not get fatigued quickly. The photos are bright, and rental prices are displayed upfront. This is excellent because prospective tenants or their parents from out of town no longer need to call repeatedly just to inquire about prices."* |
-| 2 | **Floating WhatsApp CTA Widget**: Persistent bottom-right placement | *"The green WhatsApp button in the bottom-right corner remains docked while scrolling, and clicking it immediately launches a chat with the manager. In your opinion, is this button easy to spot or does it obstruct viewing?"* | *"It is positioned perfectly there. It is easily reachable by thumb on mobile phones, and connects straight to my WhatsApp number so I can promptly respond whenever prospective tenants inquire about room availability."* |
-| 3 | **Administrative Dashboard & Auto Cashflow** (`/admin`): OLED Dark Mode layout | *"Now we are logged into the admin account. This dashboard immediately presents summary cards: occupied rooms, vacant rooms, and total monthly cash balance. Does this summary feel immediately clear or confusing?"* | *"This is very comfortable. The dark theme is gentle on the eyes during long hours in front of the laptop. Occupancy and vacancy counters are instantly visible without manual scratch calculations in ledger books. Total cash inflows and outflows are calculated automatically, allowing me to view monthly net profit instantly with zero arithmetic error."* |
-| 4 | **Walk-In Tenant Intake** (`/admin/penyewa/create`): On-premise direct registration | *"If prospective tenants or parents visit the office directly without booking online, you can register them through this concise form: tenant name, tenant phone, parent/guardian phone, and room assignment. Does this intake form feel easy to complete?"* | *"Very easy, the form fields are concise and straightforward. Most importantly, the parent/guardian phone number is permanently recorded in the system, so we can contact family members immediately in emergencies or payment disputes."* |
-| 5 | **Cash Payment Confirmation & Instant Digital Receipts** (`/admin/tagihan`) | *"In this Billing menu, all room accounts are displayed. When a tenant pays rent in cash at your desk, you search their name and click 'Confirm Cash Payment', which immediately issues a digital receipt. How practical is this method?"* | *"Extremely practical. A single click settles the bill and generates the receipt instantly. I no longer need to look for carbon receipt booklets, write by hand, and tear paper sheets. Everything is recorded neatly with no risk of lost slips."* |
-| 6 | **Calendar-Month Flat 5% Late Fee Policy** | *"The system enforces a specific penalty policy: tenants overdue past the 10th during the current month incur no penalty (IDR 0 grace period); only upon crossing into the subsequent calendar month is a one-time flat 5% late fee applied. Based on your 20 years of experience, is this rule fair and appropriate?"* | *"This late fee policy is very sensible and appropriate! University students often experience delays receiving allowances from parents, so they should not be penalized immediately within the same month. However, once the calendar rolls over, applying a flat 5% fee enforces financial discipline firmly without being usurious."* |
-| 7 | **Post-Checkout Physical Inspection Quarantine Hold** | *"When a resident completes checkout, the room status does not automatically switch to 'available', but remains locked in red ('occupied') until you finish physical room inspection and manually set it to 'available'. What is your view on this rule?"* | *"This rule is an absolute necessity! In my 20 years of managing boarding houses, vacated rooms must always have mattresses, linens, and bathrooms sanitized by cleaning staff, and lighting fixtures and plumbing inspected. If a room immediately showed as 'vacant' online before cleaning, another applicant might book it and arrive to find a messy room, embarrassing management. This red-lock hold is vital for preventing complaints."* |
-| 8 | **Expense Logging & One-Click PDF/Excel Financial Balancing** (`/admin/laporan`) | *"Routine operational expenditures such as electricity tokens, municipal water, or repair supplies can be logged in the Expense menu. When the property owner requests a monthly balance sheet, clicking one button exports a complete PDF or Excel report with net profit calculations. How does this assist your work?"* | *"It helps immensely. Previously at each month-end, I had to spend 3 to 4 working days gathering paper receipts from desk drawers and calculating expenses one by one with a calculator before submitting reports to the owner. Now, within seconds, the report is compiled cleanly and ready to print or send via WhatsApp."* |
-| 9 | **Tenant Self-Service Portal**: BCA Virtual Account & Photographic Maintenance Tickets | *"Tenants have their own self-service portal to settle monthly rent via BCA Virtual Account (Midtrans) and download A5 receipts directly. Additionally, they can submit maintenance requests for leaking taps or blown bulbs with attached photo evidence. What is your response?"* | *"Students nowadays will love this because everything is handled online from mobile phones without visiting ATMs. Furthermore, photo-documented ticketing helps my job tremendously. Previously, maintenance issues were reported verbally in corridors and often forgotten during busy hours, or sent through personal WhatsApp messages that got buried. Having photographs attached allows me to dispatch plumbers or electricians immediately with clear context."* |
-| 10 | **20-Year Retrospective Reflection & Usability Acceptance** | *"Final question Mr. Asep, after testing all modules directly: compared to your 20 years of conventional manual bookkeeping, does this web system make operational administration substantially lighter and effectively prevent manual cash discrepancies? What satisfaction score do you give from 1 to 10?"* | *"Compared to the last twenty years of handwritten books, the difference is night and day, Mr. Rafif! Managing the boarding house feels immensely lighter, and my mind is at ease because cash discrepancies and misplaced paper notes are completely eliminated. Everything is transparent and automated. From 1 to 10, I give it a firm **9.5 or even 10**! The system is fully ready and tremendously beneficial for Asri Boarding House."* |
-
-*Source: Empirical on-site operational interview and digital audio recording by authors (2026)*
-
-Reflecting upon the transition from two decades of manual bookkeeping, Mr. Asep observed: *"Compared to the last twenty years of handwritten books, the difference is night and day. Managing the boarding house is immensely lighter, and my mind is at ease because cash discrepancies and missing receipts are completely eliminated."*
-
-Figure 2. Side-by-side operational testing and think-aloud evaluation with senior resident manager.
+*Source: Empirical on-site operational evaluation and digital audio recording by authors (2026)*
 
 ---
 
 ### B. DISCUSSION
 
-The empirical findings demonstrate that integrating automated payment processing, pessimistic concurrency control, and explicit business rule enforcement resolves structural inefficiencies that have long characterized manual boarding house operations.
+The empirical findings confirm that integrating automated payment processing, pessimistic concurrency control, and explicit business rules resolves structural inefficiencies inherent in manual boarding house workflows.
 
-Comparing this architecture with prior literature illustrates key engineering advancements. The platforms developed by Cornellya & Afriyadi [3] and Nizar [4] established the utility of web-based room listings but treated payment reconciliation as an external, manual task. By integrating Midtrans Snap v2, the current system automates payment verification and state transitions via cryptographically signed webhooks, removing manual bank slip reviews. Similarly, whereas the reservation architectures of Malaikosa & Mokola [10] and Purnia et al. [11] relied on unconstrained web forms vulnerable to concurrent booking conflicts, this implementation enforces database-level serialization through `lockForUpdate()`, providing robust transaction serialization guarantees against double bookings during peak enrollment traffic.
+Contrasting this architecture with prior literature illustrates key engineering advancements. Systems by Cornellya & Afriyadi [3] and Nizar [4] established web-based room listings but treated payment reconciliation as an external, manual task. By integrating Midtrans Snap v2, our platform automates payment verification and state transitions via cryptographically signed webhooks, eliminating manual bank slip reviews. In parallel, whereas the reservation architectures of Malaikosa & Mokola [10] and Purnia et al. [11] relied on unconstrained web forms vulnerable to concurrent booking conflicts, our implementation enforces database-level serialization through `lockForUpdate()`, providing robust transaction serialization guarantees against double bookings during peak enrollment traffic.
 
-A central architectural consideration concerns the operational model of payment gateways. Prior implementations by Sutisna & Aziz [7], Fatman et al. [8], and Surya Pratama [12] integrated Midtrans into retail e-commerce or point-of-sale environments. In retail applications, transactions represent discrete, isolated purchases. Tenancy management, by contrast, operates on long-term cyclical contracts requiring recurring billing, grace periods, penalty rules, and multi-party communication. By synthesizing the payment gateway with an autonomous cron engine, this research extends payment automation into multi-month lifecycle management.
+A critical architectural distinction concerns payment gateway application models. Implementations by Sutisna & Aziz [7], Fatman et al. [8], Surya Pratama [12], Pramita et al. [13], and Wijaya et al. [14] integrated Midtrans into retail e-commerce, school fees, or service checkouts. In retail applications, transactions represent discrete, isolated purchases. Tenancy management, by contrast, operates on long-term cyclical contracts requiring recurring billing, grace periods, penalty rules, and multi-party escalation. By synthesizing Midtrans with an autonomous cron engine, this research extends payment automation into multi-month lifecycle governance.
 
-Schema engineering utilizing Virtual Generated Columns addresses a prevalent challenge in web systems: preserving database unicity across soft-deleted records. In standard Laravel deployments, implementing soft deletes often forces developers to abandon database-level unique constraints in favor of application-level validation, leaving the database vulnerable to race-condition corruption. Establishing virtual generated columns that resolve to `NULL` upon deletion maintains unicity at the database engine level, ensuring data integrity without sacrificing historical audit trails.
+Schema engineering utilizing Virtual Generated Columns addresses a prevalent challenge in web systems: preserving database unicity across soft-deleted records. In standard Laravel deployments, implementing soft deletes often forces developers to abandon database-level unique constraints in favor of application-level validation, leaving the database vulnerable to race conditions. Establishing virtual generated columns that resolve to `NULL` upon deletion maintains unicity at the database engine level, ensuring data integrity without sacrificing historical audit trails.
 
-From an operational perspective, the usability evaluation with the senior resident manager (20 years of operational experience) provides grounded empirical validation within the target boarding house. The compression of monthly financial reconciliation from 3–5 working days to instantaneous reporting demonstrates practical viability for owner-operated facilities. However, because this evaluation was conducted within a single-site case study involving one primary administrative stakeholder, these qualitative findings reflect specific local operational workflows rather than a generalized, industry-wide benchmark. Organizational factors, varying staff digital literacy levels, and differing municipal rental conventions across other student housing clusters may introduce alternative workflow requirements. This limitation reinforces the necessity of multi-branch architectural scaling and wider empirical evaluations across diverse property types, as outlined in the future research directions.
+From an operational standpoint, the usability evaluation with the senior resident manager (20 years of operational tenure) provides grounded empirical validation within the target facility. The compression of monthly financial reconciliation from 3–5 working days to instantaneous reporting demonstrates practical viability for owner-operated properties. However, because this evaluation was conducted within a single-site case study involving one primary administrative stakeholder, these qualitative findings reflect specific local operational workflows rather than a generalized, industry-wide benchmark. Organizational factors, varying staff digital literacy levels, and differing municipal rental conventions across other student housing clusters may introduce alternative workflow requirements. This limitation reinforces the necessity of multi-branch architectural scaling and wider empirical evaluations across diverse property types, as outlined in the future research directions.
 
 ---
 
-## IV. Conclusion
+## IV. CONCLUSION
 
 This research engineered and deployed an integrated management information system for Asri Boarding House, resolving long-standing operational challenges associated with manual record-keeping. Built upon Laravel 11 and a 3NF-normalized MySQL 8.0 schema, the platform delivers automated recurring billing, real-time payment gateway integration via Midtrans Snap v2, and multi-channel WhatsApp alerts via Fonnte. The application of pessimistic row locking (`lockForUpdate()`) and post-checkout room quarantine holds prevented room reservation collisions across all evaluated concurrent scenarios, while client-side `html2pdf.js` compilation removed server storage overhead for tenant receipts.
 
