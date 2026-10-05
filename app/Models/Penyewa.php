@@ -72,6 +72,38 @@ class Penyewa extends Model
     }
 
     /**
+     * Relasi ke model Reservasi (hasMany).
+     */
+    public function reservasi(): HasMany
+    {
+        return $this->hasMany(Reservasi::class, 'penyewa_id', 'id');
+    }
+
+    /**
+     * Cek apakah penyewa memiliki kontrak Full Payment aktif yang mencakup tanggal tertentu.
+     */
+    public function hasActiveFullPayment(?string $targetDate = null): bool
+    {
+        $checkDate = $targetDate 
+            ? \Illuminate\Support\Carbon::parse($targetDate)->toDateString() 
+            : \Illuminate\Support\Carbon::today()->toDateString();
+
+        return $this->reservasi()
+            ->where('is_dp', false)
+            ->whereIn('status', ['lunas', 'dikonfirmasi'])
+            ->where('tanggal_selesai', '>=', $checkDate)
+            ->exists();
+    }
+
+    /**
+     * Accessor untuk mengecek status apakah penyewa terikat skema Full Payment
+     */
+    public function getIsFullPaymentAttribute(): bool
+    {
+        return $this->hasActiveFullPayment();
+    }
+
+    /**
      * Accessor untuk mengecek apakah masa sewa penyewa aktif sudah overdue.
      */
     public function getIsOverdueAttribute(): bool

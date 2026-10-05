@@ -393,6 +393,11 @@ class TenantLifecycleFixesTest extends TestCase
         $billingService = app(BillingService::class);
         $billingService->generateTagihanBulanan();
 
+        // Assert model relationship and helper methods
+        $this->assertCount(1, $fullPaymentTenant->reservasi);
+        $this->assertTrue($fullPaymentTenant->hasActiveFullPayment('2026-10-01'));
+        $this->assertFalse($regularTenant->hasActiveFullPayment('2026-10-01'));
+
         // Assert regular tenant RECEIVED bill for October 2026
         $tagihanRegular = Tagihan::where('penyewa_id', $regularTenant->id)
             ->where('periode_bulan', 10)
