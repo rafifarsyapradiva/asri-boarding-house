@@ -8,6 +8,7 @@ use App\Models\Penyewa;
 use App\Models\Tagihan;
 use App\Models\Pembayaran;
 use App\Models\Pengeluaran;
+use App\Models\Reservasi;
 use App\Services\BillingService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
@@ -294,5 +295,119 @@ class TenantLifecycleFixesTest extends TestCase
             ->get('/penyewa/tagihan');
 
         $response->assertStatus(200);
+    }
+
+    /**
+     * Test 7: Schedular generateTagihanBulanan automatically skips tenants with active Full Payment contract
+     */
+    public function test_generate_tagihan_bulanan_skips_active_full_payment_tenant(): void
+    {
+        // 1. Create a regular monthly tenant (1 month contract)
+        $regularUser = User::create([
+            'nama' => 'Penyewa Reguler',
+            'email' => 'reguler@example.com',
+            'password' => bcrypt('password'),
+            'no_hp' => '081234567899',
+            'role' => 'penyewa',
+            'is_active' => 1,
+            'require_password_change' => false,
+            'nama_wali' => 'Wali Reguler',
+            'no_wali' => '081122334466',
+            'nik' => '1234567890123457',
+        ]);
+
+        $regularTenant = Penyewa::create([
+            'user_id' => $regularUser->id,
+            'kamar_id' => $this->kamar->id,
+            'nik' => '1234567890123457',
+            'tanggal_masuk' => '2026-09-01',
+            'tanggal_keluar_seharusnya' => '2026-10-01',
+            'nama_wali' => 'Wali Reguler',
+            'no_wali' => '081122334466',
+            'deposit' => 0,
+            'status' => 'aktif',
+            'tanggal_billing' => 1,
+            'tipe_sewa' => 'bulanan',
+            'durasi' => 1,
+            'harga_sewa' => 1000000,
+        ]);
+
+        // 2. Create a Full Payment tenant (12 months contract, covers until 2027-09-26)
+        $fullPaymentUser = User::create([
+            'nama' => 'Nur Haliza',
+            'email' => 'haliza@example.com',
+            'password' => bcrypt('password'),
+            'no_hp' => '089524569335',
+            'role' => 'penyewa',
+            'is_active' => 1,
+            'require_password_change' => false,
+            'nama_wali' => 'Kusuma',
+            'no_wali' => '082219575575',
+            'nik' => '3374115212030001',
+        ]);
+
+        $kamarVip = Kamar::create([
+            'nomor_kamar' => '102',
+            'lantai' => 1,
+            'tipe' => 'vip',
+            'luas_m2' => 16.0,
+            'harga_bulan' => 1400000,
+            'status' => 'terisi',
+        ]);
+
+        $fullPaymentTenant = Penyewa::create([
+            'user_id' => $fullPaymentUser->id,
+            'kamar_id' => $kamarVip->id,
+            'nik' => '3374115212030001',
+            'tanggal_masuk' => '2026-09-26',
+            'tanggal_keluar_seharusnya' => '2027-09-26',
+            'nama_wali' => 'Kusuma',
+            'no_wali' => '082219575575',
+            'deposit' => 0,
+            'status' => 'aktif',
+            'tanggal_billing' => 1,
+            'tipe_sewa' => 'bulanan',
+            'durasi' => 12,
+            'harga_sewa' => 1283380,
+        ]);
+
+        Reservasi::create([
+            'user_id' => $fullPaymentUser->id,
+            'kamar_id' => $kamarVip->id,
+            'penyewa_id' => $fullPaymentTenant->id,
+            'tipe_sewa' => 'bulanan',
+            'tanggal_mulai' => '2026-09-26',
+            'tanggal_selesai' => '2027-09-26',
+            'durasi' => 12,
+            'total_harga' => 15400560,
+            'status' => 'dikonfirmasi',
+            'metode_pembayaran' => 'midtrans',
+            'is_dp' => false, // Full Payment
+            'nominal_dp' => 0,
+            'nominal_sisa' => 0,
+            'order_id' => 'RSV-FULL-TEST-1',
+        ]);
+
+        // Run auto-billing cron on 2026-10-01
+        \Illuminate\Support\Carbon::setTestNow('2026-10-01 00:05:00');
+        $billingService = app(BillingService::class);
+        $billingService->generateTagihanBulanan();
+
+        // Assert regular tenant RECEIVED bill for October 2026
+        $tagihanRegular = Tagihan::where('penyewa_id', $regularTenant->id)
+            ->where('periode_bulan', 10)
+            ->where('periode_tahun', 2026)
+            ->first();
+        $this->assertNotNull($tagihanRegular, 'Regular monthly tenant should receive recurring bill on 1 October.');
+        $this->assertEquals('pending', $tagihanRegular->status);
+
+        // Assert Full Payment tenant DID NOT receive bill for October 2026
+        $tagihanFullPayment = Tagihan::where('penyewa_id', $fullPaymentTenant->id)
+            ->where('periode_bulan', 10)
+            ->where('periode_tahun', 2026)
+            ->first();
+        $this->assertNull($tagihanFullPayment, 'Full payment tenant must NOT receive recurring bill during active upfront contract.');
+
+        \Illuminate\Support\Carbon::setTestNow();
     }
 }

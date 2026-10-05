@@ -46,6 +46,20 @@ class BillingService
                 ->chunkById(100, function ($penyewaList) use ($now, $periodeBulan, $periodeTahun, $tanggalTagihan, $tanggalJatuhTempo) {
                     foreach ($penyewaList as $penyewa) {
                         try {
+                            // Proteksi Skema Pelunasan Penuh (Full Payment Upfront):
+                            // Lewati penyewa jika memiliki reservasi Full Payment yang masih aktif
+                            // dan tanggal tagihan bulan ini masih berada di dalam rentang kontrak sewa.
+                            $hasActiveFullPayment = Reservasi::where('penyewa_id', $penyewa->id)
+                                ->where('is_dp', false)
+                                ->whereIn('status', ['lunas', 'dikonfirmasi'])
+                                ->where('tanggal_selesai', '>=', $tanggalTagihan)
+                                ->exists();
+
+                            if ($hasActiveFullPayment) {
+                                Log::info("Penyewa ID {$penyewa->id} dilewati dari penagihan bulanan karena terikat kontrak Full Payment aktif.");
+                                continue;
+                            }
+
                             $createdTagihan = null;
                             try {
                                 DB::transaction(function () use ($penyewa, $now, $periodeBulan, $periodeTahun, $tanggalTagihan, $tanggalJatuhTempo, &$createdTagihan) {
