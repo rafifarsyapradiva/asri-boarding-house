@@ -700,15 +700,15 @@ Untuk memberikan pandangan terstruktur mengenai keterkaitan antar-entitas selama
 | 15 | **Manual Release Pasca-Inspeksi** | `tersedia` | - | `nonaktif` | - | - | `KamarObserver::updated` | - (Katalog Live Update)| Cache Memori Dihapus |
 
 ## 4.2 Implementasi Sistem
-Tahap implementasi merealisasikan rancangan konseptual ke dalam bentuk baris program yang terstruktur, aman, dan teruji menggunakan framework Laravel 11. Fokus implementasi diarahkan pada ketahanan arsitektur, pemisahan tanggung jawab logika bisnis (*separation of concerns*), keamanan data finansial, penanganan konkurensi (*concurrency control*), serta integrasi layanan pihak ketiga secara andal. Pada sub-bab berikut diuraikan implementasi teknis sistem disertai potongan kode program (*source code snippets*) terpilih yang merepresentasikan logika bisnis inti.
+Tahap implementasi merealisasikan rancangan konseptual ke dalam bentuk baris program yang terstruktur dan teruji menggunakan framework Laravel 11. Fokus implementasi diarahkan pada ketahanan arsitektur, pemisahan tanggung jawab logika bisnis (*separation of concerns*), keamanan data finansial, serta integrasi layanan pihak ketiga secara andal.
 
 ### 4.2.1 Lingkungan Implementasi
-Pengembangan serta pengoperasian sistem dibangun di atas spesifikasi lingkungan perangkat keras dan perangkat lunak yang terstandarisasi guna menjamin determinisme performa di lingkungan lokal (*development*) maupun peladen awan (*production*):
+Pengembangan serta pengoperasian sistem dibangun di atas spesifikasi lingkungan perangkat keras dan perangkat lunak yang terstandarisasi:
 1. **Perangkat Keras (*Hardware*)**:
    * Lingkungan Pengembangan (*Development*): Laptop Workstation berspesifikasi Prosesor Multi-Core 2.3 GHz, RAM 16 GB DDR4, serta media penyimpanan Solid State Drive (SSD) NVMe 512 GB.
    * Lingkungan Produksi (*Production*): Layanan Cloud Shared Hosting Hostinger Enterprise di Data Center Jakarta (Indonesia), ditenagai peladen web LiteSpeed Enterprise berspesifikasi 1 Core vCPU, 1 GB RAM, dan penyimpanan berbasis Cloud NVMe berkecepatan tinggi.
 2. **Perangkat Lunak (*Software Stack*)**:
-   * Bahasa Pemrograman: PHP versi 8.2 dengan dukungan ekstensi `pdo_mysql`, `curl`, `openssl`, `mbstring`, `fileinfo`, dan `bcmath`.
+   * Bahasa Pemrograman: PHP versi 8.2.12 dengan dukungan ekstensi `pdo_mysql`, `curl`, `openssl`, `mbstring`, `fileinfo`, dan `bcmath`.
    * Framework Backend: Laravel versi 11.x yang mengadopsi arsitektur MVC modern dan Service Layer.
    * Sistem Manajemen Basis Data: MySQL versi 8.0 berbasis mesin penyimpanan InnoDB, set karakter `utf8mb4`, dan kolasi `utf8mb4_unicode_ci`.
    * Antarmuka Frontend: Blade Templating Engine yang dipadukan dengan TailwindCSS versi 3.4 dan Alpine.js untuk reaktivitas interaksi antarmuka.
@@ -719,40 +719,6 @@ Pengembangan serta pengoperasian sistem dibangun di atas spesifikasi lingkungan 
    * Otomasi Pesan Instan: Fonnte WhatsApp Gateway API v2.
    * Otentikasi Eksternal: Google Cloud Console OAuth 2.0 API via paket Laravel Socialite.
    * Pengiriman Surel Transaksional: Peladen surat Hostinger SMTP terenkripsi TLS pada port 587.
-
-Ketergantungan pustaka backend dan frontend dikelola secara deklaratif. Cuplikan berkas konfigurasi dependensi sistem disajikan pada Kode 4.1 dan Kode 4.2.
-
-```json
-// Kode 4.1 Cuplikan composer.json: Konfigurasi Dependensi Inti Backend PHP 8.2 & Laravel 11
-{
-    "require": {
-        "php": "^8.2",
-        "dompdf/dompdf": "^3.1",
-        "laravel/framework": "^12.0",
-        "laravel/socialite": "^5.27",
-        "laravel/tinker": "^2.10.1"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^11.5.50"
-    }
-}
-```
-
-```json
-// Kode 4.2 Cuplikan package.json: Konfigurasi Pustaka Antarmuka Vite, TailwindCSS, & Alpine.js
-{
-    "scripts": {
-        "build": "vite build",
-        "dev": "vite"
-    },
-    "devDependencies": {
-        "alpinejs": "^3.4.2",
-        "axios": "^1.11.0",
-        "tailwindcss": "^3.1.0",
-        "vite": "^7.0.7"
-    }
-}
-```
 
 ### 4.2.2 Perancangan Arsitektur Aplikasi
 Sistem mengimplementasikan arsitektur tiga lapis (*3-Tier Architecture*) yang dipadukan dengan pola pemisahan lapisan layanan (*Service Layer Decoupling*) guna menghindari fenomena pengendali yang terlalu padat (*fat controller problem*):
@@ -766,45 +732,6 @@ Sistem mengimplementasikan arsitektur tiga lapis (*3-Tier Architecture*) yang di
 * **Data Tier**: Persistensi data dikelola oleh MySQL 8.x melalui Laravel Eloquent ORM. Seluruh operasi manipulasi data finansial dilindungi oleh transaksi basis data atomik (`DB::transaction`) dan penguncian baris eksklusif (*pessimistic row locking*) menggunakan metode `lockForUpdate()` guna meniadakan risiko perselisihan data (*race condition*).
 
 Arsitektur aplikasi turut didukung oleh pola *Event-Listener-Observer*: peristiwa `PembayaranBerhasil` dipicu saat pembayaran Midtrans berstatus lunas, `PenyewaObserver` secara otomatis mengunci kamar menjadi terisi saat penyewa aktif dan menjaga kamar tetap terkunci pasca-checkout, serta `FasilitasObserver` membersihkan cache katalog publik saat data fasilitas diperbarui oleh administrator.
-
-Penerapan *Service Layer Decoupling* tercermin pada kelas `BillingService`, di mana pemrosesan penagihan massal diisolasi ke dalam unit transaksi terproteksi dengan pembagian memori (*chunking*) guna mencegah kebocoran memori (*memory leak*). Cuplikan implementasi disajikan pada Kode 4.3.
-
-```php
-// Kode 4.3 Cuplikan app/Services/BillingService.php: Dekopling Logika Bisnis Penagihan Massal
-Penyewa::where('status', 'aktif')
-    ->where('tipe_sewa', 'bulanan')
-    ->where('tanggal_masuk', '<=', $tanggalTagihan)
-    ->with(['kamar'])
-    ->chunkById(100, function ($penyewaList) use ($now, $periodeBulan, $periodeTahun, $tanggalTagihan, $tanggalJatuhTempo) {
-        foreach ($penyewaList as $penyewa) {
-            // Proteksi Skema Full Payment: Lewati jika penyewa telah melunasi sewa di muka
-            if ($penyewa->hasActiveFullPayment($tanggalTagihan)) {
-                continue;
-            }
-
-            DB::transaction(function () use ($penyewa, $now, $periodeBulan, $periodeTahun, $tanggalTagihan, $tanggalJatuhTempo) {
-                $orderId = "TGH-{$penyewa->id}-" . $now->format('Ym');
-                $nominalPokok = ($penyewa->harga_sewa !== null && (float)$penyewa->harga_sewa > 0)
-                    ? $penyewa->harga_sewa
-                    : ($penyewa->kamar ? $penyewa->kamar->harga_bulan : 0);
-
-                // firstOrCreate menjamin integritas antiduplikasi pada lapisan transaksi
-                Tagihan::firstOrCreate([
-                    'penyewa_id'    => $penyewa->id,
-                    'periode_bulan' => $periodeBulan,
-                    'periode_tahun' => $periodeTahun,
-                ], [
-                    'order_id'            => $orderId,
-                    'tanggal_tagihan'     => $tanggalTagihan,
-                    'tanggal_jatuh_tempo' => $tanggalJatuhTempo,
-                    'nominal_pokok'       => $nominalPokok,
-                    'nominal_total'       => $nominalPokok,
-                    'status'              => 'pending',
-                ]);
-            });
-        }
-    });
-```
 
 ### 4.2.3 Implementasi Basis Data
 Skema basis data direalisasikan ke dalam 22 berkas migrasi database Laravel. Tabel 4.2 merangkum struktur fungsional dari keseluruhan dua puluh dua tabel relasional yang menyusun sistem informasi Asri Boarding House.
@@ -838,14 +765,10 @@ Skema basis data direalisasikan ke dalam 22 berkas migrasi database Laravel. Tab
 
 *Sumber: Hasil rekayasa skema basis data penulis (2026)*
 
-Sebagai penguatan integritas data, sistem menerapkan dua teknik penting pada skema DDL (*Data Definition Language*):
-1. **Virtual Generated Columns**: Digunakan pada tabel `users`, `kamar`, dan `penyewa` guna memecahkan masalah benturan indeks unik saat baris data dihapus secara lunak (*soft delete*). Nilai kolom virtual dihitung secara dinamis: jika `deleted_at IS NULL`, nilai kolom dipertahankan; jika telah di-softdelete, nilainya menjadi `NULL`. Karena MySQL mengizinkan nilai `NULL` ganda pada *unique constraint*, keunikan data aktif tetap terjamin tanpa perlu memanipulasi string data historis.
-2. **Composite Unique Index & Foreign Key Integrity**: Diterapkan pada tabel transaksi finansial (`tagihan`) untuk mengunci integritas periode penagihan bulanan serta mencegah penghapusan data induk yang memiliki ketergantungan kas melalui `ON DELETE RESTRICT`.
-
-Cuplikan berkas migrasi disajikan pada Kode 4.4 dan Kode 4.5.
+Sebagai penguatan integritas data, cuplikan berkas migrasi berikut menunjukkan penerapan *Virtual Generated Columns* untuk mencegah benturan *unique constraint* saat data dihapus lunak (*soft delete*):
 
 ```php
-// Kode 4.4 Cuplikan database/migrations/0001_01_01_000000_create_users_table.php: Virtual Generated Columns
+// Cuplikan Migrasi Tabel Users: Penerapan Virtual Generated Columns
 Schema::create('users', function (Blueprint $table) {
     $table->id();
     $table->string('nama', 100);
@@ -863,436 +786,54 @@ Schema::create('users', function (Blueprint $table) {
 });
 ```
 
-```php
-// Kode 4.5 Cuplikan database/migrations/create_tagihan_table.php: Integritas Relasi & Indeks Unik Komposit
-Schema::create('tagihan', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('penyewa_id')->constrained('penyewa')->onDelete('restrict');
-    $table->string('order_id', 50)->unique();
-    $table->tinyInteger('periode_bulan');
-    $table->smallInteger('periode_tahun');
-    $table->decimal('nominal_pokok', 12, 2);
-    $table->decimal('nominal_denda', 12, 2)->default(0);
-    $table->decimal('nominal_total', 12, 2);
-    $table->enum('status', ['pending', 'lunas', 'terlambat', 'dibatalkan'])->default('pending');
-    $table->timestamps();
-
-    // Composite unique index menjamin tepat satu tagihan per penyewa per bulan
-    $table->unique(['penyewa_id', 'periode_bulan', 'periode_tahun'], 'uq_tagihan_periode');
-});
-```
-
 ### 4.2.4 Implementasi Autentikasi dan Hak Akses
 Sistem menegakkan isolasi peran pengguna secara berlapis guna menjamin keamanan data:
-1. **Pemisahan Tiga Portal Login**: Antarmuka autentikasi diisolasi ke dalam tiga rute mandiri: `/admin/login` bagi pengelola, `/penyewa/login` bagi penghuni aktif, dan `/reservasi/login` bagi calon penyewa baru. Setiap rute dipagari oleh middleware otorisasi `RoleMiddleware` yang secara otomatis memutus sesi dan mengirimkan kode status HTTP 403 Forbidden apabila pengguna mencoba melintasi batas portal yang bukan hak otorisasi perannya.
+1. **Pemisahan Tiga Portal Login**: Antarmuka autentikasi diisolasi ke dalam tiga rute mandiri: `/admin/login` bagi pengelola, `/penyewa/login` bagi penghuni aktif, dan `/reservasi/login` bagi calon penyewa baru. Setiap rute dipagari oleh middleware otorisasi `EnsureUserRole` yang secara otomatis memutus sesi dan mengirimkan kode status HTTP 403 Forbidden apabila pengguna mencoba melintasi batas portal yang bukan hak otorisasi perannya.
 2. **Integrasi Google OAuth 2.0 via Socialite**: Calon penyewa dapat masuk secara praktis menggunakan akun Google resmi. Untuk menjamin kelengkapan data kontak, middleware `EnsureProfileIsComplete` dipasang sebagai gerbang penapis (*interceptor*): saat calon penyewa baru berhasil masuk melalui Google dan nomor ponselnya masih berformat sementara (`temp_...`), sistem secara otomatis mengalihkannya ke `/profil/complete` guna mewajibkan pengisian nomor WhatsApp aktif sebelum diizinkan mengakses formulir reservasi kamar.
-3. **Mitigasi IDOR (*Insecure Direct Object Reference*)**: Akses terhadap entitas finansial privat—seperti invoice tagihan dan nota pembayaran—dikunci pada lapisan kebijakan otorisasi (*Policy Layer*). Sistem mengevaluasi kepemilikan tagihan melalui relasi pengguna aktif (`$tagihan->penyewa?->user_id === $user->id`). Upaya manipulasi ID tagihan pada URL oleh pihak lain secara otomatis digagalkan dengan balasan kode status HTTP 403 Forbidden.
-
-Cuplikan implementasi isolasi peran dan mitigasi IDOR disajikan pada Kode 4.6 dan Kode 4.7.
-
-```php
-// Kode 4.6 Cuplikan app/Http/Middleware/RoleMiddleware.php: Isolasi Hak Akses Peran Berbasis Guard Clause
-public function handle(Request $request, Closure $next, string ...$roles): Response
-{
-    $user = $request->user();
-
-    // Guard Clause 1: Pengguna belum terautentikasi
-    if (!$user) {
-        return $request->expectsJson()
-            ? response()->json(['message' => 'Unauthenticated.'], 401)
-            : redirect()->route('login');
-    }
-
-    // Guard Clause 2: Peran pengguna tidak sesuai dengan daftar peran yang diizinkan
-    if (!in_array($user->role, $roles, true)) {
-        if ($request->expectsJson()) {
-            return response()->json(['message' => 'Akses ditolak.'], 403);
-        }
-        abort(403, 'Akses ditolak: Anda tidak memiliki otoritas pada portal ini.');
-    }
-
-    return $next($request);
-}
-```
-
-```php
-// Kode 4.7 Cuplikan app/Policies/TagihanPolicy.php: Mitigasi IDOR pada Akses Dokumen Finansial
-public function view(User $user, Tagihan $tagihan): bool
-{
-    return $user->role === User::ROLE_ADMIN || $this->isOwner($user, $tagihan);
-}
-
-public function pay(User $user, Tagihan $tagihan): bool
-{
-    return $this->isOwner($user, $tagihan);
-}
-
-private function isOwner(User $user, Tagihan $tagihan): bool
-{
-    // Membatasi akses kueri hanya untuk entitas penyewa yang memiliki relasi ke user terautentikasi
-    return $tagihan->penyewa?->user_id === $user->id;
-}
-```
+3. **Mitigasi IDOR (*Insecure Direct Object Reference*)**: Akses terhadap entitas finansial privat—seperti invoice tagihan dan nota pembayaran—dikunci pada lapisan pengontrol (*controller-level scoping*). Sistem mengikat kueri data secara eksklusif ke entitas pengguna yang terotentikasi aktif (`$request->user()->tenant->bills()->findOrFail($id)`). Upaya manipulasi ID tagihan pada URL oleh pihak lain secara otomatis digagalkan dengan balasan kode status HTTP 403.
 
 ### 4.2.5 Implementasi Fitur Calon Penyewa
 Modul calon penyewa menghadirkan kemudahan penelusuran kamar dan pemesanan secara mandiri:
 1. **Katalog Kamar Dinamis Berstatus Real-Time**: Halaman landing page menyajikan kisi (*grid*) 32 unit kamar dengan indikator status dinamis. Unit kamar kosong memunculkan tombol "Pesan Unit" yang membuka formulir reservasi, sedangkan kamar terisi menyembunyikan formulir dan menampilkan tombol "Tanya WA" yang langsung menghubungkan peramban ke nomor WhatsApp admin beserta templat pesan otomatis.
 2. **Alur Pemesanan Bertahap (*5-Step Horizontal Stepper*)**: Calon penyewa dipandu melalui lima tahapan sistematis: (1) Verifikasi Unit Kamar, (2) Pengisian Biodata Diri & NIK 16 Digit, (3) Pemilihan Tipe Sewa (Harian/Mingguan/Bulanan) beserta kalkulasi otomatis diskon sewa tahunan, (4) Pemilihan Skema Pembayaran (DP 30% atau Lunas 100%), serta (5) Pembayaran Digital via Midtrans Snap.
-3. **Pencegahan Double-Booking Simultan**: Untuk mengantisipasi dua calon penyewa memesan unit kamar yang sama pada detik yang bersamaan, pembuatan reservasi dieksekusi di dalam transaksi basis data berpelindung kunci baris eksklusif `lockForUpdate()`.
-4. **Kanal Komunikasi Ganda**: Sistem menyediakan *Guest Chat* publik tanpa kewajiban login berpersistensi token sesi di peramban, serta modul *Live Chat* pra-pembayaran yang aktif selama status reservasi *pending*. Muatan pesan disinkronkan secara berkala per 4 detik melalui teknik *incremental AJAX polling* dengan parameter `after` dan *eager loading* guna mencegah masalah kueri ganda (*N+1 queries problem*).
-
-Cuplikan logika transaksi reservasi anti *double-booking* dan kueri *incremental AJAX polling* disajikan pada Kode 4.8 dan Kode 4.9.
-
-```php
-// Kode 4.8 Cuplikan app/Services/ReservasiService.php: Transaksi Atomik Reservasi & Kunci Anti Double-Booking
-public function buatReservasi(array $data): Reservasi
-{
-    return DB::transaction(function () use ($data) {
-        // Penguncian baris pesimistik untuk serialisasi kueri konkurensi kamar
-        $kamar = Kamar::lockForUpdate()->findOrFail($data['kamar_id']);
-
-        if ($this->cekDoubleBooking($kamar, $data['tanggal_mulai'], $data['tanggal_selesai'])) {
-            throw ValidationException::withMessages([
-                'kamar_id' => 'Kamar sudah ter-booking pada rentang tanggal tersebut.'
-            ]);
-        }
-
-        $rincianHarga = $this->hitungHarga($kamar, $data['tipe_sewa'], $data['durasi']);
-
-        return Reservasi::create(array_merge($data, [
-            'order_id'     => "RSV-{$data['user_id']}-" . time(),
-            'total_harga'  => $rincianHarga['total_harga'],
-            'nominal_dp'   => $rincianHarga['nominal_dp'],
-            'nominal_sisa' => $rincianHarga['nominal_sisa'],
-            'status'       => 'pending',
-        ]));
-    });
-}
-```
-
-```php
-// Kode 4.9 Cuplikan app/Http/Controllers/Api/ChatController.php: Incremental Fetching Obrolan Pra-Bayar
-public function fetch(Request $request, Reservasi $reservasi): JsonResponse
-{
-    Gate::authorize('chat', $reservasi);
-    $query = ChatMessage::where('reservasi_id', $reservasi->id);
-
-    // Muat pesan secara bertahap hanya yang memiliki ID lebih besar dari parameter 'after'
-    if ($request->has('after') && (int) $request->query('after') > 0) {
-        $messages = $query->where('id', '>', (int) $request->query('after'))
-            ->orderBy('id', 'asc')
-            ->with('sender:id,nama,role')
-            ->get();
-    } else {
-        $messages = $query->orderBy('id', 'desc')->limit(50)
-            ->with('sender:id,nama,role')->get()->reverse()->values();
-    }
-
-    return response()->json(['messages' => $messages]);
-}
-```
+3. **Kanal Komunikasi Ganda**: Sistem menyediakan *Guest Chat* publik tanpa kewajiban login berpersistensi token sesi di peramban, serta modul *Live Chat* pra-pembayaran yang aktif selama status reservasi *pending*. Muatan pesan disinkronkan secara berkala per 4 detik melalui teknik AJAX polling yang dioptimalkan dengan *eager loading* pada relasi `latestChatMessage` guna mencegah masalah kueri ganda (*N+1 queries problem*).
 
 ### 4.2.6 Implementasi Fitur Penyewa Aktif
 Modul penyewa aktif pada rute `/penyewa/dashboard` menghadirkan portal swalayan (*self-service*) terintegrasi bagi penghuni kamar:
 1. **Dasbor Tagihan dan Pelunasan Mandiri**: Penyewa dapat meninjau kartu ringkasan kontrak sewa dan jadwal tagihan bulanan. Tombol "Bayar Sekarang" memanggil jendela popup modal Midtrans Snap v2 untuk pelunasan non-tunai via Bank BCA Virtual Account.
 2. **Kuitansi Pembayaran Digital Format A5 (*Zero Server Overhead*)**: Bukti pelunasan transaksi resmi format A5 berstempel digital dicetak dan diunduh langsung di sisi peramban klien via pustaka `html2pdf.js`. Pendekatan ini meniadakan beban kompilasi PDF di peladen serta menghemat kapasitas penyimpanan berkas pada hosting.
-3. **Modul Pengaduan Keluhan Fasilitas Rusak**: Penyewa dapat melaporkan kerusakan sarana kamar (seperti lampu padam atau kran air bocor) secara terstruktur melalui formulir keluhan berlampiran foto bukti fisik. Sistem memvalidasi ekstensi berkas (.jpg, .jpeg, .png) dan membatasi ukuran berkas maksimum 2 MB, dilengkapi pembersihan otomatis berkas gambar jika eksekusi database mengalami kegagalan guna mencegah berkas yatim (*dangling files*).
+3. **Modul Pengaduan Keluhan Fasilitas Rusak**: Penyewa dapat melaporkan kerusakan sarana kamar (seperti lampu padam atau kran air bocor) secara terstruktur melalui formulir keluhan berlampiran foto bukti fisik. Sistem memvalidasi ekstensi berkas (.jpg, .jpeg, .png) dan membatasi ukuran berkas maksimum 2 MB.
 4. **Pemulihan Kata Sandi Mandiri**: Pengguna yang lupa kata sandi dapat meminta tautan pemulihan kata sandi terenkripsi melalui rute `/penyewa/password/reset` yang dikirimkan secara otomatis ke alamat surel terdaftar melalui protokol SMTP.
-
-Cuplikan skrip perenderan kuitansi di sisi klien dan penanganan unggah bukti keluhan disajikan pada Kode 4.10 dan Kode 4.11.
-
-```javascript
-// Kode 4.10 Cuplikan resources/views/nota/cetak.blade.php: Perenderan Kuitansi A5 di Klien via html2pdf.js
-function downloadPdf() {
-    var element = document.getElementById('nota-container');
-    var filename = 'Nota-{{ addslashes($pembayaran->transaction_id) }}.pdf';
-
-    var opt = {
-        margin:      [8, 8, 8, 8],
-        filename:    filename,
-        image:       { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, logging: false },
-        jsPDF:       { unit: 'mm', format: 'a5', orientation: 'portrait' }
-    };
-
-    // Eksekusi kompilasi PDF 100% berjalan di peramban pengguna tanpa membebani CPU peladen
-    html2pdf().set(opt).from(element).save();
-}
-```
-
-```php
-// Kode 4.11 Cuplikan app/Http/Controllers/Penyewa/KeluhanController.php: Proteksi Kebocoran Storage Berkas Aduan
-public function store(StoreKeluhanRequest $request): RedirectResponse
-{
-    $penyewa = $request->user()->penyewa;
-    $validated = $request->validated();
-
-    $fotoPath = null;
-    if ($request->hasFile('foto_bukti')) {
-        $fotoPath = $request->file('foto_bukti')->store('keluhan', 'public');
-    }
-
-    try {
-        $keluhan = DB::transaction(fn() => Keluhan::create([
-            'penyewa_id' => $penyewa->id,
-            'judul'      => $validated['judul'],
-            'kategori'   => $validated['kategori'],
-            'deskripsi'  => $validated['deskripsi'],
-            'foto_bukti' => $fotoPath,
-            'status'     => 'pending',
-        ]));
-
-        event(new KeluhanDibuat($keluhan));
-        return redirect()->route('penyewa.keluhan.index')->with('success', 'Keluhan berhasil dikirim.');
-    } catch (\Throwable $e) {
-        // Hapus file fisik seketika jika query database gagal untuk mencegah penumpukan file yatim
-        if ($fotoPath && Storage::disk('public')->exists($fotoPath)) {
-            Storage::disk('public')->delete($fotoPath);
-        }
-        throw $e;
-    }
-}
-```
 
 ### 4.2.7 Implementasi Fitur Admin
 Panel administrasi pada rute `/admin/dashboard` mengadopsi tema gelap *OLED Black Dark Mode* guna menjaga kenyamanan visual pengelola (Bapak Asep, usia 48 tahun) saat memantau operasional dalam durasi panjang:
-1. **Dasbor Statistik dan Akuntansi Mikro (*Micro-Accounting*)**: Tiga kartu ringkasan keuangan utama (Total Pemasukan, Total Pengeluaran, dan Laba Bersih) dikalkulasi secara langsung melalui kueri agregasi basis data tunggal (*single-pass SQL aggregation*), menggantikan pencatatan buku besar konvensional guna mengamankan perputaran pendapatan bruto maksimum kos sebesar Rp28.500.000 per bulan dari risiko selisih hitung kas.
-2. **Pendaftaran Tamu Datang Langsung (*Walk-in*)**: Menyediakan modul pendaftaran manual bagi calon penghuni yang datang langsung ke lokasi kos tanpa reservasi web. Kelas `AdminPenyewaService` mengeksekusi pembuatan akun pengguna, penguncian kamar, pencatatan uang jaminan deposit, dan penerbitan tagihan awal lunas dalam transaksi atomik.
-3. **Konfirmasi Pembayaran Kas/Tunai**: Administrator dapat mengubah status tagihan menjadi lunas dengan satu kali sentuhan melalui tombol "Konfirmasi Tunai" pada menu tagihan via `TagihanService::confirmCashPayment`, yang secara otomatis membukukan mutasi penerimaan kas dan menerbitkan kuitansi resmi.
+1. **Dasbor Statistik dan Akuntansi Mikro (*Micro-Accounting*)**: Tiga kartu ringkasan keuangan utama (Total Pemasukan, Total Pengeluaran, dan Laba Bersih) dikalkulasi secara langsung melalui kueri agregasi basis data, menggantikan pencatatan buku besar konvensional guna mengamankan perputaran pendapatan bruto maksimum kos sebesar Rp28.500.000 per bulan dari risiko selisih hitung kas.
+2. **Pendaftaran Tamu Datang Langsung (*Walk-in*)**: Menyediakan modul pendaftaran manual bagi calon penghuni yang datang langsung ke lokasi kos tanpa reservasi web. Administrator memasukkan biodata, memilih kamar kosong, mencatat uang jaminan deposit sewa, dan mengunggah bukti setoran.
+3. **Konfirmasi Pembayaran Kas/Tunai**: Administrator dapat mengubah status tagihan menjadi lunas dengan satu kali sentuhan melalui tombol "Konfirmasi Tunai" pada menu tagihan, yang secara otomatis membukukan mutasi penerimaan kas dan menerbitkan kuitansi resmi.
 4. **Kebijakan Isolasi Kamar Pasca-Checkout**: Saat penyewa menyelesaikan masa tinggal (*checkout*), sistem secara sengaja tidak mengubah status kamar menjadi tersedia; kamar tetap berstatus `terisi` (terkunci merah) hingga administrator selesai memeriksa kebersihan dan kelayakan sarana kamar secara langsung sebelum melepas statusnya secara manual menjadi `tersedia`. Kebijakan ini efektif meniadakan risiko pemesanan ganda (*double booking*) pada kamar yang belum siap dihuni.
 5. **Kalender Kontrol Visual Hunian (UC-19) & Broadcast WhatsApp (UC-20)**: Administrator dapat memantau jadwal kedatangan, durasi sewa, dan tanggal kepulangan seluruh 32 unit kamar dalam antarmuka kalender visual interaktif, serta menyiarkan pengumuman massal atau darurat ke kontak WhatsApp seluruh penghuni aktif dalam satu kali instruksi.
 
-Cuplikan agregasi finansial mikro-akuntansi dan kebijakan penguncian kamar pasca-checkout disajikan pada Kode 4.12 dan Kode 4.13.
-
-```php
-// Kode 4.12 Cuplikan app/Services/DashboardAnalyticsService.php: Agregasi Arus Kas Riil Bulan Berjalan
-$pembayaranPokok = Pembayaran::whereMonth('tanggal_bayar', $now->month)
-    ->whereYear('tanggal_bayar', $now->year)
-    ->whereIn('status_midtrans', ['settlement', 'capture', 'success', 'cash_confirmed'])
-    ->sum('nominal');
-
-$reservasiDp = Reservasi::where('is_dp', true)
-    ->whereIn('status', ['dp', 'dikonfirmasi'])
-    ->whereMonth('updated_at', $now->month)
-    ->whereYear('updated_at', $now->year)
-    ->sum('nominal_dp');
-
-$reservasiFull = Reservasi::where('is_dp', false)
-    ->whereIn('status', ['lunas'])
-    ->whereMonth('updated_at', $now->month)
-    ->whereYear('updated_at', $now->year)
-    ->sum('total_harga');
-
-$totalPemasukan = $pembayaranPokok + $reservasiDp + $reservasiFull;
-$totalPengeluaran = Pengeluaran::whereMonth('tanggal_pengeluaran', $now->month)
-    ->whereYear('tanggal_pengeluaran', $now->year)
-    ->sum('nominal');
-
-$keuntunganBersih = $totalPemasukan - $totalPengeluaran;
-```
-
-```php
-// Kode 4.13 Cuplikan app/Observers/PenyewaObserver.php: Kebijakan Kamar Terkunci Pasca-Checkout
-public function updated(Penyewa $penyewa): void
-{
-    // Saat status penyewa diubah menjadi 'nonaktif' (checkout selesai),
-    // status fisik kamar SENGAJA TIDAK diubah otomatis ke 'tersedia'.
-    // Kamar tetap dipertahankan 'terisi' hingga inspeksi manual selesai dilakukan.
-    if ($penyewa->wasChanged('status') && $penyewa->status === 'nonaktif') {
-        $penyewa->loadMissing(['kamar', 'user']);
-        $nomorKamar = $penyewa->kamar?->nomor_kamar ?? '-';
-
-        NotifikasiKhusus::log(
-            self::LOG_SOURCE,
-            self::EVENT_CHECKOUT,
-            "Penyewa Kamar {$nomorKamar} telah checkout. Kamar dalam status karantina fisik.",
-            ['penyewa_id' => $penyewa->id, 'kamar_id' => $penyewa->kamar_id]
-        );
-    }
-}
-```
-
 ### 4.2.8 Implementasi Integrasi Payment Gateway
 Integrasi gerbang pembayaran Midtrans Snap API v2 dibangun secara modular melalui kelas `MidtransService` dan dua pengendali webhook terpisah:
-1. **Pembangkitan Snap Token Transaksi**: Sistem menyusun parameter transaksi aman (`order_id`, `gross_amount`, `customer_details`) ke Midtrans Cloud. Durasi kedaluwarsa dihitung secara dinamis: jika waktu saat ini berada menjelang akhir bulan, batas waktu dipersingkat agar token tidak dapat dibayar melintasi pergantian bulan kalender saat potensi denda baru muncul.
+1. **Pembangkitan Snap Token Transaksi**: Sistem menyusun parameter transaksi aman (`order_id`, `gross_amount`, `customer_details`, dan batas kedaluwarsa 24 jam) ke Midtrans Cloud, kemudian menerima *snap token* yang dirender pada antarmuka pengguna dalam bentuk pop-up modal.
 2. **Pemisahan Jalur Webhook Callback**: Penanganan callback dibagi ke dalam dua pengontrol terisolasi: `MidtransCallbackController` yang menangani tagihan bulanan penyewa aktif, serta `MidtransReservasiCallbackController` yang menangani reservasi awal calon penghuni.
-3. **Verifikasi Keamanan Tanda Tangan Digital SHA-512**: Setiap permintaan webhook diverifikasi keabsahannya dengan mencocokkan signature key SHA-512 yang dikalkulasi secara matematis menggunakan fungsi anti-timing attack `hash_equals`:
+3. **Verifikasi Keamanan Tanda Tangan Digital SHA-512**: Setiap permintaan notifikasi webhook yang masuk diverifikasi keabsahannya dengan mencocokkan signature key SHA-512 yang dikalkulasi secara matematis di sisi peladen:
    $$\text{Signature} = \text{SHA512}(\text{order\_id} + \text{status\_code} + \text{gross\_amount} + \text{ServerKey})$$
    Jika signature tidak cocok, permintaan segera ditolak dengan kode status HTTP 403 Forbidden guna menangkal ancaman manipulasi transaksi (*fraud spoofing*).
-4. **Penanganan Idempotensi Transaksi**: Kueri pembaruan status pembayaran tagihan diproteksi dalam blok `DB::transaction` dengan instruksi penguncian baris `lockForUpdate()`. Jika notifikasi callback dengan status `settlement` diterima lebih dari satu kali untuk `transaction_id` yang sama, sistem mendeteksi bahwa tagihan telah berstatus lunas dan mengabaikan eksekusi pencatatan kas kedua (*zero double accounting*).
-
-Cuplikan validasi tanda tangan digital dan penguncian idempoten webhook disajikan pada Kode 4.14 dan Kode 4.15.
-
-```php
-// Kode 4.14 Cuplikan app/Http/Middleware/VerifyMidtransSignature.php: Validasi Signature SHA-512 Anti Timing-Attack
-protected function isValidSignature(Request $request, string $serverKey, string $signatureKey): bool
-{
-    $orderId     = $request->order_id;
-    $statusCode  = $request->status_code;
-    $grossAmount = $request->gross_amount;
-
-    $formattedAmount = is_numeric($grossAmount)
-        ? number_format((float) $grossAmount, 2, '.', '')
-        : $grossAmount;
-
-    $expected1 = hash('sha512', $orderId . $statusCode . $formattedAmount . $serverKey);
-    $expected2 = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
-
-    // hash_equals melindungi sistem dari celah keamanan kebocoran waktu komparasi string (Timing Attack)
-    return hash_equals($expected1, $signatureKey) || hash_equals($expected2, $signatureKey);
-}
-```
-
-```php
-// Kode 4.15 Cuplikan app/Http/Controllers/Api/MidtransCallbackController.php: Idempotency Protection dengan lockForUpdate
-$result = DB::transaction(function () use ($tagihan, $grossAmount, $transactionId) {
-    // Penguncian baris eksklusif untuk menangkal race condition webhook simultan
-    $lockedTagihan = Tagihan::where('id', $tagihan->id)->lockForUpdate()->first();
-    $lockedPembayaran = Pembayaran::where('transaction_id', $transactionId)->lockForUpdate()->first();
-
-    // Fast-exit Idempotency Guard: Jika pembayaran sudah lunas, abaikan callback duplikat
-    if ($lockedPembayaran && in_array($lockedPembayaran->status_midtrans, ['settlement', 'capture'])) {
-        return ['status' => 200, 'message' => 'Already processed'];
-    }
-
-    if ($lockedTagihan->status === 'lunas') {
-        return ['status' => 200, 'message' => 'Already processed'];
-    }
-
-    // Mutasi status tagihan menjadi lunas dan pembukuan kas...
-});
-```
+4. **Penanganan Idempotensi Transaksi**: Kueri pembaruan status pembayaran tagihan diproteksi dalam blok `DB::transaction` dengan instruksi penguncian baris `lockForUpdate()`. Jika notifikasi callback dengan status `settlement` diterima lebih dari satu kali untuk `order_id` yang sama, sistem mendeteksi bahwa tagihan telah berstatus lunas dan mengabaikan eksekusi pencatatan kas kedua, menjamin mutasi saldo kas tidak tercatat ganda.
 
 ### 4.2.9 Implementasi Notifikasi Email SMTP
 Layanan surel diintegrasikan memanfaatkan driver SMTP standar Laravel yang terhubung ke peladen surat Hostinger pada port aman 587 dengan enkripsi Transport Layer Security (TLS):
-* **Pola Template Method pada Notifikasi**: Kelas abstrak `BaseResetPasswordNotification` mengimplementasikan antarmuka `ShouldQueue` dari Laravel, mendefinisikan struktur pengiriman email reset kata sandi, dan menyediakan proteksi token kadaluwarsa selama 60 menit.
-* **Distribusi Asinkron (*Queued Mailables*)**: Transmisi invoice tagihan bulanan (`TagihanBulanMail`) dan surel sistem lainnya didelegasikan ke antrean latar belakang (*Laravel Queue*) melalui trait `Queueable`. Pendekatan ini memastikan latensi jaringan transmisi SMTP tidak membebani kecepatan respons (*response time*) peramban pengguna.
-
-Cuplikan implementasi kelas notifikasi asinkron disajikan pada Kode 4.16 dan Kode 4.17.
-
-```php
-// Kode 4.16 Cuplikan app/Notifications/BaseResetPasswordNotification.php: Asynchronous Queued Mailable
-abstract class BaseResetPasswordNotification extends ResetPasswordNotification implements ShouldQueue
-{
-    use Queueable;
-
-    public const VIEW_TEMPLATE = 'emails.reset-password';
-
-    abstract protected function getRoleName(): string;
-    abstract protected function resolveRouteName(mixed $notifiable): string;
-
-    public function toMail($notifiable): MailMessage
-    {
-        $url = $this->resetUrl($notifiable);
-        $roleName = $this->getRoleName();
-        $nama = $notifiable->nama ?? $roleName;
-        $expireMinutes = (int) config('auth.passwords.users.expire', 60);
-
-        return (new MailMessage)
-            ->subject("Reset Password {$roleName} - " . config('app.name', 'Asri Boarding House'))
-            ->view(self::VIEW_TEMPLATE, [
-                'urlReset'      => $url,
-                'namaPenyewa'   => $nama,
-                'roleName'      => $roleName,
-                'expireMinutes' => $expireMinutes,
-            ]);
-    }
-}
-```
-
-```php
-// Kode 4.17 Cuplikan app/Mail/TagihanBulanMail.php: Implementasi Mailable Tagihan Bulanan Terjadwal
-class TagihanBulanMail extends Mailable implements ShouldQueue
-{
-    use Queueable, SerializesModels;
-
-    public int $tries = 3;
-    public int $backoff = 30;
-
-    public function __construct(protected Tagihan $tagihan) {}
-
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: "Tagihan Sewa Kost Bulan Berjalan - {$this->tagihan->order_id}",
-        );
-    }
-}
-```
+* Kelas Mailable `ResetPasswordNotification` menangani transmisi tautan token pemulihan kata sandi akun penyewa dengan masa berlaku token selama 60 menit.
+* Distribusi surel dijalankan melalui antrean latar belakang (*Laravel Queue*) agar latensi jaringan peladen surat tidak mengurangi kecepatan respons antarmuka pada peramban.
 
 ### 4.2.10 Implementasi Notifikasi WhatsApp FONNTE
 Integrasi otomasi pesan WhatsApp diimplementasikan melalui kelas `FonnteService` yang berkomunikasi dengan RESTful API Gateway Fonnte:
 * **Pengiriman Invoice Bulanan Otomatis**: Disiarkan setiap tanggal 1 awal bulan berisikan rincian tagihan pokok dan batas jatuh tempo tanggal 10.
-* **Pengingat Jatuh Tempo (*Payment Reminder*)**: Dikirimkan secara persuasif menjelang dan setelah tanggal 10 bagi penghuni yang belum menyelesaikan pembayaran sewa tanpa pengenaan denda selama masih berada dalam bulan kalender berjalan (Denda = Rp0).
-* **Notifikasi Denda Flat Kalender 5%**: Dijalankan secara otomatis pada tanggal 1 awal bulan berikutnya saat tagihan bulan lalu resmi menyeberang bulan kalender. Aturan denda flat 5% dilindungi oleh *Idempotency Guard* (`nominal_denda == 0`) agar sanksi hanya dibebankan tepat satu kali.
-* **Eskalasi Penunggakan ke Kontak Wali**: Pesan otomatis diteruskan ke nomor WhatsApp wali/orang tua penyewa saat keterlambatan pembayaran memasuki bulan kalender kedua (`bulan_keterlambatan > 1`).
-* **Audit Trail Notifikasi**: Setiap aktivitas pengiriman pesan dicatat pada tabel `log_notifikasi` berisikan waktu kirim, ID penerima, isi pesan, serta status terkirim (*success*) atau gagal (*failed*) guna mencegah pesan ganda (*duplicate messaging*).
-
-Cuplikan implementasi pengiriman API Fonnte, penegakan denda flat 5%, dan eskalasi ke kontak wali disajikan pada Kode 4.18, Kode 4.19, dan Kode 4.20.
-
-```php
-// Kode 4.18 Cuplikan app/Services/FonnteService.php: Transmisi Pesan HTTP POST REST API Fonnte
-public function kirimPesan(?string $nomor, string $pesan): bool
-{
-    if (empty($nomor)) return false;
-    $nomor = $this->formatNomor($nomor); // Standarisasi format nomor E.164 (+62)
-
-    try {
-        $response = Http::timeout(5)->connectTimeout(3)
-            ->withHeaders(['Authorization' => config('fonnte.token')])
-            ->post('https://api.fonnte.com/send', [
-                'target'      => $nomor,
-                'message'     => $pesan,
-                'countryCode' => '62',
-                'delay'       => '2', // Jeda transmisi anti-spam
-            ]);
-
-        $responseData = $response->json();
-        return $response->successful() && (($responseData['status'] ?? false) === true);
-    } catch (\Throwable $e) {
-        Log::error('Fonnte request exception: ' . $e->getMessage());
-        return false;
-    }
-}
-```
-
-```php
-// Kode 4.19 Cuplikan app/Services/BillingService.php: Penegakan Denda Flat 5% Idempoten Melintasi Bulan Kalender
-if ($isBulanBerikutnya) {
-    // Idempotency Guard: Denda 5% hanya dibebankan SATU KALI jika nominal_denda masih 0
-    if ($tagihanLocked->nominal_denda == 0) {
-        $nominalDenda = $tagihanLocked->nominal_pokok * self::DENDA_RATE; // 5% flat
-        $tagihanLocked->nominal_denda = $nominalDenda;
-        $tagihanLocked->nominal_total += $nominalDenda;
-        $tagihanLocked->status = 'terlambat';
-        $tagihanLocked->bulan_keterlambatan = 3; // Trigger event denda
-        $tagihanLocked->save();
-
-        $eventsToFire[] = new DendaDikenakan($tagihanLocked);
-    }
-}
-```
-
-```php
-// Kode 4.20 Cuplikan app/Services/NotifikasiService.php: Eskalasi Pesan WhatsApp ke Nomor Wali Penghuni
-if ($tagihan->bulan_keterlambatan > 1 && !empty($penyewa->no_wali)) {
-    // Audit check: Pastikan notifikasi eskalasi wali belum pernah terkirim untuk tagihan ini
-    $alreadySentWali = LogNotifikasi::where('tagihan_id', $tagihan->id)
-        ->where('channel', 'whatsapp')
-        ->whereIn('event', ['notifikasi_wali', 'notifikasi_wali_eskalasi'])
-        ->where('status', 'sukses')
-        ->exists();
-
-    if (!$alreadySentWali) {
-        $pesanWali = $this->templateNotifikasiWali($tagihan, $penyewa);
-        $this->kirimDanLog(
-            $penyewa, $tagihan, 'whatsapp', 'notifikasi_wali_eskalasi', $pesanWali,
-            fn($msg) => $this->fonnte->kirimPesan($penyewa->no_wali, $msg),
-            false
-        );
-    }
-}
-```
+* **Pengingat Jatuh Tempo (*Payment Reminder*)**: Dikirimkan secara persuasif menjelang dan setelah tanggal 10 bagi penghuni yang belum menyelesaikan pembayaran sewa.
+* **Notifikasi Denda Flat Kalender 5%**: Dikirimkan secara otomatis pada tanggal 1 awal bulan berikutnya saat tagihan bulan lalu resmi menyeberang bulan kalender.
+* **Eskalasi Penunggakan ke Nomor Wali**: Pesan otomatis diteruskan ke nomor WhatsApp wali/orang tua penyewa saat keterlambatan pembayaran memasuki bulan kalender kedua.
+* **Audit Trail Notifikasi**: Setiap aktivitas pengiriman pesan dicatat pada tabel `log_notifikasi` berisikan waktu kirim, ID penerima, isi pesan, serta status terkirim (*success*) atau gagal (*failed*) guna memudahkan pemantauan operasional.
 
 ## 4.3 Tampilan Antarmuka Sistem
 Realisasi antarmuka pengguna (*user interface*) pada sistem informasi manajemen Asri Boarding House dirancang secara kontekstual guna mengakomodasi karakteristik kognitif dan operasional dari tiga entitas pengguna utama: calon penyewa, penyewa aktif, serta pengelola operasional (administrator). Seluruh rancangan visual mengedepankan prinsip kejelasan hierarki informasi, keterbacaan tipografi (*readability*), efisiensi alur navigasi, dan kepatuhan terhadap standar aksesibilitas web internasional.
