@@ -728,7 +728,7 @@ Ketergantungan pustaka backend dan frontend dikelola secara deklaratif. Cuplikan
     "require": {
         "php": "^8.2",
         "dompdf/dompdf": "^3.1",
-        "laravel/framework": "^12.0",
+        "laravel/framework": "^11.0",
         "laravel/socialite": "^5.27",
         "laravel/tinker": "^2.10.1"
     },
