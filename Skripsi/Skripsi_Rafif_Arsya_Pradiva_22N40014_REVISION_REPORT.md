@@ -109,11 +109,12 @@ Seluruh 20 tautan gambar berformat markdown `![Caption](path)` tetap terpelihara
 13. `images/skenario_state_siklus_billing.png` (Gambar 4.6c)
 14. `images/skenario_admin_mindmap_pengelolaan.png` (Gambar 4.6d)
 15. `images/skenario_admin_flow_aktivasi_dan_monitoring.png` (Gambar 4.6e)
-16. `images/gambar_4_7.png` (Gambar 4.7)
-17. `images/gambar_4_10.png` (Gambar 4.8)
-18. `images/gambar_4_9.png` (Gambar 4.9)
-19. `images/gambar_4_8.png` (Gambar 4.10)
-20. `images/gambar_4_12.png` (Gambar 4.11)
+16. `images/skenario_flow_checkout_manual_inspection_hold.png` (Gambar 4.6f)
+17. `images/gambar_4_7.png` (Gambar 4.7)
+18. `images/gambar_4_10.png` (Gambar 4.8)
+19. `images/gambar_4_9.png` (Gambar 4.9)
+20. `images/gambar_4_8.png` (Gambar 4.10)
+21. `images/gambar_4_12.png` (Gambar 4.11)
 
 ### C. Pengecekan Sitasi dan Daftar Pustaka
 Semua penanda sitasi `[1]` hingga `[20]` tetap terhubung secara tepat pada klaim ilmiah masing-masing:

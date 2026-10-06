@@ -1,0 +1,17 @@
+flowchart TD
+    A1["26 Maret 2027: Akhir Kontrak 6 Bulan Tyas"] --> B["Admin Buka Menu Checkout (/admin/penyewa/{id}/checkout)"]
+    A2["26 September 2027: Akhir Kontrak 12 Bulan Nur Haliza"] --> B
+    B --> C{"Audit Tagihan Belum Lunas"}
+    C -->|"unpaidBillsCount > 0"| D["Ditolak Sistem: Selesaikan Tagihan Tertunggak"]
+    C -->|"unpaidBillsCount == 0"| E["Inspeksi Fisik Bersama Penyewa di Kamar"]
+    E --> F["Pemeriksaan Inventaris: Seluruh Fasilitas Prima"]
+    F --> G["Admin Eksekusi Checkout: Akun Penyewa Dinonaktifkan"]
+    G --> H["Kebijakan Kritis: Status Kamar di Basis Data TETAP 'terisi' (Terkunci)"]
+    H --> I["Tim Kebersihan Melakukan Pembersihan Menyeluruh & Sterilisasi"]
+    I --> J["Bapak Asep Buka /admin/kamar -> Ubah Status Kamar MANUAL ke 'tersedia'"]
+    J --> K["KamarObserver Menghapus Cache Landing Page (kamar_aktif_landing)"]
+    K --> L["Kamar Tayang Kembali di Katalog Landing Page Publik weatso.id"]
+
+    style D fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#991b1b
+    style H fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#92400e
+    style L fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#166534

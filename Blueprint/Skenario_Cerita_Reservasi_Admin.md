@@ -266,6 +266,10 @@ flowchart TD
 
 ## 🚪 Bagian 6: Fase Check-Out & Pelepasan Status Kamar
 
+*Berkas Diagram*: [Sumber Mermaid (.mmd)](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/Skenario/skenario_flow_checkout_manual_inspection_hold.mmd) | [Format PNG HD](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/Skenario/skenario_flow_checkout_manual_inspection_hold.png)
+
+![Flowchart Prosedur Checkout dan Protokol Penahanan Kamar (Manual Inspection Hold)](Skenario/skenario_flow_checkout_manual_inspection_hold.png)
+
 ```mermaid
 flowchart TD
     A1[26 Maret 2027: Akhir Kontrak 6 Bulan Tyas] --> B[Admin Buka /admin/penyewa/{id}/checkout]
