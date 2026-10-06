@@ -654,21 +654,7 @@ Visualisasi rangkaian diagram skenario siklus hidup penyewa dan operasional admi
 ![Gambar 4.6 (e) Flowchart Alur Keputusan Aktivasi Reservasi dan Monitoring Penagihan Admin](images/skenario_admin_flow_aktivasi_dan_monitoring.png)  
 *(e) Flowchart Alur Keputusan Aktivasi Reservasi dan Monitoring Penagihan Admin*
 
-```mermaid
-flowchart TD
-    A1["26 Maret 2027: Akhir Kontrak 6 Bulan Tyas"] --> B["Admin Buka Menu Checkout (/admin/penyewa/{id}/checkout)"]
-    A2["26 September 2027: Akhir Kontrak 12 Bulan Nur Haliza"] --> B
-    B --> C{"Audit Tagihan Belum Lunas"}
-    C -->|"unpaidBillsCount > 0"| D["Ditolak Sistem: Selesaikan Tagihan Tertunggak"]
-    C -->|"unpaidBillsCount == 0"| E["Inspeksi Fisik Bersama Penyewa di Kamar"]
-    E --> F["Pemeriksaan Inventaris: Seluruh Fasilitas Prima"]
-    F --> G["Admin Eksekusi Checkout: Akun Penyewa Dinonaktifkan"]
-    G --> H["Kebijakan Kritis: Status Kamar di Basis Data TETAP 'terisi' (Terkunci)"]
-    H --> I["Tim Kebersihan Melakukan Pembersihan Menyeluruh & Sterilisasi"]
-    I --> J["Bapak Asep Buka /admin/kamar -> Ubah Status Kamar MANUAL ke 'tersedia'"]
-    J --> K["KamarObserver Menghapus Cache Landing Page (kamar_aktif_landing)"]
-    K --> L["Kamar Tayang Kembali di Katalog Landing Page Publik weatso.id"]
-```
+![Gambar 4.6 (f) Flowchart Prosedur Checkout dan Protokol Penahanan Kamar (Manual Inspection Hold)](images/skenario_flow_checkout_manual_inspection_hold.png)  
 *(f) Flowchart Prosedur Checkout dan Protokol Penahanan Kamar (Manual Inspection Hold)*
 
 *Gambar 4.6 Skenario Diagram Siklus Hidup Transaksional Penyewa dan Operasional Administrator*  
