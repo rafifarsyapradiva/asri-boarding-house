@@ -100,7 +100,7 @@ Seluruh 20 tautan gambar berformat markdown `![Caption](path)` tetap terpelihara
 4. `images/activity_auto_billing.png` (Gambar 4.2a)
 5. `images/activity_flat_calendar_late_fee.png` (Gambar 4.2b)
 6. `images/activity_reservation_to_tenant.png` (Gambar 4.2c)
-7. `images/gambar_4_1.webp` (Gambar 4.3)
+7. `images/gambar_4_1.png` (Gambar 4.3)
 8. `images/sequence_reservasi_online.png` (Gambar 4.4a)
 9. `images/sequence_penagihan_pembayaran.png` (Gambar 4.4b)
 10. `images/gambar_4_5_erd.png` (Gambar 4.5)
@@ -109,11 +109,11 @@ Seluruh 20 tautan gambar berformat markdown `![Caption](path)` tetap terpelihara
 13. `images/skenario_state_siklus_billing.png` (Gambar 4.6c)
 14. `images/skenario_admin_mindmap_pengelolaan.png` (Gambar 4.6d)
 15. `images/skenario_admin_flow_aktivasi_dan_monitoring.png` (Gambar 4.6e)
-16. `images/gambar_4_7.webp` (Gambar 4.7)
-17. `images/gambar_4_10.webp` (Gambar 4.8)
-18. `images/gambar_4_9.webp` (Gambar 4.9)
-19. `images/gambar_4_8.webp` (Gambar 4.10)
-20. `images/gambar_4_12.webp` (Gambar 4.11)
+16. `images/gambar_4_7.png` (Gambar 4.7)
+17. `images/gambar_4_10.png` (Gambar 4.8)
+18. `images/gambar_4_9.png` (Gambar 4.9)
+19. `images/gambar_4_8.png` (Gambar 4.10)
+20. `images/gambar_4_12.png` (Gambar 4.11)
 
 ### C. Pengecekan Sitasi dan Daftar Pustaka
 Semua penanda sitasi `[1]` hingga `[20]` tetap terhubung secara tepat pada klaim ilmiah masing-masing:

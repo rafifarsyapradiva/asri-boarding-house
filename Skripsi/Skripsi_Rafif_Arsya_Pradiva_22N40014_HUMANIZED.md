@@ -388,21 +388,24 @@ Kajian kepustakaan terhadap publikasi ilmiah terdahulu dilakukan guna memetakan 
 
 Kendati penelitian-penelitian terdahulu berhasil menjawab kebutuhan operasional pada cakupan studinya masing-masing, belum ditemukan sistem yang secara terpadu mengintegrasikan mesin penagihan otomatis beraturan denda flat 5% yang idempoten, alur kerja pendaftaran hibrida, pengontrolan konkurensi kamar, serta kanal komunikasi obrolan pra-pembayaran. Matriks perbandingan penelitian terdahulu dirangkum pada Tabel 2.1.
 
-Tabel 2.1 Perbandingan Penelitian Terdahulu (State of the Art)
-Penulis & Tahun	Metode	Hasil Penelitian	Kesenjangan (Gap) dengan Sistem Asri Boarding House
-Cornellya & Afriyadi (2025) 	Waterfall (SDLC)	Sistem pemesanan kos berbasis Laravel yang mempermudah pencatatan penyewa, transaksi, dan laporan; diuji dengan black box.	Belum terdapat denda keterlambatan otomatis, eskalasi ke wali, maupun chat pra-pembayaran terintegrasi.
-Nizar (2021)	Rancang bangun web	Sistem sewa rumah kos (E-Kost) berbasis website untuk informasi dan pemesanan.	Tidak mengintegrasikan payment gateway penuh dan mesin penagihan otomatis bersiklus seragam.
-Jannah dkk. (2020) 	Pengembangan web	Sistem informasi pemasaran rumah kos berbasis web yang memperluas promosi.	Berfokus pada pemasaran; belum menangani billing, denda, dan transaksi daring.
-Malaikosa & Mokola (2024) 	Rapid Application Development	Sistem monitoring rumah kos dan pembayarannya berbasis web.	Belum ada hybrid workflow dan pencegahan double booking berbasis concurrency control.
-Purnia dkk. (2021) 	Prototyping	Marketplace rumah kos berbasis mobile untuk pencarian dan pemesanan.	Tidak menerapkan denda otomatis dan notifikasi multi-channel otomatis kepada wali.
-Sutisna & Aziz (2025) 	Waterfall	Sistem penyewaan alat event dengan integrasi Midtrans; diuji black box, GTmetrix, dan Sucuri.	Domain berbeda; tidak ada siklus tagihan bulanan seragam dan eskalasi keterlambatan.
-Fatman dkk. (2023) 	Pengembangan web	Implementasi Midtrans pada website UMKM Geberco untuk pembayaran nontunai.	Tidak memodelkan manajemen hunian, status kamar, dan reservasi.
-Surya Pratama (2025) 	Prototyping	Integrasi payment gateway pada aplikasi Point of Sales berbasis ReactJS.	Tidak menangani penyewaan jangka panjang, denda, dan wali penyewa.
-Pramita dkk. (2024) 	Agile	Penerapan Midtrans pada sistem pembayaran SPP berbasis Android.	Berbasis mobile dengan domain pendidikan; tanpa modul kamar dan reservasi.
-Wijaya dkk. (2023) 	Pengembangan web	Sistem informasi laundry berbasis web dengan Midtrans.	Tidak ada billing periodik seragam dan kanal chat pra-pembayaran.
-Hakim dkk. (2021) 	Pengembangan web	Aplikasi penerimaan dan pengeluaran kas berbasis web dan WhatsApp gateway.	Berfokus pada kas; belum terintegrasi dengan reservasi dan payment gateway.
-Sonata (2019) 	Perancangan UML	Pemanfaatan UML pada perancangan sistem informasi e-commerce.	Bersifat konseptual; belum mengimplementasikan billing otomatis dan integrasi API.
-Sumber: Hasil analisis penulis terhadap literatur terkait (2026)
+**Tabel 2.1** Perbandingan Penelitian Terdahulu (*State of the Art*)
+
+| Penulis & Tahun | Metode | Hasil Penelitian | Kesenjangan (*Gap*) dengan Sistem Asri Boarding House |
+| :--- | :--- | :--- | :--- |
+| Cornellya & Afriyadi (2025) | Waterfall (SDLC) | Sistem pemesanan kos berbasis Laravel yang mempermudah pencatatan penyewa, transaksi, dan laporan; diuji dengan black box. | Belum terdapat denda keterlambatan otomatis, eskalasi ke wali, maupun chat pra-pembayaran terintegrasi. |
+| Nizar (2021) | Rancang bangun web | Sistem sewa rumah kos (E-Kost) berbasis website untuk informasi dan pemesanan. | Tidak mengintegrasikan payment gateway penuh dan mesin penagihan otomatis bersiklus seragam. |
+| Jannah dkk. (2020) | Pengembangan web | Sistem informasi pemasaran rumah kos berbasis web yang memperluas promosi. | Berfokus pada pemasaran; belum menangani billing, denda, dan transaksi daring. |
+| Malaikosa & Mokola (2024) | Rapid Application Development | Sistem monitoring rumah kos dan pembayarannya berbasis web. | Belum ada hybrid workflow dan pencegahan double booking berbasis concurrency control. |
+| Purnia dkk. (2021) | Prototyping | Marketplace rumah kos berbasis mobile untuk pencarian dan pemesanan. | Tidak menerapkan denda otomatis dan notifikasi multi-channel otomatis kepada wali. |
+| Sutisna & Aziz (2025) | Waterfall | Sistem penyewaan alat event dengan integrasi Midtrans; diuji black box, GTmetrix, dan Sucuri. | Domain berbeda; tidak ada siklus tagihan bulanan seragam dan eskalasi keterlambatan. |
+| Fatman dkk. (2023) | Pengembangan web | Implementasi Midtrans pada website UMKM Geberco untuk pembayaran nontunai. | Tidak memodelkan manajemen hunian, status kamar, dan reservasi. |
+| Surya Pratama (2025) | Prototyping | Integrasi payment gateway pada aplikasi Point of Sales berbasis ReactJS. | Tidak menangani penyewaan jangka panjang, denda, dan wali penyewa. |
+| Pramita dkk. (2024) | Agile | Penerapan Midtrans pada sistem pembayaran SPP berbasis Android. | Berbasis mobile dengan domain pendidikan; tanpa modul kamar dan reservasi. |
+| Wijaya dkk. (2023) | Pengembangan web | Sistem informasi laundry berbasis web dengan Midtrans. | Tidak ada billing periodik seragam dan kanal chat pra-pembayaran. |
+| Hakim dkk. (2021) | Pengembangan web | Aplikasi penerimaan dan pengeluaran kas berbasis web dan WhatsApp gateway. | Berfokus pada kas; belum terintegrasi dengan reservasi dan payment gateway. |
+| Sonata (2019) | Perancangan UML | Pemanfaatan UML pada perancangan sistem informasi e-commerce. | Bersifat konseptual; belum mengimplementasikan billing otomatis dan integrasi API. |
+
+*Sumber: Hasil analisis penulis terhadap literatur terkait (2026)*
 
 Merujuk pada Tabel 2.1, kebaruan (*novelty*) penelitian ini bertumpu pada lima inovasi utama: (1) mesin penagihan otomatis beraturan denda flat kalender 5% yang idempoten, (2) protokol eskalasi notifikasi penunggakan kepada wali penghuni, (3) sinkronisasi alur kerja hibrida antara reservasi daring dan pendaftaran langsung, (4) pencegahan pemesanan ganda melalui penguncian baris `lockForUpdate()` yang dipadukan dengan isolasi kamar pasca-*checkout*, serta (5) fasilitas obrolan interaktif pra-pembayaran berbasis *AJAX polling*. Integrasi terpadu ini menjadi pembeda utama sistem yang dibangun dibandingkan karya-karya terdahulu.
 
@@ -553,7 +556,7 @@ Flowchart diagram memodelkan logika algoritmik dari alur transaksional sistem se
 
 Logika penagihan periodik dan penanganan keterlambatan dirancang secara deterministik guna mengeliminasi cabang eksekusi yang ambigu. Pengecekan status `is_active == 1` menyaring penyewa yang berhak ditagih, pembagian pemrosesan memori menggunakan teknik `chunkById(100)` mencegah peladen mengalami kehabisan alokasi memori (*memory exhaustion*), serta evaluasi tanggal kalender secara tegas memisahkan fase pengingat persuasif tanpa denda dari fase penegakan denda flat 5%. Alur flowchart disajikan pada Gambar 4.3.
 
-![Gambar 4.3 Flowchart Mekanisme Billing Engine dan Penanganan Keterlambatan Massal](images/gambar_4_1.webp)
+![Gambar 4.3 Flowchart Mekanisme Billing Engine dan Penanganan Keterlambatan Massal](images/gambar_4_1.png)
 
 *Gambar 4.3 Flowchart Mekanisme Billing Engine dan Penanganan Keterlambatan Massal*  
 *Sumber: Hasil analisis algoritma sistem penulis (2026)*
@@ -1302,14 +1305,14 @@ Realisasi antarmuka pengguna (*user interface*) pada sistem informasi manajemen 
 ### 4.3.1 Antarmuka Calon Penyewa
 Halaman publik dirancang dengan mengadopsi bahasa visual Neo-Brutalisme yang memadukan garis pembatas tegas (*high-contrast borders*), bayangan datar (*hard box-shadow*), dan tipografi modern *Space Grotesk*. Pendekatan estetika ini dipilih secara sengaja untuk memberikan ketegasan visual pada setiap elemen interaktif serta mempercepat pemahaman calon penyewa terhadap informasi unit kamar, fasilitas, dan transparansi tarif sewa tanpa ornamen grafis yang berlebihan. Guna mempermudah komunikasi langsung dengan pihak pengelola, disematkan tombol aksi mengambang (*floating action button*) WhatsApp pada sudut kanan bawah antarmuka. Tombol ini memiliki target sentuh (*touch target size*) berdiameter 56 piksel, yang secara terukur melampaui ambang batas minimum panduan aksesibilitas WCAG 2.1 (44 piksel) demi menjamin kenyamanan interaksi pengguna ponsel pintar. Tampilan katalog kamar publik disajikan pada Gambar 4.7.
 
-![Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme](images/gambar_4_7.webp)
+![Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme](images/gambar_4_7.png)
 
 *Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
 
 Ketika calon penyewa melanjutkan ke tahapan reservasi unit, sistem menyajikan panduan interaktif berbentuk *Workspace Horizontal Stepper*. Komponen ini memandu pengguna melalui lima tahapan terstruktur: pemilihan unit kamar, pengisian biodata dan verifikasi NIK 16 digit, penentuan skema serta durasi sewa, pemilihan opsi pembayaran (uang muka DP 30% atau pelunasan 100%), hingga peninjauan ringkasan pesanan sebelum transaksi dieksekusi. Visualisasi alur terpadu ini meminimalkan beban kognitif calon penyewa dan menekan angka pembatalan reservasi di tengah jalan. Tampilan wizard pemesanan kamar disajikan pada Gambar 4.8.
 
-![Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa](images/gambar_4_10.webp)
+![Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa](images/gambar_4_10.png)
 
 *Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
@@ -1317,7 +1320,7 @@ Ketika calon penyewa melanjutkan ke tahapan reservasi unit, sistem menyajikan pa
 ### 4.3.2 Antarmuka Penyewa Aktif
 Bagi penghuni yang telah terverifikasi, portal mandiri pada rute `/penyewa/dashboard` berfungsi sebagai pusat kendali layanan hunian digital. Antarmuka ini menampilkan ringkasan masa aktif sewa, kartu status kamar, daftar tagihan berjalan maupun riwayat pembayaran terdahulu, serta tombol pelunasan instan yang terintegrasi langsung dengan Midtrans Snap API. Selain itu, penghuni dapat mengunduh bukti pembayaran resmi berupa kuitansi digital format A5 dalam hitungan detik tanpa harus menemui petugas secara langsung. Portal ini juga memfasilitasi pelaporan keluhan fasilitas hunian dengan fitur penyematan bukti foto digital guna mempercepat tindak lanjut perbaikan teknis di lapangan. Tampilan portal mandiri penyewa disajikan pada Gambar 4.9.
 
-![Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa](images/gambar_4_9.webp)
+![Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa](images/gambar_4_9.png)
 
 *Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
@@ -1325,7 +1328,7 @@ Bagi penghuni yang telah terverifikasi, portal mandiri pada rute `/penyewa/dashb
 ### 4.3.3 Antarmuka Admin
 Panel administrasi pada rute `/admin/dashboard` dikembangkan dengan tema visual ergonomis *OLED Black Dark Mode*. Pemilihan skema palet gelap dengan kontras terukur ini disesuaikan dengan kebutuhan pengelola operasional yang memantau sistem dalam durasi kerja panjang, sehingga mampu meminimalkan kelelahan mata (*visual fatigue*). Dasbor utama menyajikan visualisasi data ringkas melalui tiga kartu ringkasan finansial utama—mencakup Total Pemasukan Kas, Total Pengeluaran Operasional, dan Akumulasi Laba Bersih—serta indikator keterisian 32 unit kamar secara *real-time*. Antarmuka ini juga menyediakan jalan pintas cepat (*quick actions*) untuk memverifikasi pembayaran tunai, memantau kalender kepulangan penghuni, dan menerbitkan laporan rekapitulasi periodik. Tampilan dasbor administrasi keuangan disajikan pada Gambar 4.10.
 
-![Gambar 4.10 Dasbor Administrasi Keuangan Administrator](images/gambar_4_8.webp)
+![Gambar 4.10 Dasbor Administrasi Keuangan Administrator](images/gambar_4_8.png)
 
 *Gambar 4.10 Dasbor Administrasi Keuangan Administrator*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
@@ -1586,7 +1589,7 @@ Daftar pertanyaan terstruktur beserta respon verbatim dari narasumber dirangkum 
 
 Dokumentasi pelaksanaan wawancara operasional disajikan pada Gambar 4.11.
 
-![Gambar 4.11 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)](images/gambar_4_12.webp)
+![Gambar 4.11 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)](images/gambar_4_12.png)
 
 *Gambar 4.11 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)*  
 *Sumber: Dokumentasi foto penelitian penulis (2026)*

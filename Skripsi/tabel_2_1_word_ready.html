@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabel 2.1 - Siap Copas ke Microsoft Word</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            padding: 30px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .instructions {
+            background-color: #e8f4fd;
+            border-left: 4px solid #007acc;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .btn-copy {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+        .btn-copy:hover {
+            background-color: #005a9e;
+        }
+        .copy-status {
+            display: inline-block;
+            margin-left: 15px;
+            font-weight: 600;
+            color: #28a745;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        /* Styling Khusus agar saat di-paste ke MS Word tampil rapi standar Skripsi (APA Style) */
+        #word-content {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 11pt;
+            line-height: 1.25;
+            color: #000;
+        }
+        .table-title {
+            font-weight: bold;
+            margin-bottom: 6pt;
+            font-size: 12pt;
+        }
+        table.skripsi-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 8pt;
+            font-size: 10.5pt;
+        }
+        table.skripsi-table th {
+            border-top: 1.5pt solid #000;
+            border-bottom: 1pt solid #000;
+            border-left: none;
+            border-right: none;
+            padding: 6pt 8pt;
+            text-align: left;
+            font-weight: bold;
+            vertical-align: middle;
+            background-color: #ffffff;
+        }
+        table.skripsi-table td {
+            border-top: none;
+            border-bottom: none;
+            border-left: none;
+            border-right: none;
+            padding: 5pt 8pt;
+            vertical-align: top;
+            text-align: justify;
+        }
+        table.skripsi-table tr.last-row td {
+            border-bottom: 1.5pt solid #000;
+        }
+        .table-source {
+            font-style: italic;
+            font-size: 10pt;
+            margin-top: 4pt;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📋 Penyalin Tabel 2.1 Siap Pakai ke Microsoft Word</h2>
+    
+    <div class="instructions">
+        <strong>💡 Cara Penggunaan Sangat Mudah:</strong>
+        <ol style="margin: 8px 0 0 20px; padding: 0;">
+            <li>Klik tombol biru <strong>"Salin Seluruh Tabel untuk Word"</strong> di bawah ini (atau blok tabel lalu tekan <code>Ctrl + C</code>).</li>
+            <li>Buka dokumen <strong>Microsoft Word</strong> Anda.</li>
+            <li>Tekan <strong><code>Ctrl + V</code> (Paste)</strong> pada posisi yang diinginkan. Tabel otomatis tertata rapi lengkap dengan batas garis horizontal standar skripsi!</li>
+        </ol>
+    </div>
+
+    <button class="btn-copy" onclick="copyTableForWord()">📋 Salin Seluruh Tabel untuk Word</button>
+    <span id="status-msg" class="copy-status">✅ Berhasil disalin ke Clipboard! Silakan paste (Ctrl+V) di Word.</span>
+
+    <!-- Konten yang disalin ke Word -->
+    <div id="word-content">
+        <div class="table-title"><strong>Tabel 2.1</strong> Perbandingan Penelitian Terdahulu (<em>State of the Art</em>)</div>
+        
+        <table class="skripsi-table">
+            <thead>
+                <tr>
+                    <th style="width: 22%;">Penulis &amp; Tahun</th>
+                    <th style="width: 18%;">Metode</th>
+                    <th style="width: 32%;">Hasil Penelitian</th>
+                    <th style="width: 28%;">Kesenjangan (<em>Gap</em>) dengan Sistem Asri Boarding House</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cornellya &amp; Afriyadi (2025)</td>
+                    <td>Waterfall (SDLC)</td>
+                    <td>Sistem pemesanan kos berbasis Laravel yang mempermudah pencatatan penyewa, transaksi, dan laporan; diuji dengan <em>black box</em>.</td>
+                    <td>Belum terdapat denda keterlambatan otomatis, eskalasi ke wali, maupun <em>chat</em> pra-pembayaran terintegrasi.</td>
+                </tr>
+                <tr>
+                    <td>Nizar (2021)</td>
+                    <td>Rancang bangun web</td>
+                    <td>Sistem sewa rumah kos (E-Kost) berbasis <em>website</em> untuk informasi dan pemesanan.</td>
+                    <td>Tidak mengintegrasikan <em>payment gateway</em> penuh dan mesin penagihan otomatis bersiklus seragam.</td>
+                </tr>
+                <tr>
+                    <td>Jannah dkk. (2020)</td>
+                    <td>Pengembangan web</td>
+                    <td>Sistem informasi pemasaran rumah kos berbasis web yang memperluas promosi.</td>
+                    <td>Berfokus pada pemasaran; belum menangani <em>billing</em>, denda, dan transaksi daring.</td>
+                </tr>
+                <tr>
+                    <td>Malaikosa &amp; Mokola (2024)</td>
+                    <td>Rapid Application Development</td>
+                    <td>Sistem <em>monitoring</em> rumah kos dan pembayarannya berbasis web.</td>
+                    <td>Belum ada <em>hybrid workflow</em> dan pencegahan <em>double booking</em> berbasis <em>concurrency control</em>.</td>
+                </tr>
+                <tr>
+                    <td>Purnia dkk. (2021)</td>
+                    <td>Prototyping</td>
+                    <td><em>Marketplace</em> rumah kos berbasis <em>mobile</em> untuk pencarian dan pemesanan.</td>
+                    <td>Tidak menerapkan denda otomatis dan notifikasi <em>multi-channel</em> otomatis kepada wali.</td>
+                </tr>
+                <tr>
+                    <td>Sutisna &amp; Aziz (2025)</td>
+                    <td>Waterfall</td>
+                    <td>Sistem penyewaan alat <em>event</em> dengan integrasi Midtrans; diuji <em>black box</em>, GTmetrix, dan Sucuri.</td>
+                    <td>Domain berbeda; tidak ada siklus tagihan bulanan seragam dan eskalasi keterlambatan.</td>
+                </tr>
+                <tr>
+                    <td>Fatman dkk. (2023)</td>
+                    <td>Pengembangan web</td>
+                    <td>Implementasi Midtrans pada <em>website</em> UMKM Geberco untuk pembayaran nontunai.</td>
+                    <td>Tidak memodelkan manajemen hunian, status kamar, dan reservasi.</td>
+                </tr>
+                <tr>
+                    <td>Surya Pratama (2025)</td>
+                    <td>Prototyping</td>
+                    <td>Integrasi <em>payment gateway</em> pada aplikasi Point of Sales berbasis ReactJS.</td>
+                    <td>Tidak menangani penyewaan jangka panjang, denda, dan wali penyewa.</td>
+                </tr>
+                <tr>
+                    <td>Pramita dkk. (2024)</td>
+                    <td>Agile</td>
+                    <td>Penerapan Midtrans pada sistem pembayaran SPP berbasis Android.</td>
+                    <td>Berbasis <em>mobile</em> dengan domain pendidikan; tanpa modul kamar dan reservasi.</td>
+                </tr>
+                <tr>
+                    <td>Wijaya dkk. (2023)</td>
+                    <td>Pengembangan web</td>
+                    <td>Sistem informasi <em>laundry</em> berbasis web dengan Midtrans.</td>
+                    <td>Tidak ada <em>billing</em> periodik seragam dan kanal <em>chat</em> pra-pembayaran.</td>
+                </tr>
+                <tr>
+                    <td>Hakim dkk. (2021)</td>
+                    <td>Pengembangan web</td>
+                    <td>Aplikasi penerimaan dan pengeluaran kas berbasis web dan WhatsApp <em>gateway</em>.</td>
+                    <td>Berfokus pada kas; belum terintegrasi dengan reservasi dan <em>payment gateway</em>.</td>
+                </tr>
+                <tr class="last-row">
+                    <td>Sonata (2019)</td>
+                    <td>Perancangan UML</td>
+                    <td>Pemanfaatan UML pada perancangan sistem informasi <em>e-commerce</em>.</td>
+                    <td>Bersifat konseptual; belum mengimplementasikan <em>billing</em> otomatis dan integrasi API.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="table-source"><em>Sumber: Hasil analisis penulis terhadap literatur terkait (2026)</em></div>
+    </div>
+</div>
+
+<script>
+function copyTableForWord() {
+    const content = document.getElementById('word-content');
+    
+    // Pilih dan salin via Clipboard API
+    if (navigator.clipboard && window.ClipboardItem) {
+        const typeHtml = 'text/html';
+        const typePlain = 'text/plain';
+        const blobHtml = new Blob([content.innerHTML], { type: typeHtml });
+        const blobPlain = new Blob([content.innerText], { type: typePlain });
+        
+        const data = [new ClipboardItem({ [typeHtml]: blobHtml, [typePlain]: blobPlain })];
+        
+        navigator.clipboard.write(data).then(() => {
+            showSuccess();
+        }).catch(err => {
+            fallbackCopy(content);
+        });
+    } else {
+        fallbackCopy(content);
+    }
+}
+
+function fallbackCopy(element) {
+    const range = document.createRange();
+    range.selectNode(element);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+    showSuccess();
+}
+
+function showSuccess() {
+    const msg = document.getElementById('status-msg');
+    msg.style.opacity = '1';
+    setTimeout(() => {
+        msg.style.opacity = '0';
+    }, 4000);
+}
+</script>
+
+</body>
+</html>
