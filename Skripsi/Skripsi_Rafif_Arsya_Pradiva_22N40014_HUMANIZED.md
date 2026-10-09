@@ -672,23 +672,23 @@ Untuk memberikan pandangan terstruktur mengenai keterkaitan antar-entitas selama
 
 **Tabel 4.1** Matriks Pemetaan Status Transaksional dan Transisi State Siklus Hidup Sistem
 
-| No | Fase / Peristiwa Pengujian Riil | Status Kamar | Status Reservasi | Status Penyewa | Status Tagihan | Status Pembayaran | Event Bus Laravel | Notifikasi Fonnte WA | Kuitansi / Bukti Transaksi |
-| :-: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- | :--- |
-| 1 | **Reservasi Daring Dibuat** | `tersedia` *(Locked)* | `pending` | *Belum ada* | *Belum ada* | *Belum ada* | `ReservasiDibuat` | - | Form Pemesanan Web |
-| 2 | **Midtrans Lunas 100% (Nur Haliza)**| `tersedia` *(Locked)* | `lunas` | *Belum ada* | *Belum ada* | `settlement` | `ReservasiDibayar` | Alert WA Admin | Notifikasi Pembayaran |
-| 3 | **Midtrans DP 30% (Tyas)** | `tersedia` *(Locked)* | `dp` | *Belum ada* | *Belum ada* | `settlement` | `ReservasiDibayar` | Alert WA Admin | Notifikasi Pembayaran |
-| 4 | **Konfirmasi Reservasi Lunas 100%** | `terisi` | `dikonfirmasi` | `aktif` | `lunas` (Bulan 1) | `settlement` | `ReservasiDikonfirmasi` | Welcome & Kredensial | Render A5 `html2pdf.js` |
-| 5 | **Konfirmasi Reservasi DP 30%** | `terisi` | `dikonfirmasi` | `aktif` | `pending` (Sisa 70%)| - | `ReservasiDikonfirmasi`, `TagihanDibuat` | Welcome & Link Sisa | Dashboard Alert Banner |
-| 6 | **Pelunasan Sisa DP di Portal (Tyas)**| `terisi` | `dikonfirmasi` | `aktif` | `lunas` (Sisa DP) | `settlement` | `PembayaranBerhasil` | Konfirmasi Lunas Sisa | Render A5 `html2pdf.js` |
-| 7 | **Check-in Fisik & Hunian Aktif** | `terisi` | `dikonfirmasi` | `aktif` | - | - | - | - | Kunci Kamar Diserahkan |
-| 8 | **Billing Bulanan (Tgl 1, 00:05 WIB)**| `terisi` | - | `aktif` | `pending` | - | `TagihanDibuat` | Invoice Tagihan WA | Tautan Bayar Portal |
-| 9 | **Bayar Tepat Waktu (Nur Haliza)** | `terisi` | - | `aktif` | `lunas` | `settlement` | `PembayaranBerhasil` | Tanda Terima Digital | Render A5 `html2pdf.js` |
-| 10 | **Toleransi Jatuh Tempo (Tyas)** | `terisi` | - | `aktif` | `terlambat` *(Denda 0)*| - | `ReminderPenyewa` | WA Reminder Sopan | Denda Tetap Rp0 |
-| 11 | **Pelunasan Masa Toleransi (Tyas)** | `terisi` | - | `aktif` | `lunas` | `settlement` | `PembayaranBerhasil` | Tanda Terima Digital | Render A5 `html2pdf.js` |
-| 12 | **Pengaduan Keluhan Berfoto Masuk**| `terisi` | - | `aktif` | - | - | `KeluhanDibuat` | Alert Keluhan Admin | Berkas Foto `kran_bocor.jpg` |
-| 13 | **Penyelesaian & Penutupan Keluhan**| `terisi` | - | `aktif` | - | - | `KeluhanDitanggapi` | Notifikasi Tiket Selesai | Inspeksi Fisik Lapangan |
-| 14 | **Prosedur Checkout Administratif** | `terisi` *(Locked)* | - | `nonaktif` | Semua `lunas` | - | `PenyewaController::checkout` | Konfirmasi Checkout | Akun Dinonaktifkan |
-| 15 | **Manual Release Pasca-Inspeksi** | `tersedia` | - | `nonaktif` | - | - | `KamarObserver::updated` | - (Katalog Live Update)| Cache Memori Dihapus |
+| No | Fase / Peristiwa Pengujian Riil | Transisi Status State Entitas | Respon Sistem, Notifikasi & Bukti |
+| :-: | :--- | :--- | :--- |
+| 1 | **Reservasi Daring Dibuat** | • **Kamar:** `tersedia` *(Locked)*<br>• **Reservasi:** `pending`<br>• **Penyewa/Tagihan/Bayar:** *Belum ada* | • **Event:** `ReservasiDibuat`<br>• **Notifikasi WA:** -<br>• **Bukti:** Form Pemesanan Web |
+| 2 | **Midtrans Lunas 100% (Nur Haliza)** | • **Kamar:** `tersedia` *(Locked)*<br>• **Reservasi:** `lunas`<br>• **Pembayaran:** `settlement`<br>• **Penyewa/Tagihan:** *Belum ada* | • **Event:** `ReservasiDibayar`<br>• **Notifikasi WA:** Alert WA Admin<br>• **Bukti:** Notifikasi Pembayaran |
+| 3 | **Midtrans DP 30% (Tyas)** | • **Kamar:** `tersedia` *(Locked)*<br>• **Reservasi:** `dp`<br>• **Pembayaran:** `settlement`<br>• **Penyewa/Tagihan:** *Belum ada* | • **Event:** `ReservasiDibayar`<br>• **Notifikasi WA:** Alert WA Admin<br>• **Bukti:** Notifikasi Pembayaran |
+| 4 | **Konfirmasi Reservasi Lunas 100%** | • **Kamar:** `terisi`<br>• **Reservasi:** `dikonfirmasi`<br>• **Penyewa:** `aktif`<br>• **Tagihan:** `lunas` (Bulan 1)<br>• **Pembayaran:** `settlement` | • **Event:** `ReservasiDikonfirmasi`<br>• **Notifikasi WA:** Welcome & Kredensial<br>• **Bukti:** Render A5 `html2pdf.js` |
+| 5 | **Konfirmasi Reservasi DP 30%** | • **Kamar:** `terisi`<br>• **Reservasi:** `dikonfirmasi`<br>• **Penyewa:** `aktif`<br>• **Tagihan:** `pending` (Sisa 70%)<br>• **Pembayaran:** - | • **Event:** `ReservasiDikonfirmasi`, `TagihanDibuat`<br>• **Notifikasi WA:** Welcome & Link Sisa<br>• **Bukti:** Dashboard Alert Banner |
+| 6 | **Pelunasan Sisa DP di Portal (Tyas)** | • **Kamar:** `terisi`<br>• **Reservasi:** `dikonfirmasi`<br>• **Penyewa:** `aktif`<br>• **Tagihan:** `lunas` (Sisa DP)<br>• **Pembayaran:** `settlement` | • **Event:** `PembayaranBerhasil`<br>• **Notifikasi WA:** Konfirmasi Lunas Sisa<br>• **Bukti:** Render A5 `html2pdf.js` |
+| 7 | **Check-in Fisik & Hunian Aktif** | • **Kamar:** `terisi`<br>• **Reservasi:** `dikonfirmasi`<br>• **Penyewa:** `aktif`<br>• **Tagihan & Bayar:** - | • **Event:** -<br>• **Notifikasi WA:** -<br>• **Bukti:** Kunci Kamar Diserahkan |
+| 8 | **Billing Bulanan (Tgl 1, 00:05 WIB)** | • **Kamar:** `terisi`<br>• **Reservasi:** -<br>• **Penyewa:** `aktif`<br>• **Tagihan:** `pending`<br>• **Pembayaran:** - | • **Event:** `TagihanDibuat`<br>• **Notifikasi WA:** Invoice Tagihan WA<br>• **Bukti:** Tautan Bayar Portal |
+| 9 | **Bayar Tepat Waktu (Nur Haliza)** | • **Kamar:** `terisi`<br>• **Reservasi:** -<br>• **Penyewa:** `aktif`<br>• **Tagihan:** `lunas`<br>• **Pembayaran:** `settlement` | • **Event:** `PembayaranBerhasil`<br>• **Notifikasi WA:** Tanda Terima Digital<br>• **Bukti:** Render A5 `html2pdf.js` |
+| 10 | **Toleransi Jatuh Tempo (Tyas)** | • **Kamar:** `terisi`<br>• **Reservasi:** -<br>• **Penyewa:** `aktif`<br>• **Tagihan:** `terlambat` *(Denda 0)*<br>• **Pembayaran:** - | • **Event:** `ReminderPenyewa`<br>• **Notifikasi WA:** WA Reminder Sopan<br>• **Bukti:** Denda Tetap Rp0 |
+| 11 | **Pelunasan Masa Toleransi (Tyas)** | • **Kamar:** `terisi`<br>• **Reservasi:** -<br>• **Penyewa:** `aktif`<br>• **Tagihan:** `lunas`<br>• **Pembayaran:** `settlement` | • **Event:** `PembayaranBerhasil`<br>• **Notifikasi WA:** Tanda Terima Digital<br>• **Bukti:** Render A5 `html2pdf.js` |
+| 12 | **Pengaduan Keluhan Berfoto Masuk** | • **Kamar:** `terisi`<br>• **Reservasi:** -<br>• **Penyewa:** `aktif`<br>• **Tagihan & Bayar:** - | • **Event:** `KeluhanDibuat`<br>• **Notifikasi WA:** Alert Keluhan Admin<br>• **Bukti:** Berkas Foto `kran_bocor.jpg` |
+| 13 | **Penyelesaian & Penutupan Keluhan** | • **Kamar:** `terisi`<br>• **Reservasi:** -<br>• **Penyewa:** `aktif`<br>• **Tagihan & Bayar:** - | • **Event:** `KeluhanDitanggapi`<br>• **Notifikasi WA:** Notifikasi Tiket Selesai<br>• **Bukti:** Inspeksi Fisik Lapangan |
+| 14 | **Prosedur Checkout Administratif** | • **Kamar:** `terisi` *(Locked)*<br>• **Reservasi:** -<br>• **Penyewa:** `nonaktif`<br>• **Tagihan:** Semua `lunas`<br>• **Pembayaran:** - | • **Event:** `PenyewaController::checkout`<br>• **Notifikasi WA:** Konfirmasi Checkout<br>• **Bukti:** Akun Dinonaktifkan |
+| 15 | **Manual Release Pasca-Inspeksi** | • **Kamar:** `tersedia`<br>• **Reservasi/Tagihan/Bayar:** -<br>• **Penyewa:** `nonaktif` | • **Event:** `KamarObserver::updated`<br>• **Notifikasi WA:** - (Katalog Live Update)<br>• **Bukti:** Cache Memori Dihapus |
 
 ## 4.2 Implementasi Sistem
 Tahap implementasi merealisasikan rancangan konseptual ke dalam bentuk baris program yang terstruktur, aman, dan teruji menggunakan framework Laravel 11. Fokus implementasi diarahkan pada ketahanan arsitektur, pemisahan tanggung jawab logika bisnis (*separation of concerns*), keamanan data finansial, penanganan konkurensi (*concurrency control*), serta integrasi layanan pihak ketiga secara andal. Pada sub-bab berikut diuraikan implementasi teknis sistem disertai potongan kode program (*source code snippets*) terpilih yang merepresentasikan logika bisnis inti.
