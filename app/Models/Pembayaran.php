@@ -47,3 +47,5 @@ class Pembayaran extends Model
         return $this->belongsTo(User::class, 'dikonfirmasi_oleh', 'id')->withTrashed();
     }
 }
+
+// Audit Trail: Payment proof verification metadata and manual receipt references.
