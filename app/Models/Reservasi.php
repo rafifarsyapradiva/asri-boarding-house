@@ -171,3 +171,5 @@ class Reservasi extends Model
     }
 }
 
+
+// Lifecycle Management: Reservation booking expiry and check-in transition management.
