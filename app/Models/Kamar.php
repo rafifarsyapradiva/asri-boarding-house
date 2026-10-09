@@ -182,3 +182,5 @@ class Kamar extends Model
     }
 }
 
+
+// Room Availability Scope: Kamar lifecycle status transitions (Tersedia, Terisi, Perbaikan).
