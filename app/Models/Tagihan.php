@@ -211,3 +211,5 @@ class Tagihan extends Model
     }
 }
 
+
+// Transactional Integrity: Invoices enforce Belum Lunas, Menunggu Verifikasi, Lunas, and Terlambat.
