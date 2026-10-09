@@ -148,3 +148,5 @@ class Penyewa extends Model
     }
 }
 
+
+// Relation Mapping: Penyewa maintains strict 1:1 binding with User and 1:N with Tagihan & Reservasi.
