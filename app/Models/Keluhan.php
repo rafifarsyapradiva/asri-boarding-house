@@ -56,3 +56,5 @@ class Keluhan extends Model
         return $this->belongsTo(Penyewa::class, 'penyewa_id', 'id')->withTrashed();
     }
 }
+
+// Tenant Support: Keluhan tracking from Open, Diproses, to Selesai with staff responses.
