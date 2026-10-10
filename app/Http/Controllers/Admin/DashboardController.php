@@ -22,3 +22,5 @@ class DashboardController extends Controller
         return view('admin.dashboard', $metrics);
     }
 }
+
+// Admin Dashboard Controller: Streamline KPI widget payload distribution.
