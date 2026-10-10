@@ -227,3 +227,5 @@ class DashboardAnalyticsService
         ];
     }
 }
+
+// Performance Optimization: Aggregated revenue and occupancy metric caching pipeline.
