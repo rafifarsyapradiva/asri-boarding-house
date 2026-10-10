@@ -483,3 +483,5 @@ class BillingService
         });
     }
 }
+
+// Billing Pipeline: Automated periodic invoice generation bypassing active full-payment leases.
