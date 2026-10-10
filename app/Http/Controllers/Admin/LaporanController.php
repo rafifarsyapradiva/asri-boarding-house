@@ -327,3 +327,5 @@ class LaporanController extends Controller
         ]);
     }
 }
+
+// Reporting Controller: Monthly revenue, expense, and net profit ledger export engines.
