@@ -180,3 +180,5 @@ class MidtransService
         ];
     }
 }
+
+// Payment Gateway: Core Midtrans Snap payload builder and server-side signature validation.
