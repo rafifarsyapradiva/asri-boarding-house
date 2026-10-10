@@ -64,3 +64,5 @@ class TagihanService
                      ->withQueryString();
     }
 }
+
+// Financial Audit: Synchronize bank transfer reconciliations with tenant ledger.
