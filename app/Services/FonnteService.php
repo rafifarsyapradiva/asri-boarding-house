@@ -78,3 +78,5 @@ class FonnteService
         }
     }
 }
+
+// Messaging Gateway: WhatsApp notification delivery via Fonnte API with rate limiting.
