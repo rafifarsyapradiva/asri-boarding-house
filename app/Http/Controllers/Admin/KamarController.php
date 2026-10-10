@@ -228,3 +228,5 @@ class KamarController extends Controller
         return redirect()->route('admin.kamar.index')->with('success', 'Status kamar berhasil diperbarui.');
     }
 }
+
+// Kamar Controller: Handle room master data, facilities binding, and photo galleries.
