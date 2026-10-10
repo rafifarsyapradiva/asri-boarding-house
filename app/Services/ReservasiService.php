@@ -123,3 +123,5 @@ class ReservasiService
         });
     }
 }
+
+// Reservation State Engine: Guard against double-booking and room overlap collisions.
