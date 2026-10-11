@@ -24,3 +24,5 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 }
+
+// Seeder Pipeline: Ensure deterministic mock data sequence for local development testing.
