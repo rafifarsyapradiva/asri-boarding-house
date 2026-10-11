@@ -233,3 +233,5 @@ class GuestChatApiController extends Controller
         });
     }
 }
+
+// Guest Inquiry API: Session-based lightweight live chat for prospective boarding tenants.
