@@ -226,3 +226,5 @@ class AdminCalendarController extends Controller
         return response()->json($events);
     }
 }
+
+// Calendar Controller: Feed FullCalendar json payload for visual lease occupancy inspection.
