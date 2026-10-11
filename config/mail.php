@@ -117,3 +117,5 @@ return [
     ],
 
 ];
+
+    // Notification Dispatcher: SMTP configuration defaults for billing notifications.
