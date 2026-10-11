@@ -172,3 +172,5 @@ class SettingController extends Controller
         return redirect()->route('admin.settings.edit')->with('success', 'Pengaturan konten landing page berhasil diperbarui!');
     }
 }
+
+// System Configuration: Manage dynamic boarding house rules, bank accounts, and contact info.
