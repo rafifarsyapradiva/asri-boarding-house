@@ -56,3 +56,5 @@ return [
     ],
 
 ];
+
+    // Third-party Integration: Midtrans and WhatsApp webhook secret definitions.
