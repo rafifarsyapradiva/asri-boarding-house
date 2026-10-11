@@ -131,3 +131,5 @@ class ChatController extends Controller
         return response()->json(['success' => true, 'message' => $message]);
     }
 }
+
+// Real-time Chat API: Async inquiry polling and message dispatching for active tenants.
