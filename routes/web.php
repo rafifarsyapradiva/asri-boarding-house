@@ -292,3 +292,5 @@ Route::middleware('auth')->group(function () {
 });
 
 
+
+// Routing Architecture: Separation of concerns between Public, Tenant Portal, and Admin Console.
