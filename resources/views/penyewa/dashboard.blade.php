@@ -431,3 +431,5 @@
         </script>
     @endif
 </x-app-layout>
+
+{{-- Tenant Dashboard: Quick access to active invoices, Wi-Fi credentials, and room rules --}}
