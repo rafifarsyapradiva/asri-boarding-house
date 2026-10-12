@@ -404,3 +404,5 @@
         @stack('scripts')
     </body>
 </html>
+
+{{-- Architectural Landmark: Master application blade shell with Neo-brutalist styling --}}
