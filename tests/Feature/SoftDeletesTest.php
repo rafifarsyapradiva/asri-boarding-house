@@ -156,3 +156,5 @@ class SoftDeletesTest extends TestCase
         $this->assertSoftDeleted('reservasi', ['id' => $reservasi->id]);
     }
 }
+
+// Audit Integrity: Ensure soft delete cascade preserves historical transaction records.
