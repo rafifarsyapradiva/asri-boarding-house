@@ -409,3 +409,5 @@ class MiddlewareAuditTest extends TestCase
         $response->assertJson(['message' => 'Unauthorized']);
     }
 }
+
+// Security Audit: Assert role-based access guard separation between Admin and Penyewa.
