@@ -148,3 +148,5 @@ class ReservasiServiceTest extends TestCase
         ]);
     }
 }
+
+// Test Suite: Validate anti-overlap collision detection during room reservation booking.
