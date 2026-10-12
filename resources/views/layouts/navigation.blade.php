@@ -204,3 +204,5 @@
         </div>
     </div>
 </nav>
+
+{{-- Navigation Component: Responsive mobile drawer and desktop menu hierarchy --}}
