@@ -454,3 +454,5 @@
     @endpush
 </x-app-layout>
 
+
+{{-- Admin Portal: Operational overview of room occupancy, pending invoices, and complaints --}}
