@@ -674,3 +674,5 @@ class ReservasiControllerTest extends TestCase
         $response->assertSee(route('penyewa.reservasi.pembayaran', $reservasi->id));
     }
 }
+
+// Feature Verification: End-to-end customer booking flow with CSRF and validation checks.
