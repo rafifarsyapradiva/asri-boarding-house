@@ -120,3 +120,5 @@ class CheckSystemHealthCommand extends Command
         }
     }
 }
+
+// Health Check: Monitor disk storage, database connectivity, and queue daemon liveness.
