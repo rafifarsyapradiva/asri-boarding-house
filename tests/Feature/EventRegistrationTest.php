@@ -25,8 +25,7 @@ class EventRegistrationTest extends TestCase
      */
     public function test_manual_listeners_are_registered_correctly(): void
     {
-        $this->assertHasListener(PembayaranBerhasil::class, GeneratePdfNotaListener::class);
-        $this->assertHasListener(PembayaranCashDikonfirmasi::class, GeneratePdfNotaListener::class);
+        $this->markTestSkipped('GeneratePdfNotaListener was migrated to client-side html2pdf.js receipt rendering in commit 919470d.');
     }
 
     /**

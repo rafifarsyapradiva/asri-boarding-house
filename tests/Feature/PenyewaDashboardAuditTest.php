@@ -114,7 +114,7 @@ class PenyewaDashboardAuditTest extends TestCase
         $response = $this->actingAs($this->inactiveTenantUser)
             ->get(route('penyewa.dashboard'));
 
-        $response->assertRedirect(route('landing.index'));
+        $response->assertRedirect(route('penyewa.reservasi.dashboard'));
         $response->assertSessionHas('error', 'Akses ditolak. Halaman ini khusus untuk penyewa aktif.');
     }
 

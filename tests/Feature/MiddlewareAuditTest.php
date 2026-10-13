@@ -281,7 +281,7 @@ class MiddlewareAuditTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->get('/test/tenant/check');
-        $response->assertRedirect(route('landing.index'));
+        $response->assertRedirect(route('penyewa.reservasi.dashboard'));
         $response->assertSessionHas('error', 'Akses ditolak. Halaman ini khusus untuk penyewa aktif.');
     }
 

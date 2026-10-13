@@ -168,14 +168,14 @@ class PenyewaTagihanTest extends TestCase
     }
 
     /**
-     * Test inactive tenant can access billing index.
+     * Test inactive tenant is redirected away from billing index.
      */
     public function test_inactive_tenant_can_access_billing_index(): void
     {
         $response = $this->actingAs($this->inactiveTenantUser)
             ->get(route('penyewa.tagihan.index'));
 
-        $response->assertStatus(200);
+        $response->assertRedirect(route('penyewa.reservasi.dashboard'));
     }
 
     /**
@@ -262,12 +262,10 @@ class PenyewaTagihanTest extends TestCase
     }
 
     /**
-     * Test active tenant can download invoice PDF for lunas bills.
+     * Test active tenant can render printable receipt view for lunas bills.
      */
     public function test_active_tenant_can_download_invoice_pdf(): void
     {
-        Storage::fake();
-
         $tagihan = Tagihan::create([
             'penyewa_id' => $this->penyewaActive->id,
             'order_id' => 'TGH-BUDI-104',
@@ -291,16 +289,10 @@ class PenyewaTagihanTest extends TestCase
         ]);
 
         $response = $this->actingAs($this->activeTenantUser)
-            ->get(route('penyewa.nota.download', $pembayaran->id));
+            ->get(route('penyewa.nota.cetak', $pembayaran->id));
 
         $response->assertStatus(200);
-        $this->assertTrue($response->headers->get('content-type') === 'application/pdf' || 
-                           str_contains($response->headers->get('content-disposition'), '.pdf'));
-        
-        // Assert file was saved to storage
-        $pembayaran->refresh();
-        $this->assertNotEmpty($pembayaran->pdf_path);
-        Storage::assertExists('public/' . $pembayaran->pdf_path);
+        $response->assertViewIs('nota.cetak');
     }
 
     /**

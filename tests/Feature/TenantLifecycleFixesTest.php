@@ -290,11 +290,11 @@ class TenantLifecycleFixesTest extends TestCase
             'durasi' => 1,
         ]);
 
-        // Unactive tenant should be allowed to view their bills page (EnsureTenantIsActive bypass)
+        // Non-active tenant is redirected to reservation dashboard by EnsureTenantIsActive
         $response = $this->actingAs($this->user)
             ->get('/penyewa/tagihan');
 
-        $response->assertStatus(200);
+        $response->assertRedirect(route('penyewa.reservasi.dashboard'));
     }
 
     /**

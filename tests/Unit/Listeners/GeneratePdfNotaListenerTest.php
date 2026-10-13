@@ -13,6 +13,12 @@ use Exception;
 
 class GeneratePdfNotaListenerTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->markTestSkipped('PdfNotaService and GeneratePdfNotaListener were migrated to client-side html2pdf.js receipt rendering architecture (commit 919470d).');
+    }
+
     protected function tearDown(): void
     {
         Mockery::close();

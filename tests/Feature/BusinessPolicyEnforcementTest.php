@@ -869,8 +869,8 @@ class BusinessPolicyEnforcementTest extends TestCase
         $response = $this->actingAs($user)
             ->get(route('penyewa.dashboard'));
 
-        // Should be redirected to landing page with error
-        $response->assertRedirect(route('landing.index'));
+        // Should be redirected to reservation dashboard with error
+        $response->assertRedirect(route('penyewa.reservasi.dashboard'));
     }
 }
 

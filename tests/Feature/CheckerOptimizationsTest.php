@@ -82,22 +82,25 @@ class CheckerOptimizationsTest extends TestCase
      */
     public function test_tenant_overlap_exact_boundary(): void
     {
-        // Create an active tenant checking out on 2026-08-31
+        $startDate = now()->format('Y-m-d');
+        $endDate = now()->addDays(30)->format('Y-m-d');
+
+        // Create an active tenant checking out on endDate
         Penyewa::create([
             'user_id' => $this->tenant->id,
             'kamar_id' => $this->kamar->id,
             'nik' => '1234567890123456',
-            'tanggal_masuk' => '2026-08-01',
-            'tanggal_keluar' => '2026-08-31',
+            'tanggal_masuk' => $startDate,
+            'tanggal_keluar' => $endDate,
             'nama_wali' => 'Wali Test',
             'no_wali' => '08123456789',
             'status' => 'aktif',
             'harga_sewa' => 1500000,
         ]);
 
-        // Query check-in on the checkout day 2026-08-31
+        // Query check-in on the checkout day
         $response = $this->postJson(route('landing.cekKetersediaan'), [
-            'tanggal_masuk' => '2026-08-31',
+            'tanggal_masuk' => $endDate,
             'durasi' => 1,
         ]);
 
@@ -114,22 +117,25 @@ class CheckerOptimizationsTest extends TestCase
      */
     public function test_reservation_overlap_exact_boundary(): void
     {
-        // Create a confirmed/active reservation ending on 2026-08-31
+        $startDate = now()->format('Y-m-d');
+        $endDate = now()->addDays(30)->format('Y-m-d');
+
+        // Create a confirmed/active reservation ending on endDate
         Reservasi::create([
             'user_id' => $this->tenant->id,
             'kamar_id' => $this->kamar->id,
             'tipe_sewa' => 'bulanan',
-            'tanggal_mulai' => '2026-08-01',
-            'tanggal_selesai' => '2026-08-31',
+            'tanggal_mulai' => $startDate,
+            'tanggal_selesai' => $endDate,
             'durasi' => 1,
             'total_harga' => 1500000,
             'status' => 'lunas',
             'order_id' => 'RSV-BOUNDARY-001',
         ]);
 
-        // Query check-in on 2026-08-31
+        // Query check-in on endDate
         $response = $this->postJson(route('landing.cekKetersediaan'), [
-            'tanggal_masuk' => '2026-08-31',
+            'tanggal_masuk' => $endDate,
             'durasi' => 1,
         ]);
 

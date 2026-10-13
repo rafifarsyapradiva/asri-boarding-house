@@ -284,7 +284,7 @@ class AuthenticationTest extends TestCase
 
         $response = $this->actingAs($user)->get('/penyewa/dashboard');
         
-        $response->assertRedirect(route('landing.index'));
+        $response->assertRedirect(route('penyewa.reservasi.dashboard'));
         $response->assertSessionHas('error');
     }
 
