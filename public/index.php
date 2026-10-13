@@ -57,3 +57,5 @@ try {
 } catch (\Throwable $e) {
     $terminateWithError('Fatal Error: Failed to handle the incoming request.', $e);
 }
+
+// Application Entry Point: Asri Boarding House Management Information System
