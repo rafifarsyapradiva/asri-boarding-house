@@ -54,3 +54,5 @@ class GenerateBulananTagihan extends Command
         }
     }
 }
+
+// Cron Command: Automated invoice generator scheduled via Laravel task runner.
