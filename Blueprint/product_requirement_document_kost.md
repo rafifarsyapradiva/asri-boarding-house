@@ -1444,3 +1444,5 @@ flowchart TB
     class DataTier,EloquentORM,RelationalDB,FileStorage tier3;
     class ExternalSystems,MidtransAPI,FonnteAPI ext;
 ```
+
+<!-- Architecture Blueprint: Transactional Event-Driven Architecture Specification -->
