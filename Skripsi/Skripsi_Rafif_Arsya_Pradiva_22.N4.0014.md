@@ -941,8 +941,8 @@ Guna mempertahankan keterbacaan state transisi penagihan di Microsoft Word, visu
 *(a2) State Diagram Siklus Penagihan Bulanan - Bagian 2: Masa Toleransi Bebas Denda dan Penegakan Denda Kalender 5%*  
 *Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
-![Gambar 4.6 (b) Mindmap Kluster Tanggung Jawab Operasional Administrator](images/skenario_admin_mindmap_pengelolaan.png)  
-*(b) Mindmap Kluster Tanggung Jawab Operasional Administrator (Bapak Asep)*  
+![Gambar 4.6 (b) Mindmap Kluster Tanggung Jawab Operasional Penjaga Kost](images/skenario_admin_mindmap_pengelolaan.png)  
+*(b) Mindmap Kluster Tanggung Jawab Operasional Penjaga Kost*  
 *Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
 Selanjutnya, alur keputusan aktivasi reservasi dan prosedur checkout disajikan secara modular:
