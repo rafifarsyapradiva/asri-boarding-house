@@ -1,10 +1,14 @@
 <div align="center">
 
-### LAPORAN SKRIPSI
+### TUGAS AKHIR
 
 <br>
 
-## SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY*<br>PADA ASRI BOARDING HOUSE
+## SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY<br>PADA ASRI BOARDING HOUSE
+
+<br><br>
+
+Diajukan untuk memenuhi syarat guna mencapai gelar Sarjana Komputer<br>program studi Sistem Informasi Universitas Katolik Soegijapranata<br>Semarang
 
 <br><br>
 
@@ -23,6 +27,119 @@ Disusun oleh :<br>
 **UNIVERSITAS KATOLIK SOEGIJAPRANATA**<br>
 **SEMARANG**<br>
 **2026**
+
+</div>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+### TUGAS AKHIR
+
+<br>
+
+## SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY<br>PADA ASRI BOARDING HOUSE
+
+<br><br>
+
+Diajukan untuk memenuhi salah satu syarat guna mencapai gelar Sarjana Komputer<br>pada Program Studi Sistem Informasi Fakultas Ilmu Komputer<br>Universitas Katolik Soegijapranata Semarang
+
+<br><br>
+
+*(Lambang Universitas Katolik Soegijapranata)*
+
+<br><br><br>
+
+Disusun oleh :<br>
+**RAFIF ARSYA PRADIVA**<br>
+**22.N4.0014**
+
+<br><br><br>
+
+**PROGRAM STUDI SISTEM INFORMASI**<br>
+**FAKULTAS ILMU KOMPUTER**<br>
+**UNIVERSITAS KATOLIK SOEGIJAPRANATA**<br>
+**SEMARANG**<br>
+**2026**
+
+</div>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+### HALAMAN PERNYATAAN ORISINALITAS
+
+</div>
+
+<br>
+
+Yang bertanda tangan di bawah ini:
+
+Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva  
+NIM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 22.N4.0014  
+Program Studi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Sistem Informasi  
+Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer  
+
+Menyatakan dengan sesungguhnya bahwa Tugas Akhir dengan judul:  
+**“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”**  
+adalah benar-benar hasil karya penelitian mandiri saya sendiri, bukan merupakan jiplakan atau pengambilalihan sebagian atau seluruh karya ilmiah orang lain, dan disusun dengan mematuhi kaidah serta norma etika penulisan ilmiah yang berlaku. Semua sumber data, kutipan rujukan, maupun bantuan dari berbagai pihak telah dicantumkan dan disebutkan sebagaimana mestinya sesuai pedoman akademik yang berlaku.
+
+Apabila di kemudian hari terbukti atau dapat dibuktikan terdapat penyimpangan atau pemalsuan dalam naskah ini, saya bersedia menerima segala sanksi akademik yang dijatuhkan oleh Universitas Katolik Soegijapranata Semarang sesuai ketentuan perundang-undangan yang berlaku.
+
+<br><br>
+
+<div align="right">
+
+Semarang, 13 Juli 2026<br>
+Yang membuat pernyataan,
+
+<br><br><br>
+
+**Rafif Arsya Pradiva**<br>
+NIM. 22.N4.0014
+
+</div>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+### HALAMAN PERNYATAAN BEBAS PLAGIASI
+
+</div>
+
+<br>
+
+Yang bertanda tangan di bawah ini:
+
+Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva  
+NIM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 22.N4.0014  
+Program Studi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Sistem Informasi  
+Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer  
+
+Dengan ini menyatakan bahwa naskah Tugas Akhir dengan judul:  
+**“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”**  
+benar-benar bebas dari segala bentuk dan unsur plagiasi. Seluruh gagasan, kutipan, tabel, kode program, serta ilustrasi yang bersumber dari karya pihak lain telah diakui dan dikutip sesuai kaidah tata cara pengutipan ilmiah yang baku.
+
+Apabila di kemudian hari ditemukan dan/atau terbukti bahwa karya ilmiah ini mengandung unsur plagiasi, saya menyatakan bersedia bertanggung jawab sepenuhnya dan bersedia menerima sanksi akademik yang berlaku di lingkungan Fakultas Ilmu Komputer Universitas Katolik Soegijapranata Semarang, termasuk pencabutan gelar kesarjanaan yang telah dianugerahkan.
+
+<br><br>
+
+<div align="right">
+
+Semarang, 13 Juli 2026<br>
+Yang menyatakan,
+
+<br><br>
+
+*Meterai Rp10.000*<br>
+*(tanda tangan)*
+
+<br><br>
+
+**Rafif Arsya Pradiva**<br>
+NIM. 22.N4.0014
 
 </div>
 
@@ -71,103 +188,27 @@ NPP. ....................
 
 <div align="center">
 
-### HALAMAN PERNYATAAN KEASLIAN
-
-</div>
-
-<br>
-
-Yang bertanda tangan di bawah ini
-
-Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva  
-NIM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 22.N4.0014  
-Progdi/Konsentrasi &nbsp;: Sistem Informasi  
-Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer  
-
-Dengan ini menyatakan bahwa Laporan Skripsi dengan judul **“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”** benar-benar bebas dari plagiasi, dan apabila terbukti tidak benar bersedia menerima sanksi sesuai dengan ketentuan yang berlaku.
-
-<br><br>
-
-<div align="right">
-
-Semarang, 13 Juli 2026<br>
-Yang menyatakan,
-
-<br><br>
-
-*Meterai Rp10.000*<br>
-*(tanda tangan)*
-
-<br><br>
-
-**Rafif Arsya Pradiva**
-
-</div>
-
-<div style="page-break-after: always;"></div>
-
-<div align="center">
-
-### HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI TUGAS AKHIR UNTUK KEPENTINGAN AKADEMIS
-
-</div>
-
-<br>
-
-Sebagai sivitas akademik Universitas Katolik Soegijapranata, Saya yang bertanda tangan di bawah ini :
-
-Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva  
-Program Studi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Sistem Informasi  
-Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer  
-Jenis Karya &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Skripsi  
-
-Demi pengembangan ilmu pengetahuan, menyetujui untuk memberikan kepada Universitas Katolik Soegijapranata Hak Bebas Royalti Non-eksklusif atas karya ilmiah saya yang berjudul :
-
-**“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”**
-
-Beserta perangkat yang ada (jika diperlukan). Dengan Hak Bebas Royalti Non-eksklusif ini Universitas Katolik Soegijapranata berhak menyimpan, mengalih media/formatkan, mengelola dalam bentuk pangkalan data (*database*), merawat, dan memublikasikan tugas akhir saya selama tetap mencantumkan nama saya sebagai penulis/pencipta dan sebagai pemilik Hak Cipta.
-
-Demikian pernyataan ini saya buat dengan sebenarnya.
-
-<br><br>
-
-<div align="right">
-
-Dibuat di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Semarang  
-Pada tanggal &nbsp;: 13 Juli 2026  
-Yang menyatakan
-
-<br><br><br>
-
-( ............................................................ )<br>
-**Rafif Arsya Pradiva**
-
-</div>
-
-<div style="page-break-after: always;"></div>
-
-<div align="center">
-
 ### KATA PENGANTAR
 
 </div>
 
 <br>
 
-Puji dan syukur penulis panjatkan kehadirat Tuhan Yang Maha Esa atas berkat rahmat serta kasih-Nya sehingga penulis dapat menyelesaikan skripsi ini dengan judul **“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”**.
+Puji dan syukur penulis panjatkan kehadirat Tuhan Yang Maha Esa atas berkat rahmat serta kasih-Nya sehingga penulis dapat menyelesaikan penulisan Tugas Akhir ini dengan judul **“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”**.
 
-Penulisan skripsi ini bertujuan untuk memenuhi sebagian syarat memperoleh gelar sarjana bagi mahasiswa program S1 pada program studi Sistem Informasi Universitas Katolik Soegijapranata Semarang. Penulis menyadari bahwa skripsi ini masih jauh dari kesempurnaan, oleh sebab itu penulis mengharapkan kritik dan saran yang bersifat membangun dari semua pihak demi kesempurnaan skripsi ini.
+Penulisan Tugas Akhir ini bertujuan untuk memenuhi sebagian syarat guna memperoleh gelar Sarjana Komputer bagi mahasiswa pada Program Studi Sistem Informasi Fakultas Ilmu Komputer Universitas Katolik Soegijapranata Semarang. Penulis menyadari bahwa naskah Tugas Akhir ini masih jauh dari kesempurnaan, oleh sebab itu penulis mengharapkan kritik dan saran yang bersifat membangun dari semua pihak demi kesempurnaan naskah ini.
 
-Selesainya skripsi ini tidak terlepas dari bantuan berbagai pihak, sehingga pada kesempatan ini penulis dengan segala kerendahan hati dan penuh rasa hormat mengucapkan terima kasih yang sebesar-besarnya kepada semua pihak yang telah memberikan bantuan moril maupun materil secara langsung maupun tidak langsung kepada penulis dalam penyusunan skripsi ini hingga selesai, terutama kepada yang saya hormati:
+Selesainya Tugas Akhir ini tidak terlepas dari bantuan, bimbingan, dan dukungan moral maupun material dari berbagai pihak. Oleh karena itu, pada kesempatan ini penulis dengan segala kerendahan hati dan penuh rasa hormat mengucapkan terima kasih yang sebesar-besarnya kepada:
 1. Ketua Program Studi Sistem Informasi Universitas Katolik Soegijapranata Semarang.
-2. Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling., selaku Dosen Pembimbing 1, dan Erdhi Widyarto Nugroho, S.T., M.T., selaku Dosen Pembimbing 2, yang telah memberikan kritik, saran bimbingan, maupun arahan yang sangat berguna dalam penyusunan skripsi ini.
-3. Bapak/Ibu dosen dan staf di lingkungan Fakultas Ilmu Komputer, khususnya Program Studi Sistem Informasi Universitas Katolik Soegijapranata Semarang yang telah banyak membantu kami untuk dapat melaksanakan studi dengan lancar.
-4. Bapak Asep, selaku pengelola operasional Asri Boarding House, atas kehangatan kerja sama, izin penelitian lapangan, serta keterbukaan berbagi data riil operasional kos.
-5. Teristimewa kepada kedua Orang Tua dan segenap keluarga tercinta yang selalu mendoakan, memberikan motivasi dan pengorbanannya baik dari segi moril maupun materi kepada penulis sehingga penulis dapat menyelesaikan skripsi ini.
-6. Rekan-rekan mahasiswa Program Studi Sistem Informasi angkatan 2022 serta para sahabat atas dukungan, diskusi, dan kebersamaannya sepanjang masa studi.
-7. Terima kasih juga kepada semua pihak yang telah membantu dalam penyelesaian skripsi ini yang tidak dapat disebutkan satu per satu.
+2. Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling., selaku Dosen Pembimbing 1, dan Erdhi Widyarto Nugroho, S.T., M.T., selaku Dosen Pembimbing 2, yang telah meluangkan waktu dan pemikiran untuk memberikan bimbingan, arahan, petunjuk, serta koreksi berharga dalam perancangan sistem dan penyusunan Tugas Akhir ini hingga tuntas.
+3. Seluruh Bapak/Ibu dosen dan staf pengajar di lingkungan Fakultas Ilmu Komputer, khususnya Program Studi Sistem Informasi Universitas Katolik Soegijapranata Semarang yang telah membekali ilmu pengetahuan, wawasan teknologi, dan dedikasi pengajaran selama masa studi perkuliahan.
+4. Bapak Asep, selaku pengelola operasional senior Asri Boarding House, atas kehangatan kerja sama, izin penelitian lapangan, keterbukaan berbagi data riil operasional kos, serta kesediaannya dalam pengujian tatap muka (*side-by-side usability testing*).
+5. Kelima rekan penghuni kos aktif (Arjun, Farrel, Fadil, Ammar, dan Sindhu) yang telah bersedia meluangkan waktu berharga untuk berpartisipasi dalam sesi wawancara evaluasi sistem pasca-penerapan.
+6. Teristimewa kepada kedua Orang Tua dan segenap keluarga tercinta yang senantiasa memanjatkan doa tulus, memberikan dorongan moril yang tiada henti, motivasi, cinta kasih, serta pengorbanan material yang tak ternilai bagi keberhasilan studi penulis.
+7. Rekan-rekan seperjuangan mahasiswa Program Studi Sistem Informasi angkatan 2022 serta para sahabat atas kebersamaan, diskusi teknis yang solutif, solidaritas, dan dukungan selama perkuliahan.
+8. Semua pihak yang telah membantu dalam penyelesaian Tugas Akhir ini yang tidak dapat disebutkan satu per satu.
 
-Akhir kata penulis mengucapkan terima kasih kepada semua pihak yang telah membantu dan penulis berharap semoga skripsi ini dapat bermanfaat bagi kita semua dan menjadi bahan masukan bagi pengembangan ilmu pengetahuan serta tata kelola teknologi sistem informasi.
+Akhir kata penulis berharap semoga naskah Tugas Akhir dan artefak sistem informasi yang dikembangkan dapat memberikan sumbangsih nyata bagi kemajuan ilmu pengetahuan, menjadi referensi berharga bagi penelitian selanjutnya, serta mendatangkan manfaat praktis bagi tata kelola properti akomodasi hunian di Indonesia.
 
 <br>
 
@@ -187,6 +228,50 @@ NIM. 22.N4.0014
 
 <div align="center">
 
+### HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI KARYA ILMIAH UNTUK KEPENTINGAN AKADEMIS
+
+</div>
+
+<br>
+
+Sebagai sivitas akademik Universitas Katolik Soegijapranata, saya yang bertanda tangan di bawah ini:
+
+Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva  
+Program Studi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Sistem Informasi  
+Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer  
+Jenis Karya &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Tugas Akhir / Skripsi  
+
+Demi pengembangan ilmu pengetahuan, menyetujui untuk memberikan kepada Universitas Katolik Soegijapranata Hak Bebas Royalti Non-eksklusif (*Non-exclusive Royalty-Free Right*) atas karya ilmiah saya yang berjudul:
+
+<div align="center">
+
+**“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”**
+
+</div>
+
+beserta perangkat yang ada (jika diperlukan). Dengan Hak Bebas Royalti Non-eksklusif ini Universitas Katolik Soegijapranata berhak menyimpan, mengalih-media/formatkan, mengelola dalam bentuk pangkalan data (*database*), merawat, dan memublikasikan tugas akhir saya selama tetap mencantumkan nama saya sebagai penulis/pencipta dan sebagai pemilik Hak Cipta.
+
+Demikian pernyataan ini saya buat dengan sebenarnya.
+
+<br><br>
+
+<div align="right">
+
+Dibuat di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Semarang  
+Pada tanggal &nbsp;: 13 Juli 2026  
+Yang menyatakan,
+
+<br><br><br>
+
+( ............................................................ )<br>
+**Rafif Arsya Pradiva**
+
+</div>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
 ### ABSTRAK
 
 </div>
@@ -197,8 +282,7 @@ Pengelolaan operasional hunian kos Asri Boarding House di kawasan Tembalang, Kot
 
 <br>
 
-Kata kunci:  
-sistem informasi manajemen kos, payment gateway, penagihan otomatis, evaluasi kegunaan, reservasi online, Laravel 11.
+Kata kunci: sistem informasi manajemen kos, payment gateway, penagihan otomatis, Laravel 11.
 
 <div style="page-break-after: always;"></div>
 
@@ -214,143 +298,182 @@ Operational management at Asri Boarding House in Tembalang, Semarang, encompasse
 
 <br>
 
-Key words:  
-boarding house management information system, payment gateway, automated billing, usability evaluation, online reservation, Laravel 11.
+Key words: boarding house management information system, payment gateway, automated billing, Laravel 11.
 
 <div style="page-break-after: always;"></div>
 
+<div align="center">
+
 ## DAFTAR ISI
-HALAMAN PENGESAHAN	ii
-HALAMAN PERNYATAAN KEASLIAN	iii
-HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI TUGAS AKHIR UNTUK KEPENTINGAN AKADEMIS	iv
-KATA PENGANTAR	v
-ABSTRAK	vii
-ABSTRACT	viii
-DAFTAR ISI	ix
-DAFTAR TABEL	xi
-DAFTAR GAMBAR	xii
-DAFTAR LAMPIRAN	xiii
-BAB 1 PENDAHULUAN	1
-1.1 Latar Belakang	1
-1.2 Rumusan Masalah	4
-1.3 Tujuan Penelitian	5
-1.4 Batasan Masalah	6
-BAB 2  TINJAUAN PUSTAKA	11
-2.1 Sistem Informasi dan Sistem Informasi Manajemen	11
-2.2 Sistem Berbasis Web dan E-Commerce Model B2C	11
-2.3 Sistem Manajemen Basis Data Relasional dan Normalisasi 3NF	12
-2.4 Arsitektur 3-Tier dan Model-View-Controller pada Laravel 11	12
-2.5 Antarmuka Pemrograman Aplikasi (API) Eksternal: Midtrans dan Fonnte	13
-2.6 Penjadwalan Tugas, Mesin Penagihan Otomatis, dan Cron Job	13
-2.7 Teori Interaktivitas UI/UX: Neo-Brutalism dan WCAG 2.1	14
-2.8 Keamanan Web dan Integritas Data	14
-2.9 Concurrency Control dan Mekanisme Penguncian Basis Data	15
-BAB 3  METODOLOGI PENELITIAN	16
-3.1 Jenis Penelitian	16
-3.2 Teknik Pengumpulan Data	16
-3.3 Metode Pengembangan Sistem	17
-3.4 Kerangka Pemikiran	18
 
+</div>
 
-BAB 4 HASIL DAN PEMBAHASAN	22
-4.1 Perancangan Sistem	22
-4.1.1 Use Case Diagram	22
-4.1.2 Activity Diagram	24
-4.1.3 Flowchart Diagram	27
-4.1.4 Sequence Diagram	29
-4.1.5 Entity Relationship Diagram (ERD)	31
-4.1.6 Skenario Diagram Alur Sistem	32
-4.2 Tampilan Antarmuka Sistem	35
-4.2.1 Antarmuka Calon Penyewa	35
-4.2.2 Antarmuka Penyewa Aktif	37
-4.2.3 Antarmuka Administrator	39
-4.3 Implementasi Sistem	41
-4.3.1 Lingkungan Implementasi	41
-4.3.2 Perancangan Arsitektur Aplikasi	42
-4.3.3 Implementasi Basis Data	44
-4.3.4 Implementasi Autentikasi dan Hak Akses	46
-4.3.5 Implementasi Fitur Calon Penyewa	48
-4.3.6 Implementasi Fitur Penyewa Aktif	50
-4.3.7 Implementasi Fitur Administrator	52
-4.3.8 Implementasi Integrasi Payment Gateway Midtrans	54
-4.3.9 Implementasi Notifikasi Surel SMTP	56
-4.3.10 Implementasi Notifikasi WhatsApp Fonnte	57
-4.4 Hasil Deployment	59
-4.4.1 Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP	59
-4.4.2 Konfigurasi Penjadwal Tugas Peladen (Cron Job) Mesin Penagihan Otomatis	60
-4.4.3 Konfigurasi Variabel Lingkungan Produksi dan Optimasi Kinerja Peladen	61
-4.5 Hasil Pengujian Sistem	65
-4.5.1 Hasil Black Box Testing	65
-4.5.2 Hasil Pengujian Hak Akses	71
-4.5.3 Hasil Pengujian Transaksi Midtrans Sandbox (BCA VA)	73
-4.5.4 Hasil Pengujian Parameter Keamanan dan Hak Akses Live	75
-4.6 Hasil Wawancara dengan Penjaga Kost	76
-4.7 Hasil Wawancara dengan Penghuni Kost	81
-4.8 Pembahasan	92
-BAB 5 KESIMPULAN DAN SARAN	96
-5.1 Kesimpulan	96
-5.2 Saran	97
-DAFTAR PUSTAKA	99
-LAMPIRAN	101
-Lampiran 1  Pedoman dan Panduan Wawancara Operasional Pengelola Kost	101
-Lampiran 2  Transkrip Lengkap dan Kuesioner Wawancara Lima Responden Penghuni Kost	103
-Lampiran 3  Matriks Rinci 60 Butir Pengujian Fungsionalitas Kotak Hitam (Black Box Testing)	108
-Lampiran 4  Log Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit (510 Passed, 2.211 Assertions)	115
-Lampiran 5  Kode Sumber Skrip Kritis Otomasi Sistem (Billing Engine, Late Penalty, Midtrans Webhook)	118
-Lampiran 6  Dokumentasi Riset Lapangan dan Surat Keterangan Selesai Penelitian Asri Boarding House	123
+<br>
 
+HALAMAN JUDUL &emsp; i  
+HALAMAN PERNYATAAN ORISINALITAS &emsp; ii  
+HALAMAN PERNYATAAN BEBAS PLAGIASI &emsp; iii  
+HALAMAN PENGESAHAN &emsp; iv  
+KATA PENGANTAR &emsp; v  
+HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI KARYA ILMIAH UNTUK KEPENTINGAN AKADEMIS &emsp; vii  
+ABSTRAK &emsp; viii  
+ABSTRACT &emsp; ix  
+DAFTAR ISI &emsp; x  
+DAFTAR TABEL &emsp; xii  
+DAFTAR GAMBAR &emsp; xiii  
+DAFTAR LAMPIRAN &emsp; xiv  
+
+**BAB 1 PENDAHULUAN** &emsp; **1**  
+1.1 Latar Belakang &emsp; 1  
+1.2 Rumusan Masalah &emsp; 4  
+1.3 Tujuan Penelitian &emsp; 5  
+1.4 Batasan Masalah &emsp; 6  
+
+**BAB 2 TINJAUAN PUSTAKA** &emsp; **11**  
+2.1 Sistem Informasi dan Sistem Informasi Manajemen &emsp; 11  
+2.2 Sistem Berbasis Web dan E-Commerce Model B2C &emsp; 11  
+2.3 Sistem Manajemen Basis Data Relasional dan Normalisasi 3NF &emsp; 12  
+2.4 Arsitektur 3-Tier dan Model-View-Controller pada Laravel 11 &emsp; 12  
+2.5 Antarmuka Pemrograman Aplikasi (API) Eksternal: Midtrans dan Fonnte &emsp; 13  
+2.6 Penjadwalan Tugas, Mesin Penagihan Otomatis, dan Cron Job &emsp; 13  
+2.7 Teori Interaktivitas UI/UX: Neo-Brutalism dan WCAG 2.1 &emsp; 14  
+2.8 Keamanan Web dan Integritas Data &emsp; 14  
+2.9 Concurrency Control dan Mekanisme Penguncian Basis Data &emsp; 15  
+
+**BAB 3 METODOLOGI PENELITIAN** &emsp; **16**  
+3.1 Jenis Penelitian &emsp; 16  
+3.2 Teknik Pengumpulan Data &emsp; 16  
+3.3 Metode Pengembangan Sistem &emsp; 17  
+3.4 Kerangka Pemikiran &emsp; 18  
+
+**BAB 4 HASIL DAN PEMBAHASAN** &emsp; **22**  
+4.1 Perancangan Sistem &emsp; 22  
+&emsp;&emsp;4.1.1 Use Case Diagram &emsp; 22  
+&emsp;&emsp;4.1.2 Activity Diagram &emsp; 24  
+&emsp;&emsp;4.1.3 Flowchart Diagram &emsp; 27  
+&emsp;&emsp;4.1.4 Sequence Diagram &emsp; 29  
+&emsp;&emsp;4.1.5 Entity Relationship Diagram (ERD) &emsp; 31  
+&emsp;&emsp;4.1.6 Skenario Diagram Alur Sistem &emsp; 32  
+4.2 Tampilan Antarmuka Sistem &emsp; 35  
+&emsp;&emsp;4.2.1 Antarmuka Calon Penyewa &emsp; 35  
+&emsp;&emsp;4.2.2 Antarmuka Penyewa Aktif &emsp; 37  
+&emsp;&emsp;4.2.3 Antarmuka Administrator &emsp; 39  
+4.3 Implementasi Sistem &emsp; 41  
+&emsp;&emsp;4.3.1 Lingkungan Implementasi &emsp; 41  
+&emsp;&emsp;4.3.2 Perancangan Arsitektur Aplikasi &emsp; 42  
+&emsp;&emsp;4.3.3 Implementasi Basis Data &emsp; 44  
+&emsp;&emsp;4.3.4 Implementasi Autentikasi dan Hak Akses &emsp; 46  
+&emsp;&emsp;4.3.5 Implementasi Fitur Calon Penyewa &emsp; 48  
+&emsp;&emsp;4.3.6 Implementasi Fitur Penyewa Aktif &emsp; 50  
+&emsp;&emsp;4.3.7 Implementasi Fitur Administrator &emsp; 52  
+&emsp;&emsp;4.3.8 Implementasi Integrasi Payment Gateway Midtrans &emsp; 54  
+&emsp;&emsp;4.3.9 Implementasi Notifikasi Surel SMTP &emsp; 56  
+&emsp;&emsp;4.3.10 Implementasi Notifikasi WhatsApp Fonnte &emsp; 57  
+4.4 Hasil Deployment &emsp; 59  
+&emsp;&emsp;4.4.1 Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP &emsp; 59  
+&emsp;&emsp;4.4.2 Konfigurasi Penjadwal Tugas Peladen (Cron Job) Mesin Penagihan Otomatis &emsp; 60  
+&emsp;&emsp;4.4.3 Konfigurasi Variabel Lingkungan Produksi dan Optimasi Kinerja Peladen &emsp; 61  
+4.5 Hasil Pengujian Sistem &emsp; 65  
+&emsp;&emsp;4.5.1 Hasil Black Box Testing &emsp; 65  
+&emsp;&emsp;4.5.2 Hasil Pengujian Hak Akses &emsp; 71  
+&emsp;&emsp;4.5.3 Hasil Pengujian Transaksi Midtrans Sandbox (BCA VA) &emsp; 73  
+&emsp;&emsp;4.5.4 Hasil Pengujian Parameter Keamanan dan Hak Akses Live &emsp; 75  
+4.6 Hasil Wawancara dengan Penjaga Kost &emsp; 76  
+4.7 Hasil Wawancara dengan Penghuni Kost &emsp; 81  
+4.8 Pembahasan &emsp; 92  
+
+**BAB 5 KESIMPULAN DAN SARAN** &emsp; **96**  
+5.1 Kesimpulan &emsp; 96  
+5.2 Saran &emsp; 97  
+
+**DAFTAR PUSTAKA** &emsp; **99**  
+**LAMPIRAN** &emsp; **101**  
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
 
 ## DAFTAR TABEL
-Tabel 4.1  Matriks Pemetaan Status Transaksional dan Transisi State Siklus Hidup Sistem	33
-Tabel 4.2  Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House	44
-Tabel 4.3  Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)	65
-Tabel 4.4  Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna	71
-Tabel 4.5  Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account	73
-Tabel 4.6  Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live	75
-Tabel 4.7  Daftar Pertanyaan dan Respon Wawancara dengan Penjaga Kost (Bapak Asep)	77
-Tabel 4.8  Profil dan Konteks Hunian Lima Responden Penghuni Kost	81
-Tabel 4.9  Transkrip Wawancara Terstruktur Responden 1 (Arjun — Kamar 101 VIP, Sewa Tahunan Lunas Penuh)	82
-Tabel 4.10  Transkrip Wawancara Terstruktur Responden 2 (Farrel — Kamar 104 Deluxe, Sewa 6 Bulan Skema DP 30%)	84
-Tabel 4.11  Transkrip Wawancara Terstruktur Responden 3 (Fadil — Kamar 205 Standar, Sewa Bulanan Rutin Tepat Waktu)	86
-Tabel 4.12  Transkrip Wawancara Terstruktur Responden 4 (Ammar — Kamar 208 Standar, Sewa Bulanan Toleransi Jatuh Tempo)	88
-Tabel 4.13  Transkrip Wawancara Terstruktur Responden 5 (Sindhu — Kamar 102 VIP, Pendaftaran Walk-In lalu Aktif Portal)	90
-Tabel 4.14  Matriks Komparasi Evaluasi Respon dan Temuan Kunci Kelima Penghuni Kost	91
+
+</div>
+
+<br>
+
+Tabel 4.1 &emsp; Matriks Pemetaan Status Transaksional dan Transisi State Siklus Hidup Sistem &emsp; 33  
+Tabel 4.2 &emsp; Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House &emsp; 44  
+Tabel 4.3 &emsp; Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji) &emsp; 65  
+Tabel 4.4 &emsp; Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna &emsp; 71  
+Tabel 4.5 &emsp; Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account &emsp; 73  
+Tabel 4.6 &emsp; Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live &emsp; 75  
+Tabel 4.7 &emsp; Daftar Pertanyaan dan Respon Wawancara dengan Penjaga Kost (Bapak Asep) &emsp; 77  
+Tabel 4.8 &emsp; Profil dan Konteks Hunian Lima Responden Penghuni Kost &emsp; 81  
+Tabel 4.9 &emsp; Transkrip Wawancara Terstruktur Responden 1 (Arjun — Kamar 101 VIP, Sewa Tahunan Lunas Penuh) &emsp; 82  
+Tabel 4.10 &emsp; Transkrip Wawancara Terstruktur Responden 2 (Farrel — Kamar 104 Deluxe, Sewa 6 Bulan Skema DP 30%) &emsp; 84  
+Tabel 4.11 &emsp; Transkrip Wawancara Terstruktur Responden 3 (Fadil — Kamar 205 Standar, Sewa Bulanan Rutin Tepat Waktu) &emsp; 86  
+Tabel 4.12 &emsp; Transkrip Wawancara Terstruktur Responden 4 (Ammar — Kamar 208 Standar, Sewa Bulanan Toleransi Jatuh Tempo) &emsp; 88  
+Tabel 4.13 &emsp; Transkrip Wawancara Terstruktur Responden 5 (Sindhu — Kamar 102 VIP, Pendaftaran Walk-In lalu Aktif Portal) &emsp; 90  
+Tabel 4.14 &emsp; Matriks Komparasi Evaluasi Respon dan Temuan Kunci Kelima Penghuni Kost &emsp; 91  
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
 
 ## DAFTAR GAMBAR
-Gambar 3.1  Diagram Model Waterfall Pengembangan Sistem	17
-Gambar 3.2  Kerangka Pemikiran Penelitian	18
-Gambar 4.1  Use Case Diagram Sistem Asri Boarding House (Modul Penyewa, Tamu, dan Calon Penyewa)	22
-Gambar 4.2  Activity Diagram Tiga Proses Kritis Sistem Asri Boarding House	24
-Gambar 4.3  Flowchart Diagram Logika Algoritmik Sistem Asri Boarding House	27
-Gambar 4.4  Sequence Diagram Alur Transaksional Utama Sistem Asri Boarding House	29
-Gambar 4.5  Entity Relationship Diagram (ERD) Skema Basis Data 22 Tabel	31
-Gambar 4.6  Skenario Diagram Siklus Hidup Transaksional Penyewa dan Operasional Administrator	32
-Gambar 4.7  Antarmuka Katalog Kamar Publik Neo-Brutalisme	35
-Gambar 4.8  Workspace Stepper Alur Reservasi Calon Penyewa	36
-Gambar 4.9  Portal Invoice dan Kuitansi Digital Penyewa	37
-Gambar 4.10  Dasbor Administrasi Keuangan Administrator	39
-Gambar 4.11  Cuplikan Implementasi Kode Profil Interceptor Google OAuth (UserObserver.php)	47
-Gambar 4.12  Cuplikan Implementasi Kode Anti-Double Booking Pesimistik (BookingService.php)	49
-Gambar 4.13  Cuplikan Implementasi Kode Ekspor Kuitansi Digital PDF (PaymentReceiptPdfService.php)	51
-Gambar 4.14  Cuplikan Implementasi Kode Karantina Kamar Pasca-Checkout (CheckoutService.php)	53
-Gambar 4.15  Cuplikan Implementasi Kode Validasi Webhook Signature SHA-512 Midtrans (MidtransWebhookService.php)	55
-Gambar 4.16  Cuplikan Implementasi Kode Mesin Penagihan Otomatis (GenerateMonthlyInvoices.php)	56
-Gambar 4.17  Cuplikan Implementasi Kode Perhitungan Denda Flat 5% Kalender (ApplyLatePenalties.php)	57
-Gambar 4.18  Cuplikan Implementasi Kode Integrasi Gateway WhatsApp Fonnte (FonnteNotificationService.php)	58
-Gambar 4.19  Konfigurasi Peladen Web Apache/LiteSpeed dan Header Keamanan HTTP (.htaccess)	60
-Gambar 4.20  Cuplikan Konfigurasi Variabel Lingkungan Produksi (.env.production)	62
-Gambar 4.21  Hasil Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit	75
-Gambar 4.22  Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)	80
+
+</div>
+
+<br>
+
+Gambar 3.1 &emsp; Diagram Model Waterfall Pengembangan Sistem &emsp; 17  
+Gambar 3.2 &emsp; Kerangka Pemikiran Penelitian &emsp; 18  
+Gambar 4.1 &emsp; Use Case Diagram Sistem Asri Boarding House (Modul Penyewa, Tamu, dan Calon Penyewa) &emsp; 22  
+Gambar 4.2 &emsp; Activity Diagram Tiga Proses Kritis Sistem Asri Boarding House &emsp; 24  
+Gambar 4.3 &emsp; Flowchart Diagram Logika Algoritmik Sistem Asri Boarding House &emsp; 27  
+Gambar 4.4 &emsp; Sequence Diagram Alur Transaksional Utama Sistem Asri Boarding House &emsp; 29  
+Gambar 4.5 &emsp; Entity Relationship Diagram (ERD) Skema Basis Data 22 Tabel &emsp; 31  
+Gambar 4.6 &emsp; Skenario Diagram Siklus Hidup Transaksional Penyewa dan Operasional Administrator &emsp; 32  
+Gambar 4.7 &emsp; Antarmuka Katalog Kamar Publik Neo-Brutalisme &emsp; 35  
+Gambar 4.8 &emsp; Workspace Stepper Alur Reservasi Calon Penyewa &emsp; 36  
+Gambar 4.9 &emsp; Portal Invoice dan Kuitansi Digital Penyewa &emsp; 37  
+Gambar 4.10 &emsp; Dasbor Administrasi Keuangan Administrator &emsp; 39  
+Gambar 4.11 &emsp; Cuplikan Implementasi Kode Profil Interceptor Google OAuth (UserObserver.php) &emsp; 47  
+Gambar 4.12 &emsp; Cuplikan Implementasi Kode Anti-Double Booking Pesimistik (BookingService.php) &emsp; 49  
+Gambar 4.13 &emsp; Cuplikan Implementasi Kode Ekspor Kuitansi Digital PDF (PaymentReceiptPdfService.php) &emsp; 51  
+Gambar 4.14 &emsp; Cuplikan Implementasi Kode Karantina Kamar Pasca-Checkout (CheckoutService.php) &emsp; 53  
+Gambar 4.15 &emsp; Cuplikan Implementasi Kode Validasi Webhook Signature SHA-512 Midtrans (MidtransWebhookService.php) &emsp; 55  
+Gambar 4.16 &emsp; Cuplikan Implementasi Kode Mesin Penagihan Otomatis (GenerateMonthlyInvoices.php) &emsp; 56  
+Gambar 4.17 &emsp; Cuplikan Implementasi Kode Perhitungan Denda Flat 5% Kalender (ApplyLatePenalties.php) &emsp; 57  
+Gambar 4.18 &emsp; Cuplikan Implementasi Kode Integrasi Gateway WhatsApp Fonnte (FonnteNotificationService.php) &emsp; 58  
+Gambar 4.19 &emsp; Konfigurasi Peladen Web Apache/LiteSpeed dan Header Keamanan HTTP (.htaccess) &emsp; 60  
+Gambar 4.20 &emsp; Cuplikan Konfigurasi Variabel Lingkungan Produksi (.env.production) &emsp; 62  
+Gambar 4.21 &emsp; Hasil Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit &emsp; 75  
+Gambar 4.22 &emsp; Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep) &emsp; 80  
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
 
 ## DAFTAR LAMPIRAN
-Lampiran 1  Pedoman dan Panduan Wawancara Operasional Pengelola Kost	101
-Lampiran 2  Transkrip Lengkap dan Kuesioner Wawancara Lima Responden Penghuni Kost	103
-Lampiran 3  Matriks Rinci 60 Butir Pengujian Fungsionalitas Kotak Hitam (Black Box Testing)	108
-Lampiran 4  Log Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit (510 Passed, 2.211 Assertions)	115
-Lampiran 5  Kode Sumber Skrip Kritis Otomasi Sistem (Billing Engine, Late Penalty, Midtrans Webhook)	118
-Lampiran 6  Dokumentasi Riset Lapangan dan Surat Keterangan Selesai Penelitian Asri Boarding House	123
 
-## BAB 1 PENDAHULUAN
+</div>
+
+<br>
+
+Lampiran 1 &emsp; Pedoman dan Panduan Wawancara Operasional Pengelola Kost &emsp; 101  
+Lampiran 2 &emsp; Transkrip Lengkap dan Kuesioner Wawancara Lima Responden Penghuni Kost &emsp; 103  
+Lampiran 3 &emsp; Matriks Rinci 60 Butir Pengujian Fungsionalitas Kotak Hitam (Black Box Testing) &emsp; 108  
+Lampiran 4 &emsp; Log Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit (510 Passed, 2.211 Assertions) &emsp; 115  
+Lampiran 5 &emsp; Kode Sumber Skrip Kritis Otomasi Sistem (Billing Engine, Late Penalty, Midtrans Webhook) &emsp; 118  
+Lampiran 6 &emsp; Dokumentasi Riset Lapangan dan Surat Keterangan Selesai Penelitian Asri Boarding House &emsp; 123  
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## BAB 1<br>PENDAHULUAN
+
+</div>
+
 
 ## 1.1 Latar Belakang
 Pertumbuhan kawasan perguruan tinggi senantiasa diiringi oleh tingginya permintaan fasilitas hunian sewa bagi mahasiswa perantau. Di sekitar lingkungan kampus, rumah kos memegang peranan krusial sebagai sarana akomodasi tempat tinggal yang menuntut pengelolaan operasional secara tertib, teratur, dan tanggap terhadap perkembangan zaman. Mahasiswa bersama orang tua atau wali kini terbiasa berinteraksi dalam ekosistem serba digital; mereka mengharapkan keterbukaan informasi fasilitas, kepastian ketersediaan unit kamar secara langsung (*real-time*), serta keleluasaan transaksi pembayaran non-tunai yang dapat diselesaikan dari jarak jauh tanpa kendala fisik [1]. Kendati demikian, sebagian besar tata kelola rumah kos skala menengah masih mempertahankan cara kerja konvensional yang bertumpu pada pencatatan fisik dan komunikasi manual melalui aplikasi pesan instan.
@@ -392,7 +515,13 @@ Guna menjaga fokus dan kedalaman pembahasan, batasan masalah dalam penelitian in
 4.	**Teknologi Pengembangan**: Sistem dibangun menggunakan framework PHP Laravel 11, basis data relasional MySQL 8.x dengan mesin penyimpanan InnoDB, serta integrasi API eksternal resmi (Midtrans Snap API v2 dan Fonnte WhatsApp Gateway API).
 5.	**Evaluasi dan Pengujian**: Pengujian sistem dibatasi pada verifikasi fungsionalitas melalui pengujian kotak hitam (*black box testing*) dan pengujian otomatis PHPUnit, serta evaluasi penerimaan pengguna melalui wawancara mendalam bersama pengelola/penjaga operasional dan lima orang penghuni kost aktif.
 
-## BAB 2 TINJAUAN PUSTAKA
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## BAB 2<br>TINJAUAN PUSTAKA
+
+</div>
 
 ## 2.1 Sistem Informasi dan Sistem Informasi Manajemen
 Sistem informasi pada hakikatnya merupakan rangkaian terpadu dari komponen perangkat keras (*hardware*), perangkat lunak (*software*), sarana telekomunikasi, data terstruktur, prosedur kerja, serta pengguna yang saling berinteraksi untuk mengumpulkan, mengolah, menyimpan, dan menyajikan data menjadi informasi yang bermanfaat bagi pengendalian organisasi dan pengambilan keputusan manajerial [2]. Dalam konteks tata kelola operasional, Sistem Informasi Manajemen (*Management Information System* atau SIM) memegang fungsi strategis sebagai penyedia rekapitulasi data berkala, alat bantu monitoring kinerja harian, serta pijakan bagi manajemen dalam menentukan langkah operasional yang tepat.
@@ -441,7 +570,13 @@ Pada pendekatan *Optimistic Locking*, sistem berasumsi bahwa perselisihan akses 
 
 Sebaliknya, *Pessimistic Locking* berasumsi bahwa potensi perebutan sumber daya data (*resource contention*) bernilai tinggi. Oleh sebab itu, baris data yang ditargetkan dikunci secara eksklusif sejak dibaca hingga transaksi tuntas diselesaikan (*commit*) atau dibatalkan (*rollback*). Pada MySQL InnoDB, penguncian ini dieksekusi melalui klausa `SELECT ... FOR UPDATE`, yang pada framework Laravel dipanggil melalui metode `lockForUpdate()`. Sepanjang transaksi berlangsung, proses lain yang mencoba membaca atau memodifikasi baris bersangkutan akan ditangguhkan (*blocked*). Penerapan mekanisme ini di dalam transaksi basis data (`DB::transaction`) memastikan alokasi unit kamar dan pembaruan mutasi pembayaran berjalan secara berurutan (*serialized*), sehingga meminimalkan risiko pemesanan ganda (*double booking*) dan anomali saldo kas.
 
-## BAB 3 METODOLOGI PENELITIAN
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## BAB 3<br>METODOLOGI PENELITIAN
+
+</div>
 
 ## 3.1 Jenis Penelitian
 Penelitian ini menerapkan metode Penelitian dan Pengembangan (*Research and Development* atau R&D) dengan pendekatan rekayasa perangkat lunak (*software engineering*) [11]. Metode R&D dipilih karena orientasi utama penelitian ini tidak sekadar mengkaji fenomena teoritis, melainkan merancang, membangun, menguji, dan menerapkan secara langsung sebuah artefak perangkat lunak fungsional—yakni Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway—guna menyelesaikan permasalahan operasional faktual pada Asri Boarding House di Tembalang, Kota Semarang.
@@ -615,7 +750,13 @@ graph TD
 Gambar 3.2 Kerangka Pemikiran Penelitian  
 Sumber: Rancangan penulis (2026)
 
-## BAB 4 HASIL DAN PEMBAHASAN
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## BAB 4<br>HASIL DAN PEMBAHASAN
+
+</div>
 
 ## 4.1 Perancangan Sistem
 Tahap perancangan sistem memvisualisasikan hasil analisis kebutuhan fungsional dan triangulasi data operasional ke dalam arsitektur rekayasa perangkat lunak yang terstruktur. Pemodelan sistem disusun mengacu pada standar *Unified Modeling Language* (UML 2.5)—meliputi Use Case Diagram, Activity Diagram, Flowchart Diagram, dan Sequence Diagram—serta pemodelan skema relasi data menggunakan *Entity Relationship Diagram* (ERD). Guna menjamin kemudahan penelaahan oleh dosen pembimbing dan penguji serta meniadakan distorsi visual saat naskah dibuka atau dicetak melalui perangkat lunak pengolah kata seperti Microsoft Word, diagram yang memiliki kompleksitas tinggi dan alur logika jamak dipecah secara modular ke dalam sub-diagram beresolusi tinggi (format PNG 24-bit tanpa kompresi *lossy*) dengan orientasi dan aspek rasio proporsional, serta dilengkapi penomoran resmi, judul, sumber data, dan deskripsi fungsional yang komprehensif.
@@ -1770,7 +1911,13 @@ Penelitian ini menegaskan perbedaan mendasar antara pengujian fungsionalitas per
 * Keberhasilan teknis (kelulusan 100% pada 60 skenario *black box* dan 510 pengujian otomatis PHPUnit) membuktikan bahwa program perangkat lunak bebas dari galat (*bug-free*), memenuhi spesifikasi rancangan logika, kebal terhadap manipulasi otorisasi (RBAC & IDOR), serta mampu mengolah transaksi basis data secara deterministik.
 * Namun demikian, keandalan teknis tersebut tidak secara otomatis menjamin kepuasan pengguna tanpa adanya keselarasan dengan kebiasaan operasional manusia di lapangan. Hasil evaluasi tatap muka bersama pengelola kos (Bapak Asep) dan lima orang penghuni (Arjun, Farrel, Fadil, Ammar, Sindhu) memberikan bukti empiris bahwa antarmuka Neo-Brutalisme yang berorientasi aksesibilitas (WCAG 2.1), tema *OLED Black Dark Mode*, fleksibilitas pembayaran BCA Virtual Account, transparansi kuitansi digital instan A5, serta aturan denda kalender 5% yang manusiawi berhasil diadopsi secara mulus dan memberikan kepuasan operasional yang sangat tinggi (skor 9,5 dari skala 10 oleh pengelola dan rata-rata skor 8,00 dari skala 10 oleh penghuni).
 
-## BAB 5 KESIMPULAN DAN SARAN
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## BAB 5<br>KESIMPULAN DAN SARAN
+
+</div>
 
 ## 5.1 Kesimpulan
 Berdasarkan serangkaian tahapan perancangan arsitektur, implementasi teknis, pengujian fungsionalitas, serta evaluasi operasional lapangan yang telah dilaksanakan pada Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway pada Asri Boarding House, ditarik dua kesimpulan utama yang secara langsung menjawab dua rumusan masalah penelitian:
@@ -1790,7 +1937,13 @@ Berdasarkan batasan sistem saat ini, hasil evaluasi pengujian fungsional, dan te
 4. **Otomatisasi Notifikasi Pra-Terminasi Kontrak Sewa (H-30)**: Menambahkan modul pengingat berkala otomatis melalui WhatsApp pada H-30 sebelum masa berlaku sewa tahunan atau semesteran berakhir, sehingga penghuni lama memperoleh prioritas konfirmasi perpanjangan sewa sebelum unit kamar dibuka kembali di katalog publik.
 5. **Optimasi Kinerja Skalabilitas dan *Caching* Peladen pada Beban Puncak**: Menerapkan mekanisme penyimpanan cache kueri tingkat lanjut (seperti Redis) dan optimasi penanganan lonjakan akses serentak (*concurrent traffic*) pada peladen web LiteSpeed, guna memastikan kecepatan muat dasbor penyewa tetap optimal pada tanggal 1 awal bulan saat distribusi tagihan bulanan diterbitkan secara massal.
 
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
 ## DAFTAR PUSTAKA
+
+</div>
 [1]	F. Sonata, “Pemanfaatan UML (Unified Modeling Language) dalam Perancangan Sistem Informasi E-Commerce Jenis Customer-to-Customer,” J. Komunika, vol. 8, no. 1, pp. 22–31, 2019, doi: 10.31504/komunika.v8i1.1832.
 [2]	K. C. Laudon and J. P. Laudon, Management Information Systems: Managing the Digital Firm, 15th ed. Harlow: Pearson Education, 2018.
 [3]	A. Cornellya and H. Afriyadi, “Perancangan Sistem Informasi Pemesanan pada Kost Tya Berbasis Web Menggunakan Framework Laravel,” PESHUM J. Pendidikan, Sos. dan Hum., vol. 4, no. 6, pp. 10360–10369, 2025, doi: 10.56799/peshum.v4i6.11777.
@@ -1809,7 +1962,11 @@ Berdasarkan batasan sistem saat ini, hasil evaluasi pengujian fungsional, dan te
 
 <div style="page-break-after: always;"></div>
 
-# LAMPIRAN
+<div align="center">
+
+## LAMPIRAN
+
+</div>
 
 ---
 
