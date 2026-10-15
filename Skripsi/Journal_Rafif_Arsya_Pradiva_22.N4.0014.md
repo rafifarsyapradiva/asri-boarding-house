@@ -111,7 +111,9 @@ Recurring financial routines rely on host daemon cron tasks triggering Laravel's
 2. *Intra-Month Grace Period (11th to Final Day of Month)*: Invoices that remain unpaid past the 10th transition into `terlambat` status but maintain an **IDR 0** penalty assessment throughout the active month, while periodic automated reminder messages are dispatched via WhatsApp to prompt settlement.
 3. *Calendar-Boundary Late Fee Assessment (1st of Month $M+1$)*: Upon crossing into the subsequent calendar month without settlement, the system calculates an idempotent 5% penalty levied against the room's base tariff:
 
-$$\text{Late Fee} = \begin{cases} 0.05 \times \text{Tarif Pokok}, & \text{if } \text{status} = \text{'terlambat'} \land \text{nominal\_denda} = 0 \land \Delta\text{Month} \ge 1 \\ 0, & \text{otherwise} \end{cases} \quad (1)$$
+$$
+\text{Late Fee} = \begin{cases} 0.05 \times \text{Tarif Pokok}, & \text{if } \text{status} = \text{'terlambat'} \land \text{nominal}_{\text{denda}} = 0 \land \Delta\text{Month} \ge 1 \\ 0, & \text{otherwise} \end{cases} \quad (1)
+$$
 
 Should default persist across two back-to-back monthly cycles (reaching the 10th day of Month $M+1$), the platform initiates guardian arrears escalation, dispatching automated arrears notices directly to the verified mobile contact of the tenant's parent or legal guardian.
 
@@ -142,7 +144,9 @@ To accommodate differing tenant behaviors, the platform coordinates both digital
 #### 3. Cryptographic Webhook Security and Signature Matching
 To prevent spoofed payment confirmations, asynchronous HTTP webhook dispatches emitted by the Midtrans gateway are validated against an HMAC-style SHA-512 digest calculation:
 
-$$\text{Signature}_{\text{calc}} = \text{SHA-512}(\text{order\_id} + \text{status\_code} + \text{gross\_amount} + \text{ServerKey}) \quad (2)$$
+$$
+\text{Signature}_{\text{calc}} = \text{SHA-512}(\text{order}_{\text{id}} + \text{status}_{\text{code}} + \text{gross}_{\text{amount}} + \text{ServerKey}) \quad (2)
+$$
 
 The resulting digest is verified against the inbound `signature_key` parameter. Any discrepancy causes the callback listener to terminate with an immediate HTTP 403 Forbidden error. When a valid `settlement` signal is confirmed, `MidtransCallbackController` applies state transitions within a transactional block reinforced with `lockForUpdate()`. In scenarios where network retries deliver identical webhooks, the system observes the existing `lunas` or settled status and skips secondary ledger writes, guaranteeing idempotent financial processing.
 
