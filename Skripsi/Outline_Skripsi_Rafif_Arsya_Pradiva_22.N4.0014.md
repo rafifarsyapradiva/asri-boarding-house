@@ -187,29 +187,37 @@ Rencana implementasi dirancang mengadopsi model *Waterfall System Development Li
 
 ```mermaid
 gantt
-    title Roadmap dan Linimasa Implementasi Skripsi (Februari - Juli 2026)
-    dateFormat  YYYY-MM-DD
-    section Fase 1: Riset & Analisis
-    Observasi Lapangan & Wawancara Pra-Dev       :done,    des1, 2026-02-01, 2026-02-20
-    Analisis Kebutuhan & Dokumen Blueprint      :done,    des2, 2026-02-21, 2026-03-05
-    section Fase 2: Perancangan Arsitektur
-    Pemodelan UML & Skema Basis Data 3NF (ERD)  :done,    des3, 2026-03-06, 2026-03-22
-    Desain UI/UX Neo-Brutalism & Wireframing    :done,    des4, 2026-03-23, 2026-04-05
-    section Fase 3: Rekayasa & Integrasi
-    Sprint 1-2: Core, DB 22 Tabel, RBAC & Katalog:done,   des5, 2026-04-06, 2026-04-25
-    Sprint 3-4: Booking Engine & Midtrans Snap   :done,    des6, 2026-04-26, 2026-05-15
-    Sprint 5-6: Billing Engine, Fonnte & Kuitansi:done,   des7, 2026-05-16, 2026-06-05
-    section Fase 4: Pengujian & Validasi
-    Automated Testing PHPUnit (510 Tests)       :done,    des8, 2026-06-06, 2026-06-16
-    Black Box Testing 60 Skenario & Security    :done,    des9, 2026-06-17, 2026-06-25
-    section Fase 5: Deployment Produksi
-    Deployment LiteSpeed Live & Cron Setup      :done,    des10, 2026-06-26, 2026-07-02
-    section Fase 6: Evaluasi Lapangan
-    Side-by-Side Usability Testing Pengelola    :done,    des11, 2026-07-03, 2026-07-06
-    Wawancara Terstruktur 5 Penghuni Kost       :done,    des12, 2026-07-07, 2026-07-10
-    section Fase 7: Finalisasi Naskah
-    Penulisan Lengkap Bab 1 s.d. Bab 5 & Lampiran:done,   des13, 2026-07-05, 2026-07-13
-    Persetujuan Dosen Pembimbing & Berkas Sidang:active,  des14, 2026-07-13, 2026-07-20
+    title Roadmap dan Linimasa Implementasi Skripsi 2026
+    dateFormat YYYY-MM-DD
+    axisFormat %Y-%m-%d
+
+    section Fase 1 Riset dan Analisis
+    Observasi Lapangan dan Wawancara Pra-Dev       :done, des1, 2026-02-01, 2026-02-20
+    Analisis Kebutuhan dan Dokumen Blueprint      :done, des2, 2026-02-21, 2026-03-05
+
+    section Fase 2 Perancangan Arsitektur
+    Pemodelan UML dan Skema Database 3NF          :done, des3, 2026-03-06, 2026-03-22
+    Desain UI UX Neo-Brutalism dan Wireframe      :done, des4, 2026-03-23, 2026-04-05
+
+    section Fase 3 Rekayasa dan Integrasi
+    Sprint 1 dan 2 Fondasi DB RBAC dan Katalog    :done, des5, 2026-04-06, 2026-04-25
+    Sprint 3 dan 4 Booking Engine dan Midtrans    :done, des6, 2026-04-26, 2026-05-15
+    Sprint 5 dan 6 Auto Billing Fonnte Kuitansi   :done, des7, 2026-05-16, 2026-06-05
+
+    section Fase 4 Pengujian dan Validasi
+    Automated Testing PHPUnit 510 Tests           :done, des8, 2026-06-06, 2026-06-16
+    Black Box Testing 60 Skenario dan Security    :done, des9, 2026-06-17, 2026-06-25
+
+    section Fase 5 Deployment Produksi
+    Deployment LiteSpeed Live dan Setup Cron      :done, des10, 2026-06-26, 2026-07-02
+
+    section Fase 6 Evaluasi Lapangan
+    Side by Side Usability Testing Pengelola      :done, des11, 2026-07-03, 2026-07-06
+    Wawancara Terstruktur 5 Penghuni Kost         :done, des12, 2026-07-07, 2026-07-10
+
+    section Fase 7 Finalisasi Naskah
+    Penulisan Lengkap Bab 1 hingga Bab 5          :done, des13, 2026-07-05, 2026-07-13
+    Persetujuan Dosen Pembimbing dan Sidang       :active, des14, 2026-07-13, 2026-07-20
 ```
 
 ---
