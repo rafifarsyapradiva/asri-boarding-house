@@ -166,23 +166,21 @@ BAB I PENDAHULUAN	1
 1.2 Rumusan Masalah	4
 1.3 Tujuan Penelitian	5
 1.4 Batasan Masalah	6
-BAB II  TINJAUAN PUSTAKA DAN LANDASAN TEORI	11
-2.1 Landasan Teori	11
-2.1.1 Sistem Informasi dan Sistem Informasi Manajemen	11
-2.1.2 Sistem Berbasis Web dan E-Commerce Model B2C	11
-2.1.3 Sistem Manajemen Basis Data Relasional dan Normalisasi 3NF	12
-2.1.4 Arsitektur 3-Tier dan Model-View-Controller pada Laravel 11	12
-2.1.5 Antarmuka Pemrograman Aplikasi (API) Eksternal: Midtrans dan Fonnte	13
-2.1.6 Penjadwalan Tugas, Mesin Penagihan Otomatis, dan Cron Job	13
-2.1.7 Teori Interaktivitas UI/UX: Neo-Brutalism dan WCAG 2.1	14
-2.1.8 Keamanan Web dan Integritas Data	14
-2.1.9 Concurrency Control dan Mekanisme Penguncian Basis Data	15
-2.2 Penelitian Terdahulu (State of the Art)	15
-2.3 Kerangka Pemikiran	17
-BAB III  METODOLOGI PENELITIAN	20
-3.1 Jenis Penelitian	20
-3.2 Teknik Pengumpulan Data	20
-3.3 Metode Pengembangan Sistem	21
+BAB II  TINJAUAN PUSTAKA	11
+2.1 Sistem Informasi dan Sistem Informasi Manajemen	11
+2.2 Sistem Berbasis Web dan E-Commerce Model B2C	11
+2.3 Sistem Manajemen Basis Data Relasional dan Normalisasi 3NF	12
+2.4 Arsitektur 3-Tier dan Model-View-Controller pada Laravel 11	12
+2.5 Antarmuka Pemrograman Aplikasi (API) Eksternal: Midtrans dan Fonnte	13
+2.6 Penjadwalan Tugas, Mesin Penagihan Otomatis, dan Cron Job	13
+2.7 Teori Interaktivitas UI/UX: Neo-Brutalism dan WCAG 2.1	14
+2.8 Keamanan Web dan Integritas Data	14
+2.9 Concurrency Control dan Mekanisme Penguncian Basis Data	15
+BAB III  METODOLOGI PENELITIAN	16
+3.1 Jenis Penelitian	16
+3.2 Teknik Pengumpulan Data	16
+3.3 Metode Pengembangan Sistem	17
+3.4 Kerangka Pemikiran	18
 
 
 BAB IV HASIL DAN PEMBAHASAN	22
@@ -227,7 +225,6 @@ BAB V KESIMPULAN DAN SARAN	74
 DAFTAR PUSTAKA	77
 
 ## DAFTAR TABEL
-Tabel 2.1  Perbandingan Penelitian Terdahulu (State of the Art)	16
 Tabel 4.1  Matriks Pemetaan Status Transaksional dan Transisi State Siklus Hidup Sistem	33
 Tabel 4.2  Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House	35
 Tabel 4.3  Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)	56
@@ -237,8 +234,8 @@ Tabel 4.6  Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live	66
 Tabel 4.7  Daftar Pertanyaan dan Respon Wawancara dengan Penjaga Kost (Bapak Asep)	68
 
 ## DAFTAR GAMBAR
-Gambar 2.1  Kerangka Pemikiran Penelitian	18
-Gambar 3.1  Diagram Model Waterfall Pengembangan Sistem	20
+Gambar 3.1  Diagram Model Waterfall Pengembangan Sistem	17
+Gambar 3.2  Kerangka Pemikiran Penelitian	18
 Gambar 4.1  Use Case Diagram Terpadu Sistem Asri Boarding House	22
 Gambar 4.2  Activity Diagram Tiga Proses Kritis Sistem Asri Boarding House	24
 Gambar 4.3  Flowchart Mekanisme Billing Engine dan Penanganan Keterlambatan Massal	27
@@ -293,141 +290,58 @@ Guna menjaga fokus dan kedalaman pembahasan, batasan masalah dalam penelitian in
 4.	**Teknologi Pengembangan**: Sistem dibangun menggunakan framework PHP Laravel 11, basis data relasional MySQL 8.x dengan mesin penyimpanan InnoDB, serta integrasi API eksternal resmi (Midtrans Snap API v2 dan Fonnte WhatsApp Gateway API).
 5.	**Evaluasi dan Pengujian**: Pengujian sistem dibatasi pada verifikasi fungsionalitas melalui pengujian kotak hitam (*black box testing*) dan pengujian otomatis PHPUnit, serta evaluasi penerimaan pengguna melalui wawancara mendalam bersama pengelola/penjaga operasional dan lima orang penghuni kost aktif.
 
-## BAB II TINJAUAN PUSTAKA DAN LANDASAN TEORI
-## 2.1 Landasan Teori
-### 2.1.1 Sistem Informasi dan Sistem Informasi Manajemen
+## BAB II TINJAUAN PUSTAKA
+
+## 2.1 Sistem Informasi dan Sistem Informasi Manajemen
 Sistem informasi pada hakikatnya merupakan rangkaian terpadu dari komponen perangkat keras (*hardware*), perangkat lunak (*software*), sarana telekomunikasi, data terstruktur, prosedur kerja, serta pengguna yang saling berinteraksi untuk mengumpulkan, mengolah, menyimpan, dan menyajikan data menjadi informasi yang bermanfaat bagi pengendalian organisasi dan pengambilan keputusan manajerial [2]. Dalam konteks tata kelola operasional, Sistem Informasi Manajemen (*Management Information System* atau SIM) memegang fungsi strategis sebagai penyedia rekapitulasi data berkala, alat bantu monitoring kinerja harian, serta pijakan bagi manajemen dalam menentukan langkah operasional yang tepat.
 
 Pada Asri Boarding House, prinsip-prinsip sistem informasi manajemen diterapkan sebagai pusat kendali operasional terpadu (*single source of truth*). Keberadaan sistem ini memusatkan data master 32 unit kamar, identitas penghuni, jadwal penagihan bulanan, serta mutasi arus kas yang semula tersebar pada lembaran buku besar kertas ke dalam pangkalan data relasional terpusat. Melalui sentralisasi data tersebut, pemilik dan pengelola kos dapat memantau pergerakan kas, mengawasi tingkat keterisian kamar (*occupancy rate*), dan memastikan ketertiban administrasi secara transparan dan akurat setiap saat.
 
-### 2.1.2 Sistem Berbasis Web dan E-Commerce Model B2C
+## 2.2 Sistem Berbasis Web dan E-Commerce Model B2C
 Aplikasi berbasis web (*web-based application*) beroperasi mengikuti arsitektur klien-peladen (*client-server*), di mana pengguna dapat mengakses layanan secara fleksibel melalui peramban web modern tanpa perlu memasang perangkat lunak tambahan pada perangkat mereka. Dalam perancangan sistem transaksi komersial digital, pemisahan struktur kode menjadi prinsip fundamental agar aplikasi memiliki modularitas yang baik dan mudah dipelihara (*maintainability*). Pola arsitektur *Model-View-Controller* (MVC) terbukti efektif dalam memisahkan representasi data, logika antarmuka pengguna, dan pengendali proses bisnis dalam sistem perdagangan elektronik [6].
 
 Model bisnis *Business-to-Consumer* (B2C) menitikberatkan pada hubungan transaksional digital langsung antara pelaku usaha selaku penyedia layanan dan masyarakat umum selaku konsumen akhir. Asri Boarding House mengadopsi model B2C ini secara mandiri melalui platform web: pengelola berinteraksi langsung dengan calon penghuni maupun penyewa aktif melalui etalase kamar interaktif, formulir reservasi mandiri, dan gerbang pembayaran elektronik tanpa ketergantungan pada pihak ketiga (*Online Travel Agent* atau platform agregator) yang mengenakan potongan komisi per transaksi sewa.
 
-### 2.1.3 Sistem Manajemen Basis Data Relasional dan Normalisasi 3NF
+## 2.3 Sistem Manajemen Basis Data Relasional dan Normalisasi 3NF
 Sistem Manajemen Basis Data Relasional (*Relational Database Management System* atau RDBMS) mengatur penyimpanan dan pengelolaan data dalam bentuk tabel-tabel berelasi yang diikat oleh batasan kunci utama (*primary key*) dan kunci asing (*foreign key*). Penelitian ini memilih MySQL versi 8.0 dengan mesin penyimpanan (*storage engine*) InnoDB sebagai basis data utama karena keandalannya dalam menjaga integritas referensial, memenuhi karakteristik transaksi ACID (*Atomicity, Consistency, Isolation, Durability*), serta mendukung mekanisme penguncian tingkat baris (*row-level locking*).
 
 Guna mencegah munculnya anomali data, perancangan skema tabel dilakukan secara cermat melalui proses normalisasi hingga memenuhi kaidah Bentuk Normal Ketiga (*Third Normal Form* atau 3NF). Penerapan 3NF mewajibkan setiap kolom non-kunci bergantung secara fungsional penuh pada kunci utama (*fully functionally dependent*) dan tidak memiliki ketergantungan transitif antarkolom. Melalui skema 3NF ini, seluruh data transaksi keuangan, status kamar, dan biodata penyewa Asri Boarding House terbebas dari risiko anomali penyisipan (*insertion anomaly*), pembaruan (*update anomaly*), maupun penghapusan data (*deletion anomaly*).
 
-### 2.1.4 Arsitektur 3-Tier dan Model-View-Controller pada Laravel 11
+## 2.4 Arsitektur 3-Tier dan Model-View-Controller pada Laravel 11
 Arsitektur tiga lapis (*3-Tier Architecture*) membagi struktur sistem ke dalam tiga lapisan yang terisolasi: lapisan presentasi (*Presentation Tier*), lapisan logika bisnis (*Application/Logic Tier*), dan lapisan persistensi data (*Data Tier*). Penyekatan ini menjamin bahwa modifikasi pada antarmuka pengguna tidak akan mengacaukan integritas basis data, demikian pula sebaliknya. Pola MVC pada framework Laravel 11 (yang berjalan pada lingkungan PHP 8.2) mengimplementasikan konsep ini secara terstruktur: Model menangani data melalui *Eloquent Object-Relational Mapping* (ORM), View mengatur tampilan antarmuka menggunakan mesin templat Blade, dan Controller mengendalikan arus permintaan (*request*) serta respon (*response*) HTTP.
 
 Guna menghindari penumpukan logika bisnis yang berlebihan pada pengendali (*fat controller anti-pattern*), arsitektur sistem diperkuat dengan lapisan layanan khusus (*Service Layer*). Modul-modul penting seperti `BillingService`, `MidtransService`, `ReservasiService`, `FonnteService`, dan `TransisiPenyewaService` diisolasi ke dalam kelas tersendiri. Pendekatan ini dipadukan dengan pola *Event-Listener-Observer* guna memproses pekerjaan otomatisasi dan tugas asinkron secara modular, bersih, dan mudah diuji.
 
-### 2.1.5 Antarmuka Pemrograman Aplikasi (API) Eksternal: Midtrans dan Fonnte
+## 2.5 Antarmuka Pemrograman Aplikasi (API) Eksternal: Midtrans dan Fonnte
 Antarmuka Pemrograman Aplikasi (*Application Programming Interface* atau API) menyediakan protokol komunikasi terstandarisasi yang memungkinkan perangkat lunak bertukar data secara aman dengan layanan komputasi pihak ketiga. Gerbang pembayaran (*payment gateway*) Midtrans menyediakan layanan REST API Snap yang memfasilitasi penerimaan setoran sewa non-tunai secara otomatis, khususnya melalui saluran transfer Bank Central Asia Virtual Account (BCA VA) [7], [8]. Alur integrasi mencakup penerbitan *snap token* dari peladen aplikasi, penampilan pop-up pembayaran di peramban klien via pustaka Snap.js, serta penangkapan notifikasi status pembayaran (*webhook callback*) yang diverifikasi keabsahannya menggunakan tanda tangan kriptografi SHA-512.
 
-Sebagai pelengkap, Fonnte WhatsApp API dimanfaatkan sebagai jembatan pengiriman pesan instan otomatis dari peladen ke nomor ponsel penyewa dan orang tua/wali. Layanan ini difungsikan untuk mendistribusikan rincian invoice sewa bulanan, mengirimkan pengingat tenggat waktu secara persuasif, serta meneruskan notifikasi denda keterlambatan secara terjadwal tanpa membebani pekerjaan manual pengelola.
+Sebagai pelengkap, Fonnte WhatsApp API dimanfaatkan sebagai jembatan pengiriman pesan instan otomatis dari peladen ke nomor ponsel penyewa dan orang tua/wali [10]. Layanan ini difungsikan untuk mendistribusikan rincian invoice sewa bulanan, mengirimkan pengingat tenggat waktu secara persuasif, serta meneruskan notifikasi denda keterlambatan secara terjadwal tanpa membebani pekerjaan manual pengelola.
 
-### 2.1.6 Penjadwalan Tugas, Mesin Penagihan Otomatis, dan Cron Job
+## 2.6 Penjadwalan Tugas, Mesin Penagihan Otomatis, dan Cron Job
 Penjadwalan tugas (*task scheduling*) memungkinkan peladen mengeksekusi serangkaian skrip dan perintah kerja secara berkala tanpa memerlukan intervensi manusia. Pada lingkungan produksi Linux, utilitas *cron job* dikonfigurasi untuk memicu penjadwal internal Laravel (`schedule:run`) setiap menit, yang selanjutnya mengeksekusi perintah kerja sesuai waktu yang telah diprogramkan.
 
 Mesin penagihan otomatis (*automated billing engine*) yang dibangun dalam penelitian ini menerbitkan tagihan sewa bulanan bagi seluruh penghuni aktif bertipe sewa bulanan secara serentak setiap tanggal 1 awal bulan pukul 00:05 WIB dengan batas jatuh tempo seragam pada tanggal 10. Evaluasi harian dijalankan untuk memantau keterlambatan dan memicu eskalasi notifikasi. Duplikasi tagihan dicegah secara mutlak pada tingkat basis data melalui indeks unik gabungan (*composite unique constraint*) pada kolom `(penyewa_id, periode_bulan, periode_tahun)`.
 
-### 2.1.7 Teori Interaktivitas UI/UX: Neo-Brutalism dan WCAG 2.1
+## 2.7 Teori Interaktivitas UI/UX: Neo-Brutalism dan WCAG 2.1
 Perancangan antarmuka pengguna (*User Interface*) dan pengalaman interaksi (*User Experience*) memegang peranan vital dalam mewujudkan sistem yang mudah dipelajari dan nyaman dioperasikan. Penelitian ini mengadopsi bahasa visual Neo-Brutalism secara konsisten pada portal publik, dasbor penyewa, hingga panel kontrol administrator. Ciri khas Neo-Brutalism tecermin pada pemilihan tipografi yang tegas (*Space Grotesk*), garis tepi hitam tebal berukuran 4 piksel, bayangan tegas tanpa gradasi halus (*hard box-shadow*), serta umpan balik visual saat elemen ditekan (*tactile push-down feedback*).
 
 Untuk menjamin kenyamanan aksesibilitas pada layar perangkat bergerak (*mobile-friendly*), seluruh komponen interaktif dirancang berpedoman pada standar *Web Content Accessibility Guidelines* (WCAG) 2.1 dengan target sentuh minimum 44 piksel, dan tombol aksi melayang (*floating CTA*) WhatsApp dibuat berukuran 56 piksel guna kemudahan akses ibu jari. Selain itu, sistem menerapkan kebijakan *Zero Native Browser Interaction*, yakni meniadakan dialog bawaan peramban yang kaku seperti `alert()` dan `confirm()`, lalu menggantikannya dengan dialog modal interaktif dan notifikasi *toast* yang serasi dengan tema desain sistem.
 
-### 2.1.8 Keamanan Web dan Integritas Data
+## 2.8 Keamanan Web dan Integritas Data
 Perlindungan keamanan aplikasi web merupakan keharusan mutlak mengingat sistem mengelola basis data identitas pribadi pengguna dan arus transaksi finansial. Sistem menerapkan pertahanan berlapis terhadap ancaman *Cross-Site Request Forgery* (CSRF) melalui tokenisasi acak pada setiap formulir, penangkalan *SQL Injection* melalui *parameter binding* pada kueri Eloquent ORM, serta penyaringan otomatis terhadap ancaman *Cross-Site Scripting* (XSS) melalui mesin templat Blade.
 
 Dalam mengantisipasi percobaan penerobosan kata sandi (*brute-force attack*), rute autentikasi dilengkapi pembatasan laju permintaan (*rate limiting*). Hak akses ditegakkan secara ketat melalui prinsip *Role-Based Access Control* (RBAC) pada tiga portal terisolasi (administrator, penyewa aktif, dan calon penyewa), selaras dengan standar keamanan protokol OAuth 2.0 yang diterapkan pada autentikasi akun Google [9]. Ketahanan sistem turut disempurnakan dengan penanganan galat dan operator *nullsafe* pada PHP 8.2 guna mencegah terjadinya kesalahan HTTP 500 saat relasi data bernilai kosong.
 
-### 2.1.9 Concurrency Control dan Mekanisme Penguncian Basis Data
+## 2.9 Concurrency Control dan Mekanisme Penguncian Basis Data
 Pengontrolan konkurensi (*concurrency control*) diperlukan untuk menjamin keutuhan data saat beberapa pengguna atau proses latar belakang mengakses dan memodifikasi baris data yang sama secara serentak. Pada basis data MySQL dengan mesin penyimpanan InnoDB, pendekatan kontrol konkurensi secara umum terbagi menjadi *Optimistic Locking* dan *Pessimistic Locking*.
 
 Pada pendekatan *Optimistic Locking*, sistem berasumsi bahwa perselisihan akses data jarang terjadi. Data dibaca dan dimodifikasi tanpa mengunci baris, dan pengecekan versi data baru dilakukan saat proses penyimpanan. Jika terdeteksi perubahan versi dari proses lain, transaksi saat ini dibatalkan (*aborted*). Pendekatan ini kurang cocok untuk transaksi reservasi hunian sewa, sebab pembatalan transaksi pada tahap akhir akibat konflik konkurensi dapat membingungkan pengguna yang telah menginput data maupun menyelesaikan alur pembayaran.
 
 Sebaliknya, *Pessimistic Locking* berasumsi bahwa potensi perebutan sumber daya data (*resource contention*) bernilai tinggi. Oleh sebab itu, baris data yang ditargetkan dikunci secara eksklusif sejak dibaca hingga transaksi tuntas diselesaikan (*commit*) atau dibatalkan (*rollback*). Pada MySQL InnoDB, penguncian ini dieksekusi melalui klausa `SELECT ... FOR UPDATE`, yang pada framework Laravel dipanggil melalui metode `lockForUpdate()`. Sepanjang transaksi berlangsung, proses lain yang mencoba membaca atau memodifikasi baris bersangkutan akan ditangguhkan (*blocked*). Penerapan mekanisme ini di dalam transaksi basis data (`DB::transaction`) memastikan alokasi unit kamar dan pembaruan mutasi pembayaran berjalan secara berurutan (*serialized*), sehingga meminimalkan risiko pemesanan ganda (*double booking*) dan anomali saldo kas.
 
-## 2.2 Penelitian Terdahulu (State of the Art)
-Kajian kepustakaan terhadap publikasi ilmiah terdahulu dilakukan guna memetakan posisi dan kontribusi orisinal penelitian ini di tengah perkembangan bidang ilmu terkait. Berbagai telaah telah membahas pengembangan sistem informasi pengelolaan rumah kos berbasis web dengan beragam framework dan metode pengembangan [10], [11]. Kajian lain memfokuskan pembahasannya pada integrasi gerbang pembayaran Midtrans pada aneka sektor usaha [12], [13], [14], serta implementasi gateway WhatsApp untuk transmisi notifikasi transaksi [15]. 
-
-Kendati penelitian-penelitian terdahulu berhasil menjawab kebutuhan operasional pada cakupan studinya masing-masing, belum ditemukan sistem yang secara terpadu mengintegrasikan mesin penagihan otomatis beraturan denda flat 5% yang idempoten, alur kerja pendaftaran hibrida, pengontrolan konkurensi kamar, serta kanal komunikasi obrolan pra-pembayaran. Matriks perbandingan penelitian terdahulu dirangkum pada Tabel 2.1.
-
-**Tabel 2.1** Perbandingan Penelitian Terdahulu (*State of the Art*)
-
-| Penulis & Tahun | Metode | Hasil Penelitian | Kesenjangan (*Gap*) dengan Sistem Asri Boarding House |
-| :--- | :--- | :--- | :--- |
-| Cornellya & Afriyadi (2025) | Waterfall (SDLC) | Sistem pemesanan kos berbasis Laravel yang mempermudah pencatatan penyewa, transaksi, dan laporan; diuji dengan black box. | Belum terdapat denda keterlambatan otomatis, eskalasi ke wali, maupun chat pra-pembayaran terintegrasi. |
-| Nizar (2021) | Rancang bangun web | Sistem sewa rumah kos (E-Kost) berbasis website untuk informasi dan pemesanan. | Tidak mengintegrasikan payment gateway penuh dan mesin penagihan otomatis bersiklus seragam. |
-| Jannah dkk. (2020) | Pengembangan web | Sistem informasi pemasaran rumah kos berbasis web yang memperluas promosi. | Berfokus pada pemasaran; belum menangani billing, denda, dan transaksi daring. |
-| Malaikosa & Mokola (2024) | Rapid Application Development | Sistem monitoring rumah kos dan pembayarannya berbasis web. | Belum ada hybrid workflow dan pencegahan double booking berbasis concurrency control. |
-| Purnia dkk. (2021) | Prototyping | Marketplace rumah kos berbasis mobile untuk pencarian dan pemesanan. | Tidak menerapkan denda otomatis dan notifikasi multi-channel otomatis kepada wali. |
-| Sutisna & Aziz (2025) | Waterfall | Sistem penyewaan alat event dengan integrasi Midtrans; diuji black box, GTmetrix, dan Sucuri. | Domain berbeda; tidak ada siklus tagihan bulanan seragam dan eskalasi keterlambatan. |
-| Fatman dkk. (2023) | Pengembangan web | Implementasi Midtrans pada website UMKM Geberco untuk pembayaran nontunai. | Tidak memodelkan manajemen hunian, status kamar, dan reservasi. |
-| Surya Pratama (2025) | Prototyping | Integrasi payment gateway pada aplikasi Point of Sales berbasis ReactJS. | Tidak menangani penyewaan jangka panjang, denda, dan wali penyewa. |
-| Pramita dkk. (2024) | Agile | Penerapan Midtrans pada sistem pembayaran SPP berbasis Android. | Berbasis mobile dengan domain pendidikan; tanpa modul kamar dan reservasi. |
-| Wijaya dkk. (2023) | Pengembangan web | Sistem informasi laundry berbasis web dengan Midtrans. | Tidak ada billing periodik seragam dan kanal chat pra-pembayaran. |
-| Hakim dkk. (2021) | Pengembangan web | Aplikasi penerimaan dan pengeluaran kas berbasis web dan WhatsApp gateway. | Berfokus pada kas; belum terintegrasi dengan reservasi dan payment gateway. |
-| Sonata (2019) | Perancangan UML | Pemanfaatan UML pada perancangan sistem informasi e-commerce. | Bersifat konseptual; belum mengimplementasikan billing otomatis dan integrasi API. |
-
-*Sumber: Hasil analisis penulis terhadap literatur terkait (2026)*
-
-Merujuk pada Tabel 2.1, kebaruan (*novelty*) penelitian ini bertumpu pada lima inovasi utama: (1) mesin penagihan otomatis beraturan denda flat kalender 5% yang idempoten, (2) protokol eskalasi notifikasi penunggakan kepada wali penghuni, (3) sinkronisasi alur kerja hibrida antara reservasi daring dan pendaftaran langsung, (4) pencegahan pemesanan ganda melalui penguncian baris `lockForUpdate()` yang dipadukan dengan isolasi kamar pasca-*checkout*, serta (5) fasilitas obrolan interaktif pra-pembayaran berbasis *AJAX polling*. Integrasi terpadu ini menjadi pembeda utama sistem yang dibangun dibandingkan karya-karya terdahulu.
-
-## 2.3 Kerangka Pemikiran
-Kerangka pemikiran penelitian ini dirancang dengan alur rekayasa perangkat lunak *Research and Development* (R&D) yang terstruktur, menghubungkan empat tahapan utama: masukan (*input*), proses (*process*), keluaran (*output*), dan dampak (*outcome*).
-
-Pada tahap masukan (*input*), penelitian berpijak pada identifikasi permasalahan faktual di Asri Boarding House, meliputi penagihan manual yang memakan waktu, ketiadaan eskalasi penunggakan yang terstruktur, risiko pemesanan ganda, potensi kekeliruan pencatatan kas, terbatasnya saluran reservasi mandiri, serta ketiadaan arsip riwayat transaksi digital. Kebutuhan operasional tersebut kemudian dirumuskan menjadi spesifikasi kebutuhan fungsional dan non-fungsional berdasarkan aturan bisnis nyata pada dokumen *blueprint*.
-
-Pada tahap proses (*process*), kebutuhan sistem dimodelkan menggunakan diagram UML (*use case, activity, sequence,* dan *class diagram*) serta rancangan skema basis data relasional 3NF yang dituangkan dalam ERD. Rancangan tersebut kemudian diimplementasikan menggunakan tumpukan teknologi Laravel 11, MySQL 8.x InnoDB, TailwindCSS, Midtrans Snap API, serta Fonnte WhatsApp API. Keandalan logika bisnis diuji melalui pengujian fungsionalitas kotak hitam (*black box testing*), validasi formulir masukan, serta pengujian fitur terotomatisasi berbasis PHPUnit.
-
-Pada tahap keluaran (*output*), dihasilkan produk perangkat lunak Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway dan Modul Reservasi Online yang siap diterapkan. Keluaran ini bermuara pada dampak operasional (*outcome*) yang diharapkan, yakni terwujudnya otomatisasi penagihan dan pengingat, terjaganya ketertiban pencatatan keuangan, berkurangnya risiko pemesanan ganda, serta kemudahan akses pemesanan bagi calon penyewa. Alur kerangka pemikiran tersebut diilustrasikan pada Gambar 2.1.
-
-![Gambar 2.1 Kerangka Pemikiran Penelitian](images/kerangka_pemikiran_diagram.png)
-
-```mermaid
-graph TD
-    subgraph INPUT ["1. MASUKAN (INPUT)"]
-        direction TB
-        I1["<b>Kondisi Operasional & Identifikasi Masalah:</b><br/>• Penagihan manual yang tidak efisien<br/>• Ketiadaan eskalasi keterlambatan terstruktur<br/>• Risiko pemesanan ganda (double booking)<br/>• Kebocoran & ketidakakuratan data keuangan<br/>• Absennya kanal reservasi online 24/7<br/>• Ketiadaan audit trail digital"]
-        I2["<b>Spesifikasi Kebutuhan Sistem:</b><br/>• Analisis Kebutuhan Fungsional & Non-Fungsional<br/>• Dokumen Blueprint & Aturan Bisnis Real"]
-        I1 --> I2
-    end
-
-    subgraph PROCESS ["2. PROSES (PROCESS)"]
-        direction TB
-        P1["<b>Analisis & Perancangan:</b><br/>• Pemodelan UML (Use Case, Activity, Sequence, Class Diagram)<br/>• Skema Basis Data Relasional 3NF & ERD"]
-        P2["<b>Implementasi Teknologis:</b><br/>• Framework & DB: Laravel 11, MySQL 8.x, TailwindCSS<br/>• Integrasi API: Midtrans Snap & Fonnte WhatsApp API"]
-        P3["<b>Pengujian & Validasi:</b><br/>• Black Box Testing & Validasi Formulir Input<br/>• Automated Suite Testing berbasis PHPUnit"]
-        P1 --> P2 --> P3
-    end
-
-    subgraph OUTPUT ["3. KELUARAN (OUTPUT)"]
-        O1["<b>Artefak Perangkat Lunak Teruji:</b><br/>Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway & Modul Reservasi Online (Asri Boarding House)"]
-    end
-
-    subgraph OUTCOME ["4. DAMPAK (OUTCOME)"]
-        D1["<b>Manfaat & Dampak Operasional:</b><br/>• Otomatisasi operasional penagihan & pengingat terstruktur<br/>• Penjaminan integritas & akurasi data keuangan serta audit trail<br/>• Pencegahan mutlak atas risiko pemesanan ganda (double booking)<br/>• Perluasan jangkauan pasar & kemudahan reservasi online 24/7"]
-    end
-
-    INPUT --> PROCESS
-    PROCESS --> OUTPUT
-    OUTPUT --> OUTCOME
-
-    style INPUT fill:#EFF6FF,stroke:#3B82F6,stroke-width:2px,rx:8px,ry:8px
-    style PROCESS fill:#F0FDF4,stroke:#22C55E,stroke-width:2px,rx:8px,ry:8px
-    style OUTPUT fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,rx:8px,ry:8px
-    style OUTCOME fill:#FAF5FF,stroke:#A855F7,stroke-width:2px,rx:8px,ry:8px
-
-    style I1 fill:#FFFFFF,stroke:#93C5FD,stroke-width:1px
-    style I2 fill:#FFFFFF,stroke:#93C5FD,stroke-width:1px
-    style P1 fill:#FFFFFF,stroke:#86EFAC,stroke-width:1px
-    style P2 fill:#FFFFFF,stroke:#86EFAC,stroke-width:1px
-    style P3 fill:#FFFFFF,stroke:#86EFAC,stroke-width:1px
-    style O1 fill:#FFFFFF,stroke:#FDE047,stroke-width:1px
-    style D1 fill:#FFFFFF,stroke:#E9D5FF,stroke-width:1px
-```
-
-Gambar 2.1 Kerangka Pemikiran Penelitian
-Sumber: Rancangan penulis (2026)
-
 ## BAB III METODOLOGI PENELITIAN
 ## 3.1 Jenis Penelitian
-Penelitian ini menerapkan metode Penelitian dan Pengembangan (*Research and Development* atau R&D) dengan pendekatan rekayasa perangkat lunak (*software engineering*). Metode R&D diterapkan karena fokus penelitian berorientasi pada perancangan, konstruksi, verifikasi, dan penerapan langsung artefak perangkat lunak sistem informasi manajemen hunian pada lingkungan operasional riil [16]. Rekayasa sistem dilaksanakan melalui siklus terencana yang menghubungkan analisis kebutuhan lapangan, perancangan arsitektur perangkat lunak, penulisan kode sumber, hingga pengujian mutu komprehensif demi memastikan aturan bisnis Asri Boarding House terpenuhi secara tepat.
+Penelitian ini menerapkan metode Penelitian dan Pengembangan (*Research and Development* atau R&D) dengan pendekatan rekayasa perangkat lunak (*software engineering*). Metode R&D diterapkan karena fokus penelitian berorientasi pada perancangan, konstruksi, verifikasi, dan penerapan langsung artefak perangkat lunak sistem informasi manajemen hunian pada lingkungan operasional riil [11]. Rekayasa sistem dilaksanakan melalui siklus terencana yang menghubungkan analisis kebutuhan lapangan, perancangan arsitektur perangkat lunak, penulisan kode sumber, hingga pengujian mutu komprehensif demi memastikan aturan bisnis Asri Boarding House terpenuhi secara tepat.
 
 ## 3.2 Teknik Pengumpulan Data
 Guna memperoleh data kebutuhan sistem yang valid dan komprehensif, penelitian ini menerapkan teknik triangulasi data melalui tiga metode pengumpulan yang saling melengkapi:
@@ -436,7 +350,7 @@ Guna memperoleh data kebutuhan sistem yang valid dan komprehensif, penelitian in
 3)	Studi Dokumentasi (*Document Analysis*): Peneliti menghimpun dan menelaah berkas fisik yang selama ini digunakan dalam administrasi kos, seperti lembaran buku kas harian, arsip nota kuitansi manual, dan buku catatan induk penyewa. Informasi tersebut kemudian diselaraskan secara komparatif dengan dokumen spesifikasi teknis *Blueprint Projek Website Asri Boarding House*. Triangulasi dokumen ini menghasilkan spesifikasi kebutuhan perangkat lunak yang konsisten dan dapat diverifikasi.
 
 ## 3.3 Metode Pengembangan Sistem
-Pengembangan sistem informasi manajemen ini menerapkan model proses sekuensial linier air terjun (*Waterfall*). Model Waterfall merupakan pendekatan klasik dalam Siklus Hidup Pengembangan Sistem (*System Development Life Cycle* atau SDLC) yang mengarahkan pengerjaan perangkat lunak melalui tahapan yang berurutan secara teratur: analisis kebutuhan, perancangan arsitektur, implementasi program, pengujian sistem, dan pemeliharaan [17], [18]. Model ini dipilih karena seluruh spesifikasi kebutuhan fungsional, matriks tarif kamar, skema sanksi finansial, serta aturan operasional Asri Boarding House telah terdefinisi secara matang dan stabil dalam dokumen blueprint sebelum fase pengkodean dimulai. Kejelasan batasan ruang lingkup sejak awal meminimalkan risiko pelebaran fitur (*scope creep*), memudahkan pengendalian linimasa kerja, serta menjamin kelengkapan dokumentasi pada setiap gerbang tahapan (*quality gate*).
+Pengembangan sistem informasi manajemen ini menerapkan model proses sekuensial linier air terjun (*Waterfall*). Model Waterfall merupakan pendekatan klasik dalam Siklus Hidup Pengembangan Sistem (*System Development Life Cycle* atau SDLC) yang mengarahkan pengerjaan perangkat lunak melalui tahapan yang berurutan secara teratur: analisis kebutuhan, perancangan arsitektur, implementasi program, pengujian sistem, dan pemeliharaan [12], [13]. Model ini dipilih karena seluruh spesifikasi kebutuhan fungsional, matriks tarif kamar, skema sanksi finansial, serta aturan operasional Asri Boarding House telah terdefinisi secara matang dan stabil dalam dokumen blueprint sebelum fase pengkodean dimulai. Kejelasan batasan ruang lingkup sejak awal meminimalkan risiko pelebaran fitur (*scope creep*), memudahkan pengendalian linimasa kerja, serta menjamin kelengkapan dokumentasi pada setiap gerbang tahapan (*quality gate*).
 
 Tahapan model Waterfall yang diterapkan dalam penelitian ini disajikan pada Gambar 3.1.
 
@@ -465,6 +379,78 @@ Tahapan rekayasa sistem menggunakan model Waterfall dalam penelitian ini dilaksa
 3)	Implementasi (*Implementation/Coding*): Menerjemahkan spesifikasi rancangan ke dalam baris kode program terstruktur menggunakan framework Laravel 11 (PHP 8.2), basis data MySQL 8.x InnoDB, antarmuka TailwindCSS bergaya Neo-Brutalism, serta penyambungan titik akhir API eksternal (Midtrans Snap, Fonnte WhatsApp API, dan SMTP surel).
 4)	Pengujian (*Testing*): Memverifikasi keandalan fungsional dan integritas logika sistem melalui 60 skenario uji kotak hitam (*black box testing*), pengujian isolasi hak akses peran (RBAC), simulasi transaksi Midtrans Sandbox saluran BCA Virtual Account, pengujian performa peladen produksi live dengan sertifikasi SSL Grade A, uji penerimaan pengguna kualitatif (*Side-by-Side Usability Testing*) bersama pengelola operasional senior, serta eksekusi pengujian fitur terotomatisasi berbasis PHPUnit.
 5)	Pemeliharaan (*Maintenance*): Menjalankan pemantauan operasional awal dan perbaikan galat (*bug fixing*) minor pascarilis. Sejalan dengan batasan operasional penelitian, fase pemeliharaan evolusioner jangka panjang berada di luar rentang linimasa enam bulan penelitian ini.
+
+## 3.4 Kerangka Pemikiran
+Kerangka pemikiran penelitian ini dirancang dengan alur rekayasa perangkat lunak *Research and Development* (R&D) yang terstruktur, menghubungkan lima tahapan utama: masukan (*input*), proses pengembangan (*process*), keluaran sistem (*output*), pengujian dan evaluasi (*testing & evaluation*), serta dampak operasional (*outcome*). Kerangka ini secara langsung memetakan penyelesaian terhadap kedua rumusan masalah dan tujuan penelitian yang telah ditetapkan.
+
+Pada tahap masukan (*input*), penelitian berpijak pada identifikasi permasalahan operasional faktual di Asri Boarding House, meliputi penagihan sewa manual yang tidak efisien, ketiadaan mekanisme eskalasi penunggakan terstruktur ke nomor kontak orang tua atau wali, risiko pemesanan ganda (*double booking*) akibat belum tersinkronisasinya status kamar secara langsung, potensi kekeliruan pencatatan kas akibat ketergantungan pada nota fisik, terbatasnya saluran reservasi mandiri 24/7 bagi calon penyewa luar daerah, serta ketiadaan arsip riwayat transaksi digital (*audit trail*). Berdasarkan akar permasalahan tersebut, dirumuskan spesifikasi kebutuhan sistem fungsional dan non-fungsional yang selaras dengan dokumen *blueprint* dan aturan bisnis riil properti.
+
+Pada tahap proses pengembangan (*process*), metodologi Waterfall diterapkan secara disiplin melalui tahapan analisis kebutuhan, perancangan arsitektur *3-tier* MVC, pemodelan interaksi UML (*use case*, *activity*, *flowchart*, *sequence*, dan *class diagram*), serta perancangan skema basis data relasional 3NF yang dituangkan dalam ERD 22 tabel. Cetak biru rancangan tersebut selanjutnya direalisasikan ke dalam baris program menggunakan framework Laravel 11 (PHP 8.2), basis data MySQL 8.x InnoDB, antarmuka TailwindCSS bergaya Neo-Brutalism, serta integrasi API eksternal (Midtrans Snap untuk BCA Virtual Account, Fonnte WhatsApp Gateway API, dan SMTP surel).
+
+Pada tahap keluaran (*output*), dihasilkan artefak perangkat lunak yang utuh dan siap operasional, yakni Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway pada Asri Boarding House. Sistem ini mencakup modul katalog publik dan reservasi mandiri calon penyewa, portal penyewa aktif untuk memantau invoice serta kuitansi digital, panel administrator untuk pemantauan hunian dan pembukuan kas, mesin penagihan otomatis (*automated billing engine*) dengan aturan denda flat kalender 5% yang bersifat idempoten, serta notifikasi multi-saluran terintegrasi.
+
+Pada tahap pengujian dan evaluasi (*testing & evaluation*), keandalan sistem diverifikasi melalui dua pendekatan komplementer selaras dengan rumusan masalah penelitian:
+1.	**Verifikasi Fungsionalitas Sistem**: Pengujian kotak hitam (*black box testing*) berbasis 60 skenario uji fungsional, pengujian isolasi hak akses peran (*Role-Based Access Control*), simulasi transaksi daring Midtrans Sandbox saluran BCA Virtual Account, pengujian performa peladen produksi live dengan sertifikasi SSL Grade A, serta eksekusi pengujian otomatis berbasis PHPUnit.
+2.	**Evaluasi Pengguna Pasca-Penerapan**: Evaluasi penerimaan dan kemanfaatan sistem melalui wawancara mendalam semiterstruktur bersama penjaga/pengelola operasional kost (Bapak Asep) dan lima orang penghuni kost aktif, yang berfokus pada pengalaman langsung penggunaan sistem untuk reservasi daring, pembayaran digital non-tunai, serta pengelolaan dan penagihan sewa bulanan.
+
+Rangkaian tahapan di atas bermuara pada dampak operasional (*outcome*) yang diharapkan, yakni terwujudnya otomatisasi penagihan dan eskalasi pengingat tagihan secara terjadwal, terjaminnya akurasi pencatatan keuangan tanpa risiko kebocoran kas, tereliminasinya risiko pemesanan ganda (*zero double booking*) berkat mekanisme penguncian basis data, serta meningkatnya efisiensi kerja pengelola dan kepuasan penghuni kost. Alur kerangka pemikiran penelitian disajikan pada Gambar 3.2.
+
+![Gambar 3.2 Kerangka Pemikiran Penelitian](images/kerangka_pemikiran_diagram.png)
+
+```mermaid
+graph TD
+    subgraph INPUT ["1. MASUKAN (INPUT)"]
+        direction TB
+        I1["<b>Permasalahan Operasional Kost:</b><br/>• Penagihan sewa bulanan manual & rawan terlewat<br/>• Ketiadaan eskalasi keterlambatan terstruktur ke kontak wali<br/>• Risiko pemesanan ganda (double booking) & cek fisik manual<br/>• Rekapitulasi kas berbasis nota fisik & rawan selisih saldo<br/>• Ketiadaan katalog & modul reservasi online 24/7<br/>• Ketiadaan arsip riwayat transaksi digital (audit trail)"]
+        I2["<b>Kebutuhan Sistem & Landasan Bisnis:</b><br/>• Analisis Kebutuhan Fungsional & Non-Fungsional<br/>• Aturan Operasional Blueprint & Tarif 3 Tipe Kamar"]
+        I1 --> I2
+    end
+
+    subgraph PROCESS ["2. PROSES PENGEMBANGAN (PROCESS)"]
+        direction TB
+        P1["<b>Analisis & Perancangan Arsitektur:</b><br/>• Model SDLC Waterfall (Sekuensial Linier)<br/>• Pemodelan UML (Use Case, Activity, Flowchart, Sequence)<br/>• Normalisasi Skema Relasional 3NF & ERD 22 Tabel"]
+        P2["<b>Implementasi Rekayasa Perangkat Lunak:</b><br/>• Framework Web: Laravel 11 & PHP 8.2 (Service Layer)<br/>• Basis Data: MySQL 8.x InnoDB (Pessimistic Locking)<br/>• Desain Antarmuka: TailwindCSS Bergaya Neo-Brutalism<br/>• Integrasi API: Midtrans Snap (BCA VA) & Fonnte WhatsApp"]
+        P1 --> P2
+    end
+
+    subgraph OUTPUT ["3. KELUARAN SISTEM (OUTPUT)"]
+        O1["<b>Sistem Informasi Manajemen Kost Terpadu:</b><br/>• Modul Katalog & Reservasi Kamar Mandiri Calon Penyewa<br/>• Portal Mandiri Penyewa Aktif (Invoice & Kuitansi Digital)<br/>• Panel Administrator Pengelolaan Kamar & Arus Kas Real-Time<br/>• Automated Billing Engine (Siklus Tgl 1, Tempo Tgl 10, Denda 5%)<br/>• Notifikasi Otomatis Multi-Saluran WhatsApp API & SMTP Email"]
+    end
+
+    subgraph EVALUATION ["4. PENGUJIAN & EVALUASI SISTEM"]
+        direction TB
+        E1["<b>Verifikasi Mutu & Fungsionalitas Sistem:</b><br/>• Pengujian Black Box Testing (60 Butir Skenario Uji)<br/>• Pengujian Isolasi Peran Hak Akses (RBAC 3 Portal)<br/>• Simulasi Transaksi Midtrans Sandbox BCA Virtual Account<br/>• Pengujian Otomasi Unit Internal (PHPUnit Test Suite)"]
+        E2["<b>Evaluasi Pengguna Pasca-Penerapan:</b><br/>• Wawancara Mendalam Bersama Penjaga Kost (Bapak Asep)<br/>• Wawancara Evaluasi Bersama 5 Orang Penghuni Kost Aktif<br/>• Asesmen Khusus: Reservasi Online, Pembayaran, dan Penagihan"]
+        E1 --- E2
+    end
+
+    subgraph OUTCOME ["5. DAMPAK OPERASIONAL (OUTCOME)"]
+        D1["<b>Manfaat & Peningkatan Kinerja Operasional:</b><br/>• Otomatisasi penagihan bulanan & pengingat berjenjang ke wali<br/>• Penjaminan akurasi rekapitulasi keuangan & transparansi kas<br/>• Eliminasi mutlak atas risiko pemesanan ganda (zero double booking)<br/>• Perluasan akses pemesanan daring & efisiensi kerja pengelola"]
+    end
+
+    INPUT --> PROCESS
+    PROCESS --> OUTPUT
+    OUTPUT --> EVALUATION
+    EVALUATION --> OUTCOME
+
+    style INPUT fill:#EFF6FF,stroke:#3B82F6,stroke-width:2px,rx:8px,ry:8px
+    style PROCESS fill:#F0FDF4,stroke:#22C55E,stroke-width:2px,rx:8px,ry:8px
+    style OUTPUT fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,rx:8px,ry:8px
+    style EVALUATION fill:#ECFDF5,stroke:#059669,stroke-width:2px,rx:8px,ry:8px
+    style OUTCOME fill:#FAF5FF,stroke:#A855F7,stroke-width:2px,rx:8px,ry:8px
+
+    style I1 fill:#FFFFFF,stroke:#93C5FD,stroke-width:1px
+    style I2 fill:#FFFFFF,stroke:#93C5FD,stroke-width:1px
+    style P1 fill:#FFFFFF,stroke:#86EFAC,stroke-width:1px
+    style P2 fill:#FFFFFF,stroke:#86EFAC,stroke-width:1px
+    style O1 fill:#FFFFFF,stroke:#FDE047,stroke-width:1px
+    style E1 fill:#FFFFFF,stroke:#6EE7B7,stroke-width:1px
+    style E2 fill:#FFFFFF,stroke:#6EE7B7,stroke-width:1px
+    style D1 fill:#FFFFFF,stroke:#E9D5FF,stroke-width:1px
+```
+
+Gambar 3.2 Kerangka Pemikiran Penelitian
+Sumber: Rancangan penulis (2026)
 
 ## BAB IV HASIL DAN PEMBAHASAN
 
@@ -1374,7 +1360,7 @@ MAIL_ENCRYPTION=tls
 Tahapan pengujian sistem memegang peranan krusial dalam siklus pengembangan perangkat lunak guna memverifikasi bahwa artefak sistem yang dibangun bekerja sesuai dengan spesifikasi fungsional, mematuhi batasan integritas data, kebal terhadap manipulasi otorisasi, serta mampu mengeksekusi kalkulasi finansial secara deterministik dan presisi. Pengujian dirancang secara komprehensif melalui kombinasi uji fungsionalitas kotak hitam (*black box testing*), pengujian isolasi hak akses (*Role-Based Access Control*), pengujian integrasi gerbang pembayaran daring (*payment gateway simulation*), serta validasi keamanan pada lingkungan peladen produksi (*live testing*).
 
 ### 4.5.1 Hasil Black Box Testing
-Pengujian fungsionalitas kotak hitam (*black box testing*) difokuskan pada pengujian perilaku eksternal perangkat lunak berdasarkan spesifikasi kebutuhan sistem tanpa memeriksa struktur kode program internal [19], [20]. Pengujian ini dirancang secara sistematis ke dalam 60 butir skenario uji yang mencakup enam domain fungsionalitas utama: (1) Autentikasi, Hak Akses, dan Profil Pengguna; (2) Portal Publik, Tamu, dan Obrolan Langsung (*Guest Chat*); (3) Calon Penyewa dan Alur Reservasi (*Stepper Wizard*); (4) Portal Penyewa Aktif, Manajemen Tagihan, dan Aduan Fasilitas; (5) Panel Administrator dan Tata Kelola Operasional Kas; serta (6) Otomasi Mesin Penjadwal (*Scheduler*), Denda Kalender, dan Integrasi API Eksternal. Rincian matriks pengujian fungsionalitas disajikan pada Tabel 4.3.
+Pengujian fungsionalitas kotak hitam (*black box testing*) difokuskan pada pengujian perilaku eksternal perangkat lunak berdasarkan spesifikasi kebutuhan sistem tanpa memeriksa struktur kode program internal [14], [15]. Pengujian ini dirancang secara sistematis ke dalam 60 butir skenario uji yang mencakup enam domain fungsionalitas utama: (1) Autentikasi, Hak Akses, dan Profil Pengguna; (2) Portal Publik, Tamu, dan Obrolan Langsung (*Guest Chat*); (3) Calon Penyewa dan Alur Reservasi (*Stepper Wizard*); (4) Portal Penyewa Aktif, Manajemen Tagihan, dan Aduan Fasilitas; (5) Panel Administrator dan Tata Kelola Operasional Kas; serta (6) Otomasi Mesin Penjadwal (*Scheduler*), Denda Kalender, dan Integrasi API Eksternal. Rincian matriks pengujian fungsionalitas disajikan pada Tabel 4.3.
 
 **Tabel 4.3** Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)
 
@@ -1552,12 +1538,12 @@ Berdasarkan serangkaian tahapan analisis kebutuhan, perancangan arsitektur, impl
 
 1. **Pengendalian Risiko Kesalahan dan Kebocoran Finansial**: Penerapan mesin penagihan otomatis (*Auto-Billing Engine*) yang dieksekusi secara terjadwal setiap tanggal 1 awal bulan pukul 00:05 WIB berhasil mengamankan pencatatan potensi pendapatan kotor Asri Boarding House hingga Rp28.500.000 per bulan dari 32 unit kamar (terdiri atas 6 unit VIP @ Rp1.400.000, 3 unit Deluxe @ Rp950.000, dan 23 unit Standar @ Rp750.000). Berbeda dari model pencatatan konvensional yang rentan terhadap manipulasi nota kertas maupun pencatatan sewa manual sebagaimana disoroti oleh Cornellya dan Afriyadi [3] serta Nizar [4], integrasi saluran pembayaran digital Midtrans Snap (Bank BCA Virtual Account) yang diverifikasi menggunakan tanda tangan kriptografi SHA-512 menjamin bahwa seluruh dana masuk tercatat secara terpusat dan idempoten. Pendekatan ini secara tuntas menutup celah selisih pembukuan kas (*cash variance*) dan menjamin transparansi akuntansi antara pihak penjaga operasional dan pemilik kost [2], [7].
 2. **Efisiensi Waktu dan Modernisasi Tata Kelola Operasional Administrasi**: Transformasi alur kerja dari pembukuan manual buku besar fisik selama ±20 tahun menuju ekosistem berbasis web terbukti memangkas waktu kerja administrasi secara drastis. Rekapitulasi penerimaan kas, pemilahan pengeluaran operasional (token listrik, air PAM, dan biaya teknisi), serta perhitungan laba bersih yang sebelumnya membutuhkan waktu 3 hingga 5 hari kerja manual dengan kalkulator, kini dapat diselesaikan secara instan dalam hitungan detik. Penyediaan fitur ekspor dokumen ke format PDF resmi via Dompdf serta lembar kerja Excel/CSV ber-encoding BOM UTF-8 menjamin keandalan transfer data tanpa risiko distorsi karakter saat dibuka pada perangkat pengelola maupun pemilik kos.
-3. **Harmonisasi Kebijakan Keterlambatan dan Eskalasi Wali Berjenjang**: Perancangan kebijakan denda keterlambatan sewa flat kalender 5% yang idempoten menjawab dinamika sosio-ekologis mahasiswa di kawasan Tembalang, Semarang. Kebijakan ini memberikan masa tenggang bebas denda selama bulan berjalan (pasca jatuh tempo tanggal 10) untuk mengakomodasi jeda pengiriman uang saku dari orang tua, namun menegakkan denda flat 5% satu kali saat tagihan menyeberang ke bulan kalender berikutnya guna menjaga ketertiban finansial. Dipadukan dengan pengingat persuasif multi-saluran via WhatsApp Fonnte dan eskalasi otomatis ke kontak nomor orang tua/wali pada bulan keterlambatan kedua, sistem berhasil menciptakan mekanisme penagihan yang tegas dan mendidik tanpa memicu gesekan relasional antara penghuni dan pengelola [15].
+3. **Harmonisasi Kebijakan Keterlambatan dan Eskalasi Wali Berjenjang**: Perancangan kebijakan denda keterlambatan sewa flat kalender 5% yang idempoten menjawab dinamika sosio-ekologis mahasiswa di kawasan Tembalang, Semarang. Kebijakan ini memberikan masa tenggang bebas denda selama bulan berjalan (pasca jatuh tempo tanggal 10) untuk mengakomodasi jeda pengiriman uang saku dari orang tua, namun menegakkan denda flat 5% satu kali saat tagihan menyeberang ke bulan kalender berikutnya guna menjaga ketertiban finansial. Dipadukan dengan pengingat persuasif multi-saluran via WhatsApp Fonnte dan eskalasi otomatis ke kontak nomor orang tua/wali pada bulan keterlambatan kedua, sistem berhasil menciptakan mekanisme penagihan yang tegas dan mendidik tanpa memicu gesekan relasional antara penghuni dan pengelola [10].
 4. **Mitigasi Komprehensif Pemesanan Ganda (*Defense-in-Depth against Double-Booking*)**: Risiko tabrakan pemesanan kamar (*double-booking*) pada satu unit kamar berhasil dieliminasi secara mutlak melalui dua lapis pertahanan komplementer:
    * *Pertahanan Tingkat Basis Data*: Penerapan mekanisme penguncian baris pesimistik (*pessimistic row locking*) `lockForUpdate()` dalam transaksi atomik basis data MySQL InnoDB memastikan bahwa kueri pemilihan unit kamar dieksekusi secara serial, sehingga mencegah kondisi perlombaan (*race conditions*) ketika dua calon penyewa mengakses dan membayar unit yang sama pada milidetik yang bersamaan.
    * *Pertahanan Tingkat Operasional*: Kebijakan karantina fisik pasca-checkout menetapkan bahwa status kamar yang baru ditinggalkan penghuni lama tetap terkunci dengan penanda merah (`terisi`) di sistem katalog publik hingga petugas selesai melakukan inspeksi fisik, pembersihan sanitasi, pergantian sprei, serta pengecekan kelayakan sarana kamar. Penerapan aturan bisnis ini terbukti krusial dalam melindungi reputasi bisnis pengelola dari komplain calon penyewa akibat kamar yang belum layak huni.
 5. **Triangulasi Validasi dan Mutu Perangkat Lunak**: Keandalan dan akseptabilitas sistem dibuktikan melalui triangulasi metode evaluasi yang komprehensif:
-   * *Verifikasi Fungsional*: Kelulusan sempurna (100%) pada seluruh 60 butir skenario uji kotak hitam (*black box testing*) [19], [20] serta pengujian unit internal Laravel (510 tests passed dengan 2.211 assertions).
+   * *Verifikasi Fungsional*: Kelulusan sempurna (100%) pada seluruh 60 butir skenario uji kotak hitam (*black box testing*) [14], [15] serta pengujian unit internal Laravel (510 tests passed dengan 2.211 assertions).
    * *Keamanan dan Isolasi Hak Akses*: Kepatuhan otorisasi berbasis peran (RBAC) yang berhasil menangkal serangan manipulasi parameter IDOR, didukung oleh pengerasan keamanan peladen pada lingkungan peladen produksi Hostinger LiteSpeed dengan sertifikat enkripsi TLS 1.3 Grade A.
    * *Evaluasi Empiris Pengguna*: Uji coba operasional langsung (*Side-by-Side Usability Testing*) bersama pengelola senior kost (Bapak Asep, 48 tahun, pengalaman ±20 tahun) yang terdokumentasi dalam rekaman audio digital berdurasi 23 menit 14 detik, menghasilkan konfirmasi kelayakan praktis yang sangat tinggi serta perolehan skor kepuasan operasional sebesar 9,5 dari skala 10.
 
@@ -1592,16 +1578,11 @@ Berdasarkan batasan operasional sistem saat ini dan temuan teknis yang diperoleh
 [7]	R. Sutisna and F. Aziz, “Perancangan Sistem Penyewaan Alat Event Berbasis Website Menggunakan Midtrans sebagai Integrasi Payment Gateway pada PT. Bangbewe Production,” REMIK Ris. dan E-Jurnal Manaj. Inform. Komput., vol. 9, no. 1, pp. 317–325, 2025, doi: 10.33395/remik.v9i1.14498.
 [8]	Y. Fatman, N. K. Nafisah, and P. B. J. Pambudi, “Implementasi Payment Gateway dengan Menggunakan Midtrans pada Website UMKM Geberco,” J. KomtekInfo, vol. 10, no. 2, pp. 64–72, 2023, doi: 10.35134/komtekinfo.v10i2.364.
 [9]	P. Philippaerts, D. Preuveneers, and W. Joosen, “OAuch: Exploring Security Compliance in the OAuth 2.0 Ecosystem,” in Proc. 25th Int. Symp. Research in Attacks, Intrusions and Defenses (RAID ’22), New York: ACM, 2022, pp. 460–481. doi: 10.1145/3545948.3545955.
-[10]	E. J. Malaikosa and P. Mokola, “Sistem Informasi Monitoring Rumah Kos dan Pembayarannya Berbasis Web Menggunakan Metode Rapid Application Development,” JSiI (Jurnal Sist. Informasi), vol. 11, no. 1, pp. 21–26, 2024, doi: 10.30656/jsii.v11i1.8222.
-[11]	D. S. Purnia, R. Ratningsih, and M. Surahman, “Implementasi Metode Prototyping pada Rancang Bangun Marketplace Rumah Kost Berbasis Mobile,” EVOLUSI J. Sains dan Manaj., vol. 9, no. 1, pp. 1–11, 2021, doi: 10.31294/evolusi.v9i1.10145.
-[12]	M. I. Surya Pratama, “Integrasi Payment Gateway pada Aplikasi Point of Sales Berbasis Website Menggunakan Framework ReactJS (Studi Kasus: Toko Adida Pratama),” J. Inform. dan Tek. Elektro Terap., vol. 13, no. 3, 2025, doi: 10.23960/jitet.v13i3.7099.
-[13]	I. P. Pramita, A. M. Harahap, and A. B. Nasution, “Penerapan Payment Gateway Midtrans pada Sistem Pembayaran SPP Berbasis Android di SMAN 1 Bangun Purba,” J. Ris. Sist. Inf. dan Teknol. Inf., vol. 6, no. 3, pp. 479–490, 2024, doi: 10.52005/jursistekni.v6i3.367.
-[14]	F. Wijaya, M. Maslim, M. Martinus, and P. Ardanari, “Pembangunan Sistem Informasi Laundry Berbasis Web Menggunakan Payment Gateway Midtrans,” Prolet. Community Serv. Dev. J., vol. 1, no. 1, pp. 8–14, 2023, doi: 10.61098/proletariancomdev.v1i1.63.
-[15]	L. Hakim, S. P. Kristanto, M. N. Shodiq, and E. Amaliyah, “Aplikasi Penerimaan dan Pengeluaran Kas Berbasis Web dan WhatsApp Gateway,” J. Tekno Kompak, vol. 15, no. 1, pp. 13–24, 2021, doi: 10.33365/jtk.v15i1.900.
-[16]	R. S. Pressman and B. R. Maxim, Software Engineering: A Practitioner’s Approach, 8th ed. New York: McGraw-Hill Education, 2015.
-[17]	T. Pricillia and Z. Zulfachmi, “Perbandingan Metode Pengembangan Perangkat Lunak (Waterfall, Prototype, RAD),” J. Bangkit Indones., vol. 10, no. 1, pp. 6–12, 2021, doi: 10.52771/bangkitindonesia.v10i1.153.
-[18]	D. G. A. Candra and P. P. Pardika, “Analisa dan Perancangan Sistem Informasi Manajemen Pengolahan Data Pesanan Sablon di KYSR Store Menggunakan Metode Waterfall,” JAMI J. Ahli Muda Indones., vol. 5, no. 2, pp. 134–147, 2024, doi: 10.46510/jami.v5i2.306.
-[19]	W. N. Cholifah, Y. Yulianingsih, and S. M. Sagita, “Pengujian Black Box Testing pada Aplikasi Action & Strategy Berbasis Android dengan Teknologi Phonegap,” STRING (Satuan Tulisan Ris. dan Inov. Teknol., vol. 3, no. 2, pp. 206–210, 2018, doi: 10.30998/string.v3i2.3048.
-[20]	E. Setiana, M. R. Ramadhan, B. Budiman, and R. Y. Rakhman, “Pengujian Perangkat Lunak Metode Black Box pada Aplikasi Sistem Pakar Pola Latihan dan Asupan Makanan,” Nuansa Inform., vol. 18, no. 1, pp. 68–74, 2024, doi: 10.25134/ilkom.v18i1.67.
+[10]	L. Hakim, S. P. Kristanto, M. N. Shodiq, and E. Amaliyah, “Aplikasi Penerimaan dan Pengeluaran Kas Berbasis Web dan WhatsApp Gateway,” J. Tekno Kompak, vol. 15, no. 1, pp. 13–24, 2021, doi: 10.33365/jtk.v15i1.900.
+[11]	R. S. Pressman and B. R. Maxim, Software Engineering: A Practitioner’s Approach, 8th ed. New York: McGraw-Hill Education, 2015.
+[12]	T. Pricillia and Z. Zulfachmi, “Perbandingan Metode Pengembangan Perangkat Lunak (Waterfall, Prototype, RAD),” J. Bangkit Indones., vol. 10, no. 1, pp. 6–12, 2021, doi: 10.52771/bangkitindonesia.v10i1.153.
+[13]	D. G. A. Candra and P. P. Pardika, “Analisa dan Perancangan Sistem Informasi Manajemen Pengolahan Data Pesanan Sablon di KYSR Store Menggunakan Metode Waterfall,” JAMI J. Ahli Muda Indones., vol. 5, no. 2, pp. 134–147, 2024, doi: 10.46510/jami.v5i2.306.
+[14]	W. N. Cholifah, Y. Yulianingsih, and S. M. Sagita, “Pengujian Black Box Testing pada Aplikasi Action & Strategy Berbasis Android dengan Teknologi Phonegap,” STRING (Satuan Tulisan Ris. dan Inov. Teknol., vol. 3, no. 2, pp. 206–210, 2018, doi: 10.30998/string.v3i2.3048.
+[15]	E. Setiana, M. R. Ramadhan, B. Budiman, and R. Y. Rakhman, “Pengujian Perangkat Lunak Metode Black Box pada Aplikasi Sistem Pakar Pola Latihan dan Asupan Makanan,” Nuansa Inform., vol. 18, no. 1, pp. 68–74, 2024, doi: 10.25134/ilkom.v18i1.67.
 
 <!-- Technical Appendix: System Implementation Sequence Verified on Production Target -->
