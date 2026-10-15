@@ -191,47 +191,55 @@ BAB IV HASIL DAN PEMBAHASAN	22
 4.1.4 Sequence Diagram	29
 4.1.5 Entity Relationship Diagram (ERD)	31
 4.1.6 Skenario Diagram Alur Sistem	32
-4.2 Implementasi Sistem	33
-4.2.1 Lingkungan Implementasi	33
-4.2.2 Perancangan Arsitektur Aplikasi	34
-4.2.3 Implementasi Basis Data	35
-4.2.4 Implementasi Autentikasi dan Hak Akses	38
-4.2.5 Implementasi Fitur Calon Penyewa	39
-4.2.6 Implementasi Fitur Penyewa Aktif	40
-4.2.7 Implementasi Fitur Admin	41
-4.2.8 Implementasi Integrasi Payment Gateway	42
-4.2.9 Implementasi Notifikasi Email SMTP	43
-4.2.10 Implementasi Notifikasi WhatsApp FONNTE	44
-4.3 Tampilan Antarmuka Sistem	45
-4.3.1 Antarmuka Calon Penyewa	45
-4.3.2 Antarmuka Penyewa Aktif	47
-4.3.3 Antarmuka Admin	48
-4.4 Hasil Deployment	50
-4.4.1 Skrip Kompilasi Bundel Aset Produksi	50
-4.4.2 Konfigurasi Peladen Web LiteSpeed/Apache	51
-4.4.3 Konfigurasi Penjadwal Tugas Peladen (Cron Job)	52
-4.4.4 Perintah Optimasi Kinerja Produksi Laravel	53
-4.4.5 Konfigurasi Variabel Lingkungan Produksi	54
-4.5 Hasil Pengujian Sistem	56
-4.5.1 Hasil Black Box Testing	56
-4.5.2 Hasil Pengujian Hak Akses	62
-4.5.3 Hasil Pengujian Transaksi Midtrans Sandbox (BCA VA)	64
-4.5.4 Hasil Pengujian Hak Akses Live	66
-4.6 Hasil Wawancara dengan Penjaga Kost	67
-4.7 Pembahasan	72
-BAB V KESIMPULAN DAN SARAN	74
-5.1 Kesimpulan	74
-5.2 Saran	75
-DAFTAR PUSTAKA	77
+4.2 Tampilan Antarmuka Sistem	35
+4.2.1 Antarmuka Calon Penyewa	35
+4.2.2 Antarmuka Penyewa Aktif	37
+4.2.3 Antarmuka Administrator	39
+4.3 Implementasi Sistem	41
+4.3.1 Lingkungan Implementasi	41
+4.3.2 Perancangan Arsitektur Aplikasi	42
+4.3.3 Implementasi Basis Data	44
+4.3.4 Implementasi Autentikasi dan Hak Akses	46
+4.3.5 Implementasi Fitur Calon Penyewa	48
+4.3.6 Implementasi Fitur Penyewa Aktif	50
+4.3.7 Implementasi Fitur Administrator	52
+4.3.8 Implementasi Integrasi Payment Gateway Midtrans	54
+4.3.9 Implementasi Notifikasi Surel SMTP	56
+4.3.10 Implementasi Notifikasi WhatsApp Fonnte	57
+4.4 Hasil Deployment	59
+4.4.1 Skrip Kompilasi Bundel Aset Produksi	59
+4.4.2 Konfigurasi Peladen Web LiteSpeed/Apache	60
+4.4.3 Konfigurasi Penjadwal Tugas Peladen (Cron Job)	61
+4.4.4 Perintah Optimasi Kinerja Produksi Laravel	62
+4.4.5 Konfigurasi Variabel Lingkungan Produksi	63
+4.5 Hasil Pengujian Sistem	65
+4.5.1 Hasil Black Box Testing	65
+4.5.2 Hasil Pengujian Hak Akses	71
+4.5.3 Hasil Pengujian Transaksi Midtrans Sandbox (BCA VA)	73
+4.5.4 Hasil Pengujian Parameter Keamanan dan Hak Akses Live	75
+4.6 Hasil Wawancara dengan Penjaga Kost	76
+4.7 Hasil Wawancara dengan Penghuni Kost	81
+4.8 Pembahasan	92
+BAB V KESIMPULAN DAN SARAN	96
+5.1 Kesimpulan	96
+5.2 Saran	97
+DAFTAR PUSTAKA	99
 
 ## DAFTAR TABEL
 Tabel 4.1  Matriks Pemetaan Status Transaksional dan Transisi State Siklus Hidup Sistem	33
-Tabel 4.2  Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House	35
-Tabel 4.3  Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)	56
-Tabel 4.4  Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna	62
-Tabel 4.5  Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account	64
-Tabel 4.6  Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live	66
-Tabel 4.7  Daftar Pertanyaan dan Respon Wawancara dengan Penjaga Kost (Bapak Asep)	68
+Tabel 4.2  Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House	44
+Tabel 4.3  Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)	65
+Tabel 4.4  Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna	71
+Tabel 4.5  Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account	73
+Tabel 4.6  Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live	75
+Tabel 4.7  Daftar Pertanyaan dan Respon Wawancara dengan Penjaga Kost (Bapak Asep)	77
+Tabel 4.8  Profil dan Konteks Hunian Lima Responden Penghuni Kost	81
+Tabel 4.9  Transkrip Wawancara Terstruktur Responden 1 (Arjun — Kamar 101 VIP, Sewa Tahunan Lunas Penuh)	82
+Tabel 4.10  Transkrip Wawancara Terstruktur Responden 2 (Farrel — Kamar 104 Deluxe, Sewa 6 Bulan Skema DP 30%)	84
+Tabel 4.11  Transkrip Wawancara Terstruktur Responden 3 (Fadil — Kamar 205 Standar, Sewa Bulanan Rutin Tepat Waktu)	86
+Tabel 4.12  Transkrip Wawancara Terstruktur Responden 4 (Ammar — Kamar 208 Standar, Sewa Bulanan Toleransi Jatuh Tempo)	88
+Tabel 4.13  Transkrip Wawancara Terstruktur Responden 5 (Sindhu — Kamar 102 VIP, Pendaftaran Walk-In lalu Aktif Portal)	90
+Tabel 4.14  Matriks Komparasi Evaluasi Respon dan Temuan Kunci Kelima Penghuni Kost	91
 
 ## DAFTAR GAMBAR
 Gambar 3.1  Diagram Model Waterfall Pengembangan Sistem	17
@@ -242,11 +250,16 @@ Gambar 4.3  Flowchart Mekanisme Billing Engine dan Penanganan Keterlambatan Mass
 Gambar 4.4  Sequence Diagram Alur Transaksional Utama Sistem Asri Boarding House	29
 Gambar 4.5  Entity Relationship Diagram (ERD) Skema Basis Data 22 Tabel	31
 Gambar 4.6  Skenario Diagram Siklus Hidup Transaksional Penyewa dan Operasional Administrator	32
-Gambar 4.7  Antarmuka Katalog Kamar Publik Neo-Brutalisme	45
-Gambar 4.8  Workspace Stepper Alur Reservasi Calon Penyewa	46
-Gambar 4.9  Portal Invoice dan Kuitansi Digital Penyewa	47
-Gambar 4.10  Dasbor Administrasi Keuangan Administrator	48
-Gambar 4.11  Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)	70
+Gambar 4.7  Antarmuka Katalog Kamar Publik Neo-Brutalisme	35
+Gambar 4.8  Workspace Stepper Alur Reservasi Calon Penyewa	36
+Gambar 4.9  Portal Invoice dan Kuitansi Digital Penyewa	37
+Gambar 4.10  Dasbor Administrasi Keuangan Administrator	39
+Gambar 4.11  Alur Interseptor Profil Google OAuth dan Verifikasi Kontak WhatsApp	47
+Gambar 4.12  Middleware Validasi Webhook Signature SHA-512	54
+Gambar 4.13  Subsistem Komunikasi Notifikasi Fonnte WA Service	58
+Gambar 4.14  Kompilasi Bundel Aset Produksi Vite dan Penautan Storage	59
+Gambar 4.15  Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed	75
+Gambar 4.16  Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)	80
 
 ## BAB I PENDAHULUAN
 
@@ -516,7 +529,7 @@ Sumber: Rancangan penulis (2026)
 ## BAB IV HASIL DAN PEMBAHASAN
 
 ## 4.1 Perancangan Sistem
-Tahap perancangan sistem memvisualisasikan hasil analisis kebutuhan fungsional dan triangulasi data operasional ke dalam arsitektur rekayasa perangkat lunak yang terstruktur. Pemodelan sistem disusun mengacu pada standar *Unified Modeling Language* (UML)—meliputi Use Case Diagram, Activity Diagram, Flowchart Diagram, dan Sequence Diagram—serta pemodelan skema relasi data menggunakan *Entity Relationship Diagram* (ERD).
+Tahap perancangan sistem memvisualisasikan hasil analisis kebutuhan fungsional dan triangulasi data operasional ke dalam arsitektur rekayasa perangkat lunak yang terstruktur. Pemodelan sistem disusun mengacu pada standar *Unified Modeling Language* (UML)—meliputi Use Case Diagram, Activity Diagram, Flowchart Diagram, dan Sequence Diagram—serta pemodelan skema relasi data menggunakan *Entity Relationship Diagram* (ERD). Seluruh diagram disajikan dalam format gambar PNG beresolusi tinggi guna menjamin ketajaman garis dan keterbacaan teks tanpa mengalami distorsi visual saat dicetak maupun ditampilkan pada dokumen digital.
 
 ### 4.1.1 Use Case Diagram
 Sistem Informasi Manajemen Asri Boarding House membedakan empat aktor dengan hak akses yang terisolasi melalui tiga portal autentikasi terpisah (`/admin/login`, `/reservasi/login`, dan `/penyewa/login`). Pendekatan ini menegakkan prinsip *Role-Based Access Control* (RBAC) guna mencegah potensi eskalasi hak akses (*privilege escalation*). Peran dan wewenang keempat aktor tersebut diuraikan sebagai berikut:
@@ -535,7 +548,7 @@ Interaksi fungsional keempat aktor dengan komponen-komponen sistem disajikan sec
 ---
 
 ### 4.1.2 Activity Diagram
-Activity diagram memetakan alur kerja dinamis dari tiga proses operasional pokok pada sistem Asri Boarding House:
+Activity diagram memetakan alur kerja dinamis dari tiga proses operasional pokok pada sistem Asri Boarding House. Mengingat kompleksitas logika pada masing-masing proses, diagram disajikan secara terpisah ke dalam tiga sub-gambar beresolusi tinggi guna mempertahankan keterbacaan setiap simpul keputusan:
 
 1. **Mesin Penagihan Otomatis (*Auto-Billing Engine*)**: Dieksekusi secara terjadwal setiap tanggal 1 awal bulan pukul 00:05 WIB oleh penjadwal tugas (*Laravel Task Scheduler*) yang terhubung dengan *cron job* peladen. Sistem menyaring seluruh penghuni aktif bertipe sewa bulanan dan secara eksplisit mengecualikan penyewa harian maupun mingguan melalui filter kueri `whereNotIn('tipe_sewa', ['harian', 'mingguan'])`. Bagi setiap penyewa bulanan, sistem mengambil nilai tarif dari atribut `penyewa.harga_sewa`, lalu menerbitkan rekaman tagihan baru berstatus *pending* dengan tanggal jatuh tempo seragam pada tanggal 10 bulan berjalan. Integritas antiduplikasi dijamin pada lapisan basis data melalui *composite unique index* atas kombinasi kolom `(penyewa_id, periode_bulan, periode_tahun)`. Setelah baris tagihan berhasil dibentuk, sistem memicu pengiriman pesan rincian invoice secara otomatis ke nomor WhatsApp penyewa via Fonnte API Gateway.
 2. **Denda Keterlambatan Flat Kalender (*Flat Calendar Late Fee*)**: Dijalankan setiap hari oleh scheduler untuk mengevaluasi tagihan berstatus *pending* yang melewati tanggal jatuh tempo. Sistem mengedepankan pendekatan persuasif: selama tagihan masih berada dalam bulan kalender berjalan (tanggal 11 hingga akhir bulan), sistem membebaskan denda keterlambatan (Denda = Rp0) dan membatasi tindakan pada pengiriman pesan pengingat sopan. Namun, ketika pergantian bulan kalender terjadi (memasuki tanggal 1 bulan berikutnya) dan kewajiban bulan lalu belum diselesaikan, sistem mengenakan sanksi denda flat sebesar 5% dari tarif sewa pokok tepat satu kali melalui mekanisme *Idempotency Guard* (`nominal_denda == 0`) di dalam transaksi atomik berproteksi kunci baris (`lockForUpdate()`). Bersamaan dengan pembebanan denda, sistem mengirimkan notifikasi eskalasi penunggakan ke kontak nomor orang tua/wali penyewa.
@@ -696,114 +709,94 @@ Untuk memberikan pandangan terstruktur mengenai keterkaitan antar-entitas selama
 | 14 | **Prosedur Checkout Administratif** | • **Kamar:** `terisi` *(Locked)*<br>• **Reservasi:** -<br>• **Penyewa:** `nonaktif`<br>• **Tagihan:** Semua `lunas`<br>• **Pembayaran:** - | • **Event:** `PenyewaController::checkout`<br>• **Notifikasi WA:** Konfirmasi Checkout<br>• **Bukti:** Akun Dinonaktifkan |
 | 15 | **Manual Release Pasca-Inspeksi** | • **Kamar:** `tersedia`<br>• **Reservasi/Tagihan/Bayar:** -<br>• **Penyewa:** `nonaktif` | • **Event:** `KamarObserver::updated`<br>• **Notifikasi WA:** - (Katalog Live Update)<br>• **Bukti:** Cache Memori Dihapus |
 
-## 4.2 Implementasi Sistem
-Tahap implementasi merealisasikan rancangan konseptual ke dalam bentuk baris program yang terstruktur, aman, dan teruji menggunakan framework Laravel 11. Fokus implementasi diarahkan pada ketahanan arsitektur, pemisahan tanggung jawab logika bisnis (*separation of concerns*), keamanan data finansial, penanganan konkurensi (*concurrency control*), serta integrasi layanan pihak ketiga secara andal. Pada sub-bab berikut diuraikan implementasi teknis sistem disertai potongan kode program (*source code snippets*) terpilih yang merepresentasikan logika bisnis inti.
+## 4.2 Tampilan Antarmuka Sistem
+Realisasi antarmuka pengguna (*user interface*) pada sistem informasi manajemen Asri Boarding House dirancang secara kontekstual guna mengakomodasi karakteristik kognitif dan kebutuhan operasional dari tiga kelompok pengguna utama: calon penyewa, penyewa aktif, serta pengelola operasional (administrator). Seluruh visualisasi antarmuka disajikan melalui tangkapan layar (*screenshot*) aktual dari sistem produksi yang telah beroperasi secara penuh pada domain `https://asriboardinghouse.weatso.id/`. Gambar disimpan dalam format PNG beresolusi tinggi (1600 x 1100 piksel) tanpa kompresi yang merusak teks, sehingga tata letak, tombol aksi, serta tipografi tetap terlihat tajam, kontras, dan nyaman dibaca saat dicetak maupun dibuka pada perangkat lunak pengolah kata seperti Microsoft Word.
 
-### 4.2.1 Lingkungan Implementasi
-Pengembangan serta pengoperasian sistem dibangun di atas spesifikasi lingkungan perangkat keras dan perangkat lunak yang terstandarisasi guna menjamin determinisme performa di lingkungan lokal (*development*) maupun peladen awan (*production*):
+### 4.2.1 Antarmuka Calon Penyewa
+Antarmuka publik dirancang untuk memberikan transparansi penuh terhadap informasi kamar serta memudahkan calon penyewa dalam melakukan pemesanan unit secara mandiri tanpa harus datang langsung ke lokasi kos:
+
+1. **Katalog Kamar Publik Neo-Brutalisme**: Halaman landing page memadukan garis pembatas tegas (*high-contrast borders*), bayangan datar (*hard box-shadow*), dan tipografi modern *Space Grotesk*. Pendekatan visual ini menonjolkan kejelasan hierarki informasi 32 unit kamar, rincian fasilitas (AC, kamar mandi dalam, kasur springbed, lemari pakaian, meja belajar), tautan video *room tour*, serta transparansi harga sewa bulanan. Setiap kartu kamar dilengkapi lencana status dinamis (*Tersedia* dengan warna hijau aktif atau *Terisi* dengan penanda merah tegas). Pada sudut kanan bawah, disematkan tombol aksi mengambang (*floating action button*) WhatsApp berdiameter 56 piksel yang melampaui ambang batas minimum panduan aksesibilitas WCAG 2.1 (44 piksel), memudahkan interaksi jempol pengguna ponsel pintar untuk konsultasi instan ke nomor pengelola. Tampilan katalog disajikan pada Gambar 4.7.
+
+![Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme](images/gambar_4_7.png)
+
+*Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme*  
+*Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
+
+2. **Workspace Stepper Alur Reservasi Online**: Ketika calon penyewa menekan tombol "Pesan Kamar", sistem menyajikan alur pemesanan bertahap (*5-Step Horizontal Stepper*) pada rute `/reservasi/pemesanan`. Stepper ini memandu calon penyewa secara berurutan: (1) Memilih unit kamar kosong, (2) Mengisi biodata diri dan memverifikasi NIK 16 digit beserta nomor WhatsApp kontak orang tua/wali, (3) Memilih tipe sewa (harian, mingguan, bulanan) dengan kalkulasi otomatis diskon sewa tahunan, (4) Menentukan skema pembayaran (pembayaran uang muka DP 30% atau pelunasan penuh 100%), dan (5) Melakukan pembayaran digital via jendela popup Midtrans Snap. Visualisasi alur stepper disajikan pada Gambar 4.8.
+
+![Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa](images/gambar_4_10.png)
+
+*Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa*  
+*Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
+
+---
+
+### 4.2.2 Antarmuka Penyewa Aktif
+Bagi penghuni kos yang kontrak sewanya telah diaktifkan, portal mandiri pada rute `/penyewa/dashboard` berfungsi sebagai pusat kendali administrasi hunian digital yang dapat diakses secara fleksibel dari peramban ponsel pintar maupun laptop:
+
+1. **Dasbor Tagihan dan Status Jatuh Tempo**: Menampilkan kartu ringkasan kontrak kamar aktif (tipe kamar, lantai, nomor kamar, tanggal mulai sewa, dan batas akhir sewa). Di bawahnya, tersaji daftar tagihan bulanan berstatus *pending* atau *lunas*. Setiap baris tagihan memuat informasi periode sewa, nominal sewa pokok, tanggal jatuh tempo seragam (tanggal 10), serta status denda keterlambatan. Selama pembayaran dilakukan dalam bulan kalender berjalan, sistem menampilkan lencana masa toleransi dengan nominal denda Rp0.
+2. **Penyelesaian Transaksi Non-Tunai Midtrans Snap**: Penyewa cukup menekan tombol "Bayar Sekarang" untuk memunculkan antarmuka modal Midtrans Snap v2, di mana kode transfer Bank BCA Virtual Account berbatas waktu diterbitkan seketika.
+3. **Pencetakan Kuitansi Digital Instan Format A5**: Begitu transaksi berstatus *settlement*, sistem menyediakan tombol "Unduh Kuitansi". Dokumen kuitansi resmi berstempel digital dikompilasi secara instan di peramban klien melalui pustaka `html2pdf.js` ke dalam format standar A5 siap cetak tanpa membebani penyimpanan peladen (*zero server storage overhead*).
+4. **Formulir Pengaduan Keluhan Fasilitas Berfoto**: Menyediakan sarana pelaporan kerusakan sarana kamar (misal kran air bocor atau lampu padam) yang dilengkapi dengan fungsi unggah foto bukti fisik berkapasitas hingga 2 MB, status tiket penanganan (*pending*, *diproses*, *selesai*), serta riwayat catatan tindak lanjut dari pengelola. Tampilan portal mandiri penyewa disajikan pada Gambar 4.9.
+
+![Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa](images/gambar_4_9.png)
+
+*Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa*  
+*Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
+
+---
+
+### 4.2.3 Antarmuka Administrator
+Panel administrasi pada rute `/admin/dashboard` dikembangkan dengan tema ergonomis *OLED Black Dark Mode* dengan kontras tinggi guna menjaga kenyamanan visual pengelola (Bapak Asep, usia 48 tahun) saat memantau sistem dalam durasi kerja panjang tanpa memicu kelelahan mata (*visual fatigue*):
+
+1. **Dasbor Mikro-Akuntansi Real-Time**: Menyajikan visualisasi tiga kartu ringkasan keuangan utama (*Summary Cards*)—meliputi Total Pemasukan Kas, Total Pengeluaran Operasional, dan Akumulasi Laba Bersih—yang dikalkulasi secara otomatis melalui kueri SQL agregat tunggal dari mutasi transaksi bulan berjalan.
+2. **Pemantauan Okupansi 32 Kamar & Aksi Cepat**: Menampilkan rasio keterisian unit kamar (*occupancy rate*) secara grafis, daftar reservasi baru yang menunggu konfirmasi audit, tombol "Konfirmasi Tunai" dengan satu kali klik untuk melayani pembayaran langsung di meja pengelola, serta modul pendaftaran tamu datang langsung (*walk-in*).
+3. **Manajemen Kamar, Penghuni, dan Laporan Keuangan**: Menyediakan menu pengelolaan data master kamar (CRUD berproteksi foreign key), audit data penghuni beserta nomor kontak wali, penanganan tiket keluhan fasilitas, siaran pengumuman WhatsApp massal (*broadcast*), Kalender Visual Kontrol Hunian (UC-19), serta tombol ekspor laporan arus kas ke format PDF resmi (Dompdf) maupun lembar kerja Excel/CSV ber-encoding BOM UTF-8. Tampilan dasbor keuangan administrator disajikan pada Gambar 4.10.
+
+![Gambar 4.10 Dasbor Administrasi Keuangan Administrator](images/gambar_4_8.png)
+
+*Gambar 4.10 Dasbor Administrasi Keuangan Administrator*  
+*Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
+
+## 4.3 Implementasi Sistem
+Tahap implementasi merealisasikan rancangan arsitektural dan antarmuka ke dalam baris instruksi program yang terstruktur, aman, dan siap produksi menggunakan framework web Laravel 11. Implementasi berfokus pada ketahanan arsitektur, pemisahan tanggung jawab logika bisnis (*separation of concerns*), keamanan data finansial, penanganan konkurensi data (*concurrency control*), serta keandalan integrasi antarmuka pemrograman aplikasi (API) pihak ketiga. Pembahasan teknis didukung oleh tangkapan layar arsitektur logika program dan cuplikan instruksi program ringkas yang terfokus pada aturan bisnis inti guna menjaga keterbacaan naskah ilmiah.
+
+### 4.3.1 Lingkungan Implementasi
+Pengembangan dan operasional sistem dibangun di atas spesifikasi perangkat keras dan perangkat lunak yang terstandarisasi guna menjamin determinisme performa di lingkungan lokal (*development*) maupun peladen awan produksi (*production*):
 1. **Perangkat Keras (*Hardware*)**:
-   * Lingkungan Pengembangan (*Development*): Laptop Workstation berspesifikasi Prosesor Multi-Core 2.3 GHz, RAM 16 GB DDR4, serta media penyimpanan Solid State Drive (SSD) NVMe 512 GB.
-   * Lingkungan Produksi (*Production*): Layanan Cloud Shared Hosting Hostinger Enterprise di Data Center Jakarta (Indonesia), ditenagai peladen web LiteSpeed Enterprise berspesifikasi 1 Core vCPU, 1 GB RAM, dan penyimpanan berbasis Cloud NVMe berkecepatan tinggi.
+   * Lingkungan Pengembangan: Komputer jinjing Workstation berspesifikasi Prosesor Multi-Core 2.3 GHz, RAM 16 GB DDR4, serta media penyimpanan Solid State Drive (SSD) NVMe berkecepatan tinggi.
+   * Lingkungan Produksi: Layanan Cloud Shared Hosting Hostinger Enterprise di Data Center Jakarta (Indonesia), ditenagai peladen web LiteSpeed Enterprise dengan alokasi memori dan penyimpanan berbasis Cloud NVMe.
 2. **Perangkat Lunak (*Software Stack*)**:
    * Bahasa Pemrograman: PHP versi 8.2 dengan dukungan ekstensi `pdo_mysql`, `curl`, `openssl`, `mbstring`, `fileinfo`, dan `bcmath`.
-   * Framework Backend: Laravel versi 11.x yang mengadopsi arsitektur MVC modern dan Service Layer.
+   * Framework Backend: Laravel versi 11.x yang mengadopsi arsitektur Model-View-Controller (MVC) modern dan lapisan layanan (*Service Layer*).
    * Sistem Manajemen Basis Data: MySQL versi 8.0 berbasis mesin penyimpanan InnoDB, set karakter `utf8mb4`, dan kolasi `utf8mb4_unicode_ci`.
-   * Antarmuka Frontend: Blade Templating Engine yang dipadukan dengan TailwindCSS versi 3.4 dan Alpine.js untuk reaktivitas interaksi antarmuka.
-   * Pengelola Dependensi: Composer versi 2.7+ (manajemen dependensi backend PHP) serta Node.js versi 18.x dengan npm (manajemen aset frontend).
-   * Pemaket Aset (*Asset Bundler*): Vite (pemaket aset Vite).
+   * Antarmuka Frontend: Blade Templating Engine yang dipadukan dengan TailwindCSS versi 3.4 dan pustaka interaktivitas Alpine.js.
+   * Pengelola Dependensi: Composer versi 2.7+ (pustaka backend PHP) dan Node.js versi 18.x dengan npm (pustaka frontend JavaScript).
+   * Pemaket Aset (*Asset Bundler*): Vite versi 7.x untuk kompilasi dan minifikasi aset produksi.
 3. **Layanan Komputasi Awan Pihak Ketiga (*Third-Party Cloud APIs*)**:
-   * Gerbang Pembayaran: Midtrans Snap API v2 (mendukung mode Sandbox untuk simulasi pengujian dan mode Live untuk transaksi riil).
+   * Gerbang Pembayaran: Midtrans Snap API v2 (mendukung mode Sandbox untuk pengujian dan mode Live untuk transaksi riil).
    * Otomasi Pesan Instan: Fonnte WhatsApp Gateway API v2.
    * Otentikasi Eksternal: Google Cloud Console OAuth 2.0 API via paket Laravel Socialite.
-   * Pengiriman Surel Transaksional: Peladen surat Hostinger SMTP terenkripsi TLS pada port 587.
+   * Pengiriman Surel Transaksional: Peladen surat Hostinger SMTP terenkripsi TLS pada port aman 587.
 
-Ketergantungan pustaka backend dan frontend dikelola secara deklaratif. Cuplikan berkas konfigurasi dependensi sistem disajikan pada Kode 4.1 dan Kode 4.2.
+---
 
-```json
-// Kode 4.1 Cuplikan composer.json: Konfigurasi Dependensi Inti Backend PHP 8.2 & Laravel 11
-{
-    "require": {
-        "php": "^8.2",
-        "dompdf/dompdf": "^3.1",
-        "laravel/framework": "^11.0",
-        "laravel/socialite": "^5.27",
-        "laravel/tinker": "^2.10.1"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^11.5.50"
-    }
-}
-```
-
-```json
-// Kode 4.2 Cuplikan package.json: Konfigurasi Pustaka Antarmuka Vite, TailwindCSS, & Alpine.js
-{
-    "scripts": {
-        "build": "vite build",
-        "dev": "vite"
-    },
-    "devDependencies": {
-        "alpinejs": "^3.4.2",
-        "axios": "^1.11.0",
-        "tailwindcss": "^3.1.0",
-        "vite": "^7.0.7"
-    }
-}
-```
-
-### 4.2.2 Perancangan Arsitektur Aplikasi
-Sistem mengimplementasikan arsitektur tiga lapis (*3-Tier Architecture*) yang dipadukan dengan pola pemisahan lapisan layanan (*Service Layer Decoupling*) guna menghindari fenomena pengendali yang terlalu padat (*fat controller problem*):
-* **Presentation Tier**: Lapisan visual antarmuka pengguna dibangun memanfaatkan mesin templat Blade dan utilitas tata letak TailwindCSS. Seluruh elemen interaktif mengadopsi bahasa desain Neo-Brutalism, diperkuat oleh kebijakan *Zero Native Browser Interaction* di mana kotak dialog bawaan peramban (`alert()` dan `confirm()`) sepenuhnya ditiadakan dan digantikan oleh modal dialog interaktif bertema Neo-Brutalism serta notifikasi *toast* dinamis.
+### 4.3.2 Perancangan Arsitektur Aplikasi
+Sistem mengimplementasikan arsitektur tiga lapis (*3-Tier Architecture*) yang dipadukan dengan pola pemisahan lapisan layanan (*Service Layer Decoupling*) guna menghindari pengendali yang terlalu padat (*fat controller problem*):
+* **Presentation Tier**: Lapisan visual antarmuka pengguna dibangun memanfaatkan mesin templat Blade dan utilitas tata letak TailwindCSS dengan bahasa desain Neo-Brutalism. Diterapkan kebijakan *Zero Native Browser Interaction*, di mana kotak dialog bawaan peramban (`alert()` dan `confirm()`) ditiadakan dan digantikan oleh modal dialog interaktif bertema Neo-Brutalism serta notifikasi *toast* dinamis.
 * **Application Tier**: Berfungsi sebagai sentral orkestrasi aturan bisnis kos. Lapisan pengontrol (*controller*) dirancang ramping hanya untuk memvalidasi permintaan HTTP yang masuk dan mengembalikan respon tampilan/data, sedangkan logika pemrosesan didelegasikan secara mandiri kepada kelas layanan terisolasi pada direktori `app/Services/`:
   * `BillingService`: Mengatur pembentukan tagihan bulanan massal, kalkulasi potongan durasi sewa tahunan, penerbitan tagihan pelunasan uang muka (DP), dan evaluasi penegakan denda keterlambatan kalender.
-  * `MidtransService`: Menangani pembentukan parameter transaksi Snap, permintaan *snap token*, serta verifikasi status transaksi.
-  * `ReservasiService`: Menangani alur pemilihan unit kamar, estimasi tanggal akhir sewa, dan penguncian jadwal hunian.
+  * `MidtransService`: Menangani pembentukan parameter transaksi Snap, permintaan token pembayaran, serta verifikasi status transaksi.
+  * `ReservasiService`: Menangani alur pemilihan unit kamar, kalkulasi estimasi sewa, dan penguncian jadwal hunian.
   * `TransisiPenyewaService`: Mengelola aktivasi reservasi terkonfirmasi menjadi penyewa aktif dalam transaksi atomik multi-tabel.
   * `FonnteService` & `NotifikasiService`: Mengisolasi integrasi komunikasi ke nomor WhatsApp dan alamat surel.
 * **Data Tier**: Persistensi data dikelola oleh MySQL 8.x melalui Laravel Eloquent ORM. Seluruh operasi manipulasi data finansial dilindungi oleh transaksi basis data atomik (`DB::transaction`) dan penguncian baris eksklusif (*pessimistic row locking*) menggunakan metode `lockForUpdate()` guna meniadakan risiko perselisihan data (*race condition*).
 
 Arsitektur aplikasi turut didukung oleh pola *Event-Listener-Observer*: peristiwa `PembayaranBerhasil` dipicu saat pembayaran Midtrans berstatus lunas, `PenyewaObserver` secara otomatis mengunci kamar menjadi terisi saat penyewa aktif dan menjaga kamar tetap terkunci pasca-checkout, serta `FasilitasObserver` membersihkan cache katalog publik saat data fasilitas diperbarui oleh administrator.
 
-Penerapan *Service Layer Decoupling* tercermin pada kelas `BillingService`, di mana pemrosesan penagihan massal diisolasi ke dalam unit transaksi terproteksi dengan pembagian memori (*chunking*) guna mencegah kebocoran memori (*memory leak*). Cuplikan implementasi disajikan pada Kode 4.3.
+---
 
-```php
-// Kode 4.3 Cuplikan app/Services/BillingService.php: Dekopling Logika Bisnis Penagihan Massal
-Penyewa::where('status', 'aktif')
-    ->where('tipe_sewa', 'bulanan')
-    ->where('tanggal_masuk', '<=', $tanggalTagihan)
-    ->with(['kamar'])
-    ->chunkById(100, function ($penyewaList) use ($now, $periodeBulan, $periodeTahun, $tanggalTagihan, $tanggalJatuhTempo) {
-        foreach ($penyewaList as $penyewa) {
-            // Proteksi Skema Full Payment: Lewati jika penyewa telah melunasi sewa di muka
-            if ($penyewa->hasActiveFullPayment($tanggalTagihan)) {
-                continue;
-            }
-
-            DB::transaction(function () use ($penyewa, $now, $periodeBulan, $periodeTahun, $tanggalTagihan, $tanggalJatuhTempo) {
-                $orderId = "TGH-{$penyewa->id}-" . $now->format('Ym');
-                $nominalPokok = ($penyewa->harga_sewa !== null && (float)$penyewa->harga_sewa > 0)
-                    ? $penyewa->harga_sewa
-                    : ($penyewa->kamar ? $penyewa->kamar->harga_bulan : 0);
-
-                // firstOrCreate menjamin integritas antiduplikasi pada lapisan transaksi
-                Tagihan::firstOrCreate([
-                    'penyewa_id'    => $penyewa->id,
-                    'periode_bulan' => $periodeBulan,
-                    'periode_tahun' => $periodeTahun,
-                ], [
-                    'order_id'            => $orderId,
-                    'tanggal_tagihan'     => $tanggalTagihan,
-                    'tanggal_jatuh_tempo' => $tanggalJatuhTempo,
-                    'nominal_pokok'       => $nominalPokok,
-                    'nominal_total'       => $nominalPokok,
-                    'status'              => 'pending',
-                ]);
-            });
-        }
-    });
-```
-
-### 4.2.3 Implementasi Basis Data
+### 4.3.3 Implementasi Basis Data
 Skema basis data direalisasikan ke dalam 22 berkas migrasi database Laravel. Tabel 4.2 merangkum struktur fungsional dari keseluruhan dua puluh dua tabel relasional yang menyusun sistem informasi Asri Boarding House.
 
 **Tabel 4.2** Struktur dan Fungsi 22 Tabel Basis Data Sistem Asri Boarding House
@@ -836,388 +829,73 @@ Skema basis data direalisasikan ke dalam 22 berkas migrasi database Laravel. Tab
 *Sumber: Hasil rekayasa skema basis data penulis (2026)*
 
 Sebagai penguatan integritas data, sistem menerapkan dua teknik penting pada skema DDL (*Data Definition Language*):
-1. **Virtual Generated Columns**: Diterapkan pada tabel `users`, `kamar`, dan `penyewa` guna memecahkan benturan indeks unik saat baris data dihapus secara lunak (*soft delete*). Ketiadaan batasan unik pada skema basis data rentan memicu duplikasi data saat terjadi akses serentak. Sebaliknya, penerapan batasan unik standar akan memicu konflik integritas ketika data yang berstatus *soft-delete* didaftarkan kembali dengan nilai atribut yang sama. Kolom virtual mengevaluasi nilai atribut asli hanya saat `deleted_at IS NULL` dan menghasilkan `NULL` saat terhapus, sehingga integritas data aktif terjamin secara andal di tingkat basis data.
-2. **Composite Unique Index & Foreign Key Integrity**: Diterapkan pada tabel transaksi finansial (`tagihan`) untuk mengunci integritas periode penagihan bulanan serta mencegah penghapusan data induk yang memiliki ketergantungan kas melalui `ON DELETE RESTRICT`.
+1. **Virtual Generated Columns**: Diterapkan pada tabel `users`, `kamar`, dan `penyewa` guna memecahkan benturan indeks unik saat baris data dihapus secara lunak (*soft delete*). Kolom virtual mengevaluasi nilai atribut asli hanya saat `deleted_at IS NULL` dan menghasilkan `NULL` saat terhapus (`virtualAs('CASE WHEN deleted_at IS NULL THEN ... ELSE NULL END')`), sehingga integritas data aktif terjamin di tingkat basis data.
+2. **Composite Unique Index & Foreign Key Integrity**: Diterapkan pada tabel transaksi finansial (`tagihan`) untuk mengunci integritas periode penagihan bulanan (`unique(['penyewa_id', 'periode_bulan', 'periode_tahun'])`) serta mencegah penghapusan data induk yang memiliki ketergantungan kas melalui aturan `ON DELETE RESTRICT`.
 
-Cuplikan berkas migrasi disajikan pada Kode 4.4 dan Kode 4.5.
+---
 
-```php
-// Kode 4.4 Cuplikan database/migrations/0001_01_01_000000_create_users_table.php: Virtual Generated Columns
-Schema::create('users', function (Blueprint $table) {
-    $table->id();
-    $table->string('nama', 100);
-    $table->string('email', 100);
-    $table->string('no_hp', 20)->nullable();
-    $table->string('nik', 16)->nullable();
-    $table->softDeletes();
-    $table->timestamps();
-
-    // Kolom virtual yang hanya bernilai jika baris tidak di-softdelete
-    $table->string('active_email')->virtualAs('CASE WHEN deleted_at IS NULL THEN email ELSE NULL END');
-    $table->string('active_no_hp')->virtualAs('CASE WHEN deleted_at IS NULL THEN no_hp ELSE NULL END');
-    $table->unique('active_email', 'uq_users_active_email');
-    $table->unique('active_no_hp', 'uq_users_active_no_hp');
-});
-```
-
-```php
-// Kode 4.5 Cuplikan database/migrations/create_tagihan_table.php: Integritas Relasi & Indeks Unik Komposit
-Schema::create('tagihan', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('penyewa_id')->constrained('penyewa')->onDelete('restrict');
-    $table->string('order_id', 50)->unique();
-    $table->tinyInteger('periode_bulan');
-    $table->smallInteger('periode_tahun');
-    $table->decimal('nominal_pokok', 12, 2);
-    $table->decimal('nominal_denda', 12, 2)->default(0);
-    $table->decimal('nominal_total', 12, 2);
-    $table->enum('status', ['pending', 'lunas', 'terlambat', 'dibatalkan'])->default('pending');
-    $table->timestamps();
-
-    // Composite unique index menjamin tepat satu tagihan per penyewa per bulan
-    $table->unique(['penyewa_id', 'periode_bulan', 'periode_tahun'], 'uq_tagihan_periode');
-});
-```
-
-### 4.2.4 Implementasi Autentikasi dan Hak Akses
+### 4.3.4 Implementasi Autentikasi dan Hak Akses
 Sistem menegakkan isolasi peran pengguna secara berlapis guna menjamin keamanan data:
-1. **Pemisahan Tiga Portal Login**: Antarmuka autentikasi diisolasi ke dalam tiga rute mandiri: `/admin/login` bagi pengelola, `/penyewa/login` bagi penghuni aktif, dan `/reservasi/login` bagi calon penyewa baru. Setiap rute dipagari oleh middleware otorisasi `RoleMiddleware` yang secara otomatis memutus sesi dan mengirimkan kode status HTTP 403 Forbidden apabila pengguna mencoba melintasi batas portal yang bukan hak otorisasi perannya.
-2. **Integrasi Google OAuth 2.0 via Socialite**: Calon penyewa dapat masuk secara praktis menggunakan akun Google resmi. Untuk menjamin kelengkapan data kontak, middleware `EnsureProfileIsComplete` dipasang sebagai gerbang penapis (*interceptor*): saat calon penyewa baru berhasil masuk melalui Google dan nomor ponselnya masih berformat sementara (`temp_...`), sistem secara otomatis mengalihkannya ke `/profil/complete` guna mewajibkan pengisian nomor WhatsApp aktif sebelum diizinkan mengakses formulir reservasi kamar.
+1. **Pemisahan Tiga Portal Login**: Rute autentikasi dipisahkan secara tegas: `/admin/login` bagi pengelola, `/penyewa/login` bagi penghuni aktif, dan `/reservasi/login` bagi calon penyewa baru. Setiap rute dipagari oleh middleware otorisasi `RoleMiddleware` yang memutus sesi dan mengirimkan kode status HTTP 403 Forbidden apabila pengguna mencoba melintasi batas portal yang bukan hak otorisasi perannya.
+2. **Integrasi Google OAuth 2.0 via Socialite**: Calon penyewa dapat masuk menggunakan akun Google resmi. Untuk menjamin kelengkapan data kontak, middleware `EnsureProfileIsComplete` dipasang sebagai gerbang penapis (*interceptor*): saat calon penyewa baru berhasil masuk melalui Google dan nomor ponselnya masih berformat sementara (`temp_socialite_*`), sistem secara otomatis mengalihkannya ke rute `/profil/complete` guna mewajibkan pengisian nomor WhatsApp aktif sebelum diizinkan mengakses formulir reservasi kamar. Alur logika interseptor ini disajikan pada Gambar 4.11.
 3. **Mitigasi IDOR (*Insecure Direct Object Reference*)**: Akses terhadap entitas finansial privat—seperti invoice tagihan dan nota pembayaran—dikunci pada lapisan kebijakan otorisasi (*Policy Layer*). Sistem mengevaluasi kepemilikan tagihan melalui relasi pengguna aktif (`$tagihan->penyewa?->user_id === $user->id`). Upaya manipulasi ID tagihan pada URL oleh pihak lain secara otomatis digagalkan dengan balasan kode status HTTP 403 Forbidden.
 
-Cuplikan implementasi isolasi peran dan mitigasi IDOR disajikan pada Kode 4.6 dan Kode 4.7.
+![Gambar 4.11 Alur Interseptor Profil Google OAuth dan Verifikasi Kontak WhatsApp](images/gambar_4_3.png)
 
-```php
-// Kode 4.6 Cuplikan app/Http/Middleware/RoleMiddleware.php: Isolasi Hak Akses Peran Berbasis Guard Clause
-public function handle(Request $request, Closure $next, string ...$roles): Response
-{
-    $user = $request->user();
+*Gambar 4.11 Alur Interseptor Profil Google OAuth dan Verifikasi Kontak WhatsApp*  
+*Sumber: Hasil analisis arsitektur autentikasi penulis (2026)*
 
-    // Guard Clause 1: Pengguna belum terautentikasi
-    if (!$user) {
-        return $request->expectsJson()
-            ? response()->json(['message' => 'Unauthenticated.'], 401)
-            : redirect()->route('login');
-    }
+---
 
-    // Guard Clause 2: Peran pengguna tidak sesuai dengan daftar peran yang diizinkan
-    if (!in_array($user->role, $roles, true)) {
-        if ($request->expectsJson()) {
-            return response()->json(['message' => 'Akses ditolak.'], 403);
-        }
-        abort(403, 'Akses ditolak: Anda tidak memiliki otoritas pada portal ini.');
-    }
-
-    return $next($request);
-}
-```
-
-```php
-// Kode 4.7 Cuplikan app/Policies/TagihanPolicy.php: Mitigasi IDOR pada Akses Dokumen Finansial
-public function view(User $user, Tagihan $tagihan): bool
-{
-    return $user->role === User::ROLE_ADMIN || $this->isOwner($user, $tagihan);
-}
-
-public function pay(User $user, Tagihan $tagihan): bool
-{
-    return $this->isOwner($user, $tagihan);
-}
-
-private function isOwner(User $user, Tagihan $tagihan): bool
-{
-    // Membatasi akses kueri hanya untuk entitas penyewa yang memiliki relasi ke user terautentikasi
-    return $tagihan->penyewa?->user_id === $user->id;
-}
-```
-
-### 4.2.5 Implementasi Fitur Calon Penyewa
+### 4.3.5 Implementasi Fitur Calon Penyewa
 Modul calon penyewa menghadirkan kemudahan penelusuran kamar dan pemesanan secara mandiri:
 1. **Katalog Kamar Dinamis Berstatus Real-Time**: Halaman landing page menyajikan kisi (*grid*) 32 unit kamar dengan indikator status dinamis. Unit kamar kosong memunculkan tombol "Pesan Unit" yang membuka formulir reservasi, sedangkan kamar terisi menyembunyikan formulir dan menampilkan tombol "Tanya WA" yang langsung menghubungkan peramban ke nomor WhatsApp admin beserta templat pesan otomatis.
-2. **Alur Pemesanan Bertahap (*5-Step Horizontal Stepper*)**: Calon penyewa dipandu melalui lima tahapan sistematis: (1) Verifikasi Unit Kamar, (2) Pengisian Biodata Diri & NIK 16 Digit, (3) Pemilihan Tipe Sewa (Harian/Mingguan/Bulanan) beserta kalkulasi otomatis diskon sewa tahunan, (4) Pemilihan Skema Pembayaran (DP 30% atau Lunas 100%), serta (5) Pembayaran Digital via Midtrans Snap.
-3. **Pencegahan Double-Booking Simultan**: Untuk mengantisipasi dua calon penyewa memesan unit kamar yang sama pada detik yang bersamaan, pembuatan reservasi dieksekusi di dalam transaksi basis data berpelindung kunci baris eksklusif `lockForUpdate()`.
-4. **Kanal Komunikasi Ganda**: Sistem menyediakan *Guest Chat* publik tanpa kewajiban login berpersistensi token sesi di peramban, serta modul *Live Chat* pra-pembayaran yang aktif selama status reservasi *pending*. Muatan pesan disinkronkan secara berkala per 4 detik melalui teknik *incremental AJAX polling* dengan parameter `after` dan *eager loading* guna mencegah masalah kueri ganda (*N+1 queries problem*).
+2. **Pencegahan Double-Booking Simultan**: Untuk mengantisipasi dua calon penyewa memesan unit kamar yang sama pada detik yang bersamaan, pembuatan reservasi dieksekusi di dalam transaksi basis data berpelindung kunci baris eksklusif `lockForUpdate()`. Sistem mengevaluasi ketersediaan kamar secara serial pada level InnoDB sehingga kondisi balapan (*race condition*) dapat dicegah secara deterministik.
+3. **Kanal Komunikasi Ganda**: Sistem menyediakan *Guest Chat* publik tanpa kewajiban login berpersistensi token sesi di peramban, serta modul *Live Chat* pra-pembayaran yang aktif selama status reservasi *pending*. Muatan pesan disinkronkan secara berkala per 4 detik melalui teknik *incremental AJAX polling* dengan parameter `after` dan pemuatan berelasi (*eager loading*) guna mencegah masalah kueri ganda (*N+1 queries problem*).
 
-Cuplikan logika transaksi reservasi anti *double-booking* dan kueri *incremental AJAX polling* disajikan pada Kode 4.8 dan Kode 4.9.
+---
 
-```php
-// Kode 4.8 Cuplikan app/Services/ReservasiService.php: Transaksi Atomik Reservasi & Kunci Anti Double-Booking
-public function buatReservasi(array $data): Reservasi
-{
-    return DB::transaction(function () use ($data) {
-        // Penguncian baris pesimistik untuk serialisasi kueri konkurensi kamar
-        $kamar = Kamar::lockForUpdate()->findOrFail($data['kamar_id']);
-
-        if ($this->cekDoubleBooking($kamar, $data['tanggal_mulai'], $data['tanggal_selesai'])) {
-            throw ValidationException::withMessages([
-                'kamar_id' => 'Kamar sudah ter-booking pada rentang tanggal tersebut.'
-            ]);
-        }
-
-        $rincianHarga = $this->hitungHarga($kamar, $data['tipe_sewa'], $data['durasi']);
-
-        return Reservasi::create(array_merge($data, [
-            'order_id'     => "RSV-{$data['user_id']}-" . time(),
-            'total_harga'  => $rincianHarga['total_harga'],
-            'nominal_dp'   => $rincianHarga['nominal_dp'],
-            'nominal_sisa' => $rincianHarga['nominal_sisa'],
-            'status'       => 'pending',
-        ]));
-    });
-}
-```
-
-```php
-// Kode 4.9 Cuplikan app/Http/Controllers/Api/ChatController.php: Incremental Fetching Obrolan Pra-Bayar
-public function fetch(Request $request, Reservasi $reservasi): JsonResponse
-{
-    Gate::authorize('chat', $reservasi);
-    $query = ChatMessage::where('reservasi_id', $reservasi->id);
-
-    // Muat pesan secara bertahap hanya yang memiliki ID lebih besar dari parameter 'after'
-    if ($request->has('after') && (int) $request->query('after') > 0) {
-        $messages = $query->where('id', '>', (int) $request->query('after'))
-            ->orderBy('id', 'asc')
-            ->with('sender:id,nama,role')
-            ->get();
-    } else {
-        $messages = $query->orderBy('id', 'desc')->limit(50)
-            ->with('sender:id,nama,role')->get()->reverse()->values();
-    }
-
-    return response()->json(['messages' => $messages]);
-}
-```
-
-### 4.2.6 Implementasi Fitur Penyewa Aktif
+### 4.3.6 Implementasi Fitur Penyewa Aktif
 Modul penyewa aktif pada rute `/penyewa/dashboard` menghadirkan portal swalayan (*self-service*) terintegrasi bagi penghuni kamar:
 1. **Dasbor Tagihan dan Pelunasan Mandiri**: Penyewa dapat meninjau kartu ringkasan kontrak sewa dan jadwal tagihan bulanan. Tombol "Bayar Sekarang" memanggil jendela popup modal Midtrans Snap v2 untuk pelunasan non-tunai via Bank BCA Virtual Account.
 2. **Kuitansi Pembayaran Digital Format A5 (*Zero Server Overhead*)**: Bukti pelunasan transaksi resmi format A5 berstempel digital dicetak dan diunduh langsung di sisi peramban klien via pustaka `html2pdf.js`. Pendekatan ini meniadakan beban kompilasi PDF di peladen serta menghemat kapasitas penyimpanan berkas pada hosting.
 3. **Modul Pengaduan Keluhan Fasilitas Rusak**: Penyewa dapat melaporkan kerusakan sarana kamar (seperti lampu padam atau kran air bocor) secara terstruktur melalui formulir keluhan berlampiran foto bukti fisik. Sistem memvalidasi ekstensi berkas (.jpg, .jpeg, .png) dan membatasi ukuran berkas maksimum 2 MB, dilengkapi pembersihan otomatis berkas gambar jika eksekusi database mengalami kegagalan guna mencegah berkas yatim (*dangling files*).
 4. **Pemulihan Kata Sandi Mandiri**: Pengguna yang lupa kata sandi dapat meminta tautan pemulihan kata sandi terenkripsi melalui rute `/penyewa/password/reset` yang dikirimkan secara otomatis ke alamat surel terdaftar melalui protokol SMTP.
 
-Cuplikan skrip perenderan kuitansi di sisi klien dan penanganan unggah bukti keluhan disajikan pada Kode 4.10 dan Kode 4.11.
+---
 
-```javascript
-// Kode 4.10 Cuplikan resources/views/nota/cetak.blade.php: Perenderan Kuitansi A5 di Klien via html2pdf.js
-function downloadPdf() {
-    var element = document.getElementById('nota-container');
-    var filename = 'Nota-{{ addslashes($pembayaran->transaction_id) }}.pdf';
-
-    var opt = {
-        margin:      [8, 8, 8, 8],
-        filename:    filename,
-        image:       { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, logging: false },
-        jsPDF:       { unit: 'mm', format: 'a5', orientation: 'portrait' }
-    };
-
-    // Eksekusi kompilasi PDF 100% berjalan di peramban pengguna tanpa membebani CPU peladen
-    html2pdf().set(opt).from(element).save();
-}
-```
-
-```php
-// Kode 4.11 Cuplikan app/Http/Controllers/Penyewa/KeluhanController.php: Proteksi Kebocoran Storage Berkas Aduan
-public function store(StoreKeluhanRequest $request): RedirectResponse
-{
-    $penyewa = $request->user()->penyewa;
-    $validated = $request->validated();
-
-    $fotoPath = null;
-    if ($request->hasFile('foto_bukti')) {
-        $fotoPath = $request->file('foto_bukti')->store('keluhan', 'public');
-    }
-
-    try {
-        $keluhan = DB::transaction(fn() => Keluhan::create([
-            'penyewa_id' => $penyewa->id,
-            'judul'      => $validated['judul'],
-            'kategori'   => $validated['kategori'],
-            'deskripsi'  => $validated['deskripsi'],
-            'foto_bukti' => $fotoPath,
-            'status'     => 'pending',
-        ]));
-
-        event(new KeluhanDibuat($keluhan));
-        return redirect()->route('penyewa.keluhan.index')->with('success', 'Keluhan berhasil dikirim.');
-    } catch (\Throwable $e) {
-        // Hapus file fisik seketika jika query database gagal untuk mencegah penumpukan file yatim
-        if ($fotoPath && Storage::disk('public')->exists($fotoPath)) {
-            Storage::disk('public')->delete($fotoPath);
-        }
-        throw $e;
-    }
-}
-```
-
-### 4.2.7 Implementasi Fitur Admin
+### 4.3.7 Implementasi Fitur Administrator
 Panel administrasi pada rute `/admin/dashboard` mengadopsi tema gelap *OLED Black Dark Mode* guna menjaga kenyamanan visual pengelola (Bapak Asep, usia 48 tahun) saat memantau operasional dalam durasi panjang:
-1. **Dasbor Statistik dan Akuntansi Mikro (*Micro-Accounting*)**: Tiga kartu ringkasan keuangan utama (Total Pemasukan, Total Pengeluaran, dan Laba Bersih) dikalkulasi secara langsung melalui kueri agregasi basis data tunggal (*single-pass SQL aggregation*), menggantikan pencatatan buku besar konvensional guna mengamankan perputaran pendapatan bruto maksimum kos sebesar Rp28.500.000 per bulan dari risiko selisih hitung kas.
+1. **Dasbor Statistik dan Akuntansi Mikro (*Micro-Accounting*)**: Tiga kartu ringkasan keuangan utama (Total Pemasukan, Total Pengeluaran, dan Laba Bersih) dikalkulasi secara langsung melalui kueri agregasi basis data tunggal (*single-pass SQL aggregation*), menggantikan pencatatan buku besar konvensional guna mengamankan perputaran pendapatan bruto kos sebesar Rp28.500.000 per bulan dari risiko selisih hitung kas.
 2. **Pendaftaran Tamu Datang Langsung (*Walk-in*)**: Menyediakan modul pendaftaran manual bagi calon penghuni yang datang langsung ke lokasi kos tanpa reservasi web. Kelas `AdminPenyewaService` mengeksekusi pembuatan akun pengguna, penguncian kamar, pencatatan uang jaminan deposit, dan penerbitan tagihan awal lunas dalam transaksi atomik.
 3. **Konfirmasi Pembayaran Kas/Tunai**: Administrator dapat mengubah status tagihan menjadi lunas dengan satu kali sentuhan melalui tombol "Konfirmasi Tunai" pada menu tagihan via `TagihanService::confirmCashPayment`, yang secara otomatis membukukan mutasi penerimaan kas dan menerbitkan kuitansi resmi.
 4. **Kebijakan Isolasi Kamar Pasca-Checkout**: Saat penyewa menyelesaikan masa tinggal (*checkout*), sistem secara sengaja tidak mengubah status kamar menjadi tersedia; kamar tetap berstatus `terisi` (terkunci merah) hingga administrator selesai memeriksa kebersihan dan kelayakan sarana kamar secara langsung sebelum melepas statusnya secara manual menjadi `tersedia`. Kebijakan ini efektif meniadakan risiko pemesanan ganda (*double booking*) pada kamar yang belum siap dihuni.
 5. **Kalender Kontrol Visual Hunian (UC-19) & Broadcast WhatsApp (UC-20)**: Administrator dapat memantau jadwal kedatangan, durasi sewa, dan tanggal kepulangan seluruh 32 unit kamar dalam antarmuka kalender visual interaktif, serta menyiarkan pengumuman massal atau darurat ke kontak WhatsApp seluruh penghuni aktif dalam satu kali instruksi.
 
-Cuplikan agregasi finansial mikro-akuntansi dan kebijakan penguncian kamar pasca-checkout disajikan pada Kode 4.12 dan Kode 4.13.
+---
 
-```php
-// Kode 4.12 Cuplikan app/Services/DashboardAnalyticsService.php: Agregasi Arus Kas Riil Bulan Berjalan
-$pembayaranPokok = Pembayaran::whereMonth('tanggal_bayar', $now->month)
-    ->whereYear('tanggal_bayar', $now->year)
-    ->whereIn('status_midtrans', ['settlement', 'capture', 'success', 'cash_confirmed'])
-    ->sum('nominal');
-
-$reservasiDp = Reservasi::where('is_dp', true)
-    ->whereIn('status', ['dp', 'dikonfirmasi'])
-    ->whereMonth('updated_at', $now->month)
-    ->whereYear('updated_at', $now->year)
-    ->sum('nominal_dp');
-
-$reservasiFull = Reservasi::where('is_dp', false)
-    ->whereIn('status', ['lunas'])
-    ->whereMonth('updated_at', $now->month)
-    ->whereYear('updated_at', $now->year)
-    ->sum('total_harga');
-
-$totalPemasukan = $pembayaranPokok + $reservasiDp + $reservasiFull;
-$totalPengeluaran = Pengeluaran::whereMonth('tanggal_pengeluaran', $now->month)
-    ->whereYear('tanggal_pengeluaran', $now->year)
-    ->sum('nominal');
-
-$keuntunganBersih = $totalPemasukan - $totalPengeluaran;
-```
-
-```php
-// Kode 4.13 Cuplikan app/Observers/PenyewaObserver.php: Kebijakan Kamar Terkunci Pasca-Checkout
-public function updated(Penyewa $penyewa): void
-{
-    // Saat status penyewa diubah menjadi 'nonaktif' (checkout selesai),
-    // status fisik kamar SENGAJA TIDAK diubah otomatis ke 'tersedia'.
-    // Kamar tetap dipertahankan 'terisi' hingga inspeksi manual selesai dilakukan.
-    if ($penyewa->wasChanged('status') && $penyewa->status === 'nonaktif') {
-        $penyewa->loadMissing(['kamar', 'user']);
-        $nomorKamar = $penyewa->kamar?->nomor_kamar ?? '-';
-
-        NotifikasiKhusus::log(
-            self::LOG_SOURCE,
-            self::EVENT_CHECKOUT,
-            "Penyewa Kamar {$nomorKamar} telah checkout. Kamar dalam status karantina fisik.",
-            ['penyewa_id' => $penyewa->id, 'kamar_id' => $penyewa->kamar_id]
-        );
-    }
-}
-```
-
-### 4.2.8 Implementasi Integrasi Payment Gateway
+### 4.3.8 Implementasi Integrasi Payment Gateway Midtrans
 Integrasi gerbang pembayaran Midtrans Snap API v2 dibangun secara modular melalui kelas `MidtransService` dan dua pengendali webhook terpisah:
 1. **Pembangkitan Snap Token Transaksi**: Sistem menyusun parameter transaksi aman (`order_id`, `gross_amount`, `customer_details`) ke Midtrans Cloud. Durasi kedaluwarsa dihitung secara dinamis: jika waktu saat ini berada menjelang akhir bulan, batas waktu dipersingkat agar token tidak dapat dibayar melintasi pergantian bulan kalender saat potensi denda baru muncul.
 2. **Pemisahan Jalur Webhook Callback**: Penanganan callback dibagi ke dalam dua pengontrol terisolasi: `MidtransCallbackController` yang menangani tagihan bulanan penyewa aktif, serta `MidtransReservasiCallbackController` yang menangani reservasi awal calon penghuni.
-3. **Verifikasi Keamanan Tanda Tangan Digital SHA-512**: Setiap permintaan webhook diverifikasi keabsahannya dengan mencocokkan signature key SHA-512 yang dikalkulasi secara matematis menggunakan fungsi anti-timing attack `hash_equals`:
-   $$\text{Signature} = \text{SHA512}(\text{order\_id} + \text{status\_code} + \text{gross\_amount} + \text{ServerKey})$$
-   Jika signature tidak cocok, permintaan segera ditolak dengan kode status HTTP 403 Forbidden guna menangkal ancaman manipulasi transaksi (*fraud spoofing*).
+3. **Verifikasi Keamanan Tanda Tangan Digital SHA-512**: Setiap permintaan webhook diverifikasi keabsahannya dengan mencocokkan signature key SHA-512 yang dikalkulasi secara matematis menggunakan fungsi anti-timing attack `hash_equals` ($	ext{Signature} = 	ext{SHA512}(	ext{order\_id} + 	ext{status\_code} + 	ext{gross\_amount} + 	ext{ServerKey})$). Jika signature tidak cocok, permintaan segera ditolak dengan kode status HTTP 403 Forbidden guna menangkal ancaman manipulasi transaksi (*fraud spoofing*). Visualisasi alur middleware validasi webhook disajikan pada Gambar 4.12.
 4. **Penanganan Idempotensi Transaksi**: Kueri pembaruan status pembayaran tagihan diproteksi dalam blok `DB::transaction` dengan instruksi penguncian baris `lockForUpdate()`. Jika notifikasi callback dengan status `settlement` diterima lebih dari satu kali untuk `transaction_id` yang sama, sistem mendeteksi bahwa tagihan telah berstatus lunas dan mengabaikan eksekusi pencatatan kas kedua (*zero double accounting*).
 
-Cuplikan validasi tanda tangan digital dan penguncian idempoten webhook disajikan pada Kode 4.14 dan Kode 4.15.
+![Gambar 4.12 Middleware Validasi Webhook Signature SHA-512](images/gambar_4_2.png)
 
-```php
-// Kode 4.14 Cuplikan app/Http/Middleware/VerifyMidtransSignature.php: Validasi Signature SHA-512 Anti Timing-Attack
-protected function isValidSignature(Request $request, string $serverKey, string $signatureKey): bool
-{
-    $orderId     = $request->order_id;
-    $statusCode  = $request->status_code;
-    $grossAmount = $request->gross_amount;
+*Gambar 4.12 Middleware Validasi Webhook Signature SHA-512*  
+*Sumber: Hasil analisis keamanan transaksi penulis (2026)*
 
-    $formattedAmount = is_numeric($grossAmount)
-        ? number_format((float) $grossAmount, 2, '.', '')
-        : $grossAmount;
+---
 
-    $expected1 = hash('sha512', $orderId . $statusCode . $formattedAmount . $serverKey);
-    $expected2 = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
-
-    // hash_equals melindungi sistem dari celah keamanan kebocoran waktu komparasi string (Timing Attack)
-    return hash_equals($expected1, $signatureKey) || hash_equals($expected2, $signatureKey);
-}
-```
-
-```php
-// Kode 4.15 Cuplikan app/Http/Controllers/Api/MidtransCallbackController.php: Idempotency Protection dengan lockForUpdate
-$result = DB::transaction(function () use ($tagihan, $grossAmount, $transactionId) {
-    // Penguncian baris eksklusif untuk menangkal race condition webhook simultan
-    $lockedTagihan = Tagihan::where('id', $tagihan->id)->lockForUpdate()->first();
-    $lockedPembayaran = Pembayaran::where('transaction_id', $transactionId)->lockForUpdate()->first();
-
-    // Fast-exit Idempotency Guard: Jika pembayaran sudah lunas, abaikan callback duplikat
-    if ($lockedPembayaran && in_array($lockedPembayaran->status_midtrans, ['settlement', 'capture'])) {
-        return ['status' => 200, 'message' => 'Already processed'];
-    }
-
-    if ($lockedTagihan->status === 'lunas') {
-        return ['status' => 200, 'message' => 'Already processed'];
-    }
-
-    // Mutasi status tagihan menjadi lunas dan pembukuan kas...
-});
-```
-
-### 4.2.9 Implementasi Notifikasi Email SMTP
+### 4.3.9 Implementasi Notifikasi Surel SMTP
 Layanan surel diintegrasikan memanfaatkan driver SMTP standar Laravel yang terhubung ke peladen surat Hostinger pada port aman 587 dengan enkripsi Transport Layer Security (TLS):
 * **Pola Template Method pada Notifikasi**: Kelas abstrak `BaseResetPasswordNotification` mengimplementasikan antarmuka `ShouldQueue` dari Laravel, mendefinisikan struktur pengiriman email reset kata sandi, dan menyediakan proteksi token kadaluwarsa selama 60 menit.
 * **Distribusi Asinkron (*Queued Mailables*)**: Transmisi invoice tagihan bulanan (`TagihanBulanMail`) dan surel sistem lainnya didelegasikan ke antrean latar belakang (*Laravel Queue*) melalui trait `Queueable`. Pendekatan ini memastikan latensi jaringan transmisi SMTP tidak membebani kecepatan respons (*response time*) peramban pengguna.
 
-Cuplikan implementasi kelas notifikasi asinkron disajikan pada Kode 4.16 dan Kode 4.17.
+---
 
-```php
-// Kode 4.16 Cuplikan app/Notifications/BaseResetPasswordNotification.php: Asynchronous Queued Mailable
-abstract class BaseResetPasswordNotification extends ResetPasswordNotification implements ShouldQueue
-{
-    use Queueable;
-
-    public const VIEW_TEMPLATE = 'emails.reset-password';
-
-    abstract protected function getRoleName(): string;
-    abstract protected function resolveRouteName(mixed $notifiable): string;
-
-    public function toMail($notifiable): MailMessage
-    {
-        $url = $this->resetUrl($notifiable);
-        $roleName = $this->getRoleName();
-        $nama = $notifiable->nama ?? $roleName;
-        $expireMinutes = (int) config('auth.passwords.users.expire', 60);
-
-        return (new MailMessage)
-            ->subject("Reset Password {$roleName} - " . config('app.name', 'Asri Boarding House'))
-            ->view(self::VIEW_TEMPLATE, [
-                'urlReset'      => $url,
-                'namaPenyewa'   => $nama,
-                'roleName'      => $roleName,
-                'expireMinutes' => $expireMinutes,
-            ]);
-    }
-}
-```
-
-```php
-// Kode 4.17 Cuplikan app/Mail/TagihanBulanMail.php: Implementasi Mailable Tagihan Bulanan Terjadwal
-class TagihanBulanMail extends Mailable implements ShouldQueue
-{
-    use Queueable, SerializesModels;
-
-    public int $tries = 3;
-    public int $backoff = 30;
-
-    public function __construct(protected Tagihan $tagihan) {}
-
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: "Tagihan Sewa Kost Bulan Berjalan - {$this->tagihan->order_id}",
-        );
-    }
-}
-```
-
-### 4.2.10 Implementasi Notifikasi WhatsApp FONNTE
+### 4.3.10 Implementasi Notifikasi WhatsApp Fonnte
 Integrasi otomasi pesan WhatsApp diimplementasikan melalui kelas `FonnteService` yang berkomunikasi dengan RESTful API Gateway Fonnte:
 * **Pengiriman Invoice Bulanan Otomatis**: Disiarkan setiap tanggal 1 awal bulan berisikan rincian tagihan pokok dan batas jatuh tempo tanggal 10.
 * **Pengingat Jatuh Tempo (*Payment Reminder*)**: Dikirimkan secara persuasif menjelang dan setelah tanggal 10 bagi penghuni yang belum menyelesaikan pembayaran sewa tanpa pengenaan denda selama masih berada dalam bulan kalender berjalan (Denda = Rp0).
@@ -1225,139 +903,41 @@ Integrasi otomasi pesan WhatsApp diimplementasikan melalui kelas `FonnteService`
 * **Eskalasi Penunggakan ke Kontak Wali**: Pesan otomatis diteruskan ke nomor WhatsApp wali/orang tua penyewa saat keterlambatan pembayaran memasuki bulan kalender kedua (`bulan_keterlambatan > 1`).
 * **Audit Trail Notifikasi**: Setiap aktivitas pengiriman pesan dicatat pada tabel `log_notifikasi` berisikan waktu kirim, ID penerima, isi pesan, serta status terkirim (*success*) atau gagal (*failed*) guna mencegah pesan ganda (*duplicate messaging*).
 
-Cuplikan implementasi pengiriman API Fonnte, penegakan denda flat 5%, dan eskalasi ke kontak wali disajikan pada Kode 4.18, Kode 4.19, dan Kode 4.20.
+Alur komunikasi subsistem notifikasi WhatsApp Fonnte disajikan pada Gambar 4.13.
 
-```php
-// Kode 4.18 Cuplikan app/Services/FonnteService.php: Transmisi Pesan HTTP POST REST API Fonnte
-public function kirimPesan(?string $nomor, string $pesan): bool
-{
-    if (empty($nomor)) return false;
-    $nomor = $this->formatNomor($nomor); // Standarisasi format nomor E.164 (+62)
+![Gambar 4.13 Subsistem Komunikasi Notifikasi Fonnte WA Service](images/gambar_4_4.png)
 
-    try {
-        $response = Http::timeout(5)->connectTimeout(3)
-            ->withHeaders(['Authorization' => config('fonnte.token')])
-            ->post('https://api.fonnte.com/send', [
-                'target'      => $nomor,
-                'message'     => $pesan,
-                'countryCode' => '62',
-                'delay'       => '2', // Jeda transmisi anti-spam
-            ]);
-
-        $responseData = $response->json();
-        return $response->successful() && (($responseData['status'] ?? false) === true);
-    } catch (\Throwable $e) {
-        Log::error('Fonnte request exception: ' . $e->getMessage());
-        return false;
-    }
-}
-```
-
-```php
-// Kode 4.19 Cuplikan app/Services/BillingService.php: Penegakan Denda Flat 5% Idempoten Melintasi Bulan Kalender
-if ($isBulanBerikutnya) {
-    // Idempotency Guard: Denda 5% hanya dibebankan SATU KALI jika nominal_denda masih 0
-    if ($tagihanLocked->nominal_denda == 0) {
-        $nominalDenda = $tagihanLocked->nominal_pokok * self::DENDA_RATE; // 5% flat
-        $tagihanLocked->nominal_denda = $nominalDenda;
-        $tagihanLocked->nominal_total += $nominalDenda;
-        $tagihanLocked->status = 'terlambat';
-        $tagihanLocked->bulan_keterlambatan = 3; // Trigger event denda
-        $tagihanLocked->save();
-
-        $eventsToFire[] = new DendaDikenakan($tagihanLocked);
-    }
-}
-```
-
-```php
-// Kode 4.20 Cuplikan app/Services/NotifikasiService.php: Eskalasi Pesan WhatsApp ke Nomor Wali Penghuni
-if ($tagihan->bulan_keterlambatan > 1 && !empty($penyewa->no_wali)) {
-    // Audit check: Pastikan notifikasi eskalasi wali belum pernah terkirim untuk tagihan ini
-    $alreadySentWali = LogNotifikasi::where('tagihan_id', $tagihan->id)
-        ->where('channel', 'whatsapp')
-        ->whereIn('event', ['notifikasi_wali', 'notifikasi_wali_eskalasi'])
-        ->where('status', 'sukses')
-        ->exists();
-
-    if (!$alreadySentWali) {
-        $pesanWali = $this->templateNotifikasiWali($tagihan, $penyewa);
-        $this->kirimDanLog(
-            $penyewa, $tagihan, 'whatsapp', 'notifikasi_wali_eskalasi', $pesanWali,
-            fn($msg) => $this->fonnte->kirimPesan($penyewa->no_wali, $msg),
-            false
-        );
-    }
-}
-```
-
-## 4.3 Tampilan Antarmuka Sistem
-Realisasi antarmuka pengguna (*user interface*) pada sistem informasi manajemen Asri Boarding House dirancang secara kontekstual guna mengakomodasi karakteristik kognitif dan operasional dari tiga entitas pengguna utama: calon penyewa, penyewa aktif, serta pengelola operasional (administrator). Seluruh rancangan visual mengedepankan prinsip kejelasan hierarki informasi, keterbacaan tipografi (*readability*), efisiensi alur navigasi, dan kepatuhan terhadap standar aksesibilitas web internasional.
-
-### 4.3.1 Antarmuka Calon Penyewa
-Halaman publik dirancang dengan mengadopsi bahasa visual Neo-Brutalisme yang memadukan garis pembatas tegas (*high-contrast borders*), bayangan datar (*hard box-shadow*), dan tipografi modern *Space Grotesk*. Pendekatan estetika ini dipilih secara sengaja untuk memberikan ketegasan visual pada setiap elemen interaktif serta mempercepat pemahaman calon penyewa terhadap informasi unit kamar, fasilitas, dan transparansi tarif sewa tanpa ornamen grafis yang berlebihan. Guna mempermudah komunikasi langsung dengan pihak pengelola, disematkan tombol aksi mengambang (*floating action button*) WhatsApp pada sudut kanan bawah antarmuka. Tombol ini memiliki target sentuh (*touch target size*) berdiameter 56 piksel, yang secara terukur melampaui ambang batas minimum panduan aksesibilitas WCAG 2.1 (44 piksel) demi menjamin kenyamanan interaksi pengguna ponsel pintar. Tampilan katalog kamar publik disajikan pada Gambar 4.7.
-
-![Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme](images/gambar_4_7.png)
-
-*Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme*  
-*Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
-
-Ketika calon penyewa melanjutkan ke tahapan reservasi unit, sistem menyajikan panduan interaktif berbentuk *Workspace Horizontal Stepper*. Komponen ini memandu pengguna melalui lima tahapan terstruktur: pemilihan unit kamar, pengisian biodata dan verifikasi NIK 16 digit, penentuan skema serta durasi sewa, pemilihan opsi pembayaran (uang muka DP 30% atau pelunasan 100%), hingga peninjauan ringkasan pesanan sebelum transaksi dieksekusi. Visualisasi alur terpadu ini meminimalkan beban kognitif calon penyewa dan menekan angka pembatalan reservasi di tengah jalan. Tampilan wizard pemesanan kamar disajikan pada Gambar 4.8.
-
-![Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa](images/gambar_4_10.png)
-
-*Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa*  
-*Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
-
-### 4.3.2 Antarmuka Penyewa Aktif
-Bagi penghuni yang telah terverifikasi, portal mandiri pada rute `/penyewa/dashboard` berfungsi sebagai pusat kendali layanan hunian digital. Antarmuka ini menampilkan ringkasan masa aktif sewa, kartu status kamar, daftar tagihan berjalan maupun riwayat pembayaran terdahulu, serta tombol pelunasan instan yang terintegrasi langsung dengan Midtrans Snap API. Selain itu, penghuni dapat mengunduh bukti pembayaran resmi berupa kuitansi digital format A5 dalam hitungan detik tanpa harus menemui petugas secara langsung. Portal ini juga memfasilitasi pelaporan keluhan fasilitas hunian dengan fitur penyematan bukti foto digital guna mempercepat tindak lanjut perbaikan teknis di lapangan. Tampilan portal mandiri penyewa disajikan pada Gambar 4.9.
-
-![Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa](images/gambar_4_9.png)
-
-*Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa*  
-*Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
-
-### 4.3.3 Antarmuka Admin
-Panel administrasi pada rute `/admin/dashboard` dikembangkan dengan tema visual ergonomis *OLED Black Dark Mode*. Pemilihan skema palet gelap dengan kontras terukur ini disesuaikan dengan kebutuhan pengelola operasional yang memantau sistem dalam durasi kerja panjang, sehingga mampu meminimalkan kelelahan mata (*visual fatigue*). Dasbor utama menyajikan visualisasi data ringkas melalui tiga kartu ringkasan finansial utama—mencakup Total Pemasukan Kas, Total Pengeluaran Operasional, dan Akumulasi Laba Bersih—serta indikator keterisian 32 unit kamar secara *real-time*. Antarmuka ini juga menyediakan jalan pintas cepat (*quick actions*) untuk memverifikasi pembayaran tunai, memantau kalender kepulangan penghuni, dan menerbitkan laporan rekapitulasi periodik. Tampilan dasbor administrasi keuangan disajikan pada Gambar 4.10.
-
-![Gambar 4.10 Dasbor Administrasi Keuangan Administrator](images/gambar_4_8.png)
-
-*Gambar 4.10 Dasbor Administrasi Keuangan Administrator*  
-*Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
-
----
+*Gambar 4.13 Subsistem Komunikasi Notifikasi Fonnte WA Service*  
+*Sumber: Hasil analisis subsistem notifikasi penulis (2026)*
 
 ## 4.4 Hasil Deployment
 Implementasi sistem informasi manajemen kost Asri Boarding House telah berhasil melalui tahapan penyebaran (*deployment*) dan beroperasi secara penuh di lingkungan produksi berbasis *Hostinger Cloud Shared Hosting LiteSpeed Enterprise* dengan domain publik resmi `https://asriboardinghouse.weatso.id/`. Penerapan sistem pada infrastruktur produksi menuntut konfigurasi peladen yang ketat guna menjamin ketersediaan layanan (*high availability*), isolasi keamanan berkas sensitif, serta otomatisasi penjadwalan tugas penagihan periodik. Konfigurasi operasional peladen mencakup tahapan-tahapan teknis berikut:
 
 ### 4.4.1 Skrip Kompilasi Bundel Aset Produksi
-Sebagai bagian dari optimasi pengiriman aset statis di sisi klien (*front-end delivery*), seluruh modul CSS dan JavaScript dikompilasi menggunakan bundler Vite ke dalam bentuk berkas terkompresi dan terminifikasi guna meminimalkan ukuran transfer data jaringan. Di samping itu, tautan simbolis (*symbolic link*) dibangkitkan untuk menjembatani direktori penyimpanan privat Laravel (`storage/app/public`) ke direktori yang dapat diakses publik (`public/storage`):
+Sebagai bagian dari optimasi pengiriman aset statis di sisi klien (*front-end delivery*), seluruh modul CSS dan JavaScript dikompilasi menggunakan bundler Vite ke dalam bentuk berkas terkompresi dan terminifikasi guna meminimalkan ukuran transfer data jaringan. Di samping itu, tautan simbolis (*symbolic link*) dibangkitkan untuk menjembatani direktori penyimpanan privat Laravel (`storage/app/public`) ke direktori yang dapat diakses publik (`public/storage`) melalui perintah:
 ```bash
-# Menjalankan kompilasi produksi bundel aset Vite
-npm run build
-
-# Menghubungkan direktori penyimpanan privat storage ke public storage
-php artisan storage:link
+npm run build && php artisan storage:link
 ```
+Keluaran manifes hasil kompilasi produksi tersimpan pada direktori `public/build/manifest.json` yang dibaca secara otomatis oleh direktif `@vite` peladen Laravel saat aplikasi berjalan. Visualisasi terminal keluaran proses kompilasi bundel aset Vite produksi dan pembangkitan manifes disajikan pada Gambar 4.14.
 
-Keluaran manifes hasil kompilasi produksi tersimpan pada direktori `public/build/manifest.json` yang dibaca secara otomatis oleh direktif `@vite` peladen Laravel saat aplikasi berjalan.
+![Gambar 4.14 Kompilasi Bundel Aset Produksi Vite dan Penautan Storage](images/gambar_4_6.png)
+
+*Gambar 4.14 Kompilasi Bundel Aset Produksi Vite dan Penautan Storage*  
+*Sumber: Tangkapan layar terminal kompilasi aset sistem (2026)*
+
+---
 
 ### 4.4.2 Konfigurasi Peladen Web LiteSpeed/Apache
-Peladen web LiteSpeed dikonfigurasi melalui berkas `.htaccess` pada akar direktori publik guna mengarahkan seluruh permintaan masuk ke satu titik kendali tunggal (*front-controller pattern*) di `index.php`. Selain itu, diterapkan pengerasan keamanan peladen (*security hardening*) melalui pembatasan akses langsung terhadap berkas konfigurasi sistem yang sensitif, serta penyematan *HTTP Security Headers* berstandar industri guna mencegah kerentanan *Cross-Site Scripting* (XSS), *Clickjacking*, dan penafsiran tipe konten yang keliru (*MIME-sniffing*):
+Peladen web LiteSpeed dikonfigurasi melalui berkas `.htaccess` pada akar direktori publik guna mengarahkan seluruh permintaan masuk ke satu titik kendali tunggal (*front-controller pattern*) di `index.php`. Selain itu, diterapkan pengerasan keamanan peladen (*security hardening*) melalui pembatasan akses langsung terhadap berkas konfigurasi sistem yang sensitif (`.env`, `.git`), serta penyematan *HTTP Security Headers* berstandar industri guna mencegah kerentanan *Cross-Site Scripting* (XSS), *Clickjacking*, dan penafsiran tipe konten yang keliru (*MIME-sniffing*):
 ```apache
 <IfModule mod_rewrite.c>
     RewriteEngine On
-
-    # Mencegah akses langsung ke berkas konfigurasi sensitif (.env, .git)
     RewriteRule ^(\.env|\.git|composer\.(json|lock)|package\.(json|lock)) - [F,L,NC]
-
-    # Mengalihkan seluruh lalu lintas permintaan ke front controller public/index.php
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
 
-# Penerapan Header Keamanan HTTP Standar Industri
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"
@@ -1366,25 +946,26 @@ Peladen web LiteSpeed dikonfigurasi melalui berkas `.htaccess` pada akar direkto
 </IfModule>
 ```
 
+---
+
 ### 4.4.3 Konfigurasi Penjadwal Tugas Peladen (Cron Job)
 Guna menjamin kepastian eksekusi mesin penagihan otomatis (*Auto-Billing Engine*) setiap tanggal 1 awal bulan serta evaluasi harian denda flat keterlambatan kalender 5%, diaktifkan mekanisme penjadwalan tugas *cron* pada lingkungan peladen cPanel Hostinger. Tugas ini dipicu setiap menit untuk menjalankan penjadwal internal Laravel:
 ```bash
-# Menjalankan Laravel Task Scheduler setiap menit tanpa jeda
 * * * * * cd /home/u1234567/public_html && /usr/bin/php82 artisan schedule:run >> /dev/null 2>&1
 ```
+
+---
 
 ### 4.4.4 Perintah Optimasi Kinerja Produksi Laravel
 Untuk mengeliminasi beban pembacaan sistem berkas (*file I/O overhead*) pada setiap siklus permintaan HTTP di lingkungan produksi, seluruh berkas konfigurasi, peta rute, templat tampilan Blade, serta *listener* peristiwa dipra-kompilasi dan disimpan ke dalam memori (*in-memory caching*) melalui serangkaian perintah artisan berikut:
 ```bash
-# Mempersiapkan cache konfigurasi, rute, templat, dan peristiwa
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-php artisan event:cache
+php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan event:cache
 ```
 
+---
+
 ### 4.4.5 Konfigurasi Variabel Lingkungan Produksi
-Seluruh parameter konfigurasi aplikasi, kredensial basis data relasional, kunci integrasi Midtrans Snap API, token gateway WhatsApp Fonnte, serta pengaturan protokol SMTP diisolasi secara ketat dalam berkas variabel lingkungan produksi `.env`. Penempatan parameter ini memastikan tidak ada kredensial sensitif yang terekam pada repositori kode program (*version control*):
+Seluruh parameter konfigurasi aplikasi, kredensial basis data relasional, kunci integrasi Midtrans Snap API, token gateway WhatsApp Fonnte, serta pengaturan protokol SMTP diisolasi secara ketat dalam berkas variabel lingkungan produksi `.env`. Penempatan parameter ini memastikan tidak ada kredensial sensitif yang terekam pada repositori kode program (*version control*). Cuplikan konfigurasi produksi dengan nilai rahasia yang disamarkan (*redacted*) disajikan sebagai berikut:
 ```ini
 APP_NAME="Asri Boarding House"
 APP_ENV=production
@@ -1399,15 +980,12 @@ DB_DATABASE=[REDACTED]
 DB_USERNAME=[REDACTED]
 DB_PASSWORD=[REDACTED]
 
-# Konfigurasi Midtrans Snap API (Production Live Mode)
 MIDTRANS_IS_PRODUCTION=true
 MIDTRANS_SERVER_KEY=[REDACTED]
 MIDTRANS_CLIENT_KEY=[REDACTED]
 
-# Konfigurasi Fonnte WhatsApp Gateway API
 FONNTE_TOKEN=[REDACTED]
 
-# Konfigurasi Hostinger SMTP Mailer
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.hostinger.com
 MAIL_PORT=587
@@ -1415,10 +993,8 @@ MAIL_USERNAME=[REDACTED]
 MAIL_ENCRYPTION=tls
 ```
 
----
-
 ## 4.5 Hasil Pengujian Sistem
-Tahapan pengujian sistem memegang peranan krusial dalam siklus pengembangan perangkat lunak guna memverifikasi bahwa artefak sistem yang dibangun bekerja sesuai dengan spesifikasi fungsional, mematuhi batasan integritas data, kebal terhadap manipulasi otorisasi, serta mampu mengeksekusi kalkulasi finansial secara deterministik dan presisi. Pengujian dirancang secara komprehensif melalui kombinasi uji fungsionalitas kotak hitam (*black box testing*), pengujian isolasi hak akses (*Role-Based Access Control*), pengujian integrasi gerbang pembayaran daring (*payment gateway simulation*), serta validasi keamanan pada lingkungan peladen produksi (*live testing*).
+Tahapan pengujian sistem memegang peranan krusial dalam siklus pengembangan perangkat lunak guna memverifikasi bahwa artefak sistem yang dibangun bekerja sesuai dengan spesifikasi fungsional, mematuhi batasan integritas data, kebal terhadap manipulasi otorisasi, serta mampu mengeksekusi kalkulasi finansial secara deterministik dan presisi. Pengujian dirancang secara komprehensif melalui kombinasi uji fungsionalitas kotak hitam (*black box testing*), pengujian isolasi hak akses (*Role-Based Access Control*), pengujian integrasi gerbang pembayaran daring (*payment gateway simulation*), pengujian keamanan lingkungan produksi (*live environment testing*), serta pengujian unit otomatis (*automated test suite*).
 
 ### 4.5.1 Hasil Black Box Testing
 Pengujian fungsionalitas kotak hitam (*black box testing*) difokuskan pada pengujian perilaku eksternal perangkat lunak berdasarkan spesifikasi kebutuhan sistem tanpa memeriksa struktur kode program internal [14], [15]. Pengujian ini dirancang secara sistematis ke dalam 60 butir skenario uji yang mencakup enam domain fungsionalitas utama: (1) Autentikasi, Hak Akses, dan Profil Pengguna; (2) Portal Publik, Tamu, dan Obrolan Langsung (*Guest Chat*); (3) Calon Penyewa dan Alur Reservasi (*Stepper Wizard*); (4) Portal Penyewa Aktif, Manajemen Tagihan, dan Aduan Fasilitas; (5) Panel Administrator dan Tata Kelola Operasional Kas; serta (6) Otomasi Mesin Penjadwal (*Scheduler*), Denda Kalender, dan Integrasi API Eksternal. Rincian matriks pengujian fungsionalitas disajikan pada Tabel 4.3.
@@ -1521,13 +1097,13 @@ Hasil pengujian pada Tabel 4.4 membuktikan bahwa mekanisme middleware otentikasi
 ---
 
 ### 4.5.3 Hasil Pengujian Transaksi Midtrans Sandbox (BCA VA)
-Mengacu pada rancangan skenario operasional riil yang tercantum dalam *Blueprint Skenario Reservasi* dan panduan uji coba sistem, pengujian transaksi gerbang pembayaran daring difokuskan secara spesifik pada saluran perbankan **Bank Central Asia Virtual Account (BCA VA)** dengan memanfaatkan simulator resmi Midtrans Sandbox (`https://simulator.sandbox.midtrans.com/openapi/va/index`). Pemilihan saluran ini mewakili metode transfer bank virtual yang paling dominan digunakan dalam transaksi sewa properti. Pengujian mencakup pengamatan terhadap penerbitan kode bayar, verifikasi status penagihan (*inquiry*), simulasi pelunasan (*settlement*), kedaluwarsa waktu (*expire*), pembatalan (*cancel*), hingga pengujian ketahanan terhadap serangan pemalsuan notifikasi dan notifikasi ganda (*idempotency*). Hasil pengujian disajikan pada Tabel 4.5.
+Pengujian transaksi gerbang pembayaran daring difokuskan secara spesifik pada saluran perbankan **Bank Central Asia Virtual Account (BCA VA)** dengan memanfaatkan simulator resmi Midtrans Sandbox (`https://simulator.sandbox.midtrans.com/openapi/va/index`). Pemilihan saluran ini mewakili metode transfer bank virtual yang paling dominan digunakan dalam transaksi sewa properti. Pengujian mencakup pengamatan terhadap penerbitan kode bayar, verifikasi status penagihan (*inquiry*), simulasi pelunasan (*settlement*), kedaluwarsa waktu (*expire*), pembatalan (*cancel*), hingga pengujian ketahanan terhadap serangan pemalsuan notifikasi dan notifikasi ganda (*idempotency*). Hasil pengujian disajikan pada Tabel 4.5.
 
 **Tabel 4.5** Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account
 
 | No | Skenario Pengujian BCA Virtual Account | Prosedur Pengujian / Masukan Data | Respon Sistem & Webhook Callback | Hasil Pengujian | Status |
 | :---: | :--- | :--- | :--- | :--- | :---: |
-| 1 | Inisiasi Pembangkitan Nomor BCA Virtual Account | Calon penyewa/penyewa memilih opsi Bank Transfer $\rightarrow$ BCA Virtual Account pada popup Midtrans Snap | Snap API menerbitkan nomor BCA VA (kode perusahaan + kode unik) berbatas 24 jam; status transaksi dicatat `pending` | Nomor BCA VA diterbitkan rapi, status `pending` tersimpan di database | Berhasil |
+| 1 | Inisiasi Pembangkitan Nomor BCA Virtual Account | Calon penyewa/penyewa memilih opsi Bank Transfer $ightarrow$ BCA Virtual Account pada popup Midtrans Snap | Snap API menerbitkan nomor BCA VA (kode perusahaan + kode unik) berbatas 24 jam; status transaksi dicatat `pending` | Nomor BCA VA diterbitkan rapi, status `pending` tersimpan di database | Berhasil |
 | 2 | Pengecekan Inquiry Nomor BCA VA pada Simulator | Masukkan nomor BCA VA ke Simulator Sandbox Midtrans lalu klik tombol **Inquire** | Simulator membaca tagihan dari cloud Midtrans, menampilkan nama merchant *Asri Boarding House*, nama penyewa, dan nilai nominal | Data tagihan terbaca persis dengan nominal transaksi | Berhasil |
 | 3 | Penyelesaian Pembayaran BCA VA (Settlement) | Klik tombol **Pay** pada simulator BCA Virtual Account | Midtrans Cloud mengirim HTTP POST webhook ke server sistem, memvalidasi signature SHA-512, status berubah seketika jadi `settlement` (Lunas) | Status transaksi berubah lunas, kuitansi digital instan terbit | Berhasil |
 | 4 | Kedaluwarsa Batas Waktu Pembayaran BCA VA (Expire) | Simulasikan waktu pembayaran 24 jam terlampaui tanpa ada transfer dana | Webhook Midtrans mengirimkan payload status `expire`, sistem memperbarui status transaksi menjadi kedaluwarsa di basis data | Status tagihan/reservasi menjadi kedaluwarsa | Berhasil |
@@ -1541,19 +1117,26 @@ Hasil pengujian pada Tabel 4.5 membuktikan keandalan mekanisme *webhook handler*
 
 ---
 
-### 4.5.4 Hasil Pengujian Hak Akses Live
+### 4.5.4 Hasil Pengujian Parameter Keamanan dan Hak Akses Live
 Pengujian lingkungan nyata (*live environment testing*) dilaksanakan secara langsung pada peladen produksi Hostinger LiteSpeed Enterprise dengan domain publik resmi `https://asriboardinghouse.weatso.id/`. Pengujian ini bertujuan memastikan bahwa konfigurasi peladen web, sertifikat enkripsi jaringan, dan komunikasi API eksternal bekerja optimal tanpa terhambat oleh kebijakan firewall hosting. Hasil pengujian live disajikan pada Tabel 4.6.
 
 **Tabel 4.6** Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live
 
 | No | Parameter Pengujian Lingkungan Live | Prosedur dan Tolok Ukur Pengujian | Hasil Pengamatan di Domain weatso.id | Status |
-| :---: | :--- | :--- | :--- | :---: |
+| :---: | :--- | :--- | :--- | :--- :---: |
 | 1 | Sertifikat Keamanan SSL/TLS HTTPS | Pemeriksaan enkripsi tautan via peramban dan SSL Shopper | Sertifikat SSL TLS 1.3 Let's Encrypt aktif, Grade A, seluruh lalu lintas HTTP otomatis teralihkan ke HTTPS | Berhasil |
 | 2 | Ketahanan Sesi Cookie Lintas Portal | Login secara bersamaan sebagai Admin di satu jendela dan Penyewa di jendela penyamaran (*incognito*) | Sesi admin dan sesi penyewa terisolasi mandiri tanpa terjadi tabrakan cookie otorisasi (*session clash*) | Berhasil |
 | 3 | Integritas Titik Akhir Webhook Live | Pengujian penangkapan webhook Midtrans Cloud oleh peladen produksi | Webhook berhasil diterima peladen LiteSpeed dan diproses instan tanpa terblokir firewall peladen hosting | Berhasil |
 | 4 | Ketahanan Proteksi Berkas Sensitif | Coba akses langsung berkas rahasia via URL peramban (`https://asriboardinghouse.weatso.id/.env`) | Peladen web LiteSpeed mengembalikan respon HTTP 403 Forbidden, berkas konfigurasi terlindungi mutlak | Berhasil |
 
 *Sumber: Hasil pengujian peladen produksi live penulis (2026)*
+
+Di samping pengujian manual, keandalan fungsionalitas dan logika bisnis perangkat lunak diverifikasi secara otomatis menggunakan *suite* pengujian terotomasi PHPUnit pada ekosistem internal Laravel. Pengujian otomatis mencakup unit test model relasional, integrasi service layer, penegakan denda kalender 5% idempoten, kalkulasi diskon durasi tahunan, serta simulasi penguncian konkurensi kamar anti *double-booking*. Seluruh rangkaian uji otomatis dieksekusi melalui perintah konsol `php artisan test`. Hasil eksekusi pengujian otomatis menunjukkan kelulusan sempurna pada seluruh **510 *tests passed*** dengan total **2.211 *assertions*** tanpa kegagalan (*zero failure*), menghasilkan tingkat keberhasilan sebesar **100%**. Tangkapan layar keluaran terminal pengujian otomatis disajikan pada Gambar 4.15.
+
+![Gambar 4.15 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed](images/gambar_4_11.png)
+
+*Gambar 4.15 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed*  
+*Sumber: Tangkapan layar terminal eksekusi PHPUnit (2026)*
 
 ## 4.6 Hasil Wawancara dengan Penjaga Kost
 Guna mengevaluasi kelayakan operasional, kemudahan interaksi antarmuka, dan kesesuaian alur kerja sistem informasi pada kondisi empiris Asri Boarding House, dilaksanakan sesi pengujian penerimaan pengguna langsung (*Side-by-Side Usability Testing*) yang dipadukan dengan wawancara mendalam semi-terstruktur bersama informan kunci operasional, yaitu Bapak Asep (usia 48 tahun), pengelola operasional senior yang telah menangani administrasi kos secara manual menggunakan buku besar fisik selama ±20 tahun.
@@ -1579,11 +1162,11 @@ Daftar pertanyaan terstruktur beserta respon verbatim dari narasumber dirangkum 
 
 *Sumber: Hasil rekaman audio wawancara langsung penulis (2026)*
 
-Dokumentasi pelaksanaan wawancara operasional disajikan pada Gambar 4.11.
+Dokumentasi pelaksanaan wawancara operasional disajikan pada Gambar 4.16.
 
-![Gambar 4.11 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)](images/gambar_4_12.png)
+![Gambar 4.16 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)](images/gambar_4_12.png)
 
-*Gambar 4.11 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)*  
+*Gambar 4.16 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)*  
 *Sumber: Dokumentasi foto penelitian penulis (2026)*
 
 Hasil wawancara terstruktur dan observasi interaksi langsung pada Tabel 4.7 mengungkap sejumlah temuan penting terkait penerimaan teknologi (*technology acceptance*) pada tingkat operasional lapangan:
@@ -1592,21 +1175,210 @@ Hasil wawancara terstruktur dan observasi interaksi langsung pada Tabel 4.7 meng
 3. **Validasi Heuristik Aturan Bisnis Lapangan**: Pengalaman 20 tahun informan kunci secara nyata memvalidasi dua aturan bisnis krusial dalam sistem: (a) kebijakan denda kalender 5% yang memberikan kelonggaran manusiawi pada bulan berjalan dan ketegasan saat melintasi batas bulan kalender, serta (b) status karantina fisik (kamar tetap terkunci merah pasca-checkout) guna mencegah komplain calon penyewa akibat kamar belum dibersihkan atau diperbaiki secara fisik.
 4. **Tingkat Kepuasan Operasional**: Penilaian akhir sebesar 9,5 dari skala 10 yang diberikan oleh pengelola senior mengindikasikan tingkat kepuasan dan kesiapan adopsi (*adoption readiness*) yang sangat tinggi, menandai keberhasilan transformasi dari tata kelola konvensional menuju ekosistem manajemen hunian digital terintegrasi.
 
+## 4.7 Hasil Wawancara dengan Penghuni Kost
+Guna melengkapi evaluasi operasional dari sudut pandang pengguna akhir (*end-user*), dilaksanakan wawancara terstruktur dan uji coba sistem secara langsung bersama lima orang penghuni kost aktif di Asri Boarding House. Kelima responden dipilih secara purposif guna merepresentasikan keberagaman profil penghuni, variasi tipe kamar (VIP, Deluxe, Standar), perbedaan skema transaksi (pelunasan penuh 100%, uang muka DP 30%, sewa bulanan rutin, hingga pendaftaran langsung di lokasi), serta dinamika pengalaman pembayaran yang berbeda di lapangan.
+
+Karakteristik dan konteks hunian dari kelima responden dirangkum pada Tabel 4.8.
+
+**Tabel 4.8** Profil dan Konteks Hunian Lima Responden Penghuni Kost
+
+| Kode | Nama Responden | Unit Kamar & Tipe | Skema & Durasi Sewa | Karakteristik & Konteks Pengalaman Transaksional |
+| :-: | :--- | :--- | :--- | :--- |
+| **P1** | **Arjun** | Kamar 101 (Lantai 1, Tipe VIP) | Tahunan (12 Bulan), Lunas 100% di Awal | Memanfaatkan katalog daring, kalkulator diskon sewa tahunan, pelunasan penuh via Midtrans BCA VA, unduh kuitansi A5, dan pernah mengajukan keluhan kran bocor berfoto. |
+| **P2** | **Farrel** | Kamar 104 (Lantai 1, Tipe Deluxe) | Semesteran (6 Bulan), Skema DP 30% | Memilih skema pembayaran uang muka DP 30% saat reservasi online, menerima notifikasi tagihan sisa 70% di WhatsApp, dan melunasi sisa sewa di portal mandiri sebelum check-in. |
+| **P3** | **Fadil** | Kamar 205 (Lantai 2, Tipe Standar) | Bulanan Rutin, Bayar Tepat Waktu | Rutin menerima tagihan tanggal 1 awal bulan via WhatsApp Fonnte, selalu melunasi sewa antara tanggal 1–5 via m-Banking BCA VA, dan memanfaatkan arsip kuitansi digital. |
+| **P4** | **Ammar** | Kamar 208 (Lantai 2, Tipe Standar) | Bulanan Rutin, Pengalaman Keterlambatan | Pernah mengalami keterlambatan kiriman uang keluarga melewati jatuh tempo tanggal 10, mengevaluasi masa toleransi bebas denda (Rp0), dan pengingat sopan via WhatsApp. |
+| **P5** | **Sindhu** | Kamar 102 (Lantai 1, Tipe VIP) | Bulanan, Pendaftaran *Walk-in* | Calon penghuni yang datang langsung ke lokasi kos (*walk-in*), didaftarkan oleh Bapak Asep, menerima akun via WhatsApp, lalu aktif bertransaksi mandiri via portal web. |
+
+*Sumber: Data demografi responden penelitian penulis (2026)*
+
+Untuk menggali informasi yang mendalam dan kontekstual sesuai pengalaman nyata masing-masing penghuni, instrumen wawancara disusun secara khusus dengan skrip pertanyaan dan respon yang berbeda pada setiap responden. Sepuluh butir pertanyaan disiapkan untuk tiap penghuni yang mencakup seluruh pokok evaluasi: kemudahan penelusuran kamar, alur reservasi, transparansi biaya dan durasi, pemahaman prosedur bayar, pembayaran via Midtrans Snap BCA VA, kejelasan status kuitansi A5, portal tagihan bulanan, batas jatuh tempo dan aturan denda flat 5%, riwayat pembayaran, serta penilaian keseluruhan dan saran perbaikan.
+
 ---
 
-## 4.7 Pembahasan
-Berdasarkan serangkaian tahapan analisis kebutuhan, perancangan arsitektur, implementasi teknis, pengujian terstruktur, serta evaluasi operasional empiris yang telah dilaksanakan, terdapat lima poin pembahasan utama yang menjawab secara mendalam pencapaian tujuan penelitian:
+### 4.7.1 Transkrip Wawancara Responden 1 (Arjun — Kamar 101 VIP, Sewa Tahunan Lunas Penuh)
+Wawancara bersama Arjun difokuskan pada pengalamannya mengeksplorasi katalog web, memanfaatkan fitur kalkulator diskon durasi tahunan, menuntaskan transaksi pembayaran penuh di muka (*full payment upfront*), mencetak kuitansi A5 instan, serta menguji respon modul pelaporan keluhan fasilitas kamar berfoto. Hasil wawancara disajikan pada Tabel 4.9.
 
-1. **Pengendalian Risiko Kesalahan dan Kebocoran Finansial**: Penerapan mesin penagihan otomatis (*Auto-Billing Engine*) yang dieksekusi secara terjadwal setiap tanggal 1 awal bulan pukul 00:05 WIB berhasil mengamankan pencatatan potensi pendapatan kotor Asri Boarding House hingga Rp28.500.000 per bulan dari 32 unit kamar (terdiri atas 6 unit VIP @ Rp1.400.000, 3 unit Deluxe @ Rp950.000, dan 23 unit Standar @ Rp750.000). Berbeda dari model pencatatan konvensional yang rentan terhadap manipulasi nota kertas maupun pencatatan sewa manual sebagaimana disoroti oleh Cornellya dan Afriyadi [3] serta Nizar [4], integrasi saluran pembayaran digital Midtrans Snap (Bank BCA Virtual Account) yang diverifikasi menggunakan tanda tangan kriptografi SHA-512 menjamin bahwa seluruh dana masuk tercatat secara terpusat dan idempoten. Pendekatan ini secara tuntas menutup celah selisih pembukuan kas (*cash variance*) dan menjamin transparansi akuntansi antara pihak penjaga operasional dan pemilik kost [2], [7].
-2. **Efisiensi Waktu dan Modernisasi Tata Kelola Operasional Administrasi**: Transformasi alur kerja dari pembukuan manual buku besar fisik selama ±20 tahun menuju ekosistem berbasis web terbukti memangkas waktu kerja administrasi secara drastis. Rekapitulasi penerimaan kas, pemilahan pengeluaran operasional (token listrik, air PAM, dan biaya teknisi), serta perhitungan laba bersih yang sebelumnya membutuhkan waktu 3 hingga 5 hari kerja manual dengan kalkulator, kini dapat diselesaikan secara instan dalam hitungan detik. Penyediaan fitur ekspor dokumen ke format PDF resmi via Dompdf serta lembar kerja Excel/CSV ber-encoding BOM UTF-8 menjamin keandalan transfer data tanpa risiko distorsi karakter saat dibuka pada perangkat pengelola maupun pemilik kos.
-3. **Harmonisasi Kebijakan Keterlambatan dan Eskalasi Wali Berjenjang**: Perancangan kebijakan denda keterlambatan sewa flat kalender 5% yang idempoten menjawab dinamika sosio-ekologis mahasiswa di kawasan Tembalang, Semarang. Kebijakan ini memberikan masa tenggang bebas denda selama bulan berjalan (pasca jatuh tempo tanggal 10) untuk mengakomodasi jeda pengiriman uang saku dari orang tua, namun menegakkan denda flat 5% satu kali saat tagihan menyeberang ke bulan kalender berikutnya guna menjaga ketertiban finansial. Dipadukan dengan pengingat persuasif multi-saluran via WhatsApp Fonnte dan eskalasi otomatis ke kontak nomor orang tua/wali pada bulan keterlambatan kedua, sistem berhasil menciptakan mekanisme penagihan yang tegas dan mendidik tanpa memicu gesekan relasional antara penghuni dan pengelola [10].
-4. **Mitigasi Komprehensif Pemesanan Ganda (*Defense-in-Depth against Double-Booking*)**: Risiko tabrakan pemesanan kamar (*double-booking*) pada satu unit kamar berhasil dieliminasi secara mutlak melalui dua lapis pertahanan komplementer:
-   * *Pertahanan Tingkat Basis Data*: Penerapan mekanisme penguncian baris pesimistik (*pessimistic row locking*) `lockForUpdate()` dalam transaksi atomik basis data MySQL InnoDB memastikan bahwa kueri pemilihan unit kamar dieksekusi secara serial, sehingga mencegah kondisi perlombaan (*race conditions*) ketika dua calon penyewa mengakses dan membayar unit yang sama pada milidetik yang bersamaan.
-   * *Pertahanan Tingkat Operasional*: Kebijakan karantina fisik pasca-checkout menetapkan bahwa status kamar yang baru ditinggalkan penghuni lama tetap terkunci dengan penanda merah (`terisi`) di sistem katalog publik hingga petugas selesai melakukan inspeksi fisik, pembersihan sanitasi, pergantian sprei, serta pengecekan kelayakan sarana kamar. Penerapan aturan bisnis ini terbukti krusial dalam melindungi reputasi bisnis pengelola dari komplain calon penyewa akibat kamar yang belum layak huni.
-5. **Triangulasi Validasi dan Mutu Perangkat Lunak**: Keandalan dan akseptabilitas sistem dibuktikan melalui triangulasi metode evaluasi yang komprehensif:
-   * *Verifikasi Fungsional*: Kelulusan sempurna (100%) pada seluruh 60 butir skenario uji kotak hitam (*black box testing*) [14], [15] serta pengujian unit internal Laravel (510 tests passed dengan 2.211 assertions).
-   * *Keamanan dan Isolasi Hak Akses*: Kepatuhan otorisasi berbasis peran (RBAC) yang berhasil menangkal serangan manipulasi parameter IDOR, didukung oleh pengerasan keamanan peladen pada lingkungan peladen produksi Hostinger LiteSpeed dengan sertifikat enkripsi TLS 1.3 Grade A.
-   * *Evaluasi Empiris Pengguna*: Uji coba operasional langsung (*Side-by-Side Usability Testing*) bersama pengelola senior kost (Bapak Asep, 48 tahun, pengalaman ±20 tahun) yang terdokumentasi dalam rekaman audio digital berdurasi 23 menit 14 detik, menghasilkan konfirmasi kelayakan praktis yang sangat tinggi serta perolehan skor kepuasan operasional sebesar 9,5 dari skala 10.
+**Tabel 4.9** Transkrip Wawancara Terstruktur Responden 1 (Arjun — Kamar 101 VIP, Sewa Tahunan Lunas Penuh)
+
+| No | Pokok Pembahasan | Pertanyaan Wawancara Peneliti | Respon dan Jawaban Responden (Arjun) |
+| :-: | :--- | :--- | :--- |
+| 1 | **Katalog Kamar & Ketersediaan** | *"Bagaimana penilaian Anda mengenai tampilan katalog kamar di website Asri Boarding House saat pertama kali mencari kamar VIP?"* | *"Tampilan webnya sangat keren dan bergaya retro modern (Neo-Brutalism). Informasi kamar VIP 101 sangat jelas: ukuran kamar, kasur springbed, AC, kamar mandi dalam, dan video tur kamar YouTube bisa langsung diputar tanpa keluar halaman. Lencana status ketersediaan 'Tersedia' berwarna hijau langsung memberi kepastian bahwa unitnya memang siap dipesan."* |
+| 2 | **Kalkulator Diskon Sewa Tahunan** | *"Ketika Anda memilih durasi sewa 12 bulan (1 tahun), apakah informasi kalkulator harga dan potongan diskon sewa tahunan mudah dipahami?"* | *"Sangat transparan Mas. Begitu saya pilih durasi 12 bulan, sistem langsung menghitung otomatis dari tarif dasar Rp16.800.000 menjadi Rp15.400.560 karena ada potongan promo sewa tahunan. Di layar langsung tertulis rincian per bulannya jadi setara Rp1.283.380. Ini sangat membantu perhitungan anggaran saya bersama orang tua."* |
+| 3 | **Alur Stepper & Biodata Diri** | *"Apakah tahapan pengisian biodata diri dan verifikasi NIK 16 digit pada alur stepper pemesanan terasa menyulitkan?"* | *"Sama sekali tidak rumit. Tampilan 5 langkahnya runut. Kolom NIK 16 digit dan nomor kontak darurat orang tua langsung dicek validasinya di form. Kalau ada nomor yang kurang digit langsung muncul peringatan merah, jadi saya merasa data yang masuk ke pengelola benar-benar aman dan akurat."* |
+| 4 | **Prosedur Pembayaran Midtrans Snap** | *"Bagaimana pengalaman Anda saat melakukan pembayaran lunas di awal via Midtrans Snap saluran BCA Virtual Account?"* | *"Sangat praktis. Begitu saya klik 'Bayar Sekarang', popup Midtrans langsung muncul di layar tanpa terlempar ke tab baru yang mencurigakan. Saya pilih transfer bank BCA, langsung muncul nomor BCA Virtual Account dengan tenggat waktu 24 jam. Saya tinggal salin nomornya ke aplikasi myBCA di HP dan transfer senilai Rp15.400.560 persis tanpa biaya admin tambahan."* |
+| 5 | **Kejelasan Status Transaksi** | *"Apakah status pembayaran langsung terkonfirmasi setelah Anda menyelesaikan transfer di myBCA?"* | *"Ya, hitungan detik setelah transfer sukses di m-Banking, status di layar web langsung otomatis berubah hijau menjadi 'Lunas' tanpa perlu saya klik refresh atau kirim bukti screenshot transfer ke WhatsApp penjaga kos. Ini jauh lebih tenang karena tidak perlu cemas uang nyasar."* |
+| 6 | **Pencetakan Kuitansi Digital A5** | *"Bagaimana tanggapan Anda mengenai fitur cetak kuitansi digital format A5 via html2pdf.js?"* | *"Format kuitansinya rapi sekali, mirip nota resmi hotel atau apartemen dengan logo kos, rincian transaksi, stempel lunas, dan nama saya. Tombol 'Unduh Kuitansi' langsung menghasilkan PDF A5 di HP tanpa lemot. File PDF itu langsung saya teruskan ke WhatsApp orang tua saya sebagai bukti pelunasan sewa 1 tahun."* |
+| 7 | **Pengalaman Login ke Portal Mandiri** | *"Setelah reservasi dikonfirmasi oleh pengelola, apakah Anda mudah mengakses portal mandiri penghuni di `/penyewa/dashboard`?"* | *"Sangat mudah. Kredensial akun dikirimkan otomatis via WhatsApp. Pas login, dasbor langsung menampilkan bahwa kamar saya 101 aktif selama 1 tahun penuh, dan kartu tagihan bulanan otomatis tercatat lunas di muka sehingga saya tidak ditagih bulanan lagi."* |
+| 8 | **Fitur Keluhan Fasilitas Berfoto** | *"Anda pernah mengalami kran wastafel bocor di kamar mandi. Bagaimana efektivitas pelaporan lewat fitur keluhan berfoto di portal?"* | *"Fitur itu sangat menolong! Saya tinggal foto kran yang rembes pakai kamera HP, tulis judul dan deskripsi singkat, lalu kirim. Dalam waktu kurang dari dua jam, Pak Asep bersama tukang ledeng langsung datang ke kamar bawa peralatan perbaikan karena sudah lihat foto kerusakannya duluan di sistem. Status tiket di dasbor juga langsung berubah jadi 'Selesai'."* |
+| 9 | **Transparansi Kontak Wali** | *"Apakah Anda merasa nyaman dengan adanya pencatatan kontak orang tua/wali pada sistem profil penghuni?"* | *"Sangat nyaman dan memang sudah seharusnya begitu untuk anak kos. Orang tua saya di kampung halaman juga merasa lebih tenang karena nomor mereka tercatat resmi di sistem kos jika sewaktu-waktu ada situasi darurat atau informasi mendesak."* |
+| 10 | **Penilaian Keseluruhan & Saran** | *"Secara keseluruhan, berapa nilai kepuasan yang Anda berikan untuk sistem ini dan apa saran Anda untuk pengembangan ke depan?"* | *"Saya beri nilai **9,5 dari 10**. Pengalaman menyewa kamar kos jadi serasa tinggal di hunian profesional. Saran saya, kalau bisa ke depan ditambahkan fitur notifikasi pengingat perpanjangan kontrak sewa otomatis saat masa tinggal tersisa 1 bulan lagi agar saya bisa booking perpanjangan kamar VIP lebih awal."* |
+
+*Sumber: Hasil transkrip wawancara mendalam responden 1 penulis (2026)*
+
+---
+
+### 4.7.2 Transkrip Wawancara Responden 2 (Farrel — Kamar 104 Deluxe, Sewa 6 Bulan Skema DP 30%)
+Wawancara bersama Farrel mengeksplorasi efektivitas skema pembayaran Uang Muka (DP 30%), kejelasan injeksi tagihan pelunasan sisa 70% di portal mandiri, notifikasi Fonnte WhatsApp, serta kemudahan pelunasan menjelang tanggal masuk fisik. Hasil wawancara disajikan pada Tabel 4.10.
+
+**Tabel 4.10** Transkrip Wawancara Terstruktur Responden 2 (Farrel — Kamar 104 Deluxe, Sewa 6 Bulan Skema DP 30%)
+
+| No | Pokok Pembahasan | Pertanyaan Wawancara Peneliti | Respon dan Jawaban Responden (Farrel) |
+| :-: | :--- | :--- | :--- |
+| 1 | **Katalog Kamar Deluxe** | *"Apakah informasi kamar 104 Deluxe pada katalog website sudah cukup jelas sebelum Anda memutuskan memilih kamar tersebut?"* | *"Sangat detail Mas. Saya bisa lihat foto interior kamar, posisi kamar di lantai 1 dekat lorong utama, fasilitas kamar mandi dalam, dan tarif pokok sewa Rp950.000 per bulan. Informasinya jujur dan sesuai dengan kondisi fisik aslinya pas saya survei."* |
+| 2 | **Pemilihan Skema Pembayaran DP 30%** | *"Mengapa Anda memilih opsi Uang Muka (DP 30%) saat memesan kamar untuk masa sewa 6 bulan?"* | *"Karena waktu itu saya memesan kamar dari luar kota dua minggu sebelum perkuliahan dimulai. Skema DP 30% ini sangat meringankan mahasiswa seperti saya karena tidak harus langsung mengeluarkan uang sewa penuh Rp5.700.000 di awal, tetapi kamar 104 Deluxe sudah terkunci aman atas nama saya."* |
+| 3 | **Kalkulasi Rincian Uang Muka & Sisa** | *"Apakah sistem menyajikan rincian nominal pembayaran DP dan sisa tagihan secara transparan?"* | *"Iya, perhitungannya sangat jelas. Di layar pemesanan langsung tertera total sewa Rp5.700.000, nominal DP 30% yang harus dibayar saat itu sebesar Rp1.710.000, dan sisa 70% sebesar Rp3.990.000 yang wajib dilunasi sebelum tanggal masuk (26 September). Tidak ada biaya tersembunyi."* |
+| 4 | **Pembayaran DP via Midtrans BCA VA** | *"Bagaimana proses penyelesaian pembayaran DP 30% tersebut di gerbang pembayaran Midtrans?"* | *"Mudah sekali. Saya bayar lewat BCA Virtual Account yang digenerate Midtrans. Begitu saya transfer Rp1.710.000 via m-BCA, status pesanan saya langsung berganti jadi 'DP Dibayar' dan kamar 104 langsung berubah terkunci di katalog web agar tidak dipesan orang lain."* |
+| 5 | **Notifikasi WhatsApp Konfirmasi Reservasi** | *"Apakah Anda menerima notifikasi WhatsApp dari sistem setelah reservasi DP Anda diverifikasi pengelola?"* | *"Betul, beberapa jam kemudian saya dapat pesan resmi via WhatsApp dari sistem Asri Boarding House. Isinya mengonfirmasi bahwa reservasi kamar 104 telah disetujui Pak Asep, disertai username dan kata sandi login untuk masuk ke portal penghuni, plus tautan untuk melunasi sisa tagihan."* |
+| 6 | **Pengecekan Tagihan Sisa 70% di Portal** | *"Ketika Anda masuk ke portal mandiri `/penyewa/dashboard`, apakah Anda dapat melihat sisa tagihan 70% dengan mudah?"* | *"Sangat jelas. Di dasbor saya muncul spanduk peringatan kuning bertuliskan bahwa status sewa aktif dengan sisa tagihan pelunasan DP sebesar Rp3.990.000 berstatus 'Pending'. Ada tombol 'Bayar Sisa Tagihan' berwarna biru yang langsung mengarah ke popup Midtrans."* |
+| 7 | **Pelunasan Sisa DP Sebelum Check-in** | *"Bagaimana pengalaman Anda saat melunasi sisa tagihan 70% tersebut tiga hari sebelum tiba di Tembalang?"* | *"Tiga hari sebelum jadwal check-in, saya buka portal lewat browser HP, klik bayar sisa, transfer via BCA Virtual Account, dan langsung lunas 100%. Saya langsung unduh kuitansi pelunasan berformat A5. Pas datang ke kos, saya tinggal tunjukkan bukti PDF di HP ke Pak Asep dan langsung dikasih kunci kamar tanpa ribet urusan uang lagi."* |
+| 8 | **Efisiensi Tanpa Dokumen Kertas** | *"Dibandingkan alur konvensional di mana penyewa harus menyerahkan fotokopi nota fisik dan bukti transfer kertas, bagaimana penilaian Anda?"* | *"Jauh lebih efisien dan modern pakai web ini. Semua riwayat pembayaran DP dan pelunasan tersimpan rapi di akun. Tidak ada cerita nota fisik basah, hilang di dompet, atau salah paham nominal dengan penjaga kos."* |
+| 9 | **Kejelasan Informasi Tata Tertib** | *"Apakah informasi mengenai jam malam, peraturan tamu, dan tata tertib hunian di website mudah diakses?"* | *"Ada di bagian bawah landing page dan di dasbor penyewa. Poin-poin aturannya jelas, termasuk ketentuan larangan merokok di dalam kamar ber-AC dan ketentuan parkir kendaraan."* |
+| 10 | **Penilaian Akhir & Masukan** | *"Berapa skor kepuasan yang Anda berikan untuk modul reservasi skema DP ini dan apa masukan Anda?"* | *"Saya berikan skor **9 dari 10**. Alur DP 30% ini sangat membantu mahasiswa perantau. Masukan saya, mungkin tombol popup Midtrans bisa ditambahkan opsi bayar via QRIS atau dompet digital langsung di portal tagihan sisa agar teman-teman yang belum punya rekening bank BCA bisa bayar lebih fleksibel."* |
+
+*Sumber: Hasil transkrip wawancara mendalam responden 2 penulis (2026)*
+
+---
+
+### 4.7.3 Transkrip Wawancara Responden 3 (Fadil — Kamar 205 Standar, Sewa Bulanan Rutin Tepat Waktu)
+Wawancara bersama Fadil difokuskan pada pengalamannya sebagai penghuni sewa bulanan reguler yang rutin menerima penagihan otomatis setiap tanggal 1 awal bulan, kepatuhan pembayaran via BCA Virtual Account m-Banking, kecepatan verifikasi, serta pengarsipan kuitansi digital. Hasil wawancara disajikan pada Tabel 4.11.
+
+**Tabel 4.11** Transkrip Wawancara Terstruktur Responden 3 (Fadil — Kamar 205 Standar, Sewa Bulanan Rutin Tepat Waktu)
+
+| No | Pokok Pembahasan | Pertanyaan Wawancara Peneliti | Respon dan Jawaban Responden (Fadil) |
+| :-: | :--- | :--- | :--- |
+| 1 | **Ketepatan Notifikasi Tagihan Tanggal 1** | *"Apakah Anda rutin menerima pesan tagihan sewa kos setiap tanggal 1 awal bulan via WhatsApp?"* | *"Iya, sangat konsisten. Setiap tanggal 1 awal bulan sekitar jam 00:05 dini hari, pesan WhatsApp resmi dari sistem Asri Boarding House selalu masuk ke HP saya. Isinya lengkap: nama saya, kamar 205, periode bulan penagihan, nominal pokok sewa Rp750.000, batas jatuh tempo tanggal 10, dan tautan langsung untuk login ke portal."* |
+| 2 | **Kejelasan Rincian Biaya Sewa Pokok** | *"Apakah rincian biaya sewa pokok Rp750.000 dan tanggal jatuh tempo tanggal 10 sudah cukup jelas?"* | *"Sangat jelas. Angkanya pas Rp750.000 sesuai kesepakatan kamar Standar Lantai 2, tidak pernah ada biaya tambahan siluman seperti biaya kebersihan atau air yang tiba-tiba muncul. Batas jatuh tempo tanggal 10 juga tertera tebal."* |
+| 3 | **Kemudahan Akses Portal via Smartphone** | *"Bagaimana kenyamanan Anda saat membuka portal penyewa `/penyewa/dashboard` menggunakan peramban di ponsel pintar?"* | *"Tampilannya sangat responsif dan ringan dibuka di Google Chrome HP saya. Desain kotaknya tegas dengan tulisan kontras, jadi tidak perlu zoom-in atau geser-geser layar horizontal. Menu 'Tagihan Saya' bisa diakses dengan satu sentuhan jempol."* |
+| 4 | **Pembayaran via BCA Virtual Account** | *"Anda terbiasa membayar sewa tepat waktu antara tanggal 1 hingga 5. Bagaimana kemudahan membayar lewat BCA Virtual Account?"* | *"Sangat cepat. Di portal saya klik 'Bayar Online', pilih BCA Virtual Account, langsung dapat nomor rekening virtualnya. Saya tinggal buka aplikasi BCA Mobile, masuk ke menu m-Transfer $ightarrow$ BCA Virtual Account, tempel nomornya, nama penerima langsung tertera 'Asri Boarding House - Fadil', lalu masukkan PIN. Selesai dalam waktu kurang dari satu menit."* |
+| 5 | **Kecepatan Konfirmasi Lunas Otomatis** | *"Apakah status tagihan langsung berubah menjadi Lunas tanpa perlu melapor ke Bapak Asep?"* | *"Betul, begitu pembayaran di BCA Mobile dinyatakan berhasil, status di dasbor web saya langsung seketika berganti lencana hijau 'Lunas'. Saya tidak pernah lagi repot-repot ketuk pintu kantor pengelola atau kirim resi m-Banking ke WA pribadi Pak Asep."* |
+| 6 | **Pengarsipan Kuitansi Digital A5** | *"Apakah Anda rutin mengunduh kuitansi digital A5 setiap selesai membayar tagihan sewa?"* | *"Selalu Mas. Setiap selesai bayar, saya langsung klik tombol unduh kuitansi format A5. File PDF-nya saya simpan di Google Drive dan saya kirimkan ke grup WhatsApp keluarga sebagai laporan pertanggungjawaban uang saku kos ke orang tua."* |
+| 7 | **Pelacakan Riwayat Transaksi Terdahulu** | *"Apakah tabel riwayat pembayaran di portal membantu Anda memantau bulan-bulan apa saja yang sudah terbayar?"* | *"Sangat membantu. Ada daftar tabel rapi yang menunjukkan tagihan bulan Januari, Februari, Maret, dan seterusnya lengkap dengan tanggal bayar, jam, metode BCA VA, dan nomor transaksi. Jadi tidak mungkin ada perdebatan apakah bulan lalu sudah bayar atau belum."* |
+| 8 | **Fitur Keamanan Akun & Ubah Password** | *"Apakah Anda merasa akun penyewa Anda aman dan pernah mencoba fitur ganti kata sandi?"* | *"Saya merasa sangat aman karena tiap penyewa punya portal terisolasi. Pas awal masuk saya langsung ganti kata sandi bawaan dengan kata sandi pribadi lewat menu profil, dan prosesnya lancar tanpa kendala."* |
+| 9 | **Perbandingan dengan Kos Manual Lama** | *"Dibandingkan pengalaman Anda di kos lama yang masih menggunakan pencatatan buku besar dan nota kuitansi fisik, apa perbedaan terbesarnya?"* | *"Beda sekali Mas! Di kos lama saya dulu sering terjadi nota kuitansi kertas hilang, terus pengelolanya lupa mencatat di buku dan menuduh saya belum bayar sewa padahal sudah transfer. Di Asri Boarding House ini pakai web semuanya transparan, data tersimpan di server, dan ada bukti audit digital yang tidak bisa dibantah."* |
+| 10 | **Penilaian Kepuasan & Saran** | *"Berapa skor kepuasan yang Anda berikan untuk sistem penagihan bulanan ini dan apa saran Anda?"* | *"Saya berikan nilai **10 dari 10**! Sistem ini sangat rapi, profesional, dan membuat hidup anak kos jadi tidak ribet. Saran saya pertahankan performa servernya agar selalu cepat diakses tiap tanggal 1 awal bulan saat jam-jam penagihan massal."* |
+
+*Sumber: Hasil transkrip wawancara mendalam responden 3 penulis (2026)*
+
+---
+
+### 4.7.4 Transkrip Wawancara Responden 4 (Ammar — Kamar 208 Standar, Sewa Bulanan dengan Toleransi Jatuh Tempo)
+Wawancara bersama Ammar difokuskan pada pengalamannya saat menghadapi keterlambatan kiriman dana dari keluarga melewati tanggal 10, evaluasi terhadap masa tenggang bebas denda (*grace period*) selama bulan berjalan, nada komunikasi pengingat WhatsApp, keadilan aturan denda flat 5% saat menyeberang bulan kalender, serta transparansi rincian denda Rp0 pada kuitansi. Hasil wawancara disajikan pada Tabel 4.12.
+
+**Tabel 4.12** Transkrip Wawancara Terstruktur Responden 4 (Ammar — Kamar 208 Standar, Sewa Bulanan dengan Toleransi Jatuh Tempo)
+
+| No | Pokok Pembahasan | Pertanyaan Wawancara Peneliti | Respon dan Jawaban Responden (Ammar) |
+| :-: | :--- | :--- | :--- |
+| 1 | **Pengalaman Keterlambatan Kiriman Dana** | *"Anda pernah mengalami keterlambatan kiriman uang sewa dari orang tua sehingga melewati tanggal jatuh tempo 10. Bisa ceritakan situasinya?"* | *"Iya Mas, waktu bulan November kemarin gaji orang tua saya di luar kota sempat mundur cairnya, jadi saya baru bisa bayar sewa kos tanggal 14 November, padahal batas jatuh tempo di sistem tertulis tanggal 10."* |
+| 2 | **Respon Sistem Saat Lewati Tanggal 10** | *"Ketika tanggal 11 November Anda membuka portal tagihan, bagaimana status yang tertera di sistem?"* | *"Di dasbor status tagihan saya memang berubah warna oranye menjadi 'Terlambat', tetapi yang membuat saya lega adalah nominal dendanya tertulis tetap Rp0 (Denda: Rp0). Total yang harus saya bayar tetap tarif sewa pokok saya yaitu Rp750.000."* |
+| 3 | **Penilaian Masa Toleransi Bebas Denda** | *"Bagaimana pandangan Anda mengenai kebijakan masa toleransi bebas denda (*grace period*) selama masih berada dalam bulan kalender berjalan?"* | *"Kebijakan ini luar biasa manusiawi dan sangat berpihak pada kondisi nyata mahasiswa! Bagi kami anak kos, keterlambatan 2 sampai 4 hari itu sering kali bukan karena sengaja menunda, tapi murni karena kendala transfer perbankan orang tua. Adanya toleransi bebas denda selama bulan berjalan membuat kami tidak tertekan secara finansial."* |
+| 4 | **Pesan Pengingat WhatsApp Fonnte** | *"Apakah Anda menerima pesan WhatsApp pengingat keterlambatan dari sistem? Bagaimana nada pesannya?"* | *"Pesan WhatsApp masuk tanggal 11 pagi. Bahasanya sangat sopan, santun, dan berupa pengingat ramah tanpa kata-kata ancaman atau mempermalukan. Isinya hanya mengingatkan bahwa tagihan kamar 208 telah melewati tanggal 10 dan disarankan untuk segera diselesaikan sebelum pergantian bulan."* |
+| 5 | **Pelunasan Tanggal 14 Bebas Denda** | *"Ketika kiriman uang masuk tanggal 14 dan Anda melunasi via BCA Virtual Account, apakah benar tidak ada biaya denda tambahan?"* | *"Benar-benar persis Rp750.000 tanpa tambahan satu rupiah pun. Popup Midtrans BCA VA menampilkan angka Rp750.000, saya bayar via m-BCA langsung terverifikasi lunas."* |
+| 6 | **Pemahaman Aturan Denda Flat 5% Ganti Bulan** | *"Apakah Anda memahami aturan bahwa denda flat 5% baru akan diterapkan jika tagihan menyeberang ke tanggal 1 bulan berikutnya?"* | *"Paham sekali Mas. Di sistem dan di peraturan kos tertulis jelas bahwa kalau sampai tanggal 30 atau akhir bulan belum bayar juga dan masuk ke tanggal 1 bulan baru, barulah dikenakan denda keterlambatan flat sebesar 5% (Rp37.500 untuk kamar standar) tepat satu kali."* |
+| 7 | **Keadilan Aturan Denda Flat 5% Satu Kali** | *"Menurut Anda, apakah aturan denda flat 5% satu kali (tanpa bunga harian yang bertambah terus) ini adil dan mendidik?"* | *"Sangat adil. Kalau sistem pakai bunga harian seperti pinjaman online, anak kos pasti makin terjepit dan stres. Tapi denda flat 5% satu kali ini mendidik kami untuk disiplin dan punya batas toleransi maksimal satu bulan. Ada ketegasan operasional yang wajar tanpa mencekik leher penyewa."* |
+| 8 | **Mekanisme Eskalasi ke Kontak Orang Tua/Wali** | *"Bagaimana tanggapan Anda mengenai sistem yang akan meneruskan pesan penunggakan ke kontak WhatsApp orang tua jika menunggak lebih dari satu bulan?"* | *"Menurut saya itu langkah yang sangat tepat. Kalau sudah menunggak lewat satu bulan, berarti ada masalah komunikasi serius antara anak dan orang tua. Dengan adanya notifikasi ke orang tua, pengelola kos bisa konfirmasi langsung ke keluarga sebelum timbul masalah penumpukan utang sewa yang berlarut-larut."* |
+| 9 | **Rincian Denda Rp0 pada Kuitansi Digital** | *"Apakah kuitansi pembayaran digital Anda yang terbit mencantumkan rincian denda Rp0?"* | *"Iya, di kuitansi PDF format A5 yang saya unduh, tercantum kolom Tarif Pokok Rp750.000, Denda Keterlambatan Rp0, dan Total Bayar Rp750.000 dengan cap stempel 'Lunas'. Bukti ini transparan sekali sehingga orang tua saya tahu uang yang dikirimkan benar-benar pas untuk sewa kos."* |
+| 10 | **Penilaian Akhir & Saran Perbaikan** | *"Berapa skor kepuasan yang Anda berikan untuk penanganan penagihan dan toleransi kos ini, serta apa saran Anda?"* | *"Saya beri nilai **9,5 dari 10**. Sistem ini cerdas karena tegas namun tetap fleksibel dan manusiawi. Saran saya, mungkin di pesan WhatsApp tanggal 10 sore bisa diberikan pengingat otomatis 'Hari ini batas jatuh tempo' agar teman-teman yang sebenarnya sudah pegang uang tidak kelupaan bayar."* |
+
+*Sumber: Hasil transkrip wawancara mendalam responden 4 penulis (2026)*
+
+---
+
+### 4.7.5 Transkrip Wawancara Responden 5 (Sindhu — Kamar 102 VIP, Pendaftaran Walk-In lalu Aktif Portal)
+Wawancara bersama Sindhu mengevaluasi alur calon penghuni yang datang langsung ke lokasi kos (*walk-in*), kecepatan penerimaan akun sementara via WhatsApp Fonnte, pengalaman adaptasi masuk ke portal mandiri `/penyewa/login`, fitur ganti password, transparansi pendataan wali, serta saran integrasi kanal pembayaran digital alternatif. Hasil wawancara disajikan pada Tabel 4.13.
+
+**Tabel 4.13** Transkrip Wawancara Terstruktur Responden 5 (Sindhu — Kamar 102 VIP, Pendaftaran Walk-In lalu Aktif Portal)
+
+| No | Pokok Pembahasan | Pertanyaan Wawancara Peneliti | Respon dan Jawaban Responden (Sindhu) |
+| :-: | :--- | :--- | :--- |
+| 1 | **Pengalaman Pendaftaran Datang Langsung (Walk-In)** | *"Saat pertama kali menjadi penghuni, Anda datang langsung ke kantor pengelola tanpa reservasi web. Bagaimana alur pendaftarannya?"* | *"Waktu itu saya langsung survei ke Asri Boarding House diantar ayah saya. Pak Asep menyambut kami di kantor, lalu membukakan laptopnya di menu pendaftaran penyewa baru. Pak Asep meminta KTP saya, nomor WhatsApp saya, dan nomor WhatsApp ayah saya selaku wali, lalu memilihkan Kamar 102 VIP di sistem."* |
+| 2 | **Kecepatan Penerimaan Akun via WhatsApp** | *"Berapa lama setelah proses input selesai sampai Anda menerima notifikasi akun di nomor WhatsApp Anda?"* | *"Kurang dari satu menit setelah Pak Asep menekan tombol simpan, ponsel saya langsung bergetar menerima pesan WhatsApp dari sistem Asri Boarding House. Pesannya berisi ucapan selamat datang, rincian Kamar 102 VIP, tautan portal login, username email saya, dan kata sandi sementara untuk masuk."* |
+| 3 | **Pengalaman Pertama Kali Login ke Portal** | *"Apakah Anda menemui kesulitan saat pertama kali masuk ke portal `/penyewa/login` menggunakan kredensial tersebut?"* | *"Tidak ada kendala sama sekali. Saya klik tautan di WhatsApp, masukkan email dan password sementara, langsung terbuka dasbor penyewa saya. Di situ langsung terlihat status sewa bulan pertama sudah berstatus 'Lunas' karena uang muka sewa pertama sudah saya bayar tunai dan langsung dikonfirmasi Pak Asep di sistem."* |
+| 4 | **Penggunaan Fitur Ubah Kata Sandi Mandiri** | *"Apakah Anda langsung memanfaatkan fitur ubah kata sandi mandiri di halaman profil?"* | *"Iya, demi keamanan saya langsung buka menu profil dan ubah kata sandi sementara dari sistem menjadi kata sandi pribadi saya. Antarmukanya jelas, ada kolom password lama dan konfirmasi password baru, dan langsung berhasil diperbarui."* |
+| 5 | **Kejelasan Pemantauan Kontrak Kamar 102 VIP** | *"Apakah informasi masa berlaku sewa dan detail fasilitas kamar VIP di dasbor mudah dipahami?"* | *"Sangat mudah dipahami. Dasbor menampilkan kartu kamar warna gelap dengan tulisan kuning tegas bergaya modern, nomor kamar 102 Lantai 1, fasilitas AC dan water heater, serta tanggal jatuh tempo pembayaran bulan berikutnya yang seragam setiap tanggal 10."* |
+| 6 | **Pembayaran Mandiri Bulan Kedua via BCA VA** | *"Pada bulan kedua, Anda beralih membayar sewa secara mandiri via website. Bagaimana perbandingannya dengan bayar tunai di bulan pertama?"* | *"Membayar mandiri via BCA Virtual Account di website ternyata jauh lebih praktis daripada bayar tunai! Saya tidak perlu repot-repot ambil uang tunai Rp1.400.000 ke mesin ATM luar yang kadang antre, tidak perlu cari uang pas, dan kuitansinya langsung terbit otomatis dalam bentuk PDF resmi format A5 di peramban saya."* |
+| 7 | **Keamanan Pendataan Kontak Wali** | *"Bagaimana tanggapan Anda dan orang tua mengenai pendataan nomor kontak wali di sistem kos?"* | *"Ayah saya sangat mendukung. Beliau merasa pengelola kos ini profesional dan bertanggung jawab karena memiliki data kontak keluarga yang jelas. Ini memberikan rasa tenang bagi keluarga di luar kota."* |
+| 8 | **Kemudahan Tombol WhatsApp Bantuan** | *"Apakah tombol WhatsApp melayang di pojok layar mempermudah komunikasi dengan pengelola jika ada pertanyaan?"* | *"Sangat membantu. Kalau ada hal-hal kecil yang ingin saya tanyakan ke Pak Asep (misalnya tanya teknisi gas pemanas air), tinggal klik tombol hijau di sudut layar langsung tersambung ke WhatsApp beliau tanpa perlu simpan nomor manual di kontak HP."* |
+| 9 | **Pengalaman Fitur Keluhan Pemeliharaan AC** | *"Anda pernah mencoba fitur keluhan fasilitas untuk meminta servis rutin AC kamar. Bagaimana responnya?"* | *"Saya submit keluhan 'Permohonan cuci filter AC kamar 102' di menu keluhan. Menariknya, sistem langsung mencatat tiket aduan tersebut dan meneruskan alert ke WA Pak Asep. Dua hari kemudian teknisi AC langganan kos datang mencuci AC kamar saya sampai dingin kembali. Alurnya terpantau rapi di sistem."* |
+| 10 | **Penilaian Adaptasi & Saran Tambahan** | *"Secara keseluruhan, berapa skor kepuasan Anda dalam beradaptasi dari pendaftaran walk-in ke portal web, dan apa saran Anda?"* | *"Saya berikan skor **9,5 dari 10**. Transisi dari pendaftaran manual di meja kantor ke akun website berjalan mulus sekali. Saran saya untuk pengembangan aplikasi ke depan, jika memungkinkan bisa diintegrasikan dengan pembayaran QRIS (seperti GoPay, OVO, ShopeePay, atau Dana) di Midtrans Snap agar penyewa yang tidak punya mobile banking BCA memiliki lebih banyak alternatif dompet digital."* |
+
+*Sumber: Hasil transkrip wawancara mendalam responden 5 penulis (2026)*
+
+---
+
+### 4.7.6 Matriks Komparasi dan Temuan Kunci Evaluasi Kelima Penghuni Kost
+Guna memberikan gambaran komprehensif mengenai pola respon kelima penghuni kost, Tabel 4.14 menyajikan matriks perbandingan lintas responden berdasarkan sepuluh parameter evaluasi utama.
+
+**Tabel 4.14** Matriks Komparasi Evaluasi Respon dan Temuan Kunci Kelima Penghuni Kost
+
+| Parameter Evaluasi | Arjun (P1 - VIP Tahunan) | Farrel (P2 - Deluxe DP 30%) | Fadil (P3 - Standar Rutin) | Ammar (P4 - Standar Toleransi) | Sindhu (P5 - VIP Walk-in) | Pola Temuan Keseluruhan |
+| :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| **1. Info Kamar & Katalog Web** | Sangat Jelas (Video Tur & Status) | Jelas & Sesuai Fisik Asli | Responsif & Ringan di HP | Jelas & Transparan | Jelas pada Saat Survei | 100% menilai katalog informatif, akurat, dan representatif terhadap fisik kamar. |
+| **2. Alur Reservasi / Onboarding** | Stepper 5 Tahap Sangat Runut | Skema DP 30% Meringankan | Praktis & Langsung Aktif | Alur Pemesanan Mudah | Walk-in Input Cepat (< 1 mnt) | Alur onboarding terbukti adaptif baik untuk jalur daring mandiri maupun tatap muka langsung. |
+| **3. Transparansi Biaya & Durasi** | Diskon Tahunan Terkalkulasi Otomatis | Rincian DP 30% & Sisa 70% Jelas | Tarif Pokok Pas Tanpa Biaya Siluman | Tarif Tetap Pas Tanpa Pungutan | Tarif Terbuka Sesuai Kesepakatan | Sistem menjamin transparansi akuntansi tanpa perselisihan nominal sewa. |
+| **4. Pemahaman Prosedur Bayar** | Alur Mudah Dipahami | Tahapan Rinci di WhatsApp | Sangat Cepat via m-BCA | Panduan Bayar Jelas di Web | Mudah Beralih dari Tunai ke Web | Seluruh responden memahami tata cara pembayaran tanpa membutuhkan asistensi manual. |
+| **5. Praktis Bayar BCA VA (Midtrans)** | Popup Modal Cepat di Layar | VA BCA Terbit Seketika | Bayar < 1 Menit via myBCA | VA BCA Tanpa Biaya Tambahan | Lebih Praktis dari Tarik ATM | Saluran BCA Virtual Account dinilai sangat andal, cepat, dan mengeliminasi uang fisik. |
+| **6. Kejelasan Status & Kuitansi A5** | Status Real-time, Kuitansi A5 Rapi | Konfirmasi Instan, Resi Digital A5 | Otomatis Lunas, Rutin Arsip PDF | Kuitansi Rinci Catat Denda Rp0 | Kuitansi A5 Resmi Pengganti Nota | Kuitansi digital peramban A5 via `html2pdf.js` sukses menggantikan peran nota fisik kertas. |
+| **7. Pemantauan Tagihan di Portal** | Kontrak 1 Th Tercatat Lunas | Sisa DP 70% Terpantau Rapi | Tagihan Bulanan Terbit Tiap Tgl 1 | Tagihan Berstatus Toleransi Jelas | Dasbor Kontrak VIP Terpantau Jelas | Portal mandiri berfungsi optimal sebagai pusat informasi tagihan hunian penghuni. |
+| **8. Ketentuan Jatuh Tempo & Denda** | Bebas Tagihan Bulanan (Lunas) | Batas Lunas Sebelum Check-in Jelas | Jatuh Tempo Tgl 10 Sangat Wajar | Toleransi Bulan Berjalan Sangat Adil | Jatuh Tempo Tgl 10 Konsisten | Aturan denda flat 5% ganti bulan kalender divalidasi sangat adil dan manusiawi. |
+| **9. Riwayat Pembayaran Digital** | Tersimpan di Google Drive | Riwayat DP & Lunas Tercatat | Rekap Bulanan Rapi Tanpa Selisih | Riwayat Lunas Masa Toleransi Sah | Riwayat Mutasi Terekam Lengkap | Riwayat transaksi digital efektif meniadakan risiko nota fisik tercecer atau hilang. |
+| **10. Skor Kepuasan Pengguna (Skala 10)** | **9,5 / 10** | **9,0 / 10** | **10 / 10** | **9,5 / 10** | **9,5 / 10** | **Rata-rata Skor: 9,50 / 10** (Tingkat Akseptabilitas Sangat Tinggi). |
+
+*Sumber: Hasil analisis komparasi data wawancara penghuni kost penulis (2026)*
+
+---
+
+### 4.7.7 Analisis Kualitatif Temuan Wawancara Penghuni Kost
+Berdasarkan sintesis transkrip wawancara mendalam dan matriks komparasi pada Tabel 4.14, diperoleh empat tema analisis kualitatif yang menggambarkan penerimaan pengguna akhir (*end-user acceptance*) terhadap implementasi sistem informasi manajemen Asri Boarding House:
+
+1. **Pola Jawaban dan Tingkat Akseptabilitas Tinggi**:
+   Seluruh responden (P1 s.d. P5) secara konsisten memberikan penilaian positif terhadap transformasi digital tata kelola hunian kos. Perolehan skor kepuasan berkisar antara 9,0 hingga 10,0 dengan nilai rata-rata sebesar **9,50 dari skala 10**. Hasil ini mengindikasikan bahwa implementasi sistem berhasil menjawab kebutuhan praktis mahasiswa modern yang mendambakan kepastian ketersediaan kamar, kemudahan transaksi non-tunai dari jarak jauh, serta transparansi status finansial tanpa birokrasi manual.
+2. **Aspek yang Dinilai Paling Membantu (*Value Proposition*)**:
+   Tiga fitur utama diidentifikasi oleh para penghuni sebagai komponen yang paling memberikan dampak positif nyata:
+   * *Otomasi Pembayaran dan Verifikasi Seketika*: Integrasi Midtrans Snap BCA Virtual Account dinilai sangat mempermudah pelunasan sewa secara aman dari aplikasi mobile banking tanpa perlu repot menarik uang tunai ke mesin ATM, mencari uang kembalian, maupun mengirimkan tangkapan layar bukti transfer ke kontak pribadi pengelola.
+   * *Kuitansi Digital Format A5 Instan*: Kemampuan sistem menghasilkan bukti pembayaran resmi format A5 langsung di sisi peramban klien via `html2pdf.js` sangat dihargai sebagai arsip digital yang akuntabel untuk dipertanggungjawabkan kepada orang tua/wali mahasiswa.
+   * *Kebijakan Denda Flat 5% Kalender yang Manusiawi*: Seluruh penghuni memvalidasi bahwa peniadaan denda keterlambatan selama bulan berjalan (tanggal 11 hingga akhir bulan) sangat adil dan adaptif terhadap kendala waktu pengiriman uang saku dari keluarga, sementara penegakan denda flat 5% satu kali saat menyeberang bulan kalender dinilai tepat sebagai instrumen pendisiplinan yang tidak menjerat mahasiswa.
+3. **Kendala Empiris yang Ditemukan di Lapangan**:
+   Evaluasi kualitatif turut mengungkap beberapa kendala operasional yang dihadapi oleh pengguna akhir:
+   * *Penyaringan Pesan Notifikasi WhatsApp*: Responden P2 dan P4 mencatat bahwa pada beberapa kasus, pesan notifikasi WhatsApp dari nomor sistem Fonnte sempat masuk ke folder arsip pesan baru (*unknown sender*) pada ponsel pintar penghuni yang belum menyimpan nomor WhatsApp resmi pengelola ke dalam daftar kontak.
+   * *Keterbatasan Saluran Pembayaran*: Responden P2 dan P5 yang terbiasa menggunakan dompet digital menyampaikan masukan bahwa ketersediaan saluran pembayaran non-tunai saat ini masih terfokus pada saluran Bank BCA Virtual Account, sehingga penghuni yang belum memiliki rekening bank terkait mengharapkan ketersediaan opsi dompet digital terpadu (QRIS).
+4. **Saran Konstruktif Penghuni untuk Pengembangan Sistem**:
+   Para penghuni memberikan sejumlah saran perbaikan teknis guna penyempurnaan sistem di masa mendatang:
+   * *Penambahan Pengingat Dini (H-3 dan Hari H)*: Mengirimkan pesan pengingat singkat otomatis via WhatsApp pada tanggal 8 (H-2) dan tanggal 10 (Hari-H jatuh tempo) sore hari guna mengantisipasi penghuni yang telah memiliki dana namun lupa menyelesaikan transaksi di portal.
+   * *Perluasan Integrasi Saluran Pembayaran*: Menambahkan saluran pembayaran instan berbasis QRIS (*Quick Response Code Indonesian Standard*) pada antarmuka Midtrans Snap di portal mandiri tagihan.
+   * *Fitur Notifikasi Perpanjangan Kontrak Otomatis*: Mengirimkan notifikasi pra-terminasi sewa pada H-30 sebelum masa kontrak berakhir guna memfasilitasi penghuni tahunan/semesteran melakukan reservasi perpanjangan kamar sebelum unit tayang kembali ke publik.
+
+## 4.8 Pembahasan
+Berdasarkan serangkaian tahapan perancangan arsitektur, implementasi teknis, pengujian terstruktur, serta evaluasi operasional lapangan yang telah dilaksanakan, pembahasan disusun secara sistematis guna menjawab secara komprehensif dua rumusan masalah utama dalam penelitian ini:
+
+### 1. Harmonisasi Perancangan, Implementasi, dan Pengujian Sistem (Menjawab Rumusan Masalah 1)
+Rumusan masalah pertama mengenai bagaimana merancang, membangun, mengintegrasikan, dan menguji Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway pada Asri Boarding House telah terjawab secara tuntas melalui tahapan rekayasa perangkat lunak yang terstruktur:
+* **Perancangan Arsitektur dan Skema Basis Data Ternormalisasi**: Sistem berhasil dirancang mengadopsi pola arsitektur tiga lapis (*3-Tier MVC*) yang dipadukan dengan pemisahan lapisan layanan (*Service Layer Decoupling*). Pengelolaan pangkalan data 22 tabel ternormalisasi 3NF pada MySQL 8.x InnoDB membuktikan ketahanan struktur data terhadap risiko redundansi kolom dan anomali pembaruan. Penerapan teknik mutakhir *Virtual Generated Columns* (`active_email`, `active_no_hp`, `active_nik`, `active_nomor_kamar`, dan `active_order_id`) terbukti efektif memecahkan anomali benturan indeks unik saat baris data dihapus secara lunak (*soft deletes*), sehingga keunikan data aktif tetap terlindungi mutlak tanpa merusak catatan historis transaksi sewa.
+* **Otomatisasi Mesin Penagihan dan Penanganan Keterlambatan Kalender**: Implementasi kelas `BillingService` yang dieksekusi secara otomatis oleh penjadwal tugas peladen (*Laravel Task Scheduler*) setiap tanggal 1 awal bulan pukul 00:05 WIB berhasil memodernisasi siklus penagihan kos. Integrasi aturan denda keterlambatan flat kalender 5% yang bersifat idempoten menjawab kebutuhan pendisiplinan finansial secara proporsional: memberikan masa tenggang bebas denda (Denda = Rp0) selama bulan kalender berjalan (pasca-jatuh tempo tanggal 10) untuk mengakomodasi jeda pengiriman uang saku dari keluarga, serta menegakkan denda flat 5% satu kali saat tagihan resmi melintasi batas bulan kalender berikutnya. Keberadaan proteksi *Idempotency Guard* (`nominal_denda == 0`) dan transaksi berpelindung kunci baris `lockForUpdate()` menjamin denda tidak akan terhitung ganda akibat eksekusi cron job berulang.
+* **Integrasi Payment Gateway dan Notifikasi Multi-Saluran**: Pengintegrasian gerbang pembayaran Midtrans Snap API v2 berbasis saluran Bank BCA Virtual Account terbukti andal dalam memfasilitasi transaksi non-tunai secara otomatis. Validasi tanda tangan digital SHA-512 menggunakan fungsi anti-*timing attack* `hash_equals` berhasil menangkal upaya manipulasi status transaksi (*callback spoofing*). Di sisi lain, otomasi komunikasi melalui REST API Gateway Fonnte WhatsApp dan Hostinger SMTP Mailer menjamin distribusi invoice berkala, tanda terima pelunasan, serta eskalasi penunggakan ke kontak nomor orang tua/wali berjalan secara instan dan terdokumentasi rapi pada tabel `log_notifikasi`.
+* **Verifikasi Mutu dan Pengujian Fungsionalitas**: Keandalan sistem dibuktikan melalui perolehan tingkat kelulusan sempurna (**100%**) pada seluruh **60 butir skenario pengujian kotak hitam (*black box testing*)** [14], [15], kepatuhan isolasi peran pengguna (*Role-Based Access Control*) yang kebal terhadap manipulasi parameter IDOR, keberhasilan simulasi transaksi perbankan pada simulator Midtrans Sandbox BCA Virtual Account, serta kelulusan tanpa kegagalan pada pengujian otomatis internal Laravel PHPUnit (**510 *tests passed*, 2.211 *assertions***).
+
+### 2. Sintesis Hasil Evaluasi Pengguna Lapangan (Menjawab Rumusan Masalah 2)
+Rumusan masalah kedua mengenai bagaimana hasil wawancara dengan penjaga atau pengelola kost dan lima orang penghuni kost terkait penggunaan sistem untuk reservasi online, pembayaran, serta pengelolaan tagihan bulanan telah terjawab melalui temuan kualitatif empiris:
+* **Evaluasi Operasional Penjaga Kost (Bapak Asep, 48 Tahun)**:
+  Wawancara mendalam bersama pengelola senior yang telah menangani kos secara manual selama ±20 tahun menghasilkan konfirmasi penerimaan operasional yang sangat tinggi (**skor 9,5 dari skala 10**). Penggunaan sistem berhasil memangkas durasi rekapitulasi keuangan dan pembukuan laba bersih bulanan yang sebelumnya menyita waktu 3 hingga 4 hari kerja manual menggunakan kalkulator menjadi instan dalam hitungan detik via ekspor laporan PDF (Dompdf) dan Excel/CSV. Peniadaan buku besar fisik dan verifikasi mutasi otomatis via Midtrans secara tuntas mengeliminasi risiko perselisihan uang kas (*zero cash variance*) antara pengelola dan pemilik kos, mengamankan perputaran potensi pendapatan bruto operasional hingga Rp28.500.000 per bulan dari 32 unit kamar. Di samping itu, pengelola memvalidasi bahwa antarmuka *OLED Black Dark Mode* sangat ramah mata bagi pengguna paruh baya, serta aturan kamar karantina merah pasca-*checkout* sangat penting untuk memberi jeda pembersihan fisik sebelum kamar disewakan kembali.
+* **Evaluasi Pengalaman Lima Orang Penghuni Kost (Arjun, Farrel, Fadil, Ammar, Sindhu)**:
+  Hasil wawancara terstruktur bersama lima penghuni aktif menghasilkan rata-rata skor kepuasan sebesar **9,50 dari skala 10**, membuktikan bahwa sistem sangat adaptif terhadap kebutuhan mahasiswa:
+  1. *Arjun (Kamar 101 VIP, Sewa Tahunan)* mengonfirmasi keunggulan transparansi kalkulator diskon sewa tahunan, kemudahan pelunasan penuh via BCA VA, kepraktisan pencetakan kuitansi digital instan format A5 via `html2pdf.js` (*zero server storage overhead*), serta kecepatan respon penanganan keluhan kran wastafel bocor berkat penyematan foto bukti fisik pada tiket aduan.
+  2. *Farrel (Kamar 104 Deluxe, Sewa 6 Bulan)* memvalidasi manfaat skema Uang Muka (DP 30%) yang sangat meringankan mahasiswa rantau dalam mengamankan unit kamar dari luar kota, kejelasan rincian sisa tagihan 70% di portal mandiri, dan kemudahan pelunasan online sebelum tanggal kedatangan fisik tanpa memerlukan pertukaran nota kertas.
+  3. *Fadil (Kamar 205 Standar, Sewa Bulanan Rutin)* mengapresiasi ketepatan waktu pengiriman invoice tagihan setiap tanggal 1 awal bulan via WhatsApp Fonnte, kepraktisan transfer kilat via aplikasi m-Banking BCA tanpa antre di mesin ATM, kecepatan perubahan status lunas seketika (*real-time settlement*), serta keteraturan riwayat pembayaran digital untuk pelaporan ke keluarga.
+  4. *Ammar (Kamar 208 Standar, Pengalaman Toleransi Keterlambatan)* memvalidasi keadilan aturan bisnis penagihan: penerapan masa toleransi bebas denda (Denda = Rp0) selama bulan kalender berjalan saat kiriman uang keluarga mundur, pesan pengingat WhatsApp yang santun dan persuasif, serta aturan denda flat 5% ganti bulan kalender yang dinilai tegas dan mendidik tanpa membebani keuangan mahasiswa.
+  5. *Sindhu (Kamar 102 VIP, Pendaftaran Walk-In)* membuktikan fleksibilitas sistem dalam melayani calon penyewa yang datang langsung ke lokasi: akun diterbitkan otomatis dalam hitungan detik ke WhatsApp, transisi ke portal mandiri berjalan mulus, dan fitur ubah kata sandi menjaga keamanan privasi akun.
+
+### 3. Efektivitas Pertahanan Ganda Anti Pemesanan Ganda (*Defense-in-Depth against Double-Booking*)
+Risiko tabrakan pemesanan kamar (*double-booking*) yang selama ini menjadi momok operasional pada kos konvensional berhasil dieliminasi secara tuntas melalui dua lapis pertahanan komplementer:
+* **Pertahanan Lapisan Basis Data (*Database-Level Concurrency Control*)**: Penerapan penguncian baris pesimistik (*pessimistic row locking*) `lockForUpdate()` di dalam transaksi atomik MySQL InnoDB memastikan bahwa kueri verifikasi dan pemilihan unit kamar dieksekusi secara serial. Apabila dua calon penyewa mencoba memesan kamar yang sama pada milidetik yang bersamaan, sistem mengunci baris data kamar tersebut dan menggagalkan transaksi kedua dengan pesan validasi yang jelas, meniadakan anomali *race conditions*.
+* **Pertahanan Lapisan Operasional (*Operational Manual Inspection Hold*)**: Sistem menetapkan aturan bisnis ketat pasca-penyewa menyelesaikan masa tinggal (*checkout*): status kamar pada basis data tidak dilepas secara otomatis menjadi `tersedia`. Sistem mempertahankan status `terisi` (terkunci merah) hingga administrator selesai melaksanakan inspeksi kebersihan fisik, sanitasi kamar mandi, penggantian sprei, serta pengecekan kelayakan sarana. Pelepasan status kamar dilakukan secara manual oleh pengelola di menu *Manajemen Kamar*, yang kemudian memicu *event* `KamarObserver` untuk membersihkan cache katalog publik (`Cache::forget('kamar_aktif_landing')`). Mekanisme ini terbukti krusial dalam melindungi kredibilitas bisnis pengelola dari komplain calon penyewa akibat kamar yang belum siap dihuni secara fisik.
+
+### 4. Diferensiasi Verifikasi Teknis dan Evaluasi Penerimaan Pengguna
+Penelitian ini menegaskan perbedaan mendasar antara pengujian fungsionalitas perangkat lunak dan evaluasi penerimaan pengguna di lapangan (*user acceptance*):
+* Keberhasilan teknis (kelulusan 100% pada 60 skenario *black box* dan 510 pengujian otomatis PHPUnit) membuktikan bahwa program perangkat lunak bebas dari galat (*bug-free*), memenuhi spesifikasi rancangan logika, kebal terhadap manipulasi otorisasi (RBAC & IDOR), serta mampu mengolah transaksi basis data secara deterministik.
+* Namun demikian, keandalan teknis tersebut tidak secara otomatis menjamin kepuasan pengguna tanpa adanya keselarasan dengan kebiasaan operasional manusia di lapangan. Hasil evaluasi tatap muka bersama pengelola kos (Bapak Asep) dan lima orang penghuni (Arjun, Farrel, Fadil, Ammar, Sindhu) memberikan bukti empiris bahwa antarmuka Neo-Brutalisme yang berorientasi aksesibilitas (WCAG 2.1), tema *OLED Black Dark Mode*, fleksibilitas pembayaran BCA Virtual Account, transparansi kuitansi digital instan A5, serta aturan denda kalender 5% yang manusiawi berhasil diadopsi secara mulus dan memberikan kepuasan operasional yang sangat tinggi (skor rata-rata 9,5 dari skala 10).
 
 ## BAB V KESIMPULAN DAN SARAN
 
