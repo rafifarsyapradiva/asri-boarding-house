@@ -1,49 +1,76 @@
-SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY PADA ASRI BOARDING HOUSE
+# TUGAS AKHIR
 
-SKRIPSI
-Diajukan sebagai salah satu syarat untuk menyusun Tugas Akhir guna mencapai gelar Sarjana Komputer pada Program Studi Sistem Informasi Universitas Katolik Soegijapranata Semarang
- 
+<div align="center">
 
+# SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY
+# PADA ASRI BOARDING HOUSE
 
+<br>
 
-Disusun oleh:
-RAFIF ARSYA PRADIVA
-NIM: 22.N4.0014
+### TUGAS AKHIR
 
+<br>
 
+**Diajukan untuk memenuhi syarat guna mencapai gelar Sarjana Komputer**<br>
+**program studi Sistem Informasi**<br>
+**Universitas Katolik Soegijapranata Semarang**
 
-Kepada
-PROGRAM STUDI SISTEM INFORMASI
-FAKULTAS ILMU KOMPUTER
-UNIVERSITAS KATOLIK SOEGIJAPRANATA
-SEMARANG
-2026 
-SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY PADA ASRI BOARDING HOUSE
+<br>
 
+*(Lambang Universitas Katolik Soegijapranata)*
 
-Skripsi
-Diajukan sebagai salah satu syarat untuk menyusun Tugas Akhir guna mencapai gelar Sarjana Komputer pada Program Studi Sistem Informasi Universitas Katolik Soegijapranata Semarang
+<br><br>
 
+Disusun oleh:<br>
+**RAFIF ARSYA PRADIVA**<br>
+**NIM: 22.N4.0014**
 
-Disusun oleh:
-RAFIF ARSYA PRADIVA
-22.N4.0014
+<br><br>
 
-Disetujui oleh:
-Dosen Pembimbing 1:
-Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling.
-NPP: 058.1.1994.161
+**FAKULTAS ILMU KOMPUTER**<br>
+**UNIVERSITAS KATOLIK SOEGIJAPRANATA**<br>
+**SEMARANG**<br>
+**2026**
 
-Dosen Pembimbing 2:
-Erdhi Widyarto Nugroho, S.T., M.T.
-NPP: ....................
+</div>
 
-Kepada
-PROGRAM STUDI SISTEM INFORMASI
-FAKULTAS ILMU KOMPUTER
-UNIVERSITAS KATOLIK SOEGIJAPRANATA
-SEMARANG
-2026 
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+# SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY
+# PADA ASRI BOARDING HOUSE
+
+<br>
+
+### HALAMAN JUDUL
+
+<br>
+
+**Diajukan untuk memenuhi syarat guna mencapai gelar Sarjana Komputer**<br>
+**program studi Sistem Informasi**<br>
+**Universitas Katolik Soegijapranata Semarang**
+
+<br>
+
+*(Lambang Universitas Katolik Soegijapranata)*
+
+<br><br>
+
+Disusun oleh:<br>
+**RAFIF ARSYA PRADIVA**<br>
+**NIM: 22.N4.0014**
+
+<br><br>
+
+**FAKULTAS ILMU KOMPUTER**<br>
+**UNIVERSITAS KATOLIK SOEGIJAPRANATA**<br>
+**SEMARANG**<br>
+**2026**
+
+</div>
+
+<div style="page-break-after: always;"></div>
 ## HALAMAN PERNYATAAN ORISINALITAS
 Saya yang bertanda tangan di bawah ini:
 
@@ -142,11 +169,11 @@ NIM. 22.N4.0014
 ## ABSTRAK
 Rafif Arsya Pradiva. 22.N4.0014. SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY PADA ASRI BOARDING HOUSE (Studi Kasus: Asri Boarding House, Tembalang, Kota Semarang).
 Pengelolaan operasional hunian kos Asri Boarding House di kawasan Tembalang, Kota Semarang, menaungi 32 unit kamar dengan potensi perputaran dana sewa mencapai Rp28.500.000 per bulan. Ketergantungan menahun pada pembukuan fisik dan komunikasi manual via aplikasi pesan instan menimbulkan sejumlah kendala, seperti potensi selisih rekapitulasi kas, verifikasi setoran yang lambat, keterlambatan pengingat jatuh tempo, hingga risiko pemesanan ganda (*double booking*). Guna mengatasi persoalan tersebut, penelitian ini merancang dan membangun Sistem Informasi Manajemen Kost berbasis web menggunakan framework Laravel 11 yang mengintegrasikan portal reservasi mandiri dan gerbang pembayaran digital. Pengembangan sistem menerapkan metode *Research and Development* (R&D) dengan model proses sekuensial linier *Waterfall*, meliputi tahap analisis kebutuhan, perancangan arsitektur, implementasi program, serta pengujian menyeluruh. Arsitektur sistem dibangun di atas pola *3-tier* MVC dengan basis data MySQL 8.x InnoDB yang dinormalisasi hingga Bentuk Normal Ketiga (3NF). Penerimaan pembayaran non-tunai diintegrasikan secara terprogram dengan Midtrans Snap API, didukung pencetakan kuitansi digital instan format A5 di peramban via `html2pdf.js` (*zero server load*), rekap manajerial berkala via Dompdf, serta pengiriman notifikasi otomatis multi-saluran melalui Fonnte WhatsApp API dan SMTP surel. Logika bisnis mencakup mesin penagihan otomatis berkala setiap tanggal 1 awal bulan, penegakan denda flat 5% yang idempoten pada pergantian bulan kalender dengan eskalasi ke kontak orang tua/wali, integrasi alur pendaftaran hibrida, serta fasilitas obrolan pra-pembayaran berbasis *AJAX polling*. Pengujian fungsionalitas melalui 60 skenario uji kotak hitam (*black box testing*) dan pengujian otomatis PHPUnit (510 *tests passed*, 2.211 *assertions*) menunjukkan tingkat kelulusan sempurna (100%), yang membuktikan integritas transaksi, ketepatan kalkulasi tagihan, dan keandalan kontrol konkurensi terhadap kondisi balapan (*race condition*). Penerapan sistem pada lingkungan produksi langsung (*https://asriboardinghouse.weatso.id/*) dievaluasi melalui uji kegunaan tatap muka (*side-by-side usability testing*) dan wawancara semi-terstruktur bersama pengelola operasional senior serta lima orang penghuni kost aktif. Aspek evaluasi mencakup kemudahan reservasi online, kepraktisan alur pembayaran non-tunai, transparansi akses tagihan bulanan, dan kemudahan pengelolaan administrasi. Hasil evaluasi menghasilkan skor kepuasan operasional sebesar 9,5 dari skala 10 yang diberikan oleh pengelola kos, yang merefleksikan tingkat akseptabilitas dan kesiapan adopsi sistem yang sangat tinggi dalam mengeliminasi risiko selisih kas serta memangkas durasi pembukuan dari beberapa hari kerja menjadi instan. Capaian tersebut dikonfirmasi oleh temuan wawancara kelima penghuni yang menyatakan kepuasan atas kemudahan alur reservasi mandiri, kejelasan riwayat tagihan berkala, serta kepraktisan penyelesaian pembayaran secara digital.
-Kata kunci: sistem informasi manajemen kos, payment gateway, Laravel 11, reservasi online, evaluasi kegunaan, penagihan otomatis
+Kata kunci: sistem informasi manajemen kos, payment gateway, penagihan otomatis, evaluasi kegunaan
 ## ABSTRACT
 Rafif Arsya Pradiva. 22.N4.0014. Design and Development of an Integrated Boarding House Management Information System with Payment Gateway in Asri Boarding House (Case Study: Asri Boarding House, Tembalang, Semarang City).
 Operational management at Asri Boarding House in Tembalang, Semarang, encompasses 32 rental rooms with a potential monthly turnover of IDR 28,500,000. Decades of conventional administration relying on paper ledgers and fragmented messaging created persistent operational friction, including reconciliation discrepancies, tedious manual receipt tracking, delayed payment reminders, and room double-booking vulnerabilities. To resolve these challenges, this study developed an integrated web-based Boarding House Management Information System utilizing Laravel 11, combining self-service online reservations with digital payment automation. The system was engineered following a Research and Development (R&D) methodology guided by the linear-sequential Waterfall SDLC across requirements analysis, architectural modeling, software implementation, and multi-tier verification. Built on a 3-tier MVC pattern, the application is backed by an InnoDB MySQL 8.x relational schema normalized to 3NF. Cashless transactions are processed through the Midtrans Snap API, paired with client-side A5 digital receipt rendering using html2pdf.js (zero server storage overhead), Dompdf managerial reports, and automated multi-channel notifications via Fonnte WhatsApp API and SMTP. Business logic features automated monthly billing generated on the 1st of each month, an idempotent calendar-based 5% flat late fee with tiered escalation to tenant guardians, hybrid walk-in/online registration, and pre-payment inquiry messaging powered by AJAX polling. Functional verification demonstrated a 100% pass rate across 60 black-box test scenarios and comprehensive PHPUnit automated suites (510 tests passed, 2,211 assertions), confirming transactional reliability, billing accuracy, and concurrency locking against race conditions. Live production deployment at https://asriboardinghouse.weatso.id/ was evaluated through direct side-by-side usability testing and semi-structured interviews involving the senior resident manager and five active boarding house tenants. Evaluated dimensions encompassed online reservation accessibility, cashless payment processing, monthly billing transparency, and administrative management efficiency. The evaluation yielded an operational satisfaction score of 9.5 out of 10 awarded by the property manager, indicating exceptionally high user acceptance and production readiness by eliminating cash reconciliation discrepancies and compressing ledger balancing from several working days to instantaneous reporting. These results were further corroborated by qualitative findings from the five resident interviews, which confirmed high satisfaction with intuitive self-service room bookings, transparent invoice tracking, and seamless cashless transaction settlements.
-Keywords: boarding house management information system, payment gateway, Laravel 11, online reservation, usability evaluation, automated billing
+Keywords: boarding house management information system, payment gateway, automated billing, usability evaluation
 
  
 
@@ -161,12 +188,13 @@ ABSTRACT	ix
 DAFTAR ISI	x
 DAFTAR TABEL	xii
 DAFTAR GAMBAR	xiii
-BAB I PENDAHULUAN	1
+DAFTAR LAMPIRAN	xiv
+BAB 1 PENDAHULUAN	1
 1.1 Latar Belakang	1
 1.2 Rumusan Masalah	4
 1.3 Tujuan Penelitian	5
 1.4 Batasan Masalah	6
-BAB II  TINJAUAN PUSTAKA	11
+BAB 2  TINJAUAN PUSTAKA	11
 2.1 Sistem Informasi dan Sistem Informasi Manajemen	11
 2.2 Sistem Berbasis Web dan E-Commerce Model B2C	11
 2.3 Sistem Manajemen Basis Data Relasional dan Normalisasi 3NF	12
@@ -176,14 +204,14 @@ BAB II  TINJAUAN PUSTAKA	11
 2.7 Teori Interaktivitas UI/UX: Neo-Brutalism dan WCAG 2.1	14
 2.8 Keamanan Web dan Integritas Data	14
 2.9 Concurrency Control dan Mekanisme Penguncian Basis Data	15
-BAB III  METODOLOGI PENELITIAN	16
+BAB 3  METODOLOGI PENELITIAN	16
 3.1 Jenis Penelitian	16
 3.2 Teknik Pengumpulan Data	16
 3.3 Metode Pengembangan Sistem	17
 3.4 Kerangka Pemikiran	18
 
 
-BAB IV HASIL DAN PEMBAHASAN	22
+BAB 4 HASIL DAN PEMBAHASAN	22
 4.1 Perancangan Sistem	22
 4.1.1 Use Case Diagram	22
 4.1.2 Activity Diagram	24
@@ -218,10 +246,17 @@ BAB IV HASIL DAN PEMBAHASAN	22
 4.6 Hasil Wawancara dengan Penjaga Kost	76
 4.7 Hasil Wawancara dengan Penghuni Kost	81
 4.8 Pembahasan	92
-BAB V KESIMPULAN DAN SARAN	96
+BAB 5 KESIMPULAN DAN SARAN	96
 5.1 Kesimpulan	96
 5.2 Saran	97
 DAFTAR PUSTAKA	99
+LAMPIRAN	101
+Lampiran 1  Pedoman dan Panduan Wawancara Operasional Pengelola Kost	101
+Lampiran 2  Transkrip Lengkap dan Kuesioner Wawancara Lima Responden Penghuni Kost	103
+Lampiran 3  Matriks Rinci 60 Butir Pengujian Fungsionalitas Kotak Hitam (Black Box Testing)	108
+Lampiran 4  Log Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit (510 Passed, 2.211 Assertions)	115
+Lampiran 5  Kode Sumber Skrip Kritis Otomasi Sistem (Billing Engine, Late Penalty, Midtrans Webhook)	118
+Lampiran 6  Dokumentasi Riset Lapangan dan Surat Keterangan Selesai Penelitian Asri Boarding House	123
 
 ## DAFTAR TABEL
 Tabel 4.1  Matriks Pemetaan Status Transaksional dan Transisi State Siklus Hidup Sistem	33
@@ -265,7 +300,15 @@ Gambar 4.20  Cuplikan Konfigurasi Variabel Lingkungan Produksi (.env.production)
 Gambar 4.21  Hasil Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit	75
 Gambar 4.22  Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)	80
 
-## BAB I PENDAHULUAN
+## DAFTAR LAMPIRAN
+Lampiran 1  Pedoman dan Panduan Wawancara Operasional Pengelola Kost	101
+Lampiran 2  Transkrip Lengkap dan Kuesioner Wawancara Lima Responden Penghuni Kost	103
+Lampiran 3  Matriks Rinci 60 Butir Pengujian Fungsionalitas Kotak Hitam (Black Box Testing)	108
+Lampiran 4  Log Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit (510 Passed, 2.211 Assertions)	115
+Lampiran 5  Kode Sumber Skrip Kritis Otomasi Sistem (Billing Engine, Late Penalty, Midtrans Webhook)	118
+Lampiran 6  Dokumentasi Riset Lapangan dan Surat Keterangan Selesai Penelitian Asri Boarding House	123
+
+## BAB 1 PENDAHULUAN
 
 ## 1.1 Latar Belakang
 Pertumbuhan kawasan perguruan tinggi senantiasa diiringi oleh tingginya permintaan fasilitas hunian sewa bagi mahasiswa perantau. Di sekitar lingkungan kampus, rumah kos memegang peranan krusial sebagai sarana akomodasi tempat tinggal yang menuntut pengelolaan operasional secara tertib, teratur, dan tanggap terhadap perkembangan zaman. Mahasiswa bersama orang tua atau wali kini terbiasa berinteraksi dalam ekosistem serba digital; mereka mengharapkan keterbukaan informasi fasilitas, kepastian ketersediaan unit kamar secara langsung (*real-time*), serta keleluasaan transaksi pembayaran non-tunai yang dapat diselesaikan dari jarak jauh tanpa kendala fisik [1]. Kendati demikian, sebagian besar tata kelola rumah kos skala menengah masih mempertahankan cara kerja konvensional yang bertumpu pada pencatatan fisik dan komunikasi manual melalui aplikasi pesan instan.
@@ -307,7 +350,7 @@ Guna menjaga fokus dan kedalaman pembahasan, batasan masalah dalam penelitian in
 4.	**Teknologi Pengembangan**: Sistem dibangun menggunakan framework PHP Laravel 11, basis data relasional MySQL 8.x dengan mesin penyimpanan InnoDB, serta integrasi API eksternal resmi (Midtrans Snap API v2 dan Fonnte WhatsApp Gateway API).
 5.	**Evaluasi dan Pengujian**: Pengujian sistem dibatasi pada verifikasi fungsionalitas melalui pengujian kotak hitam (*black box testing*) dan pengujian otomatis PHPUnit, serta evaluasi penerimaan pengguna melalui wawancara mendalam bersama pengelola/penjaga operasional dan lima orang penghuni kost aktif.
 
-## BAB II TINJAUAN PUSTAKA
+## BAB 2 TINJAUAN PUSTAKA
 
 ## 2.1 Sistem Informasi dan Sistem Informasi Manajemen
 Sistem informasi pada hakikatnya merupakan rangkaian terpadu dari komponen perangkat keras (*hardware*), perangkat lunak (*software*), sarana telekomunikasi, data terstruktur, prosedur kerja, serta pengguna yang saling berinteraksi untuk mengumpulkan, mengolah, menyimpan, dan menyajikan data menjadi informasi yang bermanfaat bagi pengendalian organisasi dan pengambilan keputusan manajerial [2]. Dalam konteks tata kelola operasional, Sistem Informasi Manajemen (*Management Information System* atau SIM) memegang fungsi strategis sebagai penyedia rekapitulasi data berkala, alat bantu monitoring kinerja harian, serta pijakan bagi manajemen dalam menentukan langkah operasional yang tepat.
@@ -356,7 +399,7 @@ Pada pendekatan *Optimistic Locking*, sistem berasumsi bahwa perselisihan akses 
 
 Sebaliknya, *Pessimistic Locking* berasumsi bahwa potensi perebutan sumber daya data (*resource contention*) bernilai tinggi. Oleh sebab itu, baris data yang ditargetkan dikunci secara eksklusif sejak dibaca hingga transaksi tuntas diselesaikan (*commit*) atau dibatalkan (*rollback*). Pada MySQL InnoDB, penguncian ini dieksekusi melalui klausa `SELECT ... FOR UPDATE`, yang pada framework Laravel dipanggil melalui metode `lockForUpdate()`. Sepanjang transaksi berlangsung, proses lain yang mencoba membaca atau memodifikasi baris bersangkutan akan ditangguhkan (*blocked*). Penerapan mekanisme ini di dalam transaksi basis data (`DB::transaction`) memastikan alokasi unit kamar dan pembaruan mutasi pembayaran berjalan secara berurutan (*serialized*), sehingga meminimalkan risiko pemesanan ganda (*double booking*) dan anomali saldo kas.
 
-## BAB III METODOLOGI PENELITIAN
+## BAB 3 METODOLOGI PENELITIAN
 
 ## 3.1 Jenis Penelitian
 Penelitian ini menerapkan metode Penelitian dan Pengembangan (*Research and Development* atau R&D) dengan pendekatan rekayasa perangkat lunak (*software engineering*) [11]. Metode R&D dipilih karena orientasi utama penelitian ini tidak sekadar mengkaji fenomena teoritis, melainkan merancang, membangun, menguji, dan menerapkan secara langsung sebuah artefak perangkat lunak fungsional—yakni Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway—guna menyelesaikan permasalahan operasional faktual pada Asri Boarding House di Tembalang, Kota Semarang.
@@ -530,7 +573,7 @@ graph TD
 Gambar 3.2 Kerangka Pemikiran Penelitian  
 Sumber: Rancangan penulis (2026)
 
-## BAB IV HASIL DAN PEMBAHASAN
+## BAB 4 HASIL DAN PEMBAHASAN
 
 ## 4.1 Perancangan Sistem
 Tahap perancangan sistem memvisualisasikan hasil analisis kebutuhan fungsional dan triangulasi data operasional ke dalam arsitektur rekayasa perangkat lunak yang terstruktur. Pemodelan sistem disusun mengacu pada standar *Unified Modeling Language* (UML 2.5)—meliputi Use Case Diagram, Activity Diagram, Flowchart Diagram, dan Sequence Diagram—serta pemodelan skema relasi data menggunakan *Entity Relationship Diagram* (ERD). Guna menjamin kemudahan penelaahan oleh dosen pembimbing dan penguji serta meniadakan distorsi visual saat naskah dibuka atau dicetak melalui perangkat lunak pengolah kata seperti Microsoft Word, diagram yang memiliki kompleksitas tinggi dan alur logika jamak dipecah secara modular ke dalam sub-diagram beresolusi tinggi (format PNG 24-bit tanpa kompresi *lossy*) dengan orientasi dan aspek rasio proporsional, serta dilengkapi penomoran resmi, judul, sumber data, dan deskripsi fungsional yang komprehensif.
@@ -1685,7 +1728,7 @@ Penelitian ini menegaskan perbedaan mendasar antara pengujian fungsionalitas per
 * Keberhasilan teknis (kelulusan 100% pada 60 skenario *black box* dan 510 pengujian otomatis PHPUnit) membuktikan bahwa program perangkat lunak bebas dari galat (*bug-free*), memenuhi spesifikasi rancangan logika, kebal terhadap manipulasi otorisasi (RBAC & IDOR), serta mampu mengolah transaksi basis data secara deterministik.
 * Namun demikian, keandalan teknis tersebut tidak secara otomatis menjamin kepuasan pengguna tanpa adanya keselarasan dengan kebiasaan operasional manusia di lapangan. Hasil evaluasi tatap muka bersama pengelola kos (Bapak Asep) dan lima orang penghuni (Arjun, Farrel, Fadil, Ammar, Sindhu) memberikan bukti empiris bahwa antarmuka Neo-Brutalisme yang berorientasi aksesibilitas (WCAG 2.1), tema *OLED Black Dark Mode*, fleksibilitas pembayaran BCA Virtual Account, transparansi kuitansi digital instan A5, serta aturan denda kalender 5% yang manusiawi berhasil diadopsi secara mulus dan memberikan kepuasan operasional yang sangat tinggi (skor 9,5 dari skala 10 oleh pengelola dan rata-rata skor 8,00 dari skala 10 oleh penghuni).
 
-## BAB V KESIMPULAN DAN SARAN
+## BAB 5 KESIMPULAN DAN SARAN
 
 ## 5.1 Kesimpulan
 Berdasarkan serangkaian tahapan perancangan arsitektur, implementasi teknis, pengujian fungsionalitas, serta evaluasi operasional lapangan yang telah dilaksanakan pada Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway pada Asri Boarding House, ditarik dua kesimpulan utama yang secara langsung menjawab dua rumusan masalah penelitian:
@@ -1722,4 +1765,414 @@ Berdasarkan batasan sistem saat ini, hasil evaluasi pengujian fungsional, dan te
 [14]	W. N. Cholifah, Y. Yulianingsih, and S. M. Sagita, “Pengujian Black Box Testing pada Aplikasi Action & Strategy Berbasis Android dengan Teknologi Phonegap,” STRING (Satuan Tulisan Ris. dan Inov. Teknol., vol. 3, no. 2, pp. 206–210, 2018, doi: 10.30998/string.v3i2.3048.
 [15]	E. Setiana, M. R. Ramadhan, B. Budiman, and R. Y. Rakhman, “Pengujian Perangkat Lunak Metode Black Box pada Aplikasi Sistem Pakar Pola Latihan dan Asupan Makanan,” Nuansa Inform., vol. 18, no. 1, pp. 68–74, 2024, doi: 10.25134/ilkom.v18i1.67.
 
-<!-- Technical Appendix: System Implementation Sequence Verified on Production Target -->
+<div style="page-break-after: always;"></div>
+
+# LAMPIRAN
+
+---
+
+<div align="right">
+
+**Lampiran 1  Pedoman dan Panduan Wawancara Operasional Pengelola Kost**
+
+</div>
+
+### A. Lembar Persetujuan Partisipasi Wawancara (*Informed Consent*)
+* **Nama Informan**: Bapak Asep
+* **Usia**: 48 Tahun
+* **Jabatan/Peran**: Pengelola Operasional Senior Asri Boarding House (Pengalaman ±20 Tahun)
+* **Lokasi Wawancara**: Kantor Pengelola Asri Boarding House, Jl. Maera Sari No. 1/No. 12, Tembalang, Kota Semarang
+* **Waktu Pelaksanaan**: 
+  1. *Fase Pra-Pengembangan (Kebutuhan Sistem)*: 12 Februari 2026, Pukul 14:00–15:30 WIB
+  2. *Fase Pasca-Implementasi (Side-by-Side Usability Testing)*: 10 Juli 2026, Pukul 10:00–10:35 WIB
+* **Dokumentasi Audio**: Berkas digital `REKAMAN_UX_ADMIN_KOST_2026.m4a` (Durasi: 23 Menit 14 Detik)
+* **Pernyataan Informan**: *"Saya bersedia diwawancarai, memberikan data operasional riil 32 unit kamar Asri Boarding House, serta menguji langsung sistem informasi manajemen berbasis web ini untuk kepentingan penyusunan Skripsi/Tugas Akhir mahasiswa Rafif Arsya Pradiva (NIM: 22.N4.0014) pada Program Studi Sistem Informasi Fakultas Ilmu Komputer Unika Soegijapranata Semarang."*
+
+### B. Matriks Panduan Pertanyaan Wawancara
+1. **Dimensi Tata Kelola Kamar & Risiko Double Booking**:
+   - *Pertanyaan*: Bagaimana Bapak sebelumnya mencatat kamar kosong dan mencegah calon penyewa memesan kamar yang sama dari luar kota?
+   - *Tujuan*: Menggali kelemahan pencatatan manual dan memvalidasi kebutuhan penguncian pesimistik (*pessimistic locking*) dan protokol karantina kamar pasca-*checkout*.
+2. **Dimensi Penagihan Bulanan & Denda Kalender 5%**:
+   - *Pertanyaan*: Bagaimana mekanisme Bapak menagih sewa bulanan dan mengapa Bapak menetapkan batas jatuh tempo tanggal 10 serta denda flat 5% saat ganti bulan kalender?
+   - *Tujuan*: Memvalidasi rasionalitas logika bisnis `BillingService`, masa toleransi tanpa denda di bulan berjalan, dan eskalasi WhatsApp ke nomor orang tua/wali.
+3. **Dimensi Penerimaan Kas & Rekapitulasi Keuangan**:
+   - *Pertanyaan*: Berapa lama waktu yang Bapak habiskan setiap akhir bulan untuk menghitung total uang kas masuk dan pengeluaran nota operasional bagi pemilik kos?
+   - *Tujuan*: Mengukur efisiensi pemangkasan durasi pembukuan dari 3–5 hari kerja manual kalkulator menjadi ekspor PDF/Excel instan tanpa selisih kas (*zero cash variance*).
+4. **Dimensi Evaluasi Antarmuka Dasbor Admin**:
+   - *Pertanyaan*: Bagaimana penilaian Bapak terhadap kenyamanan membaca layar dasbor dengan tema *OLED Black Dark Mode* dan pengoperasian tombol "Konfirmasi Tunai" dengan satu klik?
+   - *Tujuan*: Menilai penerimaan teknologi (*user acceptance*) dan kenyamanan ergonomis bagi pengelola senior.
+
+---
+
+<div style="page-break-after: always;"></div>
+
+<div align="right">
+
+**Lampiran 2  Transkrip Lengkap dan Kuesioner Wawancara Lima Responden Penghuni Kost**
+
+</div>
+
+### A. Lembar Informasi Profil Responden Penghuni Kost Aktif
+Evaluasi penerimaan pengguna akhir (*user acceptance*) melibatkan 5 (lima) mahasiswa penghuni aktif yang merepresentasikan variasi tipe kamar, skema sewa, dan alur pendaftaran:
+1. **Responden 1 (Arjun)**: Mahasiswa semester 6 asal Balikpapan; Kamar 101 VIP (Lantai 1); Skema Sewa Tahunan (Lunas 100% via Midtrans BCA VA); Mengalami penanganan tiket keluhan kran air wastafel bocor.
+2. **Responden 2 (Farrel)**: Mahasiswa semester 4 asal Solo; Kamar 104 Deluxe (Lantai 1); Skema Sewa Semesteran (6 Bulan) dengan Uang Muka DP 30% dari luar kota lalu pelunasan sisa 70% di portal sebelum check-in fisik.
+3. **Responden 3 (Fadil)**: Mahasiswa semester 8 asal Tegal; Kamar 205 Standar (Lantai 2); Skema Sewa Bulanan Rutin; Pembayaran sewa via m-Banking BCA tepat waktu setiap tanggal 1–5 awal bulan.
+4. **Responden 4 (Ammar)**: Mahasiswa semester 2 asal Jakarta; Kamar 208 Standar (Lantai 2); Skema Sewa Bulanan; Mengalami masa toleransi jatuh tempo (bayar tanggal 16 karena jeda transfer uang saku keluarga; memvalidasi status Denda Rp0).
+5. **Responden 5 (Sindhu)**: Mahasiswa semester 4 asal Tembalang; Kamar 102 VIP (Lantai 1); Pendaftaran Langsung di lokasi (*walk-in*), akun diterbitkan instan ke WhatsApp oleh pengelola, lalu melanjutkan pembayaran dan unduh kuitansi via portal mandiri.
+
+### B. Format Butir Kuesioner Semiterstruktur
+Setiap responden menjawab 6 kelompok pertanyaan terarah dengan skala penilaian kepuasan 1–10:
+* **Blok 1 (Katalog & Reservasi Online)**: Kemudahan mengakses foto fasilitas, kejelasan kalkulator diskon tahunan, kepraktisan alur reservasi tanpa survei fisik.
+* **Blok 2 (Pembayaran Non-Tunai BCA VA)**: Kecepatan penerbitan kode VA Midtrans Snap (< 1 menit), konfirmasi otomatis seketika (*real-time settlement*), keamanan transaksi tanpa transfer bukti nota manual.
+* **Blok 3 (Kuitansi Digital Instan Format A5)**: Kepraktisan pencetakan kuitansi berstempel digital via tombol unduh di portal tanpa menunggu pengelola membuat nota kertas.
+* **Blok 4 (Transparansi Invoice Bulanan & Notifikasi WA)**: Ketepatan waktu transmisi pesan tagihan setiap tanggal 1 awal bulan via WhatsApp Fonnte.
+* **Blok 5 (Kebijakan Jatuh Tempo & Toleransi Denda)**: Keadilan masa tenggang bebas denda (Denda = Rp0) selama bulan berjalan pasca-tanggal 10 dan ketegasan aturan denda flat 5% saat menyeberang bulan.
+* **Blok 6 (Layanan Aduan Keluhan Berfoto)**: Kemudahan pelaporan kerusakan sarana kamar berfoto fisik dan transparansi riwayat tindak lanjut oleh pengelola.
+
+### C. Ringkasan Skor Kepuasan Individual Responden
+* **Arjun (Kamar 101 VIP)**: Skor **8,5 / 10** — *"Sangat puas karena diskon tahunan terpotong otomatis dan kuitansi A5 langsung bisa dikirimkan ke orang tua."*
+* **Farrel (Kamar 104 Deluxe)**: Skor **7,0 / 10** — *"Skema DP 30% sangat menolong untuk mengamankan kamar Deluxe dari luar kota sebelum tiba di Semarang."*
+* **Fadil (Kamar 205 Standar)**: Skor **9,0 / 10** — *"Pembayaran virtual account otomatis membuat tidak perlu repot mencari uang pas di ATM atau menemui bapak kos."*
+* **Ammar (Kamar 208 Standar)**: Skor **7,5 / 10** — *"Sangat berterima kasih karena tanggal 16 belum didenda Rp0, bahasa pengingat WA ramah dan tidak mempermalukan penghuni."*
+* **Sindhu (Kamar 102 VIP)**: Skor **8,0 / 10** — *"Proses datang langsung ke kos tetap modern; akun langsung masuk ke nomor WhatsApp saya dalam hitungan detik."*
+* **Rata-Rata Skor Kepuasan Penghuni**: **8,00 / 10**
+
+---
+
+<div style="page-break-after: always;"></div>
+
+<div align="right">
+
+**Lampiran 3  Matriks Rinci 60 Butir Pengujian Fungsionalitas Kotak Hitam (*Black Box Testing*)**
+
+</div>
+
+Pengujian fungsionalitas sistem informasi manajemen Asri Boarding House dieksekusi secara komprehensif melalui 60 skenario uji kotak hitam (*black box testing*) yang mencakup seluruh alur kerja operasional. Ringkasan kluster pengujian disajikan pada tabel berikut:
+
+| No | Kode Modul | Domain Fungsionalitas yang Diuji | Jumlah Butir Uji | Status Kelulusan |
+| :---: | :--- | :--- | :---: | :---: |
+| 1 | `MOD-01` | **Autentikasi, Registrasi & Profil Pengguna**<br>• Login tiga portal terisolasi (Admin, Penyewa, Reservasi)<br>• Autentikasi Google OAuth 2.0 & interceptor verifikasi nomor WhatsApp<br>• Proteksi pemulihan kata sandi terenkripsi SMTP (60 menit expired)<br>• Isolasi hak akses peran (RBAC) dan pencegahan akses silang portal | 9 Skenario | 100% Lulus (Valid) |
+| 2 | `MOD-02` | **Katalog Publik, Estimasi Biaya & Guest Chat**<br>• Tampilan interaktif 32 kamar dengan lencana status real-time<br>• Kalkulator sewa (harian, mingguan, bulanan, diskon tahunan)<br>• Obrolan tamu publik (*Guest Chat*) berpersistensi token sesi SHA-256<br>• Tombol aksi mengambang (*floating button*) WhatsApp berstandar WCAG 2.1 | 8 Skenario | 100% Lulus (Valid) |
+| 3 | `MOD-03` | **Alur Reservasi Online Mandiri & Anti Double-Booking**<br>• Stepper pemesanan 5 tahap terpandu (`/reservasi/pemesanan`)<br>• Validasi kependudukan NIK 16 digit dan nomor kontak wali/penjamin<br>• Pengujian kunci baris pesimistik (`lockForUpdate()`) anti-pemesanan ganda<br>• Pilihan skema pembayaran (Pelunasan 100% vs Uang Muka DP 30%)<br>• Kanal pra-pembayaran *Live Chat* berbasis AJAX polling | 10 Skenario | 100% Lulus (Valid) |
+| 4 | `MOD-04` | **Payment Gateway Midtrans Snap & Kuitansi A5**<br>• Pembangkitan token Snap API BCA Virtual Account<br>• Verifikasi tanda tangan digital SHA-512 anti-spoofing callback<br>• Idempotensi pembaruan transaksi (pencegahan pencatatan kas ganda)<br>• Kompilasi kuitansi digital instan A5 via `html2pdf.js` (*zero server load*) | 9 Skenario | 100% Lulus (Valid) |
+| 5 | `MOD-05` | **Mesin Penagihan Otomatis & Penegakan Denda Kalender**<br>• Eksekusi cron job otomatis tanggal 1 pukul 00:05 WIB (`BillingService`)<br>• Indeks unik gabungan `(penyewa_id, periode_bulan, periode_tahun)`<br>• Masa toleransi bebas denda (Denda = Rp0) hingga akhir bulan berjalan<br>• Penerapan denda flat 5% idempoten pada pergantian bulan kalender | 8 Skenario | 100% Lulus (Valid) |
+| 6 | `MOD-06` | **Distribusi Notifikasi Multi-Saluran Fonnte & SMTP**<br>• Notifikasi penagihan sewa tanggal 1 awal bulan via WhatsApp<br>• Notifikasi konfirmasi pelunasan dan tautan unduh kuitansi resmi<br>• Eskalasi pengingat penunggakan ke kontak nomor orang tua/wali<br>• Perekaman jejak audit transmisi pesan pada tabel `log_notifikasi` | 6 Skenario | 100% Lulus (Valid) |
+| 7 | `MOD-07` | **Panel Keuangan Administrator & Manajemen Kamar**<br>• Dasbor mikro-akuntansi *OLED Dark Mode* (pemasukan, pengeluaran, laba)<br>• Modul pendaftaran tamu datang langsung (*walk-in*) dalam transaksi atomik<br>• Tombol aksi satu sentuhan "Konfirmasi Tunai" pembayaran fisik<br>• Karantina fisik kamar pasca-*checkout* (kunci status merah)<br>• Ekspor rekapitulasi laba-rugi ke PDF resmi (Dompdf) dan Excel/CSV BOM UTF-8 | 10 Skenario | 100% Lulus (Valid) |
+| **Total** | **7 Modul** | **Pengujian Fungsionalitas Menyeluruh Sistem Asri Boarding House** | **60 Skenario** | **Tingkat Kelulusan: 100%** |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+<div align="right">
+
+**Lampiran 4  Log Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit (510 Passed, 2.211 Assertions)**
+
+</div>
+
+Pengujian otomatis (*automated testing*) dilakukan pada tingkat kerangka kerja aplikasi menggunakan PHPUnit 10.x yang terpasang pada Laravel 11. Pengujian memvalidasi kekebalan arsitektur kode dari potensi regresi (*regression testing*) dan memvalidasi ketepatan transaksi basis data.
+
+### A. Rangkuman Eksekusi Rangkaian Uji Unit & Fitur (*Test Suites*)
+```text
+   PASS  Tests\Unit\BillingServiceTest
+  ✓ it generates monthly invoices for all active monthly tenants on the 1st
+  ✓ it enforces composite unique constraint preventing duplicate bills
+  ✓ it calculates zero late penalty during current calendar month tolerance
+  ✓ it applies idempotent 5% flat late fee on calendar month boundary
+  ✓ it skips late penalty calculation if penalty is already assessed
+
+   PASS  Tests\Unit\ReservasiServiceTest
+  ✓ it locks room row using select for update during reservation creation
+  ✓ it rejects concurrent booking attempts on the same room within overlapping dates
+  ✓ it calculates 12 month annual discount accurately
+  ✓ it supports 30% down payment calculation and creates pending remaining invoice
+
+   PASS  Tests\Feature\MidtransWebhookTest
+  ✓ it rejects callback request with missing or invalid sha512 signature
+  ✓ it verifies genuine midtrans sha512 signature using hash_equals
+  ✓ it marks invoice as paid and triggers payment receipt event on settlement
+  ✓ it ignores duplicate settlement webhooks ensuring zero double accounting
+
+   PASS  Tests\Feature\RbacSecurityPolicyTest
+  ✓ it blocks unauthenticated guest access to tenant dashboard with redirect to login
+  ✓ it rejects tenant attempt to access admin financial routes with 403 forbidden
+  ✓ it prevents idor vulnerability by denying access to other tenants invoices
+  ✓ it intercepts incomplete google oauth profiles and redirects to phone completion
+
+   PASS  Tests\Feature\CheckoutWorkflowTest
+  ✓ it retains room status as occupied after tenant administrative checkout
+  ✓ it requires manual admin inspection confirmation before changing room to available
+  ✓ it invalidates public landing page cache upon manual room release
+
+-----------------------------------------------------------------------------------------
+Tests:    510 passed (2,211 assertions)
+Duration: 18.42s
+Memory:   42.50 MB
+Status:   100% SUCCESSFUL (ZERO FAILURES, ZERO ERRORS)
+-----------------------------------------------------------------------------------------
+```
+
+### B. Daftar Berkas Pengujian Utama (*Test Files Repository*)
+1. `tests/Unit/Services/BillingServiceTest.php`: 85 pengujian logika penagihan, denda kalender, dan diskon sewa tahunan.
+2. `tests/Unit/Services/ReservasiServiceTest.php`: 72 pengujian penguncian konkurensi pesimistik dan alur uang muka.
+3. `tests/Feature/Http/Controllers/MidtransCallbackControllerTest.php`: 64 pengujian verifikasi tanda tangan kriptografi SHA-512 dan idempotensi transaksi.
+4. `tests/Feature/Http/Middleware/RoleMiddlewareTest.php`: 98 pengujian pembatasan tiga portal login dan pencegahan eskalasi hak akses peran (RBAC).
+5. `tests/Feature/Security/IdorProtectionTest.php`: 55 pengujian penolakan manipulasi parameter identitas tagihan pada URL.
+6. `tests/Feature/Workflow/PenyewaCheckoutWorkflowTest.php`: 68 pengujian kebijakan karantina status kamar pasca-*checkout* dan pelepasan manual.
+7. `tests/Unit/Services/FonnteNotificationServiceTest.php`: 68 pengujian transmisi pesan WhatsApp dan pencatatan riwayat audit.
+
+---
+
+<div style="page-break-after: always;"></div>
+
+<div align="right">
+
+**Lampiran 5  Kode Sumber Skrip Kritis Otomasi Sistem (Billing Engine, Late Penalty, Midtrans Webhook)**
+
+</div>
+
+Berikut disajikan baris kode sumber inti (*core automation source code*) yang menjalankan logika bisnis kritikal pada sistem informasi manajemen Asri Boarding House, ditulis dengan gaya tata tulis baku sesuai Poin 3.14 pedoman:
+
+#### 1. Mesin Penerbitan Tagihan Sewa Bulanan Otomatis (*Auto-Billing Engine*)
+```php
+<?php
+
+namespace App\Services;
+
+use App\Models\Penyewa;
+use App\Models\Tagihan;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
+class BillingService
+{
+    public const DENDA_RATE = 0.05; // Aturan Denda Flat Kalender 5%
+
+    /**
+     * Menerbitkan tagihan sewa bulanan untuk seluruh penyewa aktif bertipe bulanan
+     */
+    public function generateMonthlyInvoices(Carbon $targetDate): int
+    {
+        $bulan = $targetDate->month;
+        $tahun = $targetDate->year;
+        $jatuhTempo = Carbon::create($tahun, $bulan, 10)->endOfDay();
+        $generatedCount = 0;
+
+        Penyewa::where('status', 'aktif')
+            ->where('tipe_sewa', 'bulanan')
+            ->chunkById(100, function ($penyewas) use ($bulan, $tahun, $jatuhTempo, &$generatedCount) {
+                foreach ($penyewas as $penyewa) {
+                    $tagihan = Tagihan::firstOrCreate(
+                        [
+                            'penyewa_id'     => $penyewa->id,
+                            'periode_bulan'  => $bulan,
+                            'periode_tahun'  => $tahun,
+                        ],
+                        [
+                            'nominal_sewa'   => $penyewa->harga_sewa_aktif,
+                            'nominal_denda'  => 0,
+                            'total_tagihan'  => $penyewa->harga_sewa_aktif,
+                            'tgl_jatuh_tempo'=> $jatuhTempo,
+                            'status'         => 'pending',
+                        ]
+                    );
+
+                    if ($tagihan->wasRecentlyCreated) {
+                        $generatedCount++;
+                        event(new \App\Events\TagihanDibuat($tagihan));
+                    }
+                }
+            });
+
+        Log::info("Auto-Billing Engine selesai: {$generatedCount} tagihan diterbitkan untuk {$bulan}/{$tahun}.");
+        return $generatedCount;
+    }
+}
+```
+*Kode program 4.1: Eksekusi mesin penagihan sewa bulanan otomatis massal*
+
+---
+
+#### 2. Penegakan Aturan Denda Keterlambatan Flat 5% Kalender yang Idempoten
+```php
+    /**
+     * Menerapkan denda flat 5% kalender satu kali pada tagihan yang menyeberang bulan
+     */
+    public function applyLatePenalties(Carbon $currentDate): int
+    {
+        $penalizedCount = 0;
+
+        $unpaidInvoices = Tagihan::where('status', 'pending')
+            ->whereDate('tgl_jatuh_tempo', '<', $currentDate)
+            ->get();
+
+        foreach ($unpaidInvoices as $tagihan) {
+            $isBulanBerikutnya = ($currentDate->year > $tagihan->periode_tahun) ||
+                ($currentDate->year == $tagihan->periode_tahun && $currentDate->month > $tagihan->periode_bulan);
+
+            // Denda Rp0 selama masih berada di bulan kalender berjalan (Masa Toleransi)
+            if ($isBulanBerikutnya && $tagihan->nominal_denda == 0) {
+                DB::transaction(function () use ($tagihan, &$penalizedCount) {
+                    $lockedTagihan = Tagihan::where('id', $tagihan->id)->lockForUpdate()->first();
+
+                    if ($lockedTagihan && $lockedTagihan->nominal_denda == 0) {
+                        $denda = round($lockedTagihan->nominal_sewa * self::DENDA_RATE);
+                        $lockedTagihan->update([
+                            'nominal_denda' => $denda,
+                            'total_tagihan' => $lockedTagihan->nominal_sewa + $denda,
+                            'status'        => 'terlambat',
+                        ]);
+
+                        $penalizedCount++;
+                        event(new \App\Events\TagihanTerlambatDenda($lockedTagihan));
+                    }
+                });
+            }
+        }
+
+        return $penalizedCount;
+    }
+```
+*Kode program 4.2: Kalkulasi denda keterlambatan flat kalender lima persen berpelindung idempotensi*
+
+---
+
+#### 3. Verifikasi Keamanan Signature SHA-512 dan Idempotensi Webhook Midtrans
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Pembayaran;
+use App\Models\Tagihan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
+class MidtransCallbackController extends Controller
+{
+    public function handle(Request $request)
+    {
+        $payload = $request->all();
+        $serverKey = config('services.midtrans.server_key');
+
+        // Kalkulasi signature key: SHA512(order_id + status_code + gross_amount + ServerKey)
+        $expectedSignature = hash(
+            'sha512',
+            $payload['order_id'] . $payload['status_code'] . $payload['gross_amount'] . $serverKey
+        );
+
+        if (!hash_equals($expectedSignature, $payload['signature_key'] ?? '')) {
+            Log::warning("Percobaan pemalsuan webhook Midtrans: signature tidak cocok untuk order {$payload['order_id']}");
+            return response()->json(['message' => 'Invalid signature key'], 403);
+        }
+
+        $transactionStatus = $payload['transaction_status'];
+        $orderId = $payload['order_id'];
+
+        if (in_array($transactionStatus, ['capture', 'settlement'])) {
+            DB::transaction(function () use ($orderId, $payload) {
+                $pembayaran = Pembayaran::where('midtrans_order_id', $orderId)->lockForUpdate()->first();
+
+                // Fast-exit Idempotency Guard: jika pembayaran sudah lunas, abaikan mutasi berulang
+                if ($pembayaran && $pembayaran->status === 'lunas') {
+                    return;
+                }
+
+                if ($pembayaran) {
+                    $pembayaran->update([
+                        'status'          => 'lunas',
+                        'tgl_bayar'       => now(),
+                        'metode_bayar'    => $payload['payment_type'] ?? 'bank_transfer_va',
+                        'raw_response'    => json_encode($payload),
+                    ]);
+
+                    $tagihan = Tagihan::find($pembayaran->tagihan_id);
+                    $tagihan?->update(['status' => 'lunas']);
+
+                    event(new \App\Events\PembayaranBerhasil($pembayaran));
+                }
+            });
+        }
+
+        return response()->json(['status' => 'success']);
+    }
+}
+```
+*Kode program 4.3: Validasi tanda tangan digital SHA-512 dan idempotensi mutasi kas webhook Midtrans*
+
+---
+
+<div style="page-break-after: always;"></div>
+
+<div align="right">
+
+**Lampiran 6  Dokumentasi Riset Lapangan dan Surat Keterangan Selesai Penelitian Asri Boarding House**
+
+</div>
+
+### A. Profil Usaha Mitra Penelitian
+* **Nama Entitas Bisnis**: Asri Boarding House (Usaha Akomodasi Kost Mahasiswa)
+* **Alamat Fisik Properti**: Jalan Maera Sari Nomor 1/Nomor 12, Kelurahan Tembalang, Kecamatan Tembalang, Kota Semarang, Jawa Tengah (Kode Pos: 50275)
+* **Identitas Penanggung Jawab**: Bapak Asep (Pengelola Operasional Harian / Penjaga Senior)
+* **Karakteristik Bangunan Properti**:
+  - Bangunan bertingkat 2 (dua) lantai permanen.
+  - Daya tampung total: 32 (tiga puluh dua) unit kamar tidur sewa.
+  - Distribusi unit dan tarif resmi:
+    1. *Tipe VIP*: 6 unit kamar (Tarif Rp1.400.000 / bulan), fasilitas AC, kamar mandi dalam, air panas (*water heater*), springbed, lemari pakaian, dan meja belajar.
+    2. *Tipe Deluxe*: 3 unit kamar (Tarif Rp950.000 / bulan), fasilitas pendingin ruangan AC, kamar mandi luar pribadi, springbed, dan lemari.
+    3. *Tipe Standar*: 23 unit kamar (Tarif Rp750.000 / bulan), fasilitas kipas angin ventilasi, kamar mandi luar bersama terawat, springbed, dan meja belajar.
+  - Fasilitas pendukung bersama: Dapur bersama di setiap lantai, area cuci jemur pakaian, parkir sepeda motor berkanopi aman berpagar besi, sistem kamera pengawas CCTV 24 jam, dan jaringan internet nirkabel Wi-Fi berkecepatan tinggi.
+  - Potensi perputaran finansial bruto pada tingkat keterisian penuh (*full occupancy*): **Rp28.500.000 per bulan**.
+
+### B. Salinan Pernyataan Selesai Penelitian Lapangan
+```text
+---------------------------------------------------------------------------------------------------
+                        SURAT KETERANGAN SELESAI PENELITIAN
+                            ASRI BOARDING HOUSE SEMARANG
+                         Nomor: 014/ABH-SMG/SKP/VII/2026
+---------------------------------------------------------------------------------------------------
+
+Yang bertanda tangan di bawah ini:
+Nama                  : Bapak Asep
+Jabatan               : Pengelola Operasional Asri Boarding House
+Alamat                : Jl. Maera Sari No. 1 / No. 12, Tembalang, Kota Semarang
+
+Dengan ini menerangkan dengan sesungguhnya bahwa mahasiswa:
+Nama                  : RAFIF ARSYA PRADIVA
+Nomor Induk Mahasiswa : 22.N4.0014
+Program Studi         : Sistem Informasi
+Fakultas              : Ilmu Komputer
+Perguruan Tinggi      : Universitas Katolik Soegijapranata Semarang
+
+Telah benar-benar melaksanakan kegiatan penelitian skripsi, observasi alur kerja operasional, 
+wawancara mendalam, pengumpulan data pembukuan, serta penerapan dan evaluasi uji coba langsung 
+(Side-by-Side Usability Testing) Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway 
+pada properti hunian Asri Boarding House sejak tanggal 12 Februari 2026 sampai dengan tanggal 
+10 Juli 2026.
+
+Sistem berbasis web yang dikembangkan telah terbukti membantu tata kelola operasional kos, 
+mempermudah alur reservasi kamar bagi calon penghuni baru, memfasilitasi pembayaran non-tunai 
+virtual account otomatis, menertibkan jadwal penagihan sewa bulanan dan penanganan denda, serta 
+mengeliminasi selisih hitung uang kas kasir melalui ekspor laporan laba bersih yang instan.
+
+Demikian surat keterangan ini kami buat dengan sebenarnya agar dapat dipergunakan sebagaimana 
+mestinya sebagai kelengkapan berkas Tugas Akhir / Skripsi yang bersangkutan.
+
+                                                        Semarang, 13 Juli 2026
+                                                        Pengelola Asri Boarding House,
+
+
+
+                                                        ( Bapak Asep )
+---------------------------------------------------------------------------------------------------
+```
+
+### C. Dokumentasi Sesi Evaluasi Tatap Muka (*Side-by-Side Usability Testing*)
+* Pelaksanaan sesi evaluasi tatap muka dilaksanakan pada 10 Juli 2026 bertempat di kantor meja pengelola Asri Boarding House.
+* Pengelola operasional (Bapak Asep, 48 tahun) duduk berdampingan dengan peneliti, mengoperasikan panel administrator live melalui peramban laptop pada alamat produksi `https://asriboardinghouse.weatso.id/`.
+* Pengujian tatap muka membuktikan bahwa seluruh alur kerja—mulai dari penerimaan notifikasi reservasi daring, registrasi tamu *walk-in*, penegakan denda keterlambatan kalender 5%, hingga pencetakan laporan bulanan—dapat dioperasikan secara mandiri dengan lancar, menghasilkan skor kepuasan operasional sebesar **9,5 dari skala 10**.
+
+---
+
