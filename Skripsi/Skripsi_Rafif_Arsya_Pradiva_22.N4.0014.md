@@ -778,43 +778,54 @@ Skema basis data dirancang berlandaskan kaidah Bentuk Normal Ketiga (*Third Norm
 
 Skema basis data secara keseluruhan mencakup 22 tabel relasional. Guna menjamin keunikan nilai kolom tanpa merusak jejak historis penghapusan lunak (*soft deletes*), sistem menerapkan fitur *Virtual Generated Columns* berindeks unik pada MySQL 8.x, seperti `active_email`, `active_no_hp`, dan `active_nik` pada tabel `users`, `active_nomor_kamar` pada tabel `kamar`, `active_nik` pada tabel `penyewa`, serta `active_order_id` pada tabel `reservasi`. Kolom-kolom virtual ini bernilai identik dengan kolom aslinya saat data berstatus aktif (`deleted_at IS NULL`), dan berubah menjadi `NULL` saat baris data dihapus lunak. Mengingat arsitektur MySQL mengizinkan keberadaan nilai `NULL` ganda pada batasan indeks unik (*unique index*), keunikan data aktif tetap terjaga secara konsisten tanpa perlu memodifikasi string data historis.
 
-Guna memastikan setiap entitas, atribut kolom, kunci primer/asing, dan derajat relasi dapat ditelaah secara jelas, tajam, dan nyaman dibaca oleh pembimbing maupun penguji, arsitektur global skema relasi basis data disajikan secara modular melalui 2 kluster utama beresolusi tinggi (Gambar 4.5 a1 dan a2), yang kemudian didukung oleh 4 diagram kluster spesifik domain (Gambar 4.5 b, c, d, dan e):
+Guna memastikan setiap entitas, peran bisnis, kunci primer/asing, dan derajat relasi dapat ditelaah secara jelas, tajam, dan sangat nyaman dibaca oleh pembimbing maupun penguji skripsi tanpa kendala teks menciut (*microscopic clutter*), arsitektur global skema relasi 22 tabel basis data disajikan secara terstruktur melalui 3 kluster arsitektur kartu entitas (*architectural entity cards*) berskala besar (Gambar 4.5 a1, a2, dan a3), yang kemudian diperdalam oleh 4 diagram kluster relasional spesifik domain (Gambar 4.5 b, c, d, dan e):
 
 #### 1. Arsitektur Global Skema Relasi 22 Tabel Basis Data
-Pemodelan relasional menyeluruh 22 tabel basis data dipecah menjadi 2 kluster struktural berdimensi proporsional dan tipografi berskala besar:
+Pemodelan relasional menyeluruh 22 tabel basis data diorganisasikan ke dalam 3 diagram arsitektural berdimensi proporsional, berlatar bersih, dan bertipografi besar (*font size 20px* dengan kartu entitas selebar 4,5–6 cm):
 
-##### a. Kluster Inti Transaksional dan Finansial (11 Tabel Utama)
-Peta relasi entitas inti yang mengatur akun pengguna, manajemen unit hunian, siklus reservasi, serta transaksi perputaran finansial disajikan pada Gambar 4.5 (a1).
+##### a. Kluster Inti Master Hunian, Kontrak Sewa, dan Transaksi Finansial (10 Tabel Utama)
+Peta topologi relasi entitas inti yang mengatur master hunian kos, akun pengguna, siklus pemesanan daring, kontrak sewa aktif, serta perputaran finansial penagihan dan kas disajikan pada Gambar 4.5 (a1).
 
-![Gambar 4.5 (a1) Arsitektur Global Skema Relasi Basis Data — Kluster Inti Transaksional dan Finansial](images/erd_global_part1_transaksional.png)
+![Gambar 4.5 (a1) Arsitektur Global Skema Relasi Basis Data — Kluster Inti Master Hunian, Kontrak Sewa, dan Finansial](images/erd_global_part1_transaksional.png)
 
-*Gambar 4.5 (a1) Arsitektur Global Skema Relasi Basis Data — Kluster Inti Transaksional dan Finansial (11 Tabel Utama)*  
+*Gambar 4.5 (a1) Arsitektur Global Skema Relasi Basis Data — Kluster Inti Master Hunian, Kontrak Sewa, dan Finansial (10 Tabel Utama)*  
 *Sumber: Hasil analisis basis data penulis (2026)*
 
 **Deskripsi Fungsional Gambar 4.5 (a1)**:
-Diagram Bagian 1 merepresentasikan topologi relasional dari 11 entitas inti yang mengendalikan seluruh operasional bisnis Asri Boarding House. Hubungan antar-entitas dipagari oleh aturan integritas referensial yang sangat ketat:
-1. **Autentikasi dan Identitas Penghuni**: Entitas `users` berelasi satu-ke-satu (`1:1`) aktif terhadap entitas `penyewa` melalui kunci asing `user_id` dengan aturan `ON DELETE RESTRICT`, menjamin data profil penyewa tidak dapat terhapus selama relasi akun masih terikat. Keunikan akun dilindungi oleh *Virtual Generated Columns* berindeks unik (`active_email`, `active_no_hp`, dan `active_nik`).
-2. **Master Unit Hunian dan Sarana**: Entitas fisik 32 unit kos pada tabel `kamar` terhubung ke master sarana `fasilitas` melalui tabel pivot `kamar_fasilitas` yang menerapkan integritas komposit `(kamar_id, fasilitas_id)` dengan aturan `ON DELETE CASCADE`. Satu unit `kamar` dapat ditempati oleh penyewa dalam rentang waktu kontrak yang berbeda (`1:N` historis) di mana keunikan kamar aktif dijaga oleh kolom virtual `active_nomor_kamar`.
-3. **Pemesanan Kamar Daring (*Pre-Payment*)**: Calon penyewa mengajukan pemesanan melalui entitas `reservasi` (`user_id`, `kamar_id`). Entitas ini berelasi `1:N` dengan `chat_messages` (`ON DELETE CASCADE`) sebagai ruang konsultasi sebelum pembayaran uang muka/lunas diselesaikan melalui payment gateway.
-4. **Siklus Penagihan Bulanan dan Pembayaran Non-Tunai**: Entitas `penyewa` berelasi `1:N` dengan `tagihan`. Integritas penagihan dijamin oleh batasan indeks unik komposit `(penyewa_id, periode_bulan, periode_tahun)` sehingga mesin *auto-billing* mustahil menerbitkan tagihan ganda pada periode yang sama. Satu entitas `tagihan` berelasi `1:N` terhadap jejak transaksi `pembayaran` (`ON DELETE RESTRICT`) yang mencatat `order_id`, saluran transfer perbankan, dan token settlement Midtrans Snap.
-5. **Akuntabilitas Arus Kas (*Cash Flow Aggregation*)**: Setiap mutasi pembayaran terkonfirmasi (`pembayaran`) dan arus kas keluar biaya operasional (`pengeluaran`) diagregasikan secara *real-time* ke dalam entitas rekapitulasi `saldo_kas`, menjamin transparansi posisi keuangan kos secara akurat dan konsisten.
+Diagram Bagian 1 merepresentasikan topologi relasional dari 10 entitas inti yang mengendalikan operasional transaksi hunian dan keuangan kos Asri Boarding House. Hubungan antar-entitas dipagari oleh aturan integritas referensial ketat:
+1. **Domain Master Hunian dan Pengguna**: Entitas akun `users` berelasi satu-ke-satu (`1:1`) aktif terhadap entitas `penyewa` melalui foreign key `user_id` dengan aturan `ON DELETE RESTRICT`, menjamin profil sewa tidak dapat terhapus secara tidak sengaja selama masa huni masih berjalan. Keunikan akun dilindungi oleh *Virtual Generated Columns* berindeks unik (`active_email`, `active_no_hp`, dan `active_nik`). Entitas fisik 32 unit kos pada tabel `kamar` terhubung ke sarana kamar pada tabel `fasilitas` melalui tabel perantara `kamar_fasilitas` berindeks komposit `(kamar_id, fasilitas_id)` dengan aturan `ON DELETE CASCADE`.
+2. **Domain Reservasi Daring dan Kontrak Sewa**: Calon penghuni mengajukan sewa melalui entitas `reservasi` (`user_id`, `kamar_id`) yang berelasi `1:N` dengan `chat_messages` (`ON DELETE CASCADE`) untuk negosiasi atau konsultasi pra-sewa. Saat pembayaran uang muka/lunas terkonfirmasi oleh pengelola kos, data reservasi bermutasi menjadi baris aktif pada entitas `penyewa` (`kamar_id`, `user_id`, `harga_sewa`, `tanggal_masuk`).
+3. **Domain Penagihan Bulanan, Pembayaran, dan Arus Kas**: Entitas `penyewa` berelasi `1:N` dengan `tagihan`. Integritas penagihan dijamin oleh batasan unik komposit `(penyewa_id, periode_bulan, periode_tahun)` sehingga mesin penagihan otomatis (*auto-billing*) tidak akan pernah menerbitkan dua tagihan pada periode bulan kalender yang sama. Satu entitas `tagihan` berelasi `1:N` terhadap mutasi `pembayaran` (`ON DELETE RESTRICT`) yang mencatat `order_id`, kanal pembayaran perbankan, dan token transaksi Midtrans Snap. Seluruh mutasi pembayaran terverifikasi serta biaya operasional kos (`pengeluaran`) diagregasikan secara *real-time* ke dalam entitas ringkasan `saldo_kas`, menjamin transparansi akuntansi kos secara akurat.
 
 ---
 
-##### b. Kluster Layanan Operasional, Komunikasi, dan Interaksi Publik (11 Tabel Pendukung)
-Peta relasi entitas pendukung operasional, penanganan tiket komplain, audit log komunikasi WhatsApp, percakapan tamu publik, serta manajemen konten CMS disajikan pada Gambar 4.5 (a2).
+##### b. Kluster Layanan Penghuni, Tiket Komplain, dan Interaksi Tamu Publik (6 Tabel Pendukung)
+Peta topologi relasi entitas pendukung penanganan aduan fasilitas, audit log gateway notifikasi WhatsApp, jejak audit aktivitas sistem, serta interaksi pengunjung publik anonim disajikan pada Gambar 4.5 (a2).
 
-![Gambar 4.5 (a2) Arsitektur Global Skema Relasi Basis Data — Kluster Layanan Operasional, Komunikasi, dan Interaksi Publik](images/erd_global_part2_operasional.png)
+![Gambar 4.5 (a2) Arsitektur Global Skema Relasi Basis Data — Kluster Layanan Penghuni, Tiket Komplain, dan Interaksi Tamu Publik](images/erd_global_part2_layanan_tamu.png)
 
-*Gambar 4.5 (a2) Arsitektur Global Skema Relasi Basis Data — Kluster Layanan Operasional, Komunikasi, dan Interaksi Publik (11 Tabel Pendukung)*  
+*Gambar 4.5 (a2) Arsitektur Global Skema Relasi Basis Data — Kluster Layanan Penghuni, Tiket Komplain, dan Interaksi Tamu Publik (6 Tabel Pendukung)*  
 *Sumber: Hasil analisis basis data penulis (2026)*
 
 **Deskripsi Fungsional Gambar 4.5 (a2)**:
-Diagram Bagian 2 menyajikan 11 entitas pendukung yang disusun dalam empat tingkatan (*multi-tier*) hierarkis guna menjaga kelancaran operasional kos, transparansi audit komunikasi, dan keterlibatan pengunjung publik:
-1. **Layanan Pemeliharaan dan Tiket Keluhan**: Penghuni aktif mengajukan aduan sarana melalui entitas `keluhan` (`penyewa_id`, `judul`, `foto_kerusakan`, `status`, `tanggapan_admin`) yang terikat dengan aturan `ON DELETE CASCADE`. Setiap pembaruan penanganan keluhan mencatat riwayat eskalasi ke dalam entitas `log_notifikasi`.
-2. **Audit Jejak Notifikasi dan Pemberitahuan Sistem**: Entitas `log_notifikasi` bertindak sebagai sentral pencatatan audit pesan keluar gateway WhatsApp Fonnte dan surel SMTP (`penerima`, `pesan`, `status_kirim`), terhubung ke `penyewa_id` dan `tagihan_id`. Entitas `notifikasi_khusus` mencatat peristiwa kritis sistem bagi akun pengguna (`user_id`, `tipe`, `dibaca`). Pengelola kos mendistribusikan siaran pengumuman penting terpusat melalui entitas `pengumuman` (`target_role`, `is_active`).
-3. **Interaksi Pengunjung Tamu Landing Page**: Pengunjung tanpa login yang mengakses landing page dapat berkonsultasi secara anonim melalui entitas `guest_chat_threads` yang diidentifikasi melalui token sesi terenkripsi SHA-256 (`session_token`) dan alamat IP. Utas ini berelasi `1:N` dengan `guest_chat_messages` (`ON DELETE CASCADE`). Konversi pemasaran diukur melalui entitas `whatsapp_clicks` yang merekam setiap klik tombol *floating WhatsApp* ke nomor pengelola kos.
-4. **Tata Kelola CMS Dinamis dan Reputasi Publik**: Entitas `customer_reviews` menampung ulasan testimoni penghuni yang telah disetujui kurasinya (`is_published`). Pengelola mengatur parameter operasional kos secara dinamis melalui entitas `settings` (`key-value pair` unik), yang terhubung secara konseptual dengan penyediaan panduan tanya-jawab interaktif (`faqs`), publikasi tata tertib hunian (`peraturan`), serta katalog dokumentasi visual fasilitas gedung (`galleries`).
+Diagram Bagian 2 menyajikan 6 entitas pendukung operasional yang disusun dalam struktur dua cabang simetris yang bertumpu pada entitas induk pengguna (`users` dan `penyewa`):
+1. **Cabang Layanan Komplain dan Audit Log**: Penghuni aktif menyampaikan laporan kerusakan fasilitas melalui entitas `keluhan` (`penyewa_id`, `judul`, `foto_kerusakan`, `status`, `tanggapan_admin`) beraturan `ON DELETE CASCADE`. Setiap perubahan status tindak lanjut aduan memicu pencatatan riwayat pada entitas `log_notifikasi`. Entitas `log_notifikasi` mencatat jejak audit seluruh transmisi pesan keluar WhatsApp Fonnte dan surel SMTP (`penyewa_id`, `tagihan_id`, `penerima`, `pesan`, `status_kirim`). Peristiwa penting sistem dicatat pada entitas `notifikasi_khusus` (`user_id`, `tipe`, `dibaca`).
+2. **Cabang Interaksi Pengunjung Tamu dan Analitik**: Pengunjung tanpa login pada landing page berkonsultasi melalui entitas `guest_chat_threads` yang diamankan oleh token sesi terenkripsi SHA-256 (`session_token`) dan alamat IP. Utas ini berelasi `1:N` terhadap pesan obrolan pada entitas `guest_chat_messages` (`ON DELETE CASCADE`). Efektivitas promosi digital dan rasio konversi pemasaran diukur secara otomatis oleh entitas `whatsapp_clicks` yang merekam setiap peristiwa klik tombol mengambang WhatsApp menuju kontak pengelola kos.
+
+---
+
+##### c. Kluster Manajemen Konten CMS, Regulasi Hunian, dan Reputasi Publik (6 Tabel Pendukung)
+Peta topologi relasi entitas tata kelola informasi publik, regulasi tata tertib hunian, dokumentasi multimedia, dan manajemen reputasi disajikan pada Gambar 4.5 (a3).
+
+![Gambar 4.5 (a3) Arsitektur Global Skema Relasi Basis Data — Kluster Manajemen Konten CMS, Regulasi Hunian, dan Reputasi Publik](images/erd_global_part3_cms_publik.png)
+
+*Gambar 4.5 (a3) Arsitektur Global Skema Relasi Basis Data — Kluster Manajemen Konten CMS, Regulasi Hunian, dan Reputasi Publik (6 Tabel Pendukung)*  
+*Sumber: Hasil analisis basis data penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.5 (a3)**:
+Diagram Bagian 3 memodelkan 6 entitas pendukung publikasi digital yang dikendalikan oleh administrator sistem guna menyajikan transparansi informasi kepada publik:
+1. **Pengaturan Dinamis dan Komunikasi Terpusat**: Entitas `settings` menampung konfigurasi parameter operasional kos secara dinamis (`key-value pair` unik). Administrator mempublikasikan maklumat darurat atau operasional berkala melalui entitas `pengumuman` (`target_role`, `is_active`, `tanggal_mulai`). Pengalaman tinggal penghuni dihimpun pada entitas `customer_reviews` (`penyewa_id`, `rating`, `komentar`, `is_published`) guna menampilkan testimoni terkurasi yang otentik pada halaman beranda.
+2. **Informasi Regulasi dan Galeri Multimedia**: Calon penyewa dapat menelaah pertanyaan umum pada entitas `faqs` (`kategori`, `pertanyaan`, `jawaban`, `is_active`), mematuhi tata tertib kos pada entitas `peraturan` (`nomor_pasal`, `judul`, `isi_peraturan`, `status_aktif`), serta meninjau dokumentasi gedung dan fasilitas pada entitas `galleries` (`kategori`, `file_path`, `urutan`). Seluruh entitas ini memastikan calon penyewa memperoleh kepastian informasi yang lengkap sebelum memutuskan untuk menyewa kamar.
 
 ---
 
