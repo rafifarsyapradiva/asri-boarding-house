@@ -207,11 +207,9 @@ BAB IV HASIL DAN PEMBAHASAN	22
 4.3.9 Implementasi Notifikasi Surel SMTP	56
 4.3.10 Implementasi Notifikasi WhatsApp Fonnte	57
 4.4 Hasil Deployment	59
-4.4.1 Skrip Kompilasi Bundel Aset Produksi	59
-4.4.2 Konfigurasi Peladen Web LiteSpeed/Apache	60
-4.4.3 Konfigurasi Penjadwal Tugas Peladen (Cron Job)	61
-4.4.4 Perintah Optimasi Kinerja Produksi Laravel	62
-4.4.5 Konfigurasi Variabel Lingkungan Produksi	63
+4.4.1 Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP	59
+4.4.2 Konfigurasi Penjadwal Tugas Peladen (Cron Job) Mesin Penagihan Otomatis	60
+4.4.3 Konfigurasi Variabel Lingkungan Produksi dan Optimasi Kinerja Peladen	61
 4.5 Hasil Pengujian Sistem	65
 4.5.1 Hasil Black Box Testing	65
 4.5.2 Hasil Pengujian Hak Akses	71
@@ -262,11 +260,10 @@ Gambar 4.15  Cuplikan Implementasi Kode Validasi Webhook Signature SHA-512 Midtr
 Gambar 4.16  Cuplikan Implementasi Kode Mesin Penagihan Otomatis (GenerateMonthlyInvoices.php)	56
 Gambar 4.17  Cuplikan Implementasi Kode Perhitungan Denda Flat 5% Kalender (ApplyLatePenalties.php)	57
 Gambar 4.18  Cuplikan Implementasi Kode Integrasi Gateway WhatsApp Fonnte (FonnteNotificationService.php)	58
-Gambar 4.19  Manifes Hasil Kompilasi Bundel Aset Produksi Frontend Vite (manifest.json)	60
-Gambar 4.20  Konfigurasi Peladen Web Apache/LiteSpeed (.htaccess)	61
-Gambar 4.21  Cuplikan Konfigurasi Variabel Lingkungan Produksi (.env.production)	64
-Gambar 4.22  Hasil Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit	75
-Gambar 4.23  Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)	80
+Gambar 4.19  Konfigurasi Peladen Web Apache/LiteSpeed dan Header Keamanan HTTP (.htaccess)	60
+Gambar 4.20  Cuplikan Konfigurasi Variabel Lingkungan Produksi (.env.production)	62
+Gambar 4.21  Hasil Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit	75
+Gambar 4.22  Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)	80
 
 ## BAB I PENDAHULUAN
 
@@ -1256,67 +1253,50 @@ Integrasi otomasi pesan WhatsApp diimplementasikan melalui kelas `FonnteService`
 * **Hubungan dengan Kebutuhan Sistem**: Menjamin keandalan pengiriman pesan invoice dan menekan angka tunggakan sewa melalui pelibatan orang tua/wali.
 
 ## 4.4 Hasil Deployment
-Implementasi sistem informasi manajemen kost Asri Boarding House telah berhasil melalui tahapan penyebaran (*deployment*) dan beroperasi secara penuh di lingkungan produksi berbasis *Hostinger Cloud Shared Hosting LiteSpeed Enterprise* dengan domain publik resmi `https://asriboardinghouse.weatso.id/`. Penerapan sistem pada infrastruktur produksi menuntut konfigurasi peladen yang ketat guna menjamin ketersediaan layanan (*high availability*), isolasi keamanan berkas sensitif, serta otomatisasi penjadwalan tugas penagihan periodik. Seluruh konfigurasi disajikan dalam bentuk tangkapan layar beresolusi tinggi dengan penanda gambar resmi guna mempermudah penelaahan teknis.
+Implementasi sistem informasi manajemen kost Asri Boarding House telah berhasil melalui tahapan penyebaran (*deployment*) dan beroperasi secara penuh di lingkungan produksi berbasis *Hostinger Cloud Shared Hosting LiteSpeed Enterprise* dengan domain publik resmi `https://asriboardinghouse.weatso.id/`. Penerapan sistem pada infrastruktur produksi nyata menuntut konfigurasi peladen yang ketat guna menjamin ketersediaan layanan (*high availability*), isolasi keamanan berkas sensitif, otomatisasi penjadwalan tugas penagihan periodik, serta kinerja responsif bagi pengguna akhir. Seluruh konfigurasi disajikan secara rinci guna mempermudah penelaahan teknis dan audit implementasi.
 
-### 4.4.1 Skrip Kompilasi Bundel Aset Produksi
-Sebagai bagian dari optimasi pengiriman aset statis di sisi klien (*front-end delivery*), seluruh modul CSS dan JavaScript dikompilasi menggunakan bundler Vite ke dalam bentuk berkas terkompresi dan terminifikasi guna meminimalkan ukuran transfer data jaringan. Di samping itu, tautan simbolis (*symbolic link*) dibangkitkan untuk menjembatani direktori penyimpanan privat Laravel (`storage/app/public`) ke direktori yang dapat diakses publik (`public/storage`) melalui eksekusi perintah konsol:
-`npm run build && php artisan storage:link`.
+### 4.4.1 Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP
+Peladen web LiteSpeed Enterprise dikonfigurasi melalui berkas `.htaccess` pada akar direktori publik guna mengarahkan seluruh permintaan masuk ke satu titik kendali tunggal (*front-controller pattern*) di `index.php`. Selain itu, diterapkan pengerasan keamanan peladen (*security hardening*) melalui pembatasan akses langsung terhadap berkas konfigurasi sistem yang sensitif (`.env`, `.git`), serta penyematan *HTTP Security Headers* berstandar industri guna mencegah kerentanan *Cross-Site Scripting* (XSS), *Clickjacking*, dan penafsiran tipe konten yang keliru (*MIME-sniffing*). Tangkapan layar berkas konfigurasi `.htaccess` peladen disajikan pada Gambar 4.19.
 
-Keluaran manifes hasil kompilasi produksi tersimpan pada direktori `public/build/manifest.json` yang dibaca secara otomatis oleh direktif `@vite` peladen Laravel saat aplikasi berjalan. Visualisasi terminal keluaran proses kompilasi bundel aset Vite produksi dan pembangkitan manifes disajikan pada Gambar 4.19.
+![Gambar 4.19 Tangkapan Layar Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP](images/kode_deployment_htaccess.png)
 
-![Gambar 4.19 Kompilasi Bundel Aset Produksi Vite dan Penautan Storage](images/gambar_4_6.png)
-
-*Gambar 4.19 Kompilasi Bundel Aset Produksi Vite dan Penautan Storage*  
-*Sumber: Tangkapan layar terminal kompilasi aset sistem (2026)*
-
-*Keterangan Gambar 4.19:*
-* **Fungsi Perintah**: Mengompilasi kode sumber TailwindCSS dan JavaScript menjadi bundel terenkripsi *cache-busted* serta menghubungkan tautan storage publik.
-* **Bagian Penting Proses Bisnis**: Pustaka antarmuka pengguna direduksi ukurannya secara drastis sehingga loading halaman katalog publik di peramban seluler menjadi sangat instan.
-* **Hubungan dengan Kebutuhan Sistem**: Menjamin kecepatan waktu muat halaman (*page load speed*) dan aksesibilitas dokumen foto kamar kost.
-
----
-
-### 4.4.2 Konfigurasi Peladen Web LiteSpeed/Apache
-Peladen web LiteSpeed dikonfigurasi melalui berkas `.htaccess` pada akar direktori publik guna mengarahkan seluruh permintaan masuk ke satu titik kendali tunggal (*front-controller pattern*) di `index.php`. Selain itu, diterapkan pengerasan keamanan peladen (*security hardening*) melalui pembatasan akses langsung terhadap berkas konfigurasi sistem yang sensitif (`.env`, `.git`), serta penyematan *HTTP Security Headers* berstandar industri guna mencegah kerentanan *Cross-Site Scripting* (XSS), *Clickjacking*, dan penafsiran tipe konten yang keliru (*MIME-sniffing*). Tangkapan layar berkas konfigurasi `.htaccess` peladen disajikan pada Gambar 4.20.
-
-![Gambar 4.20 Tangkapan Layar Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP](images/kode_deployment_htaccess.png)
-
-*Gambar 4.20 Tangkapan Layar Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP*  
+*Gambar 4.19 Tangkapan Layar Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP*  
 *Sumber: Tangkapan layar berkas public/.htaccess penulis (2026)*
 
-*Keterangan Gambar 4.20:*
-* **Fungsi Konfigurasi**: Mengatur perutean lalu lintas HTTP peladen web LiteSpeed dan penegakan header keamanan.
-* **Bagian Penting Proses Bisnis**: Baris 5 memberlakukan aturan `RewriteRule` dengan flag `[F,L,NC]` untuk memblokir akses ke berkas kredensial `.env`, serta Baris 12–15 menyematkan `X-Frame-Options` dan `X-Content-Type-Options`.
-* **Hubungan dengan Kebutuhan Sistem**: Menangkal serangan siber pembajakan klik (*Clickjacking*) dan kebocoran kunci API payment gateway.
+*Keterangan Gambar 4.19:*
+* **Fungsi Konfigurasi**: Mengatur perutean lalu lintas HTTP peladen web LiteSpeed dan penegakan header keamanan jaringan.
+* **Bagian Penting Proses Bisnis**: Baris 5 memberlakukan aturan `RewriteRule` dengan flag `[F,L,NC]` untuk memblokir akses ke berkas kredensial `.env`, serta Baris 12–15 menyematkan header `X-Frame-Options` dan `X-Content-Type-Options`.
+* **Hubungan dengan Kebutuhan Sistem**: Menangkal serangan siber pembajakan klik (*Clickjacking*) pada portal pembayaran dan kebocoran kunci API payment gateway.
 
 ---
 
-### 4.4.3 Konfigurasi Penjadwal Tugas Peladen (Cron Job)
+### 4.4.2 Konfigurasi Penjadwal Tugas Peladen (Cron Job) Mesin Penagihan Otomatis
 Guna menjamin kepastian eksekusi mesin penagihan otomatis (*Auto-Billing Engine*) setiap tanggal 1 awal bulan serta evaluasi harian denda flat keterlambatan kalender 5%, diaktifkan mekanisme penjadwalan tugas *cron* pada lingkungan peladen cPanel Hostinger. Tugas ini dipicu setiap menit untuk menjalankan penjadwal internal Laravel:
 `* * * * * cd /home/u1234567/public_html && /usr/bin/php82 artisan schedule:run >> /dev/null 2>&1`.
 
-Konfigurasi ini memastikan bahwa perintah `tagihan:generate-bulanan` dan `tagihan:proses-keterlambatan` dieksekusi tepat waktu tanpa membutuhkan intervensi manual dari pengelola kos.
+Konfigurasi ini memastikan bahwa perintah `tagihan:generate-bulanan` yang dijadwalkan pada tanggal 1 pukul 00:05 WIB dan `tagihan:proses-keterlambatan` yang dijadwalkan harian pukul 01:00 WIB dieksekusi secara otomatis dan deterministik tanpa membutuhkan intervensi manual dari pengelola kos.
 
 ---
 
-### 4.4.4 Perintah Optimasi Kinerja Produksi Laravel
-Untuk mengeliminasi beban pembacaan sistem berkas (*file I/O overhead*) pada setiap siklus permintaan HTTP di lingkungan produksi, seluruh berkas konfigurasi, peta rute, templat tampilan Blade, serta *listener* peristiwa dipra-kompilasi dan disimpan ke dalam memori (*in-memory caching*) melalui serangkaian perintah artisan:
-`php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan event:cache`.
+### 4.4.3 Konfigurasi Variabel Lingkungan Produksi dan Optimasi Kinerja Peladen
+Seluruh parameter konfigurasi aplikasi, kredensial basis data relasional MySQL InnoDB, kunci integrasi Midtrans Snap API, token gateway WhatsApp Fonnte, serta pengaturan protokol SMTP diisolasi secara ketat dalam berkas variabel lingkungan produksi `.env`. Penempatan parameter ini memastikan tidak ada kredensial sensitif yang terekam pada repositori kode program (*version control*).
 
----
+Sebelum aplikasi dipublikasikan ke lingkungan operasional langsung, dilakukan dua tahapan finalisasi:
+1. **Kompilasi Bundel Aset Front-End**: Pustaka CSS dan JavaScript dikompilasi menggunakan bundler Vite ke dalam direktori `public/build/` melalui perintah `npm run build`, serta tautan penyimpanan publik diaktifkan via `php artisan storage:link`.
+2. **Prapemanasan Memori (*In-Memory Caching*)**: Untuk mengeliminasi beban pembacaan berkas (*file I/O overhead*) pada shared hosting, seluruh konfigurasi, rute, templat tampilan Blade, dan *event listener* dipra-kompilasi menggunakan serangkaian perintah:
+   `php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan event:cache`.
 
-### 4.4.5 Konfigurasi Variabel Lingkungan Produksi
-Seluruh parameter konfigurasi aplikasi, kredensial basis data relasional, kunci integrasi Midtrans Snap API, token gateway WhatsApp Fonnte, serta pengaturan protokol SMTP diisolasi secara ketat dalam berkas variabel lingkungan produksi `.env`. Penempatan parameter ini memastikan tidak ada kredensial sensitif yang terekam pada repositori kode program (*version control*). Tangkapan layar konfigurasi produksi dengan nilai rahasia yang disamarkan (*redacted*) disajikan pada Gambar 4.21.
+Tangkapan layar konfigurasi variabel lingkungan produksi `.env` dengan nilai rahasia yang disamarkan (*redacted*) disajikan pada Gambar 4.20.
 
-![Gambar 4.21 Tangkapan Layar Konfigurasi Variabel Lingkungan Produksi .env](images/kode_deployment_env.png)
+![Gambar 4.20 Tangkapan Layar Konfigurasi Variabel Lingkungan Produksi .env](images/kode_deployment_env.png)
 
-*Gambar 4.21 Tangkapan Layar Konfigurasi Variabel Lingkungan Produksi .env*  
+*Gambar 4.20 Tangkapan Layar Konfigurasi Variabel Lingkungan Produksi .env*  
 *Sumber: Tangkapan layar berkas .env produksi penulis (2026)*
 
-*Keterangan Gambar 4.21:*
+*Keterangan Gambar 4.20:*
 * **Fungsi Konfigurasi**: Mendefinisikan variabel lingkungan runtime untuk koneksi basis data MySQL InnoDB, driver Midtrans Live, token Fonnte, dan Hostinger SMTP.
 * **Bagian Penting Proses Bisnis**: Baris 4 mengatur `APP_DEBUG=false` untuk mencegah kebocoran jejak tumpukan (*stack trace*) error ke publik, dan Baris 15 mengaktifkan mode produksi Midtrans `MIDTRANS_IS_PRODUCTION=true`.
-* **Hubungan dengan Kebutuhan Sistem**: Menjaga kerahasiaan kredensial peladen dan memastikan sistem terhubung ke gateway pembayaran perbankan riil.
+* **Hubungan dengan Kebutuhan Sistem**: Menjaga kerahasiaan kredensial peladen dan memastikan sistem terhubung ke gateway pembayaran perbankan riil secara aman dan optimal.
 
 ## 4.5 Hasil Pengujian Sistem
 Tahapan pengujian sistem memegang peranan krusial dalam siklus pengembangan perangkat lunak guna memverifikasi bahwa artefak sistem yang dibangun bekerja sesuai dengan spesifikasi fungsional, mematuhi batasan integritas data, kebal terhadap manipulasi otorisasi, serta mampu mengeksekusi kalkulasi finansial secara deterministik dan presisi. Pengujian dirancang secara komprehensif melalui kombinasi uji fungsionalitas kotak hitam (*black box testing*), pengujian isolasi hak akses (*Role-Based Access Control*), pengujian integrasi gerbang pembayaran daring (*payment gateway simulation*), pengujian keamanan lingkungan produksi (*live environment testing*), serta pengujian unit otomatis (*automated test suite*).
@@ -1456,11 +1436,11 @@ Pengujian lingkungan nyata (*live environment testing*) dilaksanakan secara lang
 
 *Sumber: Hasil pengujian peladen produksi live penulis (2026)*
 
-Di samping pengujian manual, keandalan fungsionalitas dan logika bisnis perangkat lunak diverifikasi secara otomatis menggunakan *suite* pengujian terotomasi PHPUnit pada ekosistem internal Laravel. Pengujian otomatis mencakup unit test model relasional, integrasi service layer, penegakan denda kalender 5% idempoten, kalkulasi diskon durasi tahunan, serta simulasi penguncian konkurensi kamar anti *double-booking*. Seluruh rangkaian uji otomatis dieksekusi melalui perintah konsol `php artisan test`. Hasil eksekusi pengujian otomatis menunjukkan kelulusan sempurna pada seluruh **510 *tests passed*** dengan total **2.211 *assertions*** tanpa kegagalan (*zero failure*), menghasilkan tingkat keberhasilan sebesar **100%**. Tangkapan layar keluaran terminal pengujian otomatis disajikan pada Gambar 4.22.
+Di samping pengujian manual, keandalan fungsionalitas dan logika bisnis perangkat lunak diverifikasi secara otomatis menggunakan *suite* pengujian terotomasi PHPUnit pada ekosistem internal Laravel. Pengujian otomatis mencakup unit test model relasional, integrasi service layer, penegakan denda kalender 5% idempoten, kalkulasi diskon durasi tahunan, serta simulasi penguncian konkurensi kamar anti *double-booking*. Seluruh rangkaian uji otomatis dieksekusi melalui perintah konsol `php artisan test`. Hasil eksekusi pengujian otomatis menunjukkan kelulusan sempurna pada seluruh **510 *tests passed*** dengan total **2.211 *assertions*** tanpa kegagalan (*zero failure*), menghasilkan tingkat keberhasilan sebesar **100%**. Tangkapan layar keluaran terminal pengujian otomatis disajikan pada Gambar 4.21.
 
-![Gambar 4.22 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed](images/gambar_4_11.png)
+![Gambar 4.21 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed](images/gambar_4_11.png)
 
-*Gambar 4.22 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed*  
+*Gambar 4.21 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed*  
 *Sumber: Tangkapan layar terminal eksekusi PHPUnit (2026)*
 
 ## 4.6 Hasil Wawancara dengan Penjaga Kost
@@ -1487,11 +1467,11 @@ Daftar pertanyaan terstruktur beserta respon verbatim dari narasumber dirangkum 
 
 *Sumber: Hasil rekaman audio wawancara langsung penulis (2026)*
 
-Dokumentasi pelaksanaan wawancara operasional disajikan pada Gambar 4.23.
+Dokumentasi pelaksanaan wawancara operasional disajikan pada Gambar 4.22.
 
-![Gambar 4.23 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)](images/gambar_4_12.png)
+![Gambar 4.22 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)](images/gambar_4_12.png)
 
-*Gambar 4.23 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)*  
+*Gambar 4.22 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)*  
 *Sumber: Dokumentasi foto penelitian penulis (2026)*
 
 Hasil wawancara terstruktur dan observasi interaksi langsung pada Tabel 4.7 mengungkap sejumlah temuan penting terkait penerimaan teknologi (*technology acceptance*) pada tingkat operasional lapangan:
