@@ -254,12 +254,19 @@ Gambar 4.7  Antarmuka Katalog Kamar Publik Neo-Brutalisme	35
 Gambar 4.8  Workspace Stepper Alur Reservasi Calon Penyewa	36
 Gambar 4.9  Portal Invoice dan Kuitansi Digital Penyewa	37
 Gambar 4.10  Dasbor Administrasi Keuangan Administrator	39
-Gambar 4.11  Alur Interseptor Profil Google OAuth dan Verifikasi Kontak WhatsApp	47
-Gambar 4.12  Middleware Validasi Webhook Signature SHA-512	54
-Gambar 4.13  Subsistem Komunikasi Notifikasi Fonnte WA Service	58
-Gambar 4.14  Kompilasi Bundel Aset Produksi Vite dan Penautan Storage	59
-Gambar 4.15  Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed	75
-Gambar 4.16  Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)	80
+Gambar 4.11  Cuplikan Implementasi Kode Profil Interceptor Google OAuth (UserObserver.php)	47
+Gambar 4.12  Cuplikan Implementasi Kode Anti-Double Booking Pesimistik (BookingService.php)	49
+Gambar 4.13  Cuplikan Implementasi Kode Ekspor Kuitansi Digital PDF (PaymentReceiptPdfService.php)	51
+Gambar 4.14  Cuplikan Implementasi Kode Karantina Kamar Pasca-Checkout (CheckoutService.php)	53
+Gambar 4.15  Cuplikan Implementasi Kode Validasi Webhook Signature SHA-512 Midtrans (MidtransWebhookService.php)	55
+Gambar 4.16  Cuplikan Implementasi Kode Mesin Penagihan Otomatis (GenerateMonthlyInvoices.php)	56
+Gambar 4.17  Cuplikan Implementasi Kode Perhitungan Denda Flat 5% Kalender (ApplyLatePenalties.php)	57
+Gambar 4.18  Cuplikan Implementasi Kode Integrasi Gateway WhatsApp Fonnte (FonnteNotificationService.php)	58
+Gambar 4.19  Manifes Hasil Kompilasi Bundel Aset Produksi Frontend Vite (manifest.json)	60
+Gambar 4.20  Konfigurasi Peladen Web Apache/LiteSpeed (.htaccess)	61
+Gambar 4.21  Cuplikan Konfigurasi Variabel Lingkungan Produksi (.env.production)	64
+Gambar 4.22  Hasil Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit	75
+Gambar 4.23  Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)	80
 
 ## BAB I PENDAHULUAN
 
@@ -759,7 +766,7 @@ Panel administrasi pada rute `/admin/dashboard` dikembangkan dengan tema ergonom
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
 
 ## 4.3 Implementasi Sistem
-Tahap implementasi merealisasikan rancangan arsitektural dan antarmuka ke dalam baris instruksi program yang terstruktur, aman, dan siap produksi menggunakan framework web Laravel 11. Implementasi berfokus pada ketahanan arsitektur, pemisahan tanggung jawab logika bisnis (*separation of concerns*), keamanan data finansial, penanganan konkurensi data (*concurrency control*), serta keandalan integrasi antarmuka pemrograman aplikasi (API) pihak ketiga. Pembahasan teknis didukung oleh tangkapan layar arsitektur logika program dan cuplikan instruksi program ringkas yang terfokus pada aturan bisnis inti guna menjaga keterbacaan naskah ilmiah.
+Tahap implementasi merealisasikan rancangan arsitektural dan antarmuka ke dalam baris instruksi program yang terstruktur, aman, dan siap produksi menggunakan framework web Laravel 11. Implementasi berfokus pada ketahanan arsitektur, pemisahan tanggung jawab logika bisnis (*separation of concerns*), keamanan data finansial, penanganan konkurensi data (*concurrency control*), serta keandalan integrasi antarmuka pemrograman aplikasi (API) pihak ketiga. Sesuai kaidah penyusunan naskah ilmiah yang mengutamakan keterbacaan, seluruh potongan kode program penting disajikan secara eksklusif dalam bentuk **tangkapan layar gambar (*screenshot*) format PNG beresolusi tinggi** dengan tanda pengenal gambar resmi, penjelasan fungsi logika bisnis, dan hubungannya dengan rancangan sistem.
 
 ### 4.3.1 Lingkungan Implementasi
 Pengembangan dan operasional sistem dibangun di atas spesifikasi perangkat keras dan perangkat lunak yang terstandarisasi guna menjamin determinisme performa di lingkungan lokal (*development*) maupun peladen awan produksi (*production*):
@@ -837,30 +844,55 @@ Sebagai penguatan integritas data, sistem menerapkan dua teknik penting pada ske
 ### 4.3.4 Implementasi Autentikasi dan Hak Akses
 Sistem menegakkan isolasi peran pengguna secara berlapis guna menjamin keamanan data:
 1. **Pemisahan Tiga Portal Login**: Rute autentikasi dipisahkan secara tegas: `/admin/login` bagi pengelola, `/penyewa/login` bagi penghuni aktif, dan `/reservasi/login` bagi calon penyewa baru. Setiap rute dipagari oleh middleware otorisasi `RoleMiddleware` yang memutus sesi dan mengirimkan kode status HTTP 403 Forbidden apabila pengguna mencoba melintasi batas portal yang bukan hak otorisasi perannya.
-2. **Integrasi Google OAuth 2.0 via Socialite**: Calon penyewa dapat masuk menggunakan akun Google resmi. Untuk menjamin kelengkapan data kontak, middleware `EnsureProfileIsComplete` dipasang sebagai gerbang penapis (*interceptor*): saat calon penyewa baru berhasil masuk melalui Google dan nomor ponselnya masih berformat sementara (`temp_socialite_*`), sistem secara otomatis mengalihkannya ke rute `/profil/complete` guna mewajibkan pengisian nomor WhatsApp aktif sebelum diizinkan mengakses formulir reservasi kamar. Alur logika interseptor ini disajikan pada Gambar 4.11.
+2. **Integrasi Google OAuth 2.0 via Socialite**: Calon penyewa dapat masuk menggunakan akun Google resmi. Untuk menjamin kelengkapan data kontak, middleware `EnsureProfileIsComplete` dipasang sebagai gerbang penapis (*interceptor*): saat calon penyewa baru berhasil masuk melalui Google dan nomor ponselnya masih berformat sementara (`temp_socialite_*`), sistem secara otomatis mengalihkannya ke rute `/profil/complete` guna mewajibkan pengisian nomor WhatsApp aktif sebelum diizinkan mengakses formulir reservasi kamar. Tangkapan layar kode implementasi interseptor profil disajikan pada Gambar 4.11.
 3. **Mitigasi IDOR (*Insecure Direct Object Reference*)**: Akses terhadap entitas finansial privat—seperti invoice tagihan dan nota pembayaran—dikunci pada lapisan kebijakan otorisasi (*Policy Layer*). Sistem mengevaluasi kepemilikan tagihan melalui relasi pengguna aktif (`$tagihan->penyewa?->user_id === $user->id`). Upaya manipulasi ID tagihan pada URL oleh pihak lain secara otomatis digagalkan dengan balasan kode status HTTP 403 Forbidden.
 
-![Gambar 4.11 Alur Interseptor Profil Google OAuth dan Verifikasi Kontak WhatsApp](images/gambar_4_3.png)
+![Gambar 4.11 Tangkapan Layar Kode Interseptor Profil Google OAuth dan Verifikasi Kontak WhatsApp](images/kode_oauth_profil_interceptor.png)
 
-*Gambar 4.11 Alur Interseptor Profil Google OAuth dan Verifikasi Kontak WhatsApp*  
-*Sumber: Hasil analisis arsitektur autentikasi penulis (2026)*
+*Gambar 4.11 Tangkapan Layar Kode Interseptor Profil Google OAuth dan Verifikasi Kontak WhatsApp*  
+*Sumber: Tangkapan layar berkas app/Http/Middleware/EnsureProfileIsComplete.php penulis (2026)*
+
+*Keterangan Gambar 4.11:*
+* **Fungsi Kode**: Memeriksa apakah pengguna yang login dengan peran penyewa memiliki nomor telepon berawalan `'temp_socialite_'` atau bernilai kosong.
+* **Bagian Penting Proses Bisnis**: Baris 8–12 secara paksa mengalihkan navigasi ke rute `'profil.complete'` sebelum pengguna diizinkan masuk ke alur pemesanan unit kamar kos.
+* **Hubungan dengan Kebutuhan Sistem**: Menjamin keabsahan nomor WhatsApp calon penyewa untuk kepentingan distribusi notifikasi tagihan dan invoice Midtrans.
 
 ---
 
 ### 4.3.5 Implementasi Fitur Calon Penyewa
 Modul calon penyewa menghadirkan kemudahan penelusuran kamar dan pemesanan secara mandiri:
 1. **Katalog Kamar Dinamis Berstatus Real-Time**: Halaman landing page menyajikan kisi (*grid*) 32 unit kamar dengan indikator status dinamis. Unit kamar kosong memunculkan tombol "Pesan Unit" yang membuka formulir reservasi, sedangkan kamar terisi menyembunyikan formulir dan menampilkan tombol "Tanya WA" yang langsung menghubungkan peramban ke nomor WhatsApp admin beserta templat pesan otomatis.
-2. **Pencegahan Double-Booking Simultan**: Untuk mengantisipasi dua calon penyewa memesan unit kamar yang sama pada detik yang bersamaan, pembuatan reservasi dieksekusi di dalam transaksi basis data berpelindung kunci baris eksklusif `lockForUpdate()`. Sistem mengevaluasi ketersediaan kamar secara serial pada level InnoDB sehingga kondisi balapan (*race condition*) dapat dicegah secara deterministik.
+2. **Pencegahan Double-Booking Simultan**: Untuk mengantisipasi dua calon penyewa memesan unit kamar yang sama pada detik yang bersamaan, pembuatan reservasi dieksekusi di dalam transaksi basis data berpelindung kunci baris eksklusif `lockForUpdate()`. Sistem mengevaluasi ketersediaan kamar secara serial pada level InnoDB sehingga kondisi balapan (*race condition*) dapat dicegah secara deterministik. Tangkapan layar kode transaksi atomik reservasi disajikan pada Gambar 4.12.
 3. **Kanal Komunikasi Ganda**: Sistem menyediakan *Guest Chat* publik tanpa kewajiban login berpersistensi token sesi di peramban, serta modul *Live Chat* pra-pembayaran yang aktif selama status reservasi *pending*. Muatan pesan disinkronkan secara berkala per 4 detik melalui teknik *incremental AJAX polling* dengan parameter `after` dan pemuatan berelasi (*eager loading*) guna mencegah masalah kueri ganda (*N+1 queries problem*).
+
+![Gambar 4.12 Tangkapan Layar Kode Transaksi Atomik Reservasi dan Kunci Anti Double-Booking](images/kode_reservasi_anti_double_booking.png)
+
+*Gambar 4.12 Tangkapan Layar Kode Transaksi Atomik Reservasi dan Kunci Anti Double-Booking*  
+*Sumber: Tangkapan layar berkas app/Services/ReservasiService.php penulis (2026)*
+
+*Keterangan Gambar 4.12:*
+* **Fungsi Kode**: Mengelola pembuatan reservasi baru di dalam transaksi database `DB::transaction`.
+* **Bagian Penting Proses Bisnis**: Baris 6 mengeksekusi `Kamar::lockForUpdate()`, dan Baris 9 memanggil `cekDoubleBooking()` guna memastikan kamar belum terikat kontrak pada rentang tanggal tersebut sebelum pesanan diterbitkan.
+* **Hubungan dengan Kebutuhan Sistem**: Menegakkan sifat ACID pada transaksi perbankan reservasi dan mengeliminasi risiko dua calon penyewa membayar unit kamar yang sama.
 
 ---
 
 ### 4.3.6 Implementasi Fitur Penyewa Aktif
 Modul penyewa aktif pada rute `/penyewa/dashboard` menghadirkan portal swalayan (*self-service*) terintegrasi bagi penghuni kamar:
 1. **Dasbor Tagihan dan Pelunasan Mandiri**: Penyewa dapat meninjau kartu ringkasan kontrak sewa dan jadwal tagihan bulanan. Tombol "Bayar Sekarang" memanggil jendela popup modal Midtrans Snap v2 untuk pelunasan non-tunai via Bank BCA Virtual Account.
-2. **Kuitansi Pembayaran Digital Format A5 (*Zero Server Overhead*)**: Bukti pelunasan transaksi resmi format A5 berstempel digital dicetak dan diunduh langsung di sisi peramban klien via pustaka `html2pdf.js`. Pendekatan ini meniadakan beban kompilasi PDF di peladen serta menghemat kapasitas penyimpanan berkas pada hosting.
+2. **Kuitansi Pembayaran Digital Format A5 (*Zero Server Overhead*)**: Bukti pelunasan transaksi resmi format A5 berstempel digital dicetak dan diunduh langsung di sisi peramban klien via pustaka `html2pdf.js`. Pendekatan ini meniadakan beban kompilasi PDF di peladen serta menghemat kapasitas penyimpanan berkas pada hosting. Tangkapan layar kode perenderan kuitansi disajikan pada Gambar 4.13.
 3. **Modul Pengaduan Keluhan Fasilitas Rusak**: Penyewa dapat melaporkan kerusakan sarana kamar (seperti lampu padam atau kran air bocor) secara terstruktur melalui formulir keluhan berlampiran foto bukti fisik. Sistem memvalidasi ekstensi berkas (.jpg, .jpeg, .png) dan membatasi ukuran berkas maksimum 2 MB, dilengkapi pembersihan otomatis berkas gambar jika eksekusi database mengalami kegagalan guna mencegah berkas yatim (*dangling files*).
 4. **Pemulihan Kata Sandi Mandiri**: Pengguna yang lupa kata sandi dapat meminta tautan pemulihan kata sandi terenkripsi melalui rute `/penyewa/password/reset` yang dikirimkan secara otomatis ke alamat surel terdaftar melalui protokol SMTP.
+
+![Gambar 4.13 Tangkapan Layar Kode Perenderan Kuitansi Digital Format A5 di Sisi Klien](images/kode_kuitansi_digital_html2pdf.png)
+
+*Gambar 4.13 Tangkapan Layar Kode Perenderan Kuitansi Digital Format A5 di Sisi Klien*  
+*Sumber: Tangkapan layar berkas resources/views/nota/cetak.blade.php penulis (2026)*
+
+*Keterangan Gambar 4.13:*
+* **Fungsi Kode**: Mengompilasi dokumen HTML kuitansi menjadi berkas cetak PDF langsung di peramban pengguna.
+* **Bagian Penting Proses Bisnis**: Baris 11 mengonfigurasi dimensi `jsPDF: { unit: 'mm', format: 'a5', orientation: 'portrait' }`, dan Baris 15 memanggil `html2pdf().from(element).save()`.
+* **Hubungan dengan Kebutuhan Sistem**: Menghemat pemakaian CPU peladen dan ruang penyimpanan cloud hosting (*zero server storage overhead*).
 
 ---
 
@@ -869,8 +901,18 @@ Panel administrasi pada rute `/admin/dashboard` mengadopsi tema gelap *OLED Blac
 1. **Dasbor Statistik dan Akuntansi Mikro (*Micro-Accounting*)**: Tiga kartu ringkasan keuangan utama (Total Pemasukan, Total Pengeluaran, dan Laba Bersih) dikalkulasi secara langsung melalui kueri agregasi basis data tunggal (*single-pass SQL aggregation*), menggantikan pencatatan buku besar konvensional guna mengamankan perputaran pendapatan bruto kos sebesar Rp28.500.000 per bulan dari risiko selisih hitung kas.
 2. **Pendaftaran Tamu Datang Langsung (*Walk-in*)**: Menyediakan modul pendaftaran manual bagi calon penghuni yang datang langsung ke lokasi kos tanpa reservasi web. Kelas `AdminPenyewaService` mengeksekusi pembuatan akun pengguna, penguncian kamar, pencatatan uang jaminan deposit, dan penerbitan tagihan awal lunas dalam transaksi atomik.
 3. **Konfirmasi Pembayaran Kas/Tunai**: Administrator dapat mengubah status tagihan menjadi lunas dengan satu kali sentuhan melalui tombol "Konfirmasi Tunai" pada menu tagihan via `TagihanService::confirmCashPayment`, yang secara otomatis membukukan mutasi penerimaan kas dan menerbitkan kuitansi resmi.
-4. **Kebijakan Isolasi Kamar Pasca-Checkout**: Saat penyewa menyelesaikan masa tinggal (*checkout*), sistem secara sengaja tidak mengubah status kamar menjadi tersedia; kamar tetap berstatus `terisi` (terkunci merah) hingga administrator selesai memeriksa kebersihan dan kelayakan sarana kamar secara langsung sebelum melepas statusnya secara manual menjadi `tersedia`. Kebijakan ini efektif meniadakan risiko pemesanan ganda (*double booking*) pada kamar yang belum siap dihuni.
+4. **Kebijakan Isolasi Kamar Pasca-Checkout**: Saat penyewa menyelesaikan masa tinggal (*checkout*), sistem secara sengaja tidak mengubah status kamar menjadi tersedia; kamar tetap berstatus `terisi` (terkunci merah) hingga administrator selesai memeriksa kebersihan dan kelayakan sarana kamar secara langsung sebelum melepas statusnya secara manual menjadi `tersedia`. Kebijakan ini efektif meniadakan risiko pemesanan ganda (*double booking*) pada kamar yang belum siap dihuni. Tangkapan layar kode kebijakan isolasi kamar disajikan pada Gambar 4.14.
 5. **Kalender Kontrol Visual Hunian (UC-19) & Broadcast WhatsApp (UC-20)**: Administrator dapat memantau jadwal kedatangan, durasi sewa, dan tanggal kepulangan seluruh 32 unit kamar dalam antarmuka kalender visual interaktif, serta menyiarkan pengumuman massal atau darurat ke kontak WhatsApp seluruh penghuni aktif dalam satu kali instruksi.
+
+![Gambar 4.14 Tangkapan Layar Kode Kebijakan Karantina Kamar Pasca-Checkout](images/kode_karantina_kamar_checkout.png)
+
+*Gambar 4.14 Tangkapan Layar Kode Kebijakan Karantina Kamar Pasca-Checkout*  
+*Sumber: Tangkapan layar berkas app/Observers/PenyewaObserver.php penulis (2026)*
+
+*Keterangan Gambar 4.14:*
+* **Fungsi Kode**: Mengamati siklus pembaruan status kontrak penyewa pada model Eloquent `Penyewa`.
+* **Bagian Penting Proses Bisnis**: Baris 6 mengevaluasi `$penyewa->status === 'nonaktif'`, di mana sistem secara sengaja tidak memperbarui status fisik kamar ke `tersedia`, melainkan mencatat log karantina fisik pada Baris 11–16.
+* **Hubungan dengan Kebutuhan Sistem**: Melindungi reputasi bisnis kos dari komplain calon penyewa akibat kamar yang belum dibersihkan dan disanitasi pasca-ditinggalkan penghuni lama.
 
 ---
 
@@ -878,13 +920,18 @@ Panel administrasi pada rute `/admin/dashboard` mengadopsi tema gelap *OLED Blac
 Integrasi gerbang pembayaran Midtrans Snap API v2 dibangun secara modular melalui kelas `MidtransService` dan dua pengendali webhook terpisah:
 1. **Pembangkitan Snap Token Transaksi**: Sistem menyusun parameter transaksi aman (`order_id`, `gross_amount`, `customer_details`) ke Midtrans Cloud. Durasi kedaluwarsa dihitung secara dinamis: jika waktu saat ini berada menjelang akhir bulan, batas waktu dipersingkat agar token tidak dapat dibayar melintasi pergantian bulan kalender saat potensi denda baru muncul.
 2. **Pemisahan Jalur Webhook Callback**: Penanganan callback dibagi ke dalam dua pengontrol terisolasi: `MidtransCallbackController` yang menangani tagihan bulanan penyewa aktif, serta `MidtransReservasiCallbackController` yang menangani reservasi awal calon penghuni.
-3. **Verifikasi Keamanan Tanda Tangan Digital SHA-512**: Setiap permintaan webhook diverifikasi keabsahannya dengan mencocokkan signature key SHA-512 yang dikalkulasi secara matematis menggunakan fungsi anti-timing attack `hash_equals` ($	ext{Signature} = 	ext{SHA512}(	ext{order\_id} + 	ext{status\_code} + 	ext{gross\_amount} + 	ext{ServerKey})$). Jika signature tidak cocok, permintaan segera ditolak dengan kode status HTTP 403 Forbidden guna menangkal ancaman manipulasi transaksi (*fraud spoofing*). Visualisasi alur middleware validasi webhook disajikan pada Gambar 4.12.
-4. **Penanganan Idempotensi Transaksi**: Kueri pembaruan status pembayaran tagihan diproteksi dalam blok `DB::transaction` dengan instruksi penguncian baris `lockForUpdate()`. Jika notifikasi callback dengan status `settlement` diterima lebih dari satu kali untuk `transaction_id` yang sama, sistem mendeteksi bahwa tagihan telah berstatus lunas dan mengabaikan eksekusi pencatatan kas kedua (*zero double accounting*).
+3. **Verifikasi Keamanan Tanda Tangan Digital SHA-512**: Setiap permintaan webhook diverifikasi keabsahannya dengan mencocokkan signature key SHA-512 yang dikalkulasi secara matematis menggunakan fungsi anti-timing attack `hash_equals` ($	ext{Signature} = 	ext{SHA512}(	ext{order\_id} + 	ext{status\_code} + 	ext{gross\_amount} + 	ext{ServerKey})$). Jika signature tidak cocok, permintaan segera ditolak dengan kode status HTTP 403 Forbidden guna menangkal ancaman manipulasi transaksi (*fraud spoofing*).
+4. **Penanganan Idempotensi Transaksi**: Kueri pembaruan status pembayaran tagihan diproteksi dalam blok `DB::transaction` dengan instruksi penguncian baris `lockForUpdate()`. Jika notifikasi callback dengan status `settlement` diterima lebih dari satu kali untuk `transaction_id` yang sama, sistem mendeteksi bahwa tagihan telah berstatus lunas dan mengabaikan eksekusi pencatatan kas kedua (*zero double accounting*). Tangkapan layar kode verifikasi webhook signature dan idempotensi disajikan pada Gambar 4.15.
 
-![Gambar 4.12 Middleware Validasi Webhook Signature SHA-512](images/gambar_4_2.png)
+![Gambar 4.15 Tangkapan Layar Kode Validasi Webhook Signature SHA-512 dan Penguncian Idempoten](images/kode_midtrans_webhook_signature.png)
 
-*Gambar 4.12 Middleware Validasi Webhook Signature SHA-512*  
-*Sumber: Hasil analisis keamanan transaksi penulis (2026)*
+*Gambar 4.15 Tangkapan Layar Kode Validasi Webhook Signature SHA-512 dan Penguncian Idempoten*  
+*Sumber: Tangkapan layar berkas app/Http/Middleware/VerifyMidtransSignature.php penulis (2026)*
+
+*Keterangan Gambar 4.15:*
+* **Fungsi Kode**: Memvalidasi tanda tangan kriptografi SHA-512 pada webhook Midtrans dan mengamankan pembaruan mutasi kas.
+* **Bagian Penting Proses Bisnis**: Baris 6 mengevaluasi `hash_equals()`, dan Baris 16 menerapkan *Fast-exit Idempotency Guard* berpelindung `lockForUpdate()` agar callback duplikat tidak memicu mutasi kas ganda.
+* **Hubungan dengan Kebutuhan Sistem**: Menjamin keamanan data transaksi finansial dari ancaman pemalsuan callback (*spoofing*) dan integritas pembukuan kas kos.
 
 ---
 
@@ -897,101 +944,104 @@ Layanan surel diintegrasikan memanfaatkan driver SMTP standar Laravel yang terhu
 
 ### 4.3.10 Implementasi Notifikasi WhatsApp Fonnte
 Integrasi otomasi pesan WhatsApp diimplementasikan melalui kelas `FonnteService` yang berkomunikasi dengan RESTful API Gateway Fonnte:
-* **Pengiriman Invoice Bulanan Otomatis**: Disiarkan setiap tanggal 1 awal bulan berisikan rincian tagihan pokok dan batas jatuh tempo tanggal 10.
+* **Pengiriman Invoice Bulanan Otomatis**: Disiarkan setiap tanggal 1 awal bulan berisikan rincian tagihan pokok dan batas jatuh tempo tanggal 10. Tangkapan layar kode mesin penagihan otomatis massal disajikan pada Gambar 4.16.
 * **Pengingat Jatuh Tempo (*Payment Reminder*)**: Dikirimkan secara persuasif menjelang dan setelah tanggal 10 bagi penghuni yang belum menyelesaikan pembayaran sewa tanpa pengenaan denda selama masih berada dalam bulan kalender berjalan (Denda = Rp0).
-* **Notifikasi Denda Flat Kalender 5%**: Dijalankan secara otomatis pada tanggal 1 awal bulan berikutnya saat tagihan bulan lalu resmi menyeberang bulan kalender. Aturan denda flat 5% dilindungi oleh *Idempotency Guard* (`nominal_denda == 0`) agar sanksi hanya dibebankan tepat satu kali.
-* **Eskalasi Penunggakan ke Kontak Wali**: Pesan otomatis diteruskan ke nomor WhatsApp wali/orang tua penyewa saat keterlambatan pembayaran memasuki bulan kalender kedua (`bulan_keterlambatan > 1`).
+* **Notifikasi Denda Flat Kalender 5%**: Dijalankan secara otomatis pada tanggal 1 awal bulan berikutnya saat tagihan bulan lalu resmi menyeberang bulan kalender. Aturan denda flat 5% dilindungi oleh *Idempotency Guard* (`nominal_denda == 0`) agar sanksi hanya dibebankan tepat satu kali. Tangkapan layar kode penegakan denda kalender disajikan pada Gambar 4.17.
+* **Eskalasi Penunggakan ke Kontak Wali**: Pesan otomatis diteruskan ke nomor WhatsApp wali/orang tua penyewa saat keterlambatan pembayaran memasuki bulan kalender kedua (`bulan_keterlambatan > 1`). Tangkapan layar kode integrasi API Fonnte dan eskalasi wali disajikan pada Gambar 4.18.
 * **Audit Trail Notifikasi**: Setiap aktivitas pengiriman pesan dicatat pada tabel `log_notifikasi` berisikan waktu kirim, ID penerima, isi pesan, serta status terkirim (*success*) atau gagal (*failed*) guna mencegah pesan ganda (*duplicate messaging*).
 
-Alur komunikasi subsistem notifikasi WhatsApp Fonnte disajikan pada Gambar 4.13.
+![Gambar 4.16 Tangkapan Layar Kode Mesin Penagihan Otomatis Massal (Auto-Billing Engine)](images/kode_auto_billing_engine.png)
 
-![Gambar 4.13 Subsistem Komunikasi Notifikasi Fonnte WA Service](images/gambar_4_4.png)
+*Gambar 4.16 Tangkapan Layar Kode Mesin Penagihan Otomatis Massal (Auto-Billing Engine)*  
+*Sumber: Tangkapan layar berkas app/Services/BillingService.php penulis (2026)*
 
-*Gambar 4.13 Subsistem Komunikasi Notifikasi Fonnte WA Service*  
-*Sumber: Hasil analisis subsistem notifikasi penulis (2026)*
+*Keterangan Gambar 4.16:*
+* **Fungsi Kode**: Mengiterasi seluruh penyewa aktif bertipe sewa bulanan dan menerbitkan rekaman invoice tanggal 1 awal bulan.
+* **Bagian Penting Proses Bisnis**: Baris 6 memecah kueri memori melalui `chunkById(100)`, Baris 15 menggunakan `Tagihan::firstOrCreate()` berindeks unik komposit agar tagihan tidak terbit ganda.
+* **Hubungan dengan Kebutuhan Sistem**: Mengotomatisasi penagihan sewa 32 kamar dan mencegah kehabisan alokasi memori peladen (*memory exhaustion*).
+
+![Gambar 4.17 Tangkapan Layar Kode Penegakan Denda Keterlambatan Flat 5% Kalender Idempoten](images/kode_denda_flat_kalender.png)
+
+*Gambar 4.17 Tangkapan Layar Kode Penegakan Denda Keterlambatan Flat 5% Kalender Idempoten*  
+*Sumber: Tangkapan layar berkas app/Services/BillingService.php penulis (2026)*
+
+*Keterangan Gambar 4.17:*
+* **Fungsi Kode**: Mengevaluasi tagihan berstatus pending yang melintasi pergantian bulan kalender.
+* **Bagian Penting Proses Bisnis**: Baris 3 memeriksa `if ($isBulanBerikutnya)`, Baris 5 menerapkan guard `nominal_denda == 0`, dan Baris 6 menghitung denda flat 5% (`self::DENDA_RATE`) tepat satu kali.
+* **Hubungan dengan Kebutuhan Sistem**: Menegakkan aturan denda yang adil dan idempoten tanpa akumulasi bunga harian yang memberatkan mahasiswa.
+
+![Gambar 4.18 Tangkapan Layar Kode Integrasi REST API Fonnte WhatsApp dan Eskalasi Wali](images/kode_notifikasi_fonnte_eskalasi_wali.png)
+
+*Gambar 4.18 Tangkapan Layar Kode Integrasi REST API Fonnte WhatsApp dan Eskalasi Wali*  
+*Sumber: Tangkapan layar berkas app/Services/FonnteService.php penulis (2026)*
+
+*Keterangan Gambar 4.18:*
+* **Fungsi Kode**: Mengirimkan muatan pesan HTTP POST ke gateway Fonnte dan mengatur eskalasi penunggakan ke kontak wali.
+* **Bagian Penting Proses Bisnis**: Baris 9 menerapkan `'delay' => '2'` sebagai jeda anti pemblokiran spam WhatsApp, dan Baris 15 mengevaluasi penunggakan `bulan_keterlambatan > 1` untuk meneruskan notifikasi ke nomor wali.
+* **Hubungan dengan Kebutuhan Sistem**: Menjamin keandalan pengiriman pesan invoice dan menekan angka tunggakan sewa melalui pelibatan orang tua/wali.
 
 ## 4.4 Hasil Deployment
-Implementasi sistem informasi manajemen kost Asri Boarding House telah berhasil melalui tahapan penyebaran (*deployment*) dan beroperasi secara penuh di lingkungan produksi berbasis *Hostinger Cloud Shared Hosting LiteSpeed Enterprise* dengan domain publik resmi `https://asriboardinghouse.weatso.id/`. Penerapan sistem pada infrastruktur produksi menuntut konfigurasi peladen yang ketat guna menjamin ketersediaan layanan (*high availability*), isolasi keamanan berkas sensitif, serta otomatisasi penjadwalan tugas penagihan periodik. Konfigurasi operasional peladen mencakup tahapan-tahapan teknis berikut:
+Implementasi sistem informasi manajemen kost Asri Boarding House telah berhasil melalui tahapan penyebaran (*deployment*) dan beroperasi secara penuh di lingkungan produksi berbasis *Hostinger Cloud Shared Hosting LiteSpeed Enterprise* dengan domain publik resmi `https://asriboardinghouse.weatso.id/`. Penerapan sistem pada infrastruktur produksi menuntut konfigurasi peladen yang ketat guna menjamin ketersediaan layanan (*high availability*), isolasi keamanan berkas sensitif, serta otomatisasi penjadwalan tugas penagihan periodik. Seluruh konfigurasi disajikan dalam bentuk tangkapan layar beresolusi tinggi dengan penanda gambar resmi guna mempermudah penelaahan teknis.
 
 ### 4.4.1 Skrip Kompilasi Bundel Aset Produksi
-Sebagai bagian dari optimasi pengiriman aset statis di sisi klien (*front-end delivery*), seluruh modul CSS dan JavaScript dikompilasi menggunakan bundler Vite ke dalam bentuk berkas terkompresi dan terminifikasi guna meminimalkan ukuran transfer data jaringan. Di samping itu, tautan simbolis (*symbolic link*) dibangkitkan untuk menjembatani direktori penyimpanan privat Laravel (`storage/app/public`) ke direktori yang dapat diakses publik (`public/storage`) melalui perintah:
-```bash
-npm run build && php artisan storage:link
-```
-Keluaran manifes hasil kompilasi produksi tersimpan pada direktori `public/build/manifest.json` yang dibaca secara otomatis oleh direktif `@vite` peladen Laravel saat aplikasi berjalan. Visualisasi terminal keluaran proses kompilasi bundel aset Vite produksi dan pembangkitan manifes disajikan pada Gambar 4.14.
+Sebagai bagian dari optimasi pengiriman aset statis di sisi klien (*front-end delivery*), seluruh modul CSS dan JavaScript dikompilasi menggunakan bundler Vite ke dalam bentuk berkas terkompresi dan terminifikasi guna meminimalkan ukuran transfer data jaringan. Di samping itu, tautan simbolis (*symbolic link*) dibangkitkan untuk menjembatani direktori penyimpanan privat Laravel (`storage/app/public`) ke direktori yang dapat diakses publik (`public/storage`) melalui eksekusi perintah konsol:
+`npm run build && php artisan storage:link`.
 
-![Gambar 4.14 Kompilasi Bundel Aset Produksi Vite dan Penautan Storage](images/gambar_4_6.png)
+Keluaran manifes hasil kompilasi produksi tersimpan pada direktori `public/build/manifest.json` yang dibaca secara otomatis oleh direktif `@vite` peladen Laravel saat aplikasi berjalan. Visualisasi terminal keluaran proses kompilasi bundel aset Vite produksi dan pembangkitan manifes disajikan pada Gambar 4.19.
 
-*Gambar 4.14 Kompilasi Bundel Aset Produksi Vite dan Penautan Storage*  
+![Gambar 4.19 Kompilasi Bundel Aset Produksi Vite dan Penautan Storage](images/gambar_4_6.png)
+
+*Gambar 4.19 Kompilasi Bundel Aset Produksi Vite dan Penautan Storage*  
 *Sumber: Tangkapan layar terminal kompilasi aset sistem (2026)*
+
+*Keterangan Gambar 4.19:*
+* **Fungsi Perintah**: Mengompilasi kode sumber TailwindCSS dan JavaScript menjadi bundel terenkripsi *cache-busted* serta menghubungkan tautan storage publik.
+* **Bagian Penting Proses Bisnis**: Pustaka antarmuka pengguna direduksi ukurannya secara drastis sehingga loading halaman katalog publik di peramban seluler menjadi sangat instan.
+* **Hubungan dengan Kebutuhan Sistem**: Menjamin kecepatan waktu muat halaman (*page load speed*) dan aksesibilitas dokumen foto kamar kost.
 
 ---
 
 ### 4.4.2 Konfigurasi Peladen Web LiteSpeed/Apache
-Peladen web LiteSpeed dikonfigurasi melalui berkas `.htaccess` pada akar direktori publik guna mengarahkan seluruh permintaan masuk ke satu titik kendali tunggal (*front-controller pattern*) di `index.php`. Selain itu, diterapkan pengerasan keamanan peladen (*security hardening*) melalui pembatasan akses langsung terhadap berkas konfigurasi sistem yang sensitif (`.env`, `.git`), serta penyematan *HTTP Security Headers* berstandar industri guna mencegah kerentanan *Cross-Site Scripting* (XSS), *Clickjacking*, dan penafsiran tipe konten yang keliru (*MIME-sniffing*):
-```apache
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^(\.env|\.git|composer\.(json|lock)|package\.(json|lock)) - [F,L,NC]
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
-</IfModule>
+Peladen web LiteSpeed dikonfigurasi melalui berkas `.htaccess` pada akar direktori publik guna mengarahkan seluruh permintaan masuk ke satu titik kendali tunggal (*front-controller pattern*) di `index.php`. Selain itu, diterapkan pengerasan keamanan peladen (*security hardening*) melalui pembatasan akses langsung terhadap berkas konfigurasi sistem yang sensitif (`.env`, `.git`), serta penyematan *HTTP Security Headers* berstandar industri guna mencegah kerentanan *Cross-Site Scripting* (XSS), *Clickjacking*, dan penafsiran tipe konten yang keliru (*MIME-sniffing*). Tangkapan layar berkas konfigurasi `.htaccess` peladen disajikan pada Gambar 4.20.
 
-<IfModule mod_headers.c>
-    Header always set X-Content-Type-Options "nosniff"
-    Header always set X-Frame-Options "SAMEORIGIN"
-    Header always set X-XSS-Protection "1; mode=block"
-    Header always set Referrer-Policy "strict-origin-when-cross-origin"
-</IfModule>
-```
+![Gambar 4.20 Tangkapan Layar Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP](images/kode_deployment_htaccess.png)
+
+*Gambar 4.20 Tangkapan Layar Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP*  
+*Sumber: Tangkapan layar berkas public/.htaccess penulis (2026)*
+
+*Keterangan Gambar 4.20:*
+* **Fungsi Konfigurasi**: Mengatur perutean lalu lintas HTTP peladen web LiteSpeed dan penegakan header keamanan.
+* **Bagian Penting Proses Bisnis**: Baris 5 memberlakukan aturan `RewriteRule` dengan flag `[F,L,NC]` untuk memblokir akses ke berkas kredensial `.env`, serta Baris 12–15 menyematkan `X-Frame-Options` dan `X-Content-Type-Options`.
+* **Hubungan dengan Kebutuhan Sistem**: Menangkal serangan siber pembajakan klik (*Clickjacking*) dan kebocoran kunci API payment gateway.
 
 ---
 
 ### 4.4.3 Konfigurasi Penjadwal Tugas Peladen (Cron Job)
 Guna menjamin kepastian eksekusi mesin penagihan otomatis (*Auto-Billing Engine*) setiap tanggal 1 awal bulan serta evaluasi harian denda flat keterlambatan kalender 5%, diaktifkan mekanisme penjadwalan tugas *cron* pada lingkungan peladen cPanel Hostinger. Tugas ini dipicu setiap menit untuk menjalankan penjadwal internal Laravel:
-```bash
-* * * * * cd /home/u1234567/public_html && /usr/bin/php82 artisan schedule:run >> /dev/null 2>&1
-```
+`* * * * * cd /home/u1234567/public_html && /usr/bin/php82 artisan schedule:run >> /dev/null 2>&1`.
+
+Konfigurasi ini memastikan bahwa perintah `tagihan:generate-bulanan` dan `tagihan:proses-keterlambatan` dieksekusi tepat waktu tanpa membutuhkan intervensi manual dari pengelola kos.
 
 ---
 
 ### 4.4.4 Perintah Optimasi Kinerja Produksi Laravel
-Untuk mengeliminasi beban pembacaan sistem berkas (*file I/O overhead*) pada setiap siklus permintaan HTTP di lingkungan produksi, seluruh berkas konfigurasi, peta rute, templat tampilan Blade, serta *listener* peristiwa dipra-kompilasi dan disimpan ke dalam memori (*in-memory caching*) melalui serangkaian perintah artisan berikut:
-```bash
-php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan event:cache
-```
+Untuk mengeliminasi beban pembacaan sistem berkas (*file I/O overhead*) pada setiap siklus permintaan HTTP di lingkungan produksi, seluruh berkas konfigurasi, peta rute, templat tampilan Blade, serta *listener* peristiwa dipra-kompilasi dan disimpan ke dalam memori (*in-memory caching*) melalui serangkaian perintah artisan:
+`php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan event:cache`.
 
 ---
 
 ### 4.4.5 Konfigurasi Variabel Lingkungan Produksi
-Seluruh parameter konfigurasi aplikasi, kredensial basis data relasional, kunci integrasi Midtrans Snap API, token gateway WhatsApp Fonnte, serta pengaturan protokol SMTP diisolasi secara ketat dalam berkas variabel lingkungan produksi `.env`. Penempatan parameter ini memastikan tidak ada kredensial sensitif yang terekam pada repositori kode program (*version control*). Cuplikan konfigurasi produksi dengan nilai rahasia yang disamarkan (*redacted*) disajikan sebagai berikut:
-```ini
-APP_NAME="Asri Boarding House"
-APP_ENV=production
-APP_KEY=[REDACTED]
-APP_DEBUG=false
-APP_URL=https://asriboardinghouse.weatso.id
+Seluruh parameter konfigurasi aplikasi, kredensial basis data relasional, kunci integrasi Midtrans Snap API, token gateway WhatsApp Fonnte, serta pengaturan protokol SMTP diisolasi secara ketat dalam berkas variabel lingkungan produksi `.env`. Penempatan parameter ini memastikan tidak ada kredensial sensitif yang terekam pada repositori kode program (*version control*). Tangkapan layar konfigurasi produksi dengan nilai rahasia yang disamarkan (*redacted*) disajikan pada Gambar 4.21.
 
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=[REDACTED]
-DB_USERNAME=[REDACTED]
-DB_PASSWORD=[REDACTED]
+![Gambar 4.21 Tangkapan Layar Konfigurasi Variabel Lingkungan Produksi .env](images/kode_deployment_env.png)
 
-MIDTRANS_IS_PRODUCTION=true
-MIDTRANS_SERVER_KEY=[REDACTED]
-MIDTRANS_CLIENT_KEY=[REDACTED]
+*Gambar 4.21 Tangkapan Layar Konfigurasi Variabel Lingkungan Produksi .env*  
+*Sumber: Tangkapan layar berkas .env produksi penulis (2026)*
 
-FONNTE_TOKEN=[REDACTED]
-
-MAIL_MAILER=smtp
-MAIL_HOST=smtp.hostinger.com
-MAIL_PORT=587
-MAIL_USERNAME=[REDACTED]
-MAIL_ENCRYPTION=tls
-```
+*Keterangan Gambar 4.21:*
+* **Fungsi Konfigurasi**: Mendefinisikan variabel lingkungan runtime untuk koneksi basis data MySQL InnoDB, driver Midtrans Live, token Fonnte, dan Hostinger SMTP.
+* **Bagian Penting Proses Bisnis**: Baris 4 mengatur `APP_DEBUG=false` untuk mencegah kebocoran jejak tumpukan (*stack trace*) error ke publik, dan Baris 15 mengaktifkan mode produksi Midtrans `MIDTRANS_IS_PRODUCTION=true`.
+* **Hubungan dengan Kebutuhan Sistem**: Menjaga kerahasiaan kredensial peladen dan memastikan sistem terhubung ke gateway pembayaran perbankan riil.
 
 ## 4.5 Hasil Pengujian Sistem
 Tahapan pengujian sistem memegang peranan krusial dalam siklus pengembangan perangkat lunak guna memverifikasi bahwa artefak sistem yang dibangun bekerja sesuai dengan spesifikasi fungsional, mematuhi batasan integritas data, kebal terhadap manipulasi otorisasi, serta mampu mengeksekusi kalkulasi finansial secara deterministik dan presisi. Pengujian dirancang secara komprehensif melalui kombinasi uji fungsionalitas kotak hitam (*black box testing*), pengujian isolasi hak akses (*Role-Based Access Control*), pengujian integrasi gerbang pembayaran daring (*payment gateway simulation*), pengujian keamanan lingkungan produksi (*live environment testing*), serta pengujian unit otomatis (*automated test suite*).
@@ -1123,7 +1173,7 @@ Pengujian lingkungan nyata (*live environment testing*) dilaksanakan secara lang
 **Tabel 4.6** Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live
 
 | No | Parameter Pengujian Lingkungan Live | Prosedur dan Tolok Ukur Pengujian | Hasil Pengamatan di Domain weatso.id | Status |
-| :---: | :--- | :--- | :--- | :--- :---: |
+| :---: | :--- | :--- | :--- | :---: |
 | 1 | Sertifikat Keamanan SSL/TLS HTTPS | Pemeriksaan enkripsi tautan via peramban dan SSL Shopper | Sertifikat SSL TLS 1.3 Let's Encrypt aktif, Grade A, seluruh lalu lintas HTTP otomatis teralihkan ke HTTPS | Berhasil |
 | 2 | Ketahanan Sesi Cookie Lintas Portal | Login secara bersamaan sebagai Admin di satu jendela dan Penyewa di jendela penyamaran (*incognito*) | Sesi admin dan sesi penyewa terisolasi mandiri tanpa terjadi tabrakan cookie otorisasi (*session clash*) | Berhasil |
 | 3 | Integritas Titik Akhir Webhook Live | Pengujian penangkapan webhook Midtrans Cloud oleh peladen produksi | Webhook berhasil diterima peladen LiteSpeed dan diproses instan tanpa terblokir firewall peladen hosting | Berhasil |
@@ -1131,11 +1181,11 @@ Pengujian lingkungan nyata (*live environment testing*) dilaksanakan secara lang
 
 *Sumber: Hasil pengujian peladen produksi live penulis (2026)*
 
-Di samping pengujian manual, keandalan fungsionalitas dan logika bisnis perangkat lunak diverifikasi secara otomatis menggunakan *suite* pengujian terotomasi PHPUnit pada ekosistem internal Laravel. Pengujian otomatis mencakup unit test model relasional, integrasi service layer, penegakan denda kalender 5% idempoten, kalkulasi diskon durasi tahunan, serta simulasi penguncian konkurensi kamar anti *double-booking*. Seluruh rangkaian uji otomatis dieksekusi melalui perintah konsol `php artisan test`. Hasil eksekusi pengujian otomatis menunjukkan kelulusan sempurna pada seluruh **510 *tests passed*** dengan total **2.211 *assertions*** tanpa kegagalan (*zero failure*), menghasilkan tingkat keberhasilan sebesar **100%**. Tangkapan layar keluaran terminal pengujian otomatis disajikan pada Gambar 4.15.
+Di samping pengujian manual, keandalan fungsionalitas dan logika bisnis perangkat lunak diverifikasi secara otomatis menggunakan *suite* pengujian terotomasi PHPUnit pada ekosistem internal Laravel. Pengujian otomatis mencakup unit test model relasional, integrasi service layer, penegakan denda kalender 5% idempoten, kalkulasi diskon durasi tahunan, serta simulasi penguncian konkurensi kamar anti *double-booking*. Seluruh rangkaian uji otomatis dieksekusi melalui perintah konsol `php artisan test`. Hasil eksekusi pengujian otomatis menunjukkan kelulusan sempurna pada seluruh **510 *tests passed*** dengan total **2.211 *assertions*** tanpa kegagalan (*zero failure*), menghasilkan tingkat keberhasilan sebesar **100%**. Tangkapan layar keluaran terminal pengujian otomatis disajikan pada Gambar 4.22.
 
-![Gambar 4.15 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed](images/gambar_4_11.png)
+![Gambar 4.22 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed](images/gambar_4_11.png)
 
-*Gambar 4.15 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed*  
+*Gambar 4.22 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed*  
 *Sumber: Tangkapan layar terminal eksekusi PHPUnit (2026)*
 
 ## 4.6 Hasil Wawancara dengan Penjaga Kost
@@ -1162,11 +1212,11 @@ Daftar pertanyaan terstruktur beserta respon verbatim dari narasumber dirangkum 
 
 *Sumber: Hasil rekaman audio wawancara langsung penulis (2026)*
 
-Dokumentasi pelaksanaan wawancara operasional disajikan pada Gambar 4.16.
+Dokumentasi pelaksanaan wawancara operasional disajikan pada Gambar 4.23.
 
-![Gambar 4.16 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)](images/gambar_4_12.png)
+![Gambar 4.23 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)](images/gambar_4_12.png)
 
-*Gambar 4.16 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)*  
+*Gambar 4.23 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)*  
 *Sumber: Dokumentasi foto penelitian penulis (2026)*
 
 Hasil wawancara terstruktur dan observasi interaksi langsung pada Tabel 4.7 mengungkap sejumlah temuan penting terkait penerimaan teknologi (*technology acceptance*) pada tingkat operasional lapangan:
