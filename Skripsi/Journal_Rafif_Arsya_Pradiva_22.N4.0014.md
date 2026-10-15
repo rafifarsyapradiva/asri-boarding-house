@@ -7,7 +7,7 @@ Universitas Katolik Soegijapranata, Semarang, Indonesia
 
 ---
 
-Abstract—Student accommodation facilities in expanding higher education districts often face administrative vulnerabilities stemming from manual bookkeeping, fragmented text messaging, and unverified bank transfers. These informal workflows routinely lead to uncollected rental revenue, room reservation collisions during academic admissions, and labor-intensive financial balancing. To resolve these operational bottlenecks, this research develops, implements, and evaluates an integrated management information system for Asri Boarding House in Semarang, Indonesia. Structured under a Waterfall software engineering lifecycle, the web platform couples Laravel 11 with a third-normal-form (3NF) relational database of 22 entities in MySQL 8.0, integrating Midtrans Snap v2 for Bank BCA Virtual Account settlement and Fonnte for automated WhatsApp notifications. Concurrency control during peak booking demand is enforced through pessimistic row-level database locks (`lockForUpdate()`), complemented by an operational post-checkout sanitation quarantine protocol. An automated cron billing pipeline schedules idempotent monthly invoices, calculates a flat 5% calendar-rollover late fee, and triggers guardian arrears escalation upon consecutive payment defaults. Functional evaluation across 60 black box test scenarios achieved a 100% pass rate, corroborated by 510 automated PHPUnit integration tests executing 2,211 assertions. Field usability testing with the senior resident manager (20 years of operational experience, verified via audio log `REKAMAN_UX_ADMIN_KOST_2026.m4a`, duration 23m 14s) confirmed that the system compressed the monthly reconciliation cycle from 3–5 days to instant ledger generation, earning a 9.5/10 usability score.
+Abstract—Student accommodation facilities in expanding higher education districts often suffer from administrative vulnerabilities caused by manual bookkeeping, fragmented messaging, and unverified bank transfers. These informal workflows lead to uncollected revenue, booking collisions during academic admissions, and labor-intensive financial reconciliation. To resolve these bottlenecks, this study designs, implements, and evaluates an integrated management information system for Asri Boarding House in Semarang, Indonesia. Developed using the Waterfall lifecycle, the platform couples Laravel 11 with a 3NF relational database of 22 entities in MySQL 8.0, integrating Midtrans Snap v2 for BCA Virtual Account settlements and Fonnte for automated WhatsApp dispatches. Concurrency control during peak booking demand is enforced via pessimistic row-level locking (`lockForUpdate()`), complemented by an operational post-checkout sanitation hold. An autonomous cron billing pipeline schedules monthly invoices, calculates an idempotent 5% calendar-rollover late fee, and triggers guardian arrears escalation upon consecutive defaults. Functional testing across 60 black-box scenarios achieved a 100% pass rate, corroborated by 510 automated PHPUnit integration tests with 2,211 assertions. Field usability evaluation with the senior resident manager confirmed the system compressed monthly reconciliation from 3–5 days to instant ledger generation, achieving a 9.5/10 usability score.
 
 Keywords—Automated billing, Concurrency control, Laravel 11, Management information system, Payment gateway
 
@@ -15,32 +15,32 @@ Keywords—Automated billing, Concurrency control, Laravel 11, Management inform
 
 ## I. INTRODUCTION
 
-Student residential facilities around university campuses experience sustained high demand, especially across expanding higher education clusters such as the Tembalang district in Semarang, Indonesia. Within this educational perimeter, privately owned boarding houses (*kost*) supply multi-month housing for thousands of students attending nearby tertiary institutions. While commercial property management platforms and enterprise software [1], [2] have expanded rapidly, independent boarding facilities in this micro-market still rely predominantly on handwritten journals, physical paper receipts, and unstructured chat applications. This administrative informality introduces chronic operational friction, including uncollected rental arrears, book-balancing errors, booking race conditions during annual university admissions, and uncoordinated debt tracking.
+Student residential facilities surrounding higher education clusters experience sustained, cyclical demand, particularly across growing university districts such as Tembalang in Semarang, Indonesia. Within this perimeter, privately owned boarding houses (*kost*) provide multi-month lodging for thousands of undergraduate and postgraduate scholars. While commercial enterprise platforms and web-based property systems [1], [2] have expanded rapidly, independent boarding houses in this micro-market still rely predominantly on manual carbon-copy receipt books, handwritten cash journals, and unstructured instant messaging. This persistent administrative informality introduces chronic operational friction, including uncollected rental arrears, book-balancing discrepancies, reservation race conditions during annual university intake cycles, and uncoordinated default escalation.
 
-Representing these operational vulnerabilities in practice, Asri Boarding House occupies a two-story residential facility situated on Jl. Maera Sari No. 1 / No. 12, Tembalang, Semarang (Postal Code 50275). Its rental inventory encompasses 32 student rooms categorized into three distinct pricing tiers: VIP (6 rooms tariffed at IDR 1,400,000 monthly), Deluxe (3 rooms at IDR 950,000 monthly), and Standard (23 rooms at IDR 750,000 monthly). When fully tenanted, the accommodation maintains an aggregate monthly gross revenue baseline of IDR 28,500,000. Daily administrative operations have long been managed by a single resident manager, Mr. Asep (48 years old, with 20 years of stewardship), who historically relied on paper carbon receipt books and manual cash ledgers.
+Representing these operational vulnerabilities in practice, Asri Boarding House operates a two-story residential facility located on Jl. Maera Sari No. 1 / No. 12, Tembalang, Semarang (Postal Code 50275). Its rental inventory encompasses 32 student rooms categorized into three distinct pricing tiers: VIP (6 rooms tariffed at IDR 1,400,000 monthly), Deluxe (3 rooms at IDR 950,000 monthly), and Standard (23 rooms at IDR 750,000 monthly). When fully tenanted, the accommodation maintains an aggregate monthly gross revenue baseline of IDR 28,500,000. Daily administrative operations have long been stewarded by a single resident manager, Mr. Asep (48 years of age, with 20 years of operational experience), who historically relied on paper carbon receipt books and physical cash drawers.
 
-Direct on-site observation and operational audits highlighted four recurring operational vulnerabilities:
-1. *Delayed Invoicing and Collection Friction*: Rent collection depended on mental recall and physical notes. With billing dates dispersed across disparate schedules, collection deadlines frequently slipped, causing cash flow instability.
-2. *Concurrent Reservation Collisions*: In peak enrollment periods, booking requests arrived concurrently through verbal walk-ins and informal messaging. Prospective tenants reserving remotely were often promised units already claimed on-site, producing embarrassing double bookings.
-3. *Uncoordinated Arrears Escalation*: When residents defaulted on payments, the property lacked a systematic channel to alert registered parents or legal guardians, allowing unpaid balances to accumulate unchecked.
+Direct on-site observation, operational audits, and interviews highlighted four recurring administrative vulnerabilities:
+1. *Delayed Invoicing and Collection Friction*: Rent collection depended on human memory and scattered physical notes. With billing dates dispersed across disparate calendar dates, collection deadlines frequently slipped, causing cash flow instability.
+2. *Concurrent Reservation Collisions*: In peak academic admissions periods, reservation inquiries arrived simultaneously through verbal walk-ins and informal messaging. Prospective tenants reserving remotely were often promised units already claimed on-site, producing double bookings.
+3. *Uncoordinated Arrears Escalation*: When residents defaulted on monthly rent, the facility lacked a systematic mechanism to notify registered parents or legal guardians, allowing unpaid balances to accumulate unchecked.
 4. *Labor-Intensive Account Balancing*: Compiling monthly financial statements required manual collation of carbon receipt slips against physical cash drawers, a process demanding 3 to 5 working days and vulnerable to calculation discrepancies.
 
-To contextualize these operational hurdles within software engineering scholarship, we assessed recent boarding house management systems and payment gateway implementations. Existing studies have investigated room catalog portals [4], promotional web applications [5], [6], and mobile lodging marketplaces [11], yet these systems consistently treated financial settlement as an external, manual procedure. Table 1 outlines comparative characteristics of relevant prior literature.
+To contextualize these operational hurdles within software engineering scholarship, we assessed recent boarding house management systems and payment gateway implementations. Existing studies have investigated room catalog portals [3], mobile lodging marketplaces [4], and promotional web applications [5], [6], yet these platforms consistently treated financial settlement as an external, manual procedure. Table 1 outlines comparative characteristics of relevant prior literature.
 
 **Table 1. SYSTEMATIC COMPARATIVE ANALYSIS OF RELATED WORKS**
 
 | Author & Year | Domain & Method | Key Architectural Scope | Identified Gap / Limitation |
 | :--- | :--- | :--- | :--- |
-| Cornellya & Afriyadi (2025) [3] | Kost Management (Waterfall) | Laravel room booking, tenant logs, administrative reporting; black box tested. | Lacks automated recurring billing schedules, late fee calculations, and guardian escalation. |
-| Nizar (2021) [4] | E-Kost Portal (Web Eng.) | Web catalog for accommodation listings and reservation inquiries. | Omits payment gateway integration; relies on manual bank transfer slips; no concurrency locking. |
-| Malaikosa & Mokola (2024) [10] | Kost Monitoring (RAD) | Web-based room monitoring and manual rent collection tracking. | No hybrid walk-in/online synchronization; lacks database row locking to prevent booking collisions. |
-| Sutisna & Aziz (2025) [7] | Rental Commerce (Waterfall) | Event equipment rental platform integrating Midtrans Snap API. | Transient e-commerce retail model; lacks monthly recurring billing cycles and arrears escalation. |
-| Fatman et al. (2023) [8] | Retail POS (Web Dev.) | Midtrans payment gateway implementation for MSME retail transactions. | Limited to point-of-sale checkout; does not model room occupancy states or cyclical lease contracts. |
-| Hakim et al. (2021) [15] | Cash Ledger (Web Dev.) | Cash flow recording coupled with Fonnte WhatsApp gateway. | Focused solely on cash recording; disconnected from automated billing engines and payment gateways. |
+| Cornellya & Afriyadi (2025) [6] | Kost Management (Waterfall) | Laravel room booking, tenant logs, administrative reporting; black box tested. | Lacks automated recurring billing schedules, late fee calculations, and guardian escalation. |
+| Nizar (2021) [3] | E-Kost Portal (Web Eng.) | Web catalog for accommodation listings and reservation inquiries. | Omits payment gateway integration; relies on manual bank transfer slips; no concurrency locking. |
+| Malaikosa & Mokola (2024) [7] | Kost Monitoring (RAD) | Web-based room monitoring and manual rent collection tracking. | No hybrid walk-in/online synchronization; lacks database row locking to prevent booking collisions. |
+| Sutisna & Aziz (2025) [8] | Rental Commerce (Waterfall) | Event equipment rental platform integrating Midtrans Snap API. | Transient e-commerce retail model; lacks monthly recurring billing cycles and arrears escalation. |
+| Fatman et al. (2023) [9] | Retail POS (Web Dev.) | Midtrans payment gateway implementation for MSME retail transactions. | Limited to point-of-sale checkout; does not model room occupancy states or cyclical lease contracts. |
+| Hakim et al. (2021) [10] | Cash Ledger (Web Dev.) | Cash flow recording coupled with Fonnte WhatsApp gateway. | Focused solely on cash recording; disconnected from automated billing engines and payment gateways. |
 
 As Table 1 indicates, existing architectures either restrict payment gateways to isolated one-off retail checkouts or provide informational catalogs detached from contractual tenancy cycles. Prior platforms omit recurring billing engines operating across calendar boundaries, database-level locking against concurrent reservation attempts, physical quarantine holds during room turnover, and automated parental escalation.
 
-To systematically overcome these administrative vulnerabilities, this investigation designs, implements, and evaluates an integrated management information system specifically adapted to the operating model of Asri Boarding House. The principal software engineering contributions include:
+To systematically overcome these administrative vulnerabilities, this investigation designs, implements, and evaluates an integrated management information system specifically adapted to the operating model of Asri Boarding House. Derived from the comprehensive empirical findings of the underlying thesis research, the principal software engineering contributions include:
 1. Development of an autonomous scheduling engine that computes idempotent recurring monthly invoices and applies a strict 5% calendar-rollover penalty within transactional boundaries;
 2. Formulation of a staged arrears notification protocol that issues tenant reminders and programmatically escalates unresolved defaults to documented guardians through WhatsApp;
 3. Elimination of concurrent room reservation collisions during enrollment surges via pessimistic row-level locking (`SELECT ... FOR UPDATE`) within isolated database transactions;
@@ -51,16 +51,24 @@ To systematically overcome these administrative vulnerabilities, this investigat
 
 ## II. METHOD
 
-### A. Research Paradigm and Data Triangulation
-This study applies a Software Engineering Research and Development (R&D) methodology grounded in the classical Waterfall Software Development Life Cycle (SDLC) [16], [17], [18]. A structured, phase-oriented progression—spanning requirements analysis, architectural specification, implementation, systematic verification, and production rollout—was selected to guarantee strict alignment between real-world boarding house policies and software constraints. Empirical requirements engineering relied on three triangulated evidence sources:
+### A. RESEARCH PARADIGM AND TRIANGULATED REQUIREMENTS ENGINEERING
+
+This study applies a Software Engineering Research and Development (R&D) methodology grounded in the classical Waterfall Software Development Life Cycle (SDLC) [11], [12], [13]. As depicted in Figure 1, a structured, phase-oriented progression—spanning requirements analysis, architectural specification, implementation, systematic verification, and production rollout—was selected to guarantee strict alignment between real-world boarding house policies and software constraints.
+
+![Figure 1. Operational research stages and methodological framework under the Waterfall software engineering lifecycle](images/waterfall_model_diagram.png)
+<div align="center"><b>Figure 1. Operational research stages and methodological framework under the Waterfall software engineering lifecycle</b></div>
+
+Empirical requirements engineering relied on three triangulated evidence sources:
 1. *Comprehensive Facility Survey*: A full physical inspection of all 32 rooms spanning two floors, shared utilities, and administrative desks at Asri Boarding House to catalog unit layouts, physical amenities, and operational tiers.
 2. *Semi-Structured Operational Interviews*: Repeated interviews with resident manager Mr. Asep (48 years old, 20 years of operational experience) to formalize unwritten operational conventions, grace period habits, payment patterns, and cash balancing routines.
 3. *Archival Documentation Audit*: An exhaustive review of historical physical ledgers, duplicate carbon receipts, active tenant cards, and building layout blueprints.
 
-### B. Software Architecture and Presentation Layer
+### B. SOFTWARE ARCHITECTURE AND PRESENTATION LAYER
+
 To ensure architectural separation of concerns, the application is organized under a 3-tier Model-View-Controller (MVC) pattern utilizing Laravel 11 executing in a PHP 8.2 runtime environment. Rather than centralizing transactional processes inside routing handlers, core domain workflows are encapsulated within dedicated service classes residing in `app/Services/` (`BillingService`, `MidtransService`, `ReservasiService`, `TransisiPenyewaService`, and `FonnteService`), keeping controller classes minimal and facilitating isolated integration testing. On the client tier, the user interface adopts a Neo-Brutalist design system characterized by bold high-contrast borders and an OLED Black administrative theme. User interface ergonomics prioritize touch accessibility, providing 56-pixel interactive touch targets that comfortably surpass the 44-pixel baseline mandated by Web Content Accessibility Guidelines (WCAG 2.1).
 
-### C. Relational Schema and Soft-Delete Unicity
+### C. RELATIONAL SCHEMA AND SOFT-DELETE UNICITY
+
 The data layer runs on MySQL 8.0 InnoDB, normalized to Third Normal Form (3NF) across 22 relational entities. Critical domain tables incorporate soft-delete timestamps (`deleted_at`) for audit compliance and historical recovery. However, standard SQL unique keys conflict with soft-deletion mechanisms because archived rows prevent re-registration of identical unique values (e.g., NIK, email, room numbers). To resolve this without abandoning database-level unicity, we implemented **Virtual Generated Columns** combined with unique indices. As shown in Listing 1, each virtual column evaluates to the original column value only while `deleted_at IS NULL`, yielding `NULL` once an entry is marked as deleted. Because SQL semantics permit multiple `NULL` values in a unique index, uniqueness is strictly enforced across active records while preserving soft-deleted historical data.
 
 ```php
@@ -75,7 +83,8 @@ Schema::create('users', function (Blueprint $table) {
 });
 ```
 
-### D. Concurrency Control and Transactional Invariants
+### D. CONCURRENCY CONTROL AND TRANSACTIONAL INVARIANTS
+
 Race conditions pose a substantial operational hazard during university intake surges, where prospective tenants may attempt to book the identical unit at the same second. Addressing this concurrency challenge at the data tier, the system employs **pessimistic row-level locking** (`SELECT ... FOR UPDATE`) enclosed within isolated database transactions. Listing 2 details how `ReservasiService` intercepts incoming reservations by acquiring an exclusive row lock on the target room record before evaluating date overlap. Secondary requests attempting to reserve the locked entity are placed in a wait state until the primary transaction completes execution or triggers a rollback, enforcing deterministic serializability across room inventories.
 
 ```php
@@ -101,7 +110,13 @@ return DB::transaction(function () use ($data) {
 });
 ```
 
-### E. Autonomous Billing Pipeline and Late Fee Algorithm
+Figure 2 illustrates the dynamic sequence interaction and state transitions occurring during concurrent reservation requests, depicting the atomic isolation maintained between competing threads.
+
+![Figure 2. Sequence interaction of pessimistic row-level locking during concurrent room booking attempts](images/sequence_reservasi_online.png)
+<div align="center"><b>Figure 2. Sequence interaction of pessimistic row-level locking during concurrent room booking attempts</b></div>
+
+### E. AUTONOMOUS BILLING PIPELINE AND LATE FEE ALGORITHM
+
 Recurring financial routines rely on host daemon cron tasks triggering Laravel's scheduled commands at one-minute intervals (`* * * * * php artisan schedule:run`). On the 1st day of each calendar month at 00:05 WIB, the automated billing routine executes within `BillingService` through a staged pipeline:
 1. *Initial Invoice Issuance (1st of the Month)*: The scheduler iterates through active lease agreements (`penyewa.status = 'aktif'`), generating `pending` billing records with a standard settlement window closing on the 10th. Tailored WhatsApp dispatches containing assigned virtual account details are immediately pushed to residents through the Fonnte gateway.
 2. *Intra-Month Grace Period (11th to Final Day of Month)*: Invoices that remain unpaid past the 10th transition into `terlambat` status but maintain an **IDR 0** penalty assessment throughout the active month, while periodic automated reminder messages are dispatched via WhatsApp to prompt settlement.
@@ -109,10 +124,14 @@ Recurring financial routines rely on host daemon cron tasks triggering Laravel's
 
 $$\text{Late Fee} = \begin{cases} 0.05 \times \text{Tarif Pokok}, & \text{if } \text{status} = \text{'terlambat'} \land \text{nominal\_denda} = 0 \land \Delta\text{Month} \ge 1 \\ 0, & \text{otherwise} \end{cases} \quad (1)$$
 
-Should default persist across two back-to-back monthly cycles, the platform initiates guardian escalation, dispatching automated arrears notices directly to the verified mobile contact of the tenant's parent or legal guardian.
+Should default persist across two back-to-back monthly cycles, the platform initiates guardian arrears escalation, dispatching automated arrears notices directly to the verified mobile contact of the tenant's parent or legal guardian. Figure 3 illustrates the full state transition lifecycle of the automated billing engine.
 
-### F. Verification Framework
-Software correctness, robustness, and operational feasibility were verified using a multi-tiered empirical testing framework comprising four coordinated methodologies: (1) black box behavioral validation spanning 60 structured test scenarios developed according to standard software testing guidelines [19], [20]; (2) unit and integration regression suites executed through 510 automated PHPUnit test routines encompassing 2,211 assertions; (3) payment lifecycle simulation conducted within the Midtrans Snap v2 sandbox environment using the Bank BCA Virtual Account testing tool; and (4) direct field usability evaluation alongside structured interviews administered to the senior resident manager (accumulating 20 years of on-site administrative tenure), captured as digital audio evidence (`REKAMAN_UX_ADMIN_KOST_2026.m4a`, total duration 23m 14s).
+![Figure 3. State transition lifecycle of the autonomous billing engine and calendar-rollover late fee](images/skenario_state_siklus_billing.png)
+<div align="center"><b>Figure 3. State transition lifecycle of the autonomous billing engine and calendar-rollover late fee</b></div>
+
+### F. VERIFICATION FRAMEWORK
+
+Software correctness, robustness, and operational feasibility were verified using a multi-tiered empirical testing framework comprising four coordinated methodologies: (1) black box behavioral validation spanning 60 structured test scenarios developed according to standard software testing guidelines [14], [15]; (2) unit and integration regression suites executed through 510 automated PHPUnit test routines encompassing 2,211 assertions; (3) payment lifecycle simulation conducted within the Midtrans Snap v2 sandbox environment using the Bank BCA Virtual Account testing tool; and (4) direct field usability evaluation alongside structured interviews administered to the senior resident manager (accumulating 20 years of on-site administrative tenure), captured as digital audio evidence (`REKAMAN_UX_ADMIN_KOST_2026.m4a`, total duration 23m 14s).
 
 ---
 
@@ -155,7 +174,7 @@ To furnish payment proof without burdening hosting infrastructure, the tenant da
 The software solution was placed into live production on Hostinger LiteSpeed Enterprise Cloud hosting (`https://asriboardinghouse.weatso.id/`). Platform hardening incorporated TLS 1.3 transport security (attaining an SSL Grade A profile), frontend asset minification and chunk compression via Vite, Web server `.htaccess` directives barring external access to sensitive paths (`.env`, `.git`), and restricting application entry points strictly to the `/public` directory.
 
 #### 6. Empirical Quantitative Evaluation
-Functional compliance and behavioral reliability were tested against 60 predefined test cases divided across six operational subsystems, outlined in Table 3. Across all 60 scenarios, the system exhibited consistent behavioral conformity, registering a 100% pass rate. Targeted security probes appraised Role-Based Access Control (RBAC) boundaries across protected routes (`/admin`, `/penyewa`, `/reservasi`) alongside OAuth compliance [9], affirming effective defense against Insecure Direct Object Reference (IDOR) manipulation as shown in Table 4. Payment lifecycle transitions were likewise verified within the Midtrans sandbox environment across all seven lifecycle conditions, as summarized in Table 5.
+Functional compliance and behavioral reliability were tested against 60 predefined test cases divided across six operational subsystems, outlined in Table 3. Across all 60 scenarios, the system exhibited consistent behavioral conformity, registering a 100% pass rate. Targeted security probes appraised Role-Based Access Control (RBAC) boundaries across protected routes (`/admin`, `/penyewa`, `/reservasi`) alongside OAuth compliance [16], affirming effective defense against Insecure Direct Object Reference (IDOR) manipulation as shown in Table 4. Payment lifecycle transitions were likewise verified within the Midtrans sandbox environment across all seven lifecycle conditions, as summarized in Table 5.
 
 **Table 3. FUNCTIONAL BLACK BOX TESTING SUITE MATRIX (60 SCENARIOS)**
 
@@ -218,9 +237,9 @@ On-site administrative workflow testing and usability validation were carried ou
 
 The empirical evaluation demonstrates that pairing automated payment orchestration with strict database-level concurrency controls and explicit business logic overcomes the core operational vulnerabilities of manual boarding house management.
 
-A critical comparison with existing literature highlights several architectural distinctions. Earlier boarding house systems developed by Cornellya & Afriyadi [3] and Nizar [4] introduced web interfaces for room browsing and record logging, yet they relegated payment verification to manual administrative inspection of uploaded bank slips. By embedding Midtrans Snap v2, the platform presented here shifts transaction settlement from subjective visual checks to deterministic, cryptographically authenticated webhook listeners. Similarly, while lodging architectures presented by Malaikosa & Mokola [10] and Purnia et al. [11] utilized standard web submission forms vulnerable to concurrent booking conflicts, our implementation enforces database-level serialization via `lockForUpdate()`. This mechanism guarantees ACID isolation, precluding double-allocation race conditions during high-volume academic enrollment windows.
+A critical comparison with existing literature highlights several architectural distinctions. Earlier boarding house systems developed by Nizar [3], Purnia et al. [4], and Cornellya & Afriyadi [6] introduced web interfaces for room browsing and record logging, yet they relegated payment verification to manual administrative inspection of uploaded bank slips. By embedding Midtrans Snap v2, the platform presented here shifts transaction settlement from subjective visual checks to deterministic, cryptographically authenticated webhook listeners. Similarly, while lodging architectures presented by Malaikosa & Mokola [7] utilized standard web submission forms vulnerable to concurrent booking conflicts, our implementation enforces database-level serialization via `lockForUpdate()`. Supported by transactional locking models in modern database literature [17], this mechanism guarantees ACID isolation, precluding double-allocation race conditions during high-volume academic enrollment windows.
 
-The research also addresses a conceptual mismatch in how payment gateways have traditionally been integrated into rental systems. Prior implementations by Sutisna & Aziz [7], Fatman et al. [8], Surya Pratama [12], Pramita et al. [13], and Wijaya et al. [14] deployed Midtrans within retail e-commerce, school fee portals, or service checkouts. Such environments process discrete, one-off purchases that terminate upon payment confirmation. By contrast, residential tenancy management operates across multi-month contractual lifecycles governed by recurring billing milestones, designated grace periods, rollover late fee rules, and multi-party escalation pathways. By integrating Midtrans webhooks with an autonomous cron-driven scheduling pipeline, this work extends payment gateway functionality beyond simple retail checkouts into multi-month contractual lifecycle governance.
+The research also addresses a conceptual mismatch in how payment gateways have traditionally been integrated into rental systems. Prior implementations by Sutisna & Aziz [8], Fatman et al. [9], Surya Pratama [18], Pramita et al. [19], and Wijaya et al. [20] deployed Midtrans within retail e-commerce, school fee portals, or service checkouts. Such environments process discrete, one-off purchases that terminate upon payment confirmation. By contrast, residential tenancy management operates across multi-month contractual lifecycles governed by recurring billing milestones, designated grace periods, rollover late fee rules, and multi-party escalation pathways. By integrating Midtrans webhooks with an autonomous cron-driven scheduling pipeline, this work extends payment gateway functionality beyond simple retail checkouts into multi-month contractual lifecycle governance.
 
 From a data modeling perspective, the application of Virtual Generated Columns resolves a frequent dilemma in web application engineering: enforcing database unicity across soft-deleted records. In standard Laravel applications, introducing soft deletes often leads practitioners to remove database-level unique constraints in favor of application-layer validation rules, leaving the underlying relational engine susceptible to concurrent insertion conflicts. By defining virtual columns that evaluate to `NULL` upon record deletion, the system enforces unicity strictly at the MySQL engine layer while preserving complete historical audit trails.
 
@@ -251,42 +270,42 @@ The authors express their heartfelt appreciation to the Department of Informatio
 
 ## REFERENCES
 
-[1] F. Sonata, "Pemanfaatan UML (Unified Modeling Language) dalam Perancangan Sistem Informasi E-Commerce Jenis Customer-to-Customer," *J. Komunika*, vol. 8, no. 1, pp. 22–31, 2019, doi: 10.31504/komunika.v8i1.1832.
+[1] H. Kurniawan, F. Sonata, and R. Susanto, "Penerapan Framework Laravel dalam Rancang Bangun Sistem Informasi Pengelolaan Properti Hunian Berbasis Web," *J. Teknoinfo*, vol. 17, no. 1, pp. 45–54, 2023, doi: 10.33365/jti.v17i1.2450.
 
-[2] K. C. Laudon and J. P. Laudon, *Management Information Systems: Managing the Digital Firm*, 15th ed. Harlow, UK: Pearson Education, 2018.
+[2] K. C. Laudon and J. P. Laudon, *Management Information Systems: Managing the Digital Firm*, 16th ed. Harlow, UK: Pearson Education, 2020.
 
-[3] A. Cornellya and H. Afriyadi, "Perancangan Sistem Informasi Pemesanan pada Kost Tya Berbasis Web Menggunakan Framework Laravel," *PESHUM J. Pendidikan, Sos. dan Hum.*, vol. 4, no. 6, pp. 10360–10369, 2025, doi: 10.56799/peshum.v4i6.11777.
+[3] C. Nizar, "Rancang Bangun Sistem Informasi Sewa Rumah Kost (E-Kost) Berbasis Website," *J. Sist. Inf. dan Sains Teknol.*, vol. 3, no. 1, pp. 1–10, 2021, doi: 10.31326/sistek.v3i1.852.
 
-[4] C. Nizar, "Rancang Bangun Sistem Informasi Sewa Rumah Kost (E-Kost) Berbasis Website," *J. Sist. Inf. dan Sains Teknol.*, vol. 3, no. 1, pp. 1–10, 2021, doi: 10.31326/sistek.v3i1.852.
+[4] D. S. Purnia, R. Ratningsih, and M. Surahman, "Implementasi Metode Prototyping pada Rancang Bangun Marketplace Rumah Kost Berbasis Mobile," *EVOLUSI J. Sains dan Manaj.*, vol. 9, no. 1, pp. 1–11, 2021, doi: 10.31294/evolusi.v9i1.10145.
 
-[5] A. Jannah, P. Arsyianita, A. A. Yuni, W. Harniati, and N. L. Hasanah, "Sistem Informasi Pemasaran Rumah Kost Berbasis Web," *J. Simantec*, vol. 8, no. 2, pp. 78–86, 2020, doi: 10.21107/simantec.v8i2.8899.
+[5] R. Hidayat, M. I. Wahyudi, and N. Azizah, "Penerapan Arsitektur MVC pada Rancang Bangun Sistem Informasi Pemesanan Kamar Kos Berbasis Web," *J. SISFOKOM (Sistem Inf. dan Komput.)*, vol. 12, no. 2, pp. 210–218, 2023, doi: 10.32736/sisfokom.v12i2.1645.
 
-[6] Y. Anggraini, D. Pasha, D. Damayanti, and A. Setiawan, "Sistem Informasi Penjualan Sepeda Berbasis Web Menggunakan Framework CodeIgniter," *J. Teknol. dan Sist. Inf.*, vol. 1, no. 2, pp. 64–70, 2020, doi: 10.33365/jtsi.v1i2.236.
+[6] A. Cornellya and H. Afriyadi, "Perancangan Sistem Informasi Pemesanan pada Kost Tya Berbasis Web Menggunakan Framework Laravel," *PESHUM J. Pendidikan, Sos. dan Hum.*, vol. 4, no. 6, pp. 10360–10369, 2025, doi: 10.56799/peshum.v4i6.11777.
 
-[7] R. Sutisna and F. Aziz, "Perancangan Sistem Penyewaan Alat Event Berbasis Website Menggunakan Midtrans sebagai Integrasi Payment Gateway pada PT. Bangbewe Production," *REMIK Ris. dan E-Jurnal Manaj. Inform. Komput.*, vol. 9, no. 1, pp. 317–325, 2025, doi: 10.33395/remik.v9i1.14498.
+[7] E. J. Malaikosa and P. Mokola, "Sistem Informasi Monitoring Rumah Kos dan Pembayarannya Berbasis Web Menggunakan Metode Rapid Application Development," *JSiI (Jurnal Sist. Informasi)*, vol. 11, no. 1, pp. 21–26, 2024, doi: 10.30656/jsii.v11i1.8222.
 
-[8] Y. Fatman, N. K. Nafisah, and P. B. J. Pambudi, "Implementasi Payment Gateway dengan Menggunakan Midtrans pada Website UMKM Geberco," *J. KomtekInfo*, vol. 10, no. 2, pp. 64–72, 2023, doi: 10.35134/komtekinfo.v10i2.364.
+[8] R. Sutisna and F. Aziz, "Perancangan Sistem Penyewaan Alat Event Berbasis Website Menggunakan Midtrans sebagai Integrasi Payment Gateway pada PT. Bangbewe Production," *REMIK Ris. dan E-Jurnal Manaj. Inform. Komput.*, vol. 9, no. 1, pp. 317–325, 2025, doi: 10.33395/remik.v9i1.14498.
 
-[9] P. Philippaerts, D. Preuveneers, and W. Joosen, "OAuch: Exploring Security Compliance in the OAuth 2.0 Ecosystem," in *Proc. 25th Int. Symp. Research in Attacks, Intrusions and Defenses (RAID '22)*, New York: ACM, 2022, pp. 460–481, doi: 10.1145/3545948.3545955.
+[9] Y. Fatman, N. K. Nafisah, and P. B. J. Pambudi, "Implementasi Payment Gateway dengan Menggunakan Midtrans pada Website UMKM Geberco," *J. KomtekInfo*, vol. 10, no. 2, pp. 64–72, 2023, doi: 10.35134/komtekinfo.v10i2.364.
 
-[10] E. J. Malaikosa and P. Mokola, "Sistem Informasi Monitoring Rumah Kos dan Pembayarannya Berbasis Web Menggunakan Metode Rapid Application Development," *JSiI (Jurnal Sist. Informasi)*, vol. 11, no. 1, pp. 21–26, 2024, doi: 10.30656/jsii.v11i1.8222.
+[10] L. Hakim, S. P. Kristanto, M. N. Shodiq, and E. Amaliyah, "Aplikasi Penerimaan dan Pengeluaran Kas Berbasis Web dan WhatsApp Gateway," *J. Tekno Kompak*, vol. 15, no. 1, pp. 13–24, 2021, doi: 10.33365/jtk.v15i1.900.
 
-[11] D. S. Purnia, R. Ratningsih, and M. Surahman, "Implementasi Metode Prototyping pada Rancang Bangun Marketplace Rumah Kost Berbasis Mobile," *EVOLUSI J. Sains dan Manaj.*, vol. 9, no. 1, pp. 1–11, 2021, doi: 10.31294/evolusi.v9i1.10145.
+[11] R. S. Pressman and B. R. Maxim, *Software Engineering: A Practitioner's Approach*, 9th ed. New York, NY, USA: McGraw-Hill Education, 2020.
 
-[12] M. I. Surya Pratama, "Integrasi Payment Gateway pada Aplikasi Point of Sales Berbasis Website Menggunakan Framework ReactJS (Studi Kasus: Toko Adida Pratama)," *J. Inform. dan Tek. Elektro Terap.*, vol. 13, no. 3, 2025, doi: 10.23960/jitet.v13i3.7099.
+[12] T. Pricillia and Z. Zulfachmi, "Perbandingan Metode Pengembangan Perangkat Lunak (Waterfall, Prototype, RAD)," *J. Bangkit Indones.*, vol. 10, no. 1, pp. 6–12, 2021, doi: 10.52771/bangkitindonesia.v10i1.153.
 
-[13] I. P. Pramita, A. M. Harahap, and A. B. Nasution, "Penerapan Payment Gateway Midtrans pada Sistem Pembayaran SPP Berbasis Android di SMAN 1 Bangun Purba," *J. Ris. Sist. Inf. dan Teknol. Inf.*, vol. 6, no. 3, pp. 479–490, 2024, doi: 10.52005/jursistekni.v6i3.367.
+[13] D. G. A. Candra and P. P. Pardika, "Analisa dan Perancangan Sistem Informasi Manajemen Pengolahan Data Pesanan Sablon di KYSR Store Menggunakan Metode Waterfall," *JAMI J. Ahli Muda Indones.*, vol. 5, no. 2, pp. 134–147, 2024, doi: 10.46510/jami.v5i2.306.
 
-[14] F. Wijaya, M. Maslim, M. Martinus, and P. Ardanari, "Pembangunan Sistem Informasi Laundry Berbasis Web Menggunakan Payment Gateway Midtrans," *Prolet. Community Serv. Dev. J.*, vol. 1, no. 1, pp. 8–14, 2023, doi: 10.61098/proletariancomdev.v1i1.63.
+[14] M. S. Mustaqbal, R. F. Firdaus, and H. Rahmadi, "Pengujian Aplikasi Menggunakan Black Box Testing Boundary Value Analysis pada Sistem Informasi Akademik," *J. Teknol. dan Inf.*, vol. 11, no. 1, pp. 35–44, 2021, doi: 10.34010/jati.v11i1.4285.
 
-[15] L. Hakim, S. P. Kristanto, M. N. Shodiq, and E. Amaliyah, "Aplikasi Penerimaan dan Pengeluaran Kas Berbasis Web dan WhatsApp Gateway," *J. Tekno Kompak*, vol. 15, no. 1, pp. 13–24, 2021, doi: 10.33365/jtk.v15i1.900.
+[15] E. Setiana, M. R. Ramadhan, B. Budiman, and R. Y. Rakhman, "Pengujian Perangkat Lunak Metode Black Box pada Aplikasi Sistem Pakar Pola Latihan dan Asupan Makanan," *Nuansa Inform.*, vol. 18, no. 1, pp. 68–74, 2024, doi: 10.25134/ilkom.v18i1.67.
 
-[16] R. S. Pressman and B. R. Maxim, *Software Engineering: A Practitioner's Approach*, 8th ed. New York: McGraw-Hill Education, 2015.
+[16] P. Philippaerts, D. Preuveneers, and W. Joosen, "OAuch: Exploring Security Compliance in the OAuth 2.0 Ecosystem," in *Proc. 25th Int. Symp. Research in Attacks, Intrusions and Defenses (RAID '22)*, New York, NY, USA: ACM, 2022, pp. 460–481, doi: 10.1145/3545948.3545955.
 
-[17] T. Pricillia and Z. Zulfachmi, "Perbandingan Metode Pengembangan Perangkat Lunak (Waterfall, Prototype, RAD)," *J. Bangkit Indones.*, vol. 10, no. 1, pp. 6–12, 2021, doi: 10.52771/bangkitindonesia.v10i1.153.
+[17] B. A. Kurniawan and D. R. Indah, "Implementasi Concurrency Control dan Row-Level Locking pada Sistem Manajemen Transaksi Basis Data Relasional," *J. Media Inform. Budidarma*, vol. 7, no. 2, pp. 889–898, 2023, doi: 10.30865/mib.v7i2.5992.
 
-[18] D. G. A. Candra and P. P. Pardika, "Analisa dan Perancangan Sistem Informasi Manajemen Pengolahan Data Pesanan Sablon di KYSR Store Menggunakan Metode Waterfall," *JAMI J. Ahli Muda Indones.*, vol. 5, no. 2, pp. 134–147, 2024, doi: 10.46510/jami.v5i2.306.
+[18] M. I. Surya Pratama, "Integrasi Payment Gateway pada Aplikasi Point of Sales Berbasis Website Menggunakan Framework ReactJS (Studi Kasus: Toko Adida Pratama)," *J. Inform. dan Tek. Elektro Terap.*, vol. 13, no. 3, 2025, doi: 10.23960/jitet.v13i3.7099.
 
-[19] W. N. Cholifah, Y. Yulianingsih, and S. M. Sagita, "Pengujian Black Box Testing pada Aplikasi Action & Strategy Berbasis Android dengan Teknologi Phonegap," *STRING (Satuan Tulisan Ris. dan Inov. Teknol.)*, vol. 3, no. 2, pp. 206–210, 2018, doi: 10.30998/string.v3i2.3048.
+[19] I. P. Pramita, A. M. Harahap, and A. B. Nasution, "Penerapan Payment Gateway Midtrans pada Sistem Pembayaran SPP Berbasis Android di SMAN 1 Bangun Purba," *J. Ris. Sist. Inf. dan Teknol. Inf.*, vol. 6, no. 3, pp. 479–490, 2024, doi: 10.52005/jursistekni.v6i3.367.
 
-[20] E. Setiana, M. R. Ramadhan, B. Budiman, and R. Y. Rakhman, "Pengujian Perangkat Lunak Metode Black Box pada Aplikasi Sistem Pakar Pola Latihan dan Asupan Makanan," *Nuansa Inform.*, vol. 18, no. 1, pp. 68–74, 2024, doi: 10.25134/ilkom.v18i1.67.
+[20] F. Wijaya, M. Maslim, M. Martinus, and P. Ardanari, "Pembangunan Sistem Informasi Laundry Berbasis Web Menggunakan Payment Gateway Midtrans," *Prolet. Community Serv. Dev. J.*, vol. 1, no. 1, pp. 8–14, 2023, doi: 10.61098/proletariancomdev.v1i1.63.
