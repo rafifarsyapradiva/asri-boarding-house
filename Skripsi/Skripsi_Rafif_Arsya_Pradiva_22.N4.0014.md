@@ -929,46 +929,38 @@ Skenario operasional menggambarkan alur kerja harian pengelola (Bapak Asep, usia
    * **Protokol Penahanan Kamar (*Manual Inspection Hold*)**: Aturan bisnis utama menetapkan bahwa setelah proses *checkout* selesai, status kamar pada basis data tidak otomatis beralih menjadi `tersedia`. Sistem mempertahankan status `terisi` dalam kondisi terkunci merah guna memberi waktu bagi petugas untuk melaksanakan sanitasi, penukaran sprei, dan perbaikan sarana fisik.
    * Setelah kamar dipastikan 100% bersih dan layak dihuni kembali, pengelola membuka menu *Manajemen Kamar* dan secara manual mengubah status kamar dari `terisi` menjadi `tersedia`. Perubahan status ini memicu *event* `KamarObserver::updated` yang secara otomatis membersihkan cache katalog publik melalui `Cache::forget('kamar_aktif_landing')`. Unit kamar seketika tayang kembali pada etalase landing page publik `weatso.id` dengan tombol pemesanan aktif, mengeliminasi risiko pemesanan ganda (*double booking*) pada kamar yang belum siap dihuni.
 
-Rangkaian diagram skenario alur sistem disajikan secara komprehensif pada Gambar 4.6 (a) hingga Gambar 4.6 (f):
-
-![Gambar 4.6 (a) Skenario User Journey Calon Penyewa pada Fase Registrasi dan Reservasi Live](images/skenario_journey_penyewa.png)  
-*(a) Skenario User Journey Calon Penyewa pada Fase Registrasi dan Reservasi Live*  
-*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
-
-![Gambar 4.6 (b) Sequence Diagram Alur Audit, Konfirmasi, dan Aktivasi Kontrak Sewa](images/skenario_seq_aktivasi_reservasi.png)  
-*(b) Sequence Diagram Alur Audit, Konfirmasi, dan Aktivasi Kontrak Sewa*  
-*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
+Rangkaian diagram skenario alur sistem disajikan secara komprehensif pada Gambar 4.6 (a) hingga Gambar 4.6 (d):
 
 Guna mempertahankan keterbacaan state transisi penagihan di Microsoft Word, visualisasi state machine dipecah ke dalam dua tahap siklus penagihan:
 
-![Gambar 4.6 (c1) State Diagram Siklus Penagihan Bulanan - Bagian 1: Penerbitan Tagihan dan Pembayaran Disiplin](images/skenario_state_billing_part1.png)  
-*(c1) State Diagram Siklus Penagihan Bulanan - Bagian 1: Penerbitan Tagihan dan Pembayaran Disiplin*  
+![Gambar 4.6 (a1) State Diagram Siklus Penagihan Bulanan - Bagian 1: Penerbitan Tagihan dan Pembayaran Disiplin](images/skenario_state_billing_part1.png)  
+*(a1) State Diagram Siklus Penagihan Bulanan - Bagian 1: Penerbitan Tagihan dan Pembayaran Disiplin*  
 *Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
-![Gambar 4.6 (c2) State Diagram Siklus Penagihan Bulanan - Bagian 2: Masa Toleransi Bebas Denda dan Penegakan Denda Kalender 5%](images/skenario_state_billing_part2.png)  
-*(c2) State Diagram Siklus Penagihan Bulanan - Bagian 2: Masa Toleransi Bebas Denda dan Penegakan Denda Kalender 5%*  
+![Gambar 4.6 (a2) State Diagram Siklus Penagihan Bulanan - Bagian 2: Masa Toleransi Bebas Denda dan Penegakan Denda Kalender 5%](images/skenario_state_billing_part2.png)  
+*(a2) State Diagram Siklus Penagihan Bulanan - Bagian 2: Masa Toleransi Bebas Denda dan Penegakan Denda Kalender 5%*  
 *Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
-![Gambar 4.6 (d) Mindmap Kluster Tanggung Jawab Operasional Administrator](images/skenario_admin_mindmap_pengelolaan.png)  
-*(d) Mindmap Kluster Tanggung Jawab Operasional Administrator (Bapak Asep)*  
+![Gambar 4.6 (b) Mindmap Kluster Tanggung Jawab Operasional Administrator](images/skenario_admin_mindmap_pengelolaan.png)  
+*(b) Mindmap Kluster Tanggung Jawab Operasional Administrator (Bapak Asep)*  
 *Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
 Selanjutnya, alur keputusan aktivasi reservasi dan prosedur checkout disajikan secara modular:
 
-![Gambar 4.6 (e1) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 1: Audit Berkas dan Verifikasi Transaksi](images/skenario_admin_flow_part1.png)  
-*(e1) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 1: Audit Berkas dan Verifikasi Transaksi*  
+![Gambar 4.6 (c1) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 1: Audit Berkas dan Verifikasi Transaksi](images/skenario_admin_flow_part1.png)  
+*(c1) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 1: Audit Berkas dan Verifikasi Transaksi*  
 *Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
-![Gambar 4.6 (e2) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 2: Monitoring Pelunasan Sisa dan Otomasi Hunian](images/skenario_admin_flow_part2.png)  
-*(e2) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 2: Monitoring Pelunasan Sisa dan Otomasi Hunian*  
+![Gambar 4.6 (c2) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 2: Monitoring Pelunasan Sisa dan Otomasi Hunian](images/skenario_admin_flow_part2.png)  
+*(c2) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 2: Monitoring Pelunasan Sisa dan Otomasi Hunian*  
 *Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
-![Gambar 4.6 (f1) Flowchart Prosedur Checkout - Bagian 1: Verifikasi Finansial dan Checkout Administratif](images/skenario_checkout_part1.png)  
-*(f1) Flowchart Prosedur Checkout - Bagian 1: Verifikasi Finansial dan Checkout Administratif*  
+![Gambar 4.6 (d1) Flowchart Prosedur Checkout - Bagian 1: Verifikasi Finansial dan Checkout Administratif](images/skenario_checkout_part1.png)  
+*(d1) Flowchart Prosedur Checkout - Bagian 1: Verifikasi Finansial dan Checkout Administratif*  
 *Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
-![Gambar 4.6 (f2) Flowchart Prosedur Checkout - Bagian 2: Protokol Karantina Fisik dan Pelepasan Kamar Manual](images/skenario_checkout_part2.png)  
-*(f2) Flowchart Prosedur Checkout - Bagian 2: Protokol Karantina Fisik dan Pelepasan Kamar Manual*  
+![Gambar 4.6 (d2) Flowchart Prosedur Checkout - Bagian 2: Protokol Karantina Fisik dan Pelepasan Kamar Manual](images/skenario_checkout_part2.png)  
+*(d2) Flowchart Prosedur Checkout - Bagian 2: Protokol Karantina Fisik dan Pelepasan Kamar Manual*  
 *Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
 *Gambar 4.6 Skenario Diagram Siklus Hidup Transaksional Penyewa dan Operasional Administrator*  
