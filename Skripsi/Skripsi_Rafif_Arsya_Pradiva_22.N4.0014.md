@@ -244,9 +244,9 @@ Tabel 4.14  Matriks Komparasi Evaluasi Respon dan Temuan Kunci Kelima Penghuni K
 ## DAFTAR GAMBAR
 Gambar 3.1  Diagram Model Waterfall Pengembangan Sistem	17
 Gambar 3.2  Kerangka Pemikiran Penelitian	18
-Gambar 4.1  Use Case Diagram Terpadu Sistem Asri Boarding House	22
+Gambar 4.1  Use Case Diagram Sistem Asri Boarding House (Modul Penyewa, Tamu, dan Calon Penyewa)	22
 Gambar 4.2  Activity Diagram Tiga Proses Kritis Sistem Asri Boarding House	24
-Gambar 4.3  Flowchart Mekanisme Billing Engine dan Penanganan Keterlambatan Massal	27
+Gambar 4.3  Flowchart Diagram Logika Algoritmik Sistem Asri Boarding House	27
 Gambar 4.4  Sequence Diagram Alur Transaksional Utama Sistem Asri Boarding House	29
 Gambar 4.5  Entity Relationship Diagram (ERD) Skema Basis Data 22 Tabel	31
 Gambar 4.6  Skenario Diagram Siklus Hidup Transaksional Penyewa dan Operasional Administrator	32
@@ -536,75 +536,190 @@ Sumber: Rancangan penulis (2026)
 ## BAB IV HASIL DAN PEMBAHASAN
 
 ## 4.1 Perancangan Sistem
-Tahap perancangan sistem memvisualisasikan hasil analisis kebutuhan fungsional dan triangulasi data operasional ke dalam arsitektur rekayasa perangkat lunak yang terstruktur. Pemodelan sistem disusun mengacu pada standar *Unified Modeling Language* (UML)—meliputi Use Case Diagram, Activity Diagram, Flowchart Diagram, dan Sequence Diagram—serta pemodelan skema relasi data menggunakan *Entity Relationship Diagram* (ERD). Seluruh diagram disajikan dalam format gambar PNG beresolusi tinggi guna menjamin ketajaman garis dan keterbacaan teks tanpa mengalami distorsi visual saat dicetak maupun ditampilkan pada dokumen digital.
+Tahap perancangan sistem memvisualisasikan hasil analisis kebutuhan fungsional dan triangulasi data operasional ke dalam arsitektur rekayasa perangkat lunak yang terstruktur. Pemodelan sistem disusun mengacu pada standar *Unified Modeling Language* (UML 2.5)—meliputi Use Case Diagram, Activity Diagram, Flowchart Diagram, dan Sequence Diagram—serta pemodelan skema relasi data menggunakan *Entity Relationship Diagram* (ERD). Guna menjamin kemudahan penelaahan oleh dosen pembimbing dan penguji serta meniadakan distorsi visual saat naskah dibuka atau dicetak melalui perangkat lunak pengolah kata seperti Microsoft Word, diagram yang memiliki kompleksitas tinggi dan alur logika jamak dipecah secara modular ke dalam sub-diagram beresolusi tinggi (format PNG 24-bit tanpa kompresi *lossy*) dengan orientasi dan aspek rasio proporsional, serta dilengkapi penomoran resmi, judul, sumber data, dan deskripsi fungsional yang komprehensif.
 
 ### 4.1.1 Use Case Diagram
-Sistem Informasi Manajemen Asri Boarding House membedakan empat aktor dengan hak akses yang terisolasi melalui tiga portal autentikasi terpisah (`/admin/login`, `/reservasi/login`, dan `/penyewa/login`). Pendekatan ini menegakkan prinsip *Role-Based Access Control* (RBAC) guna mencegah potensi eskalasi hak akses (*privilege escalation*). Peran dan wewenang keempat aktor tersebut diuraikan sebagai berikut:
-1. **Tamu (*Guest*)**: Pengunjung umum yang mengakses landing page untuk memperoleh informasi seputar kos, menjelajahi etalase 32 unit kamar lengkap dengan rincian fasilitas dan video *room tour*, memanfaatkan kalkulator harga sewa lintas periode (harian, mingguan, bulanan), menggunakan tombol tindakan WhatsApp melayang, serta memulai percakapan langsung dengan administrator melalui *Guest Chat* tanpa kewajiban mendaftarkan akun. Sesi percakapan tamu dipersistensikan secara aman pada *cookie* dan penyimpanan lokal peramban (*localStorage*) menggunakan token sesi berenkripsi SHA-256.
-2. **Calon Penyewa**: Pengguna terdaftar yang masuk melalui formulir registrasi mandiri maupun integrasi Google OAuth 2.0 (Laravel Socialite). Calon penyewa dapat memilih kamar kosong, mengisi biodata kependudukan (NIK 16 digit) dan kontak penjamin/wali melalui *stepper* alur reservasi 5 tahap, memilih opsi pembayaran (Uang Muka DP 30% atau Lunas 100%), menuntaskan transaksi daring melalui Midtrans Snap (Bank BCA Virtual Account), memantau kemajuan verifikasi, serta berdiskusi dengan pengelola via kanal obrolan pra-pembayaran yang aktif selama status pemesanan masih *pending*.
-3. **Penyewa Aktif**: Penghuni yang kontrak sewanya telah disetujui dan diaktifkan oleh pengelola. Penyewa aktif memiliki hak akses ke portal mandiri untuk memantau masa tinggal, meninjau rincian tagihan sewa berkala beserta status jatuh tempo, membayar tagihan secara non-tunai via Midtrans Snap (BCA Virtual Account), mengunduh bukti kuitansi digital resmi format A5, menyampaikan pengaduan kerusakan sarana kamar disertai bukti foto, memantau penanganan perbaikan, serta melakukan reset kata sandi akun secara mandiri via surel SMTP.
-4. **Administrator**: Pengelola operasional (Bapak Asep) yang memegang kewenangan penuh dalam tata kelola hunian: memantau dasbor statistik dan tiga kartu ringkasan keuangan real-time, mengelola master data kamar dan sarana prasarana (CRUD dengan proteksi integritas relasi), melayani pendaftaran penyewa baru yang datang langsung (*walk-in*), mengonfirmasi pembayaran tunai, memvalidasi reservasi daring, memantau otomasi penagihan dan penerapan denda kalender 5%, menindaklanjuti keluhan fasilitas, menyiarkan pengumuman massal (*broadcast*), mengontrol jadwal okupansi melalui Kalender Visual (UC-19), serta mencetak laporan laba bersih ke format PDF resmi maupun lembar kerja Excel/CSV ber-encoding BOM UTF-8.
+Sistem Informasi Manajemen Asri Boarding House membedakan hak akses dan wewenang operasional pengguna secara tegas melalui tiga portal autentikasi terisolasi (`/admin/login`, `/reservasi/login`, dan `/penyewa/login`). Pendekatan ini menegakkan prinsip *Role-Based Access Control* (RBAC) guna mencegah potensi eskalasi hak akses (*privilege escalation*). Peran dan wewenang pengguna diklasifikasikan ke dalam empat entitas aktor:
+1. **Penyewa Aktif**: Penghuni yang kontrak sewanya telah disetujui dan diaktifkan oleh pengelola. Penyewa aktif memiliki hak akses ke portal mandiri internal untuk memantau masa tinggal aktif, meninjau rincian tagihan sewa berkala beserta status jatuh tempo kalender seragam (tanggal 10), melunasi kewajiban sewa secara non-tunai melalui Midtrans Snap (Bank BCA Virtual Account), mengunduh kuitansi digital resmi format A5 berstempel digital secara mandiri, menyampaikan pengaduan keluhan kerusakan sarana kamar disertai bukti foto fisik, meninjau tata tertib hunian, serta mereset kata sandi akun secara mandiri melalui surel terenkripsi SMTP.
+2. **Tamu (*Guest*)**: Pengunjung umum yang mengakses landing page publik untuk memperoleh informasi seputar kos, menjelajahi etalase 32 unit kamar lengkap dengan rincian fasilitas dan video *room tour*, memanfaatkan kalkulator harga sewa lintas periode (harian, mingguan, bulanan), menggunakan tombol tindakan WhatsApp melayang, serta memulai percakapan langsung dengan administrator melalui *Floating Guest Live Chat* tanpa kewajiban mendaftarkan akun. Sesi obrolan tamu dipersistensikan secara aman pada *cookie* dan penyimpanan lokal peramban (*localStorage*) menggunakan token sesi berenkripsi SHA-256.
+3. **Calon Penyewa**: Pengguna terdaftar yang masuk melalui formulir registrasi mandiri maupun integrasi Google OAuth 2.0 (*Laravel Socialite*). Calon penyewa dapat memilih unit kamar kosong, melengkapi verifikasi nomor kontak WhatsApp, mengisi biodata kependudukan (NIK 16 digit) dan kontak penjamin/wali melalui *stepper* alur reservasi 5 tahap, memilih opsi pembayaran (Uang Muka DP 30% atau Lunas 100%), menuntaskan transaksi daring melalui Midtrans Snap (Bank BCA Virtual Account), memantau kemajuan verifikasi, serta berdiskusi dengan pengelola via kanal obrolan pra-pembayaran yang aktif selama status pemesanan masih *pending*.
+4. **Administrator**: Pengelola operasional (Bapak Asep, usia 48 tahun) yang memegang kewenangan penuh dalam tata kelola hunian: memantau dasbor statistik dan tiga kartu ringkasan keuangan real-time, mengelola master data kamar dan sarana prasarana (CRUD dengan proteksi integritas relasi), melayani pendaftaran penyewa baru yang datang langsung (*walk-in*), mengonfirmasi pembayaran tunai, memvalidasi reservasi daring, memantau otomasi penagihan dan penerapan denda kalender 5%, menindaklanjuti keluhan fasilitas, menyiarkan pengumuman massal (*broadcast*), mengontrol jadwal okupansi melalui Kalender Visual (UC-19), serta mencetak laporan laba bersih ke format PDF resmi maupun lembar kerja Excel/CSV ber-encoding BOM UTF-8.
 
-Interaksi fungsional keempat aktor dengan komponen-komponen sistem disajikan secara terpadu pada Gambar 4.1.
+Guna mempertahankan keterbacaan teks dan ketajaman simbol diagram pada Microsoft Word, Use Case Diagram dipecah menjadi tiga diagram modular berorientasi horizontal:
 
-![Gambar 4.1 Use Case Diagram Terpadu Sistem Asri Boarding House](images/use_case_master_unified.png)
+#### 1. Use Case Diagram Modul Penyewa Aktif
+Visualisasi interaksi fungsional penghuni kos aktif dengan modul internal disajikan pada Gambar 4.1 (a).
 
-*Gambar 4.1 Use Case Diagram Terpadu Sistem Asri Boarding House*  
+![Gambar 4.1 (a) Use Case Diagram Modul Penyewa Aktif](images/use_case_penyewa_aktif.png)
+
+*Gambar 4.1 (a) Use Case Diagram Modul Penyewa Aktif*  
 *Sumber: Hasil pemodelan UML penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.1 (a)**:
+Diagram Use Case Modul Penyewa Aktif memodelkan 7 (tujuh) kasus penggunaan inti yang berpusat pada pemenuhan kebutuhan penghuni kos selama masa tinggal berlangsung:
+* **Kluster Akses Portal & Profil**: Penyewa dapat masuk ke portal mandiri melalui autentikasi kredensial lokal (`UC-22`) maupun *Single Sign-On* Google OAuth 2.0 (`UC-18`). Integrasi Google Identity Services menjamin kemudahan akses tanpa mengharuskan pengguna mengingat kombinasi kata sandi baru.
+* **Kluster Tagihan & Transaksi Finansial**: Penyewa memantau riwayat seluruh invoice sewa bulanan dan sisa pelunasan uang muka (`UC-16`). Eksekusi pembayaran tagihan (`UC-04`) terhubung langsung ke antarmuka pop-up *Midtrans Snap API*, memungkinkan transaksi non-tunai melalui saluran Bank BCA Virtual Account. Begitu transaksi berstatus *settlement*, relasi `<<extend>>` memicu ketersediaan fungsi `UC-25` (*Mengunduh Kuitansi PDF*), di mana dokumen kuitansi resmi format A5 berstempel digital dikompilasi secara instan di peramban klien via pustaka `html2pdf.js` tanpa membebani penyimpanan peladen.
+* **Kluster Layanan & Informasi Hunian**: Meliputi penyampaian tiket keluhan fasilitas kamar (`UC-05`) yang dilengkapi unggah foto bukti kerusakan fisik berkapasitas hingga 2 MB dan terhubung ke *Fonnte WhatsApp API* untuk notifikasi instan ke pengelola; peninjauan tata tertib kos dinamis (`UC-11`); serta penerimaan pengumuman darurat atau operasional (`UC-21`).
+
+---
+
+#### 2. Use Case Diagram Modul Tamu (*Guest*)
+Visualisasi interaksi pengunjung umum pada antarmuka publik disajikan pada Gambar 4.1 (b).
+
+![Gambar 4.1 (b) Use Case Diagram Modul Tamu (Guest)](images/use_case_tamu_guest.png)
+
+*Gambar 4.1 (b) Use Case Diagram Modul Tamu (Guest)*  
+*Sumber: Hasil pemodelan UML penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.1 (b)**:
+Diagram Use Case Modul Tamu memodelkan 8 (delapan) kasus penggunaan yang menitikberatkan pada kemudahan eksplorasi informasi publik, transparansi tarif, dan komunikasi pra-transaksi tanpa hambatan registrasi:
+* **Kluster Eksplorasi Publik & Konsultasi**: Tamu dapat menelusuri katalog 32 unit kamar beserta rincian fasilitas kasur springbed, AC, kamar mandi dalam, dan video *room tour* (`UC-10`). Disediakan modul kalkulator interaktif (`UC-10_Calc`) untuk mensimulasikan estimasi tarif sewa lintas periode (harian, mingguan, dan bulanan berdiskon). Tamu dapat langsung berkonsultasi dengan pengelola kos melalui *Floating Guest Live Chat* (`UC-17`) tanpa login, di mana identitas sesi diproteksi oleh token acak berenkripsi SHA-256 pada *cookie* peramban. Selain itu, tombol aksi mengambang WhatsApp (*Floating Action CTA*) berdiameter 56 px disematkan pada sudut kanan bawah guna memfasilitasi komunikasi instan satu kali klik sesuai standar aksesibilitas WCAG 2.1.
+* **Kluster Otentikasi & Pendaftaran Akun**: Tamu yang berminat menyewa kamar dapat mendaftarkan akun baru secara mandiri melalui formulir registrasi (`UC-12`) atau menggunakan mekanisme otentikasi cepat Google OAuth 2.0 (`UC-18`). Bagi pengguna terdaftar, disediakan pintu masuk login manual (`UC-22`) yang terhubung dengan relasi `<<extend>>` ke modul pemulihan kata sandi (`UC-24`), di mana tautan token reset sandi dikirimkan secara otomatis via *SMTP Mail Server*.
+
+---
+
+#### 3. Use Case Diagram Modul Calon Penyewa
+Visualisasi interaksi pemesanan kamar dan transaksi uang muka oleh calon penghuni disajikan pada Gambar 4.1 (c).
+
+![Gambar 4.1 (c) Use Case Diagram Modul Calon Penyewa](images/use_case_calon_penyewa.png)
+
+*Gambar 4.1 (c) Use Case Diagram Modul Calon Penyewa*  
+*Sumber: Hasil pemodelan UML penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.1 (c)**:
+Diagram Use Case Modul Calon Penyewa memodelkan 7 (tujuh) fungsi terintegrasi yang memandu alur pemesanan kamar secara aman, transparan, dan terstruktur:
+* **Kluster Pemesanan Kamar Bertahap (*5-Step Stepper*)**: Calon penyewa yang telah login diarahkan ke ruang kerja pemesanan (`UC-01`). Sistem memvalidasi kelengkapan profil kontak WhatsApp (`UC_Prof`) melalui middleware `EnsureProfileIsComplete`, mewajibkan input NIK 16 digit dan nomor kontak wali/penjamin darurat (`UC_Data`), serta mengalkulasi total tarif berdasarkan durasi sewa dengan diskon otomatis untuk skema kontrak tahunan (`UC_Durasi`).
+* **Kluster Transaksi & Komunikasi Pra-Bayar**: Terhubung melalui relasi `<<extend>>` ke alur utama `UC-01`, meliputi pemilihan skema pembayaran (`UC-02`: Uang Muka DP 30% atau Lunas 100%) yang diproses melalui *Midtrans Snap API*, serta kanal komunikasi interaktif *Pre-Payment Chat Box* (`UC-03`) yang memungkinkan calon penyewa bertanya seputar perlengkapan kamar kepada pengelola selama status pesanan berstatus *pending*. Terakhir, calon penyewa dapat memantau status persetujuan berkas identitas oleh administrator secara real-time (`UC-16_C`).
 
 ---
 
 ### 4.1.2 Activity Diagram
-Activity diagram memetakan alur kerja dinamis dari tiga proses operasional pokok pada sistem Asri Boarding House. Mengingat kompleksitas logika pada masing-masing proses, diagram disajikan secara terpisah ke dalam tiga sub-gambar beresolusi tinggi guna mempertahankan keterbacaan setiap simpul keputusan:
+Activity diagram memetakan alur kerja dinamis dari tiga proses operasional pokok pada sistem Asri Boarding House. Seluruh diagram disajikan dalam format *Swimlane Horizontal* beresolusi tinggi guna memisahkan secara tegas tanggung jawab antara Pengguna, Penjadwal Tugas Peladen (*Task Scheduler*), Lapisan Logika Bisnis (*Service Layer*), Basis Data MySQL, serta Layanan Pihak Ketiga (Midtrans dan Fonnte API):
 
-1. **Mesin Penagihan Otomatis (*Auto-Billing Engine*)**: Dieksekusi secara terjadwal setiap tanggal 1 awal bulan pukul 00:05 WIB oleh penjadwal tugas (*Laravel Task Scheduler*) yang terhubung dengan *cron job* peladen. Sistem menyaring seluruh penghuni aktif bertipe sewa bulanan dan secara eksplisit mengecualikan penyewa harian maupun mingguan melalui filter kueri `whereNotIn('tipe_sewa', ['harian', 'mingguan'])`. Bagi setiap penyewa bulanan, sistem mengambil nilai tarif dari atribut `penyewa.harga_sewa`, lalu menerbitkan rekaman tagihan baru berstatus *pending* dengan tanggal jatuh tempo seragam pada tanggal 10 bulan berjalan. Integritas antiduplikasi dijamin pada lapisan basis data melalui *composite unique index* atas kombinasi kolom `(penyewa_id, periode_bulan, periode_tahun)`. Setelah baris tagihan berhasil dibentuk, sistem memicu pengiriman pesan rincian invoice secara otomatis ke nomor WhatsApp penyewa via Fonnte API Gateway.
-2. **Denda Keterlambatan Flat Kalender (*Flat Calendar Late Fee*)**: Dijalankan setiap hari oleh scheduler untuk mengevaluasi tagihan berstatus *pending* yang melewati tanggal jatuh tempo. Sistem mengedepankan pendekatan persuasif: selama tagihan masih berada dalam bulan kalender berjalan (tanggal 11 hingga akhir bulan), sistem membebaskan denda keterlambatan (Denda = Rp0) dan membatasi tindakan pada pengiriman pesan pengingat sopan. Namun, ketika pergantian bulan kalender terjadi (memasuki tanggal 1 bulan berikutnya) dan kewajiban bulan lalu belum diselesaikan, sistem mengenakan sanksi denda flat sebesar 5% dari tarif sewa pokok tepat satu kali melalui mekanisme *Idempotency Guard* (`nominal_denda == 0`) di dalam transaksi atomik berproteksi kunci baris (`lockForUpdate()`). Bersamaan dengan pembebanan denda, sistem mengirimkan notifikasi eskalasi penunggakan ke kontak nomor orang tua/wali penyewa.
-3. **Transisi Reservasi Menjadi Penyewa Aktif (*Reservation-to-Tenant Transition*)**: Saat administrator menyetujui reservasi daring yang telah berstatus lunas atau DP, sistem mengeksekusi serangkaian operasi multi-tabel di dalam satu transaksi terisolasi `DB::transaction`. Sistem memperbarui status reservasi menjadi `dikonfirmasi`, mengunci status kamar menjadi `terisi`, menyalin nominal harga kamar ke kolom `penyewa.harga_sewa` sebagai tarif personal yang terkunci (*immutable personal rate*), membuat akun login pengguna pada tabel `users`, menerbitkan tagihan pelunasan sisa 70% (jika skema DP), serta mengirimkan kredensial akun bawaan ke nomor WhatsApp penyewa via Fonnte API. Sebaliknya, saat penyewa menyelesaikan masa tinggal (*checkout*), sistem menerapkan aturan operasional: status kamar tidak dilepas secara otomatis menjadi tersedia, melainkan tetap berstatus `terisi` (terkunci merah) hingga administrator melakukan verifikasi kebersihan serta sarana fisik di lokasi dan mengubah statusnya secara manual menjadi `tersedia`.
-
-Visualisasi ketiga activity diagram proses kritis disajikan pada Gambar 4.2.
+#### 1. Mesin Penagihan Otomatis (*Auto-Billing Engine*)
+Visualisasi alur penerbitan invoice berkala disajikan pada Gambar 4.2 (a).
 
 ![Gambar 4.2 (a) Activity Diagram Mesin Penagihan Otomatis](images/activity_auto_billing.png)  
 *(a) Mesin Penagihan Otomatis (Auto-Billing Engine)*
 
+*Sumber: Hasil pemodelan UML penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.2 (a)**:
+Activity diagram ini memetakan alur eksekusi rutin yang digerakkan oleh penjadwal tugas (*cron job*) setiap tanggal 1 awal bulan pukul 00:05 WIB. Partisi *Cron Scheduler* memicu perintah konsol `php artisan tagihan:generate-bulanan`. Lapisan *BillingService* mengeksekusi kueri penapisan pada tabel `penyewa` dengan menyaring klausul `is_active = 1` dan secara eksplisit mengecualikan tipe kontrak harian dan mingguan via `whereNotIn('tipe_sewa', ['harian', 'mingguan'])`. Sistem memproses data penyewa per kelompok data (`chunkById(100)`) guna mencegah konsumsi memori berlebih (*memory exhaustion*). Pada setiap perulangan, nilai tarif sewa diambil dari atribut `penyewa.harga_sewa` (mengunci tarif personal) dan disisipkan ke tabel `tagihan` dengan tanggal jatuh tempo seragam pada tanggal 10. *Composite unique index* pada `(penyewa_id, periode_bulan, periode_tahun)` menjamin ketiadaan duplikasi invoice. Setelah penyimpanan atomik berhasil, sistem mendaftarkan antrean pesan rincian tagihan ke *Fonnte WhatsApp API* untuk disiarkan ke nomor penyewa.
+
+---
+
+#### 2. Denda Keterlambatan Flat Kalender (*Flat Calendar Late Fee*)
+Visualisasi penegakan disiplin pembayaran sewa disajikan pada Gambar 4.2 (b).
+
 ![Gambar 4.2 (b) Activity Diagram Denda Keterlambatan Flat Kalender](images/activity_flat_calendar_late_fee.png)  
 *(b) Denda Keterlambatan Flat Kalender (Flat Calendar Late Fee)*
+
+*Sumber: Hasil pemodelan UML penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.2 (b)**:
+Activity diagram ini mengilustrasikan logika evaluasi denda keterlambatan yang dijalankan setiap hari pukul 01:00 WIB oleh scheduler peladen. Sistem memeriksa baris tagihan berstatus *pending* yang telah melewati batas tanggal jatuh tempo 10. Diagram memvisualisasikan dua percabangan keputusan (*decision nodes*):
+* **Cabang Masa Toleransi (*Grace Period*)**: Selama waktu sistem masih berada pada bulan kalender berjalan (tanggal 11 hingga akhir bulan), sistem membebaskan denda keterlambatan (`nominal_denda = 0`). Tindakan dibatasi pada pengiriman pesan pengingat ramah (*polite reminder*) melalui WhatsApp penyewa guna menjaga keharmonisan hubungan antara pengelola dan penghuni mahasiswa.
+* **Cabang Pergantian Bulan Kalender**: Ketika waktu sistem melintasi batas bulan kalender baru (tanggal 1 bulan berikutnya) dan kewajiban bulan lalu belum diselesaikan, sistem mengunci baris data dengan `lockForUpdate()` dan menerapkan denda flat 5% dari tarif sewa pokok. Mekanisme *Idempotency Guard* (`nominal_denda == 0`) memastikan denda hanya dibebankan tepat satu kali dan tidak berbunga harian. Bersamaan dengan itu, sistem memicu pengiriman notifikasi eskalasi penunggakan ke kontak nomor telepon orang tua/wali penyewa.
+
+---
+
+#### 3. Transisi Reservasi Menjadi Penyewa Aktif (*Reservation-to-Tenant Transition*)
+Visualisasi alur pengesahan pemesanan kamar menjadi kontrak sewa aktif disajikan pada Gambar 4.2 (c).
 
 ![Gambar 4.2 (c) Activity Diagram Transisi Reservasi Menjadi Penyewa Aktif](images/activity_reservation_to_tenant.png)  
 *(c) Transisi Reservasi Menjadi Penyewa Aktif (Reservation-to-Tenant)*
 
-*Gambar 4.2 Activity Diagram Tiga Proses Kritis Sistem Asri Boarding House*  
 *Sumber: Hasil pemodelan UML penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.2 (c)**:
+Activity diagram ini memodelkan proses audit dan konfirmasi reservasi yang dijalankan oleh administrator (Bapak Asep). Saat calon penyewa menyelesaikan pembayaran DP atau Lunas via Midtrans Snap, status reservasi menjadi `lunas` atau `dp`. Administrator membuka konsol `/admin/reservasi`, memeriksa kesahihan NIK 16 digit dan nomor kontak wali, lalu menekan tombol konfirmasi. Layanan `TransisiPenyewaService` mengeksekusi blok transaksi atomik `DB::transaction`: (1) Memperbarui status reservasi menjadi `dikonfirmasi`, (2) Mengunci status kamar menjadi `terisi` (mencegah *double booking*), (3) Menyalin nominal harga kamar ke atribut `penyewa.harga_sewa` sebagai tarif personal permanen, (4) Membuat akun pengguna login aktif pada tabel `users`, dan (5) Jika penyewa memilih skema DP 30%, sistem menerbitkan tagihan pelunasan sisa 70% berstatus *pending*. Setelah seluruh kueri tuntas, *Fonnte WhatsApp API* mengirimkan pesan selamat datang beserta kredensial akun bawaan ke nomor ponsel penyewa.
 
 ---
 
 ### 4.1.3 Flowchart Diagram
-Flowchart diagram memodelkan logika algoritmik dari alur transaksional sistem secara terintegrasi dari hulu ke hilir. Diagram ini memetakan percabangan keputusan sistem, mulai dari verifikasi ketersediaan kamar, perhitungan diskon sewa durasi tahunan, pemilihan skema pembayaran (DP 30% atau Lunas 100%), pembangkitan token Midtrans Snap saluran BCA Virtual Account, penanganan notifikasi *webhook callback settlement*, mutasi pembukuan kas, hingga siklus penagihan bulanan otomatis dan evaluasi sanksi denda kalender.
+Flowchart diagram memodelkan struktur logika algoritmik dari alur pemrosesan data secara deterministik. Diagram disajikan ke dalam tiga modul terpisah beresolusi tinggi guna menjamin kejelasan setiap simbol terminator, masukan/keluaran, proses komputasi, dan percabangan kondisi:
 
-Logika penagihan periodik dan penanganan keterlambatan dirancang secara deterministik guna mengeliminasi cabang eksekusi yang ambigu. Pengecekan status `is_active == 1` menyaring penyewa yang berhak ditagih, pembagian pemrosesan memori menggunakan teknik `chunkById(100)` mencegah peladen mengalami kehabisan alokasi memori (*memory exhaustion*), serta evaluasi tanggal kalender secara tegas memisahkan fase pengingat persuasif tanpa denda dari fase penegakan denda flat 5%. Alur flowchart disajikan pada Gambar 4.3.
+#### 1. Algoritma Mesin Penagihan Otomatis Massal
+Visualisasi logika pembentukan invoice berkala disajikan pada Gambar 4.3 (a).
 
-![Gambar 4.3 Flowchart Mekanisme Billing Engine dan Penanganan Keterlambatan Massal](images/gambar_4_1.png)
+![Gambar 4.3 (a) Flowchart Algoritma Mesin Penagihan Otomatis](images/flowchart_auto_billing.png)  
+*(a) Flowchart Algoritma Mesin Penagihan Otomatis (Auto-Billing Engine)*
 
-*Gambar 4.3 Flowchart Mekanisme Billing Engine dan Penanganan Keterlambatan Massal*  
 *Sumber: Hasil analisis algoritma sistem penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.3 (a)**:
+Flowchart ini memetakan alur kontrol instruksi pada berkas `GenerateMonthlyInvoices.php`. Eksekusi diawali oleh pemicu penjadwal tugas (*Hostinger Cron Job*). Algoritma melakukan inisialisasi tanggal sistem (`now()`), lalu memverifikasi apakah tanggal sistem bertepatan dengan tanggal 1. Jika valid, sistem membuka kursor kueri `penyewa` aktif non-harian/mingguan menggunakan teknik pembagian beban *chunking* 100 baris per iterasi. Untuk setiap data penyewa, sistem memeriksa keberadaan tagihan kembar pada periode berjalan melalui fungsi `exists()`. Jika belum ada, sistem menghitung tarif aktif personal, menerbitkan baris tagihan baru dengan tanggal jatuh tempo seragam pada tanggal 10, mencatat audit log, dan mendaftarkan instruksi pengiriman pesan WhatsApp invoice ke antrean sistem (*queue job*).
+
+---
+
+#### 2. Algoritma Evaluasi Denda Keterlambatan Flat Kalender
+Visualisasi logika penegakan denda sewa disajikan pada Gambar 4.3 (b).
+
+![Gambar 4.3 (b) Flowchart Algoritma Penegakan Denda Keterlambatan Flat Kalender](images/flowchart_denda_kalender.png)  
+*(b) Flowchart Algoritma Penegakan Denda Keterlambatan Flat Kalender 5%*
+
+*Sumber: Hasil analisis algoritma sistem penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.3 (b)**:
+Flowchart ini memodelkan algoritma berkas `ApplyLatePenalties.php`. Sistem mengevaluasi seluruh tagihan sewa berstatus `pending` atau `terlambat` yang tanggal jatuh temponya telah terlampaui (`tgl_jatuh_tempo < now()`). Algoritma memeriksa dua kondisi logika bertingkat:
+1. **Evaluasi Bulan Kalender**: Membandingkan apakah bulan kalender tagihan sama dengan bulan kalender sistem saat ini (`tagihan.periode_bulan == now()->month`). Jika sama, tagihan berada pada *fase toleransi*: status diperbarui menjadi `terlambat`, denda dipatok Rp0, dan sistem menyalurkan pengingat persuasif via WhatsApp.
+2. **Evaluasi Pergantian Bulan & Idempotensi**: Jika tagihan berasal dari bulan kalender terdahulu (`tagihan.periode_bulan < now()->month`), sistem mengevaluasi apakah denda telah pernah dibebankan (`nominal_denda == 0`). Jika bernilai nol, sistem mengkalkulasi denda flat sebesar $5\% 	imes 	ext{harga\_sewa}$, menjumlahkannya ke total kewajiban, mencatat riwayat pembebanan, dan mengirimkan pesan peringatan penunggakan ke kontak nomor telepon orang tua/wali penyewa.
+
+---
+
+#### 3. Algoritma Transisi Reservasi dan Validasi Webhook Midtrans
+Visualisasi verifikasi transaksi dan aktivasi penyewa disajikan pada Gambar 4.3 (c).
+
+![Gambar 4.3 (c) Flowchart Transisi Reservasi dan Validasi Webhook](images/flowchart_transisi_reservasi.png)  
+*(c) Flowchart Transisi Reservasi Daring, Validasi Webhook Midtrans, dan Aktivasi Kontrak*
+
+*Sumber: Hasil analisis algoritma sistem penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.3 (c)**:
+Flowchart ini menggambarkan orkestrasi transaksi daring mulai dari pemilihan unit kamar hingga aktivasi akun. Algoritma mengunci ketersediaan kamar secara pesimistik saat formulir diajukan. Saat pembayaran diselesaikan via pop-up Midtrans Snap, peladen Midtrans mengirimkan muatan *webhook HTTP POST*. Pengontrol sistem menghitung hash SHA-512 dari kombinasi `order_id + status_code + gross_amount + server_key` dan membandingkannya dengan tanda tangan digital pada header request. Jika tanda tangan terverifikasi sah dan status bernilai `settlement`, status reservasi diperbarui menjadi `lunas` atau `dp`. Selanjutnya, ketika administrator menekan tombol konfirmasi, transaksi atomik multi-tabel mengunci kamar menjadi `terisi`, menyalin tarif sewa, menerbitkan tagihan pelunasan sisa DP (jika skema DP), serta menyiarkan kredensial akun via Fonnte WhatsApp API.
 
 ---
 
 ### 4.1.4 Sequence Diagram
-Sequence diagram menggambarkan pertukaran pesan dinamis antarkomponen perangkat lunak berbasis sumbu waktu—melibatkan Aktor Pengguna, Peramban Klien, Lapisan Pengontrol Rute Laravel, Lapisan Layanan (*Service Layer*), Basis Data MySQL 8.x InnoDB, serta API Pihak Ketiga (Midtrans Snap dan Fonnte WhatsApp API). Dua alur transaksional utama dimodelkan:
+Sequence diagram menggambarkan interaksi antarkomponen perangkat lunak berbasis sumbu waktu—meliputi Aktor Pengguna, Peramban Klien, Lapisan Pengontrol Rute (*Controllers*), Lapisan Layanan (*Service Layer*), Basis Data MySQL 8.x InnoDB, serta API Pihak Ketiga (Midtrans Snap dan Fonnte WhatsApp API). Diagram disajikan dalam resolusi tinggi 2352 piksel:
 
-1. **Alur Reservasi Daring dan Aktivasi Akun Penghuni**: Calon penyewa melengkapi formulir reservasi pada antarmuka web, peramban klien memanggil *endpoint* internal untuk meminta Snap Token BCA Virtual Account dari Midtrans Cloud. Setelah pengguna menyelesaikan pembayaran pada simulator sandbox, peladen Midtrans mengirimkan notifikasi asinkron HTTP POST (*webhook callback*) yang keabsahannya divalidasi oleh `MidtransReservasiCallbackController` menggunakan tanda tangan digital SHA-512. Begitu status transaksi terkonfirmasi sah (`settlement`), administrator membuka panel kendali, memverifikasi NIK 16 digit dan nomor kontak wali, lalu mengeksekusi konfirmasi. Layanan `TransisiPenyewaService` secara atomik mengaktifkan akun penghuni, mengunci status unit kamar, dan memicu pengiriman pesan selamat datang berisikan kredensial akses akun melalui Fonnte WhatsApp Gateway.
-2. **Siklus Penagihan Bulanan dan Pembayaran Rutin**: Penjadwal tugas peladen mengeksekusi metode `BillingService::generateTagihanBulanan` setiap tanggal 1 awal bulan, menerbitkan baris tagihan berstatus *pending*, dan menyiarkan notifikasi invoice ke nomor WhatsApp penyewa. Saat penyewa masuk ke portal mandiri dan melunasi tagihannya via popup Midtrans Snap BCA VA, *webhook* `MidtransCallbackController` menerima muatan payload, memverifikasi signature SHA-512, mengunci baris data dengan `lockForUpdate()`, memperbarui status tagihan menjadi lunas secara idempoten, mencatat mutasi kas masuk, serta menyajikan dokumen kuitansi digital instan format A5 via peramban klien.
+#### 1. Alur Reservasi Daring dan Pembayaran Midtrans Snap
+Visualisasi pertukaran pesan pemesanan kamar daring disajikan pada Gambar 4.4 (a).
 
-Visualisasi sequence diagram disajikan pada Gambar 4.4.
+![Gambar 4.4 (a) Sequence Diagram Alur Reservasi Daring dan Pembayaran Midtrans Snap](images/sequence_reservasi_online.png)  
+*(a) Alur Reservasi Daring dan Pembayaran Midtrans Snap*
 
-![Gambar 4.4 (a) Sequence Diagram Alur Reservasi Daring dan Aktivasi Penyewa](images/sequence_reservasi_online.png)  
-*(a) Alur Reservasi Daring dan Aktivasi Penyewa Baru*
-
-![Gambar 4.4 (b) Sequence Diagram Siklus Penagihan dan Pembayaran Bulanan](images/sequence_penagihan_pembayaran.png)  
-*(b) Siklus Penagihan dan Pembayaran Bulanan*
-
-*Gambar 4.4 Sequence Diagram Alur Transaksional Utama Sistem Asri Boarding House*  
 *Sumber: Hasil pemodelan UML penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.4 (a)**:
+Diagram sekuens ini menggambarkan interaksi antara Calon Penyewa, Antarmuka Web, `ReservasiController`, `BookingService`, MySQL InnoDB, dan Midtrans Cloud API. Calon penyewa mengajukan data reservasi melalui stepper web. Pengontrol memanggil `BookingService::buatReservasi` yang membungkus kueri verifikasi dan pemesanan dalam `DB::transaction`. Sistem mengunci baris kamar dengan `lockForUpdate()`, memvalidasi bahwa kamar belum dipesan orang lain, dan menyisipkan baris reservasi berstatus *pending*. Selanjutnya, peramban klien meminta *Snap Token* ke endpoint internal. Sistem memanggil Midtrans Snap API via cURL terenkripsi TLS dengan muatan rincian kamar, harga, dan identitas penyewa. Midtrans mengembalikan token transaksi yang memicu munculnya antarmuka modal Snap di layar klien. Calon penyewa memilih saluran transfer Bank BCA Virtual Account dan menyelesaikan pembayaran pada simulator sandbox.
+
+---
+
+#### 2. Alur Audit, Konfirmasi, dan Aktivasi Kontrak oleh Administrator
+Visualisasi persetujuan reservasi oleh pengelola disajikan pada Gambar 4.4 (b).
+
+![Gambar 4.4 (b) Sequence Diagram Alur Audit, Konfirmasi, dan Aktivasi Kontrak](images/sequence_aktivasi_admin.png)  
+*(b) Alur Audit, Konfirmasi, dan Aktivasi Kontrak Sewa oleh Administrator*
+
+*Sumber: Hasil pemodelan UML penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.4 (b)**:
+Diagram sekuens ini memodelkan alur eksekusi saat Administrator (Bapak Asep) mengesahkan kontrak hunian. Administrator mengakses menu audit `/admin/reservasi/{id}`. Setelah memverifikasi keabsahan NIK 16 digit dan nomor kontak wali, administrator mengirimkan perintah konfirmasi HTTP POST. `AdminReservasiController` mendelegasikan tugas ke `TransisiPenyewaService::transisi`. Di dalam transaksi basis data terisolasi, layanan memperbarui status reservasi menjadi `dikonfirmasi`, mengubah status unit kamar pada tabel `kamar` menjadi `terisi` (mencegah *double booking*), menyalin harga sewa personal ke tabel `penyewa`, membuat akun login pengguna baru pada tabel `users`, dan menerbitkan tagihan pelunasan sisa 70% (jika skema pembayaran awal berupa DP 30%). Begitu transaksi basis data *commit*, sistem memicu event `ReservasiDikonfirmasi` yang ditangkap oleh listener untuk mengirimkan pesan WhatsApp selamat datang berisikan nomor kamar dan kata sandi sementara ke nomor penyewa via *Fonnte API Gateway*.
+
+---
+
+#### 3. Siklus Penagihan Bulanan dan Pembayaran Rutin Non-Tunai
+Visualisasi siklus sewa bulanan disajikan pada Gambar 4.4 (c).
+
+![Gambar 4.4 (c) Sequence Diagram Siklus Penagihan Bulanan dan Pembayaran Rutin](images/sequence_penagihan_pembayaran.png)  
+*(c) Siklus Penagihan Bulanan dan Pembayaran Rutin Non-Tunai*
+
+*Sumber: Hasil pemodelan UML penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.4 (c)**:
+Diagram sekuens ini memodelkan interaksi periodik penagihan dan pembayaran sewa bulanan. Penjadwal tugas peladen mengeksekusi metode `BillingService::generateTagihanBulanan` setiap tanggal 1 awal bulan pukul 00:05 WIB. Sistem menyisipkan baris tagihan berstatus `pending` bagi seluruh penyewa bulanan aktif dan menyiarkan notifikasi invoice ke nomor WhatsApp penyewa via Fonnte API. Saat penyewa masuk ke portal mandiri dan menekan tombol pelunasan, peramban klien memanggil endpoint pembayaran untuk meminta Snap Token BCA Virtual Account dari Midtrans. Begitu dana ditransfer, webhook peladen Midtrans mengirimkan notifikasi asinkron ke `MidtransCallbackController`. Sistem memverifikasi kecocokan tanda tangan digital SHA-512, mengunci baris tagihan dengan `lockForUpdate()`, memperbarui status tagihan menjadi `lunas`, mencatat mutasi pembukuan kas masuk, dan menyajikan dokumen kuitansi digital instan format A5 via peramban klien menggunakan pustaka `html2pdf.js`.
 
 ---
 
@@ -613,12 +728,70 @@ Skema basis data dirancang berlandaskan kaidah Bentuk Normal Ketiga (*Third Norm
 
 Skema basis data secara keseluruhan mencakup 22 tabel relasional. Guna menjamin keunikan nilai kolom tanpa merusak jejak historis penghapusan lunak (*soft deletes*), sistem menerapkan fitur *Virtual Generated Columns* berindeks unik pada MySQL 8.x, seperti `active_email`, `active_no_hp`, dan `active_nik` pada tabel `users`, `active_nomor_kamar` pada tabel `kamar`, `active_nik` pada tabel `penyewa`, serta `active_order_id` pada tabel `reservasi`. Kolom-kolom virtual ini bernilai identik dengan kolom aslinya saat data berstatus aktif (`deleted_at IS NULL`), dan berubah menjadi `NULL` saat baris data dihapus lunak. Mengingat arsitektur MySQL mengizinkan keberadaan nilai `NULL` ganda pada batasan indeks unik (*unique index*), keunikan data aktif tetap terjaga secara konsisten tanpa perlu memodifikasi string data historis.
 
-Kardinalitas relasi antarentitas didefinisikan secara presisi: entitas `users` berelasi satu-ke-satu (1:1) dengan profil `penyewa`, satu unit `kamar` dapat dihuni oleh banyak (`1:N`) penyewa dalam rentang waktu yang berbeda, relasi `kamar` dengan `fasilitas` bersifat banyak-ke-banyak (`M:N`) yang dijembatani oleh tabel pivot `kamar_fasilitas`, satu entitas `penyewa` memiliki banyak (`1:N`) `tagihan`, serta satu `tagihan` dapat memiliki banyak (`1:N`) `pembayaran` dan `log_notifikasi`. Integritas referensial ditegakkan melalui aturan foreign key `ON DELETE RESTRICT` pada transaksi finansial (penyewa, tagihan, pembayaran) agar catatan riwayat kas terlindungi permanen, `ON DELETE CASCADE` pada data dependan (pivot fasilitas dan pesan obrolan), serta `ON DELETE SET NULL` pada kolom audit persetujuan (`dikonfirmasi_oleh`). Struktur ERD 22 tabel disajikan pada Gambar 4.5.
+Guna memastikan setiap entitas, atribut kolom, kunci primer/asing, dan derajat relasi dapat ditelaah secara jelas oleh pembimbing dan penguji, perancangan basis data disajikan melalui 1 diagram arsitektur global dan 4 diagram kluster relasi modular beresolusi tinggi:
 
-![Gambar 4.5 Entity Relationship Diagram (ERD) Skema Basis Data 22 Tabel](images/gambar_4_5_erd.png)
+#### 1. Arsitektur Global Skema Relasi 22 Tabel Basis Data
+Peta keterkaitan struktural menyeluruh antar-entitas disajikan pada Gambar 4.5 (a).
 
-*Gambar 4.5 Entity Relationship Diagram (ERD) Skema Basis Data 22 Tabel*  
+![Gambar 4.5 (a) Arsitektur Global Skema Relasi 22 Tabel Basis Data](images/erd_arsitektur_global.png)
+
+*Gambar 4.5 (a) Arsitektur Global Skema Relasi 22 Tabel Basis Data Asri Boarding House*  
 *Sumber: Hasil analisis basis data penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.5 (a)**:
+Diagram ini memetakan topologi relasional 22 entitas sistem informasi Asri Boarding House. Hubungan antarentitas dikendalikan oleh batasan integritas referensial yang ketat: operasi `ON DELETE RESTRICT` diterapkan pada transaksi finansial (`penyewa`, `tagihan`, `pembayaran`, `pengeluaran`) guna melindungi rekam jejak arus kas dari risiko terhapus; aturan `ON DELETE CASCADE` diterapkan pada tabel pivot dan obrolan dependan (`kamar_fasilitas`, `chat_messages`, `guest_chat_messages`); serta `ON DELETE SET NULL` diterapkan pada kolom audit persetujuan manual (`dikonfirmasi_oleh`).
+
+---
+
+#### 2. Kluster ERD Master Kamar, Fasilitas, dan Manajemen Pengguna
+Visualisasi relasi entitas master hunian disajikan pada Gambar 4.5 (b).
+
+![Gambar 4.5 (b) Kluster ERD Master Kamar, Fasilitas, dan Manajemen Pengguna](images/erd_kluster_kamar_users.png)
+
+*Gambar 4.5 (b) Kluster ERD Master Kamar, Fasilitas, dan Manajemen Pengguna*  
+*Sumber: Hasil analisis basis data penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.5 (b)**:
+Kluster ini menghubungkan entitas akun pengguna (`users`), data fisik 32 unit kos (`kamar`), master sarana (`fasilitas`), serta profil kontrak hunian (`penyewa`). Entitas `users` berelasi satu-ke-satu (1:1) dengan `penyewa` melalui foreign key `user_id`. Entitas `kamar` berelasi banyak-ke-banyak (M:N) dengan `fasilitas` yang dijembatani oleh tabel pivot `kamar_fasilitas` berindeks komposit `(kamar_id, fasilitas_id)`. Satu unit `kamar` dapat ditempati oleh banyak penyewa dalam rentang waktu yang berbeda (relasi 1:N historis), di mana keunikan kamar aktif dilindungi oleh kolom virtual `active_nomor_kamar`.
+
+---
+
+#### 3. Kluster ERD Transaksional Reservasi, Obrolan Tamu, dan Kontrak Penyewa
+Visualisasi relasi pemesanan kamar dan percakapan disajikan pada Gambar 4.5 (c).
+
+![Gambar 4.5 (c) Kluster ERD Transaksional Reservasi, Obrolan Tamu, dan Kontrak Penyewa](images/erd_kluster_reservasi_chat.png)
+
+*Gambar 4.5 (c) Kluster ERD Transaksional Reservasi, Obrolan Tamu, dan Kontrak Penyewa*  
+*Sumber: Hasil analisis basis data penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.5 (c)**:
+Kluster ini mengatur alur transisi dari pengunjung tamu menjadi calon penyewa dan penyewa aktif. Entitas `guest_chat_threads` menampung sesi percakapan anonim pengunjung landing page melalui token unik `session_token` dan berelasi 1:N dengan `guest_chat_messages`. Entitas `reservasi` mencatat data pemesanan kamar (`user_id`, `kamar_id`, `tipe_sewa`, `skema_bayar`, `status`), berelasi 1:N dengan `chat_messages` (kotak pesan pra-pembayaran), serta bermutasi menjadi rekaman pada entitas `penyewa` saat disetujui oleh pengelola.
+
+---
+
+#### 4. Kluster ERD Finansial, Billing Engine, Pembayaran Midtrans, dan Kas
+Visualisasi relasi transaksi keuangan kos disajikan pada Gambar 4.5 (d).
+
+![Gambar 4.5 (d) Kluster ERD Finansial, Billing Engine, Pembayaran Midtrans, dan Kas](images/erd_kluster_billing_pembayaran.png)
+
+*Gambar 4.5 (d) Kluster ERD Finansial, Billing Engine, Pembayaran Midtrans, dan Kas*  
+*Sumber: Hasil analisis basis data penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.5 (d)**:
+Kluster ini merupakan jantung dari akuntabilitas finansial sistem. Satu entitas `penyewa` memiliki banyak (`1:N`) baris `tagihan`. Integritas penagihan dijamin oleh indeks unik komposit `(penyewa_id, periode_bulan, periode_tahun)` sehingga mesin penagihan otomatis tidak dapat menerbitkan dua tagihan pada bulan kalender yang sama. Satu `tagihan` dapat memiliki banyak (`1:N`) riwayat transaksi `pembayaran` (mencatat `order_id`, `metode_pembayaran`, `midtrans_transaction_id`, dan `status`). Mutasi kas operasional dicatat pada entitas `pengeluaran` yang dilengkapi tautan bukti nota fisik, serta dikonsolidasikan secara real-time pada entitas ringkasan `saldo_kas`.
+
+---
+
+#### 5. Kluster ERD Tiket Keluhan Fasilitas, Log Notifikasi WhatsApp, dan Guest Thread
+Visualisasi relasi layanan pemeliharaan sarana disajikan pada Gambar 4.5 (e).
+
+![Gambar 4.5 (e) Kluster ERD Tiket Keluhan Fasilitas, Log Notifikasi WhatsApp, dan Guest Thread](images/erd_kluster_keluhan_notifikasi.png)
+
+*Gambar 4.5 (e) Kluster ERD Tiket Keluhan Fasilitas, Log Notifikasi WhatsApp, dan Guest Thread*  
+*Sumber: Hasil analisis basis data penulis (2026)*
+
+**Deskripsi Fungsional Gambar 4.5 (e)**:
+Kluster ini memodelkan penanganan keluhan dan pemantauan distribusi notifikasi. Entitas `keluhan` menampung aduan kerusakan fasilitas yang diajukan penyewa (`penyewa_id`, `judul`, `deskripsi`, `foto_kerusakan`, `status`, `tanggapan_admin`). Entitas `log_notifikasi` mencatat jejak audit seluruh pesan keluar yang didistribusikan via Fonnte WhatsApp API (`penerima`, `pesan`, `status_kirim`, `response_api`), menjamin transparansi penyampaian tagihan bulanan, pengingat jatuh tempo, eskalasi kontak wali, dan siaran pengumuman massal.
 
 ---
 
@@ -647,6 +820,8 @@ Skenario penyewa memotret pengalaman pengguna calon penghuni dalam berinteraksi 
 4. **Penerimaan Siaran Pengumuman Massal (*Multi-Channel Broadcast*)**:
    * Ketika pengelola menjadwalkan kegiatan operasional massal (seperti kegiatan fogging DBD pada bulan Juni 2027), penyewa menerima pengumuman serentak melalui spanduk peringatan pada portal web, pesan WhatsApp melalui Fonnte API, dan surel terenkripsi TLS melalui protokol SMTP.
 
+---
+
 #### 2. Skenario Operasional Administrator (Administrator Operational Lifecycle)
 Skenario operasional menggambarkan alur kerja harian pengelola (Bapak Asep, usia 48 tahun) dalam mengendalikan administrasi, keuangan, dan aset properti Asri Boarding House melalui portal manajemen:
 
@@ -668,25 +843,47 @@ Skenario operasional menggambarkan alur kerja harian pengelola (Bapak Asep, usia
    * **Protokol Penahanan Kamar (*Manual Inspection Hold*)**: Aturan bisnis utama menetapkan bahwa setelah proses *checkout* selesai, status kamar pada basis data tidak otomatis beralih menjadi `tersedia`. Sistem mempertahankan status `terisi` dalam kondisi terkunci merah guna memberi waktu bagi petugas untuk melaksanakan sanitasi, penukaran sprei, dan perbaikan sarana fisik.
    * Setelah kamar dipastikan 100% bersih dan layak dihuni kembali, pengelola membuka menu *Manajemen Kamar* dan secara manual mengubah status kamar dari `terisi` menjadi `tersedia`. Perubahan status ini memicu *event* `KamarObserver::updated` yang secara otomatis membersihkan cache katalog publik melalui `Cache::forget('kamar_aktif_landing')`. Unit kamar seketika tayang kembali pada etalase landing page publik `weatso.id` dengan tombol pemesanan aktif, mengeliminasi risiko pemesanan ganda (*double booking*) pada kamar yang belum siap dihuni.
 
-Visualisasi rangkaian diagram skenario siklus hidup penyewa dan operasional administrator disajikan pada Gambar 4.6.
+Rangkaian diagram skenario alur sistem disajikan secara komprehensif pada Gambar 4.6 (a) hingga Gambar 4.6 (f):
 
 ![Gambar 4.6 (a) Skenario User Journey Calon Penyewa pada Fase Registrasi dan Reservasi Live](images/skenario_journey_penyewa.png)  
-*(a) Skenario User Journey Calon Penyewa pada Fase Registrasi dan Reservasi Live*
+*(a) Skenario User Journey Calon Penyewa pada Fase Registrasi dan Reservasi Live*  
+*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
 ![Gambar 4.6 (b) Sequence Diagram Alur Audit, Konfirmasi, dan Aktivasi Kontrak Sewa](images/skenario_seq_aktivasi_reservasi.png)  
-*(b) Sequence Diagram Alur Audit, Konfirmasi, dan Aktivasi Kontrak Sewa*
+*(b) Sequence Diagram Alur Audit, Konfirmasi, dan Aktivasi Kontrak Sewa*  
+*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
-![Gambar 4.6 (c) State Diagram Siklus Penagihan Bulanan dan Masa Toleransi Bebas Denda](images/skenario_state_siklus_billing.png)  
-*(c) State Diagram Siklus Penagihan Bulanan dan Masa Toleransi Bebas Denda*
+Guna mempertahankan keterbacaan state transisi penagihan di Microsoft Word, visualisasi state machine dipecah ke dalam dua tahap siklus penagihan:
+
+![Gambar 4.6 (c1) State Diagram Siklus Penagihan Bulanan - Bagian 1: Penerbitan Tagihan dan Pembayaran Disiplin](images/skenario_state_billing_part1.png)  
+*(c1) State Diagram Siklus Penagihan Bulanan - Bagian 1: Penerbitan Tagihan dan Pembayaran Disiplin*  
+*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
+
+![Gambar 4.6 (c2) State Diagram Siklus Penagihan Bulanan - Bagian 2: Masa Toleransi Bebas Denda dan Penegakan Denda Kalender 5%](images/skenario_state_billing_part2.png)  
+*(c2) State Diagram Siklus Penagihan Bulanan - Bagian 2: Masa Toleransi Bebas Denda dan Penegakan Denda Kalender 5%*  
+*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
 ![Gambar 4.6 (d) Mindmap Kluster Tanggung Jawab Operasional Administrator](images/skenario_admin_mindmap_pengelolaan.png)  
-*(d) Mindmap Kluster Tanggung Jawab Operasional Administrator (Bapak Asep)*
+*(d) Mindmap Kluster Tanggung Jawab Operasional Administrator (Bapak Asep)*  
+*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
-![Gambar 4.6 (e) Flowchart Alur Keputusan Aktivasi Reservasi dan Monitoring Penagihan Admin](images/skenario_admin_flow_aktivasi_dan_monitoring.png)  
-*(e) Flowchart Alur Keputusan Aktivasi Reservasi dan Monitoring Penagihan Admin*
+Selanjutnya, alur keputusan aktivasi reservasi dan prosedur checkout disajikan secara modular:
 
-![Gambar 4.6 (f) Flowchart Prosedur Checkout dan Protokol Penahanan Kamar (Manual Inspection Hold)](images/skenario_flow_checkout_manual_inspection_hold.png)  
-*(f) Flowchart Prosedur Checkout dan Protokol Penahanan Kamar (Manual Inspection Hold)*
+![Gambar 4.6 (e1) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 1: Audit Berkas dan Verifikasi Transaksi](images/skenario_admin_flow_part1.png)  
+*(e1) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 1: Audit Berkas dan Verifikasi Transaksi*  
+*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
+
+![Gambar 4.6 (e2) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 2: Monitoring Pelunasan Sisa dan Otomasi Hunian](images/skenario_admin_flow_part2.png)  
+*(e2) Flowchart Alur Keputusan Aktivasi Reservasi - Bagian 2: Monitoring Pelunasan Sisa dan Otomasi Hunian*  
+*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
+
+![Gambar 4.6 (f1) Flowchart Prosedur Checkout - Bagian 1: Verifikasi Finansial dan Checkout Administratif](images/skenario_checkout_part1.png)  
+*(f1) Flowchart Prosedur Checkout - Bagian 1: Verifikasi Finansial dan Checkout Administratif*  
+*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
+
+![Gambar 4.6 (f2) Flowchart Prosedur Checkout - Bagian 2: Protokol Karantina Fisik dan Pelepasan Kamar Manual](images/skenario_checkout_part2.png)  
+*(f2) Flowchart Prosedur Checkout - Bagian 2: Protokol Karantina Fisik dan Pelepasan Kamar Manual*  
+*Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
 
 *Gambar 4.6 Skenario Diagram Siklus Hidup Transaksional Penyewa dan Operasional Administrator*  
 *Sumber: Hasil pemodelan skenario operasional sistem penulis (2026)*
