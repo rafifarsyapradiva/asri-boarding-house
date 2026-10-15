@@ -56,13 +56,11 @@ BAB 1: PENDAHULUAN
 ├── 1.1 Latar Belakang
 │   ├── Dinamika pertumbuhan kawasan kampus Tembalang & tingginya kebutuhan hunian sewa mahasiswa perantau.
 │   ├── Profil Asri Boarding House: 32 kamar, 3 tipe (VIP, Deluxe, Standar), omzet bruto Rp28.500.000/bulan.
-│   ├── Tiga Masalah Faktual Operasional:
-│   │   1. Penagihan sewa bulanan manual via chat personal rawan terlewat & belum ada eskalasi kontak wali.
-│   │   2. Pencatatan kas berbasis nota kertas menyita 3-5 hari kerja pembukuan bulanan & rawan selisih saldo.
-│   │   3. Risiko pemesanan ganda (double-booking) akibat verifikasi fisik & keterbatasan akses survei calon penyewa luar kota.
-│   ├── Tinjauan 5 Penelitian Terdahulu (Cornellya & Afriyadi, Nizar, Jannah dkk., Malaikosa & Mokola, Purnia dkk.).
+│   ├── Uraian Naratif Tiga Masalah Faktual Operasional: administrasi penagihan & pengawasan tunggakan, dokumentasi pembayaran & rekapitulasi kas nota fisik 3-5 hari, serta risiko double booking & keterbatasan calon penyewa luar daerah.
+│   ├── Sintesis Naratif Tinjauan Penelitian Terdahulu: Cornellya & Afriyadi [1], Nizar [2], Jannah dkk. [3], Malaikosa & Mokola [4], dan Purnia dkk. [5].
 │   ├── Identifikasi Gap Penelitian: Ketiadaan integrasi payment gateway otomatis, auto-billing engine, denda berjenjang, dan eskalasi wali.
-│   └── Solusi yang Diajukan: SIM Kost Terpadu Laravel 11, Midtrans Snap BCA VA, Fonnte WA, dan Cron Job terprogram.
+│   ├── Landasan SIM dan Integrasi Payment Gateway: Peranan SIM [6] serta otomatisasi transaksi via payment gateway [7]-[10].
+│   └── Solusi yang Diajukan: SIM Kost Terpadu Laravel 11, Midtrans Snap BCA VA, Fonnte WA, Cron Job terprogram, dan evaluasi empiris pengelola serta 5 penghuni.
 ├── 1.2 Rumusan Masalah
 │   ├── RM 1: Perancangan, pembangunan, integrasi, dan pengujian sistem informasi manajemen kost terpadu.
 │   └── RM 2: Hasil wawancara pengelola dan 5 penghuni kost mengenai penggunaan sistem (reservasi, pembayaran, tagihan bulanan).
