@@ -1,32 +1,24 @@
-# TUGAS AKHIR
-
 <div align="center">
 
-# SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY
-# PADA ASRI BOARDING HOUSE
+### LAPORAN SKRIPSI
 
 <br>
 
-### TUGAS AKHIR
+## SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY*<br>PADA ASRI BOARDING HOUSE
 
-<br>
-
-**Diajukan untuk memenuhi syarat guna mencapai gelar Sarjana Komputer**<br>
-**program studi Sistem Informasi**<br>
-**Universitas Katolik Soegijapranata Semarang**
-
-<br>
+<br><br>
 
 *(Lambang Universitas Katolik Soegijapranata)*
 
-<br><br>
+<br><br><br>
 
-Disusun oleh:<br>
+Disusun oleh :<br>
 **RAFIF ARSYA PRADIVA**<br>
-**NIM: 22.N4.0014**
+**22.N4.0014**
 
-<br><br>
+<br><br><br>
 
+**PROGRAM STUDI SISTEM INFORMASI**<br>
 **FAKULTAS ILMU KOMPUTER**<br>
 **UNIVERSITAS KATOLIK SOEGIJAPRANATA**<br>
 **SEMARANG**<br>
@@ -38,157 +30,206 @@ Disusun oleh:<br>
 
 <div align="center">
 
-# SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY
-# PADA ASRI BOARDING HOUSE
+### HALAMAN PENGESAHAN
 
 <br>
 
-### HALAMAN JUDUL
-
-<br>
-
-**Diajukan untuk memenuhi syarat guna mencapai gelar Sarjana Komputer**<br>
-**program studi Sistem Informasi**<br>
-**Universitas Katolik Soegijapranata Semarang**
-
-<br>
-
-*(Lambang Universitas Katolik Soegijapranata)*
+**SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY*<br>PADA ASRI BOARDING HOUSE**
 
 <br><br>
 
-Disusun oleh:<br>
+Diajukan oleh :<br>
 **RAFIF ARSYA PRADIVA**<br>
-**NIM: 22.N4.0014**
+**22.N4.0014**
 
 <br><br>
 
-**FAKULTAS ILMU KOMPUTER**<br>
-**UNIVERSITAS KATOLIK SOEGIJAPRANATA**<br>
-**SEMARANG**<br>
-**2026**
+Telah disetujui, tanggal 13 Juli 2026<br>
+Oleh
+
+<br><br>
+
+| Dosen Pembimbing 1, | Dosen Pembimbing 2, |
+| :---: | :---: |
+| <br><br><br><br> | <br><br><br><br> |
+| **Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling.** | **Erdhi Widyarto Nugroho, S.T., M.T.** |
+| NPP. 058.1.1994.161 | NPP. .................... |
+
+<br><br>
+
+Mengetahui / menyetujui<br>
+Ka. Progdi Sistem Informasi,
+
+<br><br><br><br>
+
+**( ............................................................ )**<br>
+NPP. ....................
 
 </div>
 
 <div style="page-break-after: always;"></div>
-## HALAMAN PERNYATAAN ORISINALITAS
-Saya yang bertanda tangan di bawah ini:
 
-Nama			: Rafif Arsya Pradiva
-NIM			: 22.N4.0014
-Program Studi		: Sistem Informasi
-Fakultas		: Ilmu Komputer
+<div align="center">
 
-menyatakan dengan sesungguhnya bahwa Skripsi dengan judul “Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway pada Asri Boarding House” adalah benar-benar hasil karya saya sendiri, bukan merupakan jiplakan dari karya tulis orang lain, baik sebagian maupun keseluruhan. Pendapat, gagasan, atau temuan orang lain yang terdapat di dalam Skripsi ini telah dikutip dan dirujuk berdasarkan kaidah penulisan ilmiah yang berlaku.
-Apabila di kemudian hari terbukti bahwa pernyataan ini tidak benar, saya bersedia menerima sanksi akademik sesuai dengan ketentuan yang berlaku di Universitas Katolik Soegijapranata Semarang.
+### HALAMAN PERNYATAAN KEASLIAN
 
-Semarang, ........................ 2026
+</div>
+
+<br>
+
+Yang bertanda tangan di bawah ini
+
+Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva  
+NIM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 22.N4.0014  
+Progdi/Konsentrasi &nbsp;: Sistem Informasi  
+Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer  
+
+Dengan ini menyatakan bahwa Laporan Skripsi dengan judul **“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”** benar-benar bebas dari plagiasi, dan apabila terbukti tidak benar bersedia menerima sanksi sesuai dengan ketentuan yang berlaku.
+
+<br><br>
+
+<div align="right">
+
+Semarang, 13 Juli 2026<br>
 Yang menyatakan,
 
-Materai
-Rp10.000
+<br><br>
 
-Rafif Arsya Pradiva
-NIM. 22.N4.0014
-## HALAMAN PERNYATAAN BEBAS PLAGIASI
-Saya yang bertanda tangan di bawah ini:
+*Meterai Rp10.000*<br>
+*(tanda tangan)*
 
-Nama			: Rafif Arsya Pradiva
-NIM			: 22.N4.0014
-Program Studi		: Sistem Informasi
-Fakultas		: Ilmu Komputer
+<br><br>
 
-menyatakan dengan sesungguhnya bahwa Skripsi yang saya susun telah bebas dari unsur plagiasi. Seluruh sumber, baik berupa kutipan langsung maupun tidak langsung, yang berasal dari karya orang lain telah disebutkan sumbernya secara jujur dan dicantumkan dalam Daftar Pustaka sesuai dengan format penulisan ilmiah yang berlaku.
-Apabila di kemudian hari ditemukan adanya pelanggaran terhadap etika keilmuan dalam karya ini, atau terdapat klaim dari pihak lain terhadap keaslian karya ini, saya bersedia mempertanggungjawabkannya dan menerima sanksi sesuai dengan peraturan yang berlaku.
+**Rafif Arsya Pradiva**
 
-Semarang, ........................ 2026
-Yang menyatakan,
+</div>
 
-Rafif Arsya Pradiva
-NIM. 22.N4.0014
-## HALAMAN PENGESAHAN
-Skripsi dengan judul:
+<div style="page-break-after: always;"></div>
 
-SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY PADA ASRI BOARDING HOUSE
+<div align="center">
 
-yang dipersiapkan dan disusun oleh:
-Rafif Arsya Pradiva — NIM. 22.N4.0014
+### HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI TUGAS AKHIR UNTUK KEPENTINGAN AKADEMIS
 
-telah diperiksa dan disetujui oleh Dosen Pembimbing untuk diajukan dalam Seminar Skripsi pada Program Studi Sistem Informasi Fakultas Ilmu Komputer Universitas Katolik Soegijapranata Semarang.
+</div>
 
+<br>
 
+Sebagai sivitas akademik Universitas Katolik Soegijapranata, Saya yang bertanda tangan di bawah ini :
 
+Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva  
+Program Studi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Sistem Informasi  
+Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer  
+Jenis Karya &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Skripsi  
 
-Semarang, ........................ 2026
+Demi pengembangan ilmu pengetahuan, menyetujui untuk memberikan kepada Universitas Katolik Soegijapranata Hak Bebas Royalti Non-eksklusif atas karya ilmiah saya yang berjudul :
 
-Telah diperiksa dan disetujui
-Semarang, 13-07-2026
+**“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”**
 
-	Pembimbing 1					Pembimbing 2
+Beserta perangkat yang ada (jika diperlukan). Dengan Hak Bebas Royalti Non-eksklusif ini Universitas Katolik Soegijapranata berhak menyimpan, mengalih media/formatkan, mengelola dalam bentuk pangkalan data (*database*), merawat, dan memublikasikan tugas akhir saya selama tetap mencantumkan nama saya sebagai penulis/pencipta dan sebagai pemilik Hak Cipta.
 
-
-	Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling.	Erdhi Widyarto Nugroho, S.T., M.T.
-	NPP: 058.1.1994.161				NPP: ....................
-## KATA PENGANTAR
-Puji dan syukur senantiasa penulis panjatkan ke hadirat Tuhan Yang Maha Esa atas limpahan rahmat, petunjuk, dan karunia-Nya, sehingga penulisan skripsi yang berjudul “Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway pada Asri Boarding House” ini dapat diselesaikan dengan baik. Penyusunan naskah skripsi ini merupakan salah satu syarat akademik guna menuntaskan studi Strata Satu (S-1) sekaligus meraih gelar Sarjana Komputer pada Program Studi Sistem Informasi, Fakultas Ilmu Komputer, Universitas Katolik Soegijapranata Semarang.
-
-Terselesaikannya naskah ini tidak lepas dari bimbingan, dorongan, serta bantuan moril maupun materiil dari berbagai pihak. Dengan kerendahan hati, penulis menyampaikan rasa hormat dan terima kasih yang tulus kepada:
-•	Rektor Universitas Katolik Soegijapranata Semarang beserta jajarannya, atas iklim akademik yang sehat dan kondusif sepanjang masa perkuliahan;
-•	Dekan Fakultas Ilmu Komputer Universitas Katolik Soegijapranata Semarang, atas penyediaan sarana dan prasarana pendidikan yang bermutu;
-•	Ketua Program Studi Sistem Informasi, atas bimbingan kurikulum, motivasi, serta kebijakan akademik yang senantiasa mendukung perkembangan studi mahasiswa;
-•	Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling., selaku Dosen Pembimbing Pertama, dan Erdhi Widyarto Nugroho, S.T., M.T., selaku Dosen Pembimbing Kedua, atas kesabaran, bimbingan akademis, masukan kritis, serta transfer keilmuan berharga dalam mengarahkan penulis dari awal penyusunan proposal hingga penyelesaian naskah tugas akhir ini;
-•	Bapak Asep, selaku pengelola operasional Asri Boarding House, atas kehangatan kerja sama, keterbukaan berbagi data riil lapangan, serta waktu yang diluangkan dalam proses observasi, wawancara, hingga pengujian sistem;
-•	Keluarga tercinta, khususnya kedua orang tua, atas doa tulus yang terus mengalir, limpahan kasih sayang yang tak bertepi, serta pengorbanan moril maupun finansial yang menjadi pilar semangat utama penulis;
-•	Rekan-rekan mahasiswa Program Studi Sistem Informasi angkatan 2022 dan para sahabat, atas solidaritas, ruang diskusi ilmiah, serta kebersamaan dalam menuntaskan masa studi.
-
-Penulis menyadari bahwa tulisan ini masih membuka peluang bagi penyempurnaan lebih lanjut. Oleh sebab itu, setiap kritik, tinjauan kritis, dan saran yang konstruktif sangat penulis harapkan demi perbaikan karya ilmiah di masa yang akan datang. Semoga hasil perancangan sistem dan pembahasan dalam skripsi ini dapat memberikan kontribusi nyata bagi kajian keilmuan sistem informasi terapan serta membawa manfaat langsung bagi tata kelola operasional bisnis kos skala menengah.
-
-Semarang, ........................ 2026
-Penulis,
-
-Rafif Arsya Pradiva
-## HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI KARYA ILMIAH UNTUK KEPENTINGAN AKADEMIS
-Sebagai sivitas akademika Universitas Katolik Soegijapranata Semarang, saya yang bertanda tangan di bawah ini:
-
-Nama			: Rafif Arsya Pradiva
-NIM			: 22.N4.0014
-Program Studi		: Sistem Informasi
-Fakultas		: Ilmu Komputer
-Jenis Karya		: Skripsi
-
-demi pengembangan ilmu pengetahuan, menyetujui untuk memberikan kepada Program Studi Sistem Informasi Fakultas Ilmu Komputer Universitas Katolik Soegijapranata Semarang Hak Bebas Royalti Noneksklusif (Non-exclusive Royalty-Free Right) atas karya ilmiah saya yang berjudul di atas beserta perangkat yang ada (jika diperlukan).
-Dengan Hak Bebas Royalti Noneksklusif ini, Program Studi Sistem Informasi berhak menyimpan, mengalih-media/format-kan, merawat, dan memublikasikan karya ilmiah tersebut untuk kepentingan akademis tanpa perlu meminta izin dari saya selama tetap mencantumkan nama saya sebagai penulis/pencipta dan sebagai pemilik Hak Cipta. Hak Cipta atas karya ilmiah ini tetap berada pada penulis.
 Demikian pernyataan ini saya buat dengan sebenarnya.
 
-Dibuat di Semarang
-Pada tanggal ........................ 2026
-Yang menyatakan,
+<br><br>
 
-Rafif Arsya Pradiva
+<div align="right">
+
+Dibuat di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Semarang  
+Pada tanggal &nbsp;: 13 Juli 2026  
+Yang menyatakan
+
+<br><br><br>
+
+( ............................................................ )<br>
+**Rafif Arsya Pradiva**
+
+</div>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+### KATA PENGANTAR
+
+</div>
+
+<br>
+
+Puji dan syukur penulis panjatkan kehadirat Tuhan Yang Maha Esa atas berkat rahmat serta kasih-Nya sehingga penulis dapat menyelesaikan skripsi ini dengan judul **“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”**.
+
+Penulisan skripsi ini bertujuan untuk memenuhi sebagian syarat memperoleh gelar sarjana bagi mahasiswa program S1 pada program studi Sistem Informasi Universitas Katolik Soegijapranata Semarang. Penulis menyadari bahwa skripsi ini masih jauh dari kesempurnaan, oleh sebab itu penulis mengharapkan kritik dan saran yang bersifat membangun dari semua pihak demi kesempurnaan skripsi ini.
+
+Selesainya skripsi ini tidak terlepas dari bantuan berbagai pihak, sehingga pada kesempatan ini penulis dengan segala kerendahan hati dan penuh rasa hormat mengucapkan terima kasih yang sebesar-besarnya kepada semua pihak yang telah memberikan bantuan moril maupun materil secara langsung maupun tidak langsung kepada penulis dalam penyusunan skripsi ini hingga selesai, terutama kepada yang saya hormati:
+1. Ketua Program Studi Sistem Informasi Universitas Katolik Soegijapranata Semarang.
+2. Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling., selaku Dosen Pembimbing 1, dan Erdhi Widyarto Nugroho, S.T., M.T., selaku Dosen Pembimbing 2, yang telah memberikan kritik, saran bimbingan, maupun arahan yang sangat berguna dalam penyusunan skripsi ini.
+3. Bapak/Ibu dosen dan staf di lingkungan Fakultas Ilmu Komputer, khususnya Program Studi Sistem Informasi Universitas Katolik Soegijapranata Semarang yang telah banyak membantu kami untuk dapat melaksanakan studi dengan lancar.
+4. Bapak Asep, selaku pengelola operasional Asri Boarding House, atas kehangatan kerja sama, izin penelitian lapangan, serta keterbukaan berbagi data riil operasional kos.
+5. Teristimewa kepada kedua Orang Tua dan segenap keluarga tercinta yang selalu mendoakan, memberikan motivasi dan pengorbanannya baik dari segi moril maupun materi kepada penulis sehingga penulis dapat menyelesaikan skripsi ini.
+6. Rekan-rekan mahasiswa Program Studi Sistem Informasi angkatan 2022 serta para sahabat atas dukungan, diskusi, dan kebersamaannya sepanjang masa studi.
+7. Terima kasih juga kepada semua pihak yang telah membantu dalam penyelesaian skripsi ini yang tidak dapat disebutkan satu per satu.
+
+Akhir kata penulis mengucapkan terima kasih kepada semua pihak yang telah membantu dan penulis berharap semoga skripsi ini dapat bermanfaat bagi kita semua dan menjadi bahan masukan bagi pengembangan ilmu pengetahuan serta tata kelola teknologi sistem informasi.
+
+<br>
+
+<div align="right">
+
+Semarang, 13 Juli 2026  
+Penulis,
+
+<br><br><br>
+
+**Rafif Arsya Pradiva**  
 NIM. 22.N4.0014
-## ABSTRAK
-Rafif Arsya Pradiva. 22.N4.0014. SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY PADA ASRI BOARDING HOUSE (Studi Kasus: Asri Boarding House, Tembalang, Kota Semarang).
-Pengelolaan operasional hunian kos Asri Boarding House di kawasan Tembalang, Kota Semarang, menaungi 32 unit kamar dengan potensi perputaran dana sewa mencapai Rp28.500.000 per bulan. Ketergantungan menahun pada pembukuan fisik dan komunikasi manual via aplikasi pesan instan menimbulkan sejumlah kendala, seperti potensi selisih rekapitulasi kas, verifikasi setoran yang lambat, keterlambatan pengingat jatuh tempo, hingga risiko pemesanan ganda (*double booking*). Guna mengatasi persoalan tersebut, penelitian ini merancang dan membangun Sistem Informasi Manajemen Kost berbasis web menggunakan framework Laravel 11 yang mengintegrasikan portal reservasi mandiri dan gerbang pembayaran digital. Pengembangan sistem menerapkan metode *Research and Development* (R&D) dengan model proses sekuensial linier *Waterfall*, meliputi tahap analisis kebutuhan, perancangan arsitektur, implementasi program, serta pengujian menyeluruh. Arsitektur sistem dibangun di atas pola *3-tier* MVC dengan basis data MySQL 8.x InnoDB yang dinormalisasi hingga Bentuk Normal Ketiga (3NF). Penerimaan pembayaran non-tunai diintegrasikan secara terprogram dengan Midtrans Snap API, didukung pencetakan kuitansi digital instan format A5 di peramban via `html2pdf.js` (*zero server load*), rekap manajerial berkala via Dompdf, serta pengiriman notifikasi otomatis multi-saluran melalui Fonnte WhatsApp API dan SMTP surel. Logika bisnis mencakup mesin penagihan otomatis berkala setiap tanggal 1 awal bulan, penegakan denda flat 5% yang idempoten pada pergantian bulan kalender dengan eskalasi ke kontak orang tua/wali, integrasi alur pendaftaran hibrida, serta fasilitas obrolan pra-pembayaran berbasis *AJAX polling*. Pengujian fungsionalitas melalui 60 skenario uji kotak hitam (*black box testing*) dan pengujian otomatis PHPUnit (510 *tests passed*, 2.211 *assertions*) menunjukkan tingkat kelulusan sempurna (100%), yang membuktikan integritas transaksi, ketepatan kalkulasi tagihan, dan keandalan kontrol konkurensi terhadap kondisi balapan (*race condition*). Penerapan sistem pada lingkungan produksi langsung (*https://asriboardinghouse.weatso.id/*) dievaluasi melalui uji kegunaan tatap muka (*side-by-side usability testing*) dan wawancara semi-terstruktur bersama pengelola operasional senior serta lima orang penghuni kost aktif. Aspek evaluasi mencakup kemudahan reservasi online, kepraktisan alur pembayaran non-tunai, transparansi akses tagihan bulanan, dan kemudahan pengelolaan administrasi. Hasil evaluasi menghasilkan skor kepuasan operasional sebesar 9,5 dari skala 10 yang diberikan oleh pengelola kos, yang merefleksikan tingkat akseptabilitas dan kesiapan adopsi sistem yang sangat tinggi dalam mengeliminasi risiko selisih kas serta memangkas durasi pembukuan dari beberapa hari kerja menjadi instan. Capaian tersebut dikonfirmasi oleh temuan wawancara kelima penghuni yang menyatakan kepuasan atas kemudahan alur reservasi mandiri, kejelasan riwayat tagihan berkala, serta kepraktisan penyelesaian pembayaran secara digital.
-Kata kunci: sistem informasi manajemen kos, payment gateway, penagihan otomatis, evaluasi kegunaan
-## ABSTRACT
-Rafif Arsya Pradiva. 22.N4.0014. Design and Development of an Integrated Boarding House Management Information System with Payment Gateway in Asri Boarding House (Case Study: Asri Boarding House, Tembalang, Semarang City).
-Operational management at Asri Boarding House in Tembalang, Semarang, encompasses 32 rental rooms with a potential monthly turnover of IDR 28,500,000. Decades of conventional administration relying on paper ledgers and fragmented messaging created persistent operational friction, including reconciliation discrepancies, tedious manual receipt tracking, delayed payment reminders, and room double-booking vulnerabilities. To resolve these challenges, this study developed an integrated web-based Boarding House Management Information System utilizing Laravel 11, combining self-service online reservations with digital payment automation. The system was engineered following a Research and Development (R&D) methodology guided by the linear-sequential Waterfall SDLC across requirements analysis, architectural modeling, software implementation, and multi-tier verification. Built on a 3-tier MVC pattern, the application is backed by an InnoDB MySQL 8.x relational schema normalized to 3NF. Cashless transactions are processed through the Midtrans Snap API, paired with client-side A5 digital receipt rendering using html2pdf.js (zero server storage overhead), Dompdf managerial reports, and automated multi-channel notifications via Fonnte WhatsApp API and SMTP. Business logic features automated monthly billing generated on the 1st of each month, an idempotent calendar-based 5% flat late fee with tiered escalation to tenant guardians, hybrid walk-in/online registration, and pre-payment inquiry messaging powered by AJAX polling. Functional verification demonstrated a 100% pass rate across 60 black-box test scenarios and comprehensive PHPUnit automated suites (510 tests passed, 2,211 assertions), confirming transactional reliability, billing accuracy, and concurrency locking against race conditions. Live production deployment at https://asriboardinghouse.weatso.id/ was evaluated through direct side-by-side usability testing and semi-structured interviews involving the senior resident manager and five active boarding house tenants. Evaluated dimensions encompassed online reservation accessibility, cashless payment processing, monthly billing transparency, and administrative management efficiency. The evaluation yielded an operational satisfaction score of 9.5 out of 10 awarded by the property manager, indicating exceptionally high user acceptance and production readiness by eliminating cash reconciliation discrepancies and compressing ledger balancing from several working days to instantaneous reporting. These results were further corroborated by qualitative findings from the five resident interviews, which confirmed high satisfaction with intuitive self-service room bookings, transparent invoice tracking, and seamless cashless transaction settlements.
-Keywords: boarding house management information system, payment gateway, automated billing, usability evaluation
 
- 
+</div>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+### ABSTRAK
+
+</div>
+
+<br>
+
+Pengelolaan operasional hunian kos Asri Boarding House di kawasan Tembalang, Kota Semarang, menaungi 32 unit kamar dengan potensi perputaran dana sewa mencapai Rp28.500.000 per bulan. Ketergantungan menahun pada pembukuan fisik dan komunikasi manual via aplikasi pesan instan menimbulkan sejumlah kendala, seperti potensi selisih rekapitulasi kas, verifikasi setoran yang lambat, keterlambatan pengingat jatuh tempo, hingga risiko pemesanan ganda (*double booking*). Guna mengatasi persoalan tersebut, penelitian ini merancang dan membangun Sistem Informasi Manajemen Kost berbasis web menggunakan framework Laravel 11 yang mengintegrasikan portal reservasi mandiri dan gerbang pembayaran digital. Pengembangan sistem menerapkan metode *Research and Development* (R&D) dengan model proses sekuensial linier *Waterfall*, meliputi tahap analisis kebutuhan, perancangan arsitektur, implementasi program, serta pengujian menyeluruh. Arsitektur sistem dibangun di atas pola *3-tier* MVC dengan basis data MySQL 8.x InnoDB yang dinormalisasi hingga Bentuk Normal Ketiga (3NF). Penerimaan pembayaran non-tunai diintegrasikan secara terprogram dengan Midtrans Snap API, didukung pencetakan kuitansi digital instan format A5 di peramban via `html2pdf.js` (*zero server load*), rekap manajerial berkala via Dompdf, serta pengiriman notifikasi otomatis multi-saluran melalui Fonnte WhatsApp API dan SMTP surel. Logika bisnis mencakup mesin penagihan otomatis berkala setiap tanggal 1 awal bulan, penegakan denda flat 5% yang idempoten pada pergantian bulan kalender dengan eskalasi ke kontak orang tua/wali, integrasi alur pendaftaran hibrida, serta fasilitas obrolan pra-pembayaran berbasis *AJAX polling*. Pengujian fungsionalitas melalui 60 skenario uji kotak hitam (*black box testing*) dan pengujian otomatis PHPUnit (510 *tests passed*, 2.211 *assertions*) menunjukkan tingkat kelulusan sempurna (100%), yang membuktikan integritas transaksi, ketepatan kalkulasi tagihan, dan keandalan kontrol konkurensi terhadap kondisi balapan (*race condition*). Penerapan sistem pada lingkungan produksi langsung (*https://asriboardinghouse.weatso.id/*) dievaluasi melalui uji kegunaan tatap muka (*side-by-side usability testing*) dan wawancara semi-terstruktur bersama pengelola operasional senior serta lima orang penghuni kost aktif. Aspek evaluasi mencakup kemudahan reservasi online, kepraktisan alur pembayaran non-tunai, transparansi akses tagihan bulanan, dan kemudahan pengelolaan administrasi. Hasil evaluasi menghasilkan skor kepuasan operasional sebesar 9,5 dari skala 10 yang diberikan oleh pengelola kos, yang merefleksikan tingkat akseptabilitas dan kesiapan adopsi sistem yang sangat tinggi dalam mengeliminasi risiko selisih kas serta memangkas durasi pembukuan dari beberapa hari kerja menjadi instan. Capaian tersebut dikonfirmasi oleh temuan wawancara kelima penghuni yang menyatakan kepuasan atas kemudahan alur reservasi mandiri, kejelasan riwayat tagihan berkala, serta kepraktisan penyelesaian pembayaran secara digital.
+
+<br>
+
+Kata kunci:  
+sistem informasi manajemen kos, payment gateway, penagihan otomatis, evaluasi kegunaan, reservasi online, Laravel 11.
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+### ABSTRACT
+
+</div>
+
+<br>
+
+Operational management at Asri Boarding House in Tembalang, Semarang, encompasses 32 rental rooms with a potential monthly turnover of IDR 28,500,000. Decades of conventional administration relying on paper ledgers and fragmented messaging created persistent operational friction, including reconciliation discrepancies, tedious manual receipt tracking, delayed payment reminders, and room double-booking vulnerabilities. To resolve these challenges, this study developed an integrated web-based Boarding House Management Information System utilizing Laravel 11, combining self-service online reservations with digital payment automation. The system was engineered following a Research and Development (R&D) methodology guided by the linear-sequential Waterfall SDLC across requirements analysis, architectural modeling, software implementation, and multi-tier verification. Built on a 3-tier MVC pattern, the application is backed by an InnoDB MySQL 8.x relational schema normalized to 3NF. Cashless transactions are processed through the Midtrans Snap API, paired with client-side A5 digital receipt rendering using html2pdf.js (zero server storage overhead), Dompdf managerial reports, and automated multi-channel notifications via Fonnte WhatsApp API and SMTP. Business logic features automated monthly billing generated on the 1st of each month, an idempotent calendar-based 5% flat late fee with tiered escalation to tenant guardians, hybrid walk-in/online registration, and pre-payment inquiry messaging powered by AJAX polling. Functional verification demonstrated a 100% pass rate across 60 black-box test scenarios and comprehensive PHPUnit automated suites (510 tests passed, 2,211 assertions), confirming transactional reliability, billing accuracy, and concurrency locking against race conditions. Live production deployment at https://asriboardinghouse.weatso.id/ was evaluated through direct side-by-side usability testing and semi-structured interviews involving the senior resident manager and five active boarding house tenants. Evaluated dimensions encompassed online reservation accessibility, cashless payment processing, monthly billing transparency, and administrative management efficiency. The evaluation yielded an operational satisfaction score of 9.5 out of 10 awarded by the property manager, indicating exceptionally high user acceptance and production readiness by eliminating cash reconciliation discrepancies and compressing ledger balancing from several working days to instantaneous reporting. These results were further corroborated by qualitative findings from the five resident interviews, which confirmed high satisfaction with intuitive self-service room bookings, transparent invoice tracking, and seamless cashless transaction settlements.
+
+<br>
+
+Key words:  
+boarding house management information system, payment gateway, automated billing, usability evaluation, online reservation, Laravel 11.
+
+<div style="page-break-after: always;"></div>
 
 ## DAFTAR ISI
-HALAMAN PERNYATAAN ORISINALITAS	ii
-HALAMAN PERNYATAAN BEBAS PLAGIASI	iii
-HALAMAN PENGESAHAN	iv
+HALAMAN PENGESAHAN	ii
+HALAMAN PERNYATAAN KEASLIAN	iii
+HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI TUGAS AKHIR UNTUK KEPENTINGAN AKADEMIS	iv
 KATA PENGANTAR	v
-HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI KARYA ILMIAH UNTUK KEPENTINGAN AKADEMIS	vii
-ABSTRAK	viii
-ABSTRACT	ix
-DAFTAR ISI	x
-DAFTAR TABEL	xii
-DAFTAR GAMBAR	xiii
-DAFTAR LAMPIRAN	xiv
+ABSTRAK	vii
+ABSTRACT	viii
+DAFTAR ISI	ix
+DAFTAR TABEL	xi
+DAFTAR GAMBAR	xii
+DAFTAR LAMPIRAN	xiii
 BAB 1 PENDAHULUAN	1
 1.1 Latar Belakang	1
 1.2 Rumusan Masalah	4
@@ -257,6 +298,7 @@ Lampiran 3  Matriks Rinci 60 Butir Pengujian Fungsionalitas Kotak Hitam (Black B
 Lampiran 4  Log Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit (510 Passed, 2.211 Assertions)	115
 Lampiran 5  Kode Sumber Skrip Kritis Otomasi Sistem (Billing Engine, Late Penalty, Midtrans Webhook)	118
 Lampiran 6  Dokumentasi Riset Lapangan dan Surat Keterangan Selesai Penelitian Asri Boarding House	123
+
 
 ## DAFTAR TABEL
 Tabel 4.1  Matriks Pemetaan Status Transaksional dan Transisi State Siklus Hidup Sistem	33
