@@ -62,13 +62,13 @@ BAB 1: PENDAHULUAN
 │   ├── Landasan SIM dan Integrasi Payment Gateway: Peranan SIM [6] serta otomatisasi transaksi via payment gateway [7]-[10].
 │   └── Solusi yang Diajukan: SIM Kost Terpadu Laravel 11, Midtrans Snap BCA VA, Fonnte WA, Cron Job terprogram, dan evaluasi empiris pengelola serta 5 penghuni.
 ├── 1.2 Rumusan Masalah
-│   ├── RM 1: Perancangan, pembangunan, dan integrasi sistem informasi manajemen kost terpadu Laravel 11 & MySQL.
-│   ├── RM 2: Efektivitas sistem dalam memberikan solusi atas inefisiensi operasional kos (penagihan, kas, double-booking).
-│   └── RM 3: Hasil wawancara pengelola dan 5 penghuni kost mengenai penggunaan sistem (reservasi, pembayaran, tagihan bulanan).
+│   ├── RM 1: Perancangan, pembangunan, dan integrasi sistem (reservasi daring, pembayaran digital, penagihan otomatis, notifikasi WhatsApp).
+│   ├── RM 2: Solusi sistem terhadap permasalahan operasional (penagihan sewa, rekapitulasi kas, double-booking).
+│   └── RM 3: Hasil evaluasi penerimaan pengguna (pengelola dan penghuni kost) setelah sistem diterapkan live.
 ├── 1.3 Tujuan Penelitian
-│   ├── TP 1: Menghasilkan sistem terintegrasi yang teruji fungsionalitas dan keamanannya sesuai kebutuhan operasional.
-│   ├── TP 2: Membuktikan efektivitas sistem sebagai solusi pemecahan masalah operasional faktual kos.
-│   └── TP 3: Menganalisis hasil wawancara empiris pengelola dan 5 penghuni kost pasca-implementasi sistem secara live.
+│   ├── TP 1: Merancang, membangun, dan mengintegrasikan sistem informasi manajemen kost terpadu dengan empat fitur kunci.
+│   ├── TP 2: Menganalisis efektivitas sistem dalam menyelesaikan permasalahan penagihan sewa, rekapitulasi kas, dan double-booking.
+│   └── TP 3: Mendeskripsikan dan menganalisis hasil evaluasi penerimaan pengguna (pengelola dan penghuni kost) pasca-penerapan live.
 └── 1.4 Batasan Masalah
     ├── Objek: Asri Boarding House Tembalang (32 kamar).
     ├── Bentuk: Web-responsive application (desktop dan mobile).
@@ -154,7 +154,7 @@ BAB 4: HASIL DAN PEMBAHASAN
 └── 4.8 Pembahasan
     ├── 1. Harmonisasi Perancangan, Implementasi, dan Pengujian Fungsionalitas Sistem (Menjawab Rumusan Masalah 1).
     ├── 2. Efektivitas Sistem sebagai Solusi Permasalahan Operasional Kos (Menjawab Rumusan Masalah 2).
-    ├── 3. Sintesis Hasil Evaluasi Pengguna Lapangan (Menjawab Rumusan Masalah 3).
+    ├── 3. Sintesis Hasil Evaluasi Penerimaan Pengguna Lapangan (Menjawab Rumusan Masalah 3).
     └── 4. Diferensiasi Verifikasi Teknis (Kebenaran Fungsional) vs Evaluasi Penerimaan Pengguna (Adopsi Humanis).
 
 BAB 5: KESIMPULAN DAN SARAN
