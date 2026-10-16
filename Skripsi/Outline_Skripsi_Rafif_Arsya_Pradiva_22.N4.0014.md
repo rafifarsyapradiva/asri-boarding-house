@@ -62,11 +62,13 @@ BAB 1: PENDAHULUAN
 │   ├── Landasan SIM dan Integrasi Payment Gateway: Peranan SIM [6] serta otomatisasi transaksi via payment gateway [7]-[10].
 │   └── Solusi yang Diajukan: SIM Kost Terpadu Laravel 11, Midtrans Snap BCA VA, Fonnte WA, Cron Job terprogram, dan evaluasi empiris pengelola serta 5 penghuni.
 ├── 1.2 Rumusan Masalah
-│   ├── RM 1: Perancangan, pembangunan, integrasi, dan pengujian sistem informasi manajemen kost terpadu.
-│   └── RM 2: Hasil wawancara pengelola dan 5 penghuni kost mengenai penggunaan sistem (reservasi, pembayaran, tagihan bulanan).
+│   ├── RM 1: Perancangan, pembangunan, dan integrasi sistem informasi manajemen kost terpadu Laravel 11 & MySQL.
+│   ├── RM 2: Efektivitas sistem dalam memberikan solusi atas inefisiensi operasional kos (penagihan, kas, double-booking).
+│   └── RM 3: Hasil wawancara pengelola dan 5 penghuni kost mengenai penggunaan sistem (reservasi, pembayaran, tagihan bulanan).
 ├── 1.3 Tujuan Penelitian
 │   ├── TP 1: Menghasilkan sistem terintegrasi yang teruji fungsionalitas dan keamanannya sesuai kebutuhan operasional.
-│   └── TP 2: Menganalisis hasil wawancara empiris pengelola dan 5 penghuni kost pasca-implementasi sistem secara live.
+│   ├── TP 2: Membuktikan efektivitas sistem sebagai solusi pemecahan masalah operasional faktual kos.
+│   └── TP 3: Menganalisis hasil wawancara empiris pengelola dan 5 penghuni kost pasca-implementasi sistem secara live.
 └── 1.4 Batasan Masalah
     ├── Objek: Asri Boarding House Tembalang (32 kamar).
     ├── Bentuk: Web-responsive application (desktop dan mobile).
@@ -150,15 +152,16 @@ BAB 4: HASIL DAN PEMBAHASAN
 │   ├── 4.7.6 Tabel 4.14 Matriks Komparasi Evaluasi Respon dan Temuan Kunci Kelima Penghuni Kost.
 │   └── 4.7.7 Analisis Kualitatif: 4 Tema (Akseptabilitas Tinggi 8,00/10, Value Proposition, Kendala Empiris, Saran).
 └── 4.8 Pembahasan
-    ├── 1. Harmonisasi Perancangan, Implementasi, dan Pengujian Sistem (Menjawab Rumusan Masalah 1).
-    ├── 2. Sintesis Hasil Evaluasi Pengguna Lapangan (Menjawab Rumusan Masalah 2).
-    ├── 3. Efektivitas Pertahanan Ganda Anti Pemesanan Ganda (Pessimistic Row Locking + Karantina Pasca-Checkout).
+    ├── 1. Harmonisasi Perancangan, Implementasi, dan Pengujian Fungsionalitas Sistem (Menjawab Rumusan Masalah 1).
+    ├── 2. Efektivitas Sistem sebagai Solusi Permasalahan Operasional Kos (Menjawab Rumusan Masalah 2).
+    ├── 3. Sintesis Hasil Evaluasi Pengguna Lapangan (Menjawab Rumusan Masalah 3).
     └── 4. Diferensiasi Verifikasi Teknis (Kebenaran Fungsional) vs Evaluasi Penerimaan Pengguna (Adopsi Humanis).
 
 BAB 5: KESIMPULAN DAN SARAN
 ├── 5.1 Kesimpulan
-│   ├── Kesimpulan 1 (Teknis & Fungsional): Rancang bangun sistem terpadu Laravel 11 & MySQL 8.x, integrasi Midtrans & Fonnte, lulus 100% pada 60 uji black box dan 510 pengujian otomatis PHPUnit.
-│   └── Kesimpulan 2 (Empiris & Operasional): Keberhasilan penerapan live; evaluasi pengelola skor 9,5/10 (pembukuan instan, nol selisih kas); evaluasi 5 mahasiswa penghuni kost rata-rata skor 8,00/10 (kemudahan alur reservasi hingga pelunasan tagihan rutin bulanan).
+│   ├── Kesimpulan 1 (Rancang Bangun & Verifikasi): Sistem terpadu Laravel 11 & MySQL 8.x ternormalisasi 3NF, integrasi Midtrans Snap & Fonnte WA, 100% lulus 60 skenario black box dan 510 uji otomatis PHPUnit (Menjawab RM 1).
+│   ├── Kesimpulan 2 (Solusi Masalah Operasional): Otomasi auto-billing tgl 1 & denda kalender 5%, penjaminan zero cash variance & ekspor pembukuan instan, serta eliminasi zero double-booking via defense-in-depth (Menjawab RM 2).
+│   └── Kesimpulan 3 (Evaluasi Pengguna Lapangan): Keberhasilan penerapan live; evaluasi pengelola skor 9,5/10; evaluasi 5 mahasiswa penghuni kost rata-rata skor 8,00/10 (Menjawab RM 3).
 └── 5.2 Saran
     ├── 1. Perluasan Kanal Pembayaran Non-Tunai Berbasis QRIS dan E-Wallet.
     ├── 2. Penyempurnaan Penjadwalan Pengingat Berjenjang (H-2, Hari-H) dan Label Visual "Masa Toleransi".
