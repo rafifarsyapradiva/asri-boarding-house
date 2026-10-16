@@ -142,11 +142,11 @@ BAB 4: HASIL DAN PEMBAHASAN
 │   └── Analisis Capaian: Skor Kepuasan 9,5/10, Pemangkasan Pembukuan dari 3-5 Hari Jadi Instan, Zero Cash Variance.
 ├── 4.7 Hasil Wawancara dengan Lima Orang Penghuni Kost
 │   ├── Tabel 4.8 Profil & Konteks Hunian 5 Responden.
-│   ├── 4.7.1 Transkrip Responden 1: Arjun (Kamar 101 VIP, Tahunan Lunas Midtrans BCA VA, Skor 8,5/10).
-│   ├── 4.7.2 Transkrip Responden 2: Farrel (Kamar 104 Deluxe, 6 Bulan DP 30%, Skor 7,0/10).
-│   ├── 4.7.3 Transkrip Responden 3: Fadil (Kamar 205 Standar, Bulanan Tepat Waktu BCA VA, Skor 9,0/10).
-│   ├── 4.7.4 Transkrip Responden 4: Ammar (Kamar 208 Standar, Pengalaman Toleransi Denda Rp0, Skor 7,5/10).
-│   ├── 4.7.5 Transkrip Responden 5: Sindhu (Kamar 102 VIP, Walk-In lalu Aktif Portal, Skor 8,0/10).
+│   ├── 4.7.1 Transkrip Responden 1: Arjun (Pengujian via Laptop & Android, Skor 8,5/10).
+│   ├── 4.7.2 Transkrip Responden 2: Farrel (Pengujian via Smartphone Android, Mahasiswa Rantau Luar Kota, Skor 7,0/10).
+│   ├── 4.7.3 Transkrip Responden 3: Fadil (Pengujian via Laptop, Evaluasi Rekam Jejak Transaksi Digital, Skor 9,0/10).
+│   ├── 4.7.4 Transkrip Responden 4: Ammar (Pengujian via Smartphone iOS, Aksesibilitas Jarak Jauh, Skor 7,5/10).
+│   ├── 4.7.5 Transkrip Responden 5: Sindhu (Pengujian via Smartphone Android, Adaptasi Pengguna Baru, Skor 8,0/10).
 │   ├── 4.7.6 Tabel 4.14 Matriks Komparasi Evaluasi Respon dan Temuan Kunci Kelima Penghuni Kost.
 │   └── 4.7.7 Analisis Kualitatif: 4 Tema (Akseptabilitas Tinggi 8,00/10, Value Proposition, Kendala Empiris, Saran).
 └── 4.8 Pembahasan
@@ -158,7 +158,7 @@ BAB 4: HASIL DAN PEMBAHASAN
 BAB 5: KESIMPULAN DAN SARAN
 ├── 5.1 Kesimpulan
 │   ├── Kesimpulan 1 (Teknis & Fungsional): Rancang bangun sistem terpadu Laravel 11 & MySQL 8.x, integrasi Midtrans & Fonnte, lulus 100% pada 60 uji black box dan 510 pengujian otomatis PHPUnit.
-│   └── Kesimpulan 2 (Empiris & Operasional): Keberhasilan penerapan live; evaluasi pengelola skor 9,5/10 (pembukuan instan, nol selisih kas); evaluasi 5 penghuni rata-rata skor 8,00/10 (kemudahan reservasi, BCA VA instan, transparansi denda toleransi).
+│   └── Kesimpulan 2 (Empiris & Operasional): Keberhasilan penerapan live; evaluasi pengelola skor 9,5/10 (pembukuan instan, nol selisih kas); evaluasi 5 mahasiswa penghuni kost rata-rata skor 8,00/10 (kemudahan alur reservasi hingga pelunasan tagihan rutin bulanan).
 └── 5.2 Saran
     ├── 1. Perluasan Kanal Pembayaran Non-Tunai Berbasis QRIS dan E-Wallet.
     ├── 2. Penyempurnaan Penjadwalan Pengingat Berjenjang (H-2, Hari-H) dan Label Visual "Masa Toleransi".
@@ -331,7 +331,7 @@ Implementasi kode program dieksekusi secara modular menggunakan pola arsitektur 
   * Tabulasi 10 butir pertanyaan dan jawaban pengelola (Tabel 4.7) dengan capaian skor kepuasan 9,5 / 10.
 * **Aktivitas 6.2**: Wawancara Evaluasi Pasca-Implementasi bersama Lima Penghuni Kost Aktif.
   * Melakukan wawancara semiterstruktur di area bersama (*communal space*) kos.
-  * Melibatkan 5 responden dengan keragaman skema: P1 (Arjun - Tahunan BCA VA), P2 (Farrel - Semesteran DP 30%), P3 (Fadil - Bulanan Rutin Tepat Waktu), P4 (Ammar - Bulanan Pengalaman Toleransi Denda Rp0), P5 (Sindhu - Pendaftaran Walk-In).
+  * Melibatkan 5 responden mahasiswa penghuni kost (*surrogate users*) dengan beragam latar belakang perangkat dan pengalaman: P1 (Arjun - Laptop & Android), P2 (Farrel - Android & Luar Kota), P3 (Fadil - Laptop & Jejak Audit Digital), P4 (Ammar - iOS Safari & Luar Kota), P5 (Sindhu - Android & Onboarding Baru).
   * Tabulasi transkrip individu (Tabel 4.9 s.d. Tabel 4.13), matriks komparasi (Tabel 4.14), dan sintesis 4 tema kualitatif.
   * **Luaran Fase 6**: Berkas Audio Rekaman Wawancara, Lembar Transkrip Lengkap, dan Matriks Analisis Kepuasan Pengguna.
 
