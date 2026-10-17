@@ -724,18 +724,18 @@ graph TD
     end
 
     subgraph OUTPUT ["4. KELUARAN & PENERAPAN SISTEM (OUTPUT & LIVE DEPLOYMENT)"]
-        O1["<b>Sistem Informasi Manajemen Kost Terpadu Live (weatso.id):</b><br/>• Modul Katalog & Formulir Reservasi Mandiri Calon Penyewa<br/>• Portal Mandiri Penyewa (Invoice & Kuitansi Digital Instan A5)<br/>• Panel Administrator Pengawasan Kamar & Arus Kas Real-Time<br/>• Automated Billing Engine (Eksekusi Rutin Cron Job Tgl 1)<br/>• Notifikasi Otomatis Multi-Saluran Tagihan & Pengingat"]
+        O1["<b>Sistem Terpasang Live Produksi (asriboardinghouse.weatso.id):</b><br/>• Modul Katalog & Reservasi Mandiri Calon Penyewa 24/7<br/>• Portal Mandiri Penyewa (Invoice & Kuitansi Digital Instan A5)<br/>• Panel Administrator Pengawasan Kamar & Arus Kas Real-Time<br/>• Automated Billing Engine (Eksekusi Rutin Cron Job Tgl 1)<br/>• Notifikasi Otomatis Multi-Saluran Tagihan & Pengingat"]
     end
 
-    subgraph EVALUATION ["5. PENGUJIAN & EVALUASI HASIL WAWANCARA"]
+    subgraph EVALUATION ["5. PENGUJIAN & EVALUASI SISTEM (MENJAWAB 3 RUMUSAN MASALAH)"]
         direction TB
-        E1["<b>Verifikasi Mutu & Fungsionalitas Sistem:</b><br/>• Pengujian Black Box Testing (60 Butir Skenario, 100% Lulus)<br/>• Pengujian Isolasi Peran Hak Akses (RBAC 3 Portal Bebas IDOR)<br/>• Simulasi Transaksi Midtrans Sandbox BCA Virtual Account<br/>• Pengujian Otomasi Unit Internal (PHPUnit: 510 Tests Passed)"]
-        E2["<b>Evaluasi Pengguna Pasca-Penerapan:</b><br/>• Wawancara & Side-by-Side Usability Testing Pengelola (Skor 9,5/10)<br/>• Wawancara Evaluasi Bersama 5 Orang Penghuni Kost Aktif<br/>• Asesmen: Reservasi Online, Pembayaran Digital, & Penagihan"]
+        E1["<b>Verifikasi Mutu & Keandalan Fungsional (RM 1):</b><br/>• Pengujian Black Box Testing (60 Skenario, 100% Lulus)<br/>• Pengujian Isolasi Peran Hak Akses (RBAC 3 Portal Bebas IDOR)<br/>• Simulasi Transaksi Midtrans Sandbox BCA Virtual Account<br/>• Pengujian Unit Otomatis (PHPUnit: 510 Tests Passed)"]
+        E2["<b>Solusi Operasional & Evaluasi Pengguna (RM 2 & RM 3):</b><br/>• Auto-billing tgl 1, denda flat 5%, Zero Cash Variance<br/>• Peniadaan double booking & karantina kamar pasca-checkout<br/>• Usability Testing Pengelola (Skor Kepuasan: 9,5/10)<br/>• Wawancara Evaluasi Bersama 5 Mahasiswa Penghuni Aktif"]
         E1 --- E2
     end
 
     subgraph OUTCOME ["6. DAMPAK OPERASIONAL (OUTCOME)"]
-        D1["<b>Manfaat & Peningkatan Kinerja Operasional:</b><br/>• Otomatisasi penagihan bulanan & eskalasi berjenjang ke kontak wali<br/>• Penjaminan akurasi rekapitulasi kas tanpa selisih (zero cash variance)<br/>• Pemangkasan durasi laporan laba-rugi dari 3–5 hari menjadi instan<br/>• Peniadaan risiko pemesanan ganda (zero double-booking)<br/>• Peningkatan transparansi, kenyamanan penghuni, & efisiensi kerja"]
+        D1["<b>Pencapaian Manfaat & Nilai Tambah Nyata:</b><br/>• Otomatisasi penagihan bulanan & eskalasi berjenjang ke kontak wali<br/>• Penjaminan akurasi rekapitulasi kas tanpa selisih (zero cash variance)<br/>• Pemangkasan durasi laporan laba-rugi dari 3–5 hari menjadi instan<br/>• Peniadaan risiko pemesanan ganda (zero double-booking)<br/>• Peningkatan transparansi finansial, kenyamanan, & efisiensi kerja"]
     end
 
     INPUT --> DATA_COLLECTION
