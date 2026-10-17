@@ -330,16 +330,16 @@ DAFTAR LAMPIRAN &emsp; xiv
 1.4 Batasan Masalah &emsp; 6  
 
 **BAB 2 TINJAUAN PUSTAKA** &emsp; **11**  
-2.1 Sistem Informasi dan Sistem Informasi Manajemen &emsp; 11  
-2.2 Sistem Berbasis Web dan E-Commerce Model B2C &emsp; 11  
-2.3 Sistem Manajemen Basis Data Relasional dan Normalisasi 3NF &emsp; 12  
-2.4 Arsitektur 3-Tier dan Model-View-Controller pada Laravel 11 &emsp; 12  
-2.5 Antarmuka Pemrograman Aplikasi (API) Eksternal: Midtrans dan Fonnte &emsp; 13  
-2.6 Penjadwalan Tugas, Mesin Penagihan Otomatis, dan Cron Job &emsp; 13  
-2.7 Teori Interaktivitas UI/UX: Neo-Brutalism dan WCAG 2.1 &emsp; 14  
-2.8 Keamanan Web dan Integritas Data &emsp; 14  
-2.9 Concurrency Control dan Mekanisme Penguncian Basis Data &emsp; 15  
-2.10 Pengujian Perangkat Lunak dan Metode Black Box Testing &emsp; 15  
+2.1 Sistem Informasi Manajemen &emsp; 11  
+2.2 Aplikasi Berbasis Web dan Konsep E-Commerce B2C &emsp; 11  
+2.3 Basis Data Relasional dan Normalisasi Data &emsp; 12  
+2.4 Kerangka Kerja Laravel dan Pola Arsitektur MVC &emsp; 12  
+2.5 Integrasi REST API pada Layanan Payment Gateway dan WhatsApp &emsp; 13  
+2.6 Otomatisasi Penjadwalan Tugas (Cron Job) &emsp; 13  
+2.7 Desain Antarmuka Neo-Brutalism dan Standar Aksesibilitas Web &emsp; 14  
+2.8 Keamanan Aplikasi Web dan Integritas Data &emsp; 14  
+2.9 Pengendalian Konkurensi (Concurrency Control) pada Basis Data &emsp; 15  
+2.10 Pengujian Perangkat Lunak Metode Black Box &emsp; 15  
 
 **BAB 3 METODOLOGI PENELITIAN** &emsp; **16**  
 3.1 Jenis Penelitian &emsp; 16  
@@ -351,34 +351,34 @@ DAFTAR LAMPIRAN &emsp; xiv
 4.1 Perancangan Sistem &emsp; 22  
 &emsp;&emsp;4.1.1 Use Case Diagram &emsp; 22  
 &emsp;&emsp;4.1.2 Activity Diagram &emsp; 24  
-&emsp;&emsp;4.1.3 Flowchart Diagram &emsp; 27  
+&emsp;&emsp;4.1.3 Flowchart Sistem &emsp; 27  
 &emsp;&emsp;4.1.4 Sequence Diagram &emsp; 29  
 &emsp;&emsp;4.1.5 Entity Relationship Diagram (ERD) &emsp; 31  
-&emsp;&emsp;4.1.6 Skenario Diagram Alur Sistem &emsp; 32  
+&emsp;&emsp;4.1.6 Skenario Alur Kerja Sistem &emsp; 32  
 4.2 Tampilan Antarmuka Sistem &emsp; 35  
 &emsp;&emsp;4.2.1 Antarmuka Calon Penyewa &emsp; 35  
 &emsp;&emsp;4.2.2 Antarmuka Penyewa Aktif &emsp; 37  
 &emsp;&emsp;4.2.3 Antarmuka Administrator &emsp; 39  
 4.3 Implementasi Sistem &emsp; 41  
-&emsp;&emsp;4.3.1 Lingkungan Implementasi &emsp; 41  
-&emsp;&emsp;4.3.2 Perancangan Arsitektur Aplikasi &emsp; 42  
+&emsp;&emsp;4.3.1 Spesifikasi Lingkungan Implementasi &emsp; 41  
+&emsp;&emsp;4.3.2 Struktur Arsitektur Aplikasi &emsp; 42  
 &emsp;&emsp;4.3.3 Implementasi Basis Data &emsp; 44  
-&emsp;&emsp;4.3.4 Implementasi Autentikasi dan Hak Akses &emsp; 46  
-&emsp;&emsp;4.3.5 Implementasi Fitur Calon Penyewa &emsp; 48  
-&emsp;&emsp;4.3.6 Implementasi Fitur Penyewa Aktif &emsp; 50  
-&emsp;&emsp;4.3.7 Implementasi Fitur Administrator &emsp; 52  
-&emsp;&emsp;4.3.8 Implementasi Integrasi Payment Gateway Midtrans &emsp; 54  
-&emsp;&emsp;4.3.9 Implementasi Notifikasi Surel SMTP &emsp; 56  
-&emsp;&emsp;4.3.10 Implementasi Notifikasi WhatsApp Fonnte &emsp; 57  
-4.4 Hasil Deployment &emsp; 59  
-&emsp;&emsp;4.4.1 Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP &emsp; 59  
-&emsp;&emsp;4.4.2 Konfigurasi Penjadwal Tugas Peladen (Cron Job) Mesin Penagihan Otomatis &emsp; 60  
-&emsp;&emsp;4.4.3 Konfigurasi Variabel Lingkungan Produksi dan Optimasi Kinerja Peladen &emsp; 61  
-4.5 Hasil Pengujian Sistem &emsp; 65  
-&emsp;&emsp;4.5.1 Hasil Black Box Testing &emsp; 65  
-&emsp;&emsp;4.5.2 Hasil Pengujian Hak Akses &emsp; 71  
-&emsp;&emsp;4.5.3 Hasil Pengujian Transaksi Midtrans Sandbox (BCA VA) &emsp; 73  
-&emsp;&emsp;4.5.4 Hasil Pengujian Parameter Keamanan dan Hak Akses Live &emsp; 75  
+&emsp;&emsp;4.3.4 Mekanisme Autentikasi dan Pembagian Hak Akses &emsp; 46  
+&emsp;&emsp;4.3.5 Implementasi Modul Calon Penyewa &emsp; 48  
+&emsp;&emsp;4.3.6 Implementasi Modul Penyewa Aktif &emsp; 50  
+&emsp;&emsp;4.3.7 Implementasi Modul Administrator &emsp; 52  
+&emsp;&emsp;4.3.8 Integrasi Pembayaran Otomatis dengan Midtrans &emsp; 54  
+&emsp;&emsp;4.3.9 Konfigurasi Notifikasi Email Berbasis SMTP &emsp; 56  
+&emsp;&emsp;4.3.10 Integrasi Notifikasi WhatsApp melalui Fonnte &emsp; 57  
+4.4 Deployment Sistem ke Lingkungan Produksi &emsp; 59  
+&emsp;&emsp;4.4.1 Konfigurasi Web Server LiteSpeed dan HTTP Security Header &emsp; 59  
+&emsp;&emsp;4.4.2 Pengaturan Cron Job untuk Penagihan Otomatis &emsp; 60  
+&emsp;&emsp;4.4.3 Konfigurasi Environment Produksi dan Optimasi Kinerja Server &emsp; 61  
+4.5 Pengujian Sistem &emsp; 65  
+&emsp;&emsp;4.5.1 Pengujian Fungsional (Black Box) &emsp; 65  
+&emsp;&emsp;4.5.2 Pengujian Otorisasi dan Hak Akses &emsp; 71  
+&emsp;&emsp;4.5.3 Simulasi Transaksi Pembayaran pada Midtrans Sandbox &emsp; 73  
+&emsp;&emsp;4.5.4 Pengujian Parameter Keamanan pada Server Produksi &emsp; 75  
 4.6 Hasil Wawancara dengan Penjaga Kost &emsp; 76  
 4.7 Hasil Wawancara dengan Penghuni Kost &emsp; 81  
 4.8 Pembahasan &emsp; 92  
@@ -444,7 +444,7 @@ Gambar 4.14 &emsp; Cuplikan Implementasi Kode Karantina Kamar Pasca-Checkout (Pe
 Gambar 4.15 &emsp; Cuplikan Implementasi Kode Validasi Webhook Signature SHA-512 Midtrans (VerifyMidtransSignature.php) &emsp; 55  
 Gambar 4.16 &emsp; Cuplikan Implementasi Kode Distribusi Surel Tagihan Asinkron Berbasis Antrean (TagihanBulanMail.php) &emsp; 56  
 Gambar 4.17 &emsp; Cuplikan Implementasi Kode Integrasi REST API Gateway WhatsApp Fonnte dan Eskalasi Wali (FonnteService.php) &emsp; 57  
-Gambar 4.18 &emsp; Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP (.htaccess) &emsp; 59  
+Gambar 4.18 &emsp; Konfigurasi Web Server LiteSpeed dan HTTP Security Header (.htaccess) &emsp; 59  
 Gambar 4.19 &emsp; Cuplikan Konfigurasi Variabel Lingkungan Produksi (.env.production) &emsp; 61  
 Gambar 4.20 &emsp; Hasil Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit &emsp; 75  
 Gambar 4.21 &emsp; Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep) &emsp; 80  
@@ -532,54 +532,54 @@ Guna mempertahankan fokus dan kedalaman pembahasan, batasan masalah dalam peneli
 
 </div>
 
-## 2.1 Sistem Informasi dan Sistem Informasi Manajemen
+## 2.1 Sistem Informasi Manajemen
 Sistem informasi memadukan perangkat keras (*hardware*), perangkat lunak (*software*), infrastruktur jaringan, data terstruktur, prosedur operasional, serta sumber daya manusia untuk mentransformasikan data mentah menjadi informasi yang bernilai bagi pengambilan keputusan [6]. Dalam operasional bisnis, Sistem Informasi Manajemen (*Management Information System* atau SIM) berfungsi sebagai instrumen kendali harian dan penyedia laporan kinerja berkala.
 
 Pada Asri Boarding House, prinsip SIM diterapkan guna membentuk pusat data tunggal (*single source of truth*). Keberadaan sistem ini menyatukan master data 32 unit kamar, profil penghuni, jadwal penagihan bulanan, serta mutasi kas yang sebelumnya terfragmentasi pada tumpukan buku besar fisik. Melalui sentralisasi data, pengelola dan pemilik kos dapat memantau pergerakan kas, mengawasi tingkat keterisian unit (*occupancy rate*), dan memastikan ketertiban administrasi hunian secara akurat setiap saat.
 
-## 2.2 Sistem Berbasis Web dan E-Commerce Model B2C
+## 2.2 Aplikasi Berbasis Web dan Konsep E-Commerce B2C
 Aplikasi berbasis web (*web-based application*) beroperasi mengadopsi model klien-peladen (*client-server*). Pengguna dapat mengakses layanan secara fleksibel melalui peramban web modern pada komputer maupun ponsel pintar tanpa perlu memasang aplikasi tambahan. Dalam perancangan platform komersial digital, pemisahan struktur kode menjadi faktor penentu agar perangkat lunak memiliki tingkat keterpeliharaan (*maintainability*) dan skalabilitas yang baik. Pola arsitektur *Model-View-Controller* (MVC) terbukti efektif dalam memisahkan representasi data, antarmuka pengguna, dan alur kendali logika bisnis [11].
 
 Model *Business-to-Consumer* (B2C) menitikberatkan pada interaksi transaksional langsung antara penyedia jasa dan konsumen akhir. Asri Boarding House menerapkan model B2C ini secara mandiri: pengelola berhubungan langsung dengan calon penghuni dan penyewa aktif melalui etalase kamar interaktif, formulir pemesanan terpandu, dan kanal pembayaran digital. Pendekatan mandiri ini membebaskan pengelola dari ketergantungan pada platform agregator indekos pihak ketiga yang umumnya membebankan potongan komisi per transaksi sewa.
 
-## 2.3 Sistem Manajemen Basis Data Relasional dan Normalisasi 3NF
+## 2.3 Basis Data Relasional dan Normalisasi Data
 Sistem Manajemen Basis Data Relasional (*Relational Database Management System* atau RDBMS) mengorganisasikan data ke dalam tabel-tabel berelasi yang dihubungkan melalui batasan kunci utama (*primary key*) dan kunci asing (*foreign key*). Penelitian ini memilih MySQL versi 8.0 dengan mesin penyimpanan (*storage engine*) InnoDB karena keandalannya dalam menjaga integritas referensial, menjamin kepatuhan transaksi ACID (*Atomicity, Consistency, Isolation, Durability*), serta mendukung penguncian tingkat baris (*row-level locking*).
 
 Untuk menghindari redundansi dan inkonsistensi data, perancangan skema tabel melalui tahapan normalisasi hingga Bentuk Normal Ketiga (*Third Normal Form* atau 3NF). Penerapan 3NF mensyaratkan setiap atribut non-kunci bergantung secara fungsional penuh pada kunci utama (*fully functionally dependent*) dan terbebas dari ketergantungan transitif antarkolom. Melalui skema 3NF ini, seluruh pencatatan transaksi sewa, inventaris kamar, dan data penyewa Asri Boarding House terlindungi dari risiko anomali penyisipan (*insertion anomaly*), pembaruan (*update anomaly*), maupun penghapusan data (*deletion anomaly*).
 
-## 2.4 Arsitektur 3-Tier dan Model-View-Controller pada Laravel 11
+## 2.4 Kerangka Kerja Laravel dan Pola Arsitektur MVC
 Arsitektur tiga lapis (*3-Tier Architecture*) membagi sistem ke dalam tiga zona independen: lapisan presentasi (*Presentation Tier*), lapisan logika aplikasi (*Application/Logic Tier*), dan lapisan persistensi data (*Data Tier*). Pemisahan ini menjamin modifikasi pada antarmuka visual tidak merusak struktur basis data. Framework Laravel 11 yang berjalan di atas PHP 8.2 mengimplementasikan prinsip ini melalui pola MVC: Model mengelola relasi data via *Eloquent Object-Relational Mapping* (ORM), View menyusun tata letak antarmuka via mesin templat Blade, dan Controller mengendalikan arus permintaan HTTP.
 
 Guna mencegah penumpukan logika bisnis pada pengendali (*fat controller anti-pattern*), arsitektur sistem diperkuat dengan lapisan layanan (*Service Layer*). Komponen operasional seperti `BillingService`, `MidtransService`, `ReservasiService`, `FonnteService`, dan `TransisiPenyewaService` diisolasi ke dalam modul tersendiri. Pola ini dipadukan dengan mekanisme *Observer* dan *Event Listener* untuk menangani tugas otomatisasi dan proses asinkron secara terstruktur.
 
-## 2.5 Antarmuka Pemrograman Aplikasi (API) Eksternal: Midtrans dan Fonnte
+## 2.5 Integrasi REST API pada Layanan Payment Gateway dan WhatsApp
 Antarmuka Pemrograman Aplikasi (*Application Programming Interface* atau API) menyediakan mekanisme komunikasi standar yang memungkinkan sistem bertukar data secara aman dengan layanan komputasi eksternal. Gerbang pembayaran (*payment gateway*) Midtrans menyediakan antarmuka REST API Snap untuk memproses pembayaran non-tunai secara otomatis melalui saluran transfer Bank BCA Virtual Account. Integrasi ini mempermudah pencatatan transaksi perbankan dengan mekanisme verifikasi panggilan balik (*webhook callback*) yang terjamin keabsahannya [12]. Alur integrasi mencakup penerbitan token Snap dari peladen aplikasi, pemanggilan pop-up pembayaran di peramban klien via pustaka Snap.js, serta penerimaan notifikasi status pembayaran yang divalidasi menggunakan tanda tangan kriptografi SHA-512.
 
 Sebagai saluran komunikasi pendukung, Fonnte WhatsApp API difungsikan untuk mengirimkan pesan otomatis dari peladen ke nomor ponsel penyewa dan wali. Integrasi WhatsApp Gateway pada sistem informasi terbukti efektif meningkatkan kepatuhan pembayaran sewa dan mempercepat penyampaian informasi transaksi kepada pengguna [13]. Layanan ini dimanfaatkan untuk mendistribusikan invoice sewa bulanan, mengirimkan pengingat jatuh tempo secara berkala, serta meneruskan pemberitahuan denda keterlambatan secara otomatis tanpa membebani pekerjaan manual pengelola.
 
-## 2.6 Penjadwalan Tugas, Mesin Penagihan Otomatis, dan Cron Job
+## 2.6 Otomatisasi Penjadwalan Tugas (Cron Job)
 Penjadwalan tugas (*task scheduling*) memungkinkan peladen mengeksekusi serangkaian instruksi kerja secara periodik tanpa intervensi manual. Pada peladen produksi berbasis Linux, utilitas *cron job* dikonfigurasi untuk memicu perintah penjadwal internal Laravel (`schedule:run`) setiap satu menit, yang selanjutnya mengevaluasi dan menjalankan skrip sesuai waktu yang telah diprogramkan.
 
 Mesin penagihan otomatis (*automated billing engine*) yang dibangun dalam penelitian ini menerbitkan tagihan sewa bulanan bagi seluruh penyewa aktif setiap tanggal 1 awal bulan pukul 00:05 WIB dengan tenggat pelunasan seragam pada tanggal 10. Evaluasi harian dijalankan untuk memantau status keterlambatan dan memicu eskalasi notifikasi. Duplikasi tagihan dicegah secara andal pada lapisan basis data melalui batasan indeks unik gabungan (*composite unique constraint*) pada kolom `(penyewa_id, periode_bulan, periode_tahun)`.
 
-## 2.7 Teori Interaktivitas UI/UX: Neo-Brutalism dan WCAG 2.1
+## 2.7 Desain Antarmuka Neo-Brutalism dan Standar Aksesibilitas Web
 Perancangan antarmuka pengguna (*User Interface*) dan pengalaman interaksi (*User Experience*) memegang peranan krusial dalam menciptakan sistem yang mudah dipahami dan nyaman dioperasikan. Penelitian ini mengadopsi bahasa visual Neo-Brutalism secara konsisten pada portal publik, dasbor penyewa, hingga panel kontrol administrator. Ciri khas Neo-Brutalism tecermin pada pemilihan tipografi yang tegas (*Space Grotesk*), garis tepi hitam pekat berukuran 4 piksel, bayangan kontras tanpa gradasi halus (*hard box-shadow*), serta respons taktil saat elemen tombol ditekan (*push-down feedback*).
 
 Untuk menjamin kemudahan akses pada layar perangkat bergerak (*mobile-friendly*), seluruh komponen interaktif dirancang berpedoman pada standar *Web Content Accessibility Guidelines* (WCAG) 2.1 dengan target sentuh minimum 44 piksel. Tombol aksi melayang (*floating CTA*) WhatsApp dirancang berukuran 56 piksel agar mudah dijangkau oleh ibu jari. Selain itu, sistem menerapkan kebijakan peniadaan dialog bawaan peramban yang kaku (*Zero Native Browser Interaction*); fungsi seperti `alert()` dan `confirm()` digantikan oleh dialog modal interaktif dan notifikasi *toast* yang serasi dengan identitas visual sistem.
 
-## 2.8 Keamanan Web dan Integritas Data
+## 2.8 Keamanan Aplikasi Web dan Integritas Data
 Pengamanan aplikasi web menjadi prioritas mendasar mengingat sistem mengelola data pribadi penghuni dan transaksi finansial. Sistem menerapkan pertahanan berlapis terhadap ancaman *Cross-Site Request Forgery* (CSRF) melalui tokenisasi acak pada setiap formulir, penangkalan *SQL Injection* melalui *parameter binding* pada kueri Eloquent ORM, serta penyaringan otomatis terhadap risiko *Cross-Site Scripting* (XSS) melalui mesin templat Blade.
 
 Dalam mengantisipasi percobaan penerobosan kata sandi (*brute-force attack*), rute autentikasi dilengkapi pembatasan laju permintaan (*rate limiting*). Hak akses ditegakkan melalui prinsip *Role-Based Access Control* (RBAC) pada tiga portal terisolasi (administrator, penyewa aktif, dan calon penyewa), selaras dengan standar keamanan protokol OAuth 2.0 yang diterapkan pada autentikasi akun Google [14]. Keandalan sistem diperkuat dengan penanganan galat dan operator *nullsafe* pada PHP 8.2 guna mencegah terjadinya galat HTTP 500 saat relasi data bernilai kosong.
 
-## 2.9 Concurrency Control dan Mekanisme Penguncian Basis Data
+## 2.9 Pengendalian Konkurensi (Concurrency Control) pada Basis Data
 Pengontrolan konkurensi (*concurrency control*) diperlukan untuk menjamin konsistensi data saat beberapa pengguna atau proses latar belakang mengakses dan memodifikasi baris data yang sama secara bersamaan. Pada basis data MySQL dengan mesin penyimpanan InnoDB, pendekatan kontrol konkurensi terbagi menjadi *Optimistic Locking* dan *Pessimistic Locking*.
 
 Pada *Optimistic Locking*, sistem berasumsi bahwa perselisihan akses data jarang terjadi. Data dibaca dan diubah tanpa mengunci baris, dan verifikasi versi data baru dilakukan saat proses penyimpanan. Jika terdeteksi perubahan versi dari proses lain, transaksi saat ini dibatalkan (*aborted*). Pendekatan ini kurang sesuai untuk alur reservasi kamar kos, karena pembatalan di tahap akhir dapat membingungkan calon penyewa yang telah mengisi data atau menyelesaikan tahapan transaksi.
 
 Sebaliknya, *Pessimistic Locking* berasumsi bahwa potensi perebutan sumber daya (*resource contention*) bernilai tinggi. Baris data yang ditargetkan dikunci secara eksklusif sejak dibaca hingga transaksi tuntas diselesaikan (*commit*) atau dibatalkan (*rollback*). Pada MySQL InnoDB, penguncian ini dieksekusi melalui klausa `SELECT ... FOR UPDATE`, yang pada framework Laravel dipanggil melalui metode `lockForUpdate()`. Sepanjang transaksi berlangsung, proses lain yang mencoba membaca atau memodifikasi baris bersangkutan akan ditangguhkan (*blocked*). Penerapan mekanisme ini di dalam transaksi basis data (`DB::transaction`) memastikan alokasi unit kamar dan pembaruan mutasi pembayaran berjalan berurutan (*serialized*), sehingga mengeliminasi risiko pemesanan ganda (*double booking*) dan ketidaksesuaian saldo kas.
 
-## 2.10 Pengujian Perangkat Lunak dan Metode Black Box Testing
+## 2.10 Pengujian Perangkat Lunak Metode Black Box
 Pengujian perangkat lunak (*software testing*) merupakan tahapan evaluasi sistematis guna memastikan artefak program beroperasi selaras dengan spesifikasi fungsional, mematuhi aturan integritas data, serta kebal terhadap manipulasi otorisasi pengguna. Metode pengujian kotak hitam (*black box testing*) memfokuskan validasi pada perilaku antarmuka dan respon fungsional eksternal sistem tanpa menelaah struktur kode internal program [15].
 
 Melalui pendekatan *black box testing*, penguji merancang butir skenario uji berbasis teknik partisi kesetaraan (*equivalence partitioning*) dan analisis nilai batas (*boundary value analysis*) untuk memvalidasi keberhasilan formulir masukan, keandalan logika bisnis transaksi, penegakan batasan hak akses peran (*Role-Based Access Control*), serta ketepatan otomasi penagihan dan penerapan denda kalender [16]. Hasil pengujian kotak hitam memberikan bukti empiris yang objektif bahwa seluruh fitur perangkat lunak telah bekerja sesuai kebutuhan operasional pengguna sebelum sistem diterapkan secara live pada lingkungan produksi peladen riil.
@@ -876,7 +876,7 @@ Diagram Bagian 2 memodelkan eksekusi multi-tabel terisolasi `DB::transaction` ol
 
 ---
 
-### 4.1.3 Flowchart Diagram
+### 4.1.3 Flowchart Sistem
 Flowchart diagram memodelkan struktur logika algoritmik dari alur pemrosesan data secara deterministik. Guna menjamin kejelasan simbol terminator, masukan/keluaran data, proses komputasi, dan percabangan kondisi, masing-masing algoritma dipecah menjadi **2 (dua) kluster diagram beresolusi tinggi**:
 
 #### 1. Algoritma Mesin Penagihan Otomatis Massal
@@ -1104,7 +1104,7 @@ Kluster ini memodelkan penanganan keluhan dan pemantauan distribusi notifikasi. 
 
 ---
 
-### 4.1.6 Skenario Diagram Alur Sistem
+### 4.1.6 Skenario Alur Kerja Sistem
 Pemodelan teknis-formal melalui Use Case, Activity Diagram, Flowchart, Sequence Diagram, dan ERD pada subbab terdahulu menyajikan perspektif rekayasa perangkat lunak secara arsitektural. Guna menjembatani pemodelan teoretis tersebut dengan dinamika operasional di lapangan, subbab ini menguraikan skenario diagram alur sistem yang merekonstruksi hasil interaksi pengguna secara empiris pada peladen produksi langsung (`https://asriboardinghouse.weatso.id/`). Skenario ini memadukan dua sudut pandang yang saling mengisi: siklus hidup penyewa (*tenant lifecycle*) sejak tahap penelusuran awal hingga kepulangan, serta siklus hidup operasional administrator (*administrator operational lifecycle*) yang dijalankan oleh pengelola kos.
 
 #### 1. Skenario Siklus Hidup Penyewa (Tenant Lifecycle Scenario)
@@ -1264,7 +1264,7 @@ Panel administrasi pada rute `/admin/dashboard` dikembangkan dengan tema ergonom
 ## 4.3 Implementasi Sistem
 Tahap implementasi merealisasikan rancangan arsitektural dan antarmuka ke dalam baris instruksi program yang terstruktur, aman, dan siap produksi menggunakan framework web Laravel 11. Implementasi berfokus pada ketahanan arsitektur, pemisahan tanggung jawab logika bisnis (*separation of concerns*), keamanan data finansial, penanganan konkurensi data (*concurrency control*), serta keandalan integrasi antarmuka pemrograman aplikasi (API) pihak ketiga. Sesuai kaidah penyusunan naskah ilmiah yang mengutamakan keterbacaan, seluruh potongan kode program penting disajikan secara eksklusif dalam bentuk **tangkapan layar gambar (*screenshot*) format PNG beresolusi tinggi** dengan tanda pengenal gambar resmi, penjelasan fungsi logika bisnis, dan hubungannya dengan rancangan sistem.
 
-### 4.3.1 Lingkungan Implementasi
+### 4.3.1 Spesifikasi Lingkungan Implementasi
 Pengembangan dan operasional sistem dibangun di atas spesifikasi perangkat keras dan perangkat lunak yang terstandarisasi guna menjamin determinisme performa di lingkungan lokal (*development*) maupun peladen awan produksi (*production*):
 1. **Perangkat Keras (*Hardware*)**:
    * Lingkungan Pengembangan: Komputer jinjing Workstation berspesifikasi Prosesor Multi-Core 2.3 GHz, RAM 16 GB DDR4, serta media penyimpanan Solid State Drive (SSD) NVMe berkecepatan tinggi.
@@ -1284,7 +1284,7 @@ Pengembangan dan operasional sistem dibangun di atas spesifikasi perangkat keras
 
 ---
 
-### 4.3.2 Perancangan Arsitektur Aplikasi
+### 4.3.2 Struktur Arsitektur Aplikasi
 Sistem mengimplementasikan arsitektur tiga lapis (*3-Tier Architecture*) yang dipadukan dengan pola pemisahan lapisan layanan (*Service Layer Decoupling*) guna menghindari pengendali yang terlalu padat (*fat controller problem*):
 * **Presentation Tier**: Lapisan visual antarmuka pengguna dibangun memanfaatkan mesin templat Blade dan utilitas tata letak TailwindCSS dengan bahasa desain Neo-Brutalism. Diterapkan kebijakan *Zero Native Browser Interaction*, di mana kotak dialog bawaan peramban (`alert()` dan `confirm()`) ditiadakan dan digantikan oleh modal dialog interaktif bertema Neo-Brutalism serta notifikasi *toast* dinamis.
 * **Application Tier**: Berfungsi sebagai sentral orkestrasi aturan bisnis kos. Lapisan pengontrol (*controller*) dirancang ramping hanya untuk memvalidasi permintaan HTTP yang masuk dan mengembalikan respon tampilan/data, sedangkan logika pemrosesan didelegasikan secara mandiri kepada kelas layanan terisolasi pada direktori `app/Services/`:
@@ -1337,7 +1337,7 @@ Sebagai penguatan integritas data, sistem menerapkan dua teknik penting pada ske
 
 ---
 
-### 4.3.4 Implementasi Autentikasi dan Hak Akses
+### 4.3.4 Mekanisme Autentikasi dan Pembagian Hak Akses
 Sistem menegakkan isolasi peran pengguna secara berlapis guna menjamin keamanan data:
 1. **Pemisahan Tiga Portal Login**: Rute autentikasi dipisahkan secara tegas: `/admin/login` bagi pengelola, `/penyewa/login` bagi penghuni aktif, dan `/reservasi/login` bagi calon penyewa baru. Setiap rute dipagari oleh middleware otorisasi `RoleMiddleware` yang memutus sesi dan mengirimkan kode status HTTP 403 Forbidden apabila pengguna mencoba melintasi batas portal yang bukan hak otorisasi perannya.
 2. **Integrasi Google OAuth 2.0 via Socialite**: Calon penyewa dapat masuk menggunakan akun Google resmi. Untuk menjamin kelengkapan data kontak, middleware `EnsureProfileIsComplete` dipasang sebagai gerbang penapis (*interceptor*): saat calon penyewa baru berhasil masuk melalui Google dan nomor ponselnya masih berformat sementara (`temp_socialite_*`), sistem secara otomatis mengalihkannya ke rute `/profil/complete` guna mewajibkan pengisian nomor WhatsApp aktif sebelum diizinkan mengakses formulir reservasi kamar. Tangkapan layar kode implementasi interseptor profil disajikan pada Gambar 4.11.
@@ -1355,7 +1355,7 @@ Sistem menegakkan isolasi peran pengguna secara berlapis guna menjamin keamanan 
 
 ---
 
-### 4.3.5 Implementasi Fitur Calon Penyewa
+### 4.3.5 Implementasi Modul Calon Penyewa
 Modul calon penyewa menghadirkan kemudahan penelusuran unit kamar dan alur reservasi mandiri secara transparan:
 1. **Katalog Kamar Dinamis Berstatus Real-Time**: Halaman katalog publik menyajikan kisi (*grid*) 32 unit kamar dengan indikator ketersediaan dinamis. Unit berstatus kosong menampilkan tombol "Pesan Unit" yang membuka formulir reservasi mandiri 5 tahap (*stepper wizard*), sedangkan unit terisi menyembunyikan formulir dan menyediakan tombol "Tanya WA" yang secara otomatis mengarahkan peramban calon penghuni ke nomor WhatsApp pengelola dengan templat teks terstruktur.
 2. **Pencegahan Kondisi Balapan (*Race Condition*) Reservasi Ganda**: Untuk mengantisipasi skenario kritis di mana dua calon penyewa memilih dan memesan unit kamar yang sama pada detik yang bersamaan, pembuatan reservasi dieksekusi di dalam transaksi basis data berpelindung kunci baris eksklusif `lockForUpdate()`. Sistem mengevaluasi ketersediaan unit kamar secara berurutan (*serialized*) pada level mesin penyimpanan MySQL InnoDB sehingga kondisi balapan dapat dicegah secara deterministik. Cuplikan implementasi kode transaksi atomik reservasi disajikan pada Gambar 4.12.
@@ -1374,7 +1374,7 @@ Pemilihan kontrol konkurensi pesimistik (*pessimistic locking*) dibandingkan opt
 
 ---
 
-### 4.3.6 Implementasi Fitur Penyewa Aktif
+### 4.3.6 Implementasi Modul Penyewa Aktif
 Modul penyewa aktif pada portal swalayan `/penyewa/dashboard` dirancang untuk memberikan transparansi administrasi hunian dan kemandirian transaksi finansial bagi seluruh penghuni kos yang menempati 32 unit kamar:
 1. **Dasbor Tagihan dan Pelunasan Mandiri Terintegrasi**: Penghuni dapat memeriksa rincian status kontrak hunian, batas tanggal jatuh tempo, dan riwayat tagihan bulanan. Tombol "Bayar Sekarang" secara dinamis memicu jendela popup (*modal*) pembayaran Midtrans Snap v2 untuk pelunasan non-tunai melalui saluran transfer Bank BCA Virtual Account.
 2. **Kuitansi Pembayaran Digital Format A5 (*Zero Server Overhead*)**: Bukti pelunasan transaksi resmi format A5 berstempel digital dicetak dan diunduh langsung di sisi peramban klien melalui pemanfaatan pustaka JavaScript `html2pdf.js`. Pendekatan ini meniadakan beban kompilasi grafis di peladen serta menghemat kuota ruang penyimpanan pada infrastruktur hosting. Cuplikan implementasi kode perenderan kuitansi digital disajikan pada Gambar 4.13.
@@ -1394,7 +1394,7 @@ Penerapan pola perenderan di sisi klien ini merealisasikan prinsip arsitektur *Z
 
 ---
 
-### 4.3.7 Implementasi Fitur Administrator
+### 4.3.7 Implementasi Modul Administrator
 Panel kontrol administrator pada rute `/admin/dashboard` mengadopsi tema gelap *OLED Black Dark Mode* (#000000) guna menjaga ergonomi dan kenyamanan visual pengelola operasional senior saat memantau data dalam durasi kerja yang panjang:
 1. **Dasbor Statistik Keuangan Mikro (*Micro-Accounting*)**: Tiga indikator finansial utama (Total Pemasukan Kas, Total Pengeluaran Operasional, dan Laba Bersih Berjalan) dikalkulasi secara instan menggunakan kueri agregasi SQL tunggal (*single-pass database aggregation*). Pendekatan ini menggantikan rekapitulasi buku kas fisik manual yang sebelumnya menyita 3 hingga 5 hari kerja setiap akhir bulan, sekaligus melindungi perputaran pendapatan sewa kos sebesar Rp28.500.000 per bulan dari risiko kesalahan hitung kalkulator (*zero cash variance*).
 2. **Pendaftaran Calon Penghuni Datang Langsung (*Walk-in*)**: Menyediakan alur administrasi terpadu bagi tamu yang datang langsung ke properti kos tanpa reservasi daring. Kelas layanan `AdminPenyewaService` mengeksekusi pembuatan akun pengguna terotentikasi, penguncian status kamar, pencatatan uang deposit jaminan, dan penerbitan transaksi awal secara atomik dalam satu siklus transaksi basis data.
@@ -1415,7 +1415,7 @@ Penerapan *Manual Inspection Hold Policy* ini memisahkan secara tegas antara per
 
 ---
 
-### 4.3.8 Implementasi Integrasi Payment Gateway Midtrans
+### 4.3.8 Integrasi Pembayaran Otomatis dengan Midtrans
 Integrasi gerbang pembayaran Midtrans Snap API v2 dibangun secara terstruktur melalui kelas layanan `MidtransService` dan pengendali webhook peladen-ke-peladen (*server-to-server*):
 1. **Pembangkitan Snap Token Berbatas Waktu Dinamis**: Sistem menyusun muatan parameter transaksi terenkripsi (`order_id`, `gross_amount`, `customer_details`, `item_details`) ke peladen Midtrans Cloud. Masa kedaluwarsa Snap token dikalkulasi secara dinamis: apabila waktu pembayaran berada menjelang akhir bulan berjalan, durasi kedaluwarsa diperpendek agar token transaksi tidak dapat diselesaikan melintasi batas pergantian bulan kalender saat potensi tagihan denda baru muncul.
 2. **Pemisahan Jalur Webhook Callback Terisolasi**: Penanganan callback dibagi ke dalam dua pengendali terpisah: `MidtransCallbackController` yang menangani tagihan berkala penyewa aktif, serta `MidtransReservasiCallbackController` yang menangani pelunasan reservasi awal calon penghuni.
@@ -1435,7 +1435,7 @@ Integritas akuntansi diperkuat melalui penerapan gerbang idempotensi cepat (*Fas
 
 ---
 
-### 4.3.9 Implementasi Notifikasi Surel SMTP
+### 4.3.9 Konfigurasi Notifikasi Email Berbasis SMTP
 Layanan surel diintegrasikan memanfaatkan driver SMTP standar Laravel yang terhubung ke peladen surat Hostinger pada port aman 587 dengan enkripsi Transport Layer Security (TLS):
 1. **Pola Template Method pada Notifikasi Terenkripsi**: Kelas abstrak `BaseResetPasswordNotification` mengimplementasikan pola perancangan *Template Method*, mendefinisikan struktur transmisi tautan pemulihan kata sandi dengan token acak berkriptografi aman, serta membatasi masa kedaluwarsa tautan maksimal selama 60 menit.
 2. **Distribusi Asinkron Berbasis Antrean Peladen (*Queued Mailables*)**: Transmisi surel tagihan sewa bulanan (`TagihanBulanMail`) dan notifikasi konfirmasi pembayaran tunai didelegasikan sepenuhnya ke antrean latar belakang peladen (*Laravel Job Queue*) melalui pemanfaatan antarmuka `ShouldQueue` dan trait `Queueable`. Pendekatan asinkron ini menjamin bahwa latensi jabat tangan jaringan transmisi SMTP tidak membebani kecepatan respons (*response time*) peramban pengguna. Cuplikan implementasi kode distribusi surel asinkron disajikan pada Gambar 4.16.
@@ -1453,7 +1453,7 @@ Pola perancangan *Queued Mailable* ini memisahkan secara bersih (*decoupling*) l
 
 ---
 
-### 4.3.10 Implementasi Notifikasi WhatsApp Fonnte
+### 4.3.10 Integrasi Notifikasi WhatsApp melalui Fonnte
 Komunikasi otomatis melalui aplikasi pesan instan WhatsApp diintegrasikan menggunakan kelas layanan `FonnteService` yang terhubung secara terprogram dengan RESTful API Gateway Fonnte:
 1. **Otomatisasi Penerbitan Tagihan Berkala Tanggal 1 Awal Bulan**: Mesin penagihan otomatis (*Auto-Billing Engine*) dijalankan melalui penjadwal tugas (*cron job*) peladen cPanel Hostinger setiap tanggal 1 pukul 00:05 WIB. Sistem menyeleksi seluruh penghuni aktif dengan tipe sewa bulanan dan menerbitkan rekaman tagihan berbatas jatuh tempo seragam tanggal 10. Pengambilan data massal dioptimasi menggunakan metode pemotongan memori `chunkById(100)` guna mencegah lonjakan alokasi memori peladen (*memory leak / exhaustion*), dipadukan dengan batasan indeks unik gabungan (*composite unique constraint*) `(penyewa_id, periode_bulan, periode_tahun)` pada basis data untuk menjamin ketiadaan duplikasi faktur.
 2. **Penegakan Denda Keterlambatan Flat 5% Kalender Idempoten**: Dijalankan secara otomatis pada tanggal 1 awal bulan berikutnya bagi tagihan yang menyeberang bulan kalender. Aturan denda flat 5% dilindungi oleh gerbang idempotensi (*Idempotency Guard*) `nominal_denda == 0` sehingga sanksi keterlambatan hanya dibebankan tepat satu kali tanpa akumulasi bunga harian yang memberatkan mahasiswa. Logika algoritmik penegakan denda kalender pada kelas `BillingService` disajikan secara lengkap pada Lampiran 5.
@@ -1471,15 +1471,15 @@ Guna mengatasi kendala tersebut, metode `kirimPesan()` pada kelas `FonnteService
 
 Pada kelas `NotifikasiService`, sistem menerapkan algoritma eskalasi penunggakan ke kontak orang tua/wali mahasiswa: jika pembayaran sewa telah melintasi bulan kalender kedua (`$tagihan->bulan_keterlambatan > 1`) dan nomor kontak wali tercatat pada data induk penghuni, sistem mengevaluasi rekaman audit pada tabel `log_notifikasi`. Apabila riwayat pengiriman ke nomor wali belum pernah tercatat sebelumnya (`!$alreadySentWali`), sistem secara terprogram mengeskalasikan pesan peringatan formal beserta rincian sewa kamar dan besaran denda kalender langsung ke nomor WhatsApp orang tua/wali. Integrasi gerbang WhatsApp Fonnte dengan perlindungan anti-spam dan algoritma eskalasi ke kontak wali ini menjadi salah satu pilar pemecahan masalah operasional utama di Asri Boarding House, yang terbukti secara empiris memangkas angka piutang tak tertagih dan menciptakan tata kelola komunikasi yang transparan antara pengelola kos, mahasiswa, dan pihak keluarga.
 
-## 4.4 Hasil Deployment
+## 4.4 Deployment Sistem ke Lingkungan Produksi
 Implementasi sistem informasi manajemen kost Asri Boarding House telah berhasil melalui tahapan penyebaran (*deployment*) dan beroperasi secara penuh di lingkungan produksi berbasis *Hostinger Cloud Shared Hosting LiteSpeed Enterprise* dengan domain publik resmi `https://asriboardinghouse.weatso.id/`. Penerapan sistem pada infrastruktur produksi nyata menuntut konfigurasi peladen yang ketat guna menjamin ketersediaan layanan (*high availability*), isolasi keamanan berkas sensitif, otomatisasi penjadwalan tugas penagihan periodik, serta kinerja responsif bagi pengguna akhir. Seluruh konfigurasi disajikan secara rinci guna mempermudah penelaahan teknis dan audit implementasi.
 
-### 4.4.1 Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP
+### 4.4.1 Konfigurasi Web Server LiteSpeed dan HTTP Security Header
 Peladen web LiteSpeed Enterprise dikonfigurasi melalui berkas `.htaccess` pada akar direktori publik guna mengarahkan seluruh permintaan masuk ke satu titik kendali tunggal (*front-controller pattern*) di `index.php`. Selain itu, diterapkan pengerasan keamanan peladen (*security hardening*) melalui pembatasan akses langsung terhadap berkas konfigurasi sistem yang sensitif (`.env`, `.git`), serta penyematan *HTTP Security Headers* berstandar industri guna mencegah kerentanan *Cross-Site Scripting* (XSS), *Clickjacking*, dan penafsiran tipe konten yang keliru (*MIME-sniffing*). Tangkapan layar berkas konfigurasi `.htaccess` peladen disajikan pada Gambar 4.18.
 
-![Gambar 4.18 Tangkapan Layar Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP](images/kode_deployment_htaccess.png)
+![Gambar 4.18 Tangkapan Layar Konfigurasi Web Server LiteSpeed dan HTTP Security Header](images/kode_deployment_htaccess.png)
 
-*Gambar 4.18 Tangkapan Layar Konfigurasi Peladen Web LiteSpeed dan Header Keamanan HTTP*  
+*Gambar 4.18 Tangkapan Layar Konfigurasi Web Server LiteSpeed dan HTTP Security Header*  
 *Sumber: Tangkapan layar berkas public/.htaccess penulis (2026)*
 
 *Keterangan Gambar 4.18:*
@@ -1489,7 +1489,7 @@ Peladen web LiteSpeed Enterprise dikonfigurasi melalui berkas `.htaccess` pada a
 
 ---
 
-### 4.4.2 Konfigurasi Penjadwal Tugas Peladen (Cron Job) Mesin Penagihan Otomatis
+### 4.4.2 Pengaturan Cron Job untuk Penagihan Otomatis
 Guna menjamin kepastian eksekusi mesin penagihan otomatis (*Auto-Billing Engine*) setiap tanggal 1 awal bulan serta evaluasi harian denda flat keterlambatan kalender 5%, diaktifkan mekanisme penjadwalan tugas *cron* pada lingkungan peladen cPanel Hostinger. Tugas ini dipicu setiap menit untuk menjalankan penjadwal internal Laravel:
 `* * * * * cd /home/u1234567/public_html && /usr/bin/php82 artisan schedule:run >> /dev/null 2>&1`.
 
@@ -1497,7 +1497,7 @@ Konfigurasi ini memastikan bahwa perintah `tagihan:generate-bulanan` yang dijadw
 
 ---
 
-### 4.4.3 Konfigurasi Variabel Lingkungan Produksi dan Optimasi Kinerja Peladen
+### 4.4.3 Konfigurasi Environment Produksi dan Optimasi Kinerja Server
 Seluruh parameter konfigurasi aplikasi, kredensial basis data relasional MySQL InnoDB, kunci integrasi Midtrans Snap API, token gateway WhatsApp Fonnte, serta pengaturan protokol SMTP diisolasi secara ketat dalam berkas variabel lingkungan produksi `.env`. Penempatan parameter ini memastikan tidak ada kredensial sensitif yang terekam pada repositori kode program (*version control*).
 
 Sebelum aplikasi dipublikasikan ke lingkungan operasional langsung, dilakukan dua tahapan finalisasi:
@@ -1517,10 +1517,10 @@ Tangkapan layar konfigurasi variabel lingkungan produksi `.env` dengan nilai rah
 * **Bagian Penting Proses Bisnis**: Baris 4 mengatur `APP_DEBUG=false` untuk mencegah kebocoran jejak tumpukan (*stack trace*) error ke publik, dan Baris 15 mengaktifkan mode produksi Midtrans `MIDTRANS_IS_PRODUCTION=true`.
 * **Hubungan dengan Kebutuhan Sistem**: Menjaga kerahasiaan kredensial peladen dan memastikan sistem terhubung ke gateway pembayaran perbankan riil secara aman dan optimal.
 
-## 4.5 Hasil Pengujian Sistem
+## 4.5 Pengujian Sistem
 Pengujian sistem bertujuan memverifikasi bahwa perangkat lunak yang dibangun bekerja sesuai dengan spesifikasi fungsional, mematuhi batasan integritas data, kebal terhadap manipulasi otorisasi, serta mampu mengeksekusi kalkulasi finansial secara deterministik. Pengujian dirancang secara bertahap melalui kombinasi uji fungsionalitas kotak hitam (*black box testing*), pengujian isolasi hak akses (*Role-Based Access Control*), pengujian integrasi gerbang pembayaran daring (*payment gateway simulation*), pengujian keamanan lingkungan produksi (*live environment testing*), serta pengujian unit otomatis (*automated test suite*).
 
-### 4.5.1 Hasil Black Box Testing
+### 4.5.1 Pengujian Fungsional (Black Box)
 Pengujian fungsionalitas kotak hitam (*black box testing*) difokuskan pada pengujian perilaku eksternal perangkat lunak berdasarkan spesifikasi kebutuhan sistem tanpa memeriksa struktur kode program internal. Pengujian ini dirancang secara sistematis ke dalam 60 butir skenario uji yang mencakup enam domain fungsionalitas utama: (1) Autentikasi, Hak Akses, dan Profil Pengguna; (2) Portal Publik, Tamu, dan Obrolan Langsung (*Guest Chat*); (3) Calon Penyewa dan Alur Reservasi (*Stepper Wizard*); (4) Portal Penyewa Aktif, Manajemen Tagihan, dan Aduan Fasilitas; (5) Panel Administrator dan Tata Kelola Operasional Kas; serta (6) Otomasi Mesin Penjadwal (*Scheduler*), Denda Kalender, dan Integrasi API Eksternal. Rincian matriks pengujian fungsionalitas disajikan pada Tabel 4.3, sedangkan instrumen dan hasil uji setiap butir skenario secara menyeluruh dicantumkan pada Lampiran 3.
 
 **Tabel 4.3** Matriks Hasil Pengujian Fungsionalitas Kotak Hitam (60 Butir Skenario Uji)
@@ -1600,7 +1600,7 @@ Berdasarkan rekapitulasi hasil pengujian pada Tabel 4.3, seluruh 60 butir skenar
 
 ---
 
-### 4.5.2 Hasil Pengujian Hak Akses
+### 4.5.2 Pengujian Otorisasi dan Hak Akses
 Pengujian hak akses bertujuan memverifikasi ketegasan mekanisme *Role-Based Access Control* (RBAC) pada ketiga kelompok pengguna (tamu publik, penyewa aktif, dan administrator). Selain memvalidasi penyekatan rute melalui lapisan middleware Laravel, pengujian ini secara khusus menguji kekebalan sistem terhadap potensi eksploitasi *Insecure Direct Object Reference* (IDOR) pada berkas privat dan entitas tagihan individual. Matriks hasil evaluasi pengujian hak akses dirangkum pada Tabel 4.4.
 
 **Tabel 4.4** Matriks Pengujian Hak Akses dan Isolasi Peran Pengguna
@@ -1620,7 +1620,7 @@ Hasil pengujian pada Tabel 4.4 membuktikan bahwa mekanisme middleware otentikasi
 
 ---
 
-### 4.5.3 Hasil Pengujian Transaksi Midtrans Sandbox (BCA VA)
+### 4.5.3 Simulasi Transaksi Pembayaran pada Midtrans Sandbox
 Pengujian transaksi gerbang pembayaran daring difokuskan secara spesifik pada saluran perbankan **Bank Central Asia Virtual Account (BCA VA)** dengan memanfaatkan simulator resmi Midtrans Sandbox (`https://simulator.sandbox.midtrans.com/openapi/va/index`). Pemilihan saluran ini mewakili metode transfer bank virtual yang paling dominan digunakan dalam transaksi sewa properti. Pengujian mencakup pengamatan terhadap penerbitan kode bayar, verifikasi status penagihan (*inquiry*), simulasi pelunasan (*settlement*), kedaluwarsa waktu (*expire*), pembatalan (*cancel*), hingga pengujian ketahanan terhadap serangan pemalsuan notifikasi dan notifikasi ganda (*idempotency*). Hasil pengujian disajikan pada Tabel 4.5.
 
 **Tabel 4.5** Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virtual Account
@@ -1641,7 +1641,7 @@ Hasil pengujian pada Tabel 4.5 membuktikan keandalan mekanisme *webhook handler*
 
 ---
 
-### 4.5.4 Hasil Pengujian Parameter Keamanan dan Hak Akses Live
+### 4.5.4 Pengujian Parameter Keamanan pada Server Produksi
 Pengujian lingkungan nyata (*live environment testing*) dilaksanakan secara langsung pada peladen produksi Hostinger LiteSpeed Enterprise dengan domain publik resmi `https://asriboardinghouse.weatso.id/`. Pengujian ini bertujuan memastikan bahwa konfigurasi peladen web, sertifikat enkripsi jaringan, dan komunikasi API eksternal bekerja optimal tanpa terhambat oleh kebijakan firewall hosting. Hasil pengujian live disajikan pada Tabel 4.6.
 
 **Tabel 4.6** Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live
