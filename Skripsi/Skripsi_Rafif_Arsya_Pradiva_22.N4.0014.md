@@ -706,59 +706,44 @@ Visualisasi alur kerangka pemikiran penelitian disajikan pada Gambar 3.2.
 graph TD
     subgraph INPUT ["1. MASUKAN (INPUT)"]
         direction TB
-        I1["<b>Permasalahan Operasional Faktual Kos:</b><br/>• Penagihan sewa bulanan manual & rawan terlewat<br/>• Ketiadaan eskalasi keterlambatan terstruktur ke kontak wali<br/>• Risiko pemesanan ganda (double booking) & cek fisik manual<br/>• Rekapitulasi kas berbasis nota kertas & rawan selisih saldo<br/>• Ketiadaan katalog publik & modul reservasi online 24/7<br/>• Ketiadaan arsip riwayat transaksi digital (audit trail)"]
-        I2["<b>Landasan Kebutuhan & Aturan Bisnis:</b><br/>• Spesifikasi Kebutuhan Fungsional & Non-Fungsional<br/>• Struktur Tarif 3 Tipe Kamar (VIP, Deluxe, Standar)<br/>• Aturan Siklus Billing Tgl 1, Tempo Tgl 10, Denda Flat 5%"]
-        I1 --> I2
+        I1["<b>Kondisi Operasional & Identifikasi Masalah:</b><br/>• Penagihan sewa bulanan manual yang berisiko terlambat & tanpa peringatan terjadwal<br/>• Ketiadaan eskalasi keterlambatan penagihan sewa terstruktur ke kontak orang tua/wali<br/>• Risiko pemesanan ganda (double booking) akibat ketiadaan sinkronisasi kamar<br/>• Pencatatan kas bertumpu pada nota kertas fisik yang rentan selisih saldo kas<br/>• Ketiadaan katalog publik serta modul reservasi daring 24/7 bagi calon penyewa<br/>• Ketiadaan rekam jejak digital (audit trail) atas riwayat transaksi penerimaan kas"]
+        I2["<b>Spesifikasi Kebutuhan Sistem:</b><br/>• Analisis kebutuhan fungsional & non-fungsional dari triangulasi data empiris<br/>• Struktur tarif 3 tipe kamar (VIP, Deluxe, Standar) untuk kapasitas 32 unit kamar<br/>• Ketentuan siklus tagihan rutin tanggal 1, jatuh tempo tanggal 10, dan aturan denda flat 5%"]
+        I1 --- I2
     end
 
-    subgraph DATA_COLLECTION ["2. PENGUMPULAN DATA EMPIRIS"]
+    subgraph PROCESS ["2. PROSES (PROCESS)"]
         direction TB
-        DC1["<b>Triangulasi Metode Pengumpulan Data:</b><br/>• Observasi Lapangan Operasional 32 Unit Kamar<br/>• Wawancara Pengelola Kost Senior (Pengalaman ±20 Th)<br/>• Wawancara 5 Orang Mahasiswa Penghuni Kost Aktif<br/>• Studi Dokumentasi Buku Kas Fisik & Blueprint Sistem"]
+        P1["<b>Analisis & Perancangan:</b><br/>• Pemodelan UML: Use Case, Activity, Sequence, & Flowchart Diagram<br/>• Perancangan arsitektur perangkat lunak 3-tier MVC dengan Service Layer Pattern<br/>• Perancangan basis data relasional ternormalisasi 3NF dalam ERD 22 tabel<br/>• Rancangan antarmuka Neo-Brutalism berpedoman aksesibilitas WCAG 2.1"]
+        P2["<b>Implementasi Teknologis:</b><br/>• Framework & Database: Laravel 11 pada PHP 8.2, MySQL 8.x InnoDB, dan TailwindCSS<br/>• Penerapan Pessimistic Row Locking untuk proteksi konkurensi kamar saat reservasi<br/>• Integrasi Payment Gateway: Midtrans Snap API (saluran Bank BCA Virtual Account)<br/>• Integrasi Komunikasi Multi-Saluran: Fonnte WhatsApp Gateway API & SMTP surel"]
+        P3["<b>Pengujian & Validasi:</b><br/>• Pengujian fungsional kotak hitam (Black Box Testing) berbasis 60 butir skenario uji<br/>• Pengujian isolasi peran hak akses (RBAC 3 portal) guna menangkal kerentanan IDOR<br/>• Pengujian otomatis unit & integrasi aplikasi menggunakan PHPUnit (510 tests passed)<br/>• Penerapan sistem live pada peladen Hostinger LiteSpeed berproteksi SSL TLS 1.3 Grade A<br/>• Evaluasi pengguna: Side-by-Side Usability Testing pengelola & wawancara 5 mahasiswa"]
+        P1 --- P2 --- P3
     end
 
-    subgraph PROCESS ["3. PROSES PENGEMBANGAN SISTEM (SDLC WATERFALL)"]
+    subgraph OUTPUT ["3. KELUARAN (OUTPUT)"]
         direction TB
-        P1["<b>Analisis & Perancangan Arsitektur:</b><br/>• Model SDLC Waterfall (Sekuensial Linier)<br/>• Pemodelan UML (Use Case, Activity, Flowchart, Sequence)<br/>• Normalisasi Skema Relasional 3NF & ERD 22 Tabel<br/>• Desain Antarmuka Neo-Brutalism & Pedoman WCAG 2.1"]
-        P2["<b>Implementasi Rekayasa Perangkat Lunak:</b><br/>• Framework Web: Laravel 11 & PHP 8.2 (Service Layer)<br/>• Basis Data: MySQL 8.x InnoDB (Pessimistic Row Locking)<br/>• Integrasi Payment Gateway: Midtrans Snap API (BCA VA)<br/>• Integrasi Multi-Saluran: Fonnte WhatsApp Gateway & SMTP"]
-        P1 --> P2
+        O1["<b>Artefak Perangkat Lunak Teruji:</b><br/>• Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway live (asriboardinghouse.weatso.id)<br/>• Modul katalog publik interaktif & formulir reservasi online mandiri 24/7 calon penyewa<br/>• Portal mandiri penyewa aktif untuk memantau invoice, bayar BCA VA, & unduh kuitansi PDF A5<br/>• Panel administrator pengawasan kamar real-time, pencatatan mutasi kas, & ekspor laporan<br/>• Mesin penagihan otomatis (automated billing engine) berbasis cron job & notifikasi WhatsApp"]
     end
 
-    subgraph OUTPUT ["4. KELUARAN & PENERAPAN SISTEM (OUTPUT & LIVE DEPLOYMENT)"]
-        O1["<b>Sistem Terpasang Live Produksi (asriboardinghouse.weatso.id):</b><br/>• Modul Katalog & Reservasi Mandiri Calon Penyewa 24/7<br/>• Portal Mandiri Penyewa (Invoice & Kuitansi Digital Instan A5)<br/>• Panel Administrator Pengawasan Kamar & Arus Kas Real-Time<br/>• Automated Billing Engine (Eksekusi Rutin Cron Job Tgl 1)<br/>• Notifikasi Otomatis Multi-Saluran Tagihan & Pengingat"]
-    end
-
-    subgraph EVALUATION ["5. PENGUJIAN & EVALUASI SISTEM (MENJAWAB 3 RUMUSAN MASALAH)"]
+    subgraph OUTCOME ["4. DAMPAK (OUTCOME)"]
         direction TB
-        E1["<b>Verifikasi Mutu & Keandalan Fungsional (RM 1):</b><br/>• Pengujian Black Box Testing (60 Skenario, 100% Lulus)<br/>• Pengujian Isolasi Peran Hak Akses (RBAC 3 Portal Bebas IDOR)<br/>• Simulasi Transaksi Midtrans Sandbox BCA Virtual Account<br/>• Pengujian Unit Otomatis (PHPUnit: 510 Tests Passed)"]
-        E2["<b>Solusi Operasional & Evaluasi Pengguna (RM 2 & RM 3):</b><br/>• Auto-billing tgl 1, denda flat 5%, Zero Cash Variance<br/>• Peniadaan double booking & karantina kamar pasca-checkout<br/>• Usability Testing Pengelola (Skor Kepuasan: 9,5/10)<br/>• Wawancara Evaluasi Bersama 5 Mahasiswa Penghuni Aktif"]
-        E1 --- E2
+        D1["<b>Manfaat & Dampak Operasional:</b><br/>• Otomatisasi siklus penagihan rutin bulanan & eskalasi penunggakan ke kontak wali mahasiswa<br/>• Penjaminan integritas & akurasi rekapitulasi keuangan tanpa risiko selisih kas (Zero Cash Variance)<br/>• Pemangkasan durasi penyusunan laporan laba-rugi dari 3–5 hari kerja manual menjadi seketika (instan)<br/>• Peniadaan mutlak atas risiko pemesanan ganda (Zero Double-Booking) kamar kost<br/>• Kemudahan akses reservasi daring 24/7 serta peningkatan transparansi transaksi bagi penghuni"]
     end
 
-    subgraph OUTCOME ["6. DAMPAK OPERASIONAL (OUTCOME)"]
-        D1["<b>Pencapaian Manfaat & Nilai Tambah Nyata:</b><br/>• Otomatisasi penagihan bulanan & eskalasi berjenjang ke kontak wali<br/>• Penjaminan akurasi rekapitulasi kas tanpa selisih (zero cash variance)<br/>• Pemangkasan durasi laporan laba-rugi dari 3–5 hari menjadi instan<br/>• Peniadaan risiko pemesanan ganda (zero double-booking)<br/>• Peningkatan transparansi finansial, kenyamanan, & efisiensi kerja"]
-    end
-
-    INPUT --> DATA_COLLECTION
-    DATA_COLLECTION --> PROCESS
+    INPUT --> PROCESS
     PROCESS --> OUTPUT
-    OUTPUT --> EVALUATION
-    EVALUATION --> OUTCOME
+    OUTPUT --> OUTCOME
 
-    style INPUT fill:#EFF6FF,stroke:#3B82F6,stroke-width:2px,rx:8px,ry:8px
-    style DATA_COLLECTION fill:#FDF4FF,stroke:#C026D3,stroke-width:2px,rx:8px,ry:8px
-    style PROCESS fill:#F0FDF4,stroke:#22C55E,stroke-width:2px,rx:8px,ry:8px
-    style OUTPUT fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,rx:8px,ry:8px
-    style EVALUATION fill:#ECFDF5,stroke:#059669,stroke-width:2px,rx:8px,ry:8px
-    style OUTCOME fill:#FAF5FF,stroke:#A855F7,stroke-width:2px,rx:8px,ry:8px
+    style INPUT fill:#F0F7FF,stroke:#2B76C9,stroke-width:2px,rx:8px,ry:8px
+    style PROCESS fill:#EFFAF3,stroke:#278853,stroke-width:2px,rx:8px,ry:8px
+    style OUTPUT fill:#FFFDF2,stroke:#D49B28,stroke-width:2px,rx:8px,ry:8px
+    style OUTCOME fill:#FAF6FF,stroke:#7C4DCF,stroke-width:2px,rx:8px,ry:8px
 
     style I1 fill:#FFFFFF,stroke:#93C5FD,stroke-width:1px
     style I2 fill:#FFFFFF,stroke:#93C5FD,stroke-width:1px
-    style DC1 fill:#FFFFFF,stroke:#F0ABFC,stroke-width:1px
     style P1 fill:#FFFFFF,stroke:#86EFAC,stroke-width:1px
     style P2 fill:#FFFFFF,stroke:#86EFAC,stroke-width:1px
+    style P3 fill:#FFFFFF,stroke:#86EFAC,stroke-width:1px
     style O1 fill:#FFFFFF,stroke:#FDE047,stroke-width:1px
-    style E1 fill:#FFFFFF,stroke:#6EE7B7,stroke-width:1px
-    style E2 fill:#FFFFFF,stroke:#6EE7B7,stroke-width:1px
     style D1 fill:#FFFFFF,stroke:#E9D5FF,stroke-width:1px
 ```
 
