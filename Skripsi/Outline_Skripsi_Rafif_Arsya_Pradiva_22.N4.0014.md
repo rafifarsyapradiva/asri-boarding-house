@@ -122,12 +122,12 @@ BAB 4: HASIL DAN PEMBAHASAN
 │   ├── 4.3.2 Perancangan Arsitektur Aplikasi (Pemisahan Controller, Service Layer, Repository, dan Observers).
 │   ├── 4.3.3 Implementasi Basis Data (Tabel 4.2 Struktur 22 Tabel & Implementasi Virtual Generated Columns).
 │   ├── 4.3.4 Implementasi Autentikasi dan Hak Akses (RBAC Middleware & Interceptor Google OAuth UserObserver).
-│   ├── 4.3.5 Implementasi Fitur Calon Penyewa (BookingService dengan Pessimistic Row Locking anti-double booking).
-│   ├── 4.3.6 Implementasi Fitur Penyewa Aktif (PaymentReceiptPdfService dengan rendering html2pdf.js peramban).
-│   ├── 4.3.7 Implementasi Fitur Administrator (CheckoutService dengan mekanisme karantina kamar merah pasca-checkout).
-│   ├── 4.3.8 Implementasi Integrasi Payment Gateway Midtrans (Validasi SHA-512 & Idempotency Guard).
-│   ├── 4.3.9 Implementasi Notifikasi Surel SMTP (Mail Notification).
-│   └── 4.3.10 Implementasi Notifikasi WhatsApp Fonnte (FonnteNotificationService & tabel log_notifikasi).
+│   ├── 4.3.5 Implementasi Fitur Calon Penyewa (ReservasiService dengan Pessimistic Row Locking anti-double booking).
+│   ├── 4.3.6 Implementasi Fitur Penyewa Aktif (Kompilasi kuitansi digital format A5 client-side via html2pdf.js).
+│   ├── 4.3.7 Implementasi Fitur Administrator (PenyewaObserver dengan mekanisme karantina kamar merah pasca-checkout).
+│   ├── 4.3.8 Implementasi Integrasi Payment Gateway Midtrans (VerifyMidtransSignature dengan validasi SHA-512 & Idempotency Guard).
+│   ├── 4.3.9 Implementasi Notifikasi Surel SMTP (TagihanBulanMail dengan arsitektur queued mailable asinkron).
+│   └── 4.3.10 Implementasi Notifikasi WhatsApp Fonnte (BillingService denda kalender idempoten & FonnteService eskalasi wali).
 ├── 4.4 Hasil Deployment
 │   ├── 4.4.1 Konfigurasi Peladen Web LiteSpeed & Header Keamanan HTTP (.htaccess).
 │   ├── 4.4.2 Konfigurasi Penjadwal Tugas Peladen (Cron Job schedule:run per menit).
