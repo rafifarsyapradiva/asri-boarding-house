@@ -147,7 +147,7 @@ BAB 4: HASIL DAN PEMBAHASAN
 │   ├── 4.7.1 Transkrip Responden 1: Arjun (Pengujian via Laptop & Android, Skor 8,5/10).
 │   ├── 4.7.2 Transkrip Responden 2: Farrel (Pengujian via Smartphone Android, Mahasiswa Rantau Luar Kota, Skor 7,0/10).
 │   ├── 4.7.3 Transkrip Responden 3: Iman (Mahasiswa UDINUS - Penghuni Kost, Pengujian via Laptop, Evaluasi Rekam Jejak Transaksi Digital, Skor 9,0/10).
-│   ├── 4.7.4 Transkrip Responden 4: Ammar (Pengujian via Smartphone iOS, Aksesibilitas Jarak Jauh, Skor 7,5/10).
+│   ├── 4.7.4 Transkrip Responden 4: Ammar (Mahasiswa PKN STAN - Penghuni Kost, Pengujian via Smartphone iOS, Aksesibilitas Jarak Jauh, Skor 7,5/10).
 │   ├── 4.7.5 Transkrip Responden 5: Sindhu (Mahasiswa UI - Penghuni Kost, Pengujian via Smartphone Android, Adaptasi Pengguna Baru, Skor 8,0/10).
 │   ├── 4.7.6 Tabel 4.14 Matriks Komparasi Evaluasi Respon dan Temuan Kunci Kelima Penghuni Kost.
 │   └── 4.7.7 Analisis Kualitatif: 4 Tema (Akseptabilitas Tinggi 8,00/10, Value Proposition, Kendala Empiris, Saran).
@@ -334,7 +334,7 @@ Implementasi kode program dieksekusi secara modular menggunakan pola arsitektur 
   * Tabulasi 10 butir pertanyaan dan jawaban pengelola (Tabel 4.7) dengan capaian skor kepuasan 9,5 / 10.
 * **Aktivitas 6.2**: Wawancara Evaluasi Pasca-Implementasi bersama Lima Penghuni Kost Aktif.
   * Melakukan wawancara semiterstruktur di area bersama (*communal space*) kos.
-  * Melibatkan 5 responden mahasiswa penghuni kost (*surrogate users*) dengan beragam latar belakang perangkat dan pengalaman: P1 (Arjun - Laptop & Android), P2 (Farrel - Android & Luar Kota), P3 (Iman - Mahasiswa UDINUS - Penghuni Kost, Laptop & Jejak Audit Digital), P4 (Ammar - iOS Safari & Luar Kota), P5 (Sindhu - Mahasiswa UI - Penghuni Kost, Android & Onboarding Baru).
+  * Melibatkan 5 responden mahasiswa penghuni kost (*surrogate users*) dengan beragam latar belakang perangkat dan pengalaman: P1 (Arjun - Laptop & Android), P2 (Farrel - Android & Luar Kota), P3 (Iman - Mahasiswa UDINUS - Penghuni Kost, Laptop & Jejak Audit Digital), P4 (Ammar - Mahasiswa PKN STAN - Penghuni Kost, iOS Safari & Luar Kota), P5 (Sindhu - Mahasiswa UI - Penghuni Kost, Android & Onboarding Baru).
   * Tabulasi transkrip individu (Tabel 4.9 s.d. Tabel 4.13), matriks komparasi (Tabel 4.14), dan sintesis 4 tema kualitatif.
   * **Luaran Fase 6**: Berkas Audio Rekaman Wawancara, Lembar Transkrip Lengkap, dan Matriks Analisis Kepuasan Pengguna.
 
