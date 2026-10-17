@@ -24,7 +24,7 @@
 | **Kapasitas Properti** | 32 Unit Kamar (6 Unit VIP @ Rp1.400.000; 3 Unit Deluxe @ Rp950.000; 23 Unit Standar @ Rp750.000) |
 | **Potensi Omzet Bruto** | Rp28.500.000 per bulan pada kondisi keterisian penuh (*full occupancy*) |
 | **Informan Kunci Pengelola** | Bapak Asep (Usia 48 tahun, Pengelola Operasional Senior, Pengalaman Konvensional ±20 tahun) |
-| **Informan Penghuni Kost** | 5 (Lima) Mahasiswa Penghuni Aktif: Arjun (P1), Farrel (P2), Fadil (P3), Ammar (P4), dan Sindhu (P5) |
+| **Informan Penghuni Kost** | 5 (Lima) Mahasiswa Penghuni Aktif: Arjun (P1), Farrel (P2), Iman (P3), Ammar (P4), dan Sindhu (P5) |
 | **Tumpukan Teknologi (Tech Stack)** | PHP 8.2, Laravel 11 (MVC + *Service Layer*), MySQL 8.x InnoDB (3NF), TailwindCSS Neo-Brutalism |
 | **Layanan & API Pihak Ketiga** | Midtrans Snap API v2 (BCA VA), Fonnte WhatsApp Gateway API, Hostinger SMTP Mailer, `html2pdf.js` |
 | **Lingkungan Produksi Live** | Peladen Web LiteSpeed cPanel Hostinger (`https://asriboardinghouse.weatso.id/`) |
@@ -93,7 +93,7 @@ BAB 3: METODOLOGI PENELITIAN
 ├── 3.2 Teknik Pengumpulan Data (Triangulasi 4 Metode):
 │   ├── 1. Observasi Lapangan: Pengamatan langsung 32 kamar, alur walk-in, pembukuan kas fisik meja pengelola.
 │   ├── 2. Wawancara Pengelola Kost: Bapak Asep (48 tahun) pra-pengembangan dan evaluasi tatap muka pasca-implementasi.
-│   ├── 3. Wawancara Lima Penghuni Kost: Arjun (P1), Farrel (P2), Fadil (P3), Ammar (P4), dan Sindhu (P5).
+│   ├── 3. Wawancara Lima Penghuni Kost: Arjun (P1), Farrel (P2), Iman (P3), Ammar (P4), dan Sindhu (P5).
 │   └── 4. Studi Dokumentasi: Buku kas manual, arsip nota kuitansi rangkap dua, blueprint teknis, dan log pengujian.
 ├── 3.3 Metode Pengembangan Sistem (Waterfall SDLC):
 │   ├── Fase 1: Analisis Kebutuhan (Requirements Analysis).
@@ -146,7 +146,7 @@ BAB 4: HASIL DAN PEMBAHASAN
 │   ├── Tabel 4.8 Profil & Konteks Hunian 5 Responden.
 │   ├── 4.7.1 Transkrip Responden 1: Arjun (Pengujian via Laptop & Android, Skor 8,5/10).
 │   ├── 4.7.2 Transkrip Responden 2: Farrel (Pengujian via Smartphone Android, Mahasiswa Rantau Luar Kota, Skor 7,0/10).
-│   ├── 4.7.3 Transkrip Responden 3: Fadil (Pengujian via Laptop, Evaluasi Rekam Jejak Transaksi Digital, Skor 9,0/10).
+│   ├── 4.7.3 Transkrip Responden 3: Iman (Mahasiswa UDINUS - Penghuni Kost, Pengujian via Laptop, Evaluasi Rekam Jejak Transaksi Digital, Skor 9,0/10).
 │   ├── 4.7.4 Transkrip Responden 4: Ammar (Pengujian via Smartphone iOS, Aksesibilitas Jarak Jauh, Skor 7,5/10).
 │   ├── 4.7.5 Transkrip Responden 5: Sindhu (Mahasiswa UI - Penghuni Kost, Pengujian via Smartphone Android, Adaptasi Pengguna Baru, Skor 8,0/10).
 │   ├── 4.7.6 Tabel 4.14 Matriks Komparasi Evaluasi Respon dan Temuan Kunci Kelima Penghuni Kost.
@@ -334,7 +334,7 @@ Implementasi kode program dieksekusi secara modular menggunakan pola arsitektur 
   * Tabulasi 10 butir pertanyaan dan jawaban pengelola (Tabel 4.7) dengan capaian skor kepuasan 9,5 / 10.
 * **Aktivitas 6.2**: Wawancara Evaluasi Pasca-Implementasi bersama Lima Penghuni Kost Aktif.
   * Melakukan wawancara semiterstruktur di area bersama (*communal space*) kos.
-  * Melibatkan 5 responden mahasiswa penghuni kost (*surrogate users*) dengan beragam latar belakang perangkat dan pengalaman: P1 (Arjun - Laptop & Android), P2 (Farrel - Android & Luar Kota), P3 (Fadil - Laptop & Jejak Audit Digital), P4 (Ammar - iOS Safari & Luar Kota), P5 (Sindhu - Mahasiswa UI - Penghuni Kost, Android & Onboarding Baru).
+  * Melibatkan 5 responden mahasiswa penghuni kost (*surrogate users*) dengan beragam latar belakang perangkat dan pengalaman: P1 (Arjun - Laptop & Android), P2 (Farrel - Android & Luar Kota), P3 (Iman - Mahasiswa UDINUS - Penghuni Kost, Laptop & Jejak Audit Digital), P4 (Ammar - iOS Safari & Luar Kota), P5 (Sindhu - Mahasiswa UI - Penghuni Kost, Android & Onboarding Baru).
   * Tabulasi transkrip individu (Tabel 4.9 s.d. Tabel 4.13), matriks komparasi (Tabel 4.14), dan sintesis 4 tema kualitatif.
   * **Luaran Fase 6**: Berkas Audio Rekaman Wawancara, Lembar Transkrip Lengkap, dan Matriks Analisis Kepuasan Pengguna.
 
@@ -356,11 +356,11 @@ Matriks berikut menjamin konsistensi ilmiah antara permasalahan lapangan, tujuan
 
 | No | Permasalahan Lapangan | Solusi Rekayasa Fitur | Komponen Teknis & Arsitektur | Butir Pengujian | Evaluasi Pengguna | Bab Pembahasan |
 | :-: | :--- | :--- | :--- | :--- | :--- | :--- |
-| **1** | Penagihan bulanan manual via WhatsApp pribadi menyita waktu dan rawan terlewat. | Mesin Penagihan Otomatis (*Auto-Billing Engine*) terbit serentak tanggal 1 pukul 00:05 WIB. | `BillingService.php`, Cron Job Linux `schedule:run`, Indeks Unik Komposit Basis Data. | Skenario `MOD-05` (8 Butir Uji), PHPUnit `BillingServiceTest`. | Fadil (P3, Skor 9/10), Pengelola (Bapak Asep, Skor 9,5/10). | Subbab 4.3.9, 4.5.1, 4.6, 4.8.1. |
+| **1** | Penagihan bulanan manual via WhatsApp pribadi menyita waktu dan rawan terlewat. | Mesin Penagihan Otomatis (*Auto-Billing Engine*) terbit serentak tanggal 1 pukul 00:05 WIB. | `BillingService.php`, Cron Job Linux `schedule:run`, Indeks Unik Komposit Basis Data. | Skenario `MOD-05` (8 Butir Uji), PHPUnit `BillingServiceTest`. | Iman (P3, Skor 9/10), Pengelola (Bapak Asep, Skor 9,5/10). | Subbab 4.3.9, 4.5.1, 4.6, 4.8.1. |
 | **2** | Belum ada mekanisme pendisiplinan dan eskalasi penunggakan ke kontak wali mahasiswa. | Kebijakan toleransi bebas denda (Denda Rp0) di bulan berjalan; Denda flat 5% idempoten saat ganti bulan; Notifikasi otomatis ke kontak wali. | `ApplyLatePenalties.php`, `FonnteNotificationService.php`, REST API Gateway Fonnte WA. | Skenario `MOD-05` & `MOD-06` (14 Butir Uji), PHPUnit Late Penalty. | Ammar (P4, Skor 7,5/10), Pengelola (Bapak Asep, Skor 9,5/10). | Subbab 4.3.10, 4.5.1, 4.7.4, 4.8.1. |
 | **3** | Rekapitulasi kas berbasis nota kertas menyita 3-5 hari kerja & rawan selisih kas. | Dasbor Keuangan Terpusat (*Single Source of Truth*), rekap laba-rugi otomatis, dan ekspor instan PDF/Excel. | Panel Admin *OLED Dark Mode*, Dompdf Service, BOM UTF-8 Excel Exporter, MySQL InnoDB. | Skenario `MOD-07` (10 Butir Uji), Validasi Ekspor Laporan. | Pengelola (Bapak Asep: "Dari 3-4 hari kalkulator menjadi seketika, selisih kas Rp0"). | Subbab 4.3.7, 4.5.1, 4.6, 4.8.2. |
 | **4** | Pembayaran sewa tunai/transfer manual rawan nota hilang dan verifikasi mutasi lambat. | Pembayaran Digital Non-Tunai BCA Virtual Account via Midtrans Snap dengan verifikasi otomatis instan. | Midtrans Snap PHP SDK, `MidtransCallbackController`, SHA-512 Signature, Idempotency Guard. | Skenario `MOD-04` (9 Butir Uji), Midtrans Sandbox BCA VA Simulator. | Seluruh Responden (P1-P5: Verifikasi < 1 mnt tanpa kirim bukti resi manual). | Subbab 4.3.8, 4.5.3, 4.7, 4.8.1. |
-| **5** | Kuitansi kertas hilang menimbulkan perdebatan pembayaran terdahulu. | Modul kuitansi digital instan format A5 di peramban dan riwayat pembayaran digital transparan. | Pustaka JavaScript `html2pdf.js` (*zero server overhead*), Portal Mandiri `/penyewa/tagihan`. | Skenario `MOD-04`, Pengujian Cetak Kuitansi A5 Peramban Klien. | Arjun (P1), Fadil (P3: "Disimpan di GDrive dan dikirim ke grup WA keluarga"). | Subbab 4.3.6, 4.5.1, 4.7, 4.8.2. |
+| **5** | Kuitansi kertas hilang menimbulkan perdebatan pembayaran terdahulu. | Modul kuitansi digital instan format A5 di peramban dan riwayat pembayaran digital transparan. | Pustaka JavaScript `html2pdf.js` (*zero server overhead*), Portal Mandiri `/penyewa/tagihan`. | Skenario `MOD-04`, Pengujian Cetak Kuitansi A5 Peramban Klien. | Arjun (P1), Iman (P3: "Disimpan di GDrive buat arsip pribadi"). | Subbab 4.3.6, 4.5.1, 4.7, 4.8.2. |
 | **6** | Risiko pemesanan ganda (*double-booking*) akibat survei fisik & cek manual. | Pertahanan ganda: *Pessimistic Row Locking* transaksi database & karantina kamar pasca-checkout. | `lockForUpdate()` MySQL InnoDB pada `BookingService.php`, `CheckoutService.php`. | Skenario `MOD-03` (10 Butir Uji), PHPUnit Concurrency Simulation. | Farrel (P2), Sindhu (P5). | Subbab 4.3.5, 4.3.7, 4.5.1, 4.8.3. |
 | **7** | Calon penyewa luar kota sulit melihat informasi kamar dan survei fisik. | Katalog publik interaktif berdesain Neo-Brutalism dengan kalkulator sewa & formulir mandiri 5 tahap. | Blade Templating, TailwindCSS, Desain Neo-Brutalism, Standar WCAG 2.1. | Skenario `MOD-02` & `MOD-03` (18 Butir Uji Fungsional). | Arjun (P1), Farrel (P2). | Subbab 4.2.1, 4.5.1, 4.7.1, 4.8.2. |
 
