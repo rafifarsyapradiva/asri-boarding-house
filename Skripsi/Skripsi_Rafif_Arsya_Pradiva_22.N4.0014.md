@@ -662,16 +662,16 @@ Tahapan model Waterfall yang diterapkan dalam penelitian ini disajikan pada Gamb
 
 ```mermaid
 graph TD
-    A["1. Analisis Kebutuhan (Requirements Analysis)<br/>• Observasi Lapangan Operasional Kos<br/>• Wawancara Pengelola Kost<br/>• Wawancara 5 Penghuni Kost Aktif<br/>• Telaah Dokumen Blueprint & Arsip Kas"] --> B["2. Perancangan Sistem (System Design)<br/>• Arsitektur 3-Tier MVC & Service Layer<br/>• Pemodelan UML (Use Case, Activity, Sequence)<br/>• Skema Basis Data 3NF & ERD 22 Tabel<br/>• Antarmuka Neo-Brutalism Berpedoman WCAG 2.1"]
-    B --> C["3. Implementasi Program (Implementation)<br/>• Framework Web: Laravel 11 & PHP 8.2<br/>• Basis Data Relasional: MySQL 8.x InnoDB<br/>• Integrasi Midtrans Snap API (BCA VA)<br/>• Integrasi Fonnte WhatsApp API & SMTP Mailer"]
-    C --> D["4. Pengujian Sistem (System Testing)<br/>• Black Box Testing (60 Butir Skenario Uji)<br/>• Pengujian Isolasi Peran Hak Akses (RBAC)<br/>• Simulasi Transaksi Midtrans Sandbox BCA VA<br/>• Automated Unit Testing (PHPUnit 510 Tests)"]
-    D --> E["5. Penerapan Sistem (Deployment & Evaluation)<br/>• Deployment Peladen Produksi Live weatso.id<br/>• Konfigurasi Web Server & Scheduler Cron Job<br/>• Optimasi Performa Cache Produksi Laravel<br/>• Side-by-Side Usability Testing & Evaluasi Pengguna"]
+    A["<b>1. Analisis Kebutuhan (Requirements Analysis)</b><br/>• Observasi Lapangan Operasional 32 Unit Kamar<br/>• Wawancara Pengelola Kost (Identifikasi Masalah & Arus Kas)<br/>• Wawancara Penghuni Kost (Kebutuhan Pembayaran Digital)<br/>• Telaah Dokumen Buku Kas Fisik & Matriks Tarif<br/><i>Luaran: Dokumen SRS & Kamus Data Operasional</i>"] -->|"SRS Validated"| B["<b>2. Perancangan Sistem (System Design)</b><br/>• Arsitektur 3-Tier MVC & Pola Service Layer<br/>• Pemodelan UML (Use Case, Activity, Flowchart, Sequence)<br/>• Normalisasi Basis Data 3NF & ERD 22 Tabel Data<br/>• Desain Antarmuka Neo-Brutalism & Pedoman WCAG 2.1<br/><i>Luaran: Cetak Biru Arsitektur & Skema Basis Data 3NF</i>"]
+    B -->|"Design Approved"| C["<b>3. Implementasi Program (Implementation / Coding)</b><br/>• Framework Web: Laravel 11 Backend & Frontend (PHP 8.2)<br/>• Basis Data: MySQL 8.x InnoDB & Pessimistic Row Locking<br/>• Integrasi Payment Gateway: Midtrans Snap API (BCA VA)<br/>• Integrasi Multi-Saluran: Fonnte WhatsApp API & SMTP<br/><i>Luaran: Sistem Informasi Terintegrasi & Basis Data Aktif</i>"]
+    C -->|"Code Compiled"| D["<b>4. Pengujian Sistem (System Testing)</b><br/>• Black Box Testing Fungsional (60 Butir Skenario Uji)<br/>• Pengujian Keamanan RBAC (Isolasi 3 Portal Bebas IDOR)<br/>• Simulasi Transaksi Midtrans Sandbox BCA Virtual Account<br/>• Automated Suite Testing (PHPUnit 510 Tests Passed)<br/><i>Luaran: Matriks Verifikasi Fungsionalitas & Keamanan 100%</i>"]
+    D -->|"Tests Passed"| E["<b>5. Penerapan & Evaluasi (Deployment & Evaluation)</b><br/>• Penerapan Peladen Produksi Live (asriboardinghouse.weatso.id)<br/>• Konfigurasi Peladen LiteSpeed & Scheduler Cron Job Otomatis<br/>• Optimasi Kinerja Performa Cache Produksi Laravel<br/>• Usability Testing Pengelola (Skor 9,5/10) & 5 Penghuni<br/><i>Luaran: Sistem Live Beroperasi & Laporan Evaluasi UAT</i>"]
 
-    style A fill:#F8FAFC,stroke:#3B82F6,stroke-width:2px,rx:6px,ry:6px
-    style B fill:#F1F5F9,stroke:#0EA5E9,stroke-width:2px,rx:6px,ry:6px
-    style C fill:#E2E8F0,stroke:#6366F1,stroke-width:2px,rx:6px,ry:6px
-    style D fill:#CBD5E1,stroke:#10B981,stroke-width:2px,rx:6px,ry:6px
-    style E fill:#94A3B8,stroke:#F59E0B,stroke-width:2px,rx:6px,ry:6px
+    style A fill:#EFF6FF,stroke:#2563EB,stroke-width:2px,rx:8px,ry:8px
+    style B fill:#F0F9FF,stroke:#0284C7,stroke-width:2px,rx:8px,ry:8px
+    style C fill:#EEF2FF,stroke:#4F46E5,stroke-width:2px,rx:8px,ry:8px
+    style D fill:#ECFDF5,stroke:#059669,stroke-width:2px,rx:8px,ry:8px
+    style E fill:#FFFBEB,stroke:#D97706,stroke-width:2px,rx:8px,ry:8px
 ```
 
 Gambar 3.1 Diagram Model Waterfall Pengembangan Sistem  
