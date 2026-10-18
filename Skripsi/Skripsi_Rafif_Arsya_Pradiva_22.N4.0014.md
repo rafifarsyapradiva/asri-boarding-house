@@ -1417,7 +1417,7 @@ Modul penyewa aktif pada portal swalayan `/penyewa/dashboard` dirancang untuk me
 3. **Modul Pengaduan Keluhan Sarana Berlampiran Foto**: Penyewa dapat melaporkan kerusakan sarana kamar (seperti lampu mati, kran air bocor, atau kendala fasilitas penunjang) secara terstruktur melalui formulir keluhan berlampiran foto bukti fisik. Sistem memvalidasi ekstensi berkas (.jpg, .jpeg, .png), membatasi ukuran berkas maksimum 2 MB, serta menerapkan mekanisme pembersihan otomatis berkas gambar dari media penyimpanan jika eksekusi transaksi basis data mengalami kendala guna mencegah timbulnya berkas yatim (*dangling files*).
 4. **Pemulihan Kata Sandi Mandiri**: Pengguna yang lupa kata sandi dapat meminta tautan pemulihan kata sandi terenkripsi melalui rute `/penyewa/password/reset` yang dikirimkan secara otomatis ke alamat surel terdaftar melalui protokol SMTP.
 
-![Gambar 4.13 Tangkapan Layar Kode Perenderan Kuitansi Digital Format A5 di Sisi Klien](images/kode_kuitansi_digital_html2pdf.png)
+![Gambar 4.13 Tangkapan Layar Kode Perenderan Kuitansi Digital Format A5 di Sisi Klien](images/kode_render_kuitansi_html2pdf.png)
 
 *Gambar 4.13 Tangkapan Layar Kode Perenderan Kuitansi Digital Format A5 di Sisi Klien*  
 *Sumber: Tangkapan layar berkas resources/views/nota/cetak.blade.php penulis (2026)*
