@@ -1476,7 +1476,7 @@ Layanan surel diintegrasikan memanfaatkan driver SMTP standar Laravel yang terhu
 1. **Pola Template Method pada Notifikasi Terenkripsi**: Kelas abstrak `BaseResetPasswordNotification` mengimplementasikan pola perancangan *Template Method*, mendefinisikan struktur transmisi tautan pemulihan kata sandi dengan token acak berkriptografi aman, serta membatasi masa kedaluwarsa tautan maksimal selama 60 menit.
 2. **Distribusi Asinkron Berbasis Antrean Peladen (*Queued Mailables*)**: Transmisi surel tagihan sewa bulanan (`TagihanBulanMail`) dan notifikasi konfirmasi pembayaran tunai didelegasikan sepenuhnya ke antrean latar belakang peladen (*Laravel Job Queue*) melalui pemanfaatan antarmuka `ShouldQueue` dan trait `Queueable`. Pendekatan asinkron ini menjamin bahwa latensi jabat tangan jaringan transmisi SMTP tidak membebani kecepatan respons (*response time*) peramban pengguna. Cuplikan implementasi kode distribusi surel asinkron disajikan pada Gambar 4.16.
 
-![Gambar 4.16 Tangkapan Layar Kode Distribusi Surel Tagihan Asinkron Berbasis Antrean](images/kode_notifikasi_surel_smtp.png)
+![Gambar 4.16 Tangkapan Layar Kode Distribusi Surel Tagihan Asinkron Berbasis Antrean](images/kode_distribusi_surel_tagihan_asinkron.png)
 
 *Gambar 4.16 Tangkapan Layar Kode Distribusi Surel Tagihan Asinkron Berbasis Antrean*  
 *Sumber: Tangkapan layar berkas app/Mail/TagihanBulanMail.php penulis (2026)*
