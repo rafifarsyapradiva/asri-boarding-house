@@ -259,33 +259,37 @@ Rafif Arsya Pradiva
 
 <br>
 
-Puji dan syukur penulis panjatkan ke hadirat Tuhan Yang Maha Esa atas kelimpahan berkat, kekuatan, dan bimbingan-Nya, sehingga naskah Tugas Akhir berjudul **“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”** ini dapat diselesaikan dengan baik.
+Dengan penuh rasa syukur kepada Allah SWT atas rahmat dan petunjuk-Nya, sehingga skripsi yang berjudul "Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House" ini dapat terselesaikan dengan baik. Skripsi ini ditulis untuk memenuhi sebagian syarat gelar sarjana pendidikan S1 Sistem Informasi di Universitas Katolik Soegijapranata Semarang.
 
-Penyusunan naskah ini merupakan perwujudan ikhtiar akademik guna memenuhi sebagian persyaratan mencapai gelar Sarjana Komputer pada Program Studi Sistem Informasi, Fakultas Ilmu Komputer, Universitas Katolik Soegijapranata Semarang. Penelitian ini berakar dari observasi langsung terhadap dinamika pengelolaan hunian sewa di kawasan kampus Tembalang. Melalui keterlibatan langsung di lapangan, penulis berupaya mengintegrasikan solusi rekayasa perangkat lunak modern untuk mengurai kendala administratif yang selama ini dihadapi oleh pihak pengelola kos.
+Dalam proses penyusunan skripsi, penulis sadar akan kekurangan dalam dan menerima dengan rendah hati kritik serta saran untuk meningkatkan kesempurnaan penulisan. Penulis juga mengucapkan terima kasih kepada semua pihak yang telah memberikan bantuan, dukungan, dan berbagai pihak. Dengan ini, penulis ingin menyampaikan terima kasih yang sebesar-besarnya kepada:
 
-Keberhasilan penyelesaian naskah Tugas Akhir beserta artefak sistem yang dibangun tidak terlepas dari arahan, bimbingan, dan dukungan tulus dari berbagai pihak. Rasa hormat dan terima kasih yang mendalam penulis sampaikan kepada:
-1. Ketua Program Studi Sistem Informasi Universitas Katolik Soegijapranata Semarang atas arahan dan fasilitas akademik yang diberikan selama masa perkuliahan.
-2. Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling., selaku Dosen Pembimbing 1, dan Erdhi Widyarto Nugroho, S.T., M.T., selaku Dosen Pembimbing 2, yang senantiasa meluangkan waktu, ketajaman gagasan, serta kesabaran dalam membimbing, menguji alur logika sistem, dan memberikan koreksi konstruktif dari awal perancangan hingga naskah ini tuntas.
-3. Seluruh Bapak dan Ibu Dosen serta staf akademik di lingkungan Fakultas Ilmu Komputer Universitas Katolik Soegijapranata Semarang yang telah menularkan dasar keilmuan, wawasan teknologi, dan etika profesional selama masa studi.
-4. Bapak Asep, selaku pengelola operasional senior Asri Boarding House, atas keterbukaan menerima penelitian ini, kesediaan berbagi dokumen pembukuan riil, serta waktu yang diluangkan dalam pengujian tatap muka (*side-by-side usability testing*).
-5. Rekan-rekan mahasiswa penghuni kos aktif yang telah meluangkan waktu secara sukarela untuk menguji alur sistem secara langsung dan memberikan umpan balik empiris yang kritis pada sesi wawancara.
-6. Kedua Orang Tua dan seluruh keluarga tercinta, atas untaian doa yang tak putus, kasih sayang, kepercayaan penuh, serta pengorbanan moral dan material yang menjadi pendorong utama langkah penulis.
-7. Rekan-rekan mahasiswa Program Studi Sistem Informasi angkatan 2022 serta sahabat-sahabat terdekat atas dinamika perkuliahan, diskusi pemecahan masalah teknis, dan solidaritas kebersamaan.
-8. Seluruh pihak yang telah membantu secara langsung maupun tidak langsung dalam penyelesaian penelitian ini yang tidak dapat penulis sebutkan satu per satu.
+1. Bapak Prof. Dr. Ridwan Sanjaya S.E., S.Kom., MS.IEC selaku Dekan Fakultas Ilmu Komputer, yang telah memberikan fasilitas dan kemudahan selama masa studi.
+2. Bapak Dr. Albertus Dwiyoga Widiantoro S.Kom., M.Kom selaku Ketua Program Studi Sistem Informasi, atas dukungan dan sarana yang memungkinkan penulis menyelesaikan pendidikan dengan baik.
+3. Bapak Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling. selaku dosen pembimbing 1, yang telah memberikan bimbingan, arahan, serta dukungan penuh selama proses penulisan skripsi ini.
+4. Bapak Erdhi Widyarto Nugroho, S.T., M.T. selaku dosen pembimbing 2, atas segala masukan, perhatian, serta pendampingan selama proses penulisan skripsi ini.
+5. Bapak /Ibu dosen dan staff di lingkungan Fakultas Ilmu Komputer, khususnya Program Studi Sistem Informasi yang telah banyak membantu selama masa studi.
+6. Orang tua dan keluarga tercinta yang selalu memberikan doa, dukungan moral, serta motivasi kepada penulis.
 
-Penulis berharap naskah Tugas Akhir ini beserta sistem yang dikembangkan dapat memberikan sumbangsih pemikiran yang nyata bagi pengembangan sistem informasi terapan, menjadi rujukan bagi penelitian lanjutan, serta menghadirkan manfaat operasional yang berkelanjutan bagi tata kelola hunian kos.
+<div style="page-break-after: always;"></div>
 
-<br>
+7. Teman-teman dan kolega di Universitas Katolik Soegijapranata yang telah memberikan bantuan dan dukungan selama proses penyusunan skripsi.
+8. Semua pihak yang tidak dapat penulis sebutkan satu per satu, yang telah memberikan dukungan secara langsung dan tidak langsung selama proses penyusunan skripsi ini.
 
-<div align="right">
-
-Semarang, 13 Juli 2026  
-Penulis,
+Akhir kata penulis mengucapkan terimakasih kepada semua pihak yang telah membantu dan penulis berharap semoga skripsi ini dapat bermanfaat dan berkontribusi bagi dunia pendidikan, khususnya di bidang teknologi informasi dan sistem informasi.
 
 <br><br><br>
 
-**Rafif Arsya Pradiva**  
-NIM. 22.N4.0014
+<div align="right">
+
+Semarang, 13 Juli 2026
+
+<br><br><br><br>
+
+*(tanda tangan)*
+
+<br><br>
+
+Rafif Arsya Pradiva
 
 </div>
 
