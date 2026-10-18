@@ -202,43 +202,50 @@ NPP. ....................
 
 <div align="center">
 
-### HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI KARYA ILMIAH UNTUK KEPENTINGAN AKADEMIS
+### HALAMAN PERNYATAAN PUBLIKASI KARYA ILMIAH<br>UNTUK KEPENTINGAN AKADEMIS
 
 </div>
 
 <br>
 
-Sebagai sivitas akademik Universitas Katolik Soegijapranata, saya yang bertanda tangan di bawah ini:
+Yang bertanda tangan di bawah ini:
+
+<br>
 
 Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva  
+
+<br>
+
 Program Studi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Sistem Informasi  
+
+<br>
+
 Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer  
-Jenis Karya &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Tugas Akhir / Skripsi  
 
-Demi pengembangan ilmu pengetahuan, menyetujui untuk memberikan kepada Universitas Katolik Soegijapranata Hak Bebas Royalti Non-eksklusif (*Non-exclusive Royalty-Free Right*) atas karya ilmiah saya yang berjudul:
+<br>
 
-<div align="center">
+Jenis Karya &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Skripsi  
 
-**“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”**
+<br>
 
-</div>
-
-beserta perangkat yang ada (jika diperlukan). Dengan Hak Bebas Royalti Non-eksklusif ini Universitas Katolik Soegijapranata berhak menyimpan, mengalih-media/formatkan, mengelola dalam bentuk pangkalan data (*database*), merawat, dan memublikasikan tugas akhir saya selama tetap mencantumkan nama saya sebagai penulis/pencipta dan sebagai pemilik Hak Cipta.
+Menyetujui untuk memberikan kepada Universitas Katolik Soegijapranata Semarang Hak Bebas Royalti Nonekslusif atas karya ilmiah yang berjudul **“Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House”** beserta perangkat yang ada (jika diperlukan). Dengan Hak Bebas Royalti Nonekslusif ini Universitas Katolik Soegijapranata berhak menyimpan, mengalihkan media/formatkan, mengelola dalam bentuk pangkalan data (database), merawat, dan mempublikasikan tugas akhir ini selama tetap mencantumkan nama saya sebagai penulis / pencipta dan sebagai pemilik Hak Cipta.
 
 Demikian pernyataan ini saya buat dengan sebenarnya.
 
-<br><br>
+<br><br><br>
 
 <div align="right">
 
-Dibuat di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Semarang  
-Pada tanggal &nbsp;: 13 Juli 2026  
-Yang menyatakan,
+Semarang, 13 Juli 2026<br><br>
+Yang menyatakan
 
-<br><br><br>
+<br><br><br><br>
 
-( ............................................................ )<br>
-**Rafif Arsya Pradiva**
+*(tanda tangan)*
+
+<br><br>
+
+Rafif Arsya Pradiva
 
 </div>
 
@@ -328,7 +335,7 @@ HALAMAN JUDUL &emsp; i
 HALAMAN PERNYATAAN ORISINALITAS &emsp; ii  
 HALAMAN PERNYATAAN BEBAS PLAGIASI &emsp; iii  
 HALAMAN PENGESAHAN &emsp; iv  
-HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI KARYA ILMIAH UNTUK KEPENTINGAN AKADEMIS &emsp; v  
+HALAMAN PERNYATAAN PUBLIKASI KARYA ILMIAH UNTUK KEPENTINGAN AKADEMIS &emsp; v  
 KATA PENGANTAR &emsp; vi  
 ABSTRAK &emsp; viii  
 ABSTRACT &emsp; ix  
