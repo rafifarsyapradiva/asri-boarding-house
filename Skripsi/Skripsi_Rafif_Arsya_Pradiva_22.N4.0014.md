@@ -1496,9 +1496,15 @@ Komunikasi otomatis melalui aplikasi pesan instan WhatsApp diintegrasikan menggu
 3. **Integrasi REST API Gateway WhatsApp dan Eskalasi Otomatis ke Kontak Orang Tua/Wali**: Pengiriman pesan diformat menggunakan standar nomor internasional E.164, dilengkapi jeda pengaman transmisi anti-pemblokiran spam (*delay anti-spam*). Jika penunggakan sewa berlanjut hingga melintasi bulan kalender berikutnya (`bulan_keterlambatan > 1`), sistem secara otomatis mengeskalasikan pesan peringatan penunggakan ke kontak nomor WhatsApp orang tua/wali mahasiswa yang tercatat pada master data. Cuplikan implementasi integrasi API Fonnte dan eskalasi wali disajikan pada Gambar 4.17.
 4. **Pencatatan Jejak Audit Transmisi (*Audit Trail Logging*)**: Seluruh aktivitas transmisi pesan WhatsApp dicatat secara terstruktur pada tabel `log_notifikasi` berisikan stempel waktu, ID penerima, kategori pesan, payload teks, serta status pengiriman guna mencegah penyiaran pesan ganda (*duplicate messaging*). Kode sumber skrip kritis otomasi sistem, mencakup kelas `BillingService`, penegakan denda flat 5% kalender, dan verifikasi webhook Midtrans, disajikan secara lengkap pada Lampiran 5.
 
-![Gambar 4.17 Tangkapan Layar Kode Integrasi REST API Gateway WhatsApp Fonnte dan Eskalasi Wali](images/kode_notifikasi_fonnte_eskalasi_wali.png)
+![Gambar 4.17 (a) Tangkapan Layar Integrasi REST API Gateway WhatsApp Fonnte](images/kode_integrasi_fonnte_api.png)
 
-*Gambar 4.17 Tangkapan Layar Kode Integrasi REST API Gateway WhatsApp Fonnte dan Eskalasi Wali*  
+*(a) Implementasi pemanggilan HTTP POST dan jeda transmisi anti-spam pada FonnteService.php (Baris 42–68)*
+
+![Gambar 4.17 (b) Tangkapan Layar Logika Eskalasi Penunggakan ke Kontak Wali](images/kode_eskalasi_wali_whatsapp.png)
+
+*(b) Implementasi logika eskalasi penunggakan ke kontak wali pada NotifikasiService.php (Baris 604–633)*
+
+*Gambar 4.17 Tangkapan Layar Kode Integrasi REST API Gateway WhatsApp Fonnte dan Eskalasi Wali: (a) Integrasi REST API Gateway Fonnte; (b) Logika Eskalasi Penunggakan ke Kontak Wali*  
 *Sumber: Tangkapan layar berkas app/Services/FonnteService.php dan app/Services/NotifikasiService.php penulis (2026)*
 
 Pengiriman pesan notifikasi otomatis dalam volume tinggi secara simultan dari peladen sistem sangat rentan dideteksi sebagai aktivitas bot/spam oleh algoritma keamanan Meta/WhatsApp, yang berisiko mengakibatkan pemblokiran permanen (*banned*) nomor resmi operasional kos. Selain itu, pada kasus keterlambatan sewa berkepanjangan oleh mahasiswa, pesan penagihan yang hanya ditujukan ke nomor pribadi penghuni kerap tidak direspons atau diabaikan, sementara pihak orang tua/wali yang mendanai biaya tempat tinggal tidak mengetahui adanya tunggakan tersebut.
