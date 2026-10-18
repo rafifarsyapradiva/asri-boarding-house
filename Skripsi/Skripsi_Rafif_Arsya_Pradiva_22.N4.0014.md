@@ -1,6 +1,6 @@
 <div align="center">
 
-### TUGAS AKHIR
+### LAPORAN SKRIPSI
 
 <br>
 
@@ -8,24 +8,26 @@
 
 <br><br>
 
-Diajukan untuk memenuhi syarat guna mencapai gelar Sarjana Komputer<br>program studi Sistem Informasi Universitas Katolik Soegijapranata<br>Semarang
-
-<br><br>
-
-*(Lambang Universitas Katolik Soegijapranata)*
+<img src="images/logo_unika.png" alt="Logo Universitas Katolik Soegijapranata" width="230">
 
 <br><br><br>
 
-Disusun oleh :<br>
-**RAFIF ARSYA PRADIVA**<br>
+**Disusun oleh:**
+
+<br>
+
+**Rafif Arsya Pradiva**
+
+<br>
+
 **22.N4.0014**
 
 <br><br><br>
 
-**PROGRAM STUDI SISTEM INFORMASI**<br>
-**FAKULTAS ILMU KOMPUTER**<br>
-**UNIVERSITAS KATOLIK SOEGIJAPRANATA**<br>
-**SEMARANG**<br>
+**PROGRAM STUDI SISTEM INFORMASI**<br><br>
+**FAKULTAS ILMU KOMPUTER**<br><br>
+**UNIVERSITAS KATOLIK SOEGIJAPRANATA**<br><br>
+**SEMARANG**<br><br>
 **2026**
 
 </div>
@@ -34,7 +36,7 @@ Disusun oleh :<br>
 
 <div align="center">
 
-### TUGAS AKHIR
+### LAPORAN SKRIPSI
 
 <br>
 
@@ -46,20 +48,26 @@ Diajukan untuk memenuhi salah satu syarat guna mencapai gelar Sarjana Komputer<b
 
 <br><br>
 
-*(Lambang Universitas Katolik Soegijapranata)*
+<img src="images/logo_unika.png" alt="Logo Universitas Katolik Soegijapranata" width="200">
 
 <br><br><br>
 
-Disusun oleh :<br>
-**RAFIF ARSYA PRADIVA**<br>
+**Disusun oleh:**
+
+<br>
+
+**Rafif Arsya Pradiva**
+
+<br>
+
 **22.N4.0014**
 
 <br><br><br>
 
-**PROGRAM STUDI SISTEM INFORMASI**<br>
-**FAKULTAS ILMU KOMPUTER**<br>
-**UNIVERSITAS KATOLIK SOEGIJAPRANATA**<br>
-**SEMARANG**<br>
+**PROGRAM STUDI SISTEM INFORMASI**<br><br>
+**FAKULTAS ILMU KOMPUTER**<br><br>
+**UNIVERSITAS KATOLIK SOEGIJAPRANATA**<br><br>
+**SEMARANG**<br><br>
 **2026**
 
 </div>
