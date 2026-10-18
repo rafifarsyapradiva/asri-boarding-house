@@ -1397,7 +1397,7 @@ Modul calon penyewa menghadirkan kemudahan penelusuran unit kamar dan alur reser
 2. **Pencegahan Kondisi Balapan (*Race Condition*) Reservasi Ganda**: Untuk mengantisipasi skenario kritis saat dua calon penyewa memilih dan memesan unit kamar yang sama pada detik yang bersamaan, pembuatan reservasi dieksekusi di dalam transaksi basis data berpelindung kunci baris eksklusif `lockForUpdate()`. Sistem mengevaluasi ketersediaan unit kamar secara berurutan (*serialized*) pada level mesin penyimpanan MySQL InnoDB sehingga kondisi balapan dapat dicegah secara deterministik. Cuplikan implementasi kode transaksi atomik reservasi disajikan pada Gambar 4.12.
 3. **Kanal Komunikasi Interaktif Ganda**: Sistem menyediakan fitur *Guest Chat* publik tanpa kewajiban pendaftaran akun berbasis persistensi token sesi aman di peramban pengguna, serta fasilitas *Live Chat* pra-pembayaran yang aktif selama status reservasi berada dalam tahap *pending*. Muatan pesan disinkronkan secara berkala per 4 detik melalui teknik *incremental AJAX polling* berparameter `after` dengan pemuatan berelasi (*eager loading*) guna mencegah anomali kueri ganda (*N+1 queries problem*).
 
-![Gambar 4.12 Tangkapan Layar Kode Transaksi Atomik Reservasi dan Kunci Anti-Double Booking](images/kode_reservasi_anti_double_booking.png)
+![Gambar 4.12 Tangkapan Layar Kode Transaksi Atomik Reservasi dan Kunci Anti-Double Booking](images/kode_transaksi_reservasi_atomik.png)
 
 *Gambar 4.12 Tangkapan Layar Kode Transaksi Atomik Reservasi dan Kunci Anti-Double Booking*  
 *Sumber: Tangkapan layar berkas app/Services/ReservasiService.php penulis (2026)*
