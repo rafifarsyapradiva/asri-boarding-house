@@ -1386,7 +1386,7 @@ Sistem menegakkan isolasi peran pengguna secara berlapis guna menjamin keamanan 
 
 *Keterangan Gambar 4.11:*
 * **Fungsi Kode**: Memeriksa apakah pengguna yang masuk dengan peran penyewa memiliki nomor telepon berawalan `'temp_socialite_'` atau bernilai kosong.
-* **Bagian Penting Proses Bisnis**: Baris 8–12 secara terprogram mengalihkan navigasi ke rute `'profil.complete'` sebelum pengguna diizinkan masuk ke alur pemesanan unit kamar kos.
+* **Bagian Penting Proses Bisnis**: Baris 38–42 secara terprogram mengalihkan navigasi ke rute `'profil.complete'` sebelum pengguna diizinkan masuk ke alur pemesanan unit kamar kos.
 * **Hubungan dengan Kebutuhan Sistem**: Menjamin keabsahan nomor WhatsApp calon penyewa untuk kepentingan distribusi notifikasi tagihan dan faktur Midtrans.
 
 ---
