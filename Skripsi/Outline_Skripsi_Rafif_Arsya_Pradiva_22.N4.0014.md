@@ -43,8 +43,8 @@ HALAMAN AWAL
 ├── Halaman Pernyataan Orisinalitas
 ├── Halaman Pernyataan Bebas Plagiasi
 ├── Halaman Pengesahan (Dosen Pembimbing 1, Pembimbing 2, Ka. Progdi)
-├── Kata Pengantar & Ucapan Terima Kasih
 ├── Halaman Pernyataan Persetujuan Publikasi Karya Ilmiah untuk Kepentingan Akademis
+├── Kata Pengantar & Ucapan Terima Kasih
 ├── Abstrak (Bahasa Indonesia)
 ├── Abstract (Bahasa Inggris)
 ├── Daftar Isi
