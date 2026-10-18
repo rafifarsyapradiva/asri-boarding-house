@@ -1726,7 +1726,7 @@ Daftar pertanyaan terstruktur beserta respon verbatim dari narasumber dirangkum 
 
 Dokumentasi pelaksanaan wawancara operasional disajikan pada Gambar 4.21.
 
-![Gambar 4.21 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)](images/gambar_4_12.png)
+![Gambar 4.21 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)](images/gambar_4_21.jpg)
 
 *Gambar 4.21 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)*  
 *Sumber: Dokumentasi foto penelitian penulis (2026)*
