@@ -1438,7 +1438,7 @@ Panel kontrol administrator pada rute `/admin/dashboard` mengadopsi tema gelap *
 4. **Kebijakan Isolasi dan Karantina Kamar Pasca-Checkout**: Ketika penyewa menyelesaikan masa kontrak tinggal (*checkout*), sistem secara terprogram **TIDAK** mengubah status fisik kamar menjadi `tersedia`. Kamar sengaja ditahan dalam status `terisi` (indikator merah) guna memberi waktu bagi petugas untuk melaksanakan inspeksi kebersihan fisik, sterilisasi sarana, dan pengecekan kelayakan sarana sebelum kunci kamar dilepas kembali secara manual menjadi `tersedia`. Cuplikan kode kebijakan karantina kamar pasca-checkout disajikan pada Gambar 4.14.
 5. **Kalender Kontrol Visual Hunian dan Siaran Informasi Massal WhatsApp**: Panel dilengkapi tampilan kalender visual interaktif untuk memantau jadwal kedatangan, sisa durasi kontrak sewa, dan estimasi waktu kepulangan penghuni pada 32 unit kamar, serta fasilitas siaran informasi terpadu (*broadcast announcement*) ke kontak WhatsApp seluruh penyewa aktif dalam satu kali instruksi.
 
-![Gambar 4.14 Tangkapan Layar Kode Kebijakan Karantina Kamar Pasca-Checkout](images/kode_karantina_kamar_checkout.png)
+![Gambar 4.14 Tangkapan Layar Kode Kebijakan Karantina Kamar Pasca-Checkout](images/kode_karantina_kamar_pasca_checkout.png)
 
 *Gambar 4.14 Tangkapan Layar Kode Kebijakan Karantina Kamar Pasca-Checkout*  
 *Sumber: Tangkapan layar berkas app/Observers/PenyewaObserver.php penulis (2026)*
