@@ -1458,7 +1458,7 @@ Integrasi gerbang pembayaran Midtrans Snap API v2 dibangun secara terstruktur me
 3. **Verifikasi Keamanan Tanda Tangan Digital Kriptografi SHA-512**: Setiap permintaan webhook diverifikasi keabsahannya dengan mencocokkan signature key SHA-512 menggunakan fungsi anti-kebocoran waktu `hash_equals()`. Jika signature tidak cocok, permintaan segera ditolak dengan balasan kode status HTTP 403 Forbidden guna menggagalkan upaya pemalsuan data pembayaran (*request spoofing*). Cuplikan kode validasi webhook dan penguncian idempoten disajikan pada Gambar 4.15.
 4. **Penanganan Idempotensi Transaksi Mutasi Kas**: Pembaruan status transaksi pembayaran diproteksi di dalam blok `DB::transaction()` berpelindung kunci baris eksklusif `lockForUpdate()`. Jika notifikasi callback dengan status `settlement` diterima lebih dari satu kali untuk nomor transaksi (`transaction_id`) yang sama, sistem mendeteksi bahwa tagihan telah lunas dan menghentikan proses (*fast-exit*) guna mencegah pencatatan saldo penerimaan kas ganda (*zero double accounting*).
 
-![Gambar 4.15 Tangkapan Layar Kode Validasi Webhook Signature SHA-512 dan Penguncian Idempoten](images/kode_midtrans_webhook_signature.png)
+![Gambar 4.15 Tangkapan Layar Kode Validasi Webhook Signature SHA-512 dan Penguncian Idempoten](images/kode_verifikasi_midtrans_signature_sha512.png)
 
 *Gambar 4.15 Tangkapan Layar Kode Validasi Webhook Signature SHA-512 dan Penguncian Idempoten*  
 *Sumber: Tangkapan layar berkas app/Http/Middleware/VerifyMidtransSignature.php penulis (2026)*
