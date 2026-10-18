@@ -1549,7 +1549,7 @@ Sebelum sistem dipublikasikan ke lingkungan operasional langsung, dilakukan dua 
 
 Langkah ini memangkas waktu pemrosesan siklus HTTP secara signifikan dibanding pembacaan berkas secara berulang pada setiap permintaan pengguna. Tangkapan layar konfigurasi variabel lingkungan produksi `.env` dengan nilai rahasia yang disamarkan (*redacted*) disajikan pada Gambar 4.19.
 
-![Gambar 4.19 Tangkapan Layar Konfigurasi Variabel Lingkungan Produksi .env](images/kode_deployment_env.png)
+![Gambar 4.19 Tangkapan Layar Konfigurasi Variabel Lingkungan Produksi .env](images/konfigurasi_environment_produksi_env.png)
 
 *Gambar 4.19 Tangkapan Layar Konfigurasi Variabel Lingkungan Produksi .env*  
 *Sumber: Tangkapan layar berkas .env produksi penulis (2026)*
