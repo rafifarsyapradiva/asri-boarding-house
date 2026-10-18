@@ -86,28 +86,32 @@
 
 Yang bertanda tangan di bawah ini:
 
-Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva  
-NIM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 22.N4.0014  
-Program Studi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Sistem Informasi  
-Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer  
+<br>
 
-Menyatakan dengan sesungguhnya bahwa Tugas Akhir dengan judul:  
-**“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”**  
-adalah benar-benar hasil karya penelitian mandiri saya sendiri, bukan merupakan jiplakan atau pengambilalihan sebagian atau seluruh karya ilmiah orang lain, dan disusun dengan mematuhi kaidah serta norma etika penulisan ilmiah yang berlaku. Semua sumber data, kutipan rujukan, maupun bantuan dari berbagai pihak telah dicantumkan dan disebutkan sebagaimana mestinya sesuai pedoman akademik yang berlaku.
-
-Apabila di kemudian hari terbukti atau dapat dibuktikan terdapat penyimpangan atau pemalsuan dalam naskah ini, saya bersedia menerima segala sanksi akademik yang dijatuhkan oleh Universitas Katolik Soegijapranata Semarang sesuai ketentuan perundang-undangan yang berlaku.
+Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva<br><br>
+NIM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 22.N4.0014<br><br>
+Progdi / Konsentrasi &nbsp;: Sistem Informasi<br><br>
+Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer
 
 <br><br>
+
+Dengan ini menyatakan bahwa Laporan Tugas Akhir dengan judul Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway pada Asri Boarding House tersebut bebas plagiasi. Akan tetapi bila terbukti melakukan plagiasi maka bersedia menerima sanksi sesuai dengan ketentuan yang berlaku.
+
+<br><br><br>
 
 <div align="right">
 
 Semarang, 13 Juli 2026<br>
-Yang membuat pernyataan,
+Yang menyatakan,
 
-<br><br><br>
+<br><br>
 
-**Rafif Arsya Pradiva**<br>
-NIM. 22.N4.0014
+*Meterai Rp10.000*<br>
+*(tanda tangan)*
+
+<br><br>
+
+**Rafif Arsya Pradiva**
 
 </div>
 
