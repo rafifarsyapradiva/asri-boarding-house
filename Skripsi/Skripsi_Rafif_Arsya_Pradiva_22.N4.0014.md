@@ -1519,15 +1519,15 @@ Sistem informasi manajemen Asri Boarding House telah melalui tahapan peluncuran 
 ### 4.4.1 Konfigurasi Web Server LiteSpeed dan HTTP Security Header
 Peladen web LiteSpeed Enterprise dikonfigurasi melalui berkas `.htaccess` pada direktori akar publik guna mengarahkan seluruh lalu lintas permintaan ke gerbang kendali tunggal (*front-controller pattern*) di `index.php`. Langkah ini dibarengi pengerasan keamanan (*security hardening*): menutup akses langsung ke berkas sensitif (`.env`, `.git`), serta menginjeksi *HTTP Security Headers* berstandar industri. Kebijakan ini mencegah ancaman *Cross-Site Scripting* (XSS), pembajakan klik (*Clickjacking*), dan penafsiran tipe konten yang keliru (*MIME-sniffing*). Visualisasi berkas konfigurasi `.htaccess` disajikan pada Gambar 4.18.
 
-![Gambar 4.18 Tangkapan Layar Konfigurasi Web Server LiteSpeed dan HTTP Security Header](images/kode_deployment_htaccess.png)
+![Gambar 4.18 Tangkapan Layar Konfigurasi Web Server LiteSpeed dan Perutean Front-Controller](images/konfigurasi_web_server_litespeed_htaccess.png)
 
-*Gambar 4.18 Tangkapan Layar Konfigurasi Web Server LiteSpeed dan HTTP Security Header*  
+*Gambar 4.18 Tangkapan Layar Konfigurasi Web Server LiteSpeed dan Perutean Front-Controller*  
 *Sumber: Tangkapan layar berkas public/.htaccess penulis (2026)*
 
 *Keterangan Gambar 4.18:*
-* **Fungsi Konfigurasi**: Mengatur perutean lalu lintas HTTP peladen web LiteSpeed dan penegakan header keamanan jaringan.
-* **Bagian Penting Proses Bisnis**: Baris 5 memberlakukan aturan `RewriteRule` dengan flag `[F,L,NC]` untuk memblokir akses ke berkas kredensial `.env`, serta Baris 12–15 menyematkan header `X-Frame-Options` dan `X-Content-Type-Options`.
-* **Hubungan dengan Kebutuhan Sistem**: Menangkal serangan siber pembajakan klik (*Clickjacking*) pada portal pembayaran dan kebocoran kunci API payment gateway.
+* **Fungsi Konfigurasi**: Mengatur perutean lalu lintas HTTP peladen web LiteSpeed, preservasi header otorisasi API, dan penegakan pola arsitektur *front-controller*.
+* **Bagian Penting Proses Bisnis**: Baris 1–4 menonaktifkan penjelajahan direktori publik (*directory indexing*), Baris 8–14 mempreservasi header otorisasi (`HTTP:Authorization`) dan token perlindungan pemalsuan permintaan antar-situs (`X-XSRF-Token`), serta Baris 21–24 mengarahkan seluruh permintaan berkas non-statis ke gerbang kendali tunggal `index.php`.
+* **Hubungan dengan Kebutuhan Sistem**: Menjamin seluruh permintaan HTTP dari peramban dan webhook diproses melalui daur hidup aplikasi Laravel secara terpusat, aman, dan konsisten pada peladen web LiteSpeed Enterprise.
 
 ---
 
