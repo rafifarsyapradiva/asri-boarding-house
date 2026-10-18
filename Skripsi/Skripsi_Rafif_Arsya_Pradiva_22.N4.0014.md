@@ -44,7 +44,9 @@
 
 <br><br>
 
-Diajukan untuk memenuhi salah satu syarat guna mencapai gelar Sarjana Komputer<br>pada Program Studi Sistem Informasi Fakultas Ilmu Komputer<br>Universitas Katolik Soegijapranata Semarang
+**Diajukan dalam Rangka Memenuhi**<br><br>
+**Salah Satu Syarat Memperoleh**<br><br>
+**Gelar Sarjana Komputer**
 
 <br><br>
 
