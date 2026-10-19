@@ -1279,7 +1279,7 @@ Bagi penghuni aktif, portal mandiri `/penyewa/dashboard` menjadi sentral adminis
 3. **Pencetakan Kuitansi Digital Instan Format A5**: Tagihan berstatus *settlement* memunculkan tombol "Unduh Kuitansi". Dokumen kuitansi resmi berstempel lunas dirakit langsung di *browser* pengguna melalui `html2pdf.js` ke ukuran standar A5 tanpa membebani penyimpanan *server* (*zero server storage overhead*).
 4. **Formulir Pengaduan Keluhan Fasilitas Berfoto**: Menyediakan sarana pelaporan sarana rusak yang dilengkapi unggahan foto fisik (maksimal 2 MB), status penanganan (*pending*, *diproses*, *selesai*), serta catatan perbaikan dari admin. Tampilan portal mandiri disajikan pada Gambar 4.9.
 
-![Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa](images/gambar_4_9.png)
+![Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa](images/antarmuka_portal_tagihan_penyewa.png)
 
 *Gambar 4.9 Portal Invoice dan Kuitansi Digital Penyewa*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
