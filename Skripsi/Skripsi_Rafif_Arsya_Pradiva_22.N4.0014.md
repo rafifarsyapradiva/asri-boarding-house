@@ -1731,7 +1731,7 @@ Selain pengujian manual, keandalan fungsionalitas dan logika bisnis perangkat lu
 
 Hasil pengujian otomatis membuktikan keunggulan mutu perangkat lunak: seluruh **715 *tests passed*** (dengan 4 *skipped* terencana) dan total **2.793 *assertions*** terselesaikan dengan tingkat kelulusan **100% tanpa kegagalan (*zero failure*)**. Rangkuman eksekusi rangkaian uji unit dan fitur beserta repositori berkas pengujian otomatis disajikan secara lengkap pada Lampiran 4. Tangkapan layar keluaran terminal pengujian disajikan pada Gambar 4.20.
 
-![Gambar 4.20 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed](images/gambar_4_11.png)
+![Gambar 4.20 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed](images/keluaran_terminal_pengujian_phpunit_passed.png)
 
 *Gambar 4.20 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed*  
 *Sumber: Tangkapan layar terminal eksekusi PHPUnit (2026)*
