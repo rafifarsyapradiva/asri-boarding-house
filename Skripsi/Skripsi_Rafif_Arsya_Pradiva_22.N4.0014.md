@@ -455,7 +455,7 @@ Tabel 4.5 &emsp; Matriks Pengujian Transaksi Midtrans Snap Saluran Bank BCA Virt
 Tabel 4.6 &emsp; Hasil Pengujian Parameter Keamanan dan Hak Akses Lingkungan Live &emsp; 75  
 Tabel 4.7 &emsp; Daftar Pertanyaan dan Respon Wawancara dengan Penjaga Kost (Bapak Asep) &emsp; 77  
 Tabel 4.8 &emsp; Profil dan Karakteristik Lima Responden Uji Coba Pengguna (Mahasiswa Penghuni Kost) &emsp; 81  
-Tabel 4.9 &emsp; Transkrip Wawancara Evaluasi Responden 1 (Arjun, Mahasiswa UNNES - Penghuni Kost) &emsp; 82  
+Tabel 4.9 &emsp; Transkrip Wawancara Evaluasi Responden 1 (Arjun, Mahasiswa UNDIP - Penghuni Kost) &emsp; 82  
 Tabel 4.10 &emsp; Transkrip Wawancara Evaluasi Responden 2 (Farrel, Mahasiswa USM - Penghuni Kost) &emsp; 84  
 Tabel 4.11 &emsp; Transkrip Wawancara Evaluasi Responden 3 (Iman, Mahasiswa UDINUS - Penghuni Kost) &emsp; 86  
 Tabel 4.12 &emsp; Transkrip Wawancara Evaluasi Responden 4 (Ammar, Mahasiswa PKN STAN - Penghuni Kost) &emsp; 88  
@@ -1791,7 +1791,7 @@ Karakteristik dan profil kelima responden mahasiswa penghuni kost dirangkum pada
 
 | Kode | Nama Responden | Status & Profil Hunian | Gawai Uji Coba | Pengalaman Transaksional & Fokus Uji Coba Alur Sistem |
 | :-: | :--- | :--- | :--- | :--- |
-| **P1** | **Arjun** | Mahasiswa UNNES - Penghuni Kost | Laptop & Smartphone Android | Berpengalaman 3 tahun mengekos; menguji kemudahan penelusuran katalog kamar daring Neo-Brutalism, form pemesanan bertahap, transaksi Virtual Account BCA, dan kuitansi A5. |
+| **P1** | **Arjun** | Mahasiswa UNDIP - Penghuni Kost | Laptop & Smartphone Android | Berpengalaman 3 tahun mengekos; menguji kemudahan penelusuran katalog kamar daring Neo-Brutalism, form pemesanan bertahap, transaksi Virtual Account BCA, dan kuitansi A5. |
 | **P2** | **Farrel** | Mahasiswa USM - Penghuni Kost | Smartphone Android | Mahasiswa rantau luar kota; mengevaluasi kemudahan akses web via ponsel, kepraktisan alur reservasi kamar, integrasi pembayaran digital, dan pemantauan tagihan bulanan di portal. |
 | **P3** | **Iman** | Mahasiswa UDINUS - Penghuni Kost | Laptop | Berpengalaman mengalami konflik nota kuitansi hilang di kos lama; mengevaluasi keandalan konfirmasi instan, riwayat pembayaran digital, serta kepraktisan pelunasan tagihan bulanan. |
 | **P4** | **Ammar** | Mahasiswa PKN STAN - Penghuni Kost | Smartphone Apple (iOS) | Mahasiswa tahun pertama; menguji kemudahan reservasi jarak jauh, keterbacaan pengingat notifikasi tagihan via WhatsApp, serta prosedur pelunasan rutin bulanan via ponsel. |
@@ -1803,10 +1803,10 @@ Guna memperoleh data evaluasi yang mendalam, objektif, dan kontekstual, pengumpu
 
 ---
 
-### 4.7.1 Transkrip Wawancara Responden 1 (Arjun, Mahasiswa UNNES - Penghuni Kost)
-Wawancara bersama Arjun (Mahasiswa UNNES - Penghuni Kost) mengeksplorasi seluruh tahapan sistem dari awal reservasi hingga pembayaran tagihan bulanan dari sudut pandang mahasiswa senior yang mengutamakan kepraktisan, transparansi biaya, dan kemudahan pelaporan sewa ke orang tua. Hasil wawancara disajikan pada Tabel 4.9.
+### 4.7.1 Transkrip Wawancara Responden 1 (Arjun, Mahasiswa UNDIP - Penghuni Kost)
+Wawancara bersama Arjun (Mahasiswa UNDIP - Penghuni Kost) mengeksplorasi seluruh tahapan sistem dari awal reservasi hingga pembayaran tagihan bulanan dari sudut pandang mahasiswa senior yang mengutamakan kepraktisan, transparansi biaya, dan kemudahan pelaporan sewa ke orang tua. Hasil wawancara disajikan pada Tabel 4.9.
 
-**Tabel 4.9** Transkrip Wawancara Evaluasi Responden 1 (Arjun, Mahasiswa UNNES - Penghuni Kost)
+**Tabel 4.9** Transkrip Wawancara Evaluasi Responden 1 (Arjun, Mahasiswa UNDIP - Penghuni Kost)
 
 | No | Tahapan Alur Sistem | Pertanyaan Wawancara Peneliti | Respon dan Tanggapan Responden (Arjun) |
 | :-: | :--- | :--- | :--- |
@@ -1939,7 +1939,7 @@ Guna memberikan sintesis terstruktur mengenai hasil evaluasi kelima responden ma
 Berdasarkan sintesis transkrip wawancara terstruktur dan matriks komparasi pada Tabel 4.14, diperoleh empat tema analisis kualitatif yang menggambarkan persepsi dan penerimaan pengguna akhir (*end-user acceptance*) terhadap implementasi sistem informasi manajemen Asri Boarding House:
 
 1. **Tingkat Penerimaan Sistem dan Variasi Penilaian Mahasiswa**:
-   Penilaian kelima responden menghasilkan rata-rata skor kepuasan sebesar **8,00 dari skala 10** dengan rentang skor antara 7,0 hingga 9,0. Nilai ini mencerminkan bahwa sistem informasi manajemen berbasis web yang dibangun dinilai sangat membantu tata kelola hunian dan mempermudah aktivitas anak kost, sekaligus memperlihatkan penilaian yang objektif. Responden yang terbiasa dengan transaksi m-Banking BCA (Arjun, Mahasiswa UNNES - Penghuni Kost dan Iman, Mahasiswa UDINUS - Penghuni Kost) memberikan nilai tinggi (8,5 dan 9,0), sedangkan responden yang tidak memiliki rekening BCA (Farrel, Mahasiswa USM - Penghuni Kost) memberikan skor 7,0 karena mengharapkan adanya saluran pembayaran QRIS atau dompet digital. Responden Ammar (Mahasiswa PKN STAN - Penghuni Kost, 7,5) dan Sindhu (Mahasiswa UI - Penghuni Kost, 8,0) memberikan apresiasi atas kepraktisan alur, seraya memberikan masukan terkait tautan langsung di WhatsApp dan panduan awal di dasbor.
+   Penilaian kelima responden menghasilkan rata-rata skor kepuasan sebesar **8,00 dari skala 10** dengan rentang skor antara 7,0 hingga 9,0. Nilai ini mencerminkan bahwa sistem informasi manajemen berbasis web yang dibangun dinilai sangat membantu tata kelola hunian dan mempermudah aktivitas anak kost, sekaligus memperlihatkan penilaian yang objektif. Responden yang terbiasa dengan transaksi m-Banking BCA (Arjun, Mahasiswa UNDIP - Penghuni Kost dan Iman, Mahasiswa UDINUS - Penghuni Kost) memberikan nilai tinggi (8,5 dan 9,0), sedangkan responden yang tidak memiliki rekening BCA (Farrel, Mahasiswa USM - Penghuni Kost) memberikan skor 7,0 karena mengharapkan adanya saluran pembayaran QRIS atau dompet digital. Responden Ammar (Mahasiswa PKN STAN - Penghuni Kost, 7,5) dan Sindhu (Mahasiswa UI - Penghuni Kost, 8,0) memberikan apresiasi atas kepraktisan alur, seraya memberikan masukan terkait tautan langsung di WhatsApp dan panduan awal di dasbor.
 2. **Fitur-Fitur Alur yang Memberikan Kemudahan Nyata**:
    Tiga komponen sistem diidentifikasi oleh para responden sebagai fitur yang memberikan manfaat paling nyata dalam rutinitas sewa:
    * *Katalog Daring dan Kepastian Ketersediaan Unit*: Menghilangkan keharusan survei fisik keliling kos di kawasan Tembalang bagi mahasiswa baru dan anak rantau luar kota berkat adanya foto ruangan yang representatif dan status keterisian kamar secara real-time.
@@ -1980,7 +1980,7 @@ Rumusan masalah ketiga mengenai bagaimana penerimaan pengguna (pengelola dan pen
   Wawancara mendalam bersama pengelola senior menghasilkan penerimaan operasional yang istimewa (**skor 9,5 dari skala 10**). Sistem memangkas proses pembukuan laba bersih bulanan dari 3–4 hari kerja manual menjadi sekejap lewat ekspor laporan PDF dan Excel. Hilangnya buku kas fisik dan hadirnya verifikasi mutasi otomatis Midtrans sepenuhnya menghapus kekhawatiran selisih kas (*zero cash variance*) dengan pemilik kos, mengamankan pengelolaan arus kas bulanan dari seluruh 32 unit kamar. Pengelola juga menegaskan bahwa tema *OLED Black Dark Mode* membuat mata tidak cepat lelah saat bekerja lama di depan layar, serta prosedur kamar karantina merah pasca-*checkout* sangat krusial memberi ruang pembersihan fisik sebelum disewakan kembali.
 * **Evaluasi Pengalaman Lima Responden Mahasiswa Penghuni Kos**:
   Evaluasi bersama lima mahasiswa penghuni kos menghasilkan rata-rata skor kepuasan **8,00 dari skala 10** (dengan sebaran: 8,5; 7,0; 9,0; 7,5; dan 8,0). Alur sistem dari pemesanan awal hingga pembayaran bulanan dinilai berhasil memangkas kerumitan birokrasi sewa konvensional, didukung umpan balik objektif dari masing-masing responden:
-  1. *Responden 1 (Arjun, Mahasiswa UNNES - Penghuni Kost, Skor 8,5)*: Mengapresiasi kejelasan katalog daring dan transparansi biaya tanpa perlu survei manual, memuji kecepatan verifikasi otomatis Midtrans BCA Virtual Account, serta kepraktisan kuitansi digital A5 untuk laporan ke orang tua, disertai saran pengingat WhatsApp H-3 sebelum jatuh tempo.
+  1. *Responden 1 (Arjun, Mahasiswa UNDIP - Penghuni Kost, Skor 8,5)*: Mengapresiasi kejelasan katalog daring dan transparansi biaya tanpa perlu survei manual, memuji kecepatan verifikasi otomatis Midtrans BCA Virtual Account, serta kepraktisan kuitansi digital A5 untuk laporan ke orang tua, disertai saran pengingat WhatsApp H-3 sebelum jatuh tempo.
   2. *Responden 2 (Farrel, Mahasiswa USM - Penghuni Kost, Skor 7,0)*: Menilai praktis pengisian formulir reservasi daring dan pelunasan tagihan bulanan langsung dari kamar tanpa repot tarik tunai di ATM malam hari, seraya menyarankan penambahan opsi pembayaran QRIS untuk memfasilitasi mahasiswa non-nasabah BCA.
   3. *Responden 3 (Iman, Mahasiswa UDINUS - Penghuni Kost, Skor 9,0)*: Menyoroti keandalan jejak audit digital dan kuitansi berstempel lunas yang mengeliminasi trauma perselisihan pencatatan sewa yang pernah dialaminya di kos terdahulu, disertai saran menjaga kestabilan respon *server* pada tanggal 1 awal bulan.
   4. *Responden 4 (Ammar, Mahasiswa PKN STAN - Penghuni Kost, Skor 7,5)*: Menekankan fleksibilitas pelunasan tagihan mandiri lewat ponsel saat libur kuliah di luar kota, didukung pesan WhatsApp yang santun, serta mengusulkan penyematan tautan langsung (*deep-link*) pada pesan pengingat tagihan.
@@ -2149,7 +2149,7 @@ Berdasarkan pengalaman empiris selama tahap pengembangan sistem, batasan operasi
 
 ### A. Lembar Informasi Profil Responden Mahasiswa Penghuni Kost
 Evaluasi penerimaan pengguna akhir (*user acceptance*) melibatkan 5 (lima) mahasiswa penghuni kost aktif (termasuk rekan sesama mahasiswa penghuni kost) sebagai responden perwakilan (*surrogate users*) atas arahan dosen pembimbing karena pembatasan wawancara internal oleh pengelola kos:
-1. **Responden 1 (Arjun)**: Mahasiswa UNNES - Penghuni Kost; pengujian via Laptop & Smartphone Android; fokus evaluasi pada katalog daring Neo-Brutalism, form pemesanan bertahap, pembayaran Midtrans BCA VA, dan kuitansi A5.
+1. **Responden 1 (Arjun)**: Mahasiswa UNDIP - Penghuni Kost; pengujian via Laptop & Smartphone Android; fokus evaluasi pada katalog daring Neo-Brutalism, form pemesanan bertahap, pembayaran Midtrans BCA VA, dan kuitansi A5.
 2. **Responden 2 (Farrel)**: Mahasiswa USM - Penghuni Kost; pengujian via Smartphone Android; fokus evaluasi pada aksesibilitas seluler, kemudahan alur reservasi, dan pemantauan tagihan bulanan di portal.
 3. **Responden 3 (Iman)**: Mahasiswa UDINUS - Penghuni Kost; pengujian via Laptop; fokus evaluasi pada keandalan konfirmasi instan, riwayat pembayaran digital, serta kepraktisan pelunasan tagihan bulanan.
 4. **Responden 4 (Ammar)**: Mahasiswa PKN STAN - Penghuni Kost; pengujian via Smartphone iOS; fokus evaluasi pada reservasi jarak jauh, notifikasi pengingat WhatsApp, dan bayar rutin bulanan dari luar kota.
