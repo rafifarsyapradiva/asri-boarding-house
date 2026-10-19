@@ -1258,7 +1258,7 @@ Antarmuka pengguna (*user interface*) dibangun sesuai karakteristik dan kebutuha
 Antarmuka publik menghadirkan transparansi informasi kamar dan kepraktisan alur reservasi mandiri:
 1. **Katalog Kamar Publik Neo-Brutalisme**: Halaman landing page memadukan garis pembatas kontras tinggi (*high-contrast borders*), bayangan datar (*hard box-shadow*), dan tipografi *Space Grotesk*. Pendekatan ini menonjolkan hierarki 32 unit kamar, rincian sarana (AC, kamar mandi dalam, kasur springbed, lemari pakaian, meja belajar), tautan video *room tour*, dan transparansi tarif bulanan. Setiap kartu kamar memiliki lencana ketersediaan (warna hijau untuk *Tersedia* dan merah untuk *Terisi*). Tombol WhatsApp melayang berdiameter 56 px disematkan di pojok kanan bawah, melampaui batas minimum aksesibilitas WCAG 2.1 (44 px) guna memudahkan sentuhan jempol pengguna ponsel. Tampilan katalog disajikan pada Gambar 4.7.
 
-![Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme](images/gambar_4_7.png)
+![Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme](images/antarmuka_katalog_kamar_publik.png)
 
 *Gambar 4.7 Antarmuka Katalog Kamar Publik Neo-Brutalisme*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
