@@ -1265,7 +1265,7 @@ Antarmuka publik menghadirkan transparansi informasi kamar dan kepraktisan alur 
 
 2. **Workspace Stepper Alur Reservasi Online**: Menekan tombol "Pesan Kamar" mengarahkan calon penyewa ke alur bertahap (*5-Step Horizontal Stepper*) pada rute `/reservasi/pemesanan`: (1) Memilih unit kamar kosong, (2) Mengisi biodata NIK 16 digit dan nomor WhatsApp wali, (3) Menentukan tipe sewa dengan diskon sewa tahunan otomatis, (4) Memilih skema pembayaran (DP 30% atau Lunas 100%), dan (5) Menyelesaikan transaksi digital via pop-up Midtrans Snap. Visualisasi alur disajikan pada Gambar 4.8.
 
-![Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa](images/gambar_4_10.png)
+![Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa](images/antarmuka_stepper_reservasi_penyewa.png)
 
 *Gambar 4.8 Workspace Stepper Alur Reservasi Calon Penyewa*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
