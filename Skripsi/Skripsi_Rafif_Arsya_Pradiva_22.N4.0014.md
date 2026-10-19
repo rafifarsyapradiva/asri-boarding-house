@@ -1292,7 +1292,7 @@ Panel administrasi `/admin/dashboard` mengadopsi tema *OLED Black Dark Mode* (#0
 2. **Pemantauan Okupansi 32 Kamar & Aksi Cepat**: Menampilkan persentase hunian secara grafis, daftar reservasi baru yang menunggu audit, tombol "Konfirmasi Tunai" satu klik untuk pembayaran di meja pengelola, serta modul pendaftaran tamu datang langsung (*walk-in*).
 3. **Manajemen Kamar, Penghuni, dan Laporan Keuangan**: Menyediakan menu pengelolaan master kamar (CRUD berproteksi relasi), audit data penghuni beserta kontak wali, penanganan tiket keluhan, siaran WhatsApp massal (*broadcast*), Kalender Visual Kontrol Hunian (UC-19), serta tombol ekspor laporan arus kas ke format PDF resmi (Dompdf) maupun Excel/CSV ber-encoding BOM UTF-8. Tampilan dasbor disajikan pada Gambar 4.10.
 
-![Gambar 4.10 Dasbor Administrasi Keuangan Administrator](images/gambar_4_8.png)
+![Gambar 4.10 Dasbor Administrasi Keuangan Administrator](images/antarmuka_dasbor_admin_keuangan.png)
 
 *Gambar 4.10 Dasbor Administrasi Keuangan Administrator*  
 *Sumber: Tangkapan layar antarmuka sistem produksi (2026)*
