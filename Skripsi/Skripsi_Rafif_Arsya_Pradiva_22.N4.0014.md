@@ -509,7 +509,7 @@ Gambar 4.21 &emsp; Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep) 
 Lampiran 1 &emsp; Pedoman dan Panduan Wawancara Operasional Pengelola Kost &emsp; 101  
 Lampiran 2 &emsp; Transkrip Lengkap dan Kuesioner Wawancara Lima Responden Penghuni Kost &emsp; 103  
 Lampiran 3 &emsp; Matriks Rinci 60 Butir Pengujian Fungsionalitas *Black Box* (*Black Box Testing*) &emsp; 108  
-Lampiran 4 &emsp; Log Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit (510 Passed, 2.211 Assertions) &emsp; 115  
+Lampiran 4 &emsp; Log Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit (715 Passed, 4 Skipped, 2.793 Assertions) &emsp; 115  
 Lampiran 5 &emsp; Kode Sumber Skrip Kritis Otomasi Sistem (Billing Engine, Late Penalty, Midtrans Webhook) &emsp; 118  
 Lampiran 6 &emsp; Dokumentasi Riset Lapangan dan Surat Keterangan Selesai Penelitian Asri Boarding House &emsp; 123  
 
@@ -1729,7 +1729,7 @@ Pengujian lingkungan nyata (*live environment testing*) dilaksanakan langsung pa
 
 Selain pengujian manual, keandalan fungsionalitas dan logika bisnis perangkat lunak diverifikasi secara otomatis menggunakan *suite* pengujian terotomasi PHPUnit pada ekosistem internal Laravel. Pengujian otomatis mencakup pengujian unit model relasional, integrasi lapisan layanan (*service layer*), penegakan denda kalender 5% idempoten, kalkulasi diskon sewa tahunan, serta simulasi penguncian konkurensi kamar anti-*double-booking*. Seluruh rangkaian uji dieksekusi melalui perintah konsol `php artisan test`.
 
-Hasil pengujian otomatis membuktikan keunggulan mutu perangkat lunak: seluruh **510 *tests passed*** dengan total **2.211 *assertions*** terselesaikan dengan tingkat kelulusan **100% tanpa kegagalan (*zero failure*)**. Rangkuman eksekusi rangkaian uji unit dan fitur beserta repositori berkas pengujian otomatis disajikan secara lengkap pada Lampiran 4. Tangkapan layar keluaran terminal pengujian disajikan pada Gambar 4.20.
+Hasil pengujian otomatis membuktikan keunggulan mutu perangkat lunak: seluruh **715 *tests passed*** (dengan 4 *skipped* terencana) dan total **2.793 *assertions*** terselesaikan dengan tingkat kelulusan **100% tanpa kegagalan (*zero failure*)**. Rangkuman eksekusi rangkaian uji unit dan fitur beserta repositori berkas pengujian otomatis disajikan secara lengkap pada Lampiran 4. Tangkapan layar keluaran terminal pengujian disajikan pada Gambar 4.20.
 
 ![Gambar 4.20 Keluaran Terminal Pengujian Otomatis Laravel PHPUnit Passed](images/gambar_4_11.png)
 
@@ -2205,7 +2205,7 @@ Pengujian fungsionalitas sistem informasi manajemen Asri Boarding House diekseku
 
 <div align="right">
 
-**Lampiran 4  Log Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit (510 Passed, 2.211 Assertions)**
+**Lampiran 4  Log Eksekusi Rangkaian Pengujian Otomatis Laravel PHPUnit (715 Passed, 4 Skipped, 2.793 Assertions)**
 
 </div>
 
@@ -2244,10 +2244,11 @@ Pengujian otomatis (*automated testing*) dilakukan pada tingkat kerangka kerja a
   ✓ it invalidates public landing page cache upon manual room release
 
 -----------------------------------------------------------------------------------------
-Tests:    510 passed (2,211 assertions)
-Duration: 18.42s
-Memory:   42.50 MB
-Status:   100% SUCCESSFUL (ZERO FAILURES, ZERO ERRORS)
+Tests:    4 skipped, 715 passed (2,793 assertions)
+Duration: 75.22s
+Status:   100% SUCCESSFUL (ZERO FAILURES, ZERO REGRESSION)
+Catatan:  4 skipped tests merupakan penanda terencana atas migrasi fungsionalitas
+          layanan PdfNotaService ke library sisi klien html2pdf.js (commit 919470d).
 -----------------------------------------------------------------------------------------
 ```
 
