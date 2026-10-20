@@ -702,22 +702,8 @@ Bagan alur model Waterfall yang diterapkan dalam penelitian ini disajikan pada G
 
 ![Gambar 3.1 Diagram Model Waterfall Pengembangan Sistem](images/waterfall_model_diagram.png)
 
-```mermaid
-graph TD
-    A["<b>1. Analisis Kebutuhan (Requirements Analysis)</b><br/>• Observasi Lapangan Operasional Kos<br/>• Wawancara Pengelola Kost<br/>• Wawancara Penghuni Kost Aktif<br/>• Studi Dokumentasi Arsip Kas<br/><i>Luaran: Dokumen Spesifikasi Kebutuhan Sistem (SRS)</i>"] --> B["<b>2. Perancangan Sistem (System Design)</b><br/>• Arsitektur 3-Tier MVC & Service Layer<br/>• Pemodelan UML (Use Case, Activity, Sequence)<br/>• Normalisasi Skema Basis Data 3NF & ERD<br/>• Desain Antarmuka Neo-Brutalism (WCAG 2.1)<br/><i>Luaran: Cetak Biru Arsitektur & Skema Basis Data 3NF</i>"]
-    B --> C["<b>3. Implementasi Program (Implementation)</b><br/>• Framework Web Laravel 11 & PHP 8.2<br/>• Basis Data Relasional MySQL 8.x InnoDB<br/>• Integrasi Midtrans Snap API (BCA VA)<br/>• Integrasi WhatsApp Gateway Fonnte & SMTP<br/><i>Luaran: Aplikasi Sistem Informasi Terintegrasi</i>"]
-    C --> D["<b>4. Pengujian Sistem (System Testing)</b><br/>• Black Box Testing (60 Skenario Uji)<br/>• Pengujian Isolasi Hak Akses Peran (RBAC)<br/>• Simulasi Transaksi Midtrans Sandbox BCA VA<br/>• Automated Unit Testing (PHPUnit 510 Tests)<br/><i>Luaran: Matriks Pengujian Fungsionalitas & Keamanan</i>"]
-    D --> E["<b>5. Penerapan & Evaluasi (Deployment & Evaluation)</b><br/>• Deployment Server Hostinger LiteSpeed<br/>• Konfigurasi Otomasi Cron Job Penagihan<br/>• Optimasi Performa Cache Produksi<br/>• Usability Testing Pengelola & Responden Penghuni<br/><i>Luaran: Sistem Beroperasi Live & Laporan Evaluasi UAT</i>"]
-
-    style A fill:#EFF6FF,stroke:#2563EB,stroke-width:2px,rx:8px,ry:8px
-    style B fill:#F0F9FF,stroke:#0284C7,stroke-width:2px,rx:8px,ry:8px
-    style C fill:#EEF2FF,stroke:#4F46E5,stroke-width:2px,rx:8px,ry:8px
-    style D fill:#ECFDF5,stroke:#059669,stroke-width:2px,rx:8px,ry:8px
-    style E fill:#FFFBEB,stroke:#D97706,stroke-width:2px,rx:8px,ry:8px
-```
-
-Gambar 3.1 Diagram Model Waterfall Pengembangan Sistem  
-Sumber: Rancangan penulis (2026)
+*Gambar 3.1 Diagram Model Waterfall Pengembangan Sistem*  
+*Sumber: Rancangan penulis (2026)*
 
 Tahapan rekayasa perangkat lunak dilaksanakan melalui lima fase berurutan:
 1.	**Analisis Kebutuhan (*Requirements Analysis*)**: Mengidentifikasi seluruh kebutuhan fungsional dan non-fungsional melalui triangulasi data observasi lapangan, wawancara pengelola, masukan mahasiswa, dan telaah arsip fisik. Hasil analisis ini dirumuskan ke dalam dokumen spesifikasi kebutuhan sistem (*Software Requirements Specification*) sebagai acuan baku pengembangan fitur.
@@ -744,53 +730,8 @@ Bagan alur kerangka pemikiran penelitian disajikan pada Gambar 3.2.
 
 ![Gambar 3.2 Kerangka Pemikiran Penelitian](images/kerangka_pemikiran_diagram.png)
 
-```mermaid
-graph TD
-    subgraph INPUT ["1. MASUKAN (INPUT)"]
-        direction TB
-        I1["<b>Kondisi Operasional & Identifikasi Masalah:</b><br/>• Penagihan sewa bulanan manual yang berisiko terlambat & tanpa peringatan terjadwal<br/>• Ketiadaan eskalasi keterlambatan penagihan sewa terstruktur ke kontak orang tua/wali<br/>• Risiko pemesanan ganda (double booking) akibat ketiadaan sinkronisasi kamar<br/>• Pencatatan kas bertumpu pada nota kertas fisik yang rentan selisih saldo kas<br/>• Ketiadaan katalog publik serta modul reservasi daring 24/7 bagi calon penyewa<br/>• Ketiadaan rekam jejak digital (audit trail) atas riwayat transaksi penerimaan kas"]
-        I2["<b>Spesifikasi Kebutuhan Sistem:</b><br/>• Analisis kebutuhan fungsional & non-fungsional dari triangulasi data empiris<br/>• Struktur tarif 3 tipe kamar (VIP, Deluxe, Standar) untuk kapasitas 32 unit kamar<br/>• Ketentuan siklus tagihan rutin tanggal 1, jatuh tempo tanggal 10, dan aturan denda flat 5%"]
-        I1 --- I2
-    end
-
-    subgraph PROCESS ["2. PROSES (PROCESS)"]
-        direction TB
-        P1["<b>Analisis & Perancangan:</b><br/>• Pemodelan UML: Use Case, Activity, Sequence, & Flowchart Diagram<br/>• Perancangan arsitektur perangkat lunak 3-tier MVC dengan Service Layer Pattern<br/>• Perancangan basis data relasional ternormalisasi 3NF dalam ERD 22 tabel<br/>• Rancangan antarmuka Neo-Brutalism berpedoman aksesibilitas WCAG 2.1"]
-        P2["<b>Implementasi Teknologis:</b><br/>• Framework & Database: Laravel 11 pada PHP 8.2, MySQL 8.x InnoDB, dan TailwindCSS<br/>• Penerapan Pessimistic Row Locking untuk proteksi konkurensi kamar saat reservasi<br/>• Integrasi Payment Gateway: Midtrans Snap API (saluran Bank BCA Virtual Account)<br/>• Integrasi Komunikasi Multi-Saluran: Fonnte WhatsApp Gateway API & SMTP surel"]
-        P3["<b>Pengujian & Validasi:</b><br/>• Pengujian fungsional <i>black box</i> (<i>black box testing</i>) berbasis 60 butir skenario uji<br/>• Pengujian isolasi peran hak akses (RBAC 3 portal) guna mencegah kerentanan IDOR<br/>• Pengujian otomatis unit & integrasi aplikasi menggunakan PHPUnit (510 tests passed)<br/>• Penerapan sistem live pada server Hostinger LiteSpeed berproteksi SSL TLS 1.3 Grade A<br/>• Evaluasi pengguna: Side-by-Side Usability Testing pengelola & wawancara 5 mahasiswa"]
-        P1 --- P2 --- P3
-    end
-
-    subgraph OUTPUT ["3. KELUARAN (OUTPUT)"]
-        direction TB
-        O1["<b>Artefak Perangkat Lunak Teruji:</b><br/>• Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway live (asriboardinghouse.weatso.id)<br/>• Modul katalog publik interaktif & formulir reservasi online mandiri 24/7 calon penyewa<br/>• Portal mandiri penyewa aktif untuk memantau invoice, bayar BCA VA, & unduh kuitansi PDF A5<br/>• Panel administrator pengawasan kamar real-time, pencatatan mutasi kas, & ekspor laporan<br/>• Mesin penagihan otomatis (automated billing engine) berbasis cron job & notifikasi WhatsApp"]
-    end
-
-    subgraph OUTCOME ["4. DAMPAK (OUTCOME)"]
-        direction TB
-        D1["<b>Manfaat & Dampak Operasional:</b><br/>• Otomatisasi siklus penagihan rutin bulanan & eskalasi penunggakan ke kontak wali mahasiswa<br/>• Penjaminan integritas & akurasi rekapitulasi keuangan tanpa risiko selisih kas (Zero Cash Variance)<br/>• Pemangkasan durasi penyusunan laporan laba-rugi dari tiga sampai lima hari kerja manual menjadi hitungan detik (instan)<br/>• Peniadaan risiko pemesanan ganda (Zero Double-Booking) kamar kost<br/>• Kemudahan akses reservasi daring 24/7 serta peningkatan transparansi transaksi bagi penghuni"]
-    end
-
-    INPUT --> PROCESS
-    PROCESS --> OUTPUT
-    OUTPUT --> OUTCOME
-
-    style INPUT fill:#F0F7FF,stroke:#2B76C9,stroke-width:2px,rx:8px,ry:8px
-    style PROCESS fill:#EFFAF3,stroke:#278853,stroke-width:2px,rx:8px,ry:8px
-    style OUTPUT fill:#FFFDF2,stroke:#D49B28,stroke-width:2px,rx:8px,ry:8px
-    style OUTCOME fill:#FAF6FF,stroke:#7C4DCF,stroke-width:2px,rx:8px,ry:8px
-
-    style I1 fill:#FFFFFF,stroke:#93C5FD,stroke-width:1px
-    style I2 fill:#FFFFFF,stroke:#93C5FD,stroke-width:1px
-    style P1 fill:#FFFFFF,stroke:#86EFAC,stroke-width:1px
-    style P2 fill:#FFFFFF,stroke:#86EFAC,stroke-width:1px
-    style P3 fill:#FFFFFF,stroke:#86EFAC,stroke-width:1px
-    style O1 fill:#FFFFFF,stroke:#FDE047,stroke-width:1px
-    style D1 fill:#FFFFFF,stroke:#E9D5FF,stroke-width:1px
-```
-
-Gambar 3.2 Kerangka Pemikiran Penelitian  
-Sumber: Rancangan penulis (2026)
+*Gambar 3.2 Diagram Kerangka Pemikiran Penelitian*  
+*Sumber: Rancangan penulis (2026)*
 
 <div style="page-break-after: always;"></div>
 
