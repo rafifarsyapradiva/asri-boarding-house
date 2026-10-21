@@ -312,3 +312,13 @@ Rafif Arsya Pradiva
 Kata Kunci:
 
 <div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## DAFTAR ISI
+
+</div>
+
+<br>
+
+<div style="page-break-after: always;"></div>
