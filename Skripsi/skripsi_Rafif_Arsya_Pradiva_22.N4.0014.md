@@ -322,3 +322,33 @@ Kata Kunci:
 <br>
 
 <div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## DAFTAR TABEL
+
+</div>
+
+<br>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## DAFTAR GAMBAR
+
+</div>
+
+<br>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## DAFTAR LAMPIRAN
+
+</div>
+
+<br>
+
+<div style="page-break-after: always;"></div>
