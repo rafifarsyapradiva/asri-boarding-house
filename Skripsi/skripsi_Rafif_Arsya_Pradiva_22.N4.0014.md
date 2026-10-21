@@ -538,6 +538,9 @@ Objek dalam penelitian ini adalah Asri Boarding House, sebuah usaha jasa sewa hu
 <br>
 
 ## 3.2 Jenis Penelitian
+Penelitian ini menggunakan metode Penelitian dan Pengembangan atau *Research and Development* (R&D) dengan pendekatan rekayasa perangkat lunak untuk menghasilkan produk teknologi terapan. Pendekatan ini dipilih karena fokus utama riset bukan sekadar mengkaji fenomena secara teoritis, melainkan merancang, membangun, dan menguji artefak perangkat lunak fungsional guna memecahkan masalah operasional nyata [28]. Melalui prosedur pengembangan terstruktur, sistem informasi yang dibangun diharapkan mampu menyelaraskan kebutuhan tata kelola bisnis dengan keandalan pemrosesan data secara langsung.
+
+Kajian ini dipadukan dengan strategi studi kasus tunggal yang mendalam guna membedah secara rinci alur bisnis sewa kamar pada Asri Boarding House. Pengumpulan data empiris awal memanfaatkan analisis deskriptif kualitatif untuk menangkap kendala manual pencatatan kas, penagihan tempo, dan pemesanan unit kamar. Pada tahap akhir, evaluasi fungsional dan uji keterpakaian sistem diterapkan bersama pengguna langsung untuk memastikan perangkat lunak bekerja secara tepat sasaran.
 
 <br>
 
@@ -620,3 +623,5 @@ Objek dalam penelitian ini adalah Asri Boarding House, sebuah usaha jasa sewa hu
 [26] A. Wibowo, A. Fathimah, D. Waskito, and R. A. Aprilianto, “Cron Job Implementation for Automated Data Processing and Transfer in Cloud Infrastructure,” *Sainteknol J. Sains dan Teknol.*, vol. 23, no. 1, pp. 11–20, 2025, doi: [10.15294/sainteknol.v23i1.22649](https://doi.org/10.15294/sainteknol.v23i1.22649).
 
 [27] Iqbal, W. Nugraha, and R. Sa'adah, “Optimasi Notifikasi Agenda Kegiatan Pemerintahan Berbasis Web Menggunakan Firebase Cloud Messaging dan WhatsApp Gateway,” *JSITIK J. Sist. Inf. dan Teknol. Inf. Komput.*, vol. 5, no. 1, pp. 29–38, 2026, doi: [10.53624/jsitik.v5i1.951](https://doi.org/10.53624/jsitik.v5i1.951).
+
+[28] M. W. Mauludy and Fathahillah, “Pengembangan Sistem Informasi Pengarsipan File Menggunakan Metode R&D,” *J. Informatics Manag. Inf. Technol.*, vol. 5, no. 2, pp. 118–125, 2025, doi: [10.47065/jimat.v5i2.484](https://doi.org/10.47065/jimat.v5i2.484).
