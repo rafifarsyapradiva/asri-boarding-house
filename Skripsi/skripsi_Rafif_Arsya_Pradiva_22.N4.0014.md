@@ -350,10 +350,8 @@ DAFTAR LAMPIRAN &emsp; xii
 2.9 Notifikasi Fonnte WhatsApp &emsp; 13  
 2.10 Notifikasi SMTP Email &emsp; 14  
 2.11 Cron Job &emsp; 15  
-2.12 Research & Development (R&D) &emsp; 16  
-2.13 Metode SDLC Waterfall &emsp; 17  
 
-**DAFTAR PUSTAKA** &emsp; **18**  
+**DAFTAR PUSTAKA** &emsp; **16**  
 
 <div style="page-break-after: always;"></div>
 
@@ -507,14 +505,6 @@ Aplikasi Asri Boarding House mengintegrasikan layanan SMTP pihak ketiga dari Goo
 <br>
 
 ## 2.11 Cron Job
-
-<br>
-
-## 2.12 Research & Development (R&D)
-
-<br>
-
-## 2.13 Metode SDLC Waterfall
 
 <br>
 
