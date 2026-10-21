@@ -355,12 +355,12 @@ DAFTAR LAMPIRAN &emsp; xii
 **BAB 3 METODE PENELITIAN** &emsp; **16**  
 3.1 Objek Penelitian &emsp; 16  
 3.2 Jenis Penelitian &emsp; 16  
-3.3 Sumber Data &emsp; 16  
-3.4 Teknik Pengumpulan Data &emsp; 16  
-3.5 Metode Pengembangan Sistem &emsp; 16  
-3.6 Kerangka Pemikiran &emsp; 16  
+3.3 Sumber Data &emsp; 17  
+3.4 Teknik Pengumpulan Data &emsp; 17  
+3.5 Metode Pengembangan Sistem &emsp; 18  
+3.6 Kerangka Pemikiran &emsp; 19  
 
-**DAFTAR PUSTAKA** &emsp; **17**  
+**DAFTAR PUSTAKA** &emsp; **20**  
 
 <div style="page-break-after: always;"></div>
 
@@ -382,8 +382,8 @@ DAFTAR LAMPIRAN &emsp; xii
 
 <br>
 
-Gambar 3.1 Tahapan Metode SDLC Waterfall &emsp; 16  
-Gambar 3.2 Kerangka Pemikiran Penelitian &emsp; 17  
+Gambar 3.1 Tahapan Metode SDLC Waterfall &emsp; 18  
+Gambar 3.2 Kerangka Pemikiran Penelitian &emsp; 19  
 
 <div style="page-break-after: always;"></div>
 
@@ -596,7 +596,7 @@ Pada Gambar 3.1, alur pengembangan diawali dari tahap *requirement gathering and
 <br>
 
 ## 3.6 Kerangka Pemikiran
-Kerangka pemikiran penelitian ini dirancang dengan pendekatan *Research and Development* (R&D) untuk menghasilkan produk sistem informasi yang teruji bagi Asri Boarding House. Pendekatan ini menjembatani penemuan kendala operasional lapangan secara nyata dengan perancangan solusi berbasis teknologi web yang tepat guna. Melalui alur yang terstruktur dari identifikasi masalah hingga pengujian sistem, pengembangan perangkat lunak dapat berjalan secara fokus dan terukur.
+Kerangka pemikiran ini menggunakan pendekatan *Research and Development* (R&D) untuk menghasilkan produk sistem informasi yang teruji di Asri Boarding House. Pendekatan ini menghubungkan permasalahan nyata di lapangan dengan perancangan aplikasi berbasis web. Tahapan kerja yang teratur dari identifikasi masalah sampai pengujian menjaga proses pembuatan sistem tetap terarah.
 
 <div align="center">
 
@@ -605,13 +605,13 @@ Kerangka pemikiran penelitian ini dirancang dengan pendekatan *Research and Deve
 <br>
 
 *Gambar 3.2 Kerangka Pemikiran Penelitian*  
-*Sumber: Data Primer Penelitian Diolah (2026)*
+
 
 </div>
 
 <br>
 
-Pada Gambar 3.2, alur penelitian diawali dari bagian masukan (*input*) yang merangkum kondisi operasional indekos, temuan masalah pencatatan manual, serta spesifikasi kebutuhan sistem. Tahap berikutnya adalah proses (*process*), di mana kebutuhan tersebut dianalisis dan dirancang, diimplementasikan ke dalam kode program, lalu diuji kelayakannya secara menyeluruh. Rangkaian proses tersebut menghasilkan luaran (*output*) berupa artefak perangkat lunak manajemen indekos yang telah teruji dan siap digunakan. Pada akhirnya, sistem ini memberikan dampak nyata (*outcome*) berupa kemudahan operasional, ketepatan pembukuan kas, serta kenyamanan transaksi bagi pengelola dan penghuni indekos.
+Pada Gambar 3.2, tahap masukan (*input*) mencakup kondisi operasional indekos, identifikasi masalah pencatatan, dan spesifikasi kebutuhan sistem. Tahap berikutnya adalah proses (*process*), yang meliputi analisis dan perancangan, implementasi sistem, serta pengujian dan validasi fitur. Rangkaian kerja tersebut menghasilkan keluaran (*output*) berupa artefak perangkat lunak yang telah teruji dan siap digunakan. Bagian akhir berupa dampak (*outcome*) memberikan manfaat operasional langsung, seperti pembukuan kas yang rapi serta kemudahan pembayaran bagi pengelola dan penghuni.
 
 <br>
 
