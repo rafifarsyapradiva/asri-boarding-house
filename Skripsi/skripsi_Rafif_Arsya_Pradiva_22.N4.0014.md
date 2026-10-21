@@ -477,6 +477,9 @@ Penerapan metodologi normalisasi hingga Bentuk Normal Ketiga (3NF) memecah skema
 <br>
 
 ## 2.7 MySQL Database
+MySQL merupakan sistem manajemen basis data relasional (*Relational Database Management System*) sumber terbuka yang mengelola sekumpulan tabel terstruktur menggunakan bahasa *Structured Query Language* (SQL) sebagai standar manipulasi data. Sistem ini menerapkan arsitektur *client-server* multithread yang sanggup melayani kueri pembacaan maupun penulisan data secara serentak tanpa menimbulkan latensi komputasi yang berlebih. Efisiensi alokasi memori serta kompatibilitasnya yang tinggi terhadap kerangka kerja Laravel menjadikan MySQL pilihan ideal untuk menangani operasi CRUD (*Create, Read, Update, Delete*) pada seluruh entitas sistem secara cepat dan stabil [18].
+
+Pada implementasi manajemen properti sewa, pemanfaatan *storage engine* InnoDB pada MySQL menyediakan dukungan transaksi berbasis ACID (*Atomicity, Consistency, Isolation, Durability*) dan penguncian tingkat baris (*row-level locking*) guna mencegah benturan data saat beberapa penyewa mengakses unit kamar yang sama pada waktu bersamaan. Penerapan skema indeks serta penegakan integritas kunci asing (*foreign key constraints*) memastikan riwayat pembayaran dan status keterisian kamar terekam secara konsisten sekaligus mempercepat waktu respon kueri pencarian data [19].
 
 <br>
 
@@ -547,3 +550,7 @@ Penerapan metodologi normalisasi hingga Bentuk Normal Ketiga (3NF) memecah skema
 [16] Y. Adisa and M. I. P. Nasution, “Konsep Dan Peran Sistem Manajemen Basis Data Relasional Pada Sistem Informasi Manajemen,” *MASIP J. Manaj. Adm. Bisnis dan Publik Terapan*, vol. 1, no. 3, pp. 76–83, 2023, doi: [10.59061/masip.v1i3.314](https://doi.org/10.59061/masip.v1i3.314).
 
 [17] D. F. M. Dina, “Normalisasi Database Rancangan Sistem Penyewaan Buku Berbayar,” *Computing Insight J. Comput. Sci.*, vol. 4, no. 1, pp. 56–61, 2024, doi: [10.30651/comp_insight.v4i1.15814](https://doi.org/10.30651/comp_insight.v4i1.15814).
+
+[18] J. V. Dachi and J. Suhada, “Implementasi Basis Data Sederhana Menggunakan MySQL/PostgreSQL,” *Router J. Tek. Inform. dan Terap.*, vol. 3, no. 1, pp. 49–59, 2025, doi: [10.62951/router.v3i1.621](https://doi.org/10.62951/router.v3i1.621).
+
+[19] I. Thoib, B. P. Candra, N. Sururi, and D. S. Nugraha, “Perbandingan Performa Pencarian Data Berbasis Teks dengan Dan Tanpa Full-text Index pada Basis Data MySQL,” *INSOLOGI J. Sains dan Teknol.*, vol. 3, no. 6, pp. 663–673, 2024, doi: [10.55123/insologi.v3i6.4596](https://doi.org/10.55123/insologi.v3i6.4596).
