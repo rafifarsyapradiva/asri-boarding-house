@@ -352,3 +352,23 @@ Kata Kunci:
 <br>
 
 <div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## BAB 1<br>PENDAHULUAN
+
+</div>
+
+<br>
+
+## 1.1 Latar Belakang
+
+<br>
+
+## 1.2 Rumusan Masalah
+
+<br>
+
+## 1.3 Tujuan Penelitian
+
+<br>
