@@ -394,6 +394,68 @@ Berpijak pada rumusan masalah yang telah diuraikan, tujuan yang hendak dicapai d
 
 <div align="center">
 
+## BAB 2<br>TINJAUAN PUSTAKA
+
+</div>
+
+<br>
+
+## 2.1 Sistem Informasi Manajemen
+
+<br>
+
+## 2.2 E-Commerce B2C
+
+<br>
+
+## 2.3 Web Application
+
+<br>
+
+## 2.4 UI & UX
+
+<br>
+
+## 2.5 Laravel
+
+<br>
+
+## 2.6 RDBMS
+
+<br>
+
+## 2.7 MySQL Database
+
+<br>
+
+## 2.8 Payment Gateway
+
+<br>
+
+## 2.9 Notifikasi Fonnte WhatsApp
+
+<br>
+
+## 2.10 Notifikasi SMTP Email
+
+<br>
+
+## 2.11 Cron Job
+
+<br>
+
+## 2.12 Research & Development (R&D)
+
+<br>
+
+## 2.13 Metode SDLC Waterfall
+
+<br>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
 ## DAFTAR PUSTAKA
 
 </div>
