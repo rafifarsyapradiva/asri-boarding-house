@@ -1,3 +1,4 @@
+
 <div align="center">
 
 ### LAPORAN SKRIPSI
@@ -532,6 +533,7 @@ Penerapan pada sistem Asri Boarding House memanfaatkan Laravel Task Scheduling y
 <br>
 
 ## 3.1 Objek Penelitian
+Objek dalam penelitian ini adalah Asri Boarding House, sebuah usaha jasa sewa hunian indekos yang berlokasi di Jalan Maera Sari Nomor 1, Tembalang, Kota Semarang. Properti ini mengoperasikan 32 unit kamar yang terbagi ke dalam tipe VIP, Deluxe, dan Standar guna melayani kebutuhan tempat tinggal mahasiswa serta pekerja di sekitar kawasan kampus. Pengelolaan harian yang menjadi fokus kajian mencakup alur reservasi kamar, pencatatan pembayaran sewa bulanan, dan pembukuan kas yang selama ini masih ditangani secara manual menggunakan buku besar fisik. Kondisi tersebut menjadikan Asri Boarding House sebagai lokus yang tepat untuk merancang dan menerapkan sistem informasi manajemen pengelolaan kost berbasis web yang terintegrasi langsung dengan gerbang pembayaran digital.
 
 <br>
 
