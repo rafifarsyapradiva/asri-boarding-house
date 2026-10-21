@@ -545,6 +545,18 @@ Kajian ini dipadukan dengan strategi studi kasus tunggal yang mendalam guna memb
 <br>
 
 ## 3.3 Sumber Data
+Sumber data yang dihimpun dalam penelitian ini dikelompokkan menjadi dua kategori utama, yaitu data primer dan data sekunder. Kedua kelompok data tersebut dimanfaatkan untuk memetakan alur proses bisnis serta mendasari perancangan modul pada Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* di Asri Boarding House.
+
+1. Data Primer  
+Data primer diperoleh langsung dari pihak terkait di lingkungan Asri Boarding House melalui kegiatan wawancara dan observasi lapangan, yaitu:
+* **Penjaga kost**, untuk menggali informasi seputar tata kelola operasional harian, alur pencatatan sewa kamar, kendala rekapitulasi buku kas fisik, serta penilaian terhadap kemudahan penggunaan fitur sistem.
+* **Penghuni kost**, untuk memperoleh tanggapan mengenai pengalaman reservasi kamar, kejelasan informasi ketersediaan unit, kemudahan proses pembayaran digital, dan penerimaan bukti tagihan.
+
+2. Data Sekunder  
+Data sekunder diperoleh dari berbagai dokumen dan literatur tertulis guna melengkapi serta memperkuat landasan analisis dalam penelitian, yaitu:
+* Catatan pembukuan internal berupa buku besar manual, arsip bukti transfer sewa, nota belanja operasional, dan data tarif 32 unit kamar Asri Boarding House.
+* Dokumentasi teknis antarmuka pemrograman aplikasi Midtrans, gateway notifikasi WhatsApp, serta pustaka pendukung kerangka kerja Laravel.
+* Jurnal ilmiah, buku teks, dan publikasi akademik yang membahas rekayasa perangkat lunak, sistem informasi manajemen indekos, dan integrasi gerbang pembayaran elektronik.
 
 <br>
 
