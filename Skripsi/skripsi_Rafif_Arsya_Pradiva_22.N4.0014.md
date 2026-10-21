@@ -362,6 +362,15 @@ Kata Kunci:
 <br>
 
 ## 1.1 Latar Belakang
+Pertumbuhan mahasiswa perantau di kawasan pendidikan Tembalang Kota Semarang mendorong tingginya kebutuhan hunian sewa yang praktis, transparan, dan mudah diakses dari jarak jauh. Keterbatasan media publikasi konvensional kerap menyulitkan calon penyewa baru dalam memastikan ketersediaan unit kamar tanpa harus mendatangi lokasi secara langsung. Implementasi sistem pemesanan berbasis web terbukti memangkas hambatan geografis tersebut serta menertibkan pendataan reservasi secara terstruktur sejak awal [1].
+
+Kondisi tersebut dialami langsung oleh Asri Boarding House di kawasan Tembalang yang menaungi 32 unit kamar tidur sewa dalam tiga kategori, yaitu tipe VIP, Deluxe, dan Standar. Seluruh pengelolaan inventaris kamar selama ini masih bertumpu pada lembaran buku besar fisik, sehingga pengelola kesulitan menyinkronkan data keterisian kamar secara langsung. Akibatnya, risiko pemesanan ganda (*double booking*) sangat rentan terjadi saat beberapa peminat memesan unit yang sama pada rentang waktu berdekatan, suatu kendala klasik pada hunian sewa tanpa sistem terintegrasi [2].
+
+Selain masalah ketersediaan unit, ketidakteraturan penagihan sewa bulanan menjadi persoalan rutin yang menguras waktu operasional. Pemberitahuan jatuh tempo tanggal 10 dan tindak lanjut denda sewa masih dijalankan melalui pesan pribadi satu per satu, sehingga tagihan kerap terlewat dan memicu penumpukan tunggakan. Otomatisasi pengawasan jadwal sewa pada sistem informasi terbukti efektif menertibkan siklus pembayaran bulanan dan meminimalkan keterlambatan pelunasan oleh penghuni [3].
+
+Persoalan finansial kian bertambah saat verifikasi pembayaran sewa masih mengandalkan pencocokan tangkapan layar transfer bank dan penerimaan uang tunai di meja kantor. Proses rekapitulasi nota pengeluaran operasional dan bukti kas masuk tersebut memakan waktu berhari-hari pada setiap penutupan buku akhir bulan. Integrasi gerbang pembayaran digital (*payment gateway*) terbukti mampu mengotomatiskan konfirmasi transaksi non-tunai, mengeliminasi selisih kas fisik, dan menjamin validitas pencatatan keuangan secara langsung [4].
+
+Guna mengatasi kendala operasional tersebut secara menyeluruh, Asri Boarding House memerlukan platform manajemen terpadu yang memadukan reservasi daring, mesin penagihan otomatis, dan gerbang pembayaran Midtrans. Penyediaan kanal notifikasi instan berbasis *gateway* pada aplikasi web terbukti memperkuat transparansi pembukuan serta memperlancar penyampaian tagihan kepada penyewa maupun pihak penjamin secara *real-time* [5]. Oleh karena itu, penelitian ini mengembangkan Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House guna mewujudkan tata kelola properti sewa yang akuntabel, efisien, dan bebas selisih kas.
 
 <br>
 
@@ -382,3 +391,13 @@ Kata Kunci:
 </div>
 
 <br>
+
+[1] A. Cornellya and H. Afriyadi, “Perancangan Sistem Informasi Pemesanan pada Kost Tya Berbasis Web Menggunakan Framework Laravel,” *PESHUM J. Pendidikan, Sos. dan Hum.*, vol. 4, no. 6, pp. 10360-10369, 2025, doi: [10.56799/peshum.v4i6.11777](https://doi.org/10.56799/peshum.v4i6.11777).
+
+[2] C. Nizar, “Rancang Bangun Sistem Informasi Sewa Rumah Kost (E-Kost) Berbasis Website,” *J. Sist. Inf. dan Sains Teknol.*, vol. 3, no. 1, pp. 1-10, 2021, doi: [10.31326/sistek.v3i1.852](https://doi.org/10.31326/sistek.v3i1.852).
+
+[3] E. J. Malaikosa and P. Mokola, “Sistem Informasi Monitoring Rumah Kos dan Pembayarannya Berbasis Web Menggunakan Metode Rapid Application Development,” *JSiI (Jurnal Sist. Informasi)*, vol. 11, no. 1, pp. 21-26, 2024, doi: [10.30656/jsii.v11i1.8222](https://doi.org/10.30656/jsii.v11i1.8222).
+
+[4] R. Sutisna and F. Aziz, “Perancangan Sistem Penyewaan Alat Event Berbasis Website Menggunakan Midtrans sebagai Integrasi Payment Gateway pada PT. Bangbewe Production,” *REMIK Ris. dan E-Jurnal Manaj. Inform. Komput.*, vol. 9, no. 1, pp. 317-325, 2025, doi: [10.33395/remik.v9i1.14498](https://doi.org/10.33395/remik.v9i1.14498).
+
+[5] L. Hakim, S. P. Kristanto, M. N. Shodiq, and E. Amaliyah, “Aplikasi Penerimaan dan Pengeluaran Kas Berbasis Web dan WhatsApp Gateway,” *J. Tekno Kompak*, vol. 15, no. 1, pp. 13-24, 2021, doi: [10.33365/jtk.v15i1.900](https://doi.org/10.33365/jtk.v15i1.900).
