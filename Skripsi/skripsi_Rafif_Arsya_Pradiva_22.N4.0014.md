@@ -372,3 +372,13 @@ Kata Kunci:
 ## 1.3 Tujuan Penelitian
 
 <br>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## DAFTAR PUSTAKA
+
+</div>
+
+<br>
