@@ -382,6 +382,8 @@ DAFTAR LAMPIRAN &emsp; xii
 
 <br>
 
+Gambar 3.1 Tahapan Metode SDLC Waterfall &emsp; 16  
+
 <div style="page-break-after: always;"></div>
 
 <div align="center">
@@ -571,6 +573,24 @@ Wawancara dilakukan secara semi-terstruktur kepada dua kelompok responden utama,
 <br>
 
 ## 3.5 Metode Pengembangan Sistem
+Pengembangan sistem informasi manajemen pada Asri Boarding House menerapkan model sekuensial linier *Waterfall* dalam kerangka kerja *Software Development Life Cycle* (SDLC) [30]. Model ini mengarahkan proses rekayasa perangkat lunak secara berurutan mulai dari analisis kebutuhan, perancangan, implementasi kode, pengujian, verifikasi, hingga pemeliharaan berkala. Karakteristik utama pendekatan ini menuntut setiap tahapan diselesaikan dan divalidasi terlebih dahulu sebelum melanjutkan ke fase pengembangan berikutnya.
+
+Model *Waterfall* dipilih karena spesifikasi kebutuhan pengelolaan indekos, seperti alur pemesanan kamar dan skema tagihan sewa bulanan, telah terdefinisi secara pasti sejak awal melalui studi lapangan. Alur kerja yang sistematis ini memudahkan pengendalian risiko serta menjamin ketepatan integrasi gerbang pembayaran digital tanpa terjadinya perombakan struktur kode di tengah jalan.
+
+<div align="center">
+
+<img src="images/metode_sdlc_waterfall.png" alt="Tahapan Metode SDLC Waterfall" width="550">
+
+<br>
+
+*Gambar 3.1 Tahapan Metode SDLC Waterfall*  
+*Sumber: Dicoding Indonesia (2021)*
+
+</div>
+
+<br>
+
+Pada Gambar 3.1, alur pengembangan diawali dengan tahap *requirement gathering and analysis* untuk menghimpun seluruh kebutuhan fungsional pengelolaan indekos melalui wawancara dan observasi langsung. Tahap berikutnya adalah *design*, di mana kebutuhan pengguna diterjemahkan ke dalam cetak biru arsitektur perangkat lunak, perancangan antarmuka, serta pemodelan basis data relasional. Rancangan logis tersebut kemudian direalisasikan pada tahap *implementasi* melalui penulisan kode program menggunakan kerangka kerja Laravel dan integrasi antarmuka pembayaran Midtrans. Setelah modul program selesai disusun, proses berlanjut ke tahap *integration & testing* dan *verification* guna menguji kelayakan fungsi sistem serta memastikan kesesuaian alur transaksi bersama pengguna. Siklus rekayasa diakhiri dengan tahap *operation & maintenance* untuk menggelar aplikasi ke peladen produksi, memantau kinerja operasional harian, dan menangani pemeliharaan sistem secara berkala.
 
 <br>
 
@@ -645,3 +665,5 @@ Wawancara dilakukan secara semi-terstruktur kepada dua kelompok responden utama,
 [28] M. W. Mauludy and Fathahillah, “Pengembangan Sistem Informasi Pengarsipan File Menggunakan Metode R&D,” *J. Informatics Manag. Inf. Technol.*, vol. 5, no. 2, pp. 118–125, 2025, doi: [10.47065/jimat.v5i2.484](https://doi.org/10.47065/jimat.v5i2.484).
 
 [29] R. A. Putra and A. Voutama, “Rancang Bangun Sistem Informasi Manajemen Kost Menggunakan Metode Waterfall Berbasis Web,” *TIN Terap. Inform. Nusant.*, vol. 6, no. 12, pp. 2302–2312, 2026, doi: [10.47065/tin.v6i12.9567](https://doi.org/10.47065/tin.v6i12.9567).
+
+[30] E. Rahmi, E. Yumami, and N. Hidayasari, “Analisis Metode Pengembangan Sistem Informasi Berbasis Website: Systematic Literature Review,” *REMIK Ris. dan E-Jurnal Manaj. Inform. Komput.*, vol. 7, no. 1, pp. 821–834, 2023, doi: [10.33395/remik.v7i1.12177](https://doi.org/10.33395/remik.v7i1.12177).
