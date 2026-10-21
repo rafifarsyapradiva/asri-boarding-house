@@ -351,7 +351,15 @@ DAFTAR LAMPIRAN &emsp; xii
 2.10 Notifikasi SMTP Email &emsp; 14  
 2.11 Cron Job &emsp; 15  
 
-**DAFTAR PUSTAKA** &emsp; **16**  
+**BAB 3 METODE PENELITIAN** &emsp; **16**  
+3.1 Objek Penelitian &emsp; 16  
+3.2 Jenis Penelitian &emsp; 16  
+3.3 Sumber Data &emsp; 16  
+3.4 Teknik Pengumpulan Data &emsp; 16  
+3.5 Metode Pengembangan Sistem &emsp; 16  
+3.6 Kerangka Pemikiran &emsp; 16  
+
+**DAFTAR PUSTAKA** &emsp; **17**  
 
 <div style="page-break-after: always;"></div>
 
@@ -510,6 +518,40 @@ Cron job merupakan utilitas penjadwalan tugas berbasis waktu (*time-based job sc
 Dalam pengelolaan notifikasi sistem, berkas konfigurasi penjadwalan dirancang untuk memicu perintah konsol secara berkala guna mendistribusikan pesan pengingat tagihan melalui integrasi multi-saluran WhatsApp dan surat elektronik. Pengaturan ekspresi waktu yang presisi pada skrip penjadwal memungkinkan sistem membaca tenggat jatuh tempo invoice di basis data lalu meneruskan instruksi transmisi pesan secara serentak ke gerbang komunikasi eksternal [27].
 
 Penerapan pada sistem Asri Boarding House memanfaatkan Laravel Task Scheduling yang terhubung pada cron job tunggal *server* produksi untuk menjalankan perintah penerbitan tagihan setiap tanggal 1 awal bulan serta pemrosesan denda keterlambatan setiap hari pukul 01:00 WIB. Otomatisasi terjadwal ini berhasil mengeliminasi keterlambatan pencatatan piutang bulanan, memastikan penghuni menerima peringatan tempo sewa secara disiplin, serta meringankan beban operasional pengelola dari pekerjaan administratif repetitif. Integrasi cron job pada akhirnya menegaskan perannya sebagai poros otomatisasi utama yang menjaga kesinambungan siklus penagihan dan keandalan tata kelola hunian indekos modern.
+
+<br>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## BAB 3<br>METODE PENELITIAN
+
+</div>
+
+<br>
+
+## 3.1 Objek Penelitian
+
+<br>
+
+## 3.2 Jenis Penelitian
+
+<br>
+
+## 3.3 Sumber Data
+
+<br>
+
+## 3.4 Teknik Pengumpulan Data
+
+<br>
+
+## 3.5 Metode Pengembangan Sistem
+
+<br>
+
+## 3.6 Kerangka Pemikiran
 
 <br>
 
