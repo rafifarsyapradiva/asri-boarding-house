@@ -292,3 +292,23 @@ Semarang, 13 Juli 2026
 Rafif Arsya Pradiva
 
 </div>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+### ABSTRAK
+
+</div>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+Kata Kunci:
+
+<div style="page-break-after: always;"></div>
