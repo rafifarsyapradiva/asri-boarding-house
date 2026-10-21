@@ -484,6 +484,11 @@ Pada implementasi manajemen properti sewa, pemanfaatan *storage engine* InnoDB p
 <br>
 
 ## 2.8 Payment Gateway
+*Gerbang pembayaran (payment gateway)* Midtrans merupakan platform perantara transaksi digital komprehensif yang menghubungkan aplikasi web secara langsung dengan berbagai jaringan perbankan dan penyedia dompet digital di Indonesia. Layanan ini berfungsi memfasilitasi transaksi pembayaran mandiri melalui beragam metode pembayaran resmi seperti *Virtual Account* berbagai bank terkemuka, QRIS, *e-wallet*, serta kartu kredit tanpa mengharuskan pengelola membuka rekening penampung pada masing-masing bank secara terpisah. Kemampuan agregasi pembayaran tersebut mempermudah calon penyewa dalam menyelesaikan kewajiban finansial secara fleksibel serta meniadakan tahapan pengunggahan bukti transfer konvensional yang rawan pemalsuan [20].
+
+Midtrans menyediakan dua lingkungan operasional yang terisolasi, yakni mode *Sandbox* sebagai ruang simulasi transaksi untuk menguji alur pembayaran menggunakan akun virtual buatan, serta mode *Production* yang menangani transaksi perbankan riil dengan otentikasi kunci keamanan resmi. Pada tahap pengembangan sistem manajemen Asri Boarding House saat ini, mode *Sandbox* diterapkan guna memverifikasi keandalan simulasi transaksi pembayaran uang muka kamar, pelunasan sewa bulanan, hingga denda keterlambatan secara menyeluruh. Konfigurasi berbasis berkas lingkungan (*environment variable*) memungkinkan sistem beralih ke mode *Production* secara langsung hanya dengan memperbarui Server Key dan Client Key resmi tanpa perlu mengubah logika program yang telah berjalan.
+
+Integrasi teknis pada sistem dibangun menggunakan antarmuka Midtrans Snap API yang memunculkan jendela pembayaran terpadu serta memanfaatkan *webhook callback* untuk menerima pemberitahuan status transaksi berbasis validasi *signature key* SHA-512. Mekanisme ini secara otomatis memperbarui status transaksi menjadi lunas (*settlement*) di dalam basis data saat dana terverifikasi, memicu pembuatan kuitansi digital, serta membuka akses pembaruan jadwal sewa secara *real-time*. Penggunaan jalur konfirmasi otomatis tersebut meniadakan beban verifikasi manual oleh pengelola, memangkas selisih pencatatan kas fisik, dan menjamin akurasi rekapitulasi finansial bulanan. Penerapan gerbang pembayaran digital pada akhirnya menjadi instrumen krusial dalam menciptakan tata kelola keuangan indekos yang transparan, profesional, dan akuntabel bagi seluruh pihak [21].
 
 <br>
 
@@ -554,3 +559,7 @@ Pada implementasi manajemen properti sewa, pemanfaatan *storage engine* InnoDB p
 [18] J. V. Dachi and J. Suhada, “Implementasi Basis Data Sederhana Menggunakan MySQL/PostgreSQL,” *Router J. Tek. Inform. dan Terap.*, vol. 3, no. 1, pp. 49–59, 2025, doi: [10.62951/router.v3i1.621](https://doi.org/10.62951/router.v3i1.621).
 
 [19] I. Thoib, B. P. Candra, N. Sururi, and D. S. Nugraha, “Perbandingan Performa Pencarian Data Berbasis Teks dengan Dan Tanpa Full-text Index pada Basis Data MySQL,” *INSOLOGI J. Sains dan Teknol.*, vol. 3, no. 6, pp. 663–673, 2024, doi: [10.55123/insologi.v3i6.4596](https://doi.org/10.55123/insologi.v3i6.4596).
+
+[20] M. Nurhayati and R. Setiawan, “Implementasi Payment Gateway Midtrans Pada Aplikasi Toko Mas Berbasis Web,” *J. Algoritma*, vol. 21, no. 2, pp. 366–377, 2024, doi: [10.33364/algoritma/v.21-2.1686](https://doi.org/10.33364/algoritma/v.21-2.1686).
+
+[21] R. C. Buwono, R. Kartadie, and M. K. Ramadhan, “Perancangan dan Implementasi Sistem Payment Gateway MIDTRANS untuk UMKM Batik Lurik,” *INFOTECH J. Inform. dan Teknol.*, vol. 5, no. 2, pp. 228–238, 2024, doi: [10.37373/infotech.v5i2.1334](https://doi.org/10.37373/infotech.v5i2.1334).
