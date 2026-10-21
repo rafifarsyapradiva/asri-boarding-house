@@ -561,6 +561,12 @@ Data sekunder diperoleh dari berbagai dokumen dan literatur tertulis guna meleng
 <br>
 
 ## 3.4 Teknik Pengumpulan Data
+Guna menggali pemahaman mendalam mengenai kebutuhan operasional serta efektivitas sistem, penelitian ini menerapkan teknik wawancara kepada pihak-pihak yang terlibat langsung dalam tata kelola hunian indekos [29]. Pengumpulan data lapangan ini difokuskan untuk memotret kendala nyata pengelolaan sewa kamar manual serta menguji kemudahan interaksi pengguna saat mengoperasikan sistem informasi berbasis web.
+
+1. Wawancara  
+Wawancara dilakukan secara semi-terstruktur kepada dua kelompok responden utama, yaitu:
+* **Penjaga kost**, yang berfokus pada evaluasi pembukuan kas masuk, kepraktisan pemantauan ketersediaan 32 unit kamar, otomatisasi penagihan sewa bulanan, dan efisiensi waktu kerja setelah beralih dari buku besar fisik.
+* **Penghuni kost**, yang berfokus pada kemudahan reservasi kamar, kejelasan rincian tagihan sewa, kepraktisan pembayaran digital melalui *payment gateway*, dan kepuasan terhadap bukti transaksi yang diterima.
 
 <br>
 
@@ -637,3 +643,5 @@ Data sekunder diperoleh dari berbagai dokumen dan literatur tertulis guna meleng
 [27] Iqbal, W. Nugraha, and R. Sa'adah, “Optimasi Notifikasi Agenda Kegiatan Pemerintahan Berbasis Web Menggunakan Firebase Cloud Messaging dan WhatsApp Gateway,” *JSITIK J. Sist. Inf. dan Teknol. Inf. Komput.*, vol. 5, no. 1, pp. 29–38, 2026, doi: [10.53624/jsitik.v5i1.951](https://doi.org/10.53624/jsitik.v5i1.951).
 
 [28] M. W. Mauludy and Fathahillah, “Pengembangan Sistem Informasi Pengarsipan File Menggunakan Metode R&D,” *J. Informatics Manag. Inf. Technol.*, vol. 5, no. 2, pp. 118–125, 2025, doi: [10.47065/jimat.v5i2.484](https://doi.org/10.47065/jimat.v5i2.484).
+
+[29] R. A. Putra and A. Voutama, “Rancang Bangun Sistem Informasi Manajemen Kost Menggunakan Metode Waterfall Berbasis Web,” *TIN Terap. Inform. Nusant.*, vol. 6, no. 12, pp. 2302–2312, 2026, doi: [10.47065/tin.v6i12.9567](https://doi.org/10.47065/tin.v6i12.9567).
