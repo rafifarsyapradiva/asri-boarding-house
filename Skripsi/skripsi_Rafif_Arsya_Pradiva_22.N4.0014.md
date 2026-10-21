@@ -500,6 +500,9 @@ Pada arsitektur sistem Asri Boarding House, implementasi Fonnte dihubungkan mela
 <br>
 
 ## 2.10 Notifikasi SMTP Email
+Komunikasi surat elektronik berbasis *Simple Mail Transfer Protocol* (SMTP) menetapkan mekanisme baku pertukaran pesan digital lintas jaringan melalui arsitektur transmisi bertingkat dengan dukungan enkripsi TLS (*Transport Layer Security*) pada port aman. Pemanfaatan jalur surel di dalam ekosistem web memberikan media pemberitahuan berkas administratif yang permanen, rapi, dan mudah diarsipkan pengguna sebagai bukti transaksi resmi [24].
+
+Aplikasi Asri Boarding House mengintegrasikan layanan SMTP pihak ketiga dari Google melalui konfigurasi *mail driver* Laravel yang menghubungkan sistem ke *server* `smtp.gmail.com` menggunakan kredensial *App Password* dan enkripsi TLS port 587. Jalur komunikasi ini secara otomatis menyalurkan pesan transaksional penting, mencakup tautan pemulihan kata sandi akun, salinan rincian invoice sewa bulanan, dan dokumen pelunasan langsung ke kotak masuk (*inbox*) penyewa maupun administrator. Tingkat reputasi pengiriman yang tinggi pada infrastruktur Google meminimalkan risiko pesan masuk ke kotak *spam* sekaligus melengkapi notifikasi pesan instan menjadi satu kesatuan sistem komunikasi yang kredibel [25].
 
 <br>
 
@@ -570,3 +573,7 @@ Pada arsitektur sistem Asri Boarding House, implementasi Fonnte dihubungkan mela
 [22] I. M. B. Waton, A. N. Weking, and B. Deta, “Penerapan Api Whatsapp Fonnte Untuk Sistem Pengingat Jadwal Bimbingan Tugas Akhir Mahasiswa Berbasis Web,” *J. Tek. Mesin, Elektro dan Ilmu Komput.*, vol. 5, no. 2, pp. 229–241, 2025, doi: [10.55606/teknik.v5i2.7614](https://doi.org/10.55606/teknik.v5i2.7614).
 
 [23] A. R. Manik, D. Kiswanto, M. B. Akbar, and J. Purba, “Academic Portal with MFA (WhatsApp OTP via Fonnte), Role-Based Access Control, and Logging System for Network Monitoring,” *J. Ilm. Sist. Inf.*, vol. 4, no. 3, pp. 674–687, 2025, doi: [10.51903/qwz6pt87](https://doi.org/10.51903/qwz6pt87).
+
+[24] A. Harbani and A. Sidiyantoro, “Implementasi Simple Mail Transfer Protocol Relay Pada Mail Gateway Untuk Menentukan Konten Email Spam,” *TeknoIS J. Ilm. Teknol. Inf. dan Sains*, vol. 12, no. 1, pp. 57–66, 2022, doi: [10.36350/jbs.v12i1.130](https://doi.org/10.36350/jbs.v12i1.130).
+
+[25] M. A. Syahputra and R. A. Putri, “Sistem Informasi Monitoring Pembelajaran dengan Fitur Notifikasi Email Berbasis Web,” *Decode J. Pendidik. Teknol. Inf.*, vol. 5, no. 2, pp. 505–515, 2025, doi: [10.51454/decode.v5i2.1206](https://doi.org/10.51454/decode.v5i2.1206).
