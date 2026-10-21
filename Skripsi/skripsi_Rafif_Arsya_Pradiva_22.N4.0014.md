@@ -408,6 +408,9 @@ Penerapan SIM pada tata kelola indekos berfungsi sebagai basis data tunggal yang
 <br>
 
 ## 2.2 E-Commerce B2C
+Perdagangan elektronik dengan model Business-to-Consumer (B2C) memfasilitasi transaksi komersial langsung antara penyedia produk atau jasa dengan konsumen akhir melalui media internet. Pola interaksi mandiri ini memangkas rantai distribusi konvensional sehingga calon pelanggan dapat menelusuri katalog, memilih spesifikasi layanan, dan menyelesaikan transaksi secara mandiri kapan saja. Transparansi rincian harga serta kemudahan prosedur pemesanan digital terbukti memangkas keraguan calon pembeli sekaligus mempercepat alur transaksi dari tahap pertimbangan hingga kesepakatan final. Penerapan arsitektur B2C secara terpadu mampu memperluas penetrasi pasar bisnis lokal dan mengoptimalkan kepraktisan pembayaran digital secara aman [8].
+
+Pada ekosistem penyewaan hunian indekos, implementasi platform web mandiri berbasis B2C memungkinkan pihak pengelola berinteraksi langsung dengan calon penghuni tanpa ketergantungan pada pihak ketiga. Ketiadaan potongan komisi perantara menghasilkan margin pendapatan penuh bagi pengelola sekaligus memberikan keleluasaan dalam menetapkan skema sewa yang kompetitif. Calon penghuni memperoleh kepastian ketersediaan kamar secara langsung, kemudahan reservasi jarak jauh, serta akses invoice tagihan bulanan yang terstruktur. Sinergi antara kanal pemasaran digital B2C dan sistem pengelolaan properti terbukti mendongkrak tingkat okupansi kamar serta memperkuat tata kelola reservasi hunian secara berkelanjutan [9].
 
 <br>
 
@@ -478,3 +481,7 @@ Penerapan SIM pada tata kelola indekos berfungsi sebagai basis data tunggal yang
 [6] A. Syahputra, R. Wiranti, and W. Astita, “Peran Sistem Informasi Manajemen Organisasi Dalam Pengambilan Keputusan,” *J. Manaj. Sist. Inf.*, vol. 1, no. 1, pp. 26-31, 2022, doi: [10.35870/jmasif.v1i1.67](https://doi.org/10.35870/jmasif.v1i1.67).
 
 [7] J. K. Aditya and A. T. Hidayat, “Sistem Informasi Manajemen Kos Berbasis Web Menggunakan Metode Blackbox: (Studi Kasus: Kos Putri Humba),” *JUSIM (Jurnal Sist. Inf. Musirawas)*, vol. 10, no. 2, pp. 229-241, 2025, doi: [10.32767/jusim.v10i2.2782](https://doi.org/10.32767/jusim.v10i2.2782).
+
+[8] I. A. Nurhasanah, M. Brilliant, K. Reni, and A. Mulyanto, “Analisis Perancangan E-Business B2C (Business to Consumer) Upaya Digitalisasi Pengembangan UMKM (Studi Kasus : Kabupaten Pesawaran, Indonesia),” *J. Nas. Pendidik. Tek. Inform. JANAPATI*, vol. 11, no. 3, pp. 236–248, 2022, doi: [10.23887/janapati.v11i3.49787](https://doi.org/10.23887/janapati.v11i3.49787).
+
+[9] E. Y. Sutrisno, A. C. Hidayat, and A. Sutanto, “Pemanfaatan E-Commerce dan Property Management System Dalam Kegiatan Bisnis Perhotelan di Era Revolusi Industri 4.0,” *J. Kepariwisataan Indones.*, vol. 17, no. 1, pp. 85–98, 2023, doi: [10.47608/jki.v17i12023.85-98](https://doi.org/10.47608/jki.v17i12023.85-98).
