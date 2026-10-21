@@ -436,6 +436,9 @@ Pada pengembangan sistem informasi manajemen Asri Boarding House, implementasi f
 <br>
 
 ## 2.6 RDBMS
+Sistem Manajemen Basis Data Relasional (Relational Database Management System atau RDBMS) mengelola kumpulan data terstruktur ke dalam tabel-tabel dua dimensi yang saling terhubung melalui relasi kunci utama (*primary key*) dan kunci asing (*foreign key*). Arsitektur relasional ini menjamin integritas referensial antar-tabel serta mendukung kepatuhan transaksi ACID (*Atomicity, Consistency, Isolation, Durability*) agar setiap pencatatan operasional tetap akurat dan terlindungi dari korupsi data. Penggunaan model data relasional menjadi fondasi utama dalam sistem informasi modern karena mampu memproses kueri data berskala besar secara konsisten dan terorganisasi dengan baik [16].
+
+Penerapan metodologi normalisasi hingga Bentuk Normal Ketiga (3NF) memecah skema tabel yang kompleks menjadi struktur yang lebih atomik guna menghilangkan duplikasi data serta mencegah anomali penyisipan, pembaruan, dan penghapusan. Struktur basis data yang telah dinormalisasi memastikan seluruh riwayat transaksi sewa dan data keterisian kamar tersimpan secara konsisten tanpa menimbulkan inkonsistensi saat terjadi manipulasi data harian [17].
 
 <br>
 
@@ -506,3 +509,7 @@ Pada pengembangan sistem informasi manajemen Asri Boarding House, implementasi f
 [14] L. Rahmawati and Sumarsono, “Desain Pengembangan Website dengan Arsitektur Model View Controller pada Framework Laravel,” *J. Teknol. dan Sist. Inf. Bisnis*, vol. 6, no. 4, pp. 785–790, 2024, doi: [10.47233/jteksis.v6i4.1497](https://doi.org/10.47233/jteksis.v6i4.1497).
 
 [15] A. Prakarsya, L. Rahmadi, and M. S. Nurfatih, “Implementasi Konsep Model View Controller Pada Pengembangan Aplikasi Web Menggunakan Framework Laravel,” *SISKOMTI J. Sist. Inf. Komput. dan Teknol. Inf.*, vol. 5, no. 1, pp. 8–15, 2023, doi: [10.54342/agyr3903](https://doi.org/10.54342/agyr3903).
+
+[16] Y. Adisa and M. I. P. Nasution, “Konsep Dan Peran Sistem Manajemen Basis Data Relasional Pada Sistem Informasi Manajemen,” *MASIP J. Manaj. Adm. Bisnis dan Publik Terapan*, vol. 1, no. 3, pp. 76–83, 2023, doi: [10.59061/masip.v1i3.314](https://doi.org/10.59061/masip.v1i3.314).
+
+[17] D. F. M. Dina, “Normalisasi Database Rancangan Sistem Penyewaan Buku Berbayar,” *Computing Insight J. Comput. Sci.*, vol. 4, no. 1, pp. 56–61, 2024, doi: [10.30651/comp_insight.v4i1.15814](https://doi.org/10.30651/comp_insight.v4i1.15814).
