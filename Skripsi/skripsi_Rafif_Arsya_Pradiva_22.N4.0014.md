@@ -573,9 +573,9 @@ Wawancara dilakukan secara semi-terstruktur kepada dua kelompok responden utama,
 <br>
 
 ## 3.5 Metode Pengembangan Sistem
-Pengembangan sistem informasi manajemen pada Asri Boarding House menerapkan model sekuensial linier *Waterfall* dalam kerangka kerja *Software Development Life Cycle* (SDLC) [30]. Model ini mengarahkan proses rekayasa perangkat lunak secara berurutan mulai dari analisis kebutuhan, perancangan, implementasi kode, pengujian, verifikasi, hingga pemeliharaan berkala. Karakteristik utama pendekatan ini menuntut setiap tahapan diselesaikan dan divalidasi terlebih dahulu sebelum melanjutkan ke fase pengembangan berikutnya.
+Pengembangan sistem informasi manajemen pada Asri Boarding House menerapkan metode *Waterfall* dalam *Software Development Life Cycle* (SDLC) [30]. Metode ini menjalankan proses pengembangan perangkat lunak secara bertahap mulai dari analisis kebutuhan, perancangan antarmuka, penulisan kode, pengujian, hingga pemeliharaan berkala. Ciri utama alur ini yaitu setiap tahap harus diselesaikan dan dicek terlebih dahulu sebelum melangkah ke tahap berikutnya.
 
-Model *Waterfall* dipilih karena spesifikasi kebutuhan pengelolaan indekos, seperti alur pemesanan kamar dan skema tagihan sewa bulanan, telah terdefinisi secara pasti sejak awal melalui studi lapangan. Alur kerja yang sistematis ini memudahkan pengendalian risiko serta menjamin ketepatan integrasi gerbang pembayaran digital tanpa terjadinya perombakan struktur kode di tengah jalan.
+Metode *Waterfall* dipilih karena kebutuhan pengelolaan indekos, seperti alur pemesanan kamar dan tagihan sewa bulanan, sudah dipetakan dengan jelas sejak awal lewat studi lapangan. Alur yang teratur ini membantu proses pengerjaan sistem dan integrasi *payment gateway* berjalan lancar tanpa banyak perubahan alur di tengah pengerjaan.
 
 <div align="center">
 
@@ -590,7 +590,7 @@ Model *Waterfall* dipilih karena spesifikasi kebutuhan pengelolaan indekos, sepe
 
 <br>
 
-Pada Gambar 3.1, alur pengembangan diawali dengan tahap *requirement gathering and analysis* untuk menghimpun seluruh kebutuhan fungsional pengelolaan indekos melalui wawancara dan observasi langsung. Tahap berikutnya adalah *design*, di mana kebutuhan pengguna diterjemahkan ke dalam cetak biru arsitektur perangkat lunak, perancangan antarmuka, serta pemodelan basis data relasional. Rancangan logis tersebut kemudian direalisasikan pada tahap *implementasi* melalui penulisan kode program menggunakan kerangka kerja Laravel dan integrasi antarmuka pembayaran Midtrans. Setelah modul program selesai disusun, proses berlanjut ke tahap *integration & testing* dan *verification* guna menguji kelayakan fungsi sistem serta memastikan kesesuaian alur transaksi bersama pengguna. Siklus rekayasa diakhiri dengan tahap *operation & maintenance* untuk menggelar aplikasi ke peladen produksi, memantau kinerja operasional harian, dan menangani pemeliharaan sistem secara berkala.
+Pada Gambar 3.1, alur pengembangan diawali dari tahap *requirement gathering and analysis* untuk mengumpulkan kebutuhan operasional indekos lewat wawancara dan observasi langsung. Tahap berikutnya adalah *design*, yaitu menyusun rancangan antarmuka, alur sistem, serta struktur basis data sebelum masuk ke tahap pembuatan program. Hasil rancangan tersebut kemudian dikerjakan pada tahap *implementation* lewat penulisan kode program memakai *framework* Laravel dan integrasi *payment gateway* Midtrans. Setelah modul program selesai dibuat, proses berlanjut ke tahap *integration & testing* dan *verification* untuk memastikan setiap fungsi berjalan lancar serta alur pembayaran sewa tidak mengalami kendala. Tahap akhir *operation & maintenance* mencakup pengunggahan sistem ke server *hosting*, pemantauan penggunaan harian, serta perbaikan berkala jika ditemukan kendala teknis.
 
 <br>
 
