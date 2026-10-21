@@ -493,6 +493,9 @@ Integrasi teknis pada sistem dibangun menggunakan antarmuka Midtrans Snap API ya
 <br>
 
 ## 2.9 Notifikasi Fonnte WhatsApp
+Fonnte merupakan layanan penyedia *Application Programming Interface* (API) gerbang WhatsApp pihak ketiga yang memungkinkan aplikasi web mengirimkan pesan notifikasi secara otomatis langsung ke nomor kontak pengguna tanpa intervensi perangkat fisik tambahan. Integrasi notifikasi pesan instan ini menghadirkan jalur komunikasi satu arah yang sangat efektif karena memiliki tingkat keterbacaan (*open rate*) yang jauh lebih tinggi dan responsif dibandingkan saluran komunikasi konvensional seperti SMS maupun pos-el [22].
+
+Pada arsitektur sistem Asri Boarding House, implementasi Fonnte dihubungkan melalui *HTTP POST request* berotentikasi token rahasia untuk mentransmisikan kredensial akun penghuni baru, rincian tagihan sewa bulanan, tautan kuitansi pelunasan, hingga pemberitahuan penanganan keluhan fasilitas. Penerapan pengiriman otomatis ini meniadakan kebiasaan pengelola mengetik pesan penagihan manual satu per satu serta memangkas keterlambatan pembayaran sewa melalui pengingat tempo yang konsisten dan tepat waktu. Pemanfaatan gerbang WhatsApp ini membuktikan bahwa otomatisasi notifikasi transaksi digital mampu meningkatkan disiplin pembayaran penghuni sekaligus mewujudkan tata kelola operasional indekos yang responsif dan terpercaya [23].
 
 <br>
 
@@ -563,3 +566,7 @@ Integrasi teknis pada sistem dibangun menggunakan antarmuka Midtrans Snap API ya
 [20] M. Nurhayati and R. Setiawan, “Implementasi Payment Gateway Midtrans Pada Aplikasi Toko Mas Berbasis Web,” *J. Algoritma*, vol. 21, no. 2, pp. 366–377, 2024, doi: [10.33364/algoritma/v.21-2.1686](https://doi.org/10.33364/algoritma/v.21-2.1686).
 
 [21] R. C. Buwono, R. Kartadie, and M. K. Ramadhan, “Perancangan dan Implementasi Sistem Payment Gateway MIDTRANS untuk UMKM Batik Lurik,” *INFOTECH J. Inform. dan Teknol.*, vol. 5, no. 2, pp. 228–238, 2024, doi: [10.37373/infotech.v5i2.1334](https://doi.org/10.37373/infotech.v5i2.1334).
+
+[22] I. M. B. Waton, A. N. Weking, and B. Deta, “Penerapan Api Whatsapp Fonnte Untuk Sistem Pengingat Jadwal Bimbingan Tugas Akhir Mahasiswa Berbasis Web,” *J. Tek. Mesin, Elektro dan Ilmu Komput.*, vol. 5, no. 2, pp. 229–241, 2025, doi: [10.55606/teknik.v5i2.7614](https://doi.org/10.55606/teknik.v5i2.7614).
+
+[23] A. R. Manik, D. Kiswanto, M. B. Akbar, and J. Purba, “Academic Portal with MFA (WhatsApp OTP via Fonnte), Role-Based Access Control, and Logging System for Network Monitoring,” *J. Ilm. Sist. Inf.*, vol. 4, no. 3, pp. 674–687, 2025, doi: [10.51903/qwz6pt87](https://doi.org/10.51903/qwz6pt87).
