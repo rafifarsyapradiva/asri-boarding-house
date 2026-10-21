@@ -505,6 +505,11 @@ Aplikasi Asri Boarding House mengintegrasikan layanan SMTP pihak ketiga dari Goo
 <br>
 
 ## 2.11 Cron Job
+Cron job merupakan utilitas penjadwalan tugas berbasis waktu (*time-based job scheduler*) pada sistem operasi mirip Unix yang mengeksekusi instruksi program secara otomatis pada interval menit, jam, hari, atau bulan tertentu. Mekanisme otomatisasi latar belakang ini bekerja secara mandiri tanpa memerlukan intervensi interaksi manusia di depan layar komputer secara terus-menerus. Keberadaan penjadwal otomatis tersebut memegang peranan krusial dalam menjamin eksekusi pemeliharaan data, kalkulasi periodik, dan tugas komputasi berulang agar senantiasa berjalan tepat waktu sesuai konfigurasi yang ditentukan [26].
+
+Dalam pengelolaan notifikasi sistem, berkas konfigurasi penjadwalan dirancang untuk memicu perintah konsol secara berkala guna mendistribusikan pesan pengingat tagihan melalui integrasi multi-saluran WhatsApp dan surat elektronik. Pengaturan ekspresi waktu yang presisi pada skrip penjadwal memungkinkan sistem membaca tenggat jatuh tempo invoice di basis data lalu meneruskan instruksi transmisi pesan secara serentak ke gerbang komunikasi eksternal [27].
+
+Penerapan pada sistem Asri Boarding House memanfaatkan Laravel Task Scheduling yang terhubung pada cron job tunggal *server* produksi untuk menjalankan perintah penerbitan tagihan setiap tanggal 1 awal bulan serta pemrosesan denda keterlambatan setiap hari pukul 01:00 WIB. Otomatisasi terjadwal ini berhasil mengeliminasi keterlambatan pencatatan piutang bulanan, memastikan penghuni menerima peringatan tempo sewa secara disiplin, serta meringankan beban operasional pengelola dari pekerjaan administratif repetitif. Integrasi cron job pada akhirnya menegaskan perannya sebagai poros otomatisasi utama yang menjaga kesinambungan siklus penagihan dan keandalan tata kelola hunian indekos modern.
 
 <br>
 
@@ -567,3 +572,7 @@ Aplikasi Asri Boarding House mengintegrasikan layanan SMTP pihak ketiga dari Goo
 [24] A. Harbani and A. Sidiyantoro, “Implementasi Simple Mail Transfer Protocol Relay Pada Mail Gateway Untuk Menentukan Konten Email Spam,” *TeknoIS J. Ilm. Teknol. Inf. dan Sains*, vol. 12, no. 1, pp. 57–66, 2022, doi: [10.36350/jbs.v12i1.130](https://doi.org/10.36350/jbs.v12i1.130).
 
 [25] M. A. Syahputra and R. A. Putri, “Sistem Informasi Monitoring Pembelajaran dengan Fitur Notifikasi Email Berbasis Web,” *Decode J. Pendidik. Teknol. Inf.*, vol. 5, no. 2, pp. 505–515, 2025, doi: [10.51454/decode.v5i2.1206](https://doi.org/10.51454/decode.v5i2.1206).
+
+[26] A. Wibowo, A. Fathimah, D. Waskito, and R. A. Aprilianto, “Cron Job Implementation for Automated Data Processing and Transfer in Cloud Infrastructure,” *Sainteknol J. Sains dan Teknol.*, vol. 23, no. 1, pp. 11–20, 2025, doi: [10.15294/sainteknol.v23i1.22649](https://doi.org/10.15294/sainteknol.v23i1.22649).
+
+[27] Iqbal, W. Nugraha, and R. Sa'adah, “Optimasi Notifikasi Agenda Kegiatan Pemerintahan Berbasis Web Menggunakan Firebase Cloud Messaging dan WhatsApp Gateway,” *JSITIK J. Sist. Inf. dan Teknol. Inf. Komput.*, vol. 5, no. 1, pp. 29–38, 2026, doi: [10.53624/jsitik.v5i1.951](https://doi.org/10.53624/jsitik.v5i1.951).
