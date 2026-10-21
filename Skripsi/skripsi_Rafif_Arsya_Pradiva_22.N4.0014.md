@@ -321,6 +321,40 @@ Kata Kunci:
 
 <br>
 
+HALAMAN JUDUL &emsp; i  
+HALAMAN PERNYATAAN ORISINALITAS &emsp; ii  
+HALAMAN PERNYATAAN BEBAS PLAGIASI &emsp; iii  
+HALAMAN PENGESAHAN &emsp; iv  
+HALAMAN PERNYATAAN PUBLIKASI KARYA ILMIAH UNTUK KEPENTINGAN AKADEMIS &emsp; v  
+KATA PENGANTAR &emsp; vi  
+ABSTRAK &emsp; viii  
+DAFTAR ISI &emsp; ix  
+DAFTAR TABEL &emsp; x  
+DAFTAR GAMBAR &emsp; xi  
+DAFTAR LAMPIRAN &emsp; xii  
+
+**BAB 1 PENDAHULUAN** &emsp; **1**  
+1.1 Latar Belakang &emsp; 1  
+1.2 Rumusan Masalah &emsp; 3  
+1.3 Tujuan Penelitian &emsp; 4  
+
+**BAB 2 TINJAUAN PUSTAKA** &emsp; **5**  
+2.1 Sistem Informasi Manajemen &emsp; 5  
+2.2 E-Commerce B2C &emsp; 6  
+2.3 Web Application &emsp; 7  
+2.4 UI & UX &emsp; 8  
+2.5 Laravel &emsp; 9  
+2.6 RDBMS &emsp; 10  
+2.7 MySQL Database &emsp; 11  
+2.8 Payment Gateway &emsp; 12  
+2.9 Notifikasi Fonnte WhatsApp &emsp; 13  
+2.10 Notifikasi SMTP Email &emsp; 14  
+2.11 Cron Job &emsp; 15  
+2.12 Research & Development (R&D) &emsp; 16  
+2.13 Metode SDLC Waterfall &emsp; 17  
+
+**DAFTAR PUSTAKA** &emsp; **18**  
+
 <div style="page-break-after: always;"></div>
 
 <div align="center">
