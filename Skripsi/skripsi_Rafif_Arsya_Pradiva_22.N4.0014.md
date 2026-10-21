@@ -415,6 +415,9 @@ Pada ekosistem penyewaan hunian indekos, implementasi platform web mandiri berba
 <br>
 
 ## 2.3 Web Application
+Aplikasi berbasis web beroperasi mengadopsi model arsitektur client-server yang memanfaatkan protokol HTTP atau HTTPS sebagai media transmisi data lintas jaringan komputer. Perangkat peramban web pada komputer maupun ponsel cerdas berfungsi sebagai thin client untuk merender antarmuka visual, sedangkan peladen web memproses logika bisnis dan menangani pertukaran kueri basis data. Pola kerja terpusat ini memungkinkan pengguna mengakses seluruh fungsionalitas sistem secara langsung tanpa perlu melakukan proses instalasi perangkat lunak mandiri pada gawai masing-masing [10].
+
+Kemudahan distribusi informasi secara real-time menjadikan aplikasi web sebagai fondasi utama dalam menunjang otomatisasi sistem informasi manajemen modern. Pemeliharaan kode program berlangsung efisien karena setiap pemutakhiran fitur cukup dieksekusi pada peladen utama tanpa membebani perangkat pengguna akhir. Struktur aplikasi web bertaraf komersial umumnya memisahkan lapisan presentasi antarmuka, pengendali logika sistem, dan persistensi data guna menjamin keandalan skalabilitas perangkat lunak. Pendekatan modular tersebut terbukti mempercepat respon eksekusi transaksi data sekaligus mempermudah pengembangan fitur baru secara berkelanjutan [11].
 
 <br>
 
@@ -485,3 +488,7 @@ Pada ekosistem penyewaan hunian indekos, implementasi platform web mandiri berba
 [8] I. A. Nurhasanah, M. Brilliant, K. Reni, and A. Mulyanto, “Analisis Perancangan E-Business B2C (Business to Consumer) Upaya Digitalisasi Pengembangan UMKM (Studi Kasus : Kabupaten Pesawaran, Indonesia),” *J. Nas. Pendidik. Tek. Inform. JANAPATI*, vol. 11, no. 3, pp. 236–248, 2022, doi: [10.23887/janapati.v11i3.49787](https://doi.org/10.23887/janapati.v11i3.49787).
 
 [9] E. Y. Sutrisno, A. C. Hidayat, and A. Sutanto, “Pemanfaatan E-Commerce dan Property Management System Dalam Kegiatan Bisnis Perhotelan di Era Revolusi Industri 4.0,” *J. Kepariwisataan Indones.*, vol. 17, no. 1, pp. 85–98, 2023, doi: [10.47608/jki.v17i12023.85-98](https://doi.org/10.47608/jki.v17i12023.85-98).
+
+[10] W. Wahyudin and S. Bela, “Rancang Bangun Sistem Informasi Inventory Stock Barang Berbasis Web,” *J. Tek. Komput.*, vol. 7, no. 2, pp. 208–214, 2021, doi: [10.31294/jtk.v7i2.10683](https://doi.org/10.31294/jtk.v7i2.10683).
+
+[11] Y. Anggraini, D. Pasha, D. Damayanti, and A. Setiawan, “Sistem Informasi Penjualan Sepeda Berbasis Web Menggunakan Framework CodeIgniter,” *J. Teknol. dan Sist. Inf.*, vol. 1, no. 2, pp. 64–70, 2020, doi: [10.33365/jtsi.v1i2.236](https://doi.org/10.33365/jtsi.v1i2.236).
