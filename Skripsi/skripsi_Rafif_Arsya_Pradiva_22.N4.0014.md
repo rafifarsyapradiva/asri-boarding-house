@@ -415,9 +415,9 @@ Pada ekosistem penyewaan hunian indekos, implementasi platform web mandiri berba
 <br>
 
 ## 2.3 Web Application
-Aplikasi berbasis web beroperasi mengadopsi model arsitektur client-server yang memanfaatkan protokol HTTP atau HTTPS sebagai media transmisi data lintas jaringan komputer. Perangkat peramban web pada komputer maupun ponsel cerdas berfungsi sebagai thin client untuk merender antarmuka visual, sedangkan peladen web memproses logika bisnis dan menangani pertukaran kueri basis data. Pola kerja terpusat ini memungkinkan pengguna mengakses seluruh fungsionalitas sistem secara langsung tanpa perlu melakukan proses instalasi perangkat lunak mandiri pada gawai masing-masing [10].
+Aplikasi berbasis web beroperasi menggunakan arsitektur *client-server* yang mengandalkan protokol HTTP atau HTTPS sebagai jalur komunikasi data melalui jaringan internet. Peramban web (*web browser*) pada komputer maupun ponsel cerdas berperan sebagai *thin client* yang menampilkan antarmuka visual, sedangkan *web server* bertugas mengeksekusi logika bisnis serta mengelola pertukaran kueri basis data. Pola komputasi terpusat ini memungkinkan pengguna mengakses seluruh fitur operasional sistem secara langsung tanpa memerlukan instalasi aplikasi tambahan pada perangkat masing-masing [10].
 
-Kemudahan distribusi informasi secara real-time menjadikan aplikasi web sebagai fondasi utama dalam menunjang otomatisasi sistem informasi manajemen modern. Pemeliharaan kode program berlangsung efisien karena setiap pemutakhiran fitur cukup dieksekusi pada peladen utama tanpa membebani perangkat pengguna akhir. Struktur aplikasi web bertaraf komersial umumnya memisahkan lapisan presentasi antarmuka, pengendali logika sistem, dan persistensi data guna menjamin keandalan skalabilitas perangkat lunak. Pendekatan modular tersebut terbukti mempercepat respon eksekusi transaksi data sekaligus mempermudah pengembangan fitur baru secara berkelanjutan [11].
+Kemudahan penyebaran informasi secara *real-time* menjadikan aplikasi web sebagai fondasi utama dalam menunjang otomatisasi tata kelola operasional modern. Pemeliharaan kode program berlangsung jauh lebih ringkas karena setiap pembaharuan fitur cukup diterapkan pada *server* pusat tanpa membebani perangkat pengguna akhir. Struktur aplikasi web komersial umumnya memisahkan komponen antarmuka, pengendali logika bisnis, dan penyimpanan data guna menjaga keandalan skalabilitas sistem. Pendekatan arsitektur modular tersebut terbukti mempercepat waktu respon transaksi sekaligus mempermudah pengembangan fitur baru secara berkelanjutan [11].
 
 <br>
 
@@ -429,6 +429,9 @@ Pada aspek pengalaman pengguna (User Experience atau UX), alur interaksi diranca
 <br>
 
 ## 2.5 Laravel
+Kerangka kerja Laravel merupakan platform pengembangan web berbasis PHP yang menerapkan pola arsitektur Model-View-Controller (MVC) guna memisahkan logika bisnis, perancangan antarmuka, dan manipulasi data secara terstruktur. Integrasi fitur Eloquent Object-Relational Mapping (ORM) menyederhanakan interaksi tabel basis data melalui representasi objek yang ekspresif, sementara sistem perutean dan mesin templat Blade mempercepat perakitan komponen web dinamis. Ekosistem ini dilengkapi lapisan perlindungan bawaan terhadap serangan umum seperti Cross-Site Request Forgery (CSRF) dan injeksi SQL sehingga menjamin keandalan perangkat lunak sejak tahap konstruksi awal [14].
+
+Pada pengembangan sistem informasi manajemen Asri Boarding House, implementasi framework Laravel 12 menghadirkan struktur aplikasi modern yang lebih ramping dan efisien dalam pengelolaan berkas konfigurasi. Logika bisnis yang kompleks dipisahkan dari controller menuju Service Layer, mencakup modul kalkulasi tagihan sewa berkala, verifikasi transaksi pembayaran, hingga manajemen transisi penghuni kamar. Pendekatan modular tersebut mencegah terjadinya penumpukan kode program sekaligus mempermudah pelaksanaan pengujian unit otomatis pada setiap alur transaksi penting. Pengorganisasian kode yang rapi pada lingkungan Laravel terbukti meningkatkan performa eksekusi sistem dan menjamin kemudahan pemeliharaan perangkat lunak jangka panjang [15].
 
 <br>
 
@@ -499,3 +502,7 @@ Pada aspek pengalaman pengguna (User Experience atau UX), alur interaksi diranca
 [12] A. R. Setiawan, M. Asfi, A. Sevtiana, S. Pranata, and W. E. Septian, “Design System pada Perancangan Antarmuka Perangkat Lunak Sistem Akses Digital,” *J. Teknol. Terpadu*, vol. 9, no. 1, pp. 56–64, 2023, doi: [10.54914/jtt.v9i1.619](https://doi.org/10.54914/jtt.v9i1.619).
 
 [13] O. N. Faizah, N. R. Oktadini, B. W. Putra, P. E. Sevtiyuni, P. Putra, and A. Meiriza, “UI/UX Design of Web-based Software License Management System using User-Centered Design and System Usability Scale,” *J. Nas. Teknol. dan Sist. Inf.*, vol. 9, no. 3, pp. 255–263, 2023, doi: [10.25077/TEKNOSI.v9i3.2023.255-263](https://doi.org/10.25077/TEKNOSI.v9i3.2023.255-263).
+
+[14] L. Rahmawati and Sumarsono, “Desain Pengembangan Website dengan Arsitektur Model View Controller pada Framework Laravel,” *J. Teknol. dan Sist. Inf. Bisnis*, vol. 6, no. 4, pp. 785–790, 2024, doi: [10.47233/jteksis.v6i4.1497](https://doi.org/10.47233/jteksis.v6i4.1497).
+
+[15] A. Prakarsya, L. Rahmadi, and M. S. Nurfatih, “Implementasi Konsep Model View Controller Pada Pengembangan Aplikasi Web Menggunakan Framework Laravel,” *SISKOMTI J. Sist. Inf. Komput. dan Teknol. Inf.*, vol. 5, no. 1, pp. 8–15, 2023, doi: [10.54342/agyr3903](https://doi.org/10.54342/agyr3903).
