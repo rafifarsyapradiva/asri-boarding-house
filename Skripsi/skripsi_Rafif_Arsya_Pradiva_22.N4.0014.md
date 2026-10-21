@@ -422,6 +422,9 @@ Kemudahan distribusi informasi secara real-time menjadikan aplikasi web sebagai 
 <br>
 
 ## 2.4 UI & UX
+Desain antarmuka pengguna (User Interface atau UI) mengadopsi estetika Neo-Brutalism yang menonjolkan garis tepi tebal, bayangan solid dengan kontras tinggi, dan tata letak geometris yang berani. Karakter visual ini memberikan umpan balik taktil yang intuitif pada setiap tombol aksi, kartu kamar, maupun formulir reservasi sehingga pengguna dapat langsung mengenali elemen interaktif secara jelas. Pembagian bidang yang tegas tanpa ornamen gradasi halus memudahkan penyerapan informasi ketersediaan kamar dan status transaksi oleh calon penghuni maupun pengelola. Penerapan sistem desain yang konsisten pada antarmuka web terbukti menjaga keselarasan tata letak sekaligus mempercepat pemahaman visual pengguna terhadap fungsi perangkat lunak [12].
+
+Pada aspek pengalaman pengguna (User Experience atau UX), alur interaksi dirancang ringkas guna memandu pengguna menyelesaikan tugas administratif tanpa hambatan kognitif yang berbelit. Calon penyewa dapat menuntaskan alur pemesanan kamar dan transaksi pembayaran digital dalam beberapa langkah terarah, sementara penghuni aktif memperoleh kemudahan saat memeriksa riwayat invoice serta mengunduh kuitansi pelunasan. Pada sisi operasional pengelola, dasbor manajemen menyajikan hierarki status keterisian kamar dan rekapitulasi mutasi kas secara lugas untuk mendukung pemantauan harian yang gesit. Perancangan UX yang berpusat pada kebutuhan pengguna nyata terbukti memangkas waktu operasional sistem serta mendongkrak kepuasan interaksi digital secara menyeluruh [13].
 
 <br>
 
@@ -492,3 +495,7 @@ Kemudahan distribusi informasi secara real-time menjadikan aplikasi web sebagai 
 [10] W. Wahyudin and S. Bela, “Rancang Bangun Sistem Informasi Inventory Stock Barang Berbasis Web,” *J. Tek. Komput.*, vol. 7, no. 2, pp. 208–214, 2021, doi: [10.31294/jtk.v7i2.10683](https://doi.org/10.31294/jtk.v7i2.10683).
 
 [11] Y. Anggraini, D. Pasha, D. Damayanti, and A. Setiawan, “Sistem Informasi Penjualan Sepeda Berbasis Web Menggunakan Framework CodeIgniter,” *J. Teknol. dan Sist. Inf.*, vol. 1, no. 2, pp. 64–70, 2020, doi: [10.33365/jtsi.v1i2.236](https://doi.org/10.33365/jtsi.v1i2.236).
+
+[12] A. R. Setiawan, M. Asfi, A. Sevtiana, S. Pranata, and W. E. Septian, “Design System pada Perancangan Antarmuka Perangkat Lunak Sistem Akses Digital,” *J. Teknol. Terpadu*, vol. 9, no. 1, pp. 56–64, 2023, doi: [10.54914/jtt.v9i1.619](https://doi.org/10.54914/jtt.v9i1.619).
+
+[13] O. N. Faizah, N. R. Oktadini, B. W. Putra, P. E. Sevtiyuni, P. Putra, and A. Meiriza, “UI/UX Design of Web-based Software License Management System using User-Centered Design and System Usability Scale,” *J. Nas. Teknol. dan Sist. Inf.*, vol. 9, no. 3, pp. 255–263, 2023, doi: [10.25077/TEKNOSI.v9i3.2023.255-263](https://doi.org/10.25077/TEKNOSI.v9i3.2023.255-263).
