@@ -383,6 +383,10 @@ Berdasarkan latar belakang permasalahan yang telah diuraikan, rumusan masalah da
 <br>
 
 ## 1.3 Tujuan Penelitian
+Berpijak pada rumusan masalah yang telah diuraikan, tujuan yang hendak dicapai dalam penelitian ini adalah sebagai berikut:
+1. Merancang arsitektur Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House sebagai solusi terpadu atas kendala pemesanan unit, pencatatan pembukuan manual, dan keterlambatan penagihan sewa.
+2. Mengimplementasikan sistem tersebut dengan memadukan kerangka kerja Laravel, integrasi pembayaran digital Midtrans, mesin penagihan otomatis berkala, dan transmisi notifikasi WhatsApp.
+3. Menganalisis hasil penerapan dan efektivitas sistem berdasarkan evaluasi wawancara bersama penjaga kost serta penghuni kost setelah diterapkan secara langsung pada operasional Asri Boarding House.
 
 <br>
 
