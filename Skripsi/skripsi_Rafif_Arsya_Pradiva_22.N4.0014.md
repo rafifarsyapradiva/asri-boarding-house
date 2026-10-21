@@ -401,6 +401,9 @@ Berpijak pada rumusan masalah yang telah diuraikan, tujuan yang hendak dicapai d
 <br>
 
 ## 2.1 Sistem Informasi Manajemen
+Sistem Informasi Manajemen (SIM) merupakan integrasi terpadu antara komponen perangkat keras, perangkat lunak jaringan, prosedur operasional, dan sumber daya manusia guna mengolah data transaksi mentah menjadi informasi yang bernilai guna. Pengolahan data terstruktur ini mengeliminasi fragmentasi pencatatan manual sekaligus menyediakan visibilitas menyeluruh pada setiap tingkatan tata kelola organisasi. Ketersediaan informasi yang akurat dan tepat waktu memegang peran sentral dalam memandu evaluasi operasional serta mempercepat pengambilan keputusan manajerial yang tepat sasaran [6].
+
+Penerapan SIM pada tata kelola indekos berfungsi sebagai basis data tunggal yang mengonsolidasikan inventaris kamar, identitas penghuni, pencatatan transaksi sewa, serta rekonsiliasi kas operasional. Sentralisasi informasi tersebut meniadakan risiko kesalahan pencatatan buku besar, menekan potensi pemesanan ganda, serta mempermudah pengawasan masa sewa secara terperinci. Sistem berbasis web menghadirkan pelaporan keuangan yang transparan serta meningkatkan efisiensi kontrol operasional properti secara berkelanjutan [7].
 
 <br>
 
@@ -471,3 +474,7 @@ Berpijak pada rumusan masalah yang telah diuraikan, tujuan yang hendak dicapai d
 [4] R. Sutisna and F. Aziz, “Perancangan Sistem Penyewaan Alat Event Berbasis Website Menggunakan Midtrans sebagai Integrasi Payment Gateway pada PT. Bangbewe Production,” *REMIK Ris. dan E-Jurnal Manaj. Inform. Komput.*, vol. 9, no. 1, pp. 317-325, 2025, doi: [10.33395/remik.v9i1.14498](https://doi.org/10.33395/remik.v9i1.14498).
 
 [5] L. Hakim, S. P. Kristanto, M. N. Shodiq, and E. Amaliyah, “Aplikasi Penerimaan dan Pengeluaran Kas Berbasis Web dan WhatsApp Gateway,” *J. Tekno Kompak*, vol. 15, no. 1, pp. 13-24, 2021, doi: [10.33365/jtk.v15i1.900](https://doi.org/10.33365/jtk.v15i1.900).
+
+[6] A. Syahputra, R. Wiranti, and W. Astita, “Peran Sistem Informasi Manajemen Organisasi Dalam Pengambilan Keputusan,” *J. Manaj. Sist. Inf.*, vol. 1, no. 1, pp. 26-31, 2022, doi: [10.35870/jmasif.v1i1.67](https://doi.org/10.35870/jmasif.v1i1.67).
+
+[7] J. K. Aditya and A. T. Hidayat, “Sistem Informasi Manajemen Kos Berbasis Web Menggunakan Metode Blackbox: (Studi Kasus: Kos Putri Humba),” *JUSIM (Jurnal Sist. Inf. Musirawas)*, vol. 10, no. 2, pp. 229-241, 2025, doi: [10.32767/jusim.v10i2.2782](https://doi.org/10.32767/jusim.v10i2.2782).
