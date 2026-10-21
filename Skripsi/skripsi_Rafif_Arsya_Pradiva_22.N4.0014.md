@@ -335,30 +335,30 @@ DAFTAR GAMBAR &emsp; xi
 DAFTAR LAMPIRAN &emsp; xii  
 
 **BAB 1 PENDAHULUAN** &emsp; **1**  
-1.1 Latar Belakang &emsp; 1  
-1.2 Rumusan Masalah &emsp; 3  
-1.3 Tujuan Penelitian &emsp; 4  
+1.1 Latar Belakang &emsp; 1  
+1.2 Rumusan Masalah &emsp; 3  
+1.3 Tujuan Penelitian &emsp; 4  
 
 **BAB 2 TINJAUAN PUSTAKA** &emsp; **5**  
-2.1 Sistem Informasi Manajemen &emsp; 5  
-2.2 E-Commerce B2C &emsp; 6  
-2.3 Web Application &emsp; 7  
-2.4 UI & UX &emsp; 8  
-2.5 Laravel &emsp; 9  
-2.6 RDBMS &emsp; 10  
-2.7 MySQL Database &emsp; 11  
-2.8 Payment Gateway &emsp; 12  
-2.9 WhatsApp Gateway API &emsp; 13  
-2.10 Email Gateway API &emsp; 14  
-2.11 Cron Job &emsp; 15  
+2.1 Sistem Informasi Manajemen &emsp; 5  
+2.2 E-Commerce B2C &emsp; 6  
+2.3 Web Application &emsp; 7  
+2.4 UI & UX &emsp; 8  
+2.5 Laravel &emsp; 9  
+2.6 RDBMS &emsp; 10  
+2.7 MySQL Database &emsp; 11  
+2.8 Payment Gateway &emsp; 12  
+2.9 WhatsApp Gateway API &emsp; 13  
+2.10 Email Gateway API &emsp; 14  
+2.11 Cron Job &emsp; 15  
 
 **BAB 3 METODE PENELITIAN** &emsp; **16**  
-3.1 Objek Penelitian &emsp; 16  
-3.2 Jenis Penelitian &emsp; 16  
-3.3 Sumber Data &emsp; 17  
-3.4 Teknik Pengumpulan Data &emsp; 17  
-3.5 Metode Pengembangan Sistem &emsp; 18  
-3.6 Kerangka Pemikiran &emsp; 19  
+3.1 Objek Penelitian &emsp; 16  
+3.2 Jenis Penelitian &emsp; 16  
+3.3 Sumber Data &emsp; 17  
+3.4 Teknik Pengumpulan Data &emsp; 17  
+3.5 Metode Pengembangan Sistem &emsp; 18  
+3.6 Kerangka Pemikiran &emsp; 19  
 
 **DAFTAR PUSTAKA** &emsp; **20**  
 
@@ -382,8 +382,8 @@ DAFTAR LAMPIRAN &emsp; xii
 
 <br>
 
-Gambar 3.1 Tahapan Metode SDLC Waterfall &emsp; 18  
-Gambar 3.2 Kerangka Pemikiran Penelitian &emsp; 19  
+Gambar 3.1 &emsp; Tahapan Metode SDLC Waterfall &emsp; 18  
+Gambar 3.2 &emsp; Kerangka Pemikiran Penelitian &emsp; 19  
 
 <div style="page-break-after: always;"></div>
 
