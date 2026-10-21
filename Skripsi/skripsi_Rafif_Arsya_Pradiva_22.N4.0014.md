@@ -564,10 +564,10 @@ Data sekunder diperoleh dari berbagai dokumen dan literatur tertulis guna meleng
 <br>
 
 ## 3.4 Teknik Pengumpulan Data
-Guna menggali pemahaman mendalam mengenai kebutuhan operasional serta efektivitas sistem, penelitian ini menerapkan teknik wawancara kepada pihak-pihak yang terlibat langsung dalam tata kelola hunian indekos [29]. Pengumpulan data lapangan ini difokuskan untuk memotret kendala nyata pengelolaan sewa kamar manual serta menguji kemudahan interaksi pengguna saat mengoperasikan sistem informasi berbasis web.
+Pengumpulan data pada penelitian ini menggunakan pendekatan kualitatif dengan teknik wawancara langsung di Asri Boarding House [29]. Pendekatan ini bertujuan mencari kebutuhan operasional hunian indekos, kendala pencatatan sewa manual, serta pengalaman pengguna saat berinteraksi dengan sistem informasi berbasis web.
 
 1. Wawancara  
-Wawancara dilakukan secara semi-terstruktur kepada dua kelompok responden utama, yaitu:
+Wawancara dilakukan secara tatap muka dengan bantuan alat perekam suara. Percakapan rekaman tersebut selanjutnya ditranskripsi ke dalam format teks tertulis agar seluruh detail tanggapan narasumber terdokumentasi rapi dan tidak ada poin penting yang terlewat saat proses analisis kebutuhan. Proses tanya jawab ini melibatkan dua kelompok narasumber utama, yaitu:
 * **Penjaga kost**, yang berfokus pada evaluasi pembukuan kas masuk, kepraktisan pemantauan ketersediaan 32 unit kamar, otomatisasi penagihan sewa bulanan, dan efisiensi waktu kerja setelah beralih dari buku besar fisik.
 * **Penghuni kost**, yang berfokus pada kemudahan reservasi kamar, kejelasan rincian tagihan sewa, kepraktisan pembayaran digital melalui *payment gateway*, dan kepuasan terhadap bukti transaksi yang diterima.
 
