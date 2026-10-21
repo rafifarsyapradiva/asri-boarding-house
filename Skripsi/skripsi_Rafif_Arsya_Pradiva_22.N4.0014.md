@@ -375,6 +375,10 @@ Guna mengatasi kendala operasional tersebut secara menyeluruh, Asri Boarding Hou
 <br>
 
 ## 1.2 Rumusan Masalah
+Berdasarkan latar belakang permasalahan yang telah diuraikan, rumusan masalah dalam penelitian ini dirumuskan sebagai berikut:
+1. Bagaimana merancang arsitektur Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House sebagai solusi atas kendala pemesanan unit, pencatatan pembukuan manual, dan keterlambatan penagihan sewa?
+2. Bagaimana mengimplementasikan sistem tersebut dengan memadukan kerangka kerja Laravel, integrasi pembayaran digital Midtrans, mesin penagihan otomatis berkala, dan transmisi notifikasi WhatsApp?
+3. Bagaimana hasil penerapan sistem di lingkungan operasional Asri Boarding House dalam menuntaskan problem pemesanan ganda (*double booking*), meniadakan selisih kas, serta evaluasi penerimaan pengguna (*user acceptance*) oleh pengelola dan penghuni kost?
 
 <br>
 
