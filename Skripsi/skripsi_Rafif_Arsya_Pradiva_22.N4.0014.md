@@ -348,8 +348,8 @@ DAFTAR LAMPIRAN &emsp; xii
 2.6 RDBMS &emsp; 10  
 2.7 MySQL Database &emsp; 11  
 2.8 Payment Gateway &emsp; 12  
-2.9 Notifikasi Fonnte WhatsApp &emsp; 13  
-2.10 Notifikasi SMTP Email &emsp; 14  
+2.9 WhatsApp Gateway API &emsp; 13  
+2.10 Email Gateway API &emsp; 14  
 2.11 Cron Job &emsp; 15  
 
 **BAB 3 METODE PENELITIAN** &emsp; **16**  
@@ -414,14 +414,14 @@ Selain masalah ketersediaan unit, ketidakteraturan penagihan sewa bulanan menjad
 
 Persoalan finansial kian bertambah saat verifikasi pembayaran sewa masih mengandalkan pencocokan tangkapan layar transfer bank dan penerimaan uang tunai di meja kantor. Proses rekapitulasi nota pengeluaran operasional dan bukti kas masuk tersebut memakan waktu berhari-hari pada setiap penutupan buku akhir bulan. Integrasi gerbang pembayaran digital (*payment gateway*) terbukti mampu mengotomatiskan konfirmasi transaksi non-tunai, mengeliminasi selisih kas fisik, dan menjamin validitas pencatatan keuangan secara langsung [4].
 
-Guna mengatasi kendala operasional tersebut secara menyeluruh, Asri Boarding House memerlukan platform manajemen terpadu yang memadukan reservasi daring, mesin penagihan otomatis, dan gerbang pembayaran Midtrans. Penyediaan kanal notifikasi instan berbasis *gateway* pada aplikasi web terbukti memperkuat transparansi pembukuan serta memperlancar penyampaian tagihan kepada penyewa maupun pihak penjamin secara *real-time* [5]. Oleh karena itu, penelitian ini mengembangkan Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House guna mewujudkan tata kelola properti sewa yang akuntabel, efisien, dan bebas selisih kas.
+Guna mengatasi kendala operasional tersebut secara menyeluruh, Asri Boarding House memerlukan platform manajemen terpadu yang memadukan reservasi daring, mesin penagihan otomatis, dan gerbang pembayaran Midtrans. Penyediaan kanal notifikasi multi-saluran melalui WhatsApp dan surel pada aplikasi web terbukti memperkuat transparansi pembukuan serta memperlancar penyampaian tagihan kepada penyewa secara *real-time* [5]. Oleh karena itu, penelitian ini mengembangkan Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House guna mewujudkan tata kelola properti sewa yang akuntabel, efisien, dan bebas selisih kas.
 
 <br>
 
 ## 1.2 Rumusan Masalah
 Berdasarkan latar belakang permasalahan yang telah diuraikan, rumusan masalah dalam penelitian ini dirumuskan sebagai berikut:
 1. Bagaimana merancang arsitektur Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House sebagai solusi atas kendala pemesanan unit, pencatatan pembukuan manual, dan keterlambatan penagihan sewa?
-2. Bagaimana mengimplementasikan sistem tersebut dengan memadukan kerangka kerja Laravel, integrasi pembayaran digital Midtrans, mesin penagihan otomatis berkala, dan transmisi notifikasi WhatsApp?
+2. Bagaimana mengimplementasikan sistem tersebut dengan memadukan kerangka kerja Laravel, integrasi pembayaran digital Midtrans, mesin penagihan otomatis berkala, serta transmisi notifikasi multi-saluran melalui WhatsApp dan Email?
 3. Bagaimana hasil penerapan dan efektivitas sistem berdasarkan evaluasi wawancara bersama penjaga kost serta penghuni kost setelah diterapkan secara langsung pada operasional Asri Boarding House?
 
 <br>
@@ -429,7 +429,7 @@ Berdasarkan latar belakang permasalahan yang telah diuraikan, rumusan masalah da
 ## 1.3 Tujuan Penelitian
 Berpijak pada rumusan masalah yang telah diuraikan, tujuan yang hendak dicapai dalam penelitian ini adalah sebagai berikut:
 1. Merancang arsitektur Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House sebagai solusi terpadu atas kendala pemesanan unit, pencatatan pembukuan manual, dan keterlambatan penagihan sewa.
-2. Mengimplementasikan sistem tersebut dengan memadukan kerangka kerja Laravel, integrasi pembayaran digital Midtrans, mesin penagihan otomatis berkala, dan transmisi notifikasi WhatsApp.
+2. Mengimplementasikan sistem tersebut dengan memadukan kerangka kerja Laravel, integrasi pembayaran digital Midtrans, mesin penagihan otomatis berkala, serta transmisi notifikasi multi-saluran melalui WhatsApp dan Email.
 3. Menganalisis hasil penerapan dan efektivitas sistem berdasarkan evaluasi wawancara bersama penjaga kost serta penghuni kost setelah diterapkan secara langsung pada operasional Asri Boarding House.
 
 <br>
@@ -466,53 +466,53 @@ Kemudahan penyebaran informasi secara *real-time* menjadikan aplikasi web sebaga
 <br>
 
 ## 2.4 UI & UX
-Desain antarmuka pengguna (User Interface atau UI) mengadopsi estetika Neo-Brutalism yang menonjolkan garis tepi tebal, bayangan solid dengan kontras tinggi, dan tata letak geometris yang berani. Karakter visual ini memberikan umpan balik taktil yang intuitif pada setiap tombol aksi, kartu kamar, maupun formulir reservasi sehingga pengguna dapat langsung mengenali elemen interaktif secara jelas. Pembagian bidang yang tegas tanpa ornamen gradasi halus memudahkan penyerapan informasi ketersediaan kamar dan status transaksi oleh calon penghuni maupun pengelola. Penerapan sistem desain yang konsisten pada antarmuka web terbukti menjaga keselarasan tata letak sekaligus mempercepat pemahaman visual pengguna terhadap fungsi perangkat lunak [12].
+Desain antarmuka pengguna (User Interface atau UI) mengadopsi estetika Neo-Brutalism yang menonjolkan garis tepi tebal, bayangan solid dengan kontras tinggi, dan tata letak geometris yang berani. Karakter visual ini memberikan umpan balik taktil yang intuitif pada setiap tombol aksi maupun formulir data sehingga pengguna dapat langsung mengenali elemen interaktif secara jelas. Pembagian bidang yang tegas tanpa ornamen gradasi halus memudahkan penyerapan informasi status operasional dan transaksi oleh pengguna. Penerapan sistem desain yang konsisten pada antarmuka web terbukti menjaga keselarasan tata letak sekaligus mempercepat pemahaman visual pengguna terhadap fungsi perangkat lunak [12].
 
-Pada aspek pengalaman pengguna (User Experience atau UX), alur interaksi dirancang ringkas guna memandu pengguna menyelesaikan tugas administratif tanpa hambatan kognitif yang berbelit. Calon penyewa dapat menuntaskan alur pemesanan kamar dan transaksi pembayaran digital dalam beberapa langkah terarah, sementara penghuni aktif memperoleh kemudahan saat memeriksa riwayat invoice serta mengunduh kuitansi pelunasan. Pada sisi operasional pengelola, dasbor manajemen menyajikan hierarki status keterisian kamar dan rekapitulasi mutasi kas secara lugas untuk mendukung pemantauan harian yang gesit. Perancangan UX yang berpusat pada kebutuhan pengguna nyata terbukti memangkas waktu operasional sistem serta mendongkrak kepuasan interaksi digital secara menyeluruh [13].
+Pada aspek pengalaman pengguna (User Experience atau UX), alur interaksi dirancang ringkas guna memandu pengguna menyelesaikan tugas tanpa hambatan kognitif yang berbelit. Pengorganisasian navigasi yang terstruktur memungkinkan pengguna menuntaskan proses transaksi dalam beberapa langkah terarah tanpa membingungkan alur logika kerja. Penyajian informasi status operasional secara hierarkis membantu pengguna memahami ringkasan data harian secara cepat dan akurat. Perancangan UX yang berpusat pada kebutuhan pengguna terbukti memangkas waktu operasional sistem serta mendongkrak kepuasan interaksi digital secara menyeluruh [13].
 
 <br>
 
 ## 2.5 Laravel
 Kerangka kerja Laravel merupakan platform pengembangan web berbasis PHP yang menerapkan pola arsitektur Model-View-Controller (MVC) guna memisahkan logika bisnis, perancangan antarmuka, dan manipulasi data secara terstruktur. Integrasi fitur Eloquent Object-Relational Mapping (ORM) menyederhanakan interaksi tabel basis data melalui representasi objek yang ekspresif, sementara sistem perutean dan mesin templat Blade mempercepat perakitan komponen web dinamis. Ekosistem ini dilengkapi lapisan perlindungan bawaan terhadap serangan umum seperti Cross-Site Request Forgery (CSRF) dan injeksi SQL sehingga menjamin keandalan perangkat lunak sejak tahap konstruksi awal [14].
 
-Pada pengembangan sistem informasi manajemen Asri Boarding House, implementasi framework Laravel 12 menghadirkan struktur aplikasi modern yang lebih ramping dan efisien dalam pengelolaan berkas konfigurasi. Logika bisnis yang kompleks dipisahkan dari controller menuju Service Layer, mencakup modul kalkulasi tagihan sewa berkala, verifikasi transaksi pembayaran, hingga manajemen transisi penghuni kamar. Pendekatan modular tersebut mencegah terjadinya penumpukan kode program sekaligus mempermudah pelaksanaan pengujian unit otomatis pada setiap alur transaksi penting. Pengorganisasian kode yang rapi pada lingkungan Laravel terbukti meningkatkan performa eksekusi sistem dan menjamin kemudahan pemeliharaan perangkat lunak jangka panjang [15].
+Pengembangan aplikasi web modern menuntut struktur kode yang modular dan efisien guna mempermudah pemeliharaan sistem skala menengah hingga besar. Pemisahan logika bisnis kompleks dari pengendali (*controller*) menuju lapisan layanan (*Service Layer*) menjaga tanggung jawab setiap komponen kode tetap terisolasi. Pendekatan modular tersebut mencegah penumpukan kode program sekaligus mempermudah pelaksanaan pengujian unit otomatis pada setiap alur proses bisnis. Pengorganisasian kode yang terstruktur pada kerangka kerja MVC terbukti meningkatkan performa eksekusi sistem dan menjamin kemudahan pemeliharaan perangkat lunak jangka panjang [15].
 
 <br>
 
 ## 2.6 RDBMS
 Sistem Manajemen Basis Data Relasional (Relational Database Management System atau RDBMS) mengelola kumpulan data terstruktur ke dalam tabel-tabel dua dimensi yang saling terhubung melalui relasi kunci utama (*primary key*) dan kunci asing (*foreign key*). Arsitektur relasional ini menjamin integritas referensial antar-tabel serta mendukung kepatuhan transaksi ACID (*Atomicity, Consistency, Isolation, Durability*) agar setiap pencatatan operasional tetap akurat dan terlindungi dari korupsi data. Penggunaan model data relasional menjadi fondasi utama dalam sistem informasi modern karena mampu memproses kueri data berskala besar secara konsisten dan terorganisasi dengan baik [16].
 
-Penerapan metodologi normalisasi hingga Bentuk Normal Ketiga (3NF) memecah skema tabel yang kompleks menjadi struktur yang lebih atomik guna menghilangkan duplikasi data serta mencegah anomali penyisipan, pembaruan, dan penghapusan. Struktur basis data yang telah dinormalisasi memastikan seluruh riwayat transaksi sewa dan data keterisian kamar tersimpan secara konsisten tanpa menimbulkan inkonsistensi saat terjadi manipulasi data harian [17].
+Penerapan metodologi normalisasi hingga Bentuk Normal Ketiga (3NF) memecah skema tabel yang kompleks menjadi struktur yang lebih atomik guna menghilangkan duplikasi data serta mencegah anomali penyisipan, pembaruan, dan penghapusan. Struktur basis data yang dinormalisasi memastikan seluruh riwayat transaksi dan status entitas tersimpan secara konsisten tanpa menimbulkan inkonsistensi saat manipulasi data harian [17].
 
 <br>
 
 ## 2.7 MySQL Database
 MySQL merupakan sistem manajemen basis data relasional (*Relational Database Management System*) sumber terbuka yang mengelola sekumpulan tabel terstruktur menggunakan bahasa *Structured Query Language* (SQL) sebagai standar manipulasi data. Sistem ini menerapkan arsitektur *client-server* multithread yang sanggup melayani kueri pembacaan maupun penulisan data secara serentak tanpa menimbulkan latensi komputasi yang berlebih. Efisiensi alokasi memori serta kompatibilitasnya yang tinggi terhadap kerangka kerja Laravel menjadikan MySQL pilihan ideal untuk menangani operasi CRUD (*Create, Read, Update, Delete*) pada seluruh entitas sistem secara cepat dan stabil [18].
 
-Pada implementasi manajemen properti sewa, pemanfaatan *storage engine* InnoDB pada MySQL menyediakan dukungan transaksi berbasis ACID (*Atomicity, Consistency, Isolation, Durability*) dan penguncian tingkat baris (*row-level locking*) guna mencegah benturan data saat beberapa penyewa mengakses unit kamar yang sama pada waktu bersamaan. Penerapan skema indeks serta penegakan integritas kunci asing (*foreign key constraints*) memastikan riwayat pembayaran dan status keterisian kamar terekam secara konsisten sekaligus mempercepat waktu respon kueri pencarian data [19].
+Pemanfaatan *storage engine* InnoDB pada MySQL menyediakan dukungan transaksi berbasis ACID (*Atomicity, Consistency, Isolation, Durability*) dan penguncian tingkat baris (*row-level locking*) guna mencegah benturan data saat beberapa pengguna mengakses rekaman data yang sama secara bersamaan. Penerapan skema indeks serta penegakan integritas kunci asing (*foreign key constraints*) memastikan riwayat transaksi terekam secara konsisten sekaligus mempercepat waktu respon kueri pencarian data [19].
 
 <br>
 
 ## 2.8 Payment Gateway
 *Gerbang pembayaran (payment gateway)* Midtrans merupakan platform perantara transaksi digital komprehensif yang menghubungkan aplikasi web secara langsung dengan berbagai jaringan perbankan dan penyedia dompet digital di Indonesia. Layanan ini berfungsi memfasilitasi transaksi pembayaran mandiri melalui beragam metode pembayaran resmi seperti *Virtual Account* berbagai bank terkemuka, QRIS, *e-wallet*, serta kartu kredit tanpa mengharuskan pengelola membuka rekening penampung pada masing-masing bank secara terpisah. Kemampuan agregasi pembayaran tersebut mempermudah calon penyewa dalam menyelesaikan kewajiban finansial secara fleksibel serta meniadakan tahapan pengunggahan bukti transfer konvensional yang rawan pemalsuan [20].
 
-Midtrans menyediakan dua lingkungan operasional yang terisolasi, yakni mode *Sandbox* sebagai ruang simulasi transaksi untuk menguji alur pembayaran menggunakan akun virtual buatan, serta mode *Production* yang menangani transaksi perbankan riil dengan otentikasi kunci keamanan resmi. Pada tahap pengembangan sistem manajemen Asri Boarding House saat ini, mode *Sandbox* diterapkan guna memverifikasi keandalan simulasi transaksi pembayaran uang muka kamar, pelunasan sewa bulanan, hingga denda keterlambatan secara menyeluruh. Konfigurasi berbasis berkas lingkungan (*environment variable*) memungkinkan sistem beralih ke mode *Production* secara langsung hanya dengan memperbarui Server Key dan Client Key resmi tanpa perlu mengubah logika program yang telah berjalan.
+Penyedia gerbang pembayaran umumnya menyediakan dua lingkungan operasional terisolasi, yaitu mode *Sandbox* untuk simulasi pengujian alur pembayaran dan mode *Production* untuk transaksi perbankan riil. Lingkungan simulasi memungkinkan pengembang memverifikasi respons transaksi perbankan, validasi skenario pembayaran, hingga penanganan status kedaluwarsa secara aman sebelum sistem dirilis ke publik. Pemisahan kredensial berbasis berkas lingkungan (*environment variable*) menjamin fleksibilitas peralihan sistem menuju lingkungan produksi tanpa perlu mengubah logika program yang telah teruji.
 
-Integrasi teknis pada sistem dibangun menggunakan antarmuka Midtrans Snap API yang memunculkan jendela pembayaran terpadu serta memanfaatkan *webhook callback* untuk menerima pemberitahuan status transaksi berbasis validasi *signature key* SHA-512. Mekanisme ini secara otomatis memperbarui status transaksi menjadi lunas (*settlement*) di dalam basis data saat dana terverifikasi, memicu pembuatan kuitansi digital, serta membuka akses pembaruan jadwal sewa secara *real-time*. Penggunaan jalur konfirmasi otomatis tersebut meniadakan beban verifikasi manual oleh pengelola, memangkas selisih pencatatan kas fisik, dan menjamin akurasi rekapitulasi finansial bulanan. Penerapan gerbang pembayaran digital pada akhirnya menjadi instrumen krusial dalam menciptakan tata kelola keuangan indekos yang transparan, profesional, dan akuntabel bagi seluruh pihak [21].
-
-<br>
-
-## 2.9 Notifikasi Fonnte WhatsApp
-Fonnte merupakan layanan penyedia *Application Programming Interface* (API) gerbang WhatsApp pihak ketiga yang memungkinkan aplikasi web mengirimkan pesan notifikasi secara otomatis langsung ke nomor kontak pengguna tanpa intervensi perangkat fisik tambahan. Integrasi notifikasi pesan instan ini menghadirkan jalur komunikasi satu arah yang sangat efektif karena memiliki tingkat keterbacaan (*open rate*) yang jauh lebih tinggi dan responsif dibandingkan saluran komunikasi konvensional seperti SMS maupun pos-el [22].
-
-Pada arsitektur sistem Asri Boarding House, implementasi Fonnte dihubungkan melalui *HTTP POST request* berotentikasi token rahasia untuk mentransmisikan kredensial akun penghuni baru, rincian tagihan sewa bulanan, tautan kuitansi pelunasan, hingga pemberitahuan penanganan keluhan fasilitas. Penerapan pengiriman otomatis ini meniadakan kebiasaan pengelola mengetik pesan penagihan manual satu per satu serta memangkas keterlambatan pembayaran sewa melalui pengingat tempo yang konsisten dan tepat waktu. Pemanfaatan gerbang WhatsApp ini membuktikan bahwa otomatisasi notifikasi transaksi digital mampu meningkatkan disiplin pembayaran penghuni sekaligus mewujudkan tata kelola operasional indekos yang responsif dan terpercaya [23].
+Integrasi teknis gerbang pembayaran mengandalkan antarmuka terpadu berbasis API dan mekanisme *webhook callback* untuk menerima pemberitahuan status transaksi berbasis validasi *signature key* kriptografis SHA-512. Mekanisme asinkron ini memperbarui status transaksi secara otomatis di dalam basis data saat dana terverifikasi oleh jaringan perbankan. Jalur konfirmasi otomatis tersebut meniadakan verifikasi manual, meminimalkan potensi kesalahan pencatatan transaksi kas, dan menjamin akurasi rekapitulasi finansial. Penerapan gerbang pembayaran digital menjadi instrumen penting dalam menciptakan tata kelola keuangan transaksi daring yang transparan, profesional, dan akuntabel [21].
 
 <br>
 
-## 2.10 Notifikasi SMTP Email
+## 2.9 WhatsApp Gateway API
+Layanan antarmuka pemrograman aplikasi (API) gerbang WhatsApp memungkinkan aplikasi web mengirimkan pesan notifikasi secara otomatis langsung ke nomor kontak pengguna tanpa perangkat fisik tambahan. Integrasi notifikasi pesan instan ini menghadirkan jalur komunikasi yang sangat efektif karena memiliki tingkat keterbacaan (*open rate*) yang jauh lebih tinggi dan responsif dibandingkan saluran komunikasi konvensional seperti SMS maupun pos-el [22].
+
+Komunikasi data pada gerbang pesan instan memanfaatkan protokol *HTTP POST request* berotentikasi token rahasia guna menyalurkan pesan transaksional secara terprogram. Pengiriman pesan terjadwal mengeliminasi pekerjaan repetitif pengetikan manual serta meminimalkan risiko keterlambatan penerimaan informasi penting oleh pengguna. Otomatisasi pengiriman pesan instan terbukti meningkatkan disiplin interaksi pengguna sekaligus memperkuat reliabilitas layanan sistem informasi secara berkesinambungan [23].
+
+<br>
+
+## 2.10 Email Gateway API
 Komunikasi surat elektronik berbasis *Simple Mail Transfer Protocol* (SMTP) menetapkan mekanisme baku pertukaran pesan digital lintas jaringan melalui arsitektur transmisi bertingkat dengan dukungan enkripsi TLS (*Transport Layer Security*) pada port aman. Pemanfaatan jalur surel di dalam ekosistem web memberikan media pemberitahuan berkas administratif yang permanen, rapi, dan mudah diarsipkan pengguna sebagai bukti transaksi resmi [24].
 
-Aplikasi Asri Boarding House mengintegrasikan layanan SMTP pihak ketiga dari Google melalui konfigurasi *mail driver* Laravel yang menghubungkan sistem ke *server* `smtp.gmail.com` menggunakan kredensial *App Password* dan enkripsi TLS port 587. Jalur komunikasi ini secara otomatis menyalurkan pesan transaksional penting, mencakup tautan pemulihan kata sandi akun, salinan rincian invoice sewa bulanan, dan dokumen pelunasan langsung ke kotak masuk (*inbox*) penyewa maupun administrator. Tingkat reputasi pengiriman yang tinggi pada infrastruktur Google meminimalkan risiko pesan masuk ke kotak *spam* sekaligus melengkapi notifikasi pesan instan menjadi satu kesatuan sistem komunikasi yang kredibel [25].
+Integrasi layanan transfer surat elektronik pada kerangka kerja web memanfaatkan pengalih pesan (*mail relay*) terenkripsi guna menjamin kerahasiaan dan keaslian isi dokumen digital. Jalur komunikasi surel bertugas mendistribusikan berkas administratif berkala, mencakup bukti konfirmasi transaksi, invoice digital, hingga pesan verifikasi keamanan akun secara otomatis. Keberadaan layanan pengiriman surel bersertifikasi keamanan tinggi meminimalkan risiko pesan tersaring ke kotak spam sekaligus melengkapi komunikasi pesan instan menjadi kesatuan sistem notifikasi yang kredibel [25].
 
 <br>
 
@@ -521,7 +521,7 @@ Cron job merupakan utilitas penjadwalan tugas berbasis waktu (*time-based job sc
 
 Dalam pengelolaan notifikasi sistem, berkas konfigurasi penjadwalan dirancang untuk memicu perintah konsol secara berkala guna mendistribusikan pesan pengingat tagihan melalui integrasi multi-saluran WhatsApp dan surat elektronik. Pengaturan ekspresi waktu yang presisi pada skrip penjadwal memungkinkan sistem membaca tenggat jatuh tempo invoice di basis data lalu meneruskan instruksi transmisi pesan secara serentak ke gerbang komunikasi eksternal [27].
 
-Penerapan pada sistem Asri Boarding House memanfaatkan Laravel Task Scheduling yang terhubung pada cron job tunggal *server* produksi untuk menjalankan perintah penerbitan tagihan setiap tanggal 1 awal bulan serta pemrosesan denda keterlambatan setiap hari pukul 01:00 WIB. Otomatisasi terjadwal ini berhasil mengeliminasi keterlambatan pencatatan piutang bulanan, memastikan penghuni menerima peringatan tempo sewa secara disiplin, serta meringankan beban operasional pengelola dari pekerjaan administratif repetitif. Integrasi cron job pada akhirnya menegaskan perannya sebagai poros otomatisasi utama yang menjaga kesinambungan siklus penagihan dan keandalan tata kelola hunian indekos modern.
+Implementasi penjadwalan tugas tingkat kerangka kerja (*task scheduling*) memanfaatkan daemon cron tunggal sistem operasi untuk memicu eksekusi perintah pemrosesan data berkala di latar belakang. Otomatisasi berkala ini menjaga ketepatan waktu penerbitan catatan kewajiban finansial, menjamin konsistensi penegakan aturan bisnis, serta mengurangi beban kerja repetitif dari operator sistem. Penerapan penjadwal otomatis dengan kepatuhan prinsip idempoten menegaskan peranannya dalam menjaga kesinambungan siklus transaksi dan stabilitas tata kelola sistem informasi modern.
 
 <br>
 
@@ -551,7 +551,7 @@ Kajian ini dipadukan dengan strategi studi kasus tunggal yang mendalam guna memb
 Sumber data yang dihimpun dalam penelitian ini dikelompokkan menjadi dua kategori utama, yaitu data primer dan data sekunder. Kedua kelompok data tersebut dimanfaatkan untuk memetakan alur proses bisnis serta mendasari perancangan modul pada Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* di Asri Boarding House.
 
 1. Data Primer  
-Data primer diperoleh langsung dari pihak terkait di lingkungan Asri Boarding House melalui kegiatan wawancara dan observasi lapangan, yaitu:
+Data primer diperoleh langsung dari pihak terkait di lingkungan Asri Boarding House melalui kegiatan wawancara mendalam, yaitu:
 * **Penjaga kost**, untuk menggali informasi seputar tata kelola operasional harian, alur pencatatan sewa kamar, kendala rekapitulasi buku kas fisik, serta penilaian terhadap kemudahan penggunaan fitur sistem.
 * **Penghuni kost**, untuk memperoleh tanggapan mengenai pengalaman reservasi kamar, kejelasan informasi ketersediaan unit, kemudahan proses pembayaran digital, dan penerimaan bukti tagihan.
 
@@ -564,7 +564,7 @@ Data sekunder diperoleh dari berbagai dokumen dan literatur tertulis guna meleng
 <br>
 
 ## 3.4 Teknik Pengumpulan Data
-Pengumpulan data pada penelitian ini menggunakan pendekatan kualitatif dengan teknik wawancara langsung di Asri Boarding House [29]. Pendekatan ini bertujuan mencari kebutuhan operasional hunian indekos, kendala pencatatan sewa manual, serta pengalaman pengguna saat berinteraksi dengan sistem informasi berbasis web.
+Pengumpulan data pada penelitian ini menggunakan pendekatan kualitatif dengan teknik wawancara mendalam langsung di Asri Boarding House [29]. Pendekatan ini bertujuan mencari kebutuhan operasional hunian indekos, kendala pencatatan sewa manual, serta pengalaman pengguna saat berinteraksi dengan sistem informasi berbasis web.
 
 1. Wawancara  
 Wawancara dilakukan secara tatap muka dengan bantuan alat perekam suara. Percakapan rekaman tersebut selanjutnya ditranskripsi ke dalam format teks tertulis agar seluruh detail tanggapan narasumber terdokumentasi rapi dan tidak ada poin penting yang terlewat saat proses analisis kebutuhan. Proses tanya jawab ini melibatkan dua kelompok narasumber utama, yaitu:
@@ -585,13 +585,13 @@ Metode *Waterfall* dipilih karena kebutuhan pengelolaan indekos, seperti alur pe
 <br>
 
 *Gambar 3.1 Tahapan Metode SDLC Waterfall*  
-*Sumber: Dicoding Indonesia (2021)*
+*Sumber: Pressman (2015)*
 
 </div>
 
 <br>
 
-Pada Gambar 3.1, alur pengembangan diawali dari tahap *requirement gathering and analysis* untuk mengumpulkan kebutuhan operasional indekos lewat wawancara dan observasi langsung. Tahap berikutnya adalah *design*, yaitu menyusun rancangan antarmuka, alur sistem, serta struktur basis data sebelum masuk ke tahap pembuatan program. Hasil rancangan tersebut kemudian dikerjakan pada tahap *implementation* lewat penulisan kode program memakai *framework* Laravel dan integrasi *payment gateway* Midtrans. Setelah modul program selesai dibuat, proses berlanjut ke tahap *integration & testing* dan *verification* untuk memastikan setiap fungsi berjalan lancar serta alur pembayaran sewa tidak mengalami kendala. Tahap akhir *operation & maintenance* mencakup pengunggahan sistem ke server *hosting*, pemantauan penggunaan harian, serta perbaikan berkala jika ditemukan kendala teknis.
+Pada Gambar 3.1, alur pengembangan diawali dari tahap *requirement gathering and analysis* untuk mengumpulkan kebutuhan operasional indekos lewat wawancara mendalam. Tahap berikutnya adalah *design*, yaitu menyusun rancangan antarmuka, alur sistem, serta struktur basis data sebelum masuk ke tahap pembuatan program. Hasil rancangan tersebut kemudian dikerjakan pada tahap *implementation* lewat penulisan kode program memakai *framework* Laravel dan integrasi *payment gateway* Midtrans. Setelah modul program selesai dibuat, proses berlanjut ke tahap *integration & testing* dan *verification* menggunakan metode *black box testing* untuk memastikan setiap fungsi berjalan lancar serta alur pembayaran sewa tidak mengalami kendala. Tahap akhir *operation & maintenance* mencakup pengunggahan sistem ke server *hosting*, pemantauan penggunaan harian, serta perbaikan berkala jika ditemukan kendala teknis.
 
 <br>
 
@@ -681,6 +681,6 @@ Pada Gambar 3.2, tahap masukan (*input*) mencakup kondisi operasional indekos, i
 
 [28] M. W. Mauludy and Fathahillah, “Pengembangan Sistem Informasi Pengarsipan File Menggunakan Metode R&D,” *J. Informatics Manag. Inf. Technol.*, vol. 5, no. 2, pp. 118–125, 2025, doi: [10.47065/jimat.v5i2.484](https://doi.org/10.47065/jimat.v5i2.484).
 
-[29] R. A. Putra and A. Voutama, “Rancang Bangun Sistem Informasi Manajemen Kost Menggunakan Metode Waterfall Berbasis Web,” *TIN Terap. Inform. Nusant.*, vol. 6, no. 12, pp. 2302–2312, 2026, doi: [10.47065/tin.v6i12.9567](https://doi.org/10.47065/tin.v6i12.9567).
+[29] Sugiyono, *Metode Penelitian Kuantitatif, Kualitatif, dan R&D*, Bandung: Alfabeta, 2022.
 
 [30] E. Rahmi, E. Yumami, and N. Hidayasari, “Analisis Metode Pengembangan Sistem Informasi Berbasis Website: Systematic Literature Review,” *REMIK Ris. dan E-Jurnal Manaj. Inform. Komput.*, vol. 7, no. 1, pp. 821–834, 2023, doi: [10.33395/remik.v7i1.12177](https://doi.org/10.33395/remik.v7i1.12177).
