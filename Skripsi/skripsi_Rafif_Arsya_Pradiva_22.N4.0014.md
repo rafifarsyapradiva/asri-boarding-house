@@ -536,14 +536,14 @@ Pada tingkat kerangka kerja aplikasi (*task scheduling*), cukup satu *daemon cro
 <br>
 
 ## 3.1 Objek Penelitian
-Objek dalam penelitian ini adalah Asri Boarding House, sebuah usaha jasa sewa hunian indekos yang berlokasi di Jalan Maera Sari Nomor 1, Tembalang, Kota Semarang. Properti ini mengoperasikan 32 unit kamar yang terbagi ke dalam tipe VIP, Deluxe, dan Standar guna melayani kebutuhan tempat tinggal mahasiswa serta pekerja di sekitar kawasan kampus. Pengelolaan harian yang menjadi fokus kajian mencakup alur reservasi kamar, pencatatan pembayaran sewa bulanan, dan pembukuan kas yang selama ini masih ditangani secara manual menggunakan buku besar fisik. Kondisi tersebut menjadikan Asri Boarding House sebagai lokus yang tepat untuk merancang dan menerapkan sistem informasi manajemen pengelolaan kost berbasis web yang terintegrasi langsung dengan gerbang pembayaran digital.
+Objek penelitian ini adalah Asri Boarding House yang berlokasi di Jalan Maera Sari Nomor 1, Tembalang, Kota Semarang. Usaha penyewaan indekos ini menyediakan 32 unit kamar dalam tipe VIP, Deluxe, dan Standar untuk memenuhi kebutuhan tempat tinggal mahasiswa maupun pekerja di sekitar kawasan kampus. Fokus kajian pada objek ini meliputi alur reservasi kamar, penagihan sewa bulanan, hingga pembukuan kas operasional. Selama ini, seluruh aktivitas tersebut masih dicatat secara manual pada buku besar fisik. Kondisi operasional itulah yang mendasari perancangan sistem informasi manajemen kost berbasis web dengan integrasi gerbang pembayaran digital di Asri Boarding House.
 
 <br>
 
 ## 3.2 Jenis Penelitian
-Penelitian ini menggunakan metode Penelitian dan Pengembangan atau *Research and Development* (R&D) dengan pendekatan rekayasa perangkat lunak untuk menghasilkan produk teknologi terapan. Pendekatan ini dipilih karena fokus utama riset bukan sekadar mengkaji fenomena secara teoritis, melainkan merancang, membangun, dan menguji artefak perangkat lunak fungsional guna memecahkan masalah operasional nyata [28]. Melalui prosedur pengembangan terstruktur, sistem informasi yang dibangun diharapkan mampu menyelaraskan kebutuhan tata kelola bisnis dengan keandalan pemrosesan data secara langsung.
+Penelitian ini menerapkan metode Penelitian dan Pengembangan atau *Research and Development* (R&D) melalui pendekatan rekayasa perangkat lunak. Metode ini dipilih karena tujuan utama penelitian bukan sekadar mengkaji fenomena secara teoretis, melainkan merancang, membangun, dan menguji perangkat lunak fungsional untuk menyelesaikan masalah operasional di lapangan [28]. Lewat tahapan pengembangan yang terukur, sistem informasi yang dihasilkan diharapkan dapat menjawab kebutuhan pengelolaan bisnis indekos secara akurat.
 
-Kajian ini dipadukan dengan strategi studi kasus tunggal yang mendalam guna membedah secara rinci alur bisnis sewa kamar pada Asri Boarding House. Pengumpulan data empiris awal memanfaatkan analisis deskriptif kualitatif untuk menangkap kendala manual pencatatan kas, penagihan tempo, dan pemesanan unit kamar. Pada tahap akhir, evaluasi fungsional dan uji keterpakaian sistem diterapkan bersama pengguna langsung untuk memastikan perangkat lunak bekerja secara tepat sasaran.
+Metode R&D tersebut dipadukan dengan studi kasus tunggal untuk membedah alur bisnis sewa kamar di Asri Boarding House secara menyeluruh. Pada tahap awal, pengumpulan data lapangan menggunakan analisis deskriptif kualitatif untuk memetakan kendala pencatatan kas manual, penagihan jatuh tempo, dan pemesanan kamar. Selanjutnya, pada tahap akhir dilakukan pengujian fungsi serta evaluasi penggunaan sistem bersama pengguna untuk memastikan aplikasi berjalan sesuai kebutuhan.
 
 <br>
 
@@ -551,32 +551,31 @@ Kajian ini dipadukan dengan strategi studi kasus tunggal yang mendalam guna memb
 Sumber data yang dihimpun dalam penelitian ini dikelompokkan menjadi dua kategori utama, yaitu data primer dan data sekunder. Kedua kelompok data tersebut dimanfaatkan untuk memetakan alur proses bisnis serta mendasari perancangan modul pada Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* di Asri Boarding House.
 
 1. Data Primer  
-Data primer diperoleh langsung dari pihak terkait di lingkungan Asri Boarding House melalui kegiatan wawancara mendalam, yaitu:
-* **Penjaga kost**, untuk menggali informasi seputar tata kelola operasional harian, alur pencatatan sewa kamar, kendala rekapitulasi buku kas fisik, serta penilaian terhadap kemudahan penggunaan fitur sistem.
-* **Penghuni kost**, untuk memperoleh tanggapan mengenai pengalaman reservasi kamar, kejelasan informasi ketersediaan unit, kemudahan proses pembayaran digital, dan penerimaan bukti tagihan.
+Data primer merupakan data utama yang dihimpun dari narasumber di Asri Boarding House melalui wawancara mendalam, meliputi:
+* **Penjaga kost**, sebagai sumber informasi mengenai prosedur operasional harian, alur pencatatan sewa kamar, serta kendala pembukuan pada buku kas fisik.
+* **Penghuni kost**, sebagai sumber informasi terkait alur pemesanan kamar, kendala pembayaran sewa bulanan, serta kebutuhan akan bukti transaksi yang rapi.
 
 2. Data Sekunder  
-Data sekunder diperoleh dari berbagai dokumen dan literatur tertulis guna melengkapi serta memperkuat landasan analisis dalam penelitian, yaitu:
-* Catatan pembukuan internal berupa buku besar manual, arsip bukti transfer sewa, nota belanja operasional, dan data tarif 32 unit kamar Asri Boarding House.
-* Dokumentasi teknis antarmuka pemrograman aplikasi Midtrans, gateway notifikasi WhatsApp, serta pustaka pendukung kerangka kerja Laravel.
-* Jurnal ilmiah, buku teks, dan publikasi akademik yang membahas rekayasa perangkat lunak, sistem informasi manajemen indekos, dan integrasi gerbang pembayaran elektronik.
+Data sekunder diperoleh dari berbagai dokumen internal dan literatur pendukung untuk melengkapi landasan analisis penelitian, yaitu:
+* Arsip pembukuan internal yang mencakup buku besar manual, bukti transfer sewa, nota pengeluaran operasional, serta daftar tarif 32 unit kamar Asri Boarding House.
+* Dokumentasi teknis API Midtrans, *gateway* notifikasi WhatsApp, serta dokumentasi resmi kerangka kerja Laravel.
+* Artikel jurnal ilmiah, buku referensi, dan publikasi akademik yang membahas pengembangan sistem informasi indekos serta integrasi gerbang pembayaran digital.
 
 <br>
 
 ## 3.4 Teknik Pengumpulan Data
-Pengumpulan data pada penelitian ini menggunakan pendekatan kualitatif dengan teknik wawancara mendalam langsung di Asri Boarding House [29]. Pendekatan ini bertujuan mencari kebutuhan operasional hunian indekos, kendala pencatatan sewa manual, serta pengalaman pengguna saat berinteraksi dengan sistem informasi berbasis web.
+Pengumpulan data pada penelitian ini menggunakan pendekatan kualitatif melalui teknik wawancara mendalam di Asri Boarding House [29]. Teknik ini dipilih untuk menggali kebutuhan operasional indekos, kendala pencatatan sewa manual, hingga tanggapan pengguna setelah mencoba sistem informasi berbasis web yang dibangun.
 
-1. Wawancara  
-Wawancara dilakukan secara tatap muka dengan bantuan alat perekam suara. Percakapan rekaman tersebut selanjutnya ditranskripsi ke dalam format teks tertulis agar seluruh detail tanggapan narasumber terdokumentasi rapi dan tidak ada poin penting yang terlewat saat proses analisis kebutuhan. Proses tanya jawab ini melibatkan dua kelompok narasumber utama, yaitu:
-* **Penjaga kost**, yang berfokus pada evaluasi pembukuan kas masuk, kepraktisan pemantauan ketersediaan 32 unit kamar, otomatisasi penagihan sewa bulanan, dan efisiensi waktu kerja setelah beralih dari buku besar fisik.
-* **Penghuni kost**, yang berfokus pada kemudahan reservasi kamar, kejelasan rincian tagihan sewa, kepraktisan pembayaran digital melalui *payment gateway*, dan kepuasan terhadap bukti transaksi yang diterima.
+Kegiatan wawancara dilakukan secara tatap muka menggunakan bantuan alat perekam suara. Rekaman percakapan tersebut kemudian disalin (ditranskripsi) ke dalam teks tertulis supaya seluruh keterangan narasumber terdokumentasi dengan rapi dan tidak ada informasi penting yang terlewat saat dianalisis. Proses wawancara ini dilakukan pada tahap analisis kebutuhan maupun tahap evaluasi sistem bersama dua narasumber, yaitu:
+* **Penjaga kost**, dengan fokus pembahasan pada evaluasi pembukuan kas, kemudahan memantau sisa kamar dari 32 unit yang tersedia, kepraktisan penagihan otomatis, serta efisiensi kerja setelah beralih dari buku besar manual.
+* **Penghuni kost**, dengan fokus pembahasan pada pengalaman memesan kamar, kejelasan rincian tagihan bulanan, kemudahan membayar sewa melalui *payment gateway*, serta kejelasan bukti pembayaran digital yang diterima.
 
 <br>
 
 ## 3.5 Metode Pengembangan Sistem
 Pengembangan sistem informasi manajemen pada Asri Boarding House menerapkan metode *Waterfall* dalam *Software Development Life Cycle* (SDLC) [30]. Metode ini menjalankan proses pengembangan perangkat lunak secara bertahap mulai dari analisis kebutuhan, perancangan antarmuka, penulisan kode, pengujian, hingga pemeliharaan berkala. Ciri utama alur ini yaitu setiap tahap harus diselesaikan dan dicek terlebih dahulu sebelum melangkah ke tahap berikutnya.
 
-Metode *Waterfall* dipilih karena kebutuhan pengelolaan indekos, seperti alur pemesanan kamar dan tagihan sewa bulanan, sudah dipetakan dengan jelas sejak awal lewat studi lapangan. Alur yang teratur ini membantu proses pengerjaan sistem dan integrasi *payment gateway* berjalan lancar tanpa banyak perubahan alur di tengah pengerjaan.
+Metode *Waterfall* dipilih karena kebutuhan pengelolaan indekos, seperti alur pemesanan kamar dan penagihan sewa bulanan, sudah terpetakan dengan jelas sejak awal melalui studi lapangan. Tahapan kerja yang terstruktur ini membuat pembangunan sistem dan integrasi *payment gateway* dapat berjalan terarah tanpa terkendala perubahan spesifikasi di tengah jalan.
 
 <div align="center">
 
@@ -584,19 +583,18 @@ Metode *Waterfall* dipilih karena kebutuhan pengelolaan indekos, seperti alur pe
 
 <br>
 
-*Gambar 3.1 Tahapan Metode SDLC Waterfall*  
-*Sumber: Pressman (2015)*
+*Gambar 3.1 Tahapan Metode SDLC Waterfall [30]*  
 
 </div>
 
 <br>
 
-Pada Gambar 3.1, alur pengembangan diawali dari tahap *requirement gathering and analysis* untuk mengumpulkan kebutuhan operasional indekos lewat wawancara mendalam. Tahap berikutnya adalah *design*, yaitu menyusun rancangan antarmuka, alur sistem, serta struktur basis data sebelum masuk ke tahap pembuatan program. Hasil rancangan tersebut kemudian dikerjakan pada tahap *implementation* lewat penulisan kode program memakai *framework* Laravel dan integrasi *payment gateway* Midtrans. Setelah modul program selesai dibuat, proses berlanjut ke tahap *integration & testing* dan *verification* menggunakan metode *black box testing* untuk memastikan setiap fungsi berjalan lancar serta alur pembayaran sewa tidak mengalami kendala. Tahap akhir *operation & maintenance* mencakup pengunggahan sistem ke server *hosting*, pemantauan penggunaan harian, serta perbaikan berkala jika ditemukan kendala teknis.
+Berdasarkan Gambar 3.1, pengembangan sistem dimulai dari tahap *requirement gathering and analysis* untuk menghimpun kebutuhan operasional indekos melalui wawancara mendalam. Tahap kedua adalah *design*, yakni menyusun rancangan tampilan antarmuka, alur kerja sistem, serta skema basis data. Rancangan tersebut selanjutnya diterjemahkan pada tahap *implementation* dengan menulis kode program menggunakan *framework* Laravel dan mengintegrasikan *payment gateway* Midtrans. Begitu seluruh modul selesai dibangun, proses masuk ke tahap *integration & testing* serta *verification* melalui pengujian *black box testing*. Pengujian ini memastikan setiap fitur dan transaksi pembayaran sewa berjalan bebas kendala. Tahap terakhir, *operation & maintenance*, meliputi pengunggahan aplikasi ke *server hosting*, pemantauan operasional harian, serta perbaikan berkala apabila ditemukan kendala teknis.
 
 <br>
 
 ## 3.6 Kerangka Pemikiran
-Kerangka pemikiran ini menggunakan pendekatan *Research and Development* (R&D) untuk menghasilkan produk sistem informasi yang teruji di Asri Boarding House. Pendekatan ini menghubungkan permasalahan nyata di lapangan dengan perancangan aplikasi berbasis web. Tahapan kerja yang teratur dari identifikasi masalah sampai pengujian menjaga proses pembuatan sistem tetap terarah.
+Kerangka pemikiran dalam penelitian ini disusun mengikuti alur pendekatan *Research and Development* (R&D) untuk menghasilkan produk sistem informasi yang teruji bagi Asri Boarding House. Melalui kerangka ini, berbagai kendala operasional di lapangan dihubungkan secara terukur dengan solusi perancangan aplikasi berbasis web, mulai dari identifikasi masalah hingga evaluasi akhir.
 
 <div align="center">
 
@@ -606,11 +604,10 @@ Kerangka pemikiran ini menggunakan pendekatan *Research and Development* (R&D) u
 
 *Gambar 3.2 Kerangka Pemikiran Penelitian*  
 
-
 </div>
 <br>
 
-Pada Gambar 3.2, tahap masukan (*input*) mencakup kondisi operasional indekos, identifikasi masalah pencatatan, dan spesifikasi kebutuhan sistem. Tahap berikutnya adalah proses (*process*), yang meliputi analisis dan perancangan, implementasi sistem, serta pengujian dan validasi fitur. Rangkaian kerja tersebut menghasilkan keluaran (*output*) berupa artefak perangkat lunak yang telah teruji dan siap digunakan. Bagian akhir berupa dampak (*outcome*) memberikan manfaat operasional langsung, seperti pembukuan kas yang rapi serta kemudahan pembayaran bagi pengelola dan penghuni.
+Sebagaimana ditunjukkan pada Gambar 3.2, alur penelitian dimulai dari bagian masukan (*input*) yang merangkum kondisi operasional indekos, masalah pencatatan manual, serta rincian kebutuhan sistem. Bagian kedua adalah proses (*process*), yang mencakup tahapan analisis dan perancangan, penulisan kode program, hingga pengujian fitur aplikasi. Seluruh tahapan tersebut menghasilkan keluaran (*output*) berupa perangkat lunak manajemen kost yang telah teruji dan siap dioperasikan. Pada bagian akhir, dampak (*outcome*) penelitian ini terlihat dari tertatanya pembukuan kas serta makin praktisnya proses pembayaran sewa bagi penjaga maupun penghuni kost.
 
 <br>
 
