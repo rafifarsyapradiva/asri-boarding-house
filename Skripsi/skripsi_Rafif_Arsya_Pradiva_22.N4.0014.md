@@ -414,7 +414,7 @@ Masalah operasional juga muncul pada proses penagihan sewa bulanan. Pengingat ja
 
 Urusan pembukuan menjadi semakin rumit karena pemeriksaan pembayaran sewa masih mengandalkan bukti tangkapan layar transfer bank dan setoran tunai. Saat tutup buku di akhir bulan, penjaga kost membutuhkan waktu berhari-hari hanya untuk mencocokkan nota pengeluaran dengan bukti kas masuk. Masalah ini sebenarnya dapat diatasi melalui integrasi gerbang pembayaran digital (*payment gateway*). Verifikasi transaksi non-tunai yang berjalan otomatis akan menutup celah selisih kas fisik dan memastikan catatan keuangan selalu akurat [4].
 
-Berangkat dari rangkaian masalah tersebut, Asri Boarding House membutuhkan sistem manajemen terpusat yang menggabungkan fitur reservasi daring, penjadwalan tagihan otomatis, dan gerbang pembayaran Midtrans. Dukungan pengingat tagihan melalui WhatsApp dan pos-el (*email*) pada aplikasi web juga diperlukan agar informasi tagihan tersampaikan secara *real-time* sekaligus menjaga transparansi pembukuan [5]. Oleh karena itu, penelitian ini membangun Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House untuk menghadirkan tata kelola indekos yang rapi, efisien, dan bebas selisih kas.
+Berangkat dari rangkaian masalah tersebut, Asri Boarding House membutuhkan sistem manajemen terpusat yang menggabungkan fitur reservasi daring, penjadwalan tagihan otomatis, dan gerbang pembayaran Midtrans. Dukungan pengingat tagihan melalui WhatsApp dan *email* pada aplikasi web juga diperlukan agar informasi tagihan tersampaikan secara *real-time* sekaligus menjaga transparansi pembukuan [5]. Oleh karena itu, penelitian ini membangun Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House untuk menghadirkan tata kelola indekos yang rapi, efisien, dan bebas selisih kas.
 
 <br>
 
@@ -480,7 +480,7 @@ Dalam pengembangan aplikasi web berskala menengah hingga besar, struktur kode pe
 <br>
 
 ## 2.6 RDBMS
-Sistem Manajemen Basis Data Relasional (Relational Database Management System atau RDBMS) mengelola kumpulan data terstruktur ke dalam tabel-tabel dua dimensi yang saling terhubung melalui relasi kunci utama (*primary key*) dan kunci asing (*foreign key*). Arsitektur relasional ini menjamin integritas referensial antar-tabel serta mendukung kepatuhan transaksi ACID (*Atomicity, Consistency, Isolation, Durability*) agar setiap pencatatan operasional tetap akurat dan terlindungi dari korupsi data. Penggunaan model data relasional menjadi fondasi utama dalam sistem informasi modern karena mampu memproses kueri data berskala besar secara konsisten dan terorganisasi dengan baik [16].
+Sistem Manajemen Basis Data Relasional (Relational Database Management System atau RDBMS) mengelola kumpulan data terstruktur ke dalam tabel-tabel dua dimensi yang saling terhubung melalui relasi kunci utama (*primary key*) dan kunci asing (*foreign key*). Arsitektur relasional ini menjaga integritas referensial antar-tabel serta mendukung kepatuhan transaksi ACID (*Atomicity, Consistency, Isolation, Durability*) agar setiap pencatatan operasional tetap akurat dan terlindungi dari korupsi data. Penggunaan model data relasional menjadi fondasi utama dalam sistem informasi modern karena mampu memproses kueri data berskala besar secara konsisten dan terorganisasi dengan baik [16].
 
 Agar basis data bekerja optimal, skema tabel yang kompleks perlu dirancang melalui proses normalisasi hingga Bentuk Normal Ketiga (3NF). Tahapan ini memecah tabel menjadi struktur yang lebih sederhana untuk mencegah duplikasi data maupun anomali saat proses tambah, ubah, dan hapus data. Basis data yang telah dinormalisasi membuat seluruh riwayat transaksi dan status operasional tersimpan secara konsisten setiap hari [17].
 
@@ -503,21 +503,21 @@ Secara teknis, integrasi *payment gateway* bekerja menggunakan API dan mekanisme
 <br>
 
 ## 2.9 WhatsApp Gateway API
-Layanan antarmuka pemrograman aplikasi (API) gerbang WhatsApp memungkinkan aplikasi web mengirimkan pesan notifikasi secara otomatis langsung ke nomor kontak pengguna tanpa perangkat fisik tambahan. Integrasi notifikasi pesan instan ini menghadirkan jalur komunikasi yang sangat efektif karena memiliki tingkat keterbacaan (*open rate*) yang jauh lebih tinggi dan responsif dibandingkan saluran komunikasi konvensional seperti SMS maupun *email* [22].
+Layanan antarmuka pemrograman aplikasi (API) pada *gateway* WhatsApp memungkinkan aplikasi web mengirim pesan notifikasi secara otomatis ke nomor pengguna tanpa perlu mengoperasikan ponsel fisik secara manual. Integrasi pesan instan ini menjadi jalur komunikasi yang efektif karena tingkat keterbacaannya (*open rate*) jauh lebih tinggi dan cepat direspons dibandingkan SMS maupun *email* [22].
 
 Pertukaran data pada gerbang pesan instan ini berjalan melalui protokol *HTTP POST request* yang diamankan dengan autentikasi token khusus untuk mengirim pesan secara terprogram. Berkat pengiriman terjadwal, pengelola tidak perlu lagi mengetik dan mengirim pesan pengingat satu per satu secara manual. Informasi penting pun dapat diterima pengguna tepat waktu. Otomatisasi pesan instan ini membantu meningkatkan kedisiplinan respons pengguna sekaligus menjaga keandalan layanan informasi pada sistem [23].
 
 <br>
 
 ## 2.10 Email Gateway API
-Komunikasi *email* berbasis *Simple Mail Transfer Protocol* (SMTP) menetapkan mekanisme baku pertukaran pesan digital lintas jaringan melalui arsitektur transmisi bertingkat dengan dukungan enkripsi TLS (*Transport Layer Security*) pada port aman. Pemanfaatan jalur *email* di dalam ekosistem web memberikan media pemberitahuan berkas administratif yang permanen, rapi, dan mudah diarsipkan pengguna sebagai bukti transaksi resmi [24].
+Pengiriman surat elektronik (*email*) pada jaringan internet bekerja menggunakan aturan baku *Simple Mail Transfer Protocol* (SMTP) yang dilengkapi enkripsi keamanan TLS (*Transport Layer Security*). Di dalam aplikasi web, *email* berperan penting sebagai media pengiriman dokumen administrasi yang sifatnya resmi dan permanen. Pengguna pun dapat dengan mudah menyimpan dan mengarsipkan pesan tersebut sebagai bukti transaksi yang sah [24].
 
 Pada kerangka kerja web, pengiriman *email* memanfaatkan layanan *mail relay* terenkripsi agar kerahasiaan dan keaslian dokumen digital tetap terjaga. Jalur komunikasi ini digunakan untuk mengirimkan berbagai dokumen administrasi secara otomatis, mulai dari bukti pembayaran, *invoice* digital, hingga tautan verifikasi keamanan akun. Penggunaan layanan pengirim *email* dengan reputasi keamanan yang baik juga mencegah pesan masuk ke folder *spam*, sehingga dapat melengkapi notifikasi WhatsApp sebagai saluran informasi resmi yang tepercaya [25].
 
 <br>
 
 ## 2.11 Cron Job
-Cron job merupakan utilitas penjadwalan tugas berbasis waktu (*time-based job scheduler*) pada sistem operasi mirip Unix yang mengeksekusi instruksi program secara otomatis pada interval menit, jam, hari, atau bulan tertentu. Mekanisme otomatisasi latar belakang ini bekerja secara mandiri tanpa memerlukan intervensi interaksi manusia di depan layar komputer secara terus-menerus. Keberadaan penjadwal otomatis tersebut memegang peranan krusial dalam menjamin eksekusi pemeliharaan data, kalkulasi periodik, dan tugas komputasi berulang agar senantiasa berjalan tepat waktu sesuai konfigurasi yang ditentukan [26].
+*Cron job* adalah fitur penjadwal tugas berbasis waktu (*time-based job scheduler*) pada sistem operasi keluarga Unix yang menjalankan perintah program secara otomatis pada jadwal menit, jam, tanggal, atau bulan tertentu. Proses latar belakang ini bekerja mandiri di *server* tanpa perlu dijalankan secara manual oleh operator di depan layar komputer. Fitur penjadwal ini sangat dibutuhkan untuk menjalankan pemeliharaan data, perhitungan denda berkala, maupun tugas berulang lainnya agar selalu dieksekusi tepat waktu sesuai jadwal yang telah diatur [26].
 
 Dalam pengelolaan notifikasi aplikasi, konfigurasi *cron job* bertugas menjalankan perintah konsol secara berkala untuk mengirimkan pengingat tagihan lewat WhatsApp dan *email*. Melalui pengaturan waktu yang presisi, skrip penjadwal akan memeriksa tanggal jatuh tempo *invoice* di basis data, lalu secara otomatis meneruskan perintah pengiriman pesan ke gerbang komunikasi eksternal [27].
 
