@@ -406,31 +406,31 @@ Gambar 3.2 &emsp; Kerangka Pemikiran Penelitian &emsp; 19
 <br>
 
 ## 1.1 Latar Belakang
-Pertumbuhan mahasiswa perantau di kawasan pendidikan Tembalang Kota Semarang mendorong tingginya kebutuhan hunian sewa yang praktis, transparan, dan mudah diakses dari jarak jauh. Keterbatasan media publikasi konvensional kerap menyulitkan calon penyewa baru dalam memastikan ketersediaan unit kamar tanpa harus mendatangi lokasi secara langsung. Implementasi sistem pemesanan berbasis web terbukti memangkas hambatan geografis tersebut serta menertibkan pendataan reservasi secara terstruktur sejak awal [1].
+Kawasan pendidikan Tembalang di Kota Semarang terus dipadati mahasiswa perantau setiap tahunnya. Kondisi ini meningkatkan kebutuhan akan hunian sewa yang praktis, transparan, dan mudah diakses dari luar kota. Sayangnya, media promosi konvensional masih menyulitkan calon penyewa untuk mengecek sisa kamar kosong tanpa datang sendiri ke lokasi. Kehadiran sistem pemesanan berbasis web dapat mengatasi kendala jarak tersebut sekaligus merapikan pencatatan reservasi sejak awal [1].
 
-Kondisi tersebut dialami langsung oleh Asri Boarding House di kawasan Tembalang yang menaungi 32 unit kamar tidur sewa dalam tiga kategori, yaitu tipe VIP, Deluxe, dan Standar. Seluruh pengelolaan inventaris kamar selama ini masih bertumpu pada lembaran buku besar fisik, sehingga pengelola kesulitan menyinkronkan data keterisian kamar secara langsung. Akibatnya, risiko pemesanan ganda (*double booking*) sangat rentan terjadi saat beberapa peminat memesan unit yang sama pada rentang waktu berdekatan, suatu kendala klasik pada hunian sewa tanpa sistem terintegrasi [2].
+Kendala serupa terjadi di Asri Boarding House Tembalang yang menyediakan 32 unit kamar sewa dalam tipe VIP, Deluxe, dan Standar. Selama ini, seluruh pendataan kamar masih dicatat pada buku besar fisik sehingga penjaga kost kesulitan memperbarui status keterisian unit dengan cepat. Akibatnya, benturan pemesanan ganda (*double booking*) sering tidak terhindarkan ketika beberapa calon penghuni memesan kamar yang sama dalam waktu berdekatan [2].
 
-Selain masalah ketersediaan unit, ketidakteraturan penagihan sewa bulanan menjadi persoalan rutin yang menguras waktu operasional. Pemberitahuan jatuh tempo tanggal 10 dan tindak lanjut denda sewa masih dijalankan melalui pesan pribadi satu per satu, sehingga tagihan kerap terlewat dan memicu penumpukan tunggakan. Otomatisasi pengawasan jadwal sewa pada sistem informasi terbukti efektif menertibkan siklus pembayaran bulanan dan meminimalkan keterlambatan pelunasan oleh penghuni [3].
+Masalah operasional juga muncul pada proses penagihan sewa bulanan. Pengingat jatuh tempo setiap tanggal 10 beserta perhitungan dendanya masih dikirim lewat pesan pribadi satu per satu kepada penghuni. Cara manual ini membuat jadwal penagihan sering terlewat dan memicu menumpuknya tunggakan sewa. Padahal, fitur pengawasan jadwal otomatis pada sistem informasi dapat membantu pengelola menertibkan siklus tagihan bulanan serta menekan keterlambatan pembayaran [3].
 
-Persoalan finansial kian bertambah saat verifikasi pembayaran sewa masih mengandalkan pencocokan tangkapan layar transfer bank dan penerimaan uang tunai di meja kantor. Proses rekapitulasi nota pengeluaran operasional dan bukti kas masuk tersebut memakan waktu berhari-hari pada setiap penutupan buku akhir bulan. Integrasi gerbang pembayaran digital (*payment gateway*) terbukti mampu mengotomatiskan konfirmasi transaksi non-tunai, mengeliminasi selisih kas fisik, dan menjamin validitas pencatatan keuangan secara langsung [4].
+Urusan pembukuan menjadi semakin rumit karena pemeriksaan pembayaran sewa masih mengandalkan bukti tangkapan layar transfer bank dan setoran tunai. Saat tutup buku di akhir bulan, penjaga kost membutuhkan waktu berhari-hari hanya untuk mencocokkan nota pengeluaran dengan bukti kas masuk. Masalah ini sebenarnya dapat diatasi melalui integrasi gerbang pembayaran digital (*payment gateway*). Verifikasi transaksi non-tunai yang berjalan otomatis akan menutup celah selisih kas fisik dan memastikan catatan keuangan selalu akurat [4].
 
-Guna mengatasi kendala operasional tersebut secara menyeluruh, Asri Boarding House memerlukan platform manajemen terpadu yang memadukan reservasi daring, mesin penagihan otomatis, dan gerbang pembayaran Midtrans. Penyediaan kanal notifikasi multi-saluran melalui WhatsApp dan surel pada aplikasi web terbukti memperkuat transparansi pembukuan serta memperlancar penyampaian tagihan kepada penyewa secara *real-time* [5]. Oleh karena itu, penelitian ini mengembangkan Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House guna mewujudkan tata kelola properti sewa yang akuntabel, efisien, dan bebas selisih kas.
+Berangkat dari rangkaian masalah tersebut, Asri Boarding House membutuhkan sistem manajemen terpusat yang menggabungkan fitur reservasi daring, penjadwalan tagihan otomatis, dan gerbang pembayaran Midtrans. Dukungan pengingat tagihan melalui WhatsApp dan pos-el (*email*) pada aplikasi web juga diperlukan agar informasi tagihan tersampaikan secara *real-time* sekaligus menjaga transparansi pembukuan [5]. Oleh karena itu, penelitian ini membangun Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House untuk menghadirkan tata kelola indekos yang rapi, efisien, dan bebas selisih kas.
 
 <br>
 
 ## 1.2 Rumusan Masalah
 Berdasarkan latar belakang permasalahan yang telah diuraikan, rumusan masalah dalam penelitian ini dirumuskan sebagai berikut:
 1. Bagaimana merancang arsitektur Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House sebagai solusi atas kendala pemesanan unit, pencatatan pembukuan manual, dan keterlambatan penagihan sewa?
-2. Bagaimana mengimplementasikan sistem tersebut dengan memadukan kerangka kerja Laravel, integrasi pembayaran digital Midtrans, mesin penagihan otomatis berkala, serta transmisi notifikasi multi-saluran melalui WhatsApp dan Email?
-3. Bagaimana hasil penerapan dan efektivitas sistem berdasarkan evaluasi wawancara bersama penjaga kost serta penghuni kost setelah diterapkan secara langsung pada operasional Asri Boarding House?
+2. Bagaimana mengimplementasikan sistem tersebut menggunakan kerangka kerja Laravel yang dipadukan dengan gerbang pembayaran Midtrans, penjadwalan tagihan otomatis berkala, serta pengiriman notifikasi melalui WhatsApp dan *email*?
+3. Bagaimana hasil penerapan dan efektivitas sistem berdasarkan evaluasi wawancara bersama penjaga kost serta penghuni kost pada operasional harian Asri Boarding House?
 
 <br>
 
 ## 1.3 Tujuan Penelitian
 Berpijak pada rumusan masalah yang telah diuraikan, tujuan yang hendak dicapai dalam penelitian ini adalah sebagai berikut:
 1. Merancang arsitektur Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House sebagai solusi terpadu atas kendala pemesanan unit, pencatatan pembukuan manual, dan keterlambatan penagihan sewa.
-2. Mengimplementasikan sistem tersebut dengan memadukan kerangka kerja Laravel, integrasi pembayaran digital Midtrans, mesin penagihan otomatis berkala, serta transmisi notifikasi multi-saluran melalui WhatsApp dan Email.
-3. Menganalisis hasil penerapan dan efektivitas sistem berdasarkan evaluasi wawancara bersama penjaga kost serta penghuni kost setelah diterapkan secara langsung pada operasional Asri Boarding House.
+2. Mengimplementasikan sistem tersebut menggunakan kerangka kerja Laravel yang dipadukan dengan gerbang pembayaran Midtrans, penjadwalan tagihan otomatis berkala, serta pengiriman notifikasi melalui WhatsApp dan *email*.
+3. Menganalisis hasil penerapan dan efektivitas sistem berdasarkan evaluasi wawancara bersama penjaga kost serta penghuni kost pada operasional harian Asri Boarding House.
 
 <br>
 
