@@ -392,6 +392,7 @@ DAFTAR LAMPIRAN &emsp; xii
 Gambar 3.1 &emsp; Tahapan Metode SDLC Waterfall &emsp; 18  
 Gambar 3.2 &emsp; Kerangka Pemikiran Penelitian &emsp; 19  
 Gambar 4.1 &emsp; Use Case Diagram &emsp; 20  
+Gambar 4.2 &emsp; Entity Relationship Diagram (ERD) &emsp; 20  
 
 <div style="page-break-after: always;"></div>
 
@@ -664,6 +665,35 @@ Penyewa kost aktif merupakan penghuni resmi yang telah menempati kamar dan memil
 <br>
 
 ### 4.1.2 Entity Relationship Diagram (ERD)
+Struktur basis data relasional pada Sistem Informasi Manajemen Kost Asri Boarding House dirancang menggunakan *Entity Relationship Diagram* (ERD) untuk memetakan keterhubungan antartabel secara terstruktur. Skema relasi antar entitas utama yang menjadi tulang punggung pemrosesan data sistem ditampilkan secara ringkas pada gambar di bawah ini.
+
+<br>
+
+<div align="center">
+
+<img src="images/gambar_4_2_erd.png" alt="Gambar 4.2 Entity Relationship Diagram (ERD)" width="600">
+
+<br>
+
+*Gambar 4.2 Entity Relationship Diagram (ERD)*  
+
+</div>
+
+<br>
+
+Berdasarkan Gambar 4.2 tersebut, struktur basis data sistem disederhanakan ke dalam empat modul fungsional guna menjaga kejelasan relasi dari total 22 tabel yang tersedia. Pembagian modul ini memisahkan alur pengelolaan data master hunian, siklus transaksi keuangan, layanan fasilitas kamar, hingga komunikasi pengunjung publik secara terarah.
+
+1. Modul Pengelolaan Kamar dan Pengguna  
+Modul ini mengatur basis data master kamar dan pengguna melalui keterhubungan antara tabel *users*, *kamar*, serta tabel relasi *penyewa*. Tabel *users* menyimpan data autentikasi akun pengelola dan penghuni, sedangkan tabel *kamar* memuat inventaris 32 unit kamar berdasarkan tipe serta tarif sewanya. Keterhubungan penghuni dengan kamar yang ditempati diikat melalui tabel *penyewa* untuk memastikan masa berlaku kontrak dan status keterisian unit terdata secara akurat.
+
+2. Modul Transaksi Reservasi dan Pembayaran  
+Modul transaksi mengoordinasikan perputaran arus keuangan sewa kamar melalui tabel *reservasi*, *tagihan*, dan *pembayaran*. Calon penyewa yang memesan kamar akan tercatat pada tabel *reservasi*, yang kemudian bermuara pada penerbitan tagihan sewa bulanan di dalam tabel *tagihan*. Setiap pelunasan sewa melalui gerbang pembayaran Midtrans secara otomatis memperbarui riwayat pada tabel *pembayaran* tanpa membutuhkan rekonsiliasi bank manual.
+
+3. Modul Layanan Keluhan dan Operasional Kost  
+Modul operasional mengelola kenyamanan hunian dan pencatatan kas melalui tabel *keluhan*, *log_notifikasi*, serta tabel *pengeluaran*. Penghuni aktif dapat menyampaikan kendala fasilitas kamar melalui tabel *keluhan*, yang selanjutnya diproses oleh penjaga kost untuk tindakan perbaikan. Aktivitas pengingat jatuh tempo sewa dicatat dalam tabel *log_notifikasi* guna memantau pengiriman pesan otomatis melalui WhatsApp dan surel.
+
+4. Modul Komunikasi Tamu dan Pusat Informasi  
+Modul informasi publik memfasilitasi interaksi luar sistem melalui tabel *guest_chat_threads*, *chat_messages*, *customer_reviews*, serta *peraturan & faqs*. Calon penyewa dapat menanyakan ketersediaan kamar secara langsung melalui tabel obrolan interaktif sebelum memutuskan untuk memesan unit. Tabel pendukung regulasi dan testimoni berfungsi menampilkan aturan tata tertib hunian serta ulasan kepuasan penghuni pada beranda situs web indekos.
 
 <br>
 
