@@ -360,7 +360,14 @@ DAFTAR LAMPIRAN &emsp; xii
 3.5 Metode Pengembangan Sistem &emsp; 18  
 3.6 Kerangka Pemikiran &emsp; 19  
 
-**DAFTAR PUSTAKA** &emsp; **20**  
+**BAB 4 HASIL DAN PEMBAHASAN** &emsp; **20**  
+4.1 Perancangan Aplikasi &emsp; 20  
+&emsp; 4.1.1 Use Case Diagram &emsp; 20  
+&emsp; 4.1.2 Entity Relationship Diagram (ERD) &emsp; 20  
+&emsp; 4.1.3 Activity Diagram &emsp; 20  
+&emsp; 4.1.4 Flowchart Sistem &emsp; 20  
+
+**DAFTAR PUSTAKA** &emsp; **21**  
 
 <div style="page-break-after: always;"></div>
 
@@ -608,6 +615,36 @@ Kerangka pemikiran dalam penelitian ini disusun mengikuti alur pendekatan *Resea
 <br>
 
 Sebagaimana ditunjukkan pada Gambar 3.2, alur penelitian dimulai dari bagian masukan (*input*) yang merangkum kondisi operasional indekos, masalah pencatatan manual, serta rincian kebutuhan sistem. Bagian kedua adalah proses (*process*), yang mencakup tahapan analisis dan perancangan, penulisan kode program, hingga pengujian fitur aplikasi. Seluruh tahapan tersebut menghasilkan keluaran (*output*) berupa perangkat lunak manajemen kost yang telah teruji dan siap dioperasikan. Pada bagian akhir, dampak (*outcome*) penelitian ini terlihat dari tertatanya pembukuan kas serta makin praktisnya proses pembayaran sewa bagi penjaga maupun penghuni kost.
+
+<br>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## BAB 4<br>HASIL DAN PEMBAHASAN
+
+</div>
+
+<br>
+
+## 4.1 Perancangan Aplikasi
+
+<br>
+
+### 4.1.1 Use Case Diagram
+
+<br>
+
+### 4.1.2 Entity Relationship Diagram (ERD)
+
+<br>
+
+### 4.1.3 Activity Diagram
+
+<br>
+
+### 4.1.4 Flowchart Sistem
 
 <br>
 
