@@ -393,6 +393,9 @@ Gambar 3.1 &emsp; Tahapan Metode SDLC Waterfall &emsp; 18
 Gambar 3.2 &emsp; Kerangka Pemikiran Penelitian &emsp; 19  
 Gambar 4.1 &emsp; Use Case Diagram &emsp; 20  
 Gambar 4.2 &emsp; Entity Relationship Diagram (ERD) &emsp; 20  
+Gambar 4.3 &emsp; Activity Diagram Calon Penyewa &emsp; 20  
+Gambar 4.4 &emsp; Activity Diagram Admin (Penjaga Kost) &emsp; 20  
+Gambar 4.5 &emsp; Activity Diagram Penyewa Aktif &emsp; 20  
 
 <div style="page-break-after: always;"></div>
 
@@ -635,7 +638,7 @@ Sebagaimana ditunjukkan pada Gambar 3.2, alur penelitian dimulai dari bagian mas
 <br>
 
 ### 4.1.1 Use Case Diagram
-Perancangan fungsionalitas Sistem Informasi Manajemen Kost pada Asri Boarding House dipetakan melalui *use case diagram* guna menggambarkan interaksi antara pengguna dengan layanan aplikasi. Alur interaksi hak akses pengguna beserta batasan aktivitas yang dapat dijalankan di dalam sistem disajikan pada gambar di bawah ini.
+*Use case diagram* memetakan fungsionalitas Sistem Informasi Manajemen Kost Asri Boarding House dengan memvisualisasikan batas operasional dan hubungan antarpengguna terhadap layanan web. Pembagian hak akses serta cakupan tindakan yang dapat dilakukan pengguna disajikan pada gambar di bawah ini.
 
 <br>
 
@@ -651,21 +654,21 @@ Perancangan fungsionalitas Sistem Informasi Manajemen Kost pada Asri Boarding Ho
 
 <br>
 
-Berdasarkan Gambar 4.1 tersebut, operasional sistem informasi ini melibatkan tiga aktor utama yang memegang peran serta hak akses berbeda. Ketiga aktor yang saling terhubung di dalam ekosistem hunian ini mencakup calon penyewa, admin atau penjaga kost, serta penyewa kost aktif.
+Berdasarkan Gambar 4.1 tersebut, operasional sistem informasi ini melibatkan tiga aktor utama dengan peran serta hak akses yang berbeda. Ketiga pengguna yang saling terhubung di dalam ekosistem hunian ini mencakup calon penyewa, admin atau penjaga kost, serta penyewa aktif.
 
 1. Calon Penyewa  
-Calon penyewa merupakan pengguna publik yang memanfaatkan sistem untuk mengeksplorasi katalog kamar, ketersediaan unit kosong, dan rincian fasilitas di Asri Boarding House secara mandiri. Setelah menentukan tipe hunian yang diinginkan, calon penyewa dapat melakukan registrasi akun untuk melengkapi data reservasi tanpa harus datang langsung ke lokasi. Aktivitas aktor ini bermuara pada pembayaran uang muka sewa melalui gerbang pembayaran Midtrans untuk mengunci pesanan unit agar terhindar dari benturan pesanan ganda.
+Calon penyewa bertindak selaku pengunjung publik yang menelusuri katalog kamar, ketersediaan unit kosong, dan rincian fasilitas Asri Boarding House melalui situs web. Setelah memilih tipe hunian yang diminati, pemesan mendaftarkan akun untuk melengkapi berkas reservasi tanpa wajib datang ke lokasi. Tahap pemesanan dituntaskan lewat penyetoran uang muka melalui gerbang Midtrans guna mengunci unit hunian dari benturan pesanan lain.
 
 2. Admin (Penjaga Kost)  
-Admin atau penjaga kost memegang kendali operasional harian untuk memantau aktivitas hunian dan memastikan keterisian 32 unit kamar terdata dengan akurat. Aktor ini bertugas mengelola informasi tarif kamar, memverifikasi data identitas penghuni baru, serta mengatur parameter sewa bulanan. Melalui menu keuangan yang terintegrasi, penjaga kost dapat memantau status pembayaran sewa secara langsung tanpa perlu mengecek mutasi rekening bank secara manual. Selain urusan administratif, pengelola juga menindaklanjuti laporan keluhan fasilitas yang diajukan penghuni agar proses perbaikan sarana indekos dapat diselesaikan tepat waktu.
+Admin atau penjaga kost mengendalikan operasional harian guna mengawasi aktivitas hunian dan memastikan keterisian 32 unit kamar terdata akurat. Pengelola bertugas memperbarui tarif kamar, memvalidasi identitas penghuni baru, serta mengatur parameter penagihan sewa bulanan. Menu keuangan terpadu membantu penjaga kost memantau status pelunasan sewa tanpa perlu memeriksa mutasi rekening bank manual. Selain tugas administratif, pengelola menindaklanjuti tiket kerusakan fasilitas yang dilaporkan penghuni agar pemeliharaan sarana indekos lekas tertangani.
 
 3. Penyewa Kost (Penyewa Aktif)  
-Penyewa kost aktif merupakan penghuni resmi yang telah menempati kamar dan memiliki akun khusus untuk mengakses portal layanan pribadi. Setiap awal periode sewa, penghuni dapat memeriksa rincian tagihan bulanan beserta tanggal jatuh tempo secara transparan. Pembayaran tagihan sewa maupun denda dapat diselesaikan langsung melalui gerbang pembayaran digital, yang secara otomatis menerbitkan kuitansi resmi setelah transaksi terverifikasi. Penghuni juga diberikan kemudahan untuk mengajukan tiket keluhan atau kerusakan sarana kamar secara tertulis langsung ke meja kerja penjaga kost.
+Penyewa aktif menempati kamar sewa resmi dan memegang kredensial khusus untuk masuk ke portal layanan pribadi. Setiap awal periode penagihan, penghuni dapat memeriksa rincian invoice bulanan beserta jadwal jatuh tempo dengan transparan. Pelunasan tagihan sewa maupun denda dapat diselesaikan lewat kanal pembayaran digital yang menerbitkan tanda terima elektronik usai transaksi terverifikasi. Penghuni juga memperoleh fasilitas penyampaian kendala fasilitas kamar untuk diteruskan ke meja kerja penjaga kost.
 
 <br>
 
 ### 4.1.2 Entity Relationship Diagram (ERD)
-Struktur basis data relasional pada Sistem Informasi Manajemen Kost Asri Boarding House dirancang menggunakan *Entity Relationship Diagram* (ERD) untuk memetakan keterhubungan antartabel secara terstruktur. Skema relasi antar entitas utama yang menjadi tulang punggung pemrosesan data sistem ditampilkan secara ringkas pada gambar di bawah ini.
+*Entity Relationship Diagram* (ERD) menyajikan pemetaan visual keterkaitan antartabel dalam basis data relasional Asri Boarding House. Hubungan antarentitas penyusun sistem beserta derajat relasinya disajikan pada gambar di bawah ini.
 
 <br>
 
@@ -681,23 +684,75 @@ Struktur basis data relasional pada Sistem Informasi Manajemen Kost Asri Boardin
 
 <br>
 
-Berdasarkan Gambar 4.2 tersebut, struktur basis data sistem disederhanakan ke dalam empat modul fungsional guna menjaga kejelasan relasi dari total 22 tabel yang tersedia. Pembagian modul ini memisahkan alur pengelolaan data master hunian, siklus transaksi keuangan, layanan fasilitas kamar, hingga komunikasi pengunjung publik secara terarah.
+Skema basis data pada Gambar 4.2 dirangkum ke dalam empat modul fungsional agar 22 tabel yang tersedia tetap mudah dipahami relasinya. Pengelompokan ini memisahkan tata kelola master hunian, siklus transaksi, penanganan kendala kamar, dan pusat komunikasi pengunjung.
 
 1. Modul Pengelolaan Kamar dan Pengguna  
-Modul ini mengatur basis data master kamar dan pengguna melalui keterhubungan antara tabel *users*, *kamar*, serta tabel relasi *penyewa*. Tabel *users* menyimpan data autentikasi akun pengelola dan penghuni, sedangkan tabel *kamar* memuat inventaris 32 unit kamar berdasarkan tipe serta tarif sewanya. Keterhubungan penghuni dengan kamar yang ditempati diikat melalui tabel *penyewa* untuk memastikan masa berlaku kontrak dan status keterisian unit terdata secara akurat.
+Tata kelola master hunian bertumpu pada relasi tabel *users*, *kamar*, serta tabel penghubung *penyewa*. Tabel *users* memuat kredensial akun pengelola dan penghuni, sementara tabel *kamar* mendata 32 unit kamar lengkap dengan tipe dan tarif sewanya. Keterikatan penghuni dengan unit yang ditempati dikunci lewat tabel *penyewa* guna menjamin keabsahan masa kontrak tinggal.
 
 2. Modul Transaksi Reservasi dan Pembayaran  
-Modul transaksi mengoordinasikan perputaran arus keuangan sewa kamar melalui tabel *reservasi*, *tagihan*, dan *pembayaran*. Calon penyewa yang memesan kamar akan tercatat pada tabel *reservasi*, yang kemudian bermuara pada penerbitan tagihan sewa bulanan di dalam tabel *tagihan*. Setiap pelunasan sewa melalui gerbang pembayaran Midtrans secara otomatis memperbarui riwayat pada tabel *pembayaran* tanpa membutuhkan rekonsiliasi bank manual.
+Arus perputaran biaya sewa dikoordinasikan lewat tabel *reservasi*, *tagihan*, serta *pembayaran*. Pemesanan unit oleh calon penyewa masuk ke tabel *reservasi* sebelum sistem menerbitkan tagihan berkala pada tabel *tagihan*. Transaksi pelunasan via Midtrans tercatat langsung di tabel *pembayaran* tanpa perlu verifikasi mutasi bank manual.
 
 3. Modul Layanan Keluhan dan Operasional Kost  
-Modul operasional mengelola kenyamanan hunian dan pencatatan kas melalui tabel *keluhan*, *log_notifikasi*, serta tabel *pengeluaran*. Penghuni aktif dapat menyampaikan kendala fasilitas kamar melalui tabel *keluhan*, yang selanjutnya diproses oleh penjaga kost untuk tindakan perbaikan. Aktivitas pengingat jatuh tempo sewa dicatat dalam tabel *log_notifikasi* guna memantau pengiriman pesan otomatis melalui WhatsApp dan surel.
+Layanan kenyamanan penghuni dan pembukuan kas dikelola melalui tabel *keluhan*, *log_notifikasi*, serta tabel *pengeluaran*. Tiket gangguan fasilitas kamar dicatat ke tabel *keluhan* agar penjaga kost segera mengambil tindakan perbaikan fisik. Riwayat pesan pengingat jatuh tempo dihimpun pada tabel *log_notifikasi* untuk mengontrol pengiriman notifikasi WhatsApp maupun surel.
 
 4. Modul Komunikasi Tamu dan Pusat Informasi  
-Modul informasi publik memfasilitasi interaksi luar sistem melalui tabel *guest_chat_threads*, *chat_messages*, *customer_reviews*, serta *peraturan & faqs*. Calon penyewa dapat menanyakan ketersediaan kamar secara langsung melalui tabel obrolan interaktif sebelum memutuskan untuk memesan unit. Tabel pendukung regulasi dan testimoni berfungsi menampilkan aturan tata tertib hunian serta ulasan kepuasan penghuni pada beranda situs web indekos.
+Interaksi pengunjung luar diakomodasi melalui tabel *guest_chat_threads*, *chat_messages*, *customer_reviews*, serta tabel *peraturan* dan *faqs*. Calon penyewa dapat menanyakan ketersediaan kamar lewat obrolan interaktif sebelum memutuskan untuk memesan kamar. Tabel tata tertib dan ulasan penghuni menyajikan pedoman sewa serta testimoni kepuasan pada beranda situs web indekos.
 
 <br>
 
 ### 4.1.3 Activity Diagram
+*Activity diagram* memodelkan dinamika proses bisnis dan aliran interaksi antaraktor dalam Sistem Informasi Manajemen Kost Asri Boarding House. Alur aktivitas ini disusun terpisah mengikuti peran pengguna agar pembagian hak akses serta pertukaran datanya tetap tertib. Pemodelan proses dalam sistem website ini mencakup calon penyewa, admin atau penjaga kost, serta penyewa aktif, antara lain:
+
+1. Calon Penyewa  
+Calon penyewa memulai langkah dengan menjelajahi katalog unit pada situs web publik guna melihat ketersediaan kamar serta fasilitasnya. Begitu menemukan tipe hunian yang cocok, calon penghuni mengisi formulir pemesanan awal berupa data identitas diri dan jadwal masuk. Alur sewa dirampungkan lewat setoran uang muka via Midtrans agar kamar terpilih langsung terkunci dari pemesanan orang lain.
+
+<div align="center">
+
+<img src="images/gambar_4_3_calon_penyewa.png" alt="Gambar 4.3 Activity Diagram Calon Penyewa" width="650">
+
+<br>
+
+*Gambar 4.3 Activity Diagram Calon Penyewa*  
+
+</div>
+
+<br>
+
+Diagram pada Gambar 4.3 memperlihatkan proses awal saat calon penyewa memilih salah satu dari 32 unit kamar yang diminati. Permintaan sewa tersebut diverifikasi oleh aplikasi sebelum meneruskan token pembayaran ke peladen Midtrans Snap. Transaksi diselesaikan melalui kanal transfer bank atau dompet digital hingga status pembayaran terkonfirmasi lunas. Keberhasilan setoran ini mengunci status unit kamar di basis data sekaligus memicu pengiriman bukti reservasi via WhatsApp Fonnte.
+
+2. Admin (Penjaga Kost)  
+Admin atau penjaga kost memegang kendali harian atas seluruh operasional dan pemeliharaan lingkungan hunian. Tanggung jawabnya mencakup pemantauan tingkat keterisian 32 unit kamar, verifikasi data penghuni baru, serta penerbitan tagihan sewa. Pengawasan terpusat terhadap transaksi dan laporan kerusakan sarana memastikan layanan indekos tetap berjalan tertib.
+
+<div align="center">
+
+<img src="images/gambar_4_4_admin.png" alt="Gambar 4.4 Activity Diagram Admin (Penjaga Kost)" width="650">
+
+<br>
+
+*Gambar 4.4 Activity Diagram Admin (Penjaga Kost)*  
+
+</div>
+
+<br>
+
+Alur kerja pengelola pada Gambar 4.4 dimulai dari proses autentikasi akun ke antarmuka khusus penjaga kost. Melalui dasbor kontrol, admin memantau okupansi 32 unit kamar, memperbarui tarif sewa, dan memvalidasi calon penghuni baru. Aplikasi menyelaraskan status hunian ke basis data lalu menerbitkan tagihan bulanan yang diteruskan otomatis ke WhatsApp penyewa. Pengelola kemudian memverifikasi riwayat pembayaran masuk serta mencatat pengeluaran kas rutin untuk menutup pembukuan bulanan.
+
+3. Penyewa Aktif  
+Penyewa aktif memperoleh akses ke portal penghuni setelah pengajuan kontrak kamarnya disetujui penjaga kost. Halaman ini memudahkan penghuni mengecek rincian tagihan sewa bulanan, tanggal jatuh tempo, serta riwayat kuitansi sebelumnya. Apabila menjumpai fasilitas kamar yang rusak, penghuni dapat mengirimkan tiket keluhan langsung ke meja kerja pengelola.
+
+<div align="center">
+
+<img src="images/gambar_4_5_penyewa_aktif.png" alt="Gambar 4.5 Activity Diagram Penyewa Aktif" width="650">
+
+<br>
+
+*Gambar 4.5 Activity Diagram Penyewa Aktif*  
+
+</div>
+
+<br>
+
+Berdasarkan alur pada Gambar 4.5, penghuni membuka portal personal untuk meninjau tagihan sewa yang hendak jatuh tempo. Pemilihan menu bayar langsung memunculkan jendela pop-up transaksi Midtrans Snap tanpa perlu berpindah situs. Pelunasan tagihan melalui transfer perbankan atau QRIS seketika memperpanjang masa aktif kontrak sewa di sistem. Penghuni dapat langsung mengunduh kuitansi digital atau memanfaatkan menu bantuan jika mendapati kendala sarana kamar.
 
 <br>
 
