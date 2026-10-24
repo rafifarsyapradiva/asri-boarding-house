@@ -396,6 +396,7 @@ Gambar 4.2 &emsp; Entity Relationship Diagram (ERD) &emsp; 20
 Gambar 4.3 &emsp; Activity Diagram Calon Penyewa &emsp; 20  
 Gambar 4.4 &emsp; Activity Diagram Admin (Penjaga Kost) &emsp; 20  
 Gambar 4.5 &emsp; Activity Diagram Penyewa Aktif &emsp; 20  
+Gambar 4.6 &emsp; Flowchart Sistem &emsp; 20  
 
 <div style="page-break-after: always;"></div>
 
@@ -506,7 +507,7 @@ Melalui mesin penyimpanan (*storage engine*) InnoDB, MySQL telah mendukung prins
 <br>
 
 ## 2.8 Payment Gateway
-Gerbang pembayaran (*payment gateway*) adalah layanan perantara transaksi elektronik yang menghubungkan aplikasi web langsung dengan jaringan perbankan dan penyedia dompet digital. Di Indonesia, salah satu penyedia layanan ini adalah Midtrans, yang memfasilitasi pembayaran tagihan lewat *Virtual Account* berbagai bank, QRIS, *e-wallet*, hingga kartu kredit dalam satu pintu. Pengelola usaha tidak perlu lagi membuka rekening penampung di tiap bank secara terpisah. Bagi penyewa, pilihan metode bayar yang beragam ini mempermudah pelunasan tagihan tanpa harus mengunggah foto bukti transfer yang rawan manipulasi [20].
+Gerbang pembayaran (*payment gateway*) adalah layanan perantara transaksi elektronik yang menghubungkan aplikasi web langsung dengan jaringan perbankan dan penyedia dompet digital. Di Indonesia, salah satu penyedia layanan ini adalah Midtrans, yang memfasilitasi pembayaran tagihan lewat *Virtual Account* berbagai bank, *e-wallet*, hingga kartu kredit dalam satu pintu. Pengelola usaha tidak perlu lagi membuka rekening penampung di tiap bank secara terpisah. Bagi penyewa, pilihan metode bayar yang beragam ini mempermudah pelunasan tagihan tanpa harus mengunggah foto bukti transfer yang rawan manipulasi [20].
 
 Dalam tahap pengembangannya, layanan *payment gateway* menyediakan dua ruang kerja terpisah, yakni mode *Sandbox* untuk uji coba transaksi dan mode *Production* untuk transaksi uang asli. Lewat mode simulasi, pengembang dapat menguji alur pembayaran, memeriksa respons perbankan, hingga menangani status tagihan kedaluwarsa dengan aman sebelum aplikasi diluncurkan. Pengaturan kunci akses melalui berkas konfigurasi (*environment variable*) juga memudahkan peralihan sistem dari mode uji coba ke mode produksi tanpa harus mengubah kode program.
 
@@ -752,11 +753,28 @@ Penyewa aktif memperoleh akses ke portal penghuni setelah pengajuan kontrak kama
 
 <br>
 
-Berdasarkan alur pada Gambar 4.5, penghuni membuka portal personal untuk meninjau tagihan sewa yang hendak jatuh tempo. Pemilihan menu bayar langsung memunculkan jendela pop-up transaksi Midtrans Snap tanpa perlu berpindah situs. Pelunasan tagihan melalui transfer perbankan atau QRIS seketika memperpanjang masa aktif kontrak sewa di sistem. Penghuni dapat langsung mengunduh kuitansi digital atau memanfaatkan menu bantuan jika mendapati kendala sarana kamar.
+Berdasarkan alur pada Gambar 4.5, penghuni membuka portal personal untuk meninjau tagihan sewa yang hendak jatuh tempo. Pemilihan menu bayar langsung memunculkan jendela pop-up transaksi Midtrans Snap tanpa perlu berpindah situs. Pelunasan tagihan melalui transfer perbankan maupun dompet digital seketika memperpanjang masa aktif kontrak sewa di sistem. Penghuni dapat langsung mengunduh kuitansi digital atau memanfaatkan menu bantuan jika mendapati kendala sarana kamar.
 
 <br>
 
 ### 4.1.4 Flowchart Sistem
+*Flowchart* sistem memetakan urutan logika kerja dan keterhubungan antarproses pada Sistem Informasi Manajemen Kost Asri Boarding House yang telah dibangun. Bagan alir ini merangkum transisi tahapan mulai dari interaksi awal calon penyewa, verifikasi transaksi pembayaran otomatis, hingga penanganan akhir oleh penjaga kost. Rangkaian aliran data dan prosedur operasional sistem website disajikan pada gambar di bawah ini.
+
+<br>
+
+<div align="center">
+
+<img src="images/gambar_4_6_flowchart_sistem.png" alt="Gambar 4.6 Flowchart Sistem" width="650">
+
+<br>
+
+*Gambar 4.6 Flowchart Sistem*  
+
+</div>
+
+<br>
+
+Merujuk pada Gambar 4.6, alur kerja diawali saat calon penyewa mengakses halaman publik website Asri Boarding House guna memeriksa ketersediaan 32 unit kamar. Apabila kamar yang diminati masih tersedia, pemesan melengkapi formulir reservasi, mengunggah data identitas diri, serta menentukan durasi sewa bulanan. Sistem kemudian memandu pemesan ke menu pembayaran Midtrans untuk memilih saluran transfer perbankan atau dompet digital tanpa kendala. Setelah setoran diproses, admin bersama sistem memvalidasi transaksi, di mana pembayaran yang belum berhasil akan diarahkan kembali ke pemilihan metode bayar. Transaksi yang terkonfirmasi valid memicu sistem mengunci unit kamar di basis data sekaligus menerbitkan bukti reservasi resmi melalui pesan WhatsApp Fonnte. Alur operasional berakhir ketika penjaga kost memvalidasi berkas fisik calon penghuni saat tiba di lokasi, menyerahkan kunci kamar, dan mengaktifkan status hunian.
 
 <br>
 
