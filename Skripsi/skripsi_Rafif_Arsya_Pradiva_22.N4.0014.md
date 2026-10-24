@@ -391,6 +391,7 @@ DAFTAR LAMPIRAN &emsp; xii
 
 Gambar 3.1 &emsp; Tahapan Metode SDLC Waterfall &emsp; 18  
 Gambar 3.2 &emsp; Kerangka Pemikiran Penelitian &emsp; 19  
+Gambar 4.1 &emsp; Use Case Diagram &emsp; 20  
 
 <div style="page-break-after: always;"></div>
 
@@ -633,6 +634,32 @@ Sebagaimana ditunjukkan pada Gambar 3.2, alur penelitian dimulai dari bagian mas
 <br>
 
 ### 4.1.1 Use Case Diagram
+Perancangan fungsionalitas Sistem Informasi Manajemen Kost pada Asri Boarding House dipetakan melalui *use case diagram* guna menggambarkan interaksi antara pengguna dengan layanan aplikasi. Alur interaksi hak akses pengguna beserta batasan aktivitas yang dapat dijalankan di dalam sistem disajikan pada gambar di bawah ini.
+
+<br>
+
+<div align="center">
+
+<img src="images/gambar_4_1_use_case.png" alt="Gambar 4.1 Use Case Diagram" width="550">
+
+<br>
+
+*Gambar 4.1 Use Case Diagram*  
+
+</div>
+
+<br>
+
+Berdasarkan Gambar 4.1 tersebut, operasional sistem informasi ini melibatkan tiga aktor utama yang memegang peran serta hak akses berbeda. Ketiga aktor yang saling terhubung di dalam ekosistem hunian ini mencakup calon penyewa, admin atau penjaga kost, serta penyewa kost aktif.
+
+1. Calon Penyewa  
+Calon penyewa merupakan pengguna publik yang memanfaatkan sistem untuk mengeksplorasi katalog kamar, ketersediaan unit kosong, dan rincian fasilitas di Asri Boarding House secara mandiri. Setelah menentukan tipe hunian yang diinginkan, calon penyewa dapat melakukan registrasi akun untuk melengkapi data reservasi tanpa harus datang langsung ke lokasi. Aktivitas aktor ini bermuara pada pembayaran uang muka sewa melalui gerbang pembayaran Midtrans untuk mengunci pesanan unit agar terhindar dari benturan pesanan ganda.
+
+2. Admin (Penjaga Kost)  
+Admin atau penjaga kost memegang kendali operasional harian untuk memantau aktivitas hunian dan memastikan keterisian 32 unit kamar terdata dengan akurat. Aktor ini bertugas mengelola informasi tarif kamar, memverifikasi data identitas penghuni baru, serta mengatur parameter sewa bulanan. Melalui menu keuangan yang terintegrasi, penjaga kost dapat memantau status pembayaran sewa secara langsung tanpa perlu mengecek mutasi rekening bank secara manual. Selain urusan administratif, pengelola juga menindaklanjuti laporan keluhan fasilitas yang diajukan penghuni agar proses perbaikan sarana indekos dapat diselesaikan tepat waktu.
+
+3. Penyewa Kost (Penyewa Aktif)  
+Penyewa kost aktif merupakan penghuni resmi yang telah menempati kamar dan memiliki akun khusus untuk mengakses portal layanan pribadi. Setiap awal periode sewa, penghuni dapat memeriksa rincian tagihan bulanan beserta tanggal jatuh tempo secara transparan. Pembayaran tagihan sewa maupun denda dapat diselesaikan langsung melalui gerbang pembayaran digital, yang secara otomatis menerbitkan kuitansi resmi setelah transaksi terverifikasi. Penghuni juga diberikan kemudahan untuk mengajukan tiket keluhan atau kerusakan sarana kamar secara tertulis langsung ke meja kerja penjaga kost.
 
 <br>
 
