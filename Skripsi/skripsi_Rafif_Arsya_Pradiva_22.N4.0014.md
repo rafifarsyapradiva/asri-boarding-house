@@ -702,10 +702,9 @@ Interaksi pengunjung luar diakomodasi melalui tabel *guest_chat_threads*, *chat_
 <br>
 
 ### 4.1.3 Activity Diagram
-*Activity diagram* memodelkan dinamika proses bisnis dan aliran interaksi antaraktor dalam Sistem Informasi Manajemen Kost Asri Boarding House. Alur aktivitas ini disusun terpisah mengikuti peran pengguna agar pembagian hak akses serta pertukaran datanya tetap tertib. Pemodelan proses dalam sistem website ini mencakup calon penyewa, admin atau penjaga kost, serta penyewa aktif, antara lain:
+*Activity diagram* memodelkan dinamika proses bisnis dan aliran interaksi antaraktor dalam Sistem Informasi Manajemen Kost Asri Boarding House. Alur aktivitas ini disusun terpisah mengikuti peran pengguna agar pembagian hak akses serta pertukaran datanya tetap tertib. Rangkaian prosedur kerja sistem website bagi calon penyewa, admin atau penjaga kost, dan penyewa aktif disajikan pada gambar-gambar di bawah ini.
 
-1. Calon Penyewa  
-Calon penyewa memulai langkah dengan menjelajahi katalog unit pada situs web publik guna melihat ketersediaan kamar serta fasilitasnya. Begitu menemukan tipe hunian yang cocok, calon penghuni mengisi formulir pemesanan awal berupa data identitas diri dan jadwal masuk. Alur sewa dirampungkan lewat setoran uang muka via Midtrans agar kamar terpilih langsung terkunci dari pemesanan orang lain.
+<br>
 
 <div align="center">
 
@@ -719,10 +718,9 @@ Calon penyewa memulai langkah dengan menjelajahi katalog unit pada situs web pub
 
 <br>
 
-Diagram pada Gambar 4.3 memperlihatkan proses awal saat calon penyewa memilih salah satu dari 32 unit kamar yang diminati. Permintaan sewa tersebut diverifikasi oleh aplikasi sebelum meneruskan token pembayaran ke peladen Midtrans Snap. Transaksi diselesaikan melalui kanal transfer bank atau dompet digital hingga status pembayaran terkonfirmasi lunas. Keberhasilan setoran ini mengunci status unit kamar di basis data sekaligus memicu pengiriman bukti reservasi via WhatsApp Fonnte.
+Diagram pada Gambar 4.3 memperlihatkan proses awal saat calon penyewa memilih salah satu dari 32 unit kamar yang diminati. Permintaan sewa tersebut diverifikasi oleh aplikasi sebelum meneruskan token pembayaran ke peladen Midtrans Snap. Transaksi diselesaikan melalui kanal transfer perbankan atau dompet digital hingga status pembayaran terkonfirmasi lunas. Keberhasilan setoran ini mengunci status unit kamar di basis data sekaligus memicu pengiriman bukti reservasi via WhatsApp Fonnte.
 
-2. Admin (Penjaga Kost)  
-Admin atau penjaga kost memegang kendali harian atas seluruh operasional dan pemeliharaan lingkungan hunian. Tanggung jawabnya mencakup pemantauan tingkat keterisian 32 unit kamar, verifikasi data penghuni baru, serta penerbitan tagihan sewa. Pengawasan terpusat terhadap transaksi dan laporan kerusakan sarana memastikan layanan indekos tetap berjalan tertib.
+<br>
 
 <div align="center">
 
@@ -738,8 +736,7 @@ Admin atau penjaga kost memegang kendali harian atas seluruh operasional dan pem
 
 Alur kerja pengelola pada Gambar 4.4 dimulai dari proses autentikasi akun ke antarmuka khusus penjaga kost. Melalui dasbor kontrol, admin memantau okupansi 32 unit kamar, memperbarui tarif sewa, dan memvalidasi calon penghuni baru. Aplikasi menyelaraskan status hunian ke basis data lalu menerbitkan tagihan bulanan yang diteruskan otomatis ke WhatsApp penyewa. Pengelola kemudian memverifikasi riwayat pembayaran masuk serta mencatat pengeluaran kas rutin untuk menutup pembukuan bulanan.
 
-3. Penyewa Aktif  
-Penyewa aktif memperoleh akses ke portal penghuni setelah pengajuan kontrak kamarnya disetujui penjaga kost. Halaman ini memudahkan penghuni mengecek rincian tagihan sewa bulanan, tanggal jatuh tempo, serta riwayat kuitansi sebelumnya. Apabila menjumpai fasilitas kamar yang rusak, penghuni dapat mengirimkan tiket keluhan langsung ke meja kerja pengelola.
+<br>
 
 <div align="center">
 
