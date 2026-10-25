@@ -706,6 +706,11 @@ Interaksi pengunjung luar diakomodasi melalui tabel *guest_chat_threads*, *chat_
 
 <br>
 
+1. Calon Penyewa  
+Alur aktivitas calon penyewa berfokus pada kemudahan memesan unit kamar secara mandiri tanpa harus datang langsung ke lokasi. Proses ini memadukan pemilihan kamar dari katalog, verifikasi data sewa, hingga pelunasan uang muka lewat gerbang pembayaran digital. Rangkaian tahapan interaksi calon penyewa dengan sistem web dan layanan eksternal disajikan pada gambar di bawah ini.
+
+<br>
+
 <div align="center">
 
 <img src="images/gambar_4_3_calon_penyewa.png" alt="Gambar 4.3 Activity Diagram Calon Penyewa" width="650">
@@ -722,6 +727,11 @@ Diagram pada Gambar 4.3 memperlihatkan proses awal saat calon penyewa memilih sa
 
 <br>
 
+2. Admin (Penjaga Kost)  
+Aktivitas admin atau penjaga kost mencakup kendali penuh atas tata kelola operasional indekos, mulai dari pengelolaan kamar hingga pembukuan keuangan. Sistem membantu pengelola memverifikasi data penghuni baru, memantau pembayaran sewa secara langsung, serta menindaklanjuti laporan keluhan fasilitas. Diagram alir aktivitas penjaga kost dalam menjalankan fungsi manajerial harian disajikan pada gambar di bawah ini.
+
+<br>
+
 <div align="center">
 
 <img src="images/gambar_4_4_admin.png" alt="Gambar 4.4 Activity Diagram Admin (Penjaga Kost)" width="650">
@@ -735,6 +745,11 @@ Diagram pada Gambar 4.3 memperlihatkan proses awal saat calon penyewa memilih sa
 <br>
 
 Alur kerja pengelola pada Gambar 4.4 dimulai dari proses autentikasi akun ke antarmuka khusus penjaga kost. Melalui dasbor kontrol, admin memantau okupansi 32 unit kamar, memperbarui tarif sewa, dan memvalidasi calon penghuni baru. Aplikasi menyelaraskan status hunian ke basis data lalu menerbitkan tagihan bulanan yang diteruskan otomatis ke WhatsApp penyewa. Pengelola kemudian memverifikasi riwayat pembayaran masuk serta mencatat pengeluaran kas rutin untuk menutup pembukuan bulanan.
+
+<br>
+
+3. Penyewa Aktif  
+Aktivitas penyewa aktif berpusat pada pemanfaatan portal layanan pribadi untuk mengelola masa sewa secara transparan. Penghuni dapat memeriksa rincian tagihan rutin, melakukan pelunasan instan melalui gerbang pembayaran digital, hingga mengajukan laporan kendala kamar. Aliran proses interaksi penghuni dengan portal sewa dan saluran pembayaran ditampilkan pada gambar di bawah ini.
 
 <br>
 
