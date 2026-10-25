@@ -639,7 +639,7 @@ Sebagaimana ditunjukkan pada Gambar 3.2, alur penelitian dimulai dari bagian mas
 <br>
 
 ### 4.1.1 Use Case Diagram
-*Use case diagram* memetakan fungsionalitas Sistem Informasi Manajemen Kost Asri Boarding House dengan memvisualisasikan batas operasional dan hubungan antarpengguna terhadap layanan web. Pembagian hak akses serta cakupan tindakan yang dapat dilakukan pengguna disajikan pada Gambar 4.1.
+*Use case diagram* memetakan fungsionalitas Sistem Informasi Manajemen Kost Asri Boarding House dengan memvisualisasikan batas operasional dan hubungan antarpengguna terhadap layanan web. Pembagian hak akses serta cakupan tindakan yang dapat dilakukan pengguna terangkum pada Gambar 4.1.
 
 <br>
 
@@ -669,7 +669,7 @@ Penyewa aktif menempati kamar sewa resmi dan memegang kredensial khusus untuk ma
 <br>
 
 ### 4.1.2 Entity Relationship Diagram (ERD)
-*Entity Relationship Diagram* (ERD) menyajikan pemetaan visual keterkaitan antartabel dalam basis data relasional Asri Boarding House. Hubungan antarentitas penyusun sistem beserta derajat relasinya disajikan pada Gambar 4.2.
+*Entity Relationship Diagram* (ERD) memodelkan struktur logis dan keterkaitan antartabel dalam basis data relasional Asri Boarding House. Hubungan antarentitas penyusun sistem beserta derajat relasinya diilustrasikan pada Gambar 4.2.
 
 <br>
 
@@ -702,12 +702,12 @@ Interaksi pengunjung luar diakomodasi melalui tabel *guest_chat_threads*, *chat_
 <br>
 
 ### 4.1.3 Activity Diagram
-*Activity diagram* memodelkan dinamika proses bisnis dan aliran interaksi antaraktor dalam Sistem Informasi Manajemen Kost Asri Boarding House. Alur aktivitas ini disusun terpisah mengikuti peran pengguna agar pembagian hak akses serta pertukaran datanya tetap tertib. Rangkaian prosedur kerja sistem website bagi calon penyewa, admin atau penjaga kost, dan penyewa aktif disajikan berturut-turut pada Gambar 4.3, Gambar 4.4, serta Gambar 4.5.
+*Activity diagram* memodelkan dinamika proses bisnis dan aliran interaksi antaraktor dalam Sistem Informasi Manajemen Kost Asri Boarding House. Alur aktivitas ini disusun terpisah mengikuti peran pengguna agar pembagian hak akses serta pertukaran datanya tetap tertib. Rangkaian prosedur kerja sistem website bagi calon penyewa, admin atau penjaga kost, dan penyewa aktif diuraikan berturut-turut melalui Gambar 4.3, Gambar 4.4, serta Gambar 4.5.
 
 <br>
 
 1. Calon Penyewa  
-Alur aktivitas calon penyewa berfokus pada kemudahan memesan unit kamar secara mandiri tanpa harus datang langsung ke lokasi. Proses ini memadukan pemilihan kamar dari katalog, verifikasi data sewa, hingga pelunasan uang muka lewat gerbang pembayaran digital. Rangkaian tahapan interaksi calon penyewa dengan sistem web dan layanan eksternal disajikan pada Gambar 4.3.
+Alur aktivitas calon penyewa berfokus pada kemudahan memesan unit kamar secara mandiri tanpa harus datang langsung ke lokasi. Proses ini memadukan pemilihan kamar dari katalog, verifikasi data sewa, hingga pelunasan uang muka lewat gerbang pembayaran digital. Rangkaian tahapan interaksi calon penyewa dengan sistem web dan layanan eksternal dapat dicermati pada Gambar 4.3.
 
 <br>
 
@@ -728,7 +728,7 @@ Diagram pada Gambar 4.3 memperlihatkan proses awal saat calon penyewa memilih sa
 <br>
 
 2. Admin (Penjaga Kost)  
-Aktivitas admin atau penjaga kost mencakup kendali penuh atas tata kelola operasional indekos, mulai dari pengelolaan kamar hingga pembukuan keuangan. Sistem membantu pengelola memverifikasi data penghuni baru, memantau pembayaran sewa secara langsung, serta menindaklanjuti laporan keluhan fasilitas. Diagram alir aktivitas penjaga kost dalam menjalankan fungsi manajerial harian disajikan pada Gambar 4.4.
+Aktivitas admin atau penjaga kost mencakup kendali penuh atas tata kelola operasional indekos, mulai dari pengelolaan kamar hingga pembukuan keuangan. Sistem membantu pengelola memverifikasi data penghuni baru, memantau pembayaran sewa secara langsung, serta menindaklanjuti laporan keluhan fasilitas. Diagram alir aktivitas penjaga kost dalam menjalankan fungsi manajerial harian ditampilkan pada Gambar 4.4.
 
 <br>
 
@@ -749,7 +749,7 @@ Alur kerja pengelola pada Gambar 4.4 dimulai dari proses autentikasi akun ke ant
 <br>
 
 3. Penyewa Aktif  
-Aktivitas penyewa aktif berpusat pada pemanfaatan portal layanan pribadi untuk mengelola masa sewa secara transparan. Penghuni dapat memeriksa rincian tagihan rutin, melakukan pelunasan instan melalui gerbang pembayaran digital, hingga mengajukan laporan kendala kamar. Aliran proses interaksi penghuni dengan portal sewa dan saluran pembayaran disajikan pada Gambar 4.5.
+Aktivitas penyewa aktif berpusat pada pemanfaatan portal layanan pribadi untuk mengelola masa sewa secara transparan. Penghuni dapat memeriksa rincian tagihan rutin, melakukan pelunasan instan melalui gerbang pembayaran digital, hingga mengajukan laporan kendala kamar. Aliran proses interaksi penghuni dengan portal sewa dan saluran pembayaran diperlihatkan pada Gambar 4.5.
 
 <br>
 
@@ -770,7 +770,7 @@ Berdasarkan alur pada Gambar 4.5, penghuni membuka portal personal untuk meninja
 <br>
 
 ### 4.1.4 Flowchart Sistem
-*Flowchart* sistem memetakan urutan logika kerja dan keterhubungan antarproses pada Sistem Informasi Manajemen Kost Asri Boarding House yang telah dibangun. Bagan alir ini merangkum transisi tahapan mulai dari interaksi awal calon penyewa, verifikasi transaksi pembayaran otomatis, hingga penanganan akhir oleh penjaga kost. Rangkaian aliran data dan prosedur operasional sistem website disajikan pada Gambar 4.6.
+*Flowchart* sistem memetakan urutan logika kerja dan keterhubungan antarproses pada Sistem Informasi Manajemen Kost Asri Boarding House yang telah dibangun. Bagan alir ini merangkum transisi tahapan mulai dari interaksi awal calon penyewa, verifikasi transaksi pembayaran otomatis, hingga penanganan akhir oleh penjaga kost. Rangkaian aliran data dan prosedur operasional sistem website terpetakan secara runtut pada Gambar 4.6.
 
 <br>
 
