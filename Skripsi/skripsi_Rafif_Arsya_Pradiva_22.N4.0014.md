@@ -1470,7 +1470,7 @@ Berdasarkan Gambar 4.41, bagian atas antarmuka menampilkan spanduk tajuk kuning 
 7. Implementasi Nota PDF  
 Implementasi nota PDF menghasilkan lembar tanda terima pembayaran digital resmi berukuran A5 secara otomatis sesaat setelah transaksi dinyatakan lunas. Dokumen elektronik ini menggantikan kuitansi nota fisik rangkap dua yang selama ini ditulis tangan secara manual oleh penjaga kost. Penghuni memperoleh bukti pembayaran berkekuatan hukum yang rapi dan dapat diunduh langsung untuk arsip pertanggungjawaban kepada orang tua.
 
-Sistem memanfaatkan pustaka html2pdf.js untuk mengompilasi tampilan data transaksi menjadi dokumen PDF siap cetak di sisi peramban pengguna. Dokumen kuitansi memuat kop surat resmi Asri Boarding House, nomor transaksi unik, identitas penghuni, nomor kamar, rincian biaya sewa, dan kode QR verifikasi transaksi. Pembuatan dokumen secara otomatis ini memangkas antrean pengambilan kuitansi di meja penjaga kost saat periode pembayaran sewa awal bulan tiba. Tampilan fisik lembar kuitansi digital berformat PDF tersebut diperlihatkan pada Gambar 4.42.
+Sistem memanfaatkan pustaka html2pdf.js untuk mengompilasi tampilan data transaksi menjadi dokumen PDF siap cetak di sisi peramban pengguna. Dokumen kuitansi memuat kop surat resmi Asri Boarding House, identitas unit kamar penghuni, rincian nomor faktur transaksi, serta rincian biaya sewa kamar bulanan. Penerbitan kuitansi secara otomatis ini memangkas antrean pengambilan nota di meja penjaga kost saat periode penagihan tiba. Tampilan fisik lembar kuitansi digital berformat PDF tersebut diperlihatkan pada Gambar 4.42.
 
 <div align="center">
 
@@ -1482,7 +1482,7 @@ Sistem memanfaatkan pustaka html2pdf.js untuk mengompilasi tampilan data transak
 
 </div>
 
-Berdasarkan Gambar 4.42, lembar kuitansi digital dirancang menggunakan tata letak dokumen formal berukuran A5 dengan orientasi cetak horizontal. Bagian kop dokumen memuat identitas lengkap indekos, alamat jalan Maera Sari Tembalang, nomor kontak resmi pengelola, serta garis pemisah ganda tebal. Tabel rincian di bagian tengah memisahkan pos pembayaran sewa kamar bulanan, denda keterlambatan, dan jumlah total nominal yang telah dilunasi secara jelas. Sisi kiri bawah dokumen menyematkan kode QR validasi yang dapat dipindai untuk membuktikan keaslian kuitansi di sistem web indekos. Pada sudut kanan bawah, tertera stempel digital lunas resmi dan tanda tangan penanggung jawab operasional Asri Boarding House.
+Berdasarkan Gambar 4.42, lembar kuitansi digital dirancang menggunakan tata letak dokumen formal berukuran A5 vertikal dengan bingkai neo-brutalisme bergaris batas hitam tegas. Bagian atas memuat tabel kop berlatar kuning cerah yang mencantumkan nama Asri Boarding House, slogan sistem manajemen kost, serta alamat Maera Sari Tembalang dan kontak resmi WhatsApp pengelola. Area tengah menyajikan dua kartu berdampingan berlabel Ditagihkan Kepada yang memuat data kamar penghuni serta Detail Pembayaran yang memuat nomor faktur, tanggal pembayaran, dan kanal pembayaran Midtrans. Tabel rincian di bawah kartu identitas menampilkan pos sewa kost periode berjalan dengan subtotal pembayaran lunas senilai Rp 750.000. Bagian bawah dokumen dilengkapi stempel miring hijau bertuliskan LUNAS, kotak tanda tangan pengelola kost, garis pembatas putus-putus, serta catatan sistem yang mengesahkan lembar kuitansi sebagai bukti pembayaran sah.
 
 <br>
 

@@ -98,11 +98,12 @@
          * NOTA CONTAINER (yang akan dirender jadi PDF)
          * ==================================================== */
         #nota-container {
-            width: 148mm;
+            width: 138mm;
+            max-width: 100%;
             background-color: #ffffff;
             border: 3px solid #000000;
-            box-shadow: 6px 6px 0px 0px #000000;
-            padding: 10mm;
+            box-shadow: 4px 4px 0px 0px #000000;
+            padding: 8mm;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 8.5px;
             line-height: 1.35;
@@ -433,7 +434,7 @@
             var filename = 'Nota-{{ addslashes($pembayaran->transaction_id) }}.pdf';
 
             var opt = {
-                margin:      [8, 8, 8, 8],
+                margin:      [5, 5, 5, 5],
                 filename:    filename,
                 image:       { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, useCORS: true, logging: false },
