@@ -930,9 +930,9 @@ Berdasarkan Gambar 4.13, antarmuka menampilkan tajuk Pusat Bantuan FAQ berlatar 
 <br>
 
 8. Implementasi Antarmuka Tentang Kami  
-Antarmuka tentang kami memuat informasi profil usaha, visi pelayanan, dan letak geografis Asri Boarding House di kawasan Tembalang, Kota Semarang. Halaman ini menjelaskan latar belakang berdirinya indekos serta komitmen pengelola dalam menyediakan lingkungan belajar yang tenang bagi mahasiswa. Keterbukaan profil usaha ini memperkuat rasa aman bagi orang tua yang hendak menitipkan anaknya tinggal di indekos.
+Antarmuka tentang kami memuat informasi profil usaha, komitmen pelayanan, serta visi dan misi Asri Boarding House di Kota Semarang. Halaman ini menguraikan tujuan penyediaan hunian eksklusif yang dirancang guna menunjang produktivitas belajar mahasiswa dan kenyamanan bekerja para profesional muda. Keterbukaan profil usaha ini memperkuat keyakinan calon penyewa maupun orang tua dalam memilih lingkungan indekos yang tertib dan aman.
 
-Selain narasi profil, halaman ini dilengkapi rincian alamat fisik yang terhubung langsung dengan peta digital interaktif Google Maps. Calon penyewa dapat meninjau jarak indekos menuju kampus terdekat, fasilitas kesehatan, swalayan, serta akses jalan raya utama. Pengunjung juga dapat menemukan nomor kontak resmi pengelola dan jam operasional pelayanan penerimaan tamu di lokasi. Antarmuka profil lengkap indekos ini diperlihatkan pada Gambar 4.14.
+Pengunjung dapat membaca rangkuman profil pengelola yang menyeimbangkan unsur kenyamanan fisik, fasilitas modern, dan kemudahan transaksi digital. Dua kotak informasi utama memaparkan arah tujuan jangka panjang indekos beserta langkah strategis pemeliharaan sarana hunian secara terpadu. Penyajian butir misi menegaskan komitmen pengelola dalam membina komunikasi kekeluargaan yang harmonis dengan seluruh penghuni kost. Antarmuka profil dan komitmen mutu pelayanan indekos ini diperlihatkan pada Gambar 4.14.
 
 <div align="center">
 
@@ -944,7 +944,7 @@ Selain narasi profil, halaman ini dilengkapi rincian alamat fisik yang terhubung
 
 </div>
 
-Berdasarkan Gambar 4.14, tata letak halaman terbagi ke dalam bagian narasi profil pada sisi atas dan sematan peta digital pada sisi bawah. Narasi profil memaparkan sejarah singkat bangunan kost dan jumlah 32 unit kamar yang dikelola secara profesional. Kotak informasi pada sisi samping memuat baris alamat jalan, kode pos, nomor telepon pengelola, serta tautan menuju media sosial indekos. Sematan peta interaktif memungkinkan pengguna memperbesar dan menggeser peta jalan guna melihat rute perjalanan menuju lokasi fisik indekos. Desain keseluruhan halaman memanfaatkan tipografi rapi dengan penataan teks terpusat yang mencerminkan profil usaha hunian yang terpercaya.
+Berdasarkan Gambar 4.14, antarmuka menampilkan kotak tajuk Tentang Kami berlatar kuning cerah dengan ikon petir dan bayangan garis tepi tegas. Di bawah tajuk, terpasang kotak putih pengantar yang menguraikan konsep hunian eksklusif terpadu bagi kalangan mahasiswa dan pekerja di Semarang. Area konten utama menyajikan dua kartu besar berdampingan yang masing-masing memuat kotak ikon berwarna kuning cerah. Kartu sisi kiri merinci pernyataan visi organisasi sebagai pelopor hunian kost modern terpercaya berbasis integrasi teknologi. Kartu sisi kanan menjabarkan empat butir misi operasional meliputi perawatan kebersihan lingkungan, penyediaan fasilitas premium, administrasi pembayaran digital, serta pembinaan hubungan kekeluargaan yang hangat.
 
 <br>
 
