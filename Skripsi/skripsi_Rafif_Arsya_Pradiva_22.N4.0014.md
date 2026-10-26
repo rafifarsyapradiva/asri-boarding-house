@@ -1122,21 +1122,21 @@ Berdasarkan Gambar 4.23, tangkapan layar memperlihatkan gelembung pesan masuk ap
 <br>
 
 7. Implementasi Email Gateway SMTP  
-Implementasi email gateway berbasis protokol SMTP mendistribusikan tanda terima elektronik dan rincian kontrak sewa ke kotak masuk surel calon penyewa. Dokumen surel ini berfungsi sebagai arsip digital resmi yang dapat disimpan oleh penghuni maupun orang tua sebagai bukti transaksi yang sah. Pengiriman surel otomatis ini melengkapi pengingat pesan instan guna menjamin seluruh informasi administrasi tersampaikan tanpa kendala.
+Implementasi email gateway berbasis protokol SMTP mendistribusikan tanda terima elektronik dan konfirmasi aktivasi hunian ke kotak masuk surel penyewa. Dokumen surel ini berfungsi sebagai arsip digital resmi yang dapat disimpan oleh penghuni maupun wali sebagai bukti transaksi dan aktivasi sewa yang sah. Pengiriman surel otomatis ini melengkapi pengingat pesan instan guna menjamin seluruh informasi administrasi tersampaikan tanpa kendala.
 
-Sistem memanfaatkan layanan pengirim surel berbasis koneksi aman TLS untuk menerbitkan surat konfirmasi sesaat setelah pembayaran uang muka diterima. Surat elektronik disusun menggunakan templat HTML responsif yang memuat logo resmi indekos, rincian pembayaran, dan lembar lampiran tanda terima digital. Penerapan antrean surel (*queued mail*) pada kerangka kerja Laravel memastikan pengiriman pesan berlangsung cepat tanpa membebani kinerja peladen web. Bentuk surat elektronik konfirmasi reservasi sewa tersebut ditampilkan pada Gambar 4.24.
+Sistem memanfaatkan layanan pengirim surel berbasis protokol SMTP dengan enkripsi TLS untuk menerbitkan surat pemberitahuan aktivasi sesaat setelah status sewa disetujui pengelola. Surat elektronik dirancang menggunakan templat HTML responsif berdesain neo-brutalisme yang memuat identitas resmi indekos, spesifikasi kamar, dan tarif sewa bulanan. Penerapan antrean surel (*queued mail*) pada kerangka kerja Laravel menjamin proses pengiriman pesan berlangsung andal tanpa memperlambat interaksi pengguna pada aplikasi web. Bentuk surat elektronik konfirmasi dan sambutan aktivasi hunian tersebut ditampilkan pada Gambar 4.24.
 
 <div align="center">
 
-<img src="images/gambar_4_24_email_gateway_smtp.png" alt="Gambar 4.24 Implementasi Surat Elektronik Konfirmasi Reservasi via SMTP" width="600">
+<img src="images/gambar_4_24_email_gateway_smtp.png" alt="Gambar 4.24 Implementasi Surat Elektronik Konfirmasi Aktivasi Penyewa via SMTP" width="600">
 
 <br>
 
-*Gambar 4.24 Implementasi Surat Elektronik Konfirmasi Reservasi via SMTP*  
+*Gambar 4.24 Implementasi Surat Elektronik Konfirmasi Aktivasi Penyewa via SMTP*  
 
 </div>
 
-Berdasarkan Gambar 4.24, tampilan surel menampilkan tajuk surat formal yang memuat identitas Asri Boarding House lengkap dengan logo hunian. Badan surel menyajikan tabel rincian transaksi yang menguraikan kode reservasi, nama penghuni, nomor kamar, serta status transaksi lunas. Pada sisi bawah tabel, disertakan instruksi pengambilan kunci kamar dan berkas fisik yang wajib dibawa saat tiba di lokasi indekos. Terdapat tombol tautan unduh dokumen tanda terima yang dapat disimpan pengguna dalam format dokumen siap cetak. Penataan teks surel menggunakan kombinasi warna netral dan pembagian spasi yang lapang agar rincian transaksi mudah dibaca pada berbagai aplikasi surel.
+Berdasarkan Gambar 4.24, tampilan surel pada peramban memperlihatkan identitas pengirim resmi Asri Boarding House dengan alamat surel pengelola serta keterangan waktu pengiriman pada sudut kanan atas. Bagian atas badan surat mengusung gaya neo-brutalisme dengan tajuk berlatar kuning cerah bergaris tepi hitam tebal yang memuat nama hunian dan penanda notifikasi resmi. Area pembuka menampilkan kartu sambutan berilustrasi rumah bertuliskan Selamat Datang Penyewa Baru yang dilanjutkan ucapan selamat atas peresmian kamar hunian. Bagian tengah menyajikan tabel spesifikasi kontrak sewa yang merinci penempatan Kamar 104, tarif bulanan senilai Rp 950.000, serta lencana hijau yang menandakan status hunian telah aktif. Sisi bawah surat memuat instruksi pemantauan tagihan dan pelaporan keluhan yang dilengkapi tombol kuning bertuliskan Buka Portal Penyewa untuk mempermudah akses langsung ke aplikasi.
 
 <br>
 
