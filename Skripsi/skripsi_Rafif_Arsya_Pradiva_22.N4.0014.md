@@ -1010,11 +1010,11 @@ Berdasarkan Gambar 4.17, antarmuka obrolan tampil dalam bentuk jendela melayang 
 1. Implementasi Antarmuka Lengkapi Profil  
 Antarmuka lengkapi profil berfungsi menghimpun berkas identitas resmi calon penyewa sebelum sistem mengizinkan proses pemesanan kamar sewa. Verifikasi identitas ini menjadi prasyarat keamanan penting bagi pengelola guna memastikan seluruh calon penghuni indekos terdata secara sah. Langkah pendataan ini mencegah penggunaan akun anonim yang berisiko mengganggu ketertiban lingkungan hunian kost.
 
-Calon penghuni diminta melengkapi nomor induk kependudukan, alamat asal, nomor kontak darurat keluarga, serta mengunggah foto kartu identitas fisik. Sistem memvalidasi kelengkapan berkas yang diunggah dan memastikan format berkas berupa gambar yang terbaca jelas. Pengisian data darurat keluarga diperlukan agar penjaga kost dapat segera menghubungi wali jika terjadi keadaan darurat di kamar sewa. Tampilan antarmuka pengisian kelengkapan profil pemesan disajikan pada Gambar 4.18.
+Sistem menerapkan mekanisme penghalang profil yang mewajibkan pengguna melengkapi nomor WhatsApp aktif sebelum mengakses dasbor atau melanjutkan transaksi. Pengguna diminta memasukkan nomor kontak pribadi, enam belas digit nomor induk kependudukan, serta nama lengkap dan nomor telepon wali darurat. Keberadaan data kontak darurat ini menjamin pengelola dapat segera melakukan komunikasi eskalasi apabila terjadi kendala penting selama masa sewa berjalan. Tampilan antarmuka pengisian kelengkapan profil pemesan disajikan pada Gambar 4.18.
 
 <div align="center">
 
-<img src="images/gambar_4_18_lengkapi_profil.png" alt="Gambar 4.18 Antarmuka Pengisian Kelengkapan Profil Pemesan" width="600">
+<img src="images/gambar_4_18_lengkapi_profil.png" alt="Gambar 4.18 Antarmuka Pengisian Kelengkapan Profil Pemesan" width="500">
 
 <br>
 
@@ -1022,7 +1022,7 @@ Calon penghuni diminta melengkapi nomor induk kependudukan, alamat asal, nomor k
 
 </div>
 
-Berdasarkan Gambar 4.18, antarmuka menampilkan formulir terstruktur yang terbagi ke dalam bagian identitas pribadi dan bagian data kontak keluarga. Kolom isian NIK dan nomor kontak dilengkapi batas panjang digit otomatis untuk mencegah kesalahan ketik pengguna. Kotak unggah foto KTP menyediakan area pratinjau langsung yang menampilkan gambar kartu identitas sesaat setelah berkas dipilih. Label bertanda bintang merah menandakan bahwa seluruh kolom isian bersifat wajib untuk diselesaikan sebelum formulir dapat disimpan. Tombol simpan data profil diletakkan pada sudut kanan bawah formulir dengan ukuran yang cukup besar untuk memudahkan penekanan tombol.
+Berdasarkan Gambar 4.18, antarmuka menampilkan kartu formulir terpusat bergaris tepi hitam tebal dengan aksen lencana identitas hunian pada sisi atas. Di bawah tajuk Lengkapi Profil, terpasang kotak pemberitahuan berlatar kuning muda yang menegaskan kewajiban melengkapi nomor WhatsApp sebelum bertransaksi. Formulir menyediakan empat kolom isian berbingkai tegas yang mencakup nomor WhatsApp aktif, enam belas digit NIK calon penyewa, nama lengkap wali, serta nomor kontak wali. Setiap kolom isian dilengkapi ikon penjelas berwarna dan teks panduan format masukan guna mencegah terjadinya kekeliruan pengisian data oleh pemesan. Bagian bawah kartu dilengkapi tombol aksi penuh berwarna kuning cerah bertuliskan Simpan dan Lanjutkan untuk memproses penyimpanan profil ke basis data.
 
 <br>
 
