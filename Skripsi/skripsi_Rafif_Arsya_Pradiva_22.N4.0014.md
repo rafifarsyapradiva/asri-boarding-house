@@ -1200,9 +1200,9 @@ Berdasarkan Gambar 4.27, bagian atas halaman menyajikan tajuk Daftar dan Kondisi
 <br>
 
 4. Implementasi Antarmuka Manajemen Fasilitas  
-Antarmuka manajemen fasilitas digunakan pengelola untuk mengatur daftar sarana bersama yang ditampilkan pada halaman informasi publik indekos. Pengaturan inventaris sarana ini menjamin bahwa informasi fasilitas yang dibaca calon penyewa selalu sesuai dengan ketersediaan fisik di bangunan kost. Pengelola dapat memperbarui deskripsi sarana seiring dengan adanya penambahan fasilitas baru di lingkungan indekos.
+Antarmuka manajemen fasilitas digunakan oleh pengelola untuk mengonfigurasi direktori sarana dan prasarana kamar yang ditawarkan kepada calon penyewa di Asri Boarding House. Pengaturan master sarana ini menjamin konsistensi data spesifikasi ruangan yang ditampilkan pada katalog publik maupun lembar rincian kontrak hunian. Kehadiran modul inventaris fasilitas yang terpadu mempermudah pemeliharaan data sarana secara terpusat tanpa risiko inkonsistensi antarhalaman aplikasi.
 
-Modul ini menyediakan formulir penambahan nama fasilitas, pemilihan ikon grafis penjelas, penulisan deskripsi fungsi, serta tombol pengaktifan sarana. Pengelola dapat menyembunyikan sarana yang sedang mengalami kerusakan fisik agar tidak menimbulkan kekecewaan bagi calon penghuni baru. Setiap data sarana yang disimpan langsung diteruskan ke basis data untuk ditampilkan secara otomatis di beranda situs web. Tampilan halaman pengaturan fasilitas bersama indekos ini diperlihatkan pada Gambar 4.28.
+Pengelola dapat mendaftarkan sarana baru melalui formulir penambahan yang memuat nama fasilitas, ikon grafis emoji, deskripsi manfaat ruangan, dan penentuan status keaktifan. Sistem secara instan memperbarui tabel relasi fasilitas kamar di basis data saat pengelola menyunting informasi atau mengubah ketersediaan sarana tertentu. Tersedia pula tombol navigasi cepat untuk beralih kembali ke manajemen kamar guna mempercepat alur kerja pemeliharaan master data operasional. Tampilan halaman pengaturan master sarana dan prasarana indekos tersebut diperlihatkan pada Gambar 4.28.
 
 <div align="center">
 
@@ -1214,7 +1214,7 @@ Modul ini menyediakan formulir penambahan nama fasilitas, pemilihan ikon grafis 
 
 </div>
 
-Berdasarkan Gambar 4.28, antarmuka menampilkan daftar sarana kost dalam format tabel teratur yang berdampingan dengan tombol tambah fasilitas baru. Kolom tabel memuat pratinjau ikon sarana, nama fasilitas, deskripsi singkat, serta sakelar status aktif atau nonaktif. Di bagian atas layar, tersedia tombol hijau mencolok untuk membuka jendela formulir penambahan sarana hunian baru. Setiap baris fasilitas dilengkapi tombol ikon pensil untuk menyunting data sarana dan tombol tempat sampah untuk menghapus fasilitas yang sudah tidak berlaku. Tampilan antarmuka mengutamakan kemudahan navigasi agar penjaga kost dapat memperbarui inventaris sarana dengan cepat tanpa memerlukan keahlian teknis khusus.
+Berdasarkan Gambar 4.28, bagian atas antarmuka memuat judul Daftar Master Fasilitas yang didampingi tombol navigasi Kembali ke Kamar serta tombol Tambah Fasilitas berwarna kuning bergaris tepi hitam tebal. Area utama menyajikan tabel data bergaya neo-brutalisme dengan kepala kolom berlatar kuning cerah yang mencakup kolom ikon, nama fasilitas, deskripsi fungsi, status, dan aksi manajerial. Kolom ikon menampilkan simbol visual representatif seperti penyejuk udara, koneksi internet, kelistrikan, fasilitas sanitasi, lemari, meja belajar, hingga kasur tidur berkualitas. Setiap baris fasilitas dilengkapi deskripsi fungsi yang informatif serta lencana status berwarna hijau toska yang menandakan sarana berada dalam kondisi aktif digunakan. Pada sisi paling kanan tabel, disediakan tautan aksi berwarna biru untuk menyunting data fasilitas serta tautan teks merah guna menghapus sarana yang sudah tidak lagi disediakan indekos.
 
 <br>
 
