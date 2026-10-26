@@ -1411,9 +1411,9 @@ Berdasarkan Gambar 4.38, halaman antarmuka menampilkan spanduk tajuk kuning bert
 <br>
 
 4. Implementasi Antarmuka Profil  
-Antarmuka profil memfasilitasi penghuni kost untuk memperbarui data diri, kontak darurat keluarga, dan kredensial kata sandi akun secara mandiri. Pembaruan data kontak secara berkala memastikan pengelola kost selalu memiliki saluran komunikasi yang valid jika terjadi keadaan darurat di indekos. Penghuni juga memiliki kendali penuh untuk menjaga keamanan akses akun pribadinya dari waktu ke waktu.
+Antarmuka profil memfasilitasi penghuni indekos untuk memperbarui data identitas pribadi, alamat korespondensi digital, dan nomor kontak komunikasi secara mandiri. Pembaruan data kontak secara berkala memastikan pengelola Asri Boarding House senantiasa memiliki saluran komunikasi aktif guna keperluan penyampaian informasi tagihan maupun situasi darurat. Kemandirian pengelolaan profil ini memberikan fleksibilitas bagi penghuni dalam menjaga kemutakhiran informasi akun tanpa perlu melapor secara manual ke kantor pengelola.
 
-Halaman ini membagi pengaturan akun ke dalam tab informasi identitas diri, tab kontak darurat keluarga, dan tab keamanan kata sandi. Pengguna dapat memperbarui nomor telepon WhatsApp aktif dan mengganti kata sandi lama dengan memasukkan verifikasi kata sandi saat ini. Sistem secara otomatis memvalidasi format data baru sebelum menyimpannya ke tabel pengguna di basis data. Tampilan antarmuka pengaturan profil penghuni aktif disajikan pada Gambar 4.39.
+Halaman ini mengelompokkan pengaturan akun ke dalam tab navigasi profil identitas diri dan tab pembaruan kata sandi keamanan. Penghuni dapat menyunting nama lengkap, alamat surel terdaftar, serta nomor WhatsApp aktif melalui kolom isian formulir yang tersedia. Sistem memvalidasi kesesuaian format data input sebelum mengeksekusi penyimpanan data baru ke tabel pengguna di basis data peladen. Tampilan antarmuka formulir pembaruan data profil penghuni aktif tersebut disajikan pada Gambar 4.39.
 
 <div align="center">
 
@@ -1425,7 +1425,7 @@ Halaman ini membagi pengaturan akun ke dalam tab informasi identitas diri, tab k
 
 </div>
 
-Berdasarkan Gambar 4.39, antarmuka menyajikan formulir pengaturan yang terbagi ke dalam panel identitas akun dan panel keamanan sandi secara berdampingan. Sisi kiri memuat foto profil pengguna beserta kolom isian nama lengkap, alamat surel, nomor telepon seluler, dan alamat asal daerah. Sisi kanan menampilkan kolom nama kontak wali, hubungan keluarga, nomor telepon darurat, serta formulir pembaruan kata sandi akun. Setiap kolom isian dilengkapi garis batas abu-abu lembut yang berubah menjadi warna hijau saat kolom sedang aktif disunting pengguna. Tombol perbarui data diletakkan pada bagian bawah setiap panel dengan label jelas yang memastikan pengguna menyimpan perubahan data secara tepat.
+Berdasarkan Gambar 4.39, bagian atas halaman menampilkan spanduk tajuk kuning bertuliskan Kelola Akun Saya dengan menu Pengaturan Akun aktif pada bilah samping navigasi. Area atas formulir menyediakan dua tombol tab bergaya neo-brutalisme yang meliputi tab aktif Profil Saya berlatar kuning cerah serta tab Ubah Password berlatar putih. Kartu utama berbingkai hitam tebal memuat tajuk Informasi Profil dengan subketerangan pembaruan data yang dipisahkan oleh garis batas horizontal hitam. Tiga kolom isian bergaris batas tegas disajikan secara berurutan untuk memuat data nama lengkap berfokus kursor, alamat surel, serta nomor kontak WhatsApp yang seluruhnya telah disamarkan demi menjaga privasi penghuni. Pada bagian bawah formulir, disematkan tombol kuning bergaris tepi hitam dengan ikon disket bertuliskan Simpan untuk mengeksekusi pembaruan data pengguna.
 
 <br>
 
