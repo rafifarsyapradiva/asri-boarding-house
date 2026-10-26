@@ -1276,9 +1276,9 @@ Berdasarkan Gambar 4.31, halaman antarmuka menampilkan spanduk tajuk kuning bert
 <br>
 
 8. Implementasi Antarmuka Manajemen Pengeluaran  
-Antarmuka manajemen pengeluaran berfungsi mencatat seluruh pos beban biaya operasional pemeliharaan Asri Boarding House secara terperinci. Pencatatan pengeluaran harian ini menutup celah selisih pembukuan kas fisik yang selama ini sering terjadi akibat nota kertas yang tercecer. Pengelola dapat memantau pergerakan kas keluar secara teratur guna menjaga keseimbangan laba bersih bisnis indekos.
+Antarmuka manajemen pengeluaran berfungsi mengelola seluruh rekaman transaksi arus kas keluar operasional pemeliharaan Asri Boarding House secara terpusat dan terperinci. Pencatatan pengeluaran harian ini mencegah terjadinya selisih pembukuan kas fisik yang rentan terjadi akibat nota belanja tercecer atau transaksi yang tidak tercatat. Transparansi data belanja operasional mempermudah pengelola dalam mengawasi efisiensi anggaran rutin demi menjaga stabilitas margin laba bersih usaha indekos.
 
-Pengelola menginput pos beban operasional seperti pembayaran tagihan listrik PLN, retribusi air PDAM, pembelian perlengkapan kebersihan, dan upah perbaikan fasilitas. Setiap catatan pengeluaran diwajibkan menyertakan tanggal transaksi, kategori beban, nominal biaya, serta foto nota pembelian fisik sebagai bukti sah pembukuan. Seluruh data kas keluar ini langsung disinkronkan ke laporan laba-rugi bulanan tanpa perlu perhitungan ulang. Tampilan antarmuka pencatatan biaya pengeluaran operasional diperlihatkan pada Gambar 4.32.
+Pengelola dapat mendaftarkan pos beban baru dengan menekan tombol penambahan pengeluaran yang membuka formulir isian rincian belanja dan lampiran berkas bukti transaksi. Halaman ini juga dilengkapi tombol ekspor data menuju format PDF dan lembar kerja Excel guna memfasilitasi kebutuhan pengarsipan pembukuan offline. Panel penelusuran memungkinkan pemfilteran data kas keluar berdasarkan pencocokan nama pengeluaran, pengelompokan kategori beban, serta rentang tanggal kalender secara fleksibel. Tampilan antarmuka pengawasan dan pencatatan biaya pengeluaran operasional indekos tersebut diperlihatkan pada Gambar 4.32.
 
 <div align="center">
 
@@ -1290,7 +1290,7 @@ Pengelola menginput pos beban operasional seperti pembayaran tagihan listrik PLN
 
 </div>
 
-Berdasarkan Gambar 4.32, antarmuka menyediakan formulir input cepat pengeluaran pada sisi atas dan tabel rekapitulasi pengeluaran pada sisi bawah layar. Formulir input menyediakan pilihan kategori beban operasional, kolom nominal rupiah, kolom keterangan nota, serta tombol unggah bukti kuitansi belanja. Tabel di bagian bawah mencatat urutan riwayat pengeluaran kas lengkap dengan tanggal pencatatan dan nama penanggung jawab belanja. Pada kolom bukti nota, tersedia tautan gambar yang dapat ditekan pengelola untuk melihat foto nota fisik yang tersimpan di peladen. Bagian dasar antarmuka menyajikan kotak rekapitulasi total dana keluar pada bulan berjalan yang dihitung otomatis oleh sistem.
+Berdasarkan Gambar 4.32, bagian atas antarmuka memuat spanduk tajuk kuning bertuliskan Pencatatan Pengeluaran (Arus Kas Keluar) yang menaungi kartu utama Daftar Pengeluaran Operasional Kost. Sisi kanan atas kartu menyediakan jajaran tombol aksi bergaris tepi tegas yang mencakup tombol merah Export PDF, tombol hijau Export Excel, serta tombol kuning Tambah Pengeluaran. Area pencarian menyediakan panel penyaring terpadu yang memuat kolom isian nama pengeluaran, menu tarik-turun kategori, kolom pemilihan tanggal mulai dan selesai, serta tombol Filter dan Reset. Tabel data bergaya neo-brutalisme tersusun rapi dengan kepala kolom berlatar kuning cerah yang memuat informasi tanggal, nama pengeluaran, kategori, nominal rupiah, bukti nota, keterangan, dan kolom aksi. Baris tabel menampilkan contoh pencatatan pos beban tanggal 11 Oktober 2026 berupa pembayaran pajak kost sebesar Rp 200.000 berkategori lainnya lengkap dengan tiga tombol aksi untuk melihat detail, menyunting, maupun menghapus rekaman data.
 
 <br>
 
