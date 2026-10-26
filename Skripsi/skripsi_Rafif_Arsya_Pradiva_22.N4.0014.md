@@ -830,7 +830,7 @@ Halaman ini memuat kategori fasilitas umum seperti dapur bersama, area parkir ke
 
 </div>
 
-Berdasarkan Gambar 4.8, antarmuka fasilitas menampilkan susunan kartu informasi yang dikelompokkan ke dalam kisi-kisi rapi. Setiap kartu dilengkapi ikon visual penjelas, judul fasilitas, dan uraian singkat mengenai fungsi sarana tersebut bagi penghuni. Latar belakang kartu menggunakan warna putih dengan garis batas abu-abu gelap untuk memisahkan setiap poin fasilitas secara tegas. Pada bagian atas daftar, terdapat tajuk utama yang menerangkan komitmen pengelola dalam menjaga kebersihan dan kenyamanan sarana bersama. Bagian bawah halaman menyediakan tombol tautan yang mengarahkan pengunjung kembali ke katalog pemesanan kamar sewa.
+Berdasarkan Gambar 4.8, antarmuka fasilitas menampilkan tajuk utama Fasilitas Kost Asri berlatar kuning cerah yang dilengkapi kalimat pengantar penunjang produktivitas harian. Pada area konten, tersaji deretan kartu fasilitas eksklusif yang disusun ke dalam tiga kolom sejajar dengan bingkai garis tepi tegas. Setiap kartu memuat kotak ikon penjelas berwarna kuning, judul fasilitas seperti pendingin udara dan akses internet berkecepatan tinggi, serta deskripsi manfaat sarana. Tata letak kartu juga merinci ketersediaan pilihan kamar mandi dalam maupun kamar mandi bersama guna memberikan kepastian kenyamanan sanitasi penghuni. Pada sudut kanan bawah layar, disematkan tombol obrolan dan tautan pesan instan yang memudahkan pengunjung menanyakan sarana tertentu kepada pengelola.
 
 <br>
 
