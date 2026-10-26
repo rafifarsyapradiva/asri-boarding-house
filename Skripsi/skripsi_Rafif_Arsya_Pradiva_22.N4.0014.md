@@ -837,7 +837,7 @@ Berdasarkan Gambar 4.8, antarmuka fasilitas menampilkan tajuk utama Fasilitas Ko
 3. Implementasi Antarmuka Tipe Kamar Kost  
 Antarmuka tipe kamar kost menyajikan perbandingan spesifikasi dari 32 unit hunian yang terbagi ke dalam tipe VIP, Deluxe, dan Standar. Halaman ini memudahkan calon penyewa mengetahui perbedaan fasilitas dalam kamar, luas ruangan, dan besaran tarif sewa bulanan. Kejelasan klasifikasi ini mencegah kesalahpahaman spesifikasi hunian saat calon penyewa melakukan pemesanan jarak jauh.
 
-Setiap kartu tipe kamar memuat rincian perabot seperti pendingin udara, kamar mandi dalam, lemari pakaian, serta meja belajar. Pengguna dapat membandingkan harga sewa tiap tipe guna menyesuaikan anggaran bulanan yang dimiliki. Sistem mengambil data spesifikasi ini langsung dari tabel kamar di basis data agar status ketersediaannya selalu akurat. Visualisasi antarmuka perbandingan tipe kamar sewa ini disajikan pada Gambar 4.9.
+Pada bagian atas katalog, tersedia bilah penyaring kategori tipe kamar serta kolom pencarian nomor unit untuk mempercepat penemuan kamar idaman. Setiap kartu kamar menampilkan foto ruangan, lantai unit, dimensi luas, rincian fasilitas penunjang, hingga label status keterisian secara dinamis. Calon penyewa dapat langsung menekan tombol pemesanan untuk unit yang kosong atau menghubungi narahubung untuk unit yang berstatus terisi. Visualisasi antarmuka perbandingan tipe dan katalog unit kamar sewa ini disajikan pada Gambar 4.9.
 
 <div align="center">
 
@@ -849,7 +849,7 @@ Setiap kartu tipe kamar memuat rincian perabot seperti pendingin udara, kamar ma
 
 </div>
 
-Berdasarkan Gambar 4.9, halaman menampilkan tiga kolom utama yang mewakili kelas kamar VIP, Deluxe, dan Standar. Setiap kolom memuat label harga sewa per bulan dengan ukuran teks menonjol pada bagian atas kartu. Di bawah label harga, tersusun daftar butir fasilitas interior kamar yang ditandai dengan ikon centang hijau. Setiap kartu tipe kamar juga dilengkapi tombol aksi cepat yang mengarahkan calon penyewa langsung ke formulir simulasi sewa. Pemisahan antar-kolom dibuat menggunakan garis tepi tebal bergaya modern untuk mempertegas batas pembanding antar-tipe kamar.
+Berdasarkan Gambar 4.9, antarmuka menampilkan tajuk Katalog Unit Kamar berlatar kuning cerah dengan ilustrasi ikon rumah serta deskripsi pemilih hunian. Tepat di bawah tajuk, tersedia panel kontrol interaktif yang memuat tombol penyaring kategori Semua Tipe, VIP, Deluxe, dan Standar, berdampingan dengan kolom pencarian nomor kamar. Bagian utama menyajikan deretan kartu unit kamar bergaris tepi hitam tegas yang memperlihatkan foto interior, label tipe Standar, penanda lantai, serta dimensi luas ruangan sebesar 12 meter persegi. Informasi fasilitas seperti koneksi internet cepat, listrik gratis, dan kamar mandi luar dirangkum dalam bentuk lencana persegi panjang kecil di atas label harga sewa bulanan. Setiap kartu juga memuat penanda status keterisian unit yang membedakan ketersediaan kamar, lengkap dengan tombol pesan unit berwarna hitam atau tombol hijau untuk bertanya melalui WhatsApp.
 
 <br>
 
