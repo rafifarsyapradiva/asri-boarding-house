@@ -1295,9 +1295,9 @@ Berdasarkan Gambar 4.32, bagian atas antarmuka memuat spanduk tajuk kuning bertu
 <br>
 
 9. Implementasi Antarmuka Manajemen Laporan Pemasukan  
-Antarmuka manajemen laporan pemasukan menyajikan rekapitulasi menyeluruh arus kas indekos yang memadukan penerimaan sewa dengan pengeluaran operasional. Halaman laporan ini memangkas waktu tutup buku bulanan yang sebelumnya memakan waktu berhari-hari menjadi hitungan detik. Ketersediaan laporan kas yang akurat memberikan gambaran riil mengenai kesehatan finansial usaha indekos bagi pemilik modal.
+Antarmuka manajemen laporan menyajikan rekapitulasi menyeluruh arus kas indekos yang memadukan total penerimaan tagihan sewa dengan akumulasi pengeluaran operasional. Halaman rekapitulasi ini memangkas durasi proses tutup buku bulanan yang sebelumnya memakan waktu berhari-hari menjadi instan dan otomatis. Ketersediaan kalkulasi saldo kas yang akurat memberikan gambaran transparan mengenai kondisi kesehatan finansial bisnis hunian bagi pemilik indekos.
 
-Pengelola dapat memfilter laporan berdasarkan rentang tanggal tertentu, bulan kalender, maupun rekapitulasi tahunan secara fleksibel. Sistem menghitung selisih pendapatan kotor dikurangi total beban pengeluaran guna menyajikan angka laba bersih operasional yang pasti. Laporan yang tersaji dapat langsung diekspor ke dalam berkas dokumen PDF siap cetak maupun lembar kerja Excel untuk arsip kantor. Visualisasi antarmuka laporan pembukuan arus kas ini disajikan pada Gambar 4.33.
+Pengelola dapat menyesuaikan penyajian rekapitulasi finansial melalui pemilihan parameter bulan kalender, tahun anggaran, serta status pelunasan transaksi. Sistem secara otomatis mengalkulasi selisih arus kas masuk terhadap kas keluar untuk memunculkan nominal saldo bersih secara real-time. Informasi pembukuan kas yang terhimpun dapat langsung diunduh menuju dokumen cetak PDF maupun lembar kerja spreadsheet Excel guna kebutuhan audit berkala. Visualisasi antarmuka laporan pembukuan arus kas dan penagihan bulanan ini disajikan pada Gambar 4.33.
 
 <div align="center">
 
@@ -1309,7 +1309,7 @@ Pengelola dapat memfilter laporan berdasarkan rentang tanggal tertentu, bulan ka
 
 </div>
 
-Berdasarkan Gambar 4.33, antarmuka laporan menampilkan kartu ringkasan keuangan utama yang memuat total pemasukan kotor, total pengeluaran, dan saldo kas bersih. Di bawah kartu ringkasan, tersaji grafik garis yang memvisualisasikan tren pendapatan harian selama satu bulan kalender berjalan. Bagian tengah halaman menyajikan tabel pembukuan arus kas yang merinci setiap transaksi masuk dari pembayaran sewa kamar maupun transaksi keluar operasional. Sudut kanan atas layar dilengkapi tombol hijau untuk mengunduh lembar kerja Excel dan tombol merah untuk mencetak dokumen laporan berformat PDF. Seluruh susunan angka disajikan dalam format mata uang rupiah yang terstandarisasi untuk memastikan keterbacaan data laporan keuangan.
+Berdasarkan Gambar 4.33, bagian atas antarmuka memuat spanduk tajuk kuning bertuliskan Laporan Penagihan Bulanan dengan panel utama Filter dan Ekspor Laporan. Panel tersebut menyediakan tiga menu tarik-turun untuk menyaring bulan, tahun, dan status pembayaran, berdampingan dengan tombol kuning Filter, tombol putih Reset, tombol merah PDF, serta tombol hijau Excel. Bagian tengah halaman menyajikan tiga kartu metrik bergaya neo-brutalisme dengan garis batas hitam tebal yang merangkum posisi finansial indekos. Ketiga kartu tersebut meliputi kartu biru Total Arus Kas Masuk senilai Rp 36.917.740, kartu merah muda Total Arus Kas Keluar sebesar Rp 200.000, serta kartu hijau toska Saldo Bersih Akhir senilai Rp 36.717.740. Pada area bawah antarmuka, terdapat kartu Riwayat Keuangan Kost yang menyajikan tabel data berkepala kuning cerah dengan kolom nomor pesanan, periode, nama penyewa, nomor kamar, total tagihan, metode, dan status transaksi.
 
 <br>
 
