@@ -1238,9 +1238,9 @@ Berdasarkan Gambar 4.29, bagian atas halaman menampilkan tajuk Daftar Penyewa Ko
 <br>
 
 6. Implementasi Antarmuka Manajemen Reservasi  
-Antarmuka manajemen reservasi menjadi meja kerja bagi penjaga kost untuk memvalidasi seluruh pesanan kamar baru yang diajukan oleh calon penyewa. Halaman ini menyaring pemesanan yang masuk dan memastikan uang muka pembayaran digital telah terverifikasi secara sah oleh sistem. Penjaga kost memiliki kendali penuh untuk menyetujui atau menolak permohonan reservasi sebelum calon penghuni datang ke lokasi.
+Antarmuka manajemen reservasi berfungsi sebagai pusat validasi administratif bagi pengelola indekos untuk meninjau seluruh permohonan sewa baru yang diajukan oleh calon penyewa. Modul ini menyaring pesanan yang masuk dan memastikan setoran uang muka maupun pelunasan sewa melalui gerbang pembayaran digital telah terverifikasi secara valid oleh sistem. Ketersediaan rekapitulasi pemesanan secara terpusat mencegah terjadinya pesanan ganda serta memberikan kepastian alokasi unit kamar sebelum calon penghuni menempati lokasi.
 
-Tabel reservasi menampilkan kode pemesanan, identitas calon penyewa, tipe kamar yang dipilih, tanggal pengajuan sewa, dan bukti transaksi Midtrans. Pengelola dapat memeriksa berkas foto KTP yang diunggah calon penghuni guna memverifikasi keaslian data sebelum memberikan persetujuan kamar. Begitu pengelola menekan tombol konfirmasi sewa, status kamar seketika berganti menjadi terkunci dan sistem menerbitkan kode aktivasi kunci hunian. Tampilan antarmuka verifikasi reservasi kamar masuk disajikan pada Gambar 4.30.
+Pengelola dapat melakukan penelusuran transaksi reservasi melalui kolom pencarian terpadu berdasarkan nomor identitas pesanan, nama calon penghuni, atau unit kamar tertentu. Panel penyaring menyediakan opsi pemilahan status reservasi yang dilengkapi tombol eksekusi filter dan tombol penyetel ulang guna mempercepat penemuan berkas sewa. Setiap entri pemesanan terhubung dengan rincian bukti transaksi digital sehingga pengelola dapat memeriksa detail pembayaran dan kelengkapan profil pemesan secara menyeluruh. Tampilan antarmuka verifikasi dan manajemen reservasi kamar masuk tersebut diperlihatkan pada Gambar 4.30.
 
 <div align="center">
 
@@ -1252,7 +1252,7 @@ Tabel reservasi menampilkan kode pemesanan, identitas calon penyewa, tipe kamar 
 
 </div>
 
-Berdasarkan Gambar 4.30, antarmuka menampilkan daftar antrean pesanan kamar yang diurutkan mulai dari waktu pengajuan sewa yang paling mutakhir. Setiap baris pesanan memuat kode transaksi unik, nama pemesan, tipe kamar sewa, nominal pembayaran, serta lencana status verifikasi berkas. Terdapat tombol ikon mata untuk membuka jendela pop-up peninjauan berkas foto identitas calon penyewa secara mendalam. Di samping tombol tinjau berkas, tersedia tombol centang hijau untuk menyetujui pemesanan dan tombol silang merah untuk membatalkan pesanan yang bermasalah. Tampilan tabel dilengkapi indikator status pembayaran otomatis dari gerbang Midtrans guna memudahkan penjaga kost memastikan keabsahan dana sewa.
+Berdasarkan Gambar 4.30, halaman antarmuka menampilkan spanduk tajuk kuning bertuliskan Daftar Reservasi Kamar dengan kartu utama berlabel Manajemen Reservasi Calon Penyewa di bawahnya. Area atas kartu memuat panel pencarian bergaris tepi hitam tebal yang menyediakan kolom isian kata kunci pencarian, menu tarik-turun penyaring status reservasi, tombol kuning Filter, serta tombol Reset. Tabel data bergaya neo-brutalisme tersusun dengan kepala kolom berlatar kuning cerah yang mencakup rincian nomor pesanan, nama pemesan, unit kamar, tipe sewa, tanggal mulai, status, dan tombol aksi. Deretan baris tabel menyajikan daftar transaksi reservasi kamar seperti penempatan Kamar 105, Kamar 104, dan Kamar 101 dengan model sewa bulanan yang telah berhasil diproses oleh sistem. Kolom status menampilkan lencana persegi bergaris batas tegas bertuliskan Dikonfirmasi yang berdampingan dengan tombol biru toska bertuliskan Detail untuk meninjau dokumen pemesanan secara mendalam.
 
 <br>
 
