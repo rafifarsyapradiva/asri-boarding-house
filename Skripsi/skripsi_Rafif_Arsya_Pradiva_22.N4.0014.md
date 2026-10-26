@@ -1162,9 +1162,9 @@ Berdasarkan Gambar 4.25, antarmuka peramban menampilkan kartu otentikasi bergaya
 <br>
 
 2. Implementasi Antarmuka Dashboard Admin  
-Antarmuka dashboard admin menyajikan rangkuman analitik operasional harian mengenai keterisian 32 unit kamar dan kondisi perputaran kas di Asri Boarding House. Dasbor kontrol ini mempermudah penjaga kost mengawasi seluruh aktivitas hunian secara terpadu tanpa perlu memeriksa tumpukan buku besar manual. Penyajian metrik penting dalam satu layar mempercepat pengambilan keputusan manajerial dalam mengelola fasilitas indekos.
+Antarmuka dashboard admin menyajikan rangkuman analitik operasional harian mengenai keterisian 32 unit kamar serta dinamika arus kas keuangan di Asri Boarding House secara terpadu. Pusat kendali ini mempermudah pengelola memantau performa bisnis hunian tanpa perlu melakukan kalkulasi manual dari tumpukan buku besar fisik. Ketersediaan visualisasi data komprehensif dalam satu layar mempercepat evaluasi okupansi dan perumusan keputusan manajerial indekos.
 
-Halaman ini memuat kartu statistik jumlah kamar terisi, jumlah kamar kosong, total penyewa aktif, serta nominal kas masuk pada bulan berjalan. Terdapat agenda kalender jatuh tempo yang menandai kamar mana saja yang mendekati tanggal pembayaran sewa bulanan. Pengelola dapat langsung melompat ke modul menu lain melalui bilah navigasi samping yang selalu tersedia di sisi kiri layar. Visualisasi dasbor pengawasan operasional admin indekos ini disajikan pada Gambar 4.26.
+Sistem menghimpun data secara waktu nyata dari tabel kamar, reservasi, dan transaksi pembayaran guna memperbarui kalkulasi pendapatan serta tingkat keterisian unit. Pengelola dapat menjelajahi seluruh modul pengelolaan secara leluasa melalui bilah navigasi samping yang mengelompokkan menu utama, transaksi, laporan, dan pengaturan. Dasbor juga menyertakan fitur pengalihan tema visual serta kartu profil pengelola yang mempermudah pemantauan status sesi otentikasi aktif. Visualisasi antarmuka dasbor operasional dan keuangan administrator tersebut disajikan pada Gambar 4.26.
 
 <div align="center">
 
@@ -1176,7 +1176,7 @@ Halaman ini memuat kartu statistik jumlah kamar terisi, jumlah kamar kosong, tot
 
 </div>
 
-Berdasarkan Gambar 4.26, bagian atas dasbor menampilkan empat kartu metrik utama dengan ikon penjelas dan angka statistik yang berukuran besar. Di bawah kartu metrik, terdapat bagan grafik lingkaran yang memperlihatkan rasio perbandingan keterisian 32 unit kamar secara proporsional. Sisi tengah dasbor memuat tabel ringkasan pesanan reservasi terbaru yang memerlukan tindakan verifikasi segera dari penjaga kost. Bilah navigasi vertikal di sisi kiri layar memuat ikon menu lengkap mulai dari master kamar, data penghuni, tagihan bulanan, hingga laporan pembukuan. Tata letak dasbor disusun padat dan terstruktur agar pengelola dapat memantau denyut operasional indekos hanya dalam sekali pandang.
+Berdasarkan Gambar 4.26, halaman dasbor menampilkan tajuk kuning bertuliskan Dashboard Admin dengan bilah navigasi vertikal di sisi kiri yang mengelompokkan menu operasional secara terstruktur. Area atas menyajikan delapan kartu metrik bergaya neo-brutalisme dengan aksen warna kontras yang merinci total 32 unit kamar, ketersediaan 29 kamar kosong, rekapitulasi pemasukan, pengeluaran, keuntungan bersih, status tagihan, reservasi masuk, serta metrik interaksi komunikasi. Pada area tengah sebelah kiri, terpampang grafik batang Tren Pemasukan 12 Bulan Terakhir yang membandingkan volume arus kas masuk dan beban biaya operasional. Sisi kanan grafik batang memuat diagram donat Status Kamar yang memvisualisasikan proporsi unit tersedia sebesar 29 kamar dan unit terisi sebanyak 3 kamar dengan kode warna hijau dan biru. Bagian bawah antarmuka memuat area ringkasan Tagihan Terbaru guna memberikan akses pemantauan cepat terhadap transaksi penyewa yang baru saja tercatat ke dalam sistem.
 
 <br>
 
