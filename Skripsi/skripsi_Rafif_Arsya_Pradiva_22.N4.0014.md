@@ -1333,9 +1333,9 @@ Berdasarkan Gambar 4.34, bagian atas halaman menampilkan spanduk tajuk kuning be
 <br>
 
 11. Implementasi Antarmuka Manajemen Fitur Chat Guest  
-Antarmuka manajemen fitur chat guest menjadi panel komunikasi bagi pengelola untuk membalas pertanyaan calon penyewa yang masuk dari beranda publik. Fitur obrolan terpusat ini memungkinkan penjaga kost menjawab calon penghuni secara langsung melalui peramban komputer kerja tanpa berganti perangkat ponsel. Kecepatan respon pengelola dalam percakapan daring meningkatkan rasio keberhasilan calon penyewa dalam memesan kamar indekos.
+Antarmuka manajemen obrolan tamu menjadi pusat komunikasi real-time bagi pengelola untuk merespons pertanyaan calon penyewa yang dikirim melalui beranda publik Asri Boarding House. Integrasi percakapan terpadu ini memfasilitasi pengelola dalam melayani konsultasi kamar secara langsung lewat peramban komputer tanpa perlu berpindah ke perangkat telepon pintar. Kecepatan dan ketepatan balasan informasi ketersediaan unit melalui kanal percakapan digital efektif meningkatkan minat konversi calon penghuni dalam menyewa kamar.
 
-Panel obrolan menampilkan daftar sesi percakapan dari pengunjung luar yang diurutkan berdasarkan waktu pesan masuk terbaru. Pengelola dapat membuka sesi percakapan, membaca pertanyaan seputar ketersediaan kamar, dan mengetikkan balasan secara langsung. Riwayat percakapan tersimpan rapi pada basis data sehingga pengelola lain dapat melanjutkan komunikasi tanpa kehilangan konteks pembicaraan. Antarmuka panel pengelolaan obrolan langsung tamu luar ini diperlihatkan pada Gambar 4.35.
+Panel navigasi sisi kiri mengurutkan antrean pesan masuk dari calon penyewa berdasarkan tanda waktu pengiriman pesan paling mutakhir. Pengelola dapat memilih salah satu sesi obrolan untuk membaca riwayat percakapan serta mengetikkan balasan teks melalui kolom isian pesan di bagian bawah ruang obrolan. Header percakapan turut menyediakan tombol aksi cepat untuk mengalihkan komunikasi menuju WhatsApp, memperbarui status tiket konsultasi menjadi selesai, atau menghapus riwayat sesi obrolan. Tampilan antarmuka penanganan pesan interaktif calon penyewa tersebut disajikan pada Gambar 4.35.
 
 <div align="center">
 
@@ -1347,7 +1347,7 @@ Panel obrolan menampilkan daftar sesi percakapan dari pengunjung luar yang diuru
 
 </div>
 
-Berdasarkan Gambar 4.35, tampilan antarmuka terbagi menjadi kolom daftar kontak percakapan pada sisi kiri dan ruang obrolan aktif pada sisi kanan layar. Daftar kontak di sisi kiri menampilkan nama tamu, cuplikan pesan terakhir, tanda waktu pesan, dan lencana merah jika terdapat pesan belum terbaca. Ruang obrolan sisi kanan menyajikan gelembung percakapan runut lengkap dengan indikator waktu kirim pada setiap baris pesan. Bagian bawah ruang obrolan menyediakan area pengetikan pesan teks yang berdampingan dengan tombol kirim berikon panah warna hijau. Sisi atas panel obrolan dilengkapi tombol opsi untuk menutup sesi percakapan yang telah selesai atau menghapus riwayat obrolan yang tidak relevan.
+Berdasarkan Gambar 4.35, antarmuka menampilkan spanduk tajuk kuning bertuliskan Obrolan Guest (Calon Penyewa) dengan tata letak layar terbagi menjadi dua kartu neo-brutalisme bergaris tepi hitam tebal. Kartu sisi kiri bertajuk Daftar Pertanyaan Guest memuat antrean penanya dalam kartu kuning aktif yang merangkum nama tamu, nomor kontak tersamar, tanda waktu pesan, dan cuplikan obrolan terakhir. Kartu sisi kanan menyajikan ruang obrolan aktif dengan tajuk yang dilengkapi tombol hijau Hubungi WA, tombol kuning Tandai Selesai, dan tombol merah Hapus. Area percakapan memperlihatkan gelembung pesan masuk berlatar putih dari tamu dengan pesan pembuka serta gelembung balasan berlatar kuning cerah dari pengelola lengkap dengan label pengirim dan tanda waktu pengiriman yang presisi. Bagian dasar ruang obrolan dilengkapi kolom isian untuk mengetik balasan teks serta tombol hitam bertuliskan Kirim dengan ikon pesawat kertas di sudut kanan.
 
 <br>
 
