@@ -875,7 +875,7 @@ Berdasarkan Gambar 4.10, halaman menampilkan tajuk Galeri Foto Kost Asri berlata
 5. Implementasi Antarmuka Alur Cara Reservasi  
 Antarmuka alur cara reservasi menyajikan pedoman praktis bagi calon penyewa baru mengenai tahapan memesan kamar secara mandiri melalui situs web. Halaman edukasi ini disusun secara berurutan agar pengguna tidak merasa bingung saat pertama kali menggunakan layanan pemesanan daring. Keterangan langkah kerja yang jelas mempermudah calon penghuni menyiapkan berkas dan menyelesaikan pembayaran tanpa kendala teknis.
 
-Alur pemesanan dijabarkan ke dalam langkah-langkah ringkas mulai dari pemilihan kamar, pendaftaran akun, pengisian data diri, hingga pembayaran uang muka lewat gerbang digital. Setiap langkah dilengkapi petunjuk mengenai dokumen identitas yang wajib diunggah serta batas waktu pelunasan transaksi. Pengguna dapat membaca panduan ini kapan saja sebelum menekan tombol pemesanan kamar sewa. Tata letak petunjuk langkah reservasi indekos dapat dicermati pada Gambar 4.11.
+Panduan pemesanan memandu calon penyewa melalui empat tahapan terstruktur mulai dari penelusuran unit kamar hingga perolehan bukti pembayaran resmi. Pengguna memperoleh kepastian mengenai keamanan transaksi perbankan digital serta mekanisme pengiriman kode akses kamar tanpa harus menunggu konfirmasi manual. Setiap kartu tahapan menyajikan ringkasan syarat praktis beserta kiat penting guna memperlancar proses administrasi sewa. Tata letak petunjuk langkah reservasi indekos dapat dicermati pada Gambar 4.11.
 
 <div align="center">
 
@@ -887,7 +887,7 @@ Alur pemesanan dijabarkan ke dalam langkah-langkah ringkas mulai dari pemilihan 
 
 </div>
 
-Berdasarkan Gambar 4.11, panduan alur reservasi ditampilkan dalam format bagan bertingkat horizontal dengan penomoran urut yang mencolok. Setiap blok tahapan memuat lingkaran nomor langkah, judul proses kerja, serta dua baris kalimat penjelas mengenai tindakan yang perlu diambil pemesan. Garis penghubung antar-lingkaran nomor memperlihatkan arah alur kerja sistem dari awal pendaftaran hingga tahap akhir konfirmasi kunci. Pada bagian akhir langkah, terdapat pemberitahuan penting mengenai syarat pelunasan transaksi sebelum kamar dinyatakan resmi terpesan. Bagian dasar halaman menyediakan tombol pendaftaran langsung guna mempercepat pengguna yang ingin segera memulai proses reservasi.
+Berdasarkan Gambar 4.11, antarmuka menampilkan lencana Panduan Lengkap Reservasi di atas tajuk utama Cara Booking Kost berlatar kuning cerah dengan ikon petir. Di bawah tajuk, tertera kotak keterangan pemesanan instan yang merangkum empat tahapan alur sewa kamar selama 24 jam non-stop. Tata letak utama menyusun empat kartu vertikal bergaris tepi tebal yang memuat nomor urut, ikon representatif, judul langkah, serta deskripsi singkat proses. Rincian setiap kartu mencakup panduan penelusuran kamar, pengisian data diri dan kontak wali darurat, pembayaran instan melalui gerbang Midtrans Snap, hingga penerbitan nota digital. Bagian dasar setiap kartu dilengkapi kotak kiat khusus berwarna kuning yang menegaskan kebijakan enkripsi data, opsi pelunasan uang muka minimal 30 persen, serta aktivasi kode akses kamar saat tanggal masa sewa dimulai.
 
 <br>
 
