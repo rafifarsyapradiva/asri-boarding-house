@@ -1219,9 +1219,9 @@ Berdasarkan Gambar 4.28, bagian atas antarmuka memuat judul Daftar Master Fasili
 <br>
 
 5. Implementasi Antarmuka Manajemen Penyewa  
-Antarmuka manajemen penyewa memuat direktori induk seluruh penghuni aktif yang menempati 32 unit kamar di Asri Boarding House. Pusat data penghuni ini membantu penjaga kost memantau masa kontrak sewa, data identitas KTP, serta nomor kontak darurat keluarga penghuni. Pendataan yang terpusat memastikan setiap unit kamar memiliki penanggung jawab resmi yang tercatat secara sah di sistem.
+Antarmuka manajemen penyewa memuat direktori induk seluruh penghuni aktif yang menempati unit hunian di Asri Boarding House secara terpusat. Basis data kependudukan indekos ini memfasilitasi pengelola dalam memantau legalitas nomor induk kependudukan, masa aktif sewa kamar, serta kontak darurat perwakilan wali penghuni. Pendataan terstruktur ini menjamin akuntabilitas kepenghunian sekaligus mempermudah penyusunan laporan administratif secara berkala.
 
-Pengelola dapat memeriksa riwayat kamar yang pernah ditempati penghuni, memperpanjang masa kontrak sewa bulanan, atau memproses prosedur keluar sewa (*check-out*). Sistem secara otomatis menghitung sisa masa aktif sewa setiap penghuni dan memberikan tanda peringatan jika kontrak sewa mendekati masa kedaluwarsa. Fitur ekspor data penyewa ke format dokumen digital juga disediakan guna mempermudah laporan ke rukun warga setempat. Antarmuka pengelolaan direktori penghuni kost diperlihatkan pada Gambar 4.29.
+Pengelola dapat melakukan penelusuran data penghuni secara cepat melalui bilah pencarian cerdas berbasis nama, kontak, maupun nomor kamar hunian. Sistem menyediakan fitur penyaringan status keaktifan serta fasilitas ekspor berkas kependudukan ke dalam format PDF dan lembar kerja Excel secara instan. Setiap baris data terhubung secara otomatis ke modul penagihan bulanan dan riwayat reservasi guna mempermudah pemantauan rekam jejak sewa penghuni. Tampilan antarmuka pengelolaan direktori penghuni indekos tersebut disajikan pada Gambar 4.29.
 
 <div align="center">
 
@@ -1233,7 +1233,7 @@ Pengelola dapat memeriksa riwayat kamar yang pernah ditempati penghuni, memperpa
 
 </div>
 
-Berdasarkan Gambar 4.29, antarmuka menyajikan tabel direktori penghuni yang memuat kolom nama lengkap, nomor kamar, tanggal mulai sewa, dan batas akhir kontrak tinggal. Pada sisi nama penghuni, tercantum nomor telepon WhatsApp aktif yang dapat ditekan pengelola untuk langsung membuka jendela percakapan. Kolom masa sewa menampilkan sisa durasi bulan sewa yang dihitung secara dinamis oleh logika sistem aplikasi. Pada baris akhir tabel, tersedia tombol aksi perpanjangan masa sewa dan tombol penghentian hunian yang disertai formulir inspeksi kondisi fisik kamar. Tata letak direktori dirancang lapang dengan bilah pencarian nama penghuni di bagian atas guna mempermudah pemeriksaan data di lapangan.
+Berdasarkan Gambar 4.29, bagian atas halaman menampilkan tajuk Daftar Penyewa Kost yang dilengkapi tombol ekspor dokumen berformat PDF dan lembar sebar Excel serta tombol Tambah Penyewa berwarna kuning cerah. Tepat di bawah tajuk, tersedia panel pencarian berbingkai tebal yang memuat kolom penelusuran kata kunci terpadu berdampingan dengan menu tarik-turun penyaring status keaktifan penyewa. Tabel data bergaya neo-brutalisme mengusung kepala kolom berlatar kuning yang merinci nama kontak, alokasi nomor kamar, nomor induk kependudukan, durasi sewa, tanggal masuk, data wali, status keaktifan, dan menu aksi. Deretan baris data menampilkan sebaran penghuni aktif pada unit Kamar 101 tipe VIP, Kamar 104 tipe Deluxe, dan Kamar 105 tipe Standar dengan paket durasi sewa satu bulan hingga dua belas bulan. Kolom status menampilkan lencana hijau toska bertuliskan Aktif untuk setiap penghuni yang sah, sementara kolom aksi di sisi paling kanan menyediakan tombol interaksi untuk memeriksa rincian profil penyewa.
 
 <br>
 
