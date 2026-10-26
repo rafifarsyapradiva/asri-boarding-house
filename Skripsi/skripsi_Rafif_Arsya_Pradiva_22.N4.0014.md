@@ -970,7 +970,7 @@ Berdasarkan Gambar 4.15, antarmuka login menampilkan kartu ganda berlatar kisi-k
 10. Implementasi Antarmuka Register User  
 Antarmuka register user berfungsi sebagai formulir pembuatan akun baru bagi masyarakat yang ingin menyewa kamar di Asri Boarding House. Pendaftaran akun ini menjadi langkah awal sebelum calon penyewa diizinkan memilih kamar dan mengajukan jadwal masa sewa. Data akun yang tersimpan menjadi dasar identifikasi pengguna di seluruh alur transaksi sistem web indekos.
 
-Calon pengguna mengisi data awal berupa nama lengkap, alamat surel aktif, nomor telepon seluler, dan membuat kata sandi baru. Sistem secara otomatis memeriksa keunikan alamat surel di basis data untuk mencegah duplikasi akun oleh orang yang sama. Kata sandi yang dimasukkan langsung dienkripsi menggunakan algoritma Bcrypt sebelum disimpan pada tabel pengguna. Formulir pendaftaran akun calon penyewa ini ditampilkan pada Gambar 4.16.
+Calon penyewa dapat melakukan pendaftaran instan melalui tautan akun Google atau mengisi rincian identitas secara manual. Sistem memverifikasi kesesuaian format nama lengkap, keunikan alamat surel, nomor kontak WhatsApp, hingga konfirmasi kata sandi minimal delapan karakter. Pengguna yang telah memiliki kredensial dapat langsung beralih ke halaman login melalui tautan navigasi di atas tombol pendaftaran. Formulir pendaftaran akun calon penyewa ini ditampilkan pada Gambar 4.16.
 
 <div align="center">
 
@@ -982,7 +982,7 @@ Calon pengguna mengisi data awal berupa nama lengkap, alamat surel aktif, nomor 
 
 </div>
 
-Berdasarkan Gambar 4.16, formulir registrasi menampilkan kartu isian vertikal dengan urutan kolom yang sistematis dari atas ke bawah. Setiap kolom isian dilengkapi petunjuk format teks serta pesan kesalahan otomatis jika terdapat kolom wajib yang belum terisi. Di bawah kolom kata sandi, terdapat indikator kekuatan sandi guna mengingatkan pengguna untuk menyusun kombinasi karakter yang aman. Terdapat kotak centang persetujuan syarat dan ketentuan sewa yang wajib ditandai sebelum tombol daftar dapat ditekan. Tombol daftar akun menggunakan aksen warna hijau mencolok dengan label teks tegas yang menandakan kesiapan pemrosesan data akun baru.
+Berdasarkan Gambar 4.16, antarmuka registrasi menerapkan tata letak kartu ganda berbingkai hitam tegas di atas latar belakang bermotif titik-titik. Panel sisi kiri berlatar hitam memuat lencana identitas indekos, tajuk Daftar Akun Reservasi Baru beraksen kotak kuning cerah, serta informasi pemesanan instan dan jaminan keamanan data. Panel sisi kanan menyajikan tombol pendaftaran kilat Daftar dengan Google yang dipisahkan oleh garis batas dari formulir manual. Formulir isian manual memuat lima kolom terstruktur meliputi nama lengkap, alamat email, nomor WhatsApp, kata sandi, serta konfirmasi kata sandi dengan ikon pengalih intip karakter. Bagian bawah kartu dilengkapi tautan pengalihan masuk akun, tombol aksi utama Daftar Akun Baru berwarna kuning cerah, dan tombol navigasi kembali ke beranda pada sisi luar kartu.
 
 <br>
 
