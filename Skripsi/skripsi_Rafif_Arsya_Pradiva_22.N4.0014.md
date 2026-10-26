@@ -1314,9 +1314,9 @@ Berdasarkan Gambar 4.33, bagian atas antarmuka memuat spanduk tajuk kuning bertu
 <br>
 
 10. Implementasi Antarmuka Manajemen Keluhan Penyewa  
-Antarmuka manajemen keluhan penyewa menjadi pusat penanganan laporan kerusakan sarana dan gangguan kenyamanan kamar dari seluruh penghuni indekos. Sistem tiket pengaduan ini memastikan setiap kendala fasilitas lekas ditindaklanjuti oleh penjaga kost tanpa ada laporan yang terabaikan. Penanganan aduan yang tanggap menjaga kepuasan tinggal penghuni dan merawat kualitas fisik bangunan indekos.
+Antarmuka manajemen keluhan penyewa menjadi pusat penanganan operasional untuk mencatat kendala fasilitas dan laporan kerusakan unit kamar dari para penghuni indekos. Sistem tiket pengaduan ini memastikan setiap kendala sarana hunian terdokumentasi secara tertib sehingga pengelola dapat segera menentukan tindakan perbaikan. Penanganan kendala fasilitas yang cepat dan terukur mendukung kenyamanan tinggal penghuni sekaligus memelihara kondisi aset fisik bangunan Asri Boarding House.
 
-Setiap tiket aduan menampilkan identitas pelapor, nomor kamar, jenis kendala fasilitas, rincian kronologi, serta foto bukti kerusakan fisik sarana. Penjaga kost dapat memperbarui status tiket dari tahap diterima, dalam proses perbaikan, hingga dinyatakan selesai ditangani. Sistem secara otomatis mengirimkan notifikasi pembaruan status pengerjaan kembali ke akun penghuni yang bersangkutan. Tampilan meja kerja penanganan tiket keluhan fasilitas kamar ini ditampilkan pada Gambar 4.34.
+Pengelola dapat memilah tiket kendala berdasarkan tahapan penanganan melalui tombol filter status pending, diproses, maupun aduan yang telah tuntas. Bilah pencarian kata kunci disematkan di sisi kanan panel guna mempermudah pelacakan laporan spesifik berdasarkan nama penghuni atau nomor kamar. Setiap baris aduan menyediakan tombol tindakan peninjauan detail untuk memeriksa kronologi kejadian serta memperbarui tahapan penanganan fasilitas. Tampilan meja kerja penanganan tiket keluhan fasilitas kamar tersebut disajikan pada Gambar 4.34.
 
 <div align="center">
 
@@ -1328,7 +1328,7 @@ Setiap tiket aduan menampilkan identitas pelapor, nomor kamar, jenis kendala fas
 
 </div>
 
-Berdasarkan Gambar 4.34, antarmuka memuat daftar tiket keluhan penghuni yang disusun dalam format kartu kerja bertingkat. Setiap kartu memuat judul kerusakan kamar, nama penghuni, nomor unit kamar, tanggal pelaporan, serta lencana prioritas penanganan. Kotak pratinjau gambar menampilkan foto kerusakan sarana yang diunggah penghuni guna memudahkan penjaga kost mendiagnosis perbaikan yang dibutuhkan. Pada bagian bawah kartu, terdapat menu tarik-turun untuk mengubah status tiket menjadi sedang diperbaiki atau selesai dituntaskan. Tersedia pula kolom catatan internal bagi penjaga kost untuk menuliskan rincian tindakan teknis atau sparepart yang diganti pada kamar sewa.
+Berdasarkan Gambar 4.34, bagian atas halaman menampilkan spanduk tajuk kuning bertuliskan Manajemen Keluhan & Pengaduan yang menaungi kartu utama Daftar Pengaduan Masuk. Bagian atas kartu memuat deretan tombol tab penyaring status tiket yang terdiri atas tombol toska Semua Keluhan, Pending, Diproses, serta Selesai yang bersanding dengan bilah pencarian dan tombol kuning Cari. Tabel data bergaya neo-brutalisme tersusun dengan garis batas hitam tegas dan kepala kolom kuning cerah yang mencakup informasi penyewa, kamar, judul laporan, kategori, tanggal lapor, status, dan aksi. Baris tabel memuat rekaman aduan fasilitas Kamar 101 dengan judul laporan lampu mati yang masuk pada kategori kamar tertanggal 26 September 2026 pukul 17:19. Kolom status menampilkan lencana persegi hijau toska bertuliskan Selesai yang berdampingan dengan tombol biru toska bertuliskan Detail untuk memeriksa dokumen laporan secara mendalam.
 
 <br>
 
