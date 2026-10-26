@@ -1103,21 +1103,21 @@ Berdasarkan Gambar 4.22, antarmuka transaksi Midtrans Snap tampil dalam bentuk j
 <br>
 
 6. Implementasi WhatsApp Gateway Fonnte  
-Implementasi WhatsApp gateway melalui integrasi API Fonnte mengotomatisasi pengiriman pesan notifikasi dan pengingat pembayaran langsung ke ponsel penyewa. Kehadiran saluran komunikasi instan ini meningkatkan ketepatan waktu pembayaran sewa sekaligus mengurangi beban komunikasi manual pengelola indekos. Penyampaian informasi tagihan secara langsung memastikan penghuni menerima pemberitahuan resmi tanpa hambatan waktu dan tempat.
+Implementasi WhatsApp gateway melalui integrasi API Fonnte mengotomatisasi pengiriman pesan sambutan dan konfirmasi aktivasi kamar langsung ke nomor kontak penyewa. Saluran komunikasi bergerak ini memastikan penyewa baru menerima kepastian status hunian secara seketika tanpa harus menunggu konfirmasi manual dari pengelola indekos. Kehadiran pesan instan resmi ini memperkuat transparansi administrasi sekaligus menjamin bahwa hak akses hunian telah dibuka secara sah oleh sistem.
 
-Peladen aplikasi mengeksekusi permintaan HTTP POST ke peladen Fonnte dengan menyertakan token otentikasi serta muatan pesan yang disusun secara terstruktur. Sistem secara dinamis menyusun teks pengingat berdasarkan data nomor kamar, periode tagihan, tanggal jatuh tempo, dan nominal sewa dari basis data. Pesan tersebut dilengkapi tautan pembayaran aman yang mengarahkan penghuni langsung ke portal penyelesaian transaksi pada aplikasi web. Tampilan pesan notifikasi tagihan otomatis melalui layanan WhatsApp Fonnte disajikan pada Gambar 4.23.
+Peladen aplikasi mengeksekusi permintaan HTTP POST ke endpoint peladen Fonnte sesaat setelah pembayaran uang muka diverifikasi dan akun penyewa dinyatakan aktif. Permintaan transmisi data menyertakan token otentikasi aman serta muatan pesan teks terformat yang merinci nomor kamar dan instruksi awal penghuni. Mekanisme pengiriman latar belakang (*background job*) memastikan proses komunikasi eksternal ini berjalan mulus tanpa menghambat responsivitas aplikasi web. Bentuk pesan konfirmasi dan sambutan aktivasi hunian melalui layanan WhatsApp Fonnte tersebut diperlihatkan pada Gambar 4.23.
 
 <div align="center">
 
-<img src="images/gambar_4_23_whatsapp_gateway_fonnte.png" alt="Gambar 4.23 Implementasi Pesan Notifikasi Otomatis via WhatsApp Fonnte" width="380">
+<img src="images/gambar_4_23_whatsapp_gateway_fonnte.png" alt="Gambar 4.23 Implementasi Pesan Aktivasi Hunian via WhatsApp Fonnte" width="380">
 
 <br>
 
-*Gambar 4.23 Implementasi Pesan Notifikasi Otomatis via WhatsApp Fonnte*  
+*Gambar 4.23 Implementasi Pesan Aktivasi Hunian via WhatsApp Fonnte*  
 
 </div>
 
-Berdasarkan Gambar 4.23, tangkapan layar memperlihatkan gelembung pesan masuk aplikasi WhatsApp bertema gelap dari akun bisnis indekos dengan nomor telepon yang telah disamarkan demi privasi. Bagian pembuka pesan menyajikan sapaan personal kepada penghuni serta pemberitahuan masa jatuh tempo sewa kamar untuk periode bulan berjalan. Paragraf kedua menjelaskan status masa keringanan pembayaran sebesar Rp 950.000 tanpa beban denda tambahan hingga batas akhir bulan. Pesan menyertakan tanda peringatan bertanda segitiga kuning mengenai pemberlakuan denda keterlambatan otomatis sebesar lima persen jika tagihan belum diselesaikan hingga pergantian bulan. Bagian penutup pesan memuat tautan resmi menuju portal pembayaran aplikasi serta keterangan pengiriman otomatis melalui peladen Fonnte pada sisi bawah gelembung.
+Berdasarkan Gambar 4.23, tangkapan layar memperlihatkan gelembung pesan aplikasi WhatsApp bertema gelap dengan tajuk huruf kapital tebal diapit ikon rumah bertuliskan Selamat Datang Penyewa Baru. Baris berikutnya memuat sapaan personal ramah kepada penyewa yang bersangkutan disertai ucapan selamat bergabung secara resmi di Asri Boarding House. Bagian inti pesan menegaskan bahwa unit hunian Kamar 101 telah resmi berstatus aktif dengan penanda ikon pintu cokelat. Paragraf penutup mengarahkan penghuni untuk memanfaatkan portal penyewa guna mempermudah urusan administrasi dan pelaporan fasilitas selama masa sewa berjalan. Sisi bawah gelembung pesan menampilkan penutup hormat dari manajemen indekos serta penanda transmisi otomatis melalui peladen Fonnte lengkap dengan catatan waktu pengiriman pesan.
 
 <br>
 
