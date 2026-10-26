@@ -1090,7 +1090,7 @@ Sistem memanggil pustaka Midtrans Snap API untuk memunculkan jendela transaksi t
 
 <div align="center">
 
-<img src="images/gambar_4_22_payment_gateway_midtrans.png" alt="Gambar 4.22 Antarmuka Jendela Pembayaran Digital Midtrans Snap" width="600">
+<img src="images/gambar_4_22_payment_gateway_midtrans.png" alt="Gambar 4.22 Antarmuka Jendela Pembayaran Digital Midtrans Snap" width="400">
 
 <br>
 
@@ -1098,7 +1098,7 @@ Sistem memanggil pustaka Midtrans Snap API untuk memunculkan jendela transaksi t
 
 </div>
 
-Berdasarkan Gambar 4.22, jendela transaksi Midtrans Snap muncul sebagai panel melayang tepat di bagian tengah layar peramban pengguna. Bagian atas panel menampilkan total nominal uang sewa yang wajib dibayar beserta batas waktu hitung mundur masa berlaku pembayaran. Di bawah nominal, tersedia daftar pilihan bank transfer seperti BCA, Mandiri, BNI, dan BRI beserta opsi pembayaran instan menggunakan QRIS. Pemilihan salah satu metode perbankan langsung memunculkan nomor rekening Virtual Account resmi yang dapat disalin dengan sekali tekan tombol. Desain jendela pembayaran mengadopsi standar tata letak resmi Midtrans yang menjamin keamanan data transaksi finansial calon penghuni.
+Berdasarkan Gambar 4.22, antarmuka transaksi Midtrans Snap tampil dalam bentuk jendela sembulan berbingkai bersih yang memuat tajuk resmi Asri Boarding House pada bagian atas. Area atas jendela menyajikan informasi total tagihan senilai Rp750.000, nomor pesanan transaksi, serta bilah hitung mundur masa berlaku pembayaran selama dua puluh empat jam. Pada bagian tengah, terpampang instruksi penyelesaian transaksi menggunakan saluran Bank BCA yang disertai logo resmi perbankan. Sistem menerbitkan deretan digit nomor Virtual Account BCA khusus yang dilengkapi tombol salin praktis guna memudahkan pembayaran melalui perbankan elektronik. Sisi bawah jendela dilengkapi tautan panduan tata cara pembayaran serta tombol periksa status berwarna gelap untuk memverifikasi transaksi secara langsung.
 
 <br>
 
