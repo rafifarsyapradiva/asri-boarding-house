@@ -1143,9 +1143,9 @@ Berdasarkan Gambar 4.24, tampilan surel pada peramban memperlihatkan identitas p
 ### 4.2.3 Implementasi Admin
 
 1. Implementasi Antarmuka Admin Login  
-Antarmuka admin login merupakan gerbang otentikasi khusus yang membatasi hak akses pengelolaan sistem hanya kepada penjaga dan pemilik kost yang sah. Pemisahan pintu masuk ini menjaga keamanan master data kamar, laporan keuangan, dan data pribadi seluruh penghuni dari manipulasi pihak luar. Hak akses administrator dikunci secara ketat oleh sistem melalui pemeriksaan peran (*role-based access control*).
+Antarmuka admin login merupakan gerbang otentikasi khusus yang membatasi hak akses pengelolaan sistem hanya kepada penjaga dan pemilik indekos yang sah. Pemisahan pintu masuk ini menjaga keamanan master data kamar, pencatatan transaksi keuangan, dan data pribadi seluruh penghuni dari manipulasi pihak luar. Hak akses pengelola dikunci secara ketat oleh sistem melalui verifikasi kredensial serta penerapan kontrol akses berbasis peran (*role-based access control*).
 
-Pengelola kost memasukkan nama pengguna dan kata sandi khusus yang tersimpan pada tabel otentikasi terenkripsi di basis data. Sistem menerapkan pembatasan waktu sesi login otomatis agar dasbor pengelola tertutup dengan aman saat komputer tidak digunakan dalam jangka waktu tertentu. Jika kredensial yang dimasukkan salah, sistem menolak akses secara tegas dan mencatat alamat IP percobaan masuk tersebut. Tampilan halaman masuk portal administrator ini diperlihatkan pada Gambar 4.25.
+Pengelola memasukkan alamat surel administrator dan kata sandi khusus yang diverifikasi secara langsung terhadap tabel pengguna terenkripsi di basis data. Sistem menerapkan perlindungan sesi otomatis dan pembatasan frekuensi percobaan masuk guna menangkal potensi serangan siber berbasis *brute force*. Tersedia pula opsi pengingat sesi masuk serta tautan pemulihan kata sandi apabila pengelola mengalami kendala ingatan terhadap kredensial akun. Tampilan halaman masuk portal manajemen administrator tersebut diperlihatkan pada Gambar 4.25.
 
 <div align="center">
 
@@ -1157,7 +1157,7 @@ Pengelola kost memasukkan nama pengguna dan kata sandi khusus yang tersimpan pad
 
 </div>
 
-Berdasarkan Gambar 4.25, formulir masuk pengelola dirancang dengan tata letak minimalis yang memusatkan kotak masuk akun di tengah layar. Bidang isian nama pengguna dan kata sandi diberi garis tepi tegas dengan indikator fokus warna hijau saat kolom sedang diketik. Pada bagian atas formulir, terpampang logo indekos berdampingan dengan label tegas yang menandakan portal khusus pengelolaan operasional kost. Tombol masuk akun menggunakan warna hijau gelap dengan label teks tebal yang memberi kesan ketegasan antarmuka manajerial. Latar belakang halaman memanfaatkan warna gelap lembut untuk mengurangi kelelahan mata pengelola yang bekerja memeriksa sistem setiap hari.
+Berdasarkan Gambar 4.25, antarmuka peramban menampilkan kartu otentikasi bergaya neo-brutalisme dengan garis tepi hitam tebal yang terbagi menjadi dua panel kontras di atas latar belakang bermotif titik-titik. Panel kiri berlatar hitam pekat menyajikan lencana kuning Asri Boarding House, tajuk Portal Manajemen Administrator, serta penjelasan fitur pemantauan statistik dan pengamanan akses terenkripsi. Panel kanan berlatar putih bersih memuat formulir Admin Login yang dilengkapi kolom isian alamat surel bergaris fokus ganda serta kolom kata sandi bersandi titik tersembunyi dengan ikon penampil sandi. Pada bagian bawah kolom isian, tersedia kotak centang pengingat sesi dan tautan bantuan lupa kata sandi yang berdampingan secara proporsional. Tombol aksi utama berwarna kuning cerah bertuliskan Masuk Administrator diletakkan di sisi bawah formulir dan diperkuat dengan tombol kembali ke beranda pada bagian luar kartu.
 
 <br>
 
