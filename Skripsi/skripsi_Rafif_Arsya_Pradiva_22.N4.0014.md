@@ -1257,9 +1257,9 @@ Berdasarkan Gambar 4.30, halaman antarmuka menampilkan spanduk tajuk kuning bert
 <br>
 
 7. Implementasi Antarmuka Manajemen Tagihan  
-Antarmuka manajemen tagihan mengontrol siklus penerbitan tagihan sewa bulanan otomatis bagi seluruh penghuni aktif di Asri Boarding House. Fitur ini menyelesaikan masalah penagihan manual yang selama ini sering terlewat oleh penjaga kost sehingga memicu penumpukan tunggakan sewa. Transparansi status tagihan membantu pengelola memastikan arus penerimaan kas indekos berjalan tepat waktu setiap tanggal 10.
+Antarmuka manajemen tagihan mengontrol siklus penerbitan faktur sewa bulanan otomatis bagi seluruh penghuni aktif yang menempati unit hunian Asri Boarding House. Modul ini mengotomatisasi pemantauan masa jatuh tempo pembayaran sewa setiap tanggal sepuluh guna meminimalkan risiko keterlambatan dan tunggakan kas masuk. Rekapitulasi status tagihan secara terpusat memastikan arus kas operasional indekos tercatat secara transparan dan tertib administrasi.
 
-Sistem secara otomatis mengeksekusi proses pembuatan tagihan pada tanggal satu setiap awal bulan dan menyelaraskan jadwal jatuh tempo tagihan. Jika penghuni melewati batas tanggal pembayaran, sistem secara mandiri menghitung denda keterlambatan berdasarkan selisih hari kalender. Pengelola juga dapat mencatat pembayaran yang disetor secara tunai oleh penghuni tanpa mengacaukan pembukuan sistem digital. Antarmuka pengawasan tagihan sewa bulanan dan denda ini ditampilkan pada Gambar 4.31.
+Sistem secara berkala menyusun lembar tagihan baru berdasarkan konfigurasi tarif sewa kamar serta riwayat pemesanan yang tercatat di basis data. Pengelola dapat melakukan penelusuran riwayat pembayaran melalui panel penyaring kata kunci dan status pelunasan transaksi secara praktis. Setiap rincian tagihan terintegrasi langsung dengan saluran gerbang pembayaran digital Midtrans untuk memverifikasi keabsahan dana sewa yang disetor penghuni. Tampilan antarmuka pengawasan dan manajemen tagihan sewa bulanan tersebut disajikan pada Gambar 4.31.
 
 <div align="center">
 
@@ -1271,7 +1271,7 @@ Sistem secara otomatis mengeksekusi proses pembuatan tagihan pada tanggal satu s
 
 </div>
 
-Berdasarkan Gambar 4.31, tabel manajemen tagihan menyajikan kolom nomor faktur sewa, nama penghuni, nomor kamar, periode bulan tagihan, dan batas waktu jatuh tempo. Kolom nominal memuat rincian tarif pokok sewa yang disandingkan dengan kolom denda keterlambatan yang bertambah otomatis jika lewat tempo. Lencana status pembayaran dibedakan secara tegas antara status belum lunas dengan warna merah dan status lunas dengan warna hijau. Pada baris tagihan yang belum lunas, tersedia tombol pengingat manual untuk mengirimkan pesan WhatsApp kilat ke ponsel penghuni bersangkutan. Sisi atas tabel dilengkapi ringkasan total piutang sewa yang masih tertunggak pada bulan berjalan guna memudahkan evaluasi kas pengelola.
+Berdasarkan Gambar 4.31, halaman antarmuka menampilkan spanduk tajuk kuning bertuliskan Daftar Tagihan Kost dengan kartu utama berlabel Semua Tagihan Bulanan. Bagian atas kartu memuat panel penyaring berbingkai hitam tebal yang menyediakan kolom isian pencarian kata kunci, menu tarik-turun status pembayaran, tombol kuning Filter, serta tombol Reset. Tabel data bergaya neo-brutalisme tersusun rapi dengan kepala kolom berlatar kuning cerah yang mencakup nomor pesanan tagihan, nama penyewa, nomor kamar, periode tagihan, tanggal jatuh tempo, nominal tagihan, status, saluran metode pembayaran, dan tombol aksi. Baris data memperlihatkan daftar faktur sewa bulanan untuk unit Kamar 105 senilai Rp 750.000 serta deretan tagihan berkelanjutan untuk unit Kamar 101 senilai Rp 1.283.380 per periode. Seluruh baris transaksi menampilkan lencana status hijau toska bertuliskan Lunas dengan keterangan kanal pembayaran Midtrans serta tombol biru toska bertuliskan Detail untuk memeriksa struk pembayaran.
 
 <br>
 
