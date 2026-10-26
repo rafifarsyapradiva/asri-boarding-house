@@ -1449,21 +1449,21 @@ Berdasarkan Gambar 4.40, bagian atas antarmuka memuat spanduk tajuk kuning bertu
 <br>
 
 6. Implementasi Antarmuka Keluhan  
-Antarmuka keluhan memfasilitasi penghuni untuk menyampaikan laporan gangguan fasilitas kamar secara resmi kepada pengelola Asri Boarding House. Jalur pelaporan digital ini menggantikan pesan teks pribadi ke penjaga kost yang sering kali terlewat atau lambat ditangani. Pencatatan keluhan yang rapi membantu pengelola memprioritaskan perbaikan sarana berdasarkan tingkat urgensi kerusakan di lapangan.
+Antarmuka keluhan memfasilitasi penghuni untuk menyampaikan laporan kendala fasilitas unit kamar secara mandiri dan terdokumentasi kepada pengelola Asri Boarding House. Saluran pengaduan digital ini mengeliminasi risiko keluhan yang terlewat atau lambat ditangani akibat pesan personal yang tenggelam di aplikasi perpesanan instan. Dokumentasi tiket aduan yang transparan mempermudah penghuni dalam memastikan setiap keluhan sarana fisik lekas memperoleh tindakan perbaikan dari pihak pengelola.
 
-Penghuni memilih kategori fasilitas yang bermasalah, menuliskan deskripsi kendala secara rinci, dan mengunggah foto bukti kerusakan dari kamera ponsel. Sistem langsung meneruskan tiket laporan tersebut ke meja kerja admin dan memberikan nomor pelacakan tiket kepada penghuni. Penghuni dapat memantau perkembangan penanganan perbaikan fasilitas secara langsung dari daftar riwayat aduan di halaman yang sama. Tampilan formulir pengajuan tiket keluhan kamar ini disajikan pada Gambar 4.41.
+Penghuni dapat mendaftarkan keluhan baru dengan menekan tombol penambahan aduan untuk mengisi rincian kendala, kategori sarana, serta mengunggah lampiran foto bukti kerusakan. Halaman ini menyediakan panel penyaring terpadu berbasis tab status guna memantau aduan yang sedang menunggu peninjauan, dalam proses pengerjaan, maupun yang telah tuntas diperbaiki. Bilah pencarian kata kunci turut disematkan di sisi kanan panel filter guna mempercepat pelacakan arsip pengaduan kerusakan terdahulu. Tampilan antarmuka pemantauan dan pengajuan keluhan fasilitas kamar oleh penghuni disajikan pada Gambar 4.41.
 
 <div align="center">
 
-<img src="images/gambar_4_41_keluhan.png" alt="Gambar 4.41 Antarmuka Formulir Pengajuan Keluhan Kamar" width="600">
+<img src="images/gambar_4_41_keluhan.png" alt="Gambar 4.41 Antarmuka Riwayat dan Pengajuan Keluhan Kamar" width="600">
 
 <br>
 
-*Gambar 4.41 Antarmuka Formulir Pengajuan Keluhan Kamar*  
+*Gambar 4.41 Antarmuka Riwayat dan Pengajuan Keluhan Kamar*  
 
 </div>
 
-Berdasarkan Gambar 4.41, halaman pelaporan keluhan menampilkan formulir input di bagian atas dan tabel daftar tiket aduan di bagian bawah layar. Formulir menyediakan menu tarik-turun untuk memilih jenis fasilitas kamar yang rusak seperti pendingin udara, keran air, kasur, atau lampu ruangan. Kolom deskripsi masalah dirancang luas agar penghuni leluasa menceritakan kendala fisik kamar yang dialami secara mendalam. Di samping kolom deskripsi, tersedia kotak unggah berkas yang memuat pratinjau foto kerusakan sarana sesaat setelah berkas dipilih pengguna. Tombol kirim pengaduan menggunakan aksen warna kontras yang memproses pengiriman tiket laporan langsung ke basis data pengelola.
+Berdasarkan Gambar 4.41, bagian atas antarmuka menampilkan spanduk tajuk kuning bertuliskan Keluhan & Pengaduan Saya dengan menu navigasi Keluhan Saya berlatar kuning aktif pada bilah samping. Area utama memuat kartu berbingkai hitam tebal bertajuk Riwayat Keluhan Anda yang dilengkapi tombol kuning bertuliskan Buat Keluhan Baru pada sudut kanan atas. Di bawah tajuk kartu, tersedia panel penyaring status yang memuat tombol toska Semua Keluhan, Pending, Diproses, dan Selesai yang bersanding dengan bilah pencarian kata kunci dan tombol kuning Cari. Bagian bawah memuat tabel data bergaya neo-brutalisme dengan kepala kolom berlatar kuning cerah yang mencakup judul aduan, kategori fasilitas, tanggal lapor, status penanganan, tanggapan admin, dan kolom aksi. Baris tabel menyajikan keadaan awal tanpa rekaman keluhan dengan teks miring abu-abu yang menyatakan bahwa belum ada data keluhan yang terdaftar pada sistem.
 
 <br>
 
