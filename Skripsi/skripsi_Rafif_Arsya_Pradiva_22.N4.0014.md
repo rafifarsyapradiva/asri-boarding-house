@@ -1430,9 +1430,9 @@ Berdasarkan Gambar 4.39, bagian atas halaman menampilkan spanduk tajuk kuning be
 <br>
 
 5. Implementasi Antarmuka Riwayat Pembayaran  
-Antarmuka riwayat pembayaran mendokumentasikan seluruh catatan transaksi pelunasan sewa yang pernah dilakukan oleh penghuni selama menempati indekos. Arsip transaksi digital ini memberikan rasa aman bagi penghuni karena setiap rupiah uang sewa yang disetor memiliki bukti catatan sistem yang sah. Penghuni dapat memeriksa kembali tanggal pembayaran masa lalu tanpa perlu mencari nota fisik yang rawan hilang.
+Antarmuka riwayat pembayaran mendokumentasikan seluruh rekam jejak transaksi keuangan yang berhasil diselesaikan oleh penghuni selama menempati Asri Boarding House. Arsip digital terpadu ini memberikan jaminan rasa aman bagi penghuni karena setiap dana reservasi maupun sewa bulanan yang disetorkan memiliki bukti pencatatan resmi di sistem. Transparansi histori pembayaran mempermudah penghuni dalam meninjau rincian biaya sewa terdahulu tanpa perlu menyimpan tumpukan kuitansi fisik konvensional.
 
-Tabel riwayat menyajikan nomor faktur transaksi, tanggal pelunasan uang sewa, nominal pembayaran, metode pembayaran digital yang digunakan, dan tautan kuitansi. Data riwayat diurutkan berdasarkan waktu pembayaran terbaru guna mempermudah penghuni melacak transaksi terakhir yang berhasil diselesaikan. Penghuni dapat menekan tautan cetak tanda terima pada setiap baris transaksi untuk mengunduh bukti kuitansi resmi kapan saja. Antarmuka catatan riwayat pembayaran sewa penghuni diperlihatkan pada Gambar 4.40.
+Tiga kartu metrik pada sisi atas merangkum akumulasi pembayaran pemesanan awal, total penyetoran sewa bulanan, serta jumlah transaksi berhasil secara real-time. Halaman ini memisahkan log pembayaran ke dalam tabel pemesanan kamar reservasi awal dan tabel pelunasan tagihan sewa rutin bulanan. Penghuni dapat menekan tombol rincian pada setiap baris transaksi untuk memeriksa bukti transaksi digital serta detail metode pembayaran yang telah divalidasi sistem. Tampilan antarmuka catatan riwayat pembayaran sewa penghuni tersebut diperlihatkan pada Gambar 4.40.
 
 <div align="center">
 
@@ -1444,7 +1444,7 @@ Tabel riwayat menyajikan nomor faktur transaksi, tanggal pelunasan uang sewa, no
 
 </div>
 
-Berdasarkan Gambar 4.40, antarmuka menyajikan tabel riwayat transaksi pembayaran dengan format baris data yang bersih dan rapi. Kolom tabel memuat kode pembayaran resmi, tanggal transaksi lunas, periode bulan sewa yang dibayar, serta nominal transaksi dalam satuan rupiah. Pada kolom metode pembayaran, tercantum kanal perbankan yang digunakan penghuni seperti transfer Virtual Account BCA maupun dompet digital QRIS. Kolom status menampilkan lencana hijau bertuliskan lunas yang menegaskan keabsahan transaksi pada catatan peladen Midtrans dan basis data sistem. Pada ujung kanan setiap baris, terdapat tombol ikon dokumen yang dapat ditekan penghuni untuk langsung mencetak lembar kuitansi digital.
+Berdasarkan Gambar 4.40, bagian atas antarmuka memuat spanduk tajuk kuning bertuliskan Riwayat Pembayaran dengan menu navigasi Riwayat Pembayaran aktif pada bilah samping. Area atas menyajikan tiga kartu metrik ringkasan bergaya neo-brutalisme yang meliputi kartu toska Total Bayar Booking senilai Rp 750.000, kartu ungu Total Bayar Bulanan senilai Rp 0, serta kartu kuning Transaksi Berhasil sebanyak satu transaksi. Area tengah menampilkan kartu Pembayaran Booking Kamar (Reservasi) yang memuat tabel data bergaris batas hitam tegas dengan kepala kolom berlatar kuning cerah. Baris data menyajikan transaksi pemesanan awal bernomor RSV-4-1792501872 untuk unit Kamar 105 dengan skema sewa bulanan penuh senilai Rp 750.000 tertanggal 20 Oktober 2026. Kolom status menampilkan lencana persegi hijau toska bertuliskan Dikonfirmasi yang berdampingan dengan tombol kuning bergaris tepi tebal bertuliskan Rincian guna membuka lembar detail pembayaran.
 
 <br>
 
