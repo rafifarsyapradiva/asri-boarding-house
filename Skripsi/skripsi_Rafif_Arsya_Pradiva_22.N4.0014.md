@@ -363,11 +363,16 @@ DAFTAR LAMPIRAN &emsp; xii
 **BAB 4 HASIL DAN PEMBAHASAN** &emsp; **20**  
 4.1 Perancangan Aplikasi &emsp; 20  
 &emsp; 4.1.1 Use Case Diagram &emsp; 20  
-&emsp; 4.1.2 Entity Relationship Diagram (ERD) &emsp; 20  
-&emsp; 4.1.3 Activity Diagram &emsp; 20  
-&emsp; 4.1.4 Flowchart Sistem &emsp; 20  
+&emsp; 4.1.2 Entity Relationship Diagram (ERD) &emsp; 21  
+&emsp; 4.1.3 Activity Diagram &emsp; 22  
+&emsp; 4.1.4 Flowchart Sistem &emsp; 25  
+4.2 Implementasi Sistem &emsp; 26  
+&emsp; 4.2.1 Implementasi Umum &emsp; 26  
+&emsp; 4.2.2 Implementasi Calon Penyewa &emsp; 37  
+&emsp; 4.2.3 Implementasi Admin &emsp; 44  
+&emsp; 4.2.4 Implementasi Penyewa Aktif &emsp; 55  
 
-**DAFTAR PUSTAKA** &emsp; **21**  
+**DAFTAR PUSTAKA** &emsp; **62**  
 
 <div style="page-break-after: always;"></div>
 
@@ -392,11 +397,47 @@ DAFTAR LAMPIRAN &emsp; xii
 Gambar 3.1 &emsp; Tahapan Metode SDLC Waterfall &emsp; 18  
 Gambar 3.2 &emsp; Kerangka Pemikiran Penelitian &emsp; 19  
 Gambar 4.1 &emsp; Use Case Diagram &emsp; 20  
-Gambar 4.2 &emsp; Entity Relationship Diagram (ERD) &emsp; 20  
-Gambar 4.3 &emsp; Activity Diagram Calon Penyewa &emsp; 20  
-Gambar 4.4 &emsp; Activity Diagram Admin (Penjaga Kost) &emsp; 20  
-Gambar 4.5 &emsp; Activity Diagram Penyewa Aktif &emsp; 20  
-Gambar 4.6 &emsp; Flowchart Sistem &emsp; 20  
+Gambar 4.2 &emsp; Entity Relationship Diagram (ERD) &emsp; 21  
+Gambar 4.3 &emsp; Activity Diagram Calon Penyewa &emsp; 22  
+Gambar 4.4 &emsp; Activity Diagram Admin (Penjaga Kost) &emsp; 23  
+Gambar 4.5 &emsp; Activity Diagram Penyewa Aktif &emsp; 24  
+Gambar 4.6 &emsp; Flowchart Sistem &emsp; 25  
+Gambar 4.7 &emsp; Antarmuka Halaman Beranda (Home Page) &emsp; 26  
+Gambar 4.8 &emsp; Antarmuka Daftar Fasilitas Kost &emsp; 27  
+Gambar 4.9 &emsp; Antarmuka Tipe dan Spesifikasi Kamar Kost &emsp; 28  
+Gambar 4.10 &emsp; Antarmuka Galeri Foto Kost &emsp; 29  
+Gambar 4.11 &emsp; Antarmuka Panduan Alur Cara Reservasi &emsp; 30  
+Gambar 4.12 &emsp; Antarmuka Testimoni dan Ulasan Penghuni &emsp; 31  
+Gambar 4.13 &emsp; Antarmuka Pertanyaan Umum (FAQ) &emsp; 32  
+Gambar 4.14 &emsp; Antarmuka Halaman Tentang Kami &emsp; 33  
+Gambar 4.15 &emsp; Antarmuka Halaman Login Pengguna &emsp; 34  
+Gambar 4.16 &emsp; Antarmuka Halaman Pendaftaran Akun (Register) &emsp; 35  
+Gambar 4.17 &emsp; Antarmuka Fitur Chat Real Time Pengunjung &emsp; 36  
+Gambar 4.18 &emsp; Antarmuka Pengisian Kelengkapan Profil Pemesan &emsp; 37  
+Gambar 4.19 &emsp; Antarmuka Dasbor Reservasi Calon Penyewa &emsp; 38  
+Gambar 4.20 &emsp; Antarmuka Simulasi Biaya Kamar dan Reservasi &emsp; 39  
+Gambar 4.21 &emsp; Antarmuka Pemantauan Alur Lima Tahap dan Pembayaran Reservasi &emsp; 40  
+Gambar 4.22 &emsp; Antarmuka Jendela Pembayaran Digital Midtrans Snap &emsp; 41  
+Gambar 4.23 &emsp; Implementasi Pesan Aktivasi Hunian via WhatsApp Fonnte &emsp; 42  
+Gambar 4.24 &emsp; Implementasi Surat Elektronik Konfirmasi Aktivasi Penyewa via SMTP &emsp; 43  
+Gambar 4.25 &emsp; Antarmuka Halaman Login Administrator &emsp; 44  
+Gambar 4.26 &emsp; Antarmuka Dasbor Operasional dan Keuangan Administrator &emsp; 45  
+Gambar 4.27 &emsp; Antarmuka Pengelolaan Master Data Kamar &emsp; 46  
+Gambar 4.28 &emsp; Antarmuka Pengelolaan Fasilitas Kost &emsp; 47  
+Gambar 4.29 &emsp; Antarmuka Pengelolaan Data Penghuni Kost &emsp; 48  
+Gambar 4.30 &emsp; Antarmuka Pengelolaan Pesanan Reservasi Masuk &emsp; 49  
+Gambar 4.31 &emsp; Antarmuka Pengelolaan Tagihan Sewa Bulanan dan Denda &emsp; 50  
+Gambar 4.32 &emsp; Antarmuka Pencatatan Pengeluaran Operasional Kost &emsp; 51  
+Gambar 4.33 &emsp; Antarmuka Laporan Rekapitulasi Kas dan Ekspor Dokumen &emsp; 52  
+Gambar 4.34 &emsp; Antarmuka Pengelolaan Tiket Keluhan Fasilitas &emsp; 53  
+Gambar 4.35 &emsp; Antarmuka Pengelolaan Obrolan Tamu (Guest Chat Admin) &emsp; 54  
+Gambar 4.36 &emsp; Antarmuka Login Portal Penyewa Aktif &emsp; 55  
+Gambar 4.37 &emsp; Antarmuka Dasbor Portal Penyewa Aktif &emsp; 56  
+Gambar 4.38 &emsp; Antarmuka Riwayat dan Pembayaran Tagihan Sewa Penyewa &emsp; 57  
+Gambar 4.39 &emsp; Antarmuka Pengaturan Profil Penghuni &emsp; 58  
+Gambar 4.40 &emsp; Antarmuka Riwayat Transaksi Pembayaran &emsp; 59  
+Gambar 4.41 &emsp; Antarmuka Riwayat dan Pengajuan Keluhan Kamar &emsp; 60  
+Gambar 4.42 &emsp; Antarmuka Tanda Terima Kuitansi Digital (Nota PDF) &emsp; 61  
 
 <div style="page-break-after: always;"></div>
 
