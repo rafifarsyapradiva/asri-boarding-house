@@ -951,7 +951,7 @@ Berdasarkan Gambar 4.14, antarmuka menampilkan kotak tajuk Tentang Kami berlatar
 9. Implementasi Antarmuka Login User  
 Antarmuka login user merupakan pintu masuk otentikasi bagi calon penyewa maupun penghuni terdaftar untuk mengakses portal layanan web indekos. Formulir ini melindungi data pribadi dan catatan transaksi sewa dari akses pihak yang tidak memiliki hak operasional. Verifikasi kredensial akun menjamin bahwa setiap interaksi sewa dijalankan oleh pemilik akun yang sah.
 
-Pengguna diminta memasukkan alamat surel dan kata sandi yang telah didaftarkan pada basis data sistem. Formulir ini diproteksi oleh token CSRF dan pembatasan frekuensi percobaan masuk guna mencegah serangan peretasan kata sandi secara berulang. Apabila kata sandi cocok, sistem membaca hak akses pengguna dan mengarahkannya langsung ke dasbor layanan yang sesuai. Tampilan antarmuka masuk akun pengguna tersebut disajikan pada Gambar 4.15.
+Pengguna dapat memilih metode masuk cepat menggunakan akun Google maupun memasukkan alamat surel dan kata sandi secara manual. Bidang isian dilengkapi ikon penjelas, fitur pengalih keterbacaan sandi, serta kotak opsi untuk mempertahankan status sesi pengguna pada peramban. Sistem juga menyediakan tautan pemulihan kata sandi bagi pengguna yang terkendala serta tautan pendaftaran akun bagi calon penyewa baru. Tampilan antarmuka masuk akun pengguna tersebut disajikan pada Gambar 4.15.
 
 <div align="center">
 
@@ -963,7 +963,7 @@ Pengguna diminta memasukkan alamat surel dan kata sandi yang telah didaftarkan p
 
 </div>
 
-Berdasarkan Gambar 4.15, kotak formulir login ditempatkan tepat di tengah layar dengan latar belakang bersih berbingkai tegas. Bidang isian surel dan kata sandi dilengkapi label penunjuk yang jelas serta ikon mata untuk memeriksa ketepatan ketikan sandi. Di bawah bidang kata sandi, tersedia tautan lupa kata sandi yang dapat digunakan pengguna untuk memulihkan akses akun lewat surel. Tombol masuk akun didesain menggunakan warna kontras dengan teks tebal agar langsung terlihat oleh pengguna saat halaman terbuka. Sisi bawah kotak formulir menyediakan tautan alternatif yang mengarahkan calon pengguna baru ke halaman pendaftaran akun sewa.
+Berdasarkan Gambar 4.15, antarmuka login menampilkan kartu ganda berlatar kisi-kisi titik dengan bayangan blok hitam bergaya neo-brutalisme. Panel sisi kiri berlatar hitam memuat lencana identitas hunian, tajuk Sistem Reservasi Kamar Online beraksen kuning, serta penanda integrasi Midtrans dan fasilitas jaringan internet. Panel sisi kanan menyediakan tombol otentikasi instan Masuk dengan Google yang dipisahkan oleh garis pembatas dari formulir masukan manual. Formulir manual memuat kolom alamat email dan kata sandi lengkap dengan tombol pengalih intip karakter serta tautan pemulihan akses pada sudut kanan atas kolom sandi. Pada area bawah formulir, tersedia kotak centang ingat sesi dan tautan pendaftaran akun baru, yang disempurnakan oleh tombol aksi utama Masuk ke Akun berwarna kuning serta navigasi kembali ke beranda.
 
 <br>
 
