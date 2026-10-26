@@ -1181,9 +1181,9 @@ Berdasarkan Gambar 4.26, halaman dasbor menampilkan tajuk kuning bertuliskan Das
 <br>
 
 3. Implementasi Antarmuka Manajemen Kamar  
-Antarmuka manajemen kamar menyediakan fasilitas pengelolaan data induk untuk 32 unit hunian yang terbagi ke dalam tipe VIP, Deluxe, dan Standar. Modul ini menjadi pusat kendali inventaris kamar guna memastikan status fisik kamar di lapangan selalu selaras dengan data di situs web. Ketepatan pembaruan data kamar mencegah risiko pesanan ganda yang selama ini menjadi kendala utama pembukuan buku besar manual.
+Antarmuka manajemen kamar menyediakan fasilitas pengelolaan data induk untuk 32 unit hunian yang terbagi ke dalam berbagai klasifikasi tipe kamar di Asri Boarding House. Modul ini menjadi pusat kendali inventaris ruangan guna memastikan status keterisian fisik kamar di lapangan selalu sinkron dengan informasi pada sistem basis data. Ketepatan pembaruan data unit mencegah terjadinya tumpang tindih pesanan serta mempermudah pengawasan fasilitas hunian secara terpadu.
 
-Pengelola dapat menambah nomor unit kamar baru, menyunting tarif sewa bulanan, serta mengubah status kamar menjadi kosong, terisi, atau karantina pembersihan. Sistem menyediakan tombol pengalihan status cepat agar penjaga kost leluasa mengunci kamar yang sedang dalam perbaikan fasilitas. Seluruh perubahan inventaris kamar seketika diselaraskan ke katalog publik yang diakses oleh calon penyewa luar. Tampilan antarmuka pengelolaan master data kamar ini disajikan pada Gambar 4.27.
+Pengelola dapat mendaftarkan unit kamar baru, memperbarui spesifikasi fasilitas, menyetel tarif sewa bulanan, serta menyesuaikan status kamar secara dinamis. Halaman ini menyediakan panel penyaring terstruktur berdasarkan tipe ruangan, status keterisian, dan tingkatan lantai guna mempercepat pencarian unit tertentu. Sistem juga mendukung pengalihan tata letak antara format tabel terinci dan denah kisi visual untuk memberikan fleksibilitas pemantauan fisik kamar. Tampilan antarmuka pengelolaan master data kamar indekos tersebut diperlihatkan pada Gambar 4.27.
 
 <div align="center">
 
@@ -1195,7 +1195,7 @@ Pengelola dapat menambah nomor unit kamar baru, menyunting tarif sewa bulanan, s
 
 </div>
 
-Berdasarkan Gambar 4.27, antarmuka menyajikan tabel master kamar yang memuat nomor kamar, tipe ruangan, besaran tarif sewa, dan lencana status unit. Lencana status menggunakan kode warna kontras, yaitu hijau untuk kamar kosong, merah untuk kamar terisi, dan kuning untuk kamar dalam pemeliharaan. Pada baris paling kanan tabel, tersedia tombol aksi untuk menyunting spesifikasi ruangan atau mengatur ketersediaan kamar secara instan. Sisi atas tabel dilengkapi kolom pencarian nomor kamar dan penyaring tipe kamar guna mempercepat penemuan data unit tertentu. Desain tabel menerapkan baris berselang-seling dengan garis batas tipis agar penjaga kost nyaman memeriksa deretan 32 unit kamar tanpa keliru baris.
+Berdasarkan Gambar 4.27, bagian atas halaman menyajikan tajuk Daftar dan Kondisi Kamar yang dilengkapi tombol aksi cepat Kelola Fasilitas serta tombol Tambah Kamar berwarna kuning cerah. Tepat di bawah tajuk, terpampang empat kartu status bergaya neo-brutalisme dengan aksen warna kontras yang merangkum 32 unit total kamar, 29 unit kamar tersedia, 3 unit kamar terisi, serta status pemeliharaan kosong. Area tengah menyajikan deretan tombol penyaring status interaktif, opsi pengalih tampilan tabel atau denah visual, serta panel penyaring bertingkat untuk menyortir tipe kamar, status, dan posisi lantai. Bagian utama halaman memuat tabel master data berbingkai tegas dengan kepala kolom berwarna kuning yang merinci foto unit, nomor kamar, lantai, tipe, daftar lencana fasilitas, tarif sewa, status kamar, penyewa aktif, dan tombol aksi. Baris pertama tabel menampilkan contoh unit Kamar 101 pada Lantai 1 bertipe VIP dengan deretan lencana fasilitas penunjang lengkap, tarif bulanan senilai Rp 1.400.000, serta lencana status terisi yang menunjukkan nama akun penghuni aktif.
 
 <br>
 
