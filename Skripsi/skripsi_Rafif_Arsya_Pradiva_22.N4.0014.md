@@ -1103,21 +1103,21 @@ Berdasarkan Gambar 4.22, antarmuka transaksi Midtrans Snap tampil dalam bentuk j
 <br>
 
 6. Implementasi WhatsApp Gateway Fonnte  
-Implementasi WhatsApp gateway melalui API Fonnte mengirimkan bukti konfirmasi reservasi secara otomatis langsung ke ponsel calon penyewa. Pengiriman pesan instan ini memberikan kepastian status sewa dalam hitungan detik setelah transaksi pelunasan diverifikasi oleh sistem. Calon penghuni tidak perlu menunggu konfirmasi telepon dari penjaga kost untuk memastikan unit kamar telah berhasil terkunci.
+Implementasi WhatsApp gateway melalui integrasi API Fonnte mengotomatisasi pengiriman pesan notifikasi dan pengingat pembayaran langsung ke ponsel penyewa. Kehadiran saluran komunikasi instan ini meningkatkan ketepatan waktu pembayaran sewa sekaligus mengurangi beban komunikasi manual pengelola indekos. Penyampaian informasi tagihan secara langsung memastikan penghuni menerima pemberitahuan resmi tanpa hambatan waktu dan tempat.
 
-Peladen aplikasi mengirimkan perintah HTTP POST ke endpoint peladen Fonnte yang memuat token otentikasi serta pesan berformat rapi. Teks pesan mencantumkan nomor reservasi, nama pemesan, tipe kamar, tanggal mulai sewa, dan petunjuk kedatangan ke lokasi indekos. Pesan resmi ini juga menyertakan nomor telepon penjaga kost agar calon penyewa mudah berkoordinasi saat hari kedatangan tiba. Tampilan pesan notifikasi konfirmasi reservasi via WhatsApp Fonnte disajikan pada Gambar 4.23.
+Peladen aplikasi mengeksekusi permintaan HTTP POST ke peladen Fonnte dengan menyertakan token otentikasi serta muatan pesan yang disusun secara terstruktur. Sistem secara dinamis menyusun teks pengingat berdasarkan data nomor kamar, periode tagihan, tanggal jatuh tempo, dan nominal sewa dari basis data. Pesan tersebut dilengkapi tautan pembayaran aman yang mengarahkan penghuni langsung ke portal penyelesaian transaksi pada aplikasi web. Tampilan pesan notifikasi tagihan otomatis melalui layanan WhatsApp Fonnte disajikan pada Gambar 4.23.
 
 <div align="center">
 
-<img src="images/gambar_4_23_whatsapp_gateway_fonnte.png" alt="Gambar 4.23 Implementasi Pesan Notifikasi Reservasi WhatsApp Fonnte" width="600">
+<img src="images/gambar_4_23_whatsapp_gateway_fonnte.png" alt="Gambar 4.23 Implementasi Pesan Notifikasi Otomatis via WhatsApp Fonnte" width="380">
 
 <br>
 
-*Gambar 4.23 Implementasi Pesan Notifikasi Reservasi WhatsApp Fonnte*  
+*Gambar 4.23 Implementasi Pesan Notifikasi Otomatis via WhatsApp Fonnte*  
 
 </div>
 
-Berdasarkan Gambar 4.23, tangkapan layar memperlihatkan gelembung pesan masuk pada aplikasi WhatsApp di perangkat ponsel pintar calon penyewa. Bagian tajuk pesan memuat ucapan terima kasih resmi atas penyelesaian pembayaran reservasi kamar di Asri Boarding House. Badan pesan menyajikan daftar rincian transaksi yang disusun rapi menggunakan baris pemisah dan teks tebal pada poin penting. Terdapat instruksi kedatangan ke lokasi kost beserta tautan peta navigasi yang dapat ditekan langsung dari percakapan WhatsApp. Pesan dikirimkan dari akun WhatsApp resmi indekos dengan tanda waktu pengiriman yang bersamaan dengan momen pelunasan transaksi sewa.
+Berdasarkan Gambar 4.23, tangkapan layar memperlihatkan gelembung pesan masuk aplikasi WhatsApp bertema gelap dari akun bisnis indekos dengan nomor telepon yang telah disamarkan demi privasi. Bagian pembuka pesan menyajikan sapaan personal kepada penghuni serta pemberitahuan masa jatuh tempo sewa kamar untuk periode bulan berjalan. Paragraf kedua menjelaskan status masa keringanan pembayaran sebesar Rp 950.000 tanpa beban denda tambahan hingga batas akhir bulan. Pesan menyertakan tanda peringatan bertanda segitiga kuning mengenai pemberlakuan denda keterlambatan otomatis sebesar lima persen jika tagihan belum diselesaikan hingga pergantian bulan. Bagian penutup pesan memuat tautan resmi menuju portal pembayaran aplikasi serta keterangan pengiriman otomatis melalui peladen Fonnte pada sisi bawah gelembung.
 
 <br>
 
