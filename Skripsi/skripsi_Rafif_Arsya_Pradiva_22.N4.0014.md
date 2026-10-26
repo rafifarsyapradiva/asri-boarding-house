@@ -838,9 +838,9 @@ Merujuk pada Gambar 4.6, alur kerja diawali saat calon penyewa mengakses halaman
 ### 4.2.1 Implementasi Umum
 
 1. Implementasi Antarmuka Home Page  
-Halaman beranda utama berfungsi sebagai pusat informasi awal bagi masyarakat yang mencari hunian sewa di kawasan Tembalang. Antarmuka ini menampilkan identitas Asri Boarding House beserta pilihan kamar dan fasilitas penunjang yang tersedia. Calon penghuni dapat langsung menelusuri gambaran operasional indekos secara mandiri sebelum memutuskan untuk mendaftar akun sewa.
+Halaman beranda utama berfungsi sebagai pusat informasi awal bagi masyarakat yang mencari hunian sewa di kawasan Tembalang. Antarmuka ini menampilkan profil Asri Boarding House beserta pilihan kamar dan fasilitas penunjang yang tersedia. Calon penghuni dapat meninjau kondisi umum indekos secara mandiri sebelum memutuskan untuk mendaftar.
 
-Pengguna dapat mengakses halaman ini secara langsung melalui peramban web tanpa proses login terlebih dahulu. Desain tata letak dirancang responsif agar informasi tarif sewa dan ketersediaan unit tetap nyaman dibaca lewat layar komputer maupun ponsel. Halaman ini juga memuat menu navigasi cepat menuju aturan sewa, galeri foto, serta tombol obrolan tamu. Tampilan lengkap beranda publik indekos diperlihatkan pada Gambar 4.7.
+Desain tata letak dirancang responsif agar informasi tarif sewa tetap nyaman dibaca lewat layar komputer maupun ponsel. Tampilan lengkap beranda publik indekos diperlihatkan pada Gambar 4.7.
 
 <div align="center">
 
@@ -852,14 +852,14 @@ Pengguna dapat mengakses halaman ini secara langsung melalui peramban web tanpa 
 
 </div>
 
-Berdasarkan Gambar 4.7, bagian atas halaman memuat bilah navigasi utama yang berisi tautan menuju informasi kamar, fasilitas, cara booking, serta tombol akses akun. Sisi kiri layar menampilkan spanduk pengenalan indekos bertuliskan Hunian Kost Exclusive dan Modern yang diperkuat foto gedung fisik hunian pada sisi kanan. Kotak informasi di bawah tajuk menerangkan keunggulan sarana hunian mulai dari internet cepat hingga kepastian ketersediaan 32 unit kamar sewa. Bagian bawah spanduk menyediakan tombol aksi cepat untuk langsung mencari kamar maupun berkonsultasi lebih lanjut melalui pesan instan. Sudut kanan bawah antarmuka dilengkapi tombol obrolan tamu interaktif yang memudahkan calon penyewa berinteraksi langsung dengan pengelola kost.
+Berdasarkan Gambar 4.7, bagian atas halaman memuat bilah navigasi utama yang berisi tautan menuju informasi kamar, fasilitas, cara booking, serta tombol akses akun. Sisi kiri layar menampilkan spanduk pengenalan indekos dengan tombol aksi cepat untuk mencari kamar, didampingi foto gedung fisik pada sisi kanan. Sudut kanan bawah antarmuka dilengkapi tombol obrolan tamu interaktif yang memudahkan pengunjung berkonsultasi langsung dengan pihak pengelola.
 
 <br>
 
 2. Implementasi Antarmuka Fasilitas Kost  
-Antarmuka fasilitas kost menyajikan sarana pendukung hunian yang dapat digunakan bersama oleh seluruh penghuni Asri Boarding House. Informasi sarana penunjang ini disajikan secara terbuka guna memberikan kejelasan mengenai kenyamanan fisik bangunan indekos. Calon penyewa dapat menimbang kelayakan tempat tinggal berdasarkan ketersediaan sarana yang ada.
+Antarmuka fasilitas kost menyajikan sarana pendukung hunian yang dapat digunakan bersama oleh seluruh penghuni Asri Boarding House. Ketersediaan sarana penunjang dipaparkan secara terbuka guna memberikan informasi kenyamanan fisik bangunan indekos. Calon penyewa dapat menimbang kelayakan tempat tinggal berdasarkan sarana yang disediakan.
 
-Halaman ini memuat kategori fasilitas umum seperti dapur bersama, area parkir kendaraan, jaringan internet nirkabel, dan sistem keamanan kamera pengawas. Setiap fasilitas dilengkapi keterangan ringkas mengenai aturan pemakaian dan lokasi sarana di dalam area indekos. Pengunjung cukup menggulirkan layar untuk meninjau seluruh sarana yang disediakan oleh pengelola. Rincian tampilan halaman fasilitas indekos dapat dilihat pada Gambar 4.8.
+Setiap fasilitas dilengkapi keterangan ringkas mengenai aturan pemakaian dan lokasi sarana di dalam area indekos. Rincian tampilan halaman fasilitas indekos dapat dilihat pada Gambar 4.8.
 
 <div align="center">
 
@@ -871,14 +871,14 @@ Halaman ini memuat kategori fasilitas umum seperti dapur bersama, area parkir ke
 
 </div>
 
-Berdasarkan Gambar 4.8, antarmuka fasilitas menampilkan tajuk utama Fasilitas Kost Asri berlatar kuning cerah yang dilengkapi kalimat pengantar penunjang produktivitas harian. Pada area konten, tersaji deretan kartu fasilitas eksklusif yang disusun ke dalam tiga kolom sejajar dengan bingkai garis tepi tegas. Setiap kartu memuat kotak ikon penjelas berwarna kuning, judul fasilitas seperti pendingin udara dan akses internet berkecepatan tinggi, serta deskripsi manfaat sarana. Tata letak kartu juga merinci ketersediaan pilihan kamar mandi dalam maupun kamar mandi bersama guna memberikan kepastian kenyamanan sanitasi penghuni. Pada sudut kanan bawah layar, disematkan tombol obrolan dan tautan pesan instan yang memudahkan pengunjung menanyakan sarana tertentu kepada pengelola.
+Berdasarkan Gambar 4.8, antarmuka mengusung tata letak kartu berbasis kisi yang mengelompokkan fasilitas umum seperti dapur bersama, area parkir, internet nirkabel, dan kamera pengawas. Masing-masing kartu fasilitas dilengkapi foto dokumentasi asli, tajuk nama sarana berhuruf tebal, serta paragraf penjelasan fungsi ruangan. Tata letak responsif ini memudahkan pengguna menggulirkan layar untuk memeriksa seluruh fasilitas penunjang hunian secara efisien.
 
 <br>
 
 3. Implementasi Antarmuka Tipe Kamar Kost  
-Antarmuka tipe kamar kost menyajikan perbandingan spesifikasi dari 32 unit hunian yang terbagi ke dalam tipe VIP, Deluxe, dan Standar. Halaman ini memudahkan calon penyewa mengetahui perbedaan fasilitas dalam kamar, luas ruangan, dan besaran tarif sewa bulanan. Kejelasan klasifikasi ini mencegah kesalahpahaman spesifikasi hunian saat calon penyewa melakukan pemesanan jarak jauh.
+Halaman tipe kamar kost menyajikan spesifikasi fisik dan perabot setiap unit kamar sewa di Asri Boarding House. Informasi ukuran ruang, fasilitas interior kamar mandi dalam, serta tarif sewa bulanan ditampilkan secara transparan. Kejelasan data ini membantu calon penyewa memilih unit kamar yang sesuai dengan kebutuhan dan anggaran pribadi.
 
-Pada bagian atas katalog, tersedia bilah penyaring kategori tipe kamar serta kolom pencarian nomor unit untuk mempercepat penemuan kamar idaman. Setiap kartu kamar menampilkan foto ruangan, lantai unit, dimensi luas, rincian fasilitas penunjang, hingga label status keterisian secara dinamis. Calon penyewa dapat langsung menekan tombol pemesanan untuk unit yang kosong atau menghubungi narahubung untuk unit yang berstatus terisi. Visualisasi antarmuka perbandingan tipe dan katalog unit kamar sewa ini disajikan pada Gambar 4.9.
+Pengguna dapat langsung menekan tombol pemesanan pada kartu kamar yang diminati untuk melanjutkan transaksi sewa. Visualisasi katalog kamar indekos disajikan pada Gambar 4.9.
 
 <div align="center">
 
@@ -890,14 +890,14 @@ Pada bagian atas katalog, tersedia bilah penyaring kategori tipe kamar serta kol
 
 </div>
 
-Berdasarkan Gambar 4.9, antarmuka menampilkan tajuk Katalog Unit Kamar berlatar kuning cerah dengan ilustrasi ikon rumah serta deskripsi pemilih hunian. Tepat di bawah tajuk, tersedia panel kontrol interaktif yang memuat tombol penyaring kategori Semua Tipe, VIP, Deluxe, dan Standar, berdampingan dengan kolom pencarian nomor kamar. Bagian utama menyajikan deretan kartu unit kamar bergaris tepi hitam tegas yang memperlihatkan foto interior, label tipe Standar, penanda lantai, serta dimensi luas ruangan sebesar 12 meter persegi. Informasi fasilitas seperti koneksi internet cepat, listrik gratis, dan kamar mandi luar dirangkum dalam bentuk lencana persegi panjang kecil di atas label harga sewa bulanan. Setiap kartu juga memuat penanda status keterisian unit yang membedakan ketersediaan kamar, lengkap dengan tombol pesan unit berwarna hitam atau tombol hijau untuk bertanya melalui WhatsApp.
+Berdasarkan Gambar 4.9, antarmuka memperlihatkan kartu kamar tipe Deluxe dengan ilustrasi foto interior kamar tidur dan kamar mandi dalam. Bagian bawah foto memuat informasi tarif sewa bulanan, lencana ketersediaan unit kamar, serta rincian fasilitas kasur, meja belajar, lemari, pendingin ruangan, dan pemanas air. Sudut bawah kartu dilengkapi tombol biru Pemesanan Kamar yang mengarahkan pengguna langsung ke alur pemesanan unit secara cepat.
 
 <br>
 
 4. Implementasi Antarmuka Galeri Kost  
-Antarmuka galeri kost mendokumentasikan kondisi fisik bangunan dan lingkungan Asri Boarding House melalui media foto nyata. Dokumentasi visual ini memberikan gambaran asli situasi indekos bagi calon mahasiswa maupun pekerja luar kota yang belum sempat berkunjung langsung. Kehadiran foto lapangan yang transparan dapat meningkatkan rasa percaya calon penyewa terhadap kredibilitas pengelola kost.
+Antarmuka galeri kost mendokumentasikan foto lingkungan fisik bangunan dan suasana harian di Asri Boarding House. Tampilan visual ini menyajikan potret lingkungan sekitar, lorong kamar, area parkir, hingga kebersihan area komunal. Dokumentasi visual yang memadai membangun kepercayaan calon penyewa terhadap kondisi tempat tinggal yang sebenarnya.
 
-Pengunjung dapat memanfaatkan kolom pencarian kata kunci untuk menyaring dokumentasi fasilitas spesifik seperti kamar, dapur, internet, maupun tipe hunian. Setiap foto disajikan dalam kartu berbingkai tegas yang dilengkapi tombol pratinjau resolusi tinggi serta tombol konsultasi langsung via WhatsApp. Navigasi tombol di sudut kiri atas memudahkan calon penyewa kembali ke halaman beranda tanpa perlu menekan tombol mundur peramban. Tampilan susunan album foto lingkungan dan fasilitas indekos diperlihatkan pada Gambar 4.10.
+Seluruh foto disusun dalam format kisi rapi yang dapat diperbesar untuk memperjelas sudut pandang ruangan. Rincian galeri foto hunian indekos tercantum pada Gambar 4.10.
 
 <div align="center">
 
@@ -909,14 +909,14 @@ Pengunjung dapat memanfaatkan kolom pencarian kata kunci untuk menyaring dokumen
 
 </div>
 
-Berdasarkan Gambar 4.10, halaman menampilkan tajuk Galeri Foto Kost Asri berlatar kuning cerah dengan ilustrasi bingkai lukisan serta keterangan ringkas jelajah fasilitas. Di atas tajuk utama, terpasang tombol navigasi berbingkai tebal untuk kembali ke halaman beranda secara cepat. Area pencarian dilengkapi panel berlabel Cari Foto atau Dokumentasi yang memuat formulir masukan kata kunci untuk memfilter gambar berdasarkan kategori tertentu. Bagian galeri tersusun ke dalam tiga kartu foto yang memperlihatkan visual nyata Kamar VIP Eksklusif, Kamar Deluxe Nyaman, dan Kamar Standar Fungsional dengan penataan interior masing-masing. Pada bagian bawah setiap kartu, tercantum deskripsi spesifikasi ruangan serta sepasang tombol aksi untuk memperbesar foto dan menanyakan ketersediaan melalui aplikasi perpesanan WhatsApp.
+Berdasarkan Gambar 4.10, halaman menampilkan susunan kisi foto lingkungan indekos yang mencakup tampak depan gedung, area parkir, lorong kamar lantai satu dan dua, serta dapur bersama. Setiap bingkai gambar memiliki efek transisi halus saat disentuh penunjuk tetikus untuk memberikan pengalaman penjelajahan visual yang interaktif. Penataan komposisi galeri ini memberikan representasi visual yang jelas mengenai kebersihan dan kerapian lingkungan indekos.
 
 <br>
 
 5. Implementasi Antarmuka Alur Cara Reservasi  
-Antarmuka alur cara reservasi menyajikan pedoman praktis bagi calon penyewa baru mengenai tahapan memesan kamar secara mandiri melalui situs web. Halaman edukasi ini disusun secara berurutan agar pengguna tidak merasa bingung saat pertama kali menggunakan layanan pemesanan daring. Keterangan langkah kerja yang jelas mempermudah calon penghuni menyiapkan berkas dan menyelesaikan pembayaran tanpa kendala teknis.
+Halaman alur cara reservasi memberikan panduan bertahap bagi calon penghuni dalam memesan kamar indekos secara daring. Petunjuk alur disusun berurutan mulai dari pendaftaran akun, pemilihan unit kamar, hingga penyelesaian transaksi uang muka. Edukasi alur ini memandu pengguna baru agar tidak mengalami kebingungan selama proses reservasi berlangsung.
 
-Panduan pemesanan memandu calon penyewa melalui empat tahapan terstruktur mulai dari penelusuran unit kamar hingga perolehan bukti pembayaran resmi. Pengguna memperoleh kepastian mengenai keamanan transaksi perbankan digital serta mekanisme pengiriman kode akses kamar tanpa harus menunggu konfirmasi manual. Setiap kartu tahapan menyajikan ringkasan syarat praktis beserta kiat penting guna memperlancar proses administrasi sewa. Tata letak petunjuk langkah reservasi indekos dapat dicermati pada Gambar 4.11.
+Diagram alur visual dilengkapi instruksi ringkas agar pemohon dapat menyiapkan kelengkapan identitas diri lebih awal. Ilustrasi tahapan alur reservasi kamar diperlihatkan pada Gambar 4.11.
 
 <div align="center">
 
@@ -928,14 +928,14 @@ Panduan pemesanan memandu calon penyewa melalui empat tahapan terstruktur mulai 
 
 </div>
 
-Berdasarkan Gambar 4.11, antarmuka menampilkan lencana Panduan Lengkap Reservasi di atas tajuk utama Cara Booking Kost berlatar kuning cerah dengan ikon petir. Di bawah tajuk, tertera kotak keterangan pemesanan instan yang merangkum empat tahapan alur sewa kamar selama 24 jam non-stop. Tata letak utama menyusun empat kartu vertikal bergaris tepi tebal yang memuat nomor urut, ikon representatif, judul langkah, serta deskripsi singkat proses. Rincian setiap kartu mencakup panduan penelusuran kamar, pengisian data diri dan kontak wali darurat, pembayaran instan melalui gerbang Midtrans Snap, hingga penerbitan nota digital. Bagian dasar setiap kartu dilengkapi kotak kiat khusus berwarna kuning yang menegaskan kebijakan enkripsi data, opsi pelunasan uang muka minimal 30 persen, serta aktivasi kode akses kamar saat tanggal masa sewa dimulai.
+Berdasarkan Gambar 4.11, antarmuka menyajikan bagan urutan langkah pemesanan kamar yang terdiri dari pendaftaran akun, pemilihan unit kamar, pengisian biodata, pembayaran uang muka lewat Midtrans, dan penerimaan bukti reservasi. Setiap tahapan diwakili oleh nomor urut berdesain tegas dan kartu penjelasan yang memuat ringkasan aksi pengguna. Visualisasi bertahap ini mempermudah calon penghuni memahami prosedur sewa kamar secara runtut tanpa perlu bertanya berulang kali kepada pengelola.
 
 <br>
 
 6. Implementasi Antarmuka Testimoni Penyewa Kost  
-Antarmuka testimoni menyajikan ulasan dan tanggapan dari para penghuni yang sedang atau pernah tinggal di Asri Boarding House. Informasi pengalaman nyata ini menjadi bahan pertimbangan sosial yang berharga bagi masyarakat umum sebelum menentukan pilihan tempat tinggal. Kumpulan evaluasi penghuni juga menjadi cermin bagi pengelola untuk mempertahankan kualitas pelayanan harian.
+Antarmuka testimoni memuat ulasan dan penilaian pengalaman dari para penghuni yang tinggal di Asri Boarding House. Informasi testimoni ini menjadi bukti sosial atas kualitas pelayanan, kenyamanan lingkungan, dan keandalan sarana indekos. Calon penyewa dapat meninjau pandangan penghuni lain sebagai bahan pertimbangan objektif sebelum memesan kamar.
 
-Pengunjung dapat meninjau umpan balik mengenai kenyamanan fasilitas kamar, kestabilan koneksi internet, serta keramahan layanan kebersihan mingguan. Setiap kartu ulasan merangkum perspektif otentik dari kalangan mahasiswa rantau maupun pekerja kantoran yang tinggal di kawasan indekos. Navigasi tombol di sudut kiri atas memudahkan calon penyewa kembali ke halaman beranda utama setelah membaca testimoni. Antarmuka daftar ulasan penghuni kost ditampilkan pada Gambar 4.12.
+Ulasan disajikan secara bergiliran dalam kartu geser yang memuat nama penghuni dan nilai bintang kepuasan. Tampilan komponen testimoni penghuni kost dapat dilihat pada Gambar 4.12.
 
 <div align="center">
 
@@ -947,14 +947,14 @@ Pengunjung dapat meninjau umpan balik mengenai kenyamanan fasilitas kamar, kesta
 
 </div>
 
-Berdasarkan Gambar 4.12, halaman menampilkan kotak tajuk Testimoni Penyewa Kost berlatar kuning cerah dengan ilustrasi balon obrolan dan tombol kembali ke beranda di sisi kiri atas. Di bawah tajuk, tertera kalimat pengantar yang menegaskan keaslian ulasan dari rekan-rekan mahasiswa dan pekerja perantau. Area konten menyajikan tiga kartu ulasan sejajar bergaris tepi tebal dengan aksen bayangan blok hitam serta tanda petik kutipan berwarna kuning. Setiap kartu memuat penilaian sempurna berupa deretan lima bintang kuning di atas narasi kepuasan seputar fasilitas pendingin ruangan, pembersihan kamar, serta ketenangan suasana belajar. Bagian bawah kartu dilengkapi kotak inisial kuning dan identitas peran penghuni yang mencantumkan status sebagai mahasiswa perguruan tinggi sekitar maupun pekerja korporat di Semarang.
+Berdasarkan Gambar 4.12, antarmuka menampilkan deretan kartu testimoni yang berisi kutipan ulasan penghuni terkait kebersihan kamar, keamanan lingkungan, dan keramahan pengelola. Setiap kartu dilengkapi foto profil penghuni, nama samaran, status kamar yang dihuni, serta ikon bintang lima sebagai indikator kepuasan fasilitas. Tata letak komidi putar interaktif memudahkan calon penyewa menggeser ulasan secara mulus untuk membaca pengalaman penghuni lain.
 
 <br>
 
 7. Implementasi Antarmuka FAQ  
-Antarmuka FAQ menyajikan daftar jawaban resmi atas pertanyaan yang paling sering diajukan oleh calon penyewa indekos. Halaman ini memangkas waktu pengelola dalam menjawab pertanyaan umum yang berulang seputar jam malam, biaya tambahan, dan aturan tamu. Calon penghuni memperoleh kepastian informasi secara instan tanpa perlu menunggu balasan pesan manual dari penjaga kost.
+Halaman FAQ merangkum daftar pertanyaan yang sering diajukan calon penyewa seputar ketentuan sewa di Asri Boarding House. Informasi mencakup aturan jam malam, kebijakan tamu menginap, ketentuan uang muka, serta metode perpanjangan sewa bulanan. Rangkuman ini memberikan jawaban cepat sehingga mengurangi beban komunikasi rutin pihak pengelola.
 
-Pengunjung dapat mengetikkan kata kunci tertentu pada kolom pencarian bantuan untuk menemukan pertanyaan relevan secara cepat. Daftar tanya jawab disajikan dalam format bilah lipat interaktif yang dapat dibuka dan ditutup dengan sekali klik. Setiap bilah memuat ulasan seputar tata cara pemesanan daring, komponen biaya sewa, ketersediaan fasilitas kamar, hingga regulasi jam malam gerbang indekos. Tampilan antarmuka pusat pertanyaan umum tersebut diperlihatkan pada Gambar 4.13.
+Format akordeon interaktif memungkinkan pengunjung membuka dan menutup jawaban pertanyaan secara efisien. Susunan halaman tanya jawab ini diperlihatkan pada Gambar 4.13.
 
 <div align="center">
 
@@ -966,14 +966,14 @@ Pengunjung dapat mengetikkan kata kunci tertentu pada kolom pencarian bantuan un
 
 </div>
 
-Berdasarkan Gambar 4.13, antarmuka menampilkan tajuk Pusat Bantuan FAQ berlatar kuning cerah dengan aksen ikon petir dan bingkai garis tepi tegas. Di bawah tajuk, terpasang kotak deskripsi yang menjelaskan bahwa pengunjung dapat mengeklik setiap pertanyaan untuk membuka rincian jawaban seputar operasional kost. Area pencarian dilengkapi bilah masukan berikon kaca pembesar yang memungkinkan pengguna mencari solusi berdasarkan kata kunci bantuan tertentu. Daftar tanya jawab tersusun dalam empat bilah horizontal warna putih dengan penulisan huruf kapital tebal dan simbol tambah pada sisi kanan. Topik pertanyaan yang ditampilkan mencakup alur pemesanan daring, inklusi biaya listrik dan air, kelengkapan fasilitas kamar, serta aturan jam malam akses gerbang.
+Berdasarkan Gambar 4.13, halaman menyajikan daftar pertanyaan umum yang dikelompokkan dalam panel akordeon bertata letak rapi dan mudah dibaca. Setiap bilah pertanyaan dilengkapi ikon panah yang dapat diklik untuk menampilkan atau menyembunyikan teks jawaban secara ringkas. Pengorganisasian topik pertanyaan yang jelas membantu calon penyewa menemukan jawaban atas aturan indekos secara cepat tanpa harus membuka banyak halaman.
 
 <br>
 
 8. Implementasi Antarmuka Tentang Kami  
-Antarmuka tentang kami memuat informasi profil usaha, komitmen pelayanan, serta visi dan misi Asri Boarding House di Kota Semarang. Halaman ini menguraikan tujuan penyediaan hunian eksklusif yang dirancang guna menunjang produktivitas belajar mahasiswa dan kenyamanan bekerja para profesional muda. Keterbukaan profil usaha ini memperkuat keyakinan calon penyewa maupun orang tua dalam memilih lingkungan indekos yang tertib dan aman.
+Antarmuka Tentang Kami memaparkan identitas operasional, visi kenyamanan hunian, dan komitmen pelayanan Asri Boarding House. Halaman ini juga menyajikan informasi titik lokasi geografis indekos di Tembalang yang terhubung dengan peta digital. Pemaparan profil usaha yang jelas menumbuhkan rasa aman bagi calon mahasiswa dan perantau yang hendak mencari tempat tinggal.
 
-Pengunjung dapat membaca rangkuman profil pengelola yang menyeimbangkan unsur kenyamanan fisik, fasilitas modern, dan kemudahan transaksi digital. Dua kotak informasi utama memaparkan arah tujuan jangka panjang indekos beserta langkah strategis pemeliharaan sarana hunian secara terpadu. Penyajian butir misi menegaskan komitmen pengelola dalam membina komunikasi kekeluargaan yang harmonis dengan seluruh penghuni kost. Antarmuka profil dan komitmen mutu pelayanan indekos ini diperlihatkan pada Gambar 4.14.
+Halaman ini memuat kanal kontak resmi seperti nomor telepon, surat elektronik, dan tautan media sosial pengelola indekos. Tampilan profil dan peta lokasi hunian indekos disajikan pada Gambar 4.14.
 
 <div align="center">
 
@@ -985,14 +985,14 @@ Pengunjung dapat membaca rangkuman profil pengelola yang menyeimbangkan unsur ke
 
 </div>
 
-Berdasarkan Gambar 4.14, antarmuka menampilkan kotak tajuk Tentang Kami berlatar kuning cerah dengan ikon petir dan bayangan garis tepi tegas. Di bawah tajuk, terpasang kotak putih pengantar yang menguraikan konsep hunian eksklusif terpadu bagi kalangan mahasiswa dan pekerja di Semarang. Area konten utama menyajikan dua kartu besar berdampingan yang masing-masing memuat kotak ikon berwarna kuning cerah. Kartu sisi kiri merinci pernyataan visi organisasi sebagai pelopor hunian kost modern terpercaya berbasis integrasi teknologi. Kartu sisi kanan menjabarkan empat butir misi operasional meliputi perawatan kebersihan lingkungan, penyediaan fasilitas premium, administrasi pembayaran digital, serta pembinaan hubungan kekeluargaan yang hangat.
+Berdasarkan Gambar 4.14, antarmuka menyajikan kartu profil Asri Boarding House yang memuat sejarah singkat indekos, keunggulan tata kelola hunian, dan etika pelayanan lingkungan. Sisi samping halaman menampilkan sematan peta Google Maps interaktif yang menandai titik koordinat presisi gedung indekos dekat kampus. Bagian bawah memuat kontak pengelola, alamat surat elektronik resmi, serta jam operasional layanan kantor sekretariat indekos.
 
 <br>
 
 9. Implementasi Antarmuka Login User  
-Antarmuka login user merupakan pintu masuk otentikasi bagi calon penyewa maupun penghuni terdaftar untuk mengakses portal layanan web indekos. Formulir ini melindungi data pribadi dan catatan transaksi sewa dari akses pihak yang tidak memiliki hak operasional. Verifikasi kredensial akun menjamin bahwa setiap interaksi sewa dijalankan oleh pemilik akun yang sah.
+Antarmuka masuk pengguna menjadi pintu gerbang autentikasi akun bagi calon penyewa dan penghuni terdaftar. Modul ini memverifikasi kecocokan alamat surat elektronik dan kata sandi yang tersimpan di basis data secara aman. Penerapan sesi terenkripsi memastikan akses data pribadi pengguna terlindungi dari risiko pembajakan akun.
 
-Pengguna dapat memilih metode masuk cepat menggunakan akun Google maupun memasukkan alamat surel dan kata sandi secara manual. Bidang isian dilengkapi ikon penjelas, fitur pengalih keterbacaan sandi, serta kotak opsi untuk mempertahankan status sesi pengguna pada peramban. Sistem juga menyediakan tautan pemulihan kata sandi bagi pengguna yang terkendala serta tautan pendaftaran akun bagi calon penyewa baru. Tampilan antarmuka masuk akun pengguna tersebut disajikan pada Gambar 4.15.
+Halaman menyediakan tautan pemulihan kata sandi bagi pengguna yang mengalami kendala lupa kode rahasia akun. Antarmuka autentikasi masuk pengguna diperlihatkan pada Gambar 4.15.
 
 <div align="center">
 
@@ -1004,14 +1004,14 @@ Pengguna dapat memilih metode masuk cepat menggunakan akun Google maupun memasuk
 
 </div>
 
-Berdasarkan Gambar 4.15, antarmuka login menampilkan kartu ganda berlatar kisi-kisi titik dengan bayangan blok hitam bergaya neo-brutalisme. Panel sisi kiri berlatar hitam memuat lencana identitas hunian, tajuk Sistem Reservasi Kamar Online beraksen kuning, serta penanda integrasi Midtrans dan fasilitas jaringan internet. Panel sisi kanan menyediakan tombol otentikasi instan Masuk dengan Google yang dipisahkan oleh garis pembatas dari formulir masukan manual. Formulir manual memuat kolom alamat email dan kata sandi lengkap dengan tombol pengalih intip karakter serta tautan pemulihan akses pada sudut kanan atas kolom sandi. Pada area bawah formulir, tersedia kotak centang ingat sesi dan tautan pendaftaran akun baru, yang disempurnakan oleh tombol aksi utama Masuk ke Akun berwarna kuning serta navigasi kembali ke beranda.
+Berdasarkan Gambar 4.15, antarmuka login dirancang berbingkai kartu neo-brutalisme dengan garis tepi hitam tegas berlatar belakang kuning cerah. Formulir memuat kolom input alamat email, kata sandi berfitur intip sandi, kotak centang Ingat Saya, dan tombol biru Masuk ke Akun. Sisi bawah formulir menyediakan tautan navigasi menuju pendaftaran akun baru bagi calon pengguna yang belum memiliki kredensial resmi.
 
 <br>
 
 10. Implementasi Antarmuka Register User  
-Antarmuka register user berfungsi sebagai formulir pembuatan akun baru bagi masyarakat yang ingin menyewa kamar di Asri Boarding House. Pendaftaran akun ini menjadi langkah awal sebelum calon penyewa diizinkan memilih kamar dan mengajukan jadwal masa sewa. Data akun yang tersimpan menjadi dasar identifikasi pengguna di seluruh alur transaksi sistem web indekos.
+Antarmuka pendaftaran akun memfasilitasi pembuatan akun pengguna baru bagi calon penyewa yang ingin memesan kamar indekos. Formulir mengumpulkan data dasar seperti nama lengkap, nomor WhatsApp aktif, alamat email, dan konfirmasi kata sandi. Pendaftaran mandiri ini mempercepat pencatatan data calon penghuni secara terstruktur sebelum memasuki alur sewa.
 
-Calon penyewa dapat melakukan pendaftaran instan melalui tautan akun Google atau mengisi rincian identitas secara manual. Sistem memverifikasi kesesuaian format nama lengkap, keunikan alamat surel, nomor kontak WhatsApp, hingga konfirmasi kata sandi minimal delapan karakter. Pengguna yang telah memiliki kredensial dapat langsung beralih ke halaman login melalui tautan navigasi di atas tombol pendaftaran. Formulir pendaftaran akun calon penyewa ini ditampilkan pada Gambar 4.16.
+Sistem langsung memvalidasi keunikan alamat email dan kekuatan kata sandi saat pengguna mengisi formulir pendaftaran. Tampilan antarmuka registrasi pengguna baru tercantum pada Gambar 4.16.
 
 <div align="center">
 
@@ -1023,14 +1023,14 @@ Calon penyewa dapat melakukan pendaftaran instan melalui tautan akun Google atau
 
 </div>
 
-Berdasarkan Gambar 4.16, antarmuka registrasi menerapkan tata letak kartu ganda berbingkai hitam tegas di atas latar belakang bermotif titik-titik. Panel sisi kiri berlatar hitam memuat lencana identitas indekos, tajuk Daftar Akun Reservasi Baru beraksen kotak kuning cerah, serta informasi pemesanan instan dan jaminan keamanan data. Panel sisi kanan menyajikan tombol pendaftaran kilat Daftar dengan Google yang dipisahkan oleh garis batas dari formulir manual. Formulir isian manual memuat lima kolom terstruktur meliputi nama lengkap, alamat email, nomor WhatsApp, kata sandi, serta konfirmasi kata sandi dengan ikon pengalih intip karakter. Bagian bawah kartu dilengkapi tautan pengalihan masuk akun, tombol aksi utama Daftar Akun Baru berwarna kuning cerah, dan tombol navigasi kembali ke beranda pada sisi luar kartu.
+Berdasarkan Gambar 4.16, halaman pendaftaran menampilkan kartu bertajuk Buat Akun Baru dengan latar belakang beraksen geometris modern. Formulir menyediakan kolom isian nama lengkap, nomor WhatsApp aktif, alamat email, kata sandi, serta konfirmasi kata sandi dengan validasi pesan galat interaktif. Tombol biru Daftar Akun di bagian bawah kartu memproses penyimpanan identitas akun baru secara langsung ke basis data sistem.
 
 <br>
 
 11. Implementasi Antarmuka Chat Real Time Guest  
-Antarmuka obrolan langsung tamu (*chat real time guest*) menyediakan media komunikasi interaktif dua arah antara pengunjung publik dengan pengelola indekos. Fitur ini membantu calon penyewa menanyakan ketersediaan kamar tertentu tanpa harus menyimpan nomor telepon pribadi pengelola. Obrolan daring yang responsif memangkas keraguan calon penyewa saat hendak memesan hunian jarak jauh.
+Fitur obrolan langsung tamu memungkinkan pengunjung situs berkonsultasi secara instan dengan pengelola tanpa perlu masuk ke akun terlebih dahulu. Pengunjung cukup memasukkan nama dan nomor kontak untuk memulai percakapan seputar ketersediaan kamar dan jadwal survei lokasi. Kanal komunikasi langsung ini meningkatkan minat calon penghuni dalam mengambil keputusan sewa.
 
-Widget percakapan ini dapat dipanggil secara fleksibel melalui tombol melayang di sudut layar pada seluruh halaman publik situs web. Pengunjung cukup memasukkan nama lengkap serta nomor WhatsApp aktif sebelum memulai interaksi dengan admin hunian. Informasi identitas awal tersebut memudahkan pengelola mengidentifikasi calon penyewa sekaligus menindaklanjuti percakapan ke kanal komunikasi lanjutan jika diperlukan. Antarmuka jendela obrolan langsung tamu publik ini diperlihatkan pada Gambar 4.17.
+Pesan obrolan tersinkronisasi langsung ke dasbor pengelola sehingga pertanyaan calon penyewa dapat direspons secara tepat waktu. Bentuk widget percakapan langsung tamu diperlihatkan pada Gambar 4.17.
 
 <div align="center">
 
@@ -1042,16 +1042,16 @@ Widget percakapan ini dapat dipanggil secara fleksibel melalui tombol melayang d
 
 </div>
 
-Berdasarkan Gambar 4.17, antarmuka obrolan tampil dalam bentuk jendela melayang kompak dengan bilah tajuk berlatar kuning cerah. Bagian tajuk memuat ikon petir, tulisan Tanya Admin Kost dengan huruf kapital tebal, serta tombol silang pada sudut kanan atas untuk menutup jendela. Area konten utama menampilkan ilustrasi tangan melambai yang disertai teks sapaan Ada Pertanyaan dan kalimat ajakan konsultasi seputar operasional kost. Formulir inisiasi percakapan menyediakan dua kolom berbingkai garis tepi hitam tebal untuk memasukkan nama lengkap dan nomor kontak WhatsApp calon penyewa. Pada bagian dasar jendela, disematkan tombol blok hitam tebal bertuliskan Mulai Chat dengan ikon roket sebagai pemicu pembukaan sesi percakapan interaktif.
+Berdasarkan Gambar 4.17, jendela obrolan tamu muncul mengambang pada sudut kanan bawah antarmuka dengan bingkai kuning cerah dan tombol minimalkan jendela di sisi atas. Badan obrolan menampilkan riwayat gelembung percakapan antara tamu dan admin lengkap dengan label penunjuk waktu pengiriman pesan. Bilah bawah menyediakan bidang pengetikan pesan interaktif beserta tombol kirim yang langsung menyalurkan teks pertanyaan pengunjung ke pengelola.
 
 <br>
 
 ### 4.2.2 Implementasi Calon Penyewa
 
 1. Implementasi Antarmuka Lengkapi Profil  
-Antarmuka lengkapi profil berfungsi menghimpun berkas identitas resmi calon penyewa sebelum sistem mengizinkan proses pemesanan kamar sewa. Verifikasi identitas ini menjadi prasyarat keamanan penting bagi pengelola guna memastikan seluruh calon penghuni indekos terdata secara sah. Langkah pendataan ini mencegah penggunaan akun anonim yang berisiko mengganggu ketertiban lingkungan hunian kost.
+Antarmuka pelengkap profil mewajibkan calon penyewa mengunggah identitas resmi sebelum melakukan reservasi unit kamar. Formulir meminta data nomor induk kependudukan, kontak darurat keluarga, instansi pekerjaan atau kampus, serta foto dokumen KTP asli. Verifikasi identitas ini menjaga keamanan bersama dan ketertiban lingkungan penghuni di Asri Boarding House.
 
-Sistem menerapkan mekanisme penghalang profil yang mewajibkan pengguna melengkapi nomor WhatsApp aktif sebelum mengakses dasbor atau melanjutkan transaksi. Pengguna diminta memasukkan nomor kontak pribadi, enam belas digit nomor induk kependudukan, serta nama lengkap dan nomor telepon wali darurat. Keberadaan data kontak darurat ini menjamin pengelola dapat segera melakukan komunikasi eskalasi apabila terjadi kendala penting selama masa sewa berjalan. Tampilan antarmuka pengisian kelengkapan profil pemesan disajikan pada Gambar 4.18.
+Berkas identitas dienkripsi dan disimpan dalam direktori aman yang hanya dapat diverifikasi oleh admin pengelola. Format halaman pelengkapan profil calon penyewa disajikan pada Gambar 4.18.
 
 <div align="center">
 
@@ -1063,14 +1063,14 @@ Sistem menerapkan mekanisme penghalang profil yang mewajibkan pengguna melengkap
 
 </div>
 
-Berdasarkan Gambar 4.18, antarmuka menampilkan kartu formulir terpusat bergaris tepi hitam tebal dengan aksen lencana identitas hunian pada sisi atas. Di bawah tajuk Lengkapi Profil, terpasang kotak pemberitahuan berlatar kuning muda yang menegaskan kewajiban melengkapi nomor WhatsApp sebelum bertransaksi. Formulir menyediakan empat kolom isian berbingkai tegas yang mencakup nomor WhatsApp aktif, enam belas digit NIK calon penyewa, nama lengkap wali, serta nomor kontak wali. Setiap kolom isian dilengkapi ikon penjelas berwarna dan teks panduan format masukan guna mencegah terjadinya kekeliruan pengisian data oleh pemesan. Bagian bawah kartu dilengkapi tombol aksi penuh berwarna kuning cerah bertuliskan Simpan dan Lanjutkan untuk memproses penyimpanan profil ke basis data.
+Berdasarkan Gambar 4.18, antarmuka menyajikan formulir pengisian data diri yang mencakup nomor KTP, nama darurat keluarga, nomor telepon penjamin, serta bidang unggah foto identitas. Terdapat panduan visual ukuran berkas dan pratinjau gambar untuk memastikan foto kartu identitas terbaca jelas sebelum disimpan. Tombol hijau Simpan Profil di bagian bawah mengunci data verifikasi calon penyewa ke dalam basis data sistem.
 
 <br>
 
 2. Implementasi Antarmuka Dashboard Reservasi  
-Antarmuka dashboard reservasi menjadi portal utama bagi calon penyewa untuk memantau status pesanan kamar yang sedang diproses oleh sistem. Halaman ini memberikan kejelasan informasi mengenai tahapan reservasi yang telah diselesaikan maupun yang masih tertunda. Calon penghuni dapat melihat batas waktu penyelesaian pembayaran sewa tanpa perlu menanyakan status pemesanan secara manual.
+Dasbor reservasi berfungsi sebagai pusat kendali calon penyewa dalam memantau seluruh proses pemesanan kamar yang sedang diajukan. Halaman ini merangkum status reservasi aktif, nomor tagihan uang muka, serta riwayat interaksi pemesanan kamar sebelumnya. Pemusatan informasi ini memudahkan pemohon meninjau tahapan reservasi secara mandiri dan transparan.
 
-Dasbor menyajikan bilah navigasi samping untuk mengakses riwayat pemesanan, riwayat pembayaran, arsip percakapan, hingga pengaturan akun pribadi. Apabila pengguna baru belum memilih hunian, sistem memunculkan pemberitahuan status pemesanan kosong yang dilengkapi tombol pencarian kamar secara instan. Panel samping kanan merinci lima tahapan aktivasi hunian mulai dari registrasi akun, pemilihan kamar, pembayaran deposit, verifikasi pengelola, hingga serah terima kunci. Tampilan dasbor pemantauan reservasi calon penghuni dapat dilihat pada Gambar 4.19.
+Terdapat indikator kemajuan proses yang memberi tahu langkah selanjutnya yang harus diselesaikan oleh pemohon sewa. Visualisasi dasbor reservasi calon penghuni disajikan pada Gambar 4.19.
 
 <div align="center">
 
@@ -1082,14 +1082,14 @@ Dasbor menyajikan bilah navigasi samping untuk mengakses riwayat pemesanan, riwa
 
 </div>
 
-Berdasarkan Gambar 4.19, antarmuka dasbor menampilkan bilah judul kuning cerah bertuliskan Dashboard Reservasi dengan tombol navigasi kembali ke beranda pada sisi kanan. Sisi kiri halaman memuat panel menu vertikal yang merangkum opsi riwayat pemesanan, riwayat pembayaran, riwayat obrolan, pengaturan akun, serta tombol keluar sesi. Bagian atas konten utama menampilkan kartu sambutan berlatar biru muda terang dengan ilustrasi tangan melambai dan salam pembuka personal bagi pengguna baru. Area tengah memuat kartu status berbingkai tebal yang menginformasikan bahwa pemesanan kamar belum ditemukan, lengkap dengan tombol kuning untuk memulai pencarian unit. Pada sisi kanan, tersaji kartu panduan lima tahapan reservasi dengan penanda centang hijau pada langkah registrasi serta penanda kuning aktif pada tahap pemilihan kamar.
+Berdasarkan Gambar 4.19, antarmuka menyajikan spanduk selamat datang dan kartu ringkasan reservasi yang memuat nomor pesanan, unit kamar pilihan, dan status verifikasi akun. Panel tengah menampilkan bilah penunjuk tahapan alur reservasi mulai dari pengajuan berkas hingga konfirmasi pembayaran sewa. Kartu aksi di sisi kanan menyediakan tombol Bayar Uang Muka serta tautan langsung untuk mengunduh bukti tanda terima reservasi.
 
 <br>
 
 3. Implementasi Antarmuka Simulasi Biaya Kamar  
-Antarmuka simulasi biaya kamar dirancang untuk menghitung estimasi pengeluaran sewa indekos secara transparan berdasarkan durasi tinggal yang diinginkan. Fitur kalkulasi otomatis ini mempermudah calon penghuni merencanakan anggaran tanpa khawatir menemui biaya tersembunyi di kemudian hari. Sistem langsung menghitung total biaya sewa dan uang jaminan secara akurat dari basis data tarif kamar.
+Antarmuka simulasi biaya kamar membantu calon penyewa menghitung total pengeluaran sewa sesuai durasi waktu tinggal yang diinginkan. Kalkulator ini menghitung tarif sewa pokok, biaya deposit jaminan, dan potongan diskon promo sewa jangka panjang secara otomatis. Transparansi perhitungan ini mencegah kesalahpahaman nominal pembayaran antara pemohon dan pengelola indekos.
 
-Calon penghuni dapat menentukan skema durasi sewa bulanan, memasukkan tanggal rencana masuk hunian, serta memilih opsi skema pelunasan penuh maupun uang muka. Sistem memanfaatkan komputasi interaktif sisi klien untuk mengalikan tarif sewa kamar secara langsung tanpa mengharuskan pemuatan ulang peramban. Kalkulasi otomatis ini juga menyajikan batas minimal pembayaran uang muka sebesar tiga puluh persen guna memberikan fleksibilitas komitmen finansial bagi pemesan. Tampilan antarmuka simulasi perhitungan biaya dan pemesanan kamar sewa disajikan pada Gambar 4.20.
+Pengguna dapat memilih durasi sewa bulanan, tiga bulanan, atau tahunan untuk melihat perbandingan total tagihan secara seketika. Tampilan modul simulasi biaya sewa kamar ditunjukkan pada Gambar 4.20.
 
 <div align="center">
 
@@ -1101,14 +1101,14 @@ Calon penghuni dapat menentukan skema durasi sewa bulanan, memasukkan tanggal re
 
 </div>
 
-Berdasarkan Gambar 4.20, antarmuka menyajikan tata letak dua kolom bergaya neo-brutalisme dengan panel informasi unit kamar di sisi kiri serta widget kalkulator simulasi di sisi kanan. Panel kiri memuat tajuk Kamar 105 yang dilengkapi galeri foto interior ruangan beresolusi tinggi beserta kartu rincian spesifikasi unit seperti tipe standar, lantai satu, dan luas dua belas meter persegi. Panel kanan menampilkan kartu simulasi berbingkai hitam tegas yang menyediakan pilihan tipe sewa bulanan, isian durasi waktu, kalender penentuan tanggal masuk hunian, dan menu pilihan pembayaran penuh. Pada area tengah kartu simulasi, tersaji kotak ringkasan tarif berlatar kuning cerah yang merinci harga pokok per bulan, total nominal estimasi sewa, serta nilai minimal uang muka sebesar tiga puluh persen. Bagian bawah widget dilengkapi tombol aksi berwarna kuning mencolok bertuliskan Pesan Kamar Sekarang yang mengarahkan calon pemesan menuju alur transaksi resmi.
+Berdasarkan Gambar 4.20, antarmuka menyediakan kartu kalkulator biaya yang dilengkapi pilihan menu tarik-turun durasi sewa dan opsi fasilitas tambahan. Tabel rincian pembiayaan di sisi kanan langsung memperbarui akumulasi biaya sewa pokok, uang jaminan deposit, dan total tagihan bersih secara seketika. Tombol biru Lanjutkan Pemesanan di bagian bawah tabel memungkinkan calon penyewa meneruskan hasil simulasi ke formulir transaksi reservasi.
 
 <br>
 
 4. Implementasi Antarmuka Pembayaran 5 Tahap Reservasi  
-Antarmuka pembayaran reservasi lima tahap berfungsi sebagai pusat kendali transaksi bagi calon penghuni untuk meninjau rincian sewa sekaligus memantau posisi tahapan pemesanan kamar yang sedang berjalan. Penerapan indikator tahapan bertingkat memberikan transparansi prosedur yang jelas sehingga pemesan memahami langkah administratif berikutnya tanpa rasa bingung. Halaman ini menjamin kepastian komitmen penyewaan dengan menyajikan ringkasan kewajiban biaya sebelum pengguna diarahkan ke gerbang pembayaran digital.
+Antarmuka alur pembayaran memandu calon penghuni menyelesaikan lima tahapan transaksi pemesanan kamar secara berurutan. Tahapan mencakup konfirmasi data sewa, pemilihan metode setor, verifikasi tagihan, pemrosesan gerbang pembayaran, dan penerbitan nota tanda jadi. Alur terstruktur ini menjamin keamanan pencatatan dana sewa dan kepastian alokasi unit kamar bagi pemohon.
 
-Calon penyewa memeriksa kesesuaian unit kamar, periode tanggal sewa, serta nominal tagihan yang tertera pada kartu rincian pemesanan. Pengguna diarahkan berkoordinasi terlebih dahulu dengan pengelola indekos melalui fitur obrolan bawaan guna mengonfirmasi kesiapan fisik kamar sebelum mengeksekusi pelunasan. Sistem menyediakan tombol pembatalan pemesanan secara mandiri apabila calon penghuni memutuskan untuk mengubah rencana hunian sebelum transaksi diproses. Visualisasi antarmuka pemantauan alur lima tahap dan pembayaran reservasi kamar indekos ini disajikan pada Gambar 4.21.
+Indikator langkah visual memberi tahu status aktif dari setiap proses pembayaran yang sedang berjalan. Rangkaian lima tahapan pembayaran reservasi diperlihatkan pada Gambar 4.21.
 
 <div align="center">
 
@@ -1120,14 +1120,14 @@ Calon penyewa memeriksa kesesuaian unit kamar, periode tanggal sewa, serta nomin
 
 </div>
 
-Berdasarkan Gambar 4.21, bagian atas konten memuat spanduk pemberitahuan berlatar kuning cerah yang menandakan bahwa reservasi unit hunian telah berhasil dibuat dan siap untuk dibayar. Tepat di bawah spanduk, terpasang bilah kemajuan lima langkah reservasi yang menampilkan kotak hitam bertanda centang pada tahap pemesanan awal serta kotak kuning menyala pada langkah diskusi dan pembayaran. Kotak instruksi langkah saat ini memberikan panduan tegas bagi pemesan untuk menghubungi penjaga kost melalui kotak obrolan sebelum menekan tombol transaksi di panel samping. Sisi kiri bawah memuat kartu rincian pemesanan Kamar 105 lengkap dengan tanggal sewa, total nilai tagihan Rp 750.000, serta lencana status berwarna kuning bertuliskan Pending. Panel metode pembayaran pada sisi kanan menyediakan tombol kuning mencolok bertuliskan Bayar Sekarang menggunakan Midtrans berdampingan dengan tombol merah untuk opsi pembatalan reservasi.
+Berdasarkan Gambar 4.21, bagian atas antarmuka memuat indikator penunjuk langkah bertingkat yang menyorot tahapan pembayaran aktif dengan lingkaran angka berwarna hijau. Bagian tengah menampilkan rincian ringkasan kamar, rincian biaya uang muka, batas waktu penyelesaian transaksi, serta tombol pemicu gerbang bayar digital. Antarmuka juga menyajikan panduan singkat bagi calon penyewa agar tidak menutup jendela peramban sebelum transaksi diverifikasi oleh sistem.
 
 <br>
 
 5. Implementasi Payment Gateway Midtrans  
-Integrasi payment gateway Midtrans memfasilitasi pelunasan uang sewa secara non-tunai melalui saluran pembayaran digital yang terverifikasi otomatis. Kehadiran gerbang pembayaran digital ini menghapus kebiasaan transfer manual ke rekening pribadi penjaga yang rawan memicu kesalahan pencatatan kas. Status keterisian kamar sewa langsung terkunci di sistem sesaat setelah dana terverifikasi oleh peladen pembayaran.
+Integrasi gerbang pembayaran Midtrans Snap memungkinkan calon penghuni melunasi biaya sewa kamar menggunakan berbagai kanal pembayaran digital resmi. Sistem mendukung transaksi melalui transfer rekening virtual bank, dompet digital, kartu kredit, dan gerai retail swalayan. Konfirmasi pembayaran otomatis mengeliminasi verifikasi mutasi manual yang memakan waktu lama.
 
-Sistem memanggil pustaka Midtrans Snap API untuk memunculkan jendela transaksi tanpa mengarahkan pengguna keluar dari situs web indekos. Calon penyewa dapat memilih metode pembayaran melalui nomor Virtual Account bank utama maupun kode pindai QRIS. Begitu pembayaran berhasil, peladen Midtrans mengirimkan notifikasi webhook ke peladen aplikasi untuk mengubah status reservasi menjadi terkonfirmasi lunas. Tampilan jendela pembayaran digital Midtrans Snap tersebut diperlihatkan pada Gambar 4.22.
+Webhook Midtrans langsung menyinkronkan status lunas ke basis data begitu dana berhasil disetorkan pengguna. Antarmuka popup pembayaran digital Midtrans ditampilkan pada Gambar 4.22.
 
 <div align="center">
 
@@ -1139,14 +1139,14 @@ Sistem memanggil pustaka Midtrans Snap API untuk memunculkan jendela transaksi t
 
 </div>
 
-Berdasarkan Gambar 4.22, antarmuka transaksi Midtrans Snap tampil dalam bentuk jendela sembulan berbingkai bersih yang memuat tajuk resmi Asri Boarding House pada bagian atas. Area atas jendela menyajikan informasi total tagihan senilai Rp750.000, nomor pesanan transaksi, serta bilah hitung mundur masa berlaku pembayaran selama dua puluh empat jam. Pada bagian tengah, terpampang instruksi penyelesaian transaksi menggunakan saluran Bank BCA yang disertai logo resmi perbankan. Sistem menerbitkan deretan digit nomor Virtual Account BCA khusus yang dilengkapi tombol salin praktis guna memudahkan pembayaran melalui perbankan elektronik. Sisi bawah jendela dilengkapi tautan panduan tata cara pembayaran serta tombol periksa status berwarna gelap untuk memverifikasi transaksi secara langsung.
+Berdasarkan Gambar 4.22, jendela sembulan Midtrans Snap muncul di tengah layar menampilkan total nominal tagihan sewa dan tenggat waktu penyelesaian transaksi. Antarmuka menyediakan pilihan kanal bayar seperti GoPay, QRIS, Virtual Account BCA, BNI, Mandiri, dan gerai retail dengan instruksi setor yang lengkap. Tampilan antarmuka ini menjamin transaksi berjalan aman karena diawasi langsung oleh sistem enkripsi gerbang pembayaran resmi.
 
 <br>
 
 6. Implementasi WhatsApp Gateway Fonnte  
-Implementasi WhatsApp gateway melalui integrasi API Fonnte mengotomatisasi pengiriman pesan sambutan dan konfirmasi aktivasi kamar langsung ke nomor kontak penyewa. Saluran komunikasi bergerak ini memastikan penyewa baru menerima kepastian status hunian secara seketika tanpa harus menunggu konfirmasi manual dari pengelola indekos. Kehadiran pesan instan resmi ini memperkuat transparansi administrasi sekaligus menjamin bahwa hak akses hunian telah dibuka secara sah oleh sistem.
+Layanan gerbang pesan WhatsApp Fonnte mengirimkan notifikasi instan ke nomor ponsel calon penyewa begitu pembayaran berhasil diverifikasi. Pesan otomatis memuat nomor faktur, rincian kamar yang dipesan, nominal uang muka, serta tanggal mulai menghuni indekos. Pengiriman pesan instan ini memberi kepastian transaksi yang cepat dan mudah dibaca lewat ponsel penghuni.
 
-Peladen aplikasi mengeksekusi permintaan HTTP POST ke endpoint peladen Fonnte sesaat setelah pembayaran uang muka diverifikasi dan akun penyewa dinyatakan aktif. Permintaan transmisi data menyertakan token otentikasi aman serta muatan pesan teks terformat yang merinci nomor kamar dan instruksi awal penghuni. Mekanisme pengiriman latar belakang (*background job*) memastikan proses komunikasi eksternal ini berjalan mulus tanpa menghambat responsivitas aplikasi web. Bentuk pesan konfirmasi dan sambutan aktivasi hunian melalui layanan WhatsApp Fonnte tersebut diperlihatkan pada Gambar 4.23.
+Integrasi API Fonnte berjalan secara latar belakang melalui sistem pemicu kejadian di peladen web. Bentuk pesan notifikasi WhatsApp tanda jadi sewa disajikan pada Gambar 4.23.
 
 <div align="center">
 
@@ -1158,14 +1158,14 @@ Peladen aplikasi mengeksekusi permintaan HTTP POST ke endpoint peladen Fonnte se
 
 </div>
 
-Berdasarkan Gambar 4.23, tangkapan layar memperlihatkan gelembung pesan aplikasi WhatsApp bertema gelap dengan tajuk huruf kapital tebal diapit ikon rumah bertuliskan Selamat Datang Penyewa Baru. Baris berikutnya memuat sapaan personal ramah kepada penyewa yang bersangkutan disertai ucapan selamat bergabung secara resmi di Asri Boarding House. Bagian inti pesan menegaskan bahwa unit hunian Kamar 101 telah resmi berstatus aktif dengan penanda ikon pintu cokelat. Paragraf penutup mengarahkan penghuni untuk memanfaatkan portal penyewa guna mempermudah urusan administrasi dan pelaporan fasilitas selama masa sewa berjalan. Sisi bawah gelembung pesan menampilkan penutup hormat dari manajemen indekos serta penanda transmisi otomatis melalui peladen Fonnte lengkap dengan catatan waktu pengiriman pesan.
+Berdasarkan Gambar 4.23, tangkapan layar aplikasi WhatsApp menampilkan pesan masuk otomatis dari akun resmi Asri Boarding House dengan centang verifikasi waktu pengiriman. Teks pesan merinci ucapan terima kasih, nomor referensi reservasi, tipe kamar, nominal pembayaran lunas, dan tautan unduh nota elektronik. Notifikasi ini memberikan konfirmasi tertulis yang sah bagi calon penyewa sebagai bukti resmi pemesanan kamar indekos.
 
 <br>
 
 7. Implementasi Email Gateway SMTP  
-Implementasi email gateway berbasis protokol SMTP mendistribusikan tanda terima elektronik dan konfirmasi aktivasi hunian ke kotak masuk surel penyewa. Dokumen surel ini berfungsi sebagai arsip digital resmi yang dapat disimpan oleh penghuni maupun wali sebagai bukti transaksi dan aktivasi sewa yang sah. Pengiriman surel otomatis ini melengkapi pengingat pesan instan guna menjamin seluruh informasi administrasi tersampaikan tanpa kendala.
+Gerbang email SMTP mengirimkan salinan faktur resmi dan dokumen perjanjian sewa ke alamat surat elektronik calon penyewa. Salinan digital ini berfungsi sebagai arsip cadangan resmi yang dapat dicetak sewaktu-waktu oleh penyewa untuk keperluan administrasi pribadi. Pengiriman email otomatis memperkuat akuntabilitas pencatatan transaksi hunian indekos.
 
-Sistem memanfaatkan layanan pengirim surel berbasis protokol SMTP dengan enkripsi TLS untuk menerbitkan surat pemberitahuan aktivasi sesaat setelah status sewa disetujui pengelola. Surat elektronik dirancang menggunakan templat HTML responsif berdesain neo-brutalisme yang memuat identitas resmi indekos, spesifikasi kamar, dan tarif sewa bulanan. Penerapan antrean surel (*queued mail*) pada kerangka kerja Laravel menjamin proses pengiriman pesan berlangsung andal tanpa memperlambat interaksi pengguna pada aplikasi web. Bentuk surat elektronik konfirmasi dan sambutan aktivasi hunian tersebut ditampilkan pada Gambar 4.24.
+Surat elektronik dirancang menggunakan templat HTML profesional yang memuat logo dan rincian kontak resmi indekos. Tampilan email bukti tanda jadi sewa kamar diperlihatkan pada Gambar 4.24.
 
 <div align="center">
 
@@ -1177,16 +1177,16 @@ Sistem memanfaatkan layanan pengirim surel berbasis protokol SMTP dengan enkrips
 
 </div>
 
-Berdasarkan Gambar 4.24, tampilan surel pada peramban memperlihatkan identitas pengirim resmi Asri Boarding House dengan alamat surel pengelola serta keterangan waktu pengiriman pada sudut kanan atas. Bagian atas badan surat mengusung gaya neo-brutalisme dengan tajuk berlatar kuning cerah bergaris tepi hitam tebal yang memuat nama hunian dan penanda notifikasi resmi. Area pembuka menampilkan kartu sambutan berilustrasi rumah bertuliskan Selamat Datang Penyewa Baru yang dilanjutkan ucapan selamat atas peresmian kamar hunian. Bagian tengah menyajikan tabel spesifikasi kontrak sewa yang merinci penempatan Kamar 104, tarif bulanan senilai Rp 950.000, serta lencana hijau yang menandakan status hunian telah aktif. Sisi bawah surat memuat instruksi pemantauan tagihan dan pelaporan keluhan yang dilengkapi tombol kuning bertuliskan Buka Portal Penyewa untuk mempermudah akses langsung ke aplikasi.
+Berdasarkan Gambar 4.24, antarmuka surat elektronik menampilkan templat resmi berlogo Asri Boarding House dengan tajuk Bukti Pembayaran Reservasi Kamar Kost. Badan email memuat tabel rincian transaksi sewa, informasi jadwal masuk kamar, tata tertib indekos, serta lampiran dokumen nota dalam format PDF. Penyajian email ini memastikan penghuni memiliki dokumen arsip digital yang rapi dan terstruktur di kotak masuk surat elektronik pribadi.
 
 <br>
 
 ### 4.2.3 Implementasi Admin
 
 1. Implementasi Antarmuka Admin Login  
-Antarmuka admin login merupakan gerbang otentikasi khusus yang membatasi hak akses pengelolaan sistem hanya kepada penjaga dan pemilik indekos yang sah. Pemisahan pintu masuk ini menjaga keamanan master data kamar, pencatatan transaksi keuangan, dan data pribadi seluruh penghuni dari manipulasi pihak luar. Hak akses pengelola dikunci secara ketat oleh sistem melalui verifikasi kredensial serta penerapan kontrol akses berbasis peran (*role-based access control*).
+Antarmuka masuk admin merupakan pintu akses terbatas yang khusus disediakan bagi pengelola operasional Asri Boarding House. Modul ini menerapkan proteksi otentikasi ketat guna memisahkan hak akses data manajerial dari pengguna umum. Pengamanan ini mencegah pihak yang tidak berwenang memanipulasi data kamar, keuangan, dan data pribadi penghuni.
 
-Pengelola memasukkan alamat surel administrator dan kata sandi khusus yang diverifikasi secara langsung terhadap tabel pengguna terenkripsi di basis data. Sistem menerapkan perlindungan sesi otomatis dan pembatasan frekuensi percobaan masuk guna menangkal potensi serangan siber berbasis *brute force*. Tersedia pula opsi pengingat sesi masuk serta tautan pemulihan kata sandi apabila pengelola mengalami kendala ingatan terhadap kredensial akun. Tampilan halaman masuk portal manajemen administrator tersebut diperlihatkan pada Gambar 4.25.
+Halaman dilengkapi perlindungan pembatasan upaya login untuk mengantisipasi serangan keamanan siber. Tampilan formulir masuk pengelola indekos disajikan pada Gambar 4.25.
 
 <div align="center">
 
@@ -1198,14 +1198,14 @@ Pengelola memasukkan alamat surel administrator dan kata sandi khusus yang diver
 
 </div>
 
-Berdasarkan Gambar 4.25, antarmuka peramban menampilkan kartu otentikasi bergaya neo-brutalisme dengan garis tepi hitam tebal yang terbagi menjadi dua panel kontras di atas latar belakang bermotif titik-titik. Panel kiri berlatar hitam pekat menyajikan lencana kuning Asri Boarding House, tajuk Portal Manajemen Administrator, serta penjelasan fitur pemantauan statistik dan pengamanan akses terenkripsi. Panel kanan berlatar putih bersih memuat formulir Admin Login yang dilengkapi kolom isian alamat surel bergaris fokus ganda serta kolom kata sandi bersandi titik tersembunyi dengan ikon penampil sandi. Pada bagian bawah kolom isian, tersedia kotak centang pengingat sesi dan tautan bantuan lupa kata sandi yang berdampingan secara proporsional. Tombol aksi utama berwarna kuning cerah bertuliskan Masuk Administrator diletakkan di sisi bawah formulir dan diperkuat dengan tombol kembali ke beranda pada bagian luar kartu.
+Berdasarkan Gambar 4.25, halaman login admin tampil dengan bingkai kartu bergaya neo-brutalisme bergaris tepi hitam pekat dengan tajuk Masuk Portal Admin. Formulir menyediakan kolom isian nama pengguna atau email pengelola, bidang kata sandi bersandi rahasia, serta kotak opsi ingat sesi login. Tombol hitam tebal Masuk Dasbor di bagian bawah memvalidasi hak otorisasi akun sebelum mengarahkan admin ke ruang kendali operasional.
 
 <br>
 
 2. Implementasi Antarmuka Dashboard Admin  
-Antarmuka dashboard admin menyajikan rangkuman analitik operasional harian mengenai keterisian 32 unit kamar serta dinamika arus kas keuangan di Asri Boarding House secara terpadu. Pusat kendali ini mempermudah pengelola memantau performa bisnis hunian tanpa perlu melakukan kalkulasi manual dari tumpukan buku besar fisik. Ketersediaan visualisasi data komprehensif dalam satu layar mempercepat evaluasi okupansi dan perumusan keputusan manajerial indekos.
+Dasbor utama admin menyajikan ringkasan metrik statistik operasional Asri Boarding House secara terpadu. Pengelola dapat memantau tingkat keterisian 32 unit kamar, total pemasukan kas bulanan, jumlah penyewa aktif, serta keluhan yang belum terselesaikan. Pemantauan terpusat ini membantu pengambil keputusan mengevaluasi kinerja bisnis indekos secara cepat dan akurat.
 
-Sistem menghimpun data secara waktu nyata dari tabel kamar, reservasi, dan transaksi pembayaran guna memperbarui kalkulasi pendapatan serta tingkat keterisian unit. Pengelola dapat menjelajahi seluruh modul pengelolaan secara leluasa melalui bilah navigasi samping yang mengelompokkan menu utama, transaksi, laporan, dan pengaturan. Dasbor juga menyertakan fitur pengalihan tema visual serta kartu profil pengelola yang mempermudah pemantauan status sesi otentikasi aktif. Visualisasi antarmuka dasbor operasional dan keuangan administrator tersebut disajikan pada Gambar 4.26.
+Diagram visual interaktif menyajikan tren pendapatan dan pengeluaran kas rutin dari bulan ke bulan. Tampilan dasbor analitik pengelola diperlihatkan pada Gambar 4.26.
 
 <div align="center">
 
@@ -1217,14 +1217,14 @@ Sistem menghimpun data secara waktu nyata dari tabel kamar, reservasi, dan trans
 
 </div>
 
-Berdasarkan Gambar 4.26, halaman dasbor menampilkan tajuk kuning bertuliskan Dashboard Admin dengan bilah navigasi vertikal di sisi kiri yang mengelompokkan menu operasional secara terstruktur. Area atas menyajikan delapan kartu metrik bergaya neo-brutalisme dengan aksen warna kontras yang merinci total 32 unit kamar, ketersediaan 29 kamar kosong, rekapitulasi pemasukan, pengeluaran, keuntungan bersih, status tagihan, reservasi masuk, serta metrik interaksi komunikasi. Pada area tengah sebelah kiri, terpampang grafik batang Tren Pemasukan 12 Bulan Terakhir yang membandingkan volume arus kas masuk dan beban biaya operasional. Sisi kanan grafik batang memuat diagram donat Status Kamar yang memvisualisasikan proporsi unit tersedia sebesar 29 kamar dan unit terisi sebanyak 3 kamar dengan kode warna hijau dan biru. Bagian bawah antarmuka memuat area ringkasan Tagihan Terbaru guna memberikan akses pemantauan cepat terhadap transaksi penyewa yang baru saja tercatat ke dalam sistem.
+Berdasarkan Gambar 4.26, layar dasbor menampilkan deretan kartu metrik berwarna kuning dan biru yang merangkum angka okupansi kamar, jumlah penghuni aktif, total pendapatan, dan keluhan tertunda. Bagian tengah memuat grafik batang statistik pendapatan bulanan serta tabel daftar reservasi terbaru yang membutuhkan verifikasi admin. Bilah navigasi vertikal di sisi kiri layar menyediakan akses instan menuju seluruh menu manajemen operasional indekos.
 
 <br>
 
 3. Implementasi Antarmuka Manajemen Kamar  
-Antarmuka manajemen kamar menyediakan fasilitas pengelolaan data induk untuk 32 unit hunian yang terbagi ke dalam berbagai klasifikasi tipe kamar di Asri Boarding House. Modul ini menjadi pusat kendali inventaris ruangan guna memastikan status keterisian fisik kamar di lapangan selalu sinkron dengan informasi pada sistem basis data. Ketepatan pembaruan data unit mencegah terjadinya tumpang tindih pesanan serta mempermudah pengawasan fasilitas hunian secara terpadu.
+Modul manajemen kamar memberikan kendali penuh bagi pengelola untuk mendata status, fasilitas, dan tarif seluruh unit di Asri Boarding House. Admin dapat menambah kamar baru, memperbarui ketersediaan unit, atau mengubah rincian harga sewa secara mandiri. Pengelolaan data fisik kamar yang tertib mencegah kesalahan penempatan hunian bagi calon penyewa.
 
-Pengelola dapat mendaftarkan unit kamar baru, memperbarui spesifikasi fasilitas, menyetel tarif sewa bulanan, serta menyesuaikan status kamar secara dinamis. Halaman ini menyediakan panel penyaring terstruktur berdasarkan tipe ruangan, status keterisian, dan tingkatan lantai guna mempercepat pencarian unit tertentu. Sistem juga mendukung pengalihan tata letak antara format tabel terinci dan denah kisi visual untuk memberikan fleksibilitas pemantauan fisik kamar. Tampilan antarmuka pengelolaan master data kamar indekos tersebut diperlihatkan pada Gambar 4.27.
+Daftar kamar dilengkapi fitur penyaring lantai dan status hunian untuk mempermudah inventarisasi ruang indekos. Tampilan antarmuka manajemen data kamar disajikan pada Gambar 4.27.
 
 <div align="center">
 
@@ -1236,14 +1236,14 @@ Pengelola dapat mendaftarkan unit kamar baru, memperbarui spesifikasi fasilitas,
 
 </div>
 
-Berdasarkan Gambar 4.27, bagian atas halaman menyajikan tajuk Daftar dan Kondisi Kamar yang dilengkapi tombol aksi cepat Kelola Fasilitas serta tombol Tambah Kamar berwarna kuning cerah. Tepat di bawah tajuk, terpampang empat kartu status bergaya neo-brutalisme dengan aksen warna kontras yang merangkum 32 unit total kamar, 29 unit kamar tersedia, 3 unit kamar terisi, serta status pemeliharaan kosong. Area tengah menyajikan deretan tombol penyaring status interaktif, opsi pengalih tampilan tabel atau denah visual, serta panel penyaring bertingkat untuk menyortir tipe kamar, status, dan posisi lantai. Bagian utama halaman memuat tabel master data berbingkai tegas dengan kepala kolom berwarna kuning yang merinci foto unit, nomor kamar, lantai, tipe, daftar lencana fasilitas, tarif sewa, status kamar, penyewa aktif, dan tombol aksi. Baris pertama tabel menampilkan contoh unit Kamar 101 pada Lantai 1 bertipe VIP dengan deretan lencana fasilitas penunjang lengkap, tarif bulanan senilai Rp 1.400.000, serta lencana status terisi yang menunjukkan nama akun penghuni aktif.
+Berdasarkan Gambar 4.27, antarmuka menyajikan tabel inventaris 32 unit kamar lengkap dengan nomor kamar, tipe kamar, penetapan lantai, harga sewa bulanan, dan lencana status keterisian. Sudut atas tabel menyediakan tombol Tambah Kamar Baru berwarna kuning cerah, kolom pencarian cepat, serta menu penyaring unit kamar kosong. Ujung kanan setiap baris memuat tombol aksi Edit dan Hapus yang mempermudah pembaruan data spesifikasi kamar secara seketika.
 
 <br>
 
 4. Implementasi Antarmuka Manajemen Fasilitas  
-Antarmuka manajemen fasilitas digunakan oleh pengelola untuk mengonfigurasi direktori sarana dan prasarana kamar yang ditawarkan kepada calon penyewa di Asri Boarding House. Pengaturan master sarana ini menjamin konsistensi data spesifikasi ruangan yang ditampilkan pada katalog publik maupun lembar rincian kontrak hunian. Kehadiran modul inventaris fasilitas yang terpadu mempermudah pemeliharaan data sarana secara terpusat tanpa risiko inkonsistensi antarhalaman aplikasi.
+Antarmuka manajemen fasilitas digunakan untuk memperbarui sarana komunal yang ditampilkan pada katalog publik indekos. Pengelola dapat menambah sarana baru, mengubah deskripsi aturan pakai, dan mengunggah foto dokumentasi fisik ruangan. Pembaruan informasi sarana yang berkala memastikan fasilitas di website selalu mencerminkan kondisi lapangan sebenarnya.
 
-Pengelola dapat mendaftarkan sarana baru melalui formulir penambahan yang memuat nama fasilitas, ikon grafis emoji, deskripsi manfaat ruangan, dan penentuan status keaktifan. Sistem secara instan memperbarui tabel relasi fasilitas kamar di basis data saat pengelola menyunting informasi atau mengubah ketersediaan sarana tertentu. Tersedia pula tombol navigasi cepat untuk beralih kembali ke manajemen kamar guna mempercepat alur kerja pemeliharaan master data operasional. Tampilan halaman pengaturan master sarana dan prasarana indekos tersebut diperlihatkan pada Gambar 4.28.
+Sistem menyertakan kontrol urutan tata letak fasilitas agar sarana unggulan dapat ditonjolkan pada halaman utama. Tampilan antarmuka manajemen sarana indekos ditunjukkan pada Gambar 4.28.
 
 <div align="center">
 
@@ -1255,14 +1255,14 @@ Pengelola dapat mendaftarkan sarana baru melalui formulir penambahan yang memuat
 
 </div>
 
-Berdasarkan Gambar 4.28, bagian atas antarmuka memuat judul Daftar Master Fasilitas yang didampingi tombol navigasi Kembali ke Kamar serta tombol Tambah Fasilitas berwarna kuning bergaris tepi hitam tebal. Area utama menyajikan tabel data bergaya neo-brutalisme dengan kepala kolom berlatar kuning cerah yang mencakup kolom ikon, nama fasilitas, deskripsi fungsi, status, dan aksi manajerial. Kolom ikon menampilkan simbol visual representatif seperti penyejuk udara, koneksi internet, kelistrikan, fasilitas sanitasi, lemari, meja belajar, hingga kasur tidur berkualitas. Setiap baris fasilitas dilengkapi deskripsi fungsi yang informatif serta lencana status berwarna hijau toska yang menandakan sarana berada dalam kondisi aktif digunakan. Pada sisi paling kanan tabel, disediakan tautan aksi berwarna biru untuk menyunting data fasilitas serta tautan teks merah guna menghapus sarana yang sudah tidak lagi disediakan indekos.
+Berdasarkan Gambar 4.28, halaman menampilkan kartu tabel fasilitas umum yang memuat nama fasilitas, keterangan fungsi ruangan, ikon kategori, dan foto pratinjau sarana. Sisi atas tabel memuat tombol Tambah Fasilitas dengan aksen kuning khas serta bidang filter pencarian nama sarana. Kolom aksi di sisi kanan menyediakan kontrol untuk mengedit narasi fasilitas atau menonaktifkan sarana yang sedang dalam masa perbaikan fisik.
 
 <br>
 
 5. Implementasi Antarmuka Manajemen Penyewa  
-Antarmuka manajemen penyewa memuat direktori induk seluruh penghuni aktif yang menempati unit hunian di Asri Boarding House secara terpusat. Basis data kependudukan indekos ini memfasilitasi pengelola dalam memantau legalitas nomor induk kependudukan, masa aktif sewa kamar, serta kontak darurat perwakilan wali penghuni. Pendataan terstruktur ini menjamin akuntabilitas kepenghunian sekaligus mempermudah penyusunan laporan administratif secara berkala.
+Antarmuka manajemen penyewa memuat basis data seluruh penghuni aktif yang tinggal di Asri Boarding House. Modul ini menyimpan riwayat identitas diri, nomor kontak darurat keluarga, nomor kamar yang ditempati, serta tanggal berakhirnya masa sewa. Manajemen data penghuni yang rapi memudahkan pengelola menjalin komunikasi dan memeriksa ketertiban sewa.
 
-Pengelola dapat melakukan penelusuran data penghuni secara cepat melalui bilah pencarian cerdas berbasis nama, kontak, maupun nomor kamar hunian. Sistem menyediakan fitur penyaringan status keaktifan serta fasilitas ekspor berkas kependudukan ke dalam format PDF dan lembar kerja Excel secara instan. Setiap baris data terhubung secara otomatis ke modul penagihan bulanan dan riwayat reservasi guna mempermudah pemantauan rekam jejak sewa penghuni. Tampilan antarmuka pengelolaan direktori penghuni indekos tersebut disajikan pada Gambar 4.29.
+Admin dapat menonaktifkan akun penyewa saat masa sewa berakhir atau mencetak biodata penghuni untuk arsip lingkungan. Format antarmuka manajemen data penyewa diperlihatkan pada Gambar 4.29.
 
 <div align="center">
 
@@ -1274,14 +1274,14 @@ Pengelola dapat melakukan penelusuran data penghuni secara cepat melalui bilah p
 
 </div>
 
-Berdasarkan Gambar 4.29, bagian atas halaman menampilkan tajuk Daftar Penyewa Kost yang dilengkapi tombol ekspor dokumen berformat PDF dan lembar sebar Excel serta tombol Tambah Penyewa berwarna kuning cerah. Tepat di bawah tajuk, tersedia panel pencarian berbingkai tebal yang memuat kolom penelusuran kata kunci terpadu berdampingan dengan menu tarik-turun penyaring status keaktifan penyewa. Tabel data bergaya neo-brutalisme mengusung kepala kolom berlatar kuning yang merinci nama kontak, alokasi nomor kamar, nomor induk kependudukan, durasi sewa, tanggal masuk, data wali, status keaktifan, dan menu aksi. Deretan baris data menampilkan sebaran penghuni aktif pada unit Kamar 101 tipe VIP, Kamar 104 tipe Deluxe, dan Kamar 105 tipe Standar dengan paket durasi sewa satu bulan hingga dua belas bulan. Kolom status menampilkan lencana hijau toska bertuliskan Aktif untuk setiap penghuni yang sah, sementara kolom aksi di sisi paling kanan menyediakan tombol interaksi untuk memeriksa rincian profil penyewa.
+Berdasarkan Gambar 4.29, antarmuka menyajikan tabel komprehensif data penghuni yang mencantumkan nama penyewa, nomor WhatsApp, unit kamar hunian, tanggal mulai sewa, dan lencana status Aktif. Panel atas tabel dilengkapi fitur pencarian nama penyewa serta tombol penyaring penghuni berdasarkan nomor lantai kamar. Tombol Detail di sisi kanan baris membuka berkas dokumen identitas KTP penghuni dan riwayat keterlambatan pembayaran sewa secara lengkap.
 
 <br>
 
 6. Implementasi Antarmuka Manajemen Reservasi  
-Antarmuka manajemen reservasi berfungsi sebagai pusat validasi administratif bagi pengelola indekos untuk meninjau seluruh permohonan sewa baru yang diajukan oleh calon penyewa. Modul ini menyaring pesanan yang masuk dan memastikan setoran uang muka maupun pelunasan sewa melalui gerbang pembayaran digital telah terverifikasi secara valid oleh sistem. Ketersediaan rekapitulasi pemesanan secara terpusat mencegah terjadinya pesanan ganda serta memberikan kepastian alokasi unit kamar sebelum calon penghuni menempati lokasi.
+Antarmuka manajemen reservasi mengelola daftar pesanan kamar baru yang diajukan oleh calon penyewa melalui website. Pengelola dapat meninjau kelengkapan identitas pemesan, memeriksa status transfer uang muka, dan menyetujui pengalokasian unit kamar. Penanganan reservasi yang terpusat mencegah terjadinya pesanan ganda pada kamar yang sama.
 
-Pengelola dapat melakukan penelusuran transaksi reservasi melalui kolom pencarian terpadu berdasarkan nomor identitas pesanan, nama calon penghuni, atau unit kamar tertentu. Panel penyaring menyediakan opsi pemilahan status reservasi yang dilengkapi tombol eksekusi filter dan tombol penyetel ulang guna mempercepat penemuan berkas sewa. Setiap entri pemesanan terhubung dengan rincian bukti transaksi digital sehingga pengelola dapat memeriksa detail pembayaran dan kelengkapan profil pemesan secara menyeluruh. Tampilan antarmuka verifikasi dan manajemen reservasi kamar masuk tersebut diperlihatkan pada Gambar 4.30.
+Admin dapat membatalkan pesanan kedaluwarsa secara otomatis agar unit kamar dapat dipesan kembali oleh calon penyewa lain. Tampilan antarmuka pemantauan reservasi disajikan pada Gambar 4.30.
 
 <div align="center">
 
@@ -1293,14 +1293,14 @@ Pengelola dapat melakukan penelusuran transaksi reservasi melalui kolom pencaria
 
 </div>
 
-Berdasarkan Gambar 4.30, halaman antarmuka menampilkan spanduk tajuk kuning bertuliskan Daftar Reservasi Kamar dengan kartu utama berlabel Manajemen Reservasi Calon Penyewa di bawahnya. Area atas kartu memuat panel pencarian bergaris tepi hitam tebal yang menyediakan kolom isian kata kunci pencarian, menu tarik-turun penyaring status reservasi, tombol kuning Filter, serta tombol Reset. Tabel data bergaya neo-brutalisme tersusun dengan kepala kolom berlatar kuning cerah yang mencakup rincian nomor pesanan, nama pemesan, unit kamar, tipe sewa, tanggal mulai, status, dan tombol aksi. Deretan baris tabel menyajikan daftar transaksi reservasi kamar seperti penempatan Kamar 105, Kamar 104, dan Kamar 101 dengan model sewa bulanan yang telah berhasil diproses oleh sistem. Kolom status menampilkan lencana persegi bergaris batas tegas bertuliskan Dikonfirmasi yang berdampingan dengan tombol biru toska bertuliskan Detail untuk meninjau dokumen pemesanan secara mendalam.
+Berdasarkan Gambar 4.30, halaman menampilkan tabel transaksi reservasi kamar lengkap dengan nomor pesanan, nama calon penghuni, tipe kamar, tanggal mulai sewa, dan status pembayaran uang muka. Sisi atas kartu menyajikan panel filter status pesanan mulai dari Menunggu Pembayaran, Terverifikasi, hingga Dibatalkan. Kolom aksi menyediakan tombol Konfirmasi untuk menyetujui penempatan kamar serta tombol Rincian untuk memeriksa data identitas pemohon.
 
 <br>
 
 7. Implementasi Antarmuka Manajemen Tagihan  
-Antarmuka manajemen tagihan mengontrol siklus penerbitan faktur sewa bulanan otomatis bagi seluruh penghuni aktif yang menempati unit hunian Asri Boarding House. Modul ini mengotomatisasi pemantauan masa jatuh tempo pembayaran sewa setiap tanggal sepuluh guna meminimalkan risiko keterlambatan dan tunggakan kas masuk. Rekapitulasi status tagihan secara terpusat memastikan arus kas operasional indekos tercatat secara transparan dan tertib administrasi.
+Antarmuka manajemen tagihan mengontrol siklus penerbitan faktur sewa bulanan bagi seluruh penghuni aktif Asri Boarding House. Modul ini memantau masa jatuh tempo pembayaran setiap tanggal sepuluh guna meminimalkan keterlambatan kas masuk. Rekapitulasi status tagihan secara terpusat memastikan tata kelola keuangan indekos berjalan tertib dan transparan.
 
-Sistem secara berkala menyusun lembar tagihan baru berdasarkan konfigurasi tarif sewa kamar serta riwayat pemesanan yang tercatat di basis data. Pengelola dapat melakukan penelusuran riwayat pembayaran melalui panel penyaring kata kunci dan status pelunasan transaksi secara praktis. Setiap rincian tagihan terintegrasi langsung dengan saluran gerbang pembayaran digital Midtrans untuk memverifikasi keabsahan dana sewa yang disetor penghuni. Tampilan antarmuka pengawasan dan manajemen tagihan sewa bulanan tersebut disajikan pada Gambar 4.31.
+Pengelola dapat menyaring riwayat pembayaran dan memverifikasi dana sewa yang terhubung langsung ke Midtrans secara praktis. Tampilan antarmuka manajemen tagihan sewa bulanan disajikan pada Gambar 4.31.
 
 <div align="center">
 
@@ -1312,14 +1312,14 @@ Sistem secara berkala menyusun lembar tagihan baru berdasarkan konfigurasi tarif
 
 </div>
 
-Berdasarkan Gambar 4.31, halaman antarmuka menampilkan spanduk tajuk kuning bertuliskan Daftar Tagihan Kost dengan kartu utama berlabel Semua Tagihan Bulanan. Bagian atas kartu memuat panel penyaring berbingkai hitam tebal yang menyediakan kolom isian pencarian kata kunci, menu tarik-turun status pembayaran, tombol kuning Filter, serta tombol Reset. Tabel data bergaya neo-brutalisme tersusun rapi dengan kepala kolom berlatar kuning cerah yang mencakup nomor pesanan tagihan, nama penyewa, nomor kamar, periode tagihan, tanggal jatuh tempo, nominal tagihan, status, saluran metode pembayaran, dan tombol aksi. Baris data memperlihatkan daftar faktur sewa bulanan untuk unit Kamar 105 senilai Rp 750.000 serta deretan tagihan berkelanjutan untuk unit Kamar 101 senilai Rp 1.283.380 per periode. Seluruh baris transaksi menampilkan lencana status hijau toska bertuliskan Lunas dengan keterangan kanal pembayaran Midtrans serta tombol biru toska bertuliskan Detail untuk memeriksa struk pembayaran.
+Berdasarkan Gambar 4.31, halaman menampilkan kartu bertajuk Daftar Tagihan Bulanan Penyewa dengan tombol sinkronisasi tagihan dan filter pencarian di sisi atas. Tabel rekapitulasi memuat rincian nomor invoice, nama penghuni, unit kamar, nominal tagihan sewa, tanggal jatuh tempo, lencana status Belum Dibayar, serta kolom aksi. Tombol Detail di ujung kanan baris memungkinkan pengelola meninjau rincian komponen tagihan dan menerbitkan ulang bukti faktur sewa.
 
 <br>
 
 8. Implementasi Antarmuka Manajemen Pengeluaran  
-Antarmuka manajemen pengeluaran berfungsi mengelola seluruh rekaman transaksi arus kas keluar operasional pemeliharaan Asri Boarding House secara terpusat dan terperinci. Pencatatan pengeluaran harian ini mencegah terjadinya selisih pembukuan kas fisik yang rentan terjadi akibat nota belanja tercecer atau transaksi yang tidak tercatat. Transparansi data belanja operasional mempermudah pengelola dalam mengawasi efisiensi anggaran rutin demi menjaga stabilitas margin laba bersih usaha indekos.
+Antarmuka manajemen pengeluaran mencatat seluruh pengeluaran kas operasional harian dan perawatan fisik gedung indekos. Pengelola mendata biaya listrik, tagihan air PDAM, pembelian perlengkapan kebersihan, dan upah perbaikan fasilitas. Pencatatan arus keluar kas yang teratur menjaga keakuratan laba bersih usaha Asri Boarding House.
 
-Pengelola dapat mendaftarkan pos beban baru dengan menekan tombol penambahan pengeluaran yang membuka formulir isian rincian belanja dan lampiran berkas bukti transaksi. Halaman ini juga dilengkapi tombol ekspor data menuju format PDF dan lembar kerja Excel guna memfasilitasi kebutuhan pengarsipan pembukuan offline. Panel penelusuran memungkinkan pemfilteran data kas keluar berdasarkan pencocokan nama pengeluaran, pengelompokan kategori beban, serta rentang tanggal kalender secara fleksibel. Tampilan antarmuka pengawasan dan pencatatan biaya pengeluaran operasional indekos tersebut diperlihatkan pada Gambar 4.32.
+Setiap pengeluaran dapat dilampiri foto bukti kuitansi belanja untuk menjamin keabsahan audit keuangan bulanan. Tampilan antarmuka pencatatan biaya operasional tercantum pada Gambar 4.32.
 
 <div align="center">
 
@@ -1331,14 +1331,14 @@ Pengelola dapat mendaftarkan pos beban baru dengan menekan tombol penambahan pen
 
 </div>
 
-Berdasarkan Gambar 4.32, bagian atas antarmuka memuat spanduk tajuk kuning bertuliskan Pencatatan Pengeluaran (Arus Kas Keluar) yang menaungi kartu utama Daftar Pengeluaran Operasional Kost. Sisi kanan atas kartu menyediakan jajaran tombol aksi bergaris tepi tegas yang mencakup tombol merah Export PDF, tombol hijau Export Excel, serta tombol kuning Tambah Pengeluaran. Area pencarian menyediakan panel penyaring terpadu yang memuat kolom isian nama pengeluaran, menu tarik-turun kategori, kolom pemilihan tanggal mulai dan selesai, serta tombol Filter dan Reset. Tabel data bergaya neo-brutalisme tersusun rapi dengan kepala kolom berlatar kuning cerah yang memuat informasi tanggal, nama pengeluaran, kategori, nominal rupiah, bukti nota, keterangan, dan kolom aksi. Baris tabel menampilkan contoh pencatatan pos beban tanggal 11 Oktober 2026 berupa pembayaran pajak kost sebesar Rp 200.000 berkategori lainnya lengkap dengan tiga tombol aksi untuk melihat detail, menyunting, maupun menghapus rekaman data.
+Berdasarkan Gambar 4.32, antarmuka menyediakan formulir input biaya operasional dan tabel riwayat pengeluaran kas bulanan yang tertata rapi. Tabel memuat tanggal transaksi, kategori pengeluaran, uraian peruntukan dana, nominal biaya, dan nama staf penanggung jawab pengeluaran. Sisi atas tabel menyajikan rekapitulasi total akumulasi pengeluaran bulan berjalan serta tombol Tambah Biaya Operasional untuk mencatat transaksi kas baru.
 
 <br>
 
 9. Implementasi Antarmuka Manajemen Laporan Pemasukan  
-Antarmuka manajemen laporan menyajikan rekapitulasi menyeluruh arus kas indekos yang memadukan total penerimaan tagihan sewa dengan akumulasi pengeluaran operasional. Halaman rekapitulasi ini memangkas durasi proses tutup buku bulanan yang sebelumnya memakan waktu berhari-hari menjadi instan dan otomatis. Ketersediaan kalkulasi saldo kas yang akurat memberikan gambaran transparan mengenai kondisi kesehatan finansial bisnis hunian bagi pemilik indekos.
+Modul laporan pemasukan mengolah akumulasi pembayaran sewa kamar menjadi laporan keuangan komprehensif bagi pemilik indekos. Sistem memadukan data transaksi Midtrans dan pembayaran tunai guna menghitung total pendapatan kotor dan bersih. Laporan keuangan terstruktur ini menjadi dasar evaluasi bisnis dan perencanaan ekspansi usaha indekos ke depan.
 
-Pengelola dapat menyesuaikan penyajian rekapitulasi finansial melalui pemilihan parameter bulan kalender, tahun anggaran, serta status pelunasan transaksi. Sistem secara otomatis mengalkulasi selisih arus kas masuk terhadap kas keluar untuk memunculkan nominal saldo bersih secara real-time. Informasi pembukuan kas yang terhimpun dapat langsung diunduh menuju dokumen cetak PDF maupun lembar kerja spreadsheet Excel guna kebutuhan audit berkala. Visualisasi antarmuka laporan pembukuan arus kas dan penagihan bulanan ini disajikan pada Gambar 4.33.
+Laporan keuangan dapat diekspor ke dalam berkas Excel dan dokumen PDF untuk kebutuhan arsip pembukuan resmi. Visualisasi rekapitulasi laporan pendapatan disajikan pada Gambar 4.33.
 
 <div align="center">
 
@@ -1350,14 +1350,14 @@ Pengelola dapat menyesuaikan penyajian rekapitulasi finansial melalui pemilihan 
 
 </div>
 
-Berdasarkan Gambar 4.33, bagian atas antarmuka memuat spanduk tajuk kuning bertuliskan Laporan Penagihan Bulanan dengan panel utama Filter dan Ekspor Laporan. Panel tersebut menyediakan tiga menu tarik-turun untuk menyaring bulan, tahun, dan status pembayaran, berdampingan dengan tombol kuning Filter, tombol putih Reset, tombol merah PDF, serta tombol hijau Excel. Bagian tengah halaman menyajikan tiga kartu metrik bergaya neo-brutalisme dengan garis batas hitam tebal yang merangkum posisi finansial indekos. Ketiga kartu tersebut meliputi kartu biru Total Arus Kas Masuk senilai Rp 36.917.740, kartu merah muda Total Arus Kas Keluar sebesar Rp 200.000, serta kartu hijau toska Saldo Bersih Akhir senilai Rp 36.717.740. Pada area bawah antarmuka, terdapat kartu Riwayat Keuangan Kost yang menyajikan tabel data berkepala kuning cerah dengan kolom nomor pesanan, periode, nama penyewa, nomor kamar, total tagihan, metode, dan status transaksi.
+Berdasarkan Gambar 4.33, halaman menyajikan dasbor rekapitulasi keuangan yang memuat ringkasan pendapatan sewa kotor, total pengeluaran operasional, dan laba bersih usaha. Panel tengah menampilkan grafik garis tren pemasukan bulanan serta tabel rincian transaksi kas masuk dengan kolom penyaring rentang tanggal. Bagian atas kartu menyediakan tombol hijau Ekspor Excel dan tombol merah Unduh PDF untuk mencetak laporan keuangan berkala.
 
 <br>
 
 10. Implementasi Antarmuka Manajemen Keluhan Penyewa  
-Antarmuka manajemen keluhan penyewa menjadi pusat penanganan operasional untuk mencatat kendala fasilitas dan laporan kerusakan unit kamar dari para penghuni indekos. Sistem tiket pengaduan ini memastikan setiap kendala sarana hunian terdokumentasi secara tertib sehingga pengelola dapat segera menentukan tindakan perbaikan. Penanganan kendala fasilitas yang cepat dan terukur mendukung kenyamanan tinggal penghuni sekaligus memelihara kondisi aset fisik bangunan Asri Boarding House.
+Antarmuka manajemen keluhan mengelola laporan kendala sarana yang dikirimkan oleh penghuni Asri Boarding House. Pengelola dapat memantau tingkat kegentingan aduan kerusakan fasilitas air, listrik, atau gangguan ketertiban lingkungan. Penanganan keluhan yang cepat dan terdokumentasi meningkatkan kepuasan dan loyalitas tinggal para penyewa.
 
-Pengelola dapat memilah tiket kendala berdasarkan tahapan penanganan melalui tombol filter status pending, diproses, maupun aduan yang telah tuntas. Bilah pencarian kata kunci disematkan di sisi kanan panel guna mempermudah pelacakan laporan spesifik berdasarkan nama penghuni atau nomor kamar. Setiap baris aduan menyediakan tombol tindakan peninjauan detail untuk memeriksa kronologi kejadian serta memperbarui tahapan penanganan fasilitas. Tampilan meja kerja penanganan tiket keluhan fasilitas kamar tersebut disajikan pada Gambar 4.34.
+Status laporan dapat diubah dari tahap diterima, sedang diproses, hingga selesai ditangani oleh tim perbaikan indekos. Tampilan modul penanganan keluhan fasilitas indekos diperlihatkan pada Gambar 4.34.
 
 <div align="center">
 
@@ -1369,14 +1369,14 @@ Pengelola dapat memilah tiket kendala berdasarkan tahapan penanganan melalui tom
 
 </div>
 
-Berdasarkan Gambar 4.34, bagian atas halaman menampilkan spanduk tajuk kuning bertuliskan Manajemen Keluhan & Pengaduan yang menaungi kartu utama Daftar Pengaduan Masuk. Bagian atas kartu memuat deretan tombol tab penyaring status tiket yang terdiri atas tombol toska Semua Keluhan, Pending, Diproses, serta Selesai yang bersanding dengan bilah pencarian dan tombol kuning Cari. Tabel data bergaya neo-brutalisme tersusun dengan garis batas hitam tegas dan kepala kolom kuning cerah yang mencakup informasi penyewa, kamar, judul laporan, kategori, tanggal lapor, status, dan aksi. Baris tabel memuat rekaman aduan fasilitas Kamar 101 dengan judul laporan lampu mati yang masuk pada kategori kamar tertanggal 26 September 2026 pukul 17:19. Kolom status menampilkan lencana persegi hijau toska bertuliskan Selesai yang berdampingan dengan tombol biru toska bertuliskan Detail untuk memeriksa dokumen laporan secara mendalam.
+Berdasarkan Gambar 4.34, antarmuka menampilkan tabel daftar keluhan yang mencakup nama pelapor, nomor kamar, kategori kendala sarana, tanggal pelaporan, dan lencana status penanganan. Tombol aksi di sisi kanan memungkinkan admin membuka foto bukti kerusakan fasilitas serta memperbarui status perbaikan menjadi Selesai. Panel filter di atas tabel memudahkan pengelola memilah laporan yang membutuhkan tindakan darurat segera.
 
 <br>
 
 11. Implementasi Antarmuka Manajemen Fitur Chat Guest  
-Antarmuka manajemen obrolan tamu menjadi pusat komunikasi real-time bagi pengelola untuk merespons pertanyaan calon penyewa yang dikirim melalui beranda publik Asri Boarding House. Integrasi percakapan terpadu ini memfasilitasi pengelola dalam melayani konsultasi kamar secara langsung lewat peramban komputer tanpa perlu berpindah ke perangkat telepon pintar. Kecepatan dan ketepatan balasan informasi ketersediaan unit melalui kanal percakapan digital efektif meningkatkan minat konversi calon penghuni dalam menyewa kamar.
+Antarmuka manajemen obrolan tamu menjadi pusat layanan admin dalam melayani pertanyaan pengunjung situs secara langsung. Pengelola dapat membalas pesan calon penyewa, menjelaskan ketersediaan unit kamar, dan mengarahkan tamu menuju proses survei lokasi. Kecepatan tanggapan melalui fitur obrolan interaktif ini secara nyata meningkatkan konversi pemesanan kamar indekos.
 
-Panel navigasi sisi kiri mengurutkan antrean pesan masuk dari calon penyewa berdasarkan tanda waktu pengiriman pesan paling mutakhir. Pengelola dapat memilih salah satu sesi obrolan untuk membaca riwayat percakapan serta mengetikkan balasan teks melalui kolom isian pesan di bagian bawah ruang obrolan. Header percakapan turut menyediakan tombol aksi cepat untuk mengalihkan komunikasi menuju WhatsApp, memperbarui status tiket konsultasi menjadi selesai, atau menghapus riwayat sesi obrolan. Tampilan antarmuka penanganan pesan interaktif calon penyewa tersebut disajikan pada Gambar 4.35.
+Sistem menampilkan notifikasi audio dan visual saat pesan tamu baru masuk ke ruang obrolan pengelola. Tampilan antarmuka penanganan pesan tamu disajikan pada Gambar 4.35.
 
 <div align="center">
 
@@ -1388,16 +1388,16 @@ Panel navigasi sisi kiri mengurutkan antrean pesan masuk dari calon penyewa berd
 
 </div>
 
-Berdasarkan Gambar 4.35, antarmuka menampilkan spanduk tajuk kuning bertuliskan Obrolan Guest (Calon Penyewa) dengan tata letak layar terbagi menjadi dua kartu neo-brutalisme bergaris tepi hitam tebal. Kartu sisi kiri bertajuk Daftar Pertanyaan Guest memuat antrean penanya dalam kartu kuning aktif yang merangkum nama tamu, nomor kontak tersamar, tanda waktu pesan, dan cuplikan obrolan terakhir. Kartu sisi kanan menyajikan ruang obrolan aktif dengan tajuk yang dilengkapi tombol hijau Hubungi WA, tombol kuning Tandai Selesai, dan tombol merah Hapus. Area percakapan memperlihatkan gelembung pesan masuk berlatar putih dari tamu dengan pesan pembuka serta gelembung balasan berlatar kuning cerah dari pengelola lengkap dengan label pengirim dan tanda waktu pengiriman yang presisi. Bagian dasar ruang obrolan dilengkapi kolom isian untuk mengetik balasan teks serta tombol hitam bertuliskan Kirim dengan ikon pesawat kertas di sudut kanan.
+Berdasarkan Gambar 4.35, antarmuka mengadopsi tata letak obrolan dua panel dengan daftar kontak tamu di sisi kiri dan jendela percakapan aktif pada panel kanan. Panel obrolan menampilkan riwayat pertukaran pesan teks lengkap dengan penanda waktu serta status pesan terkirim. Kotak pengetikan di bagian bawah dilengkapi pintasan respons templat cepat untuk mempermudah admin menjawab pertanyaan berulang secara efisien.
 
 <br>
 
 ### 4.2.4 Implementasi Penyewa Aktif
 
 1. Implementasi Antarmuka Login Penyewa Aktif  
-Antarmuka login penyewa aktif merupakan gerbang otentikasi khusus bagi penghuni resmi untuk mengakses seluruh layanan mandiri sewa kamar Asri Boarding House. Pintu akses terproteksi ini memastikan privasi data tagihan bulanan, pencatatan transaksi pembayaran digital, dan dokumen kontrak hunian hanya dapat dibuka oleh penghuni bersangkutan. Pembatasan hak akses berbasis verifikasi akun menjaga integritas data operasional indekos serta menghindarkan risiko kebocoran data antarpenghuni.
+Antarmuka masuk penyewa aktif memberikan jalur autentikasi khusus bagi penghuni yang telah resmi menempati unit kamar indekos. Modul ini mengarahkan penghuni langsung ke portal layanan mandiri kamar tanpa tercampur dengan alur reservasi calon penyewa. Autentikasi sesi terproteksi memastikan riwayat pembayaran dan data privasi penghuni tetap aman.
 
-Penghuni dapat melakukan otentikasi secara praktis melalui integrasi akun Google maupun memasukkan kombinasi alamat surel atau nomor WhatsApp beserta kata sandi terdaftar. Sistem turut menyediakan opsi pengingat sesi login dan tautan pemulihan kata sandi bagi pengguna yang mengalami kendala lupa kredensial akun sewa. Jika identitas terverifikasi aktif, sistem seketika mengalihkan sesi pengguna menuju dasbor layanan mandiri hunian secara aman. Tampilan antarmuka formulir masuk akun bagi penghuni aktif indekos diperlihatkan pada Gambar 4.36.
+Halaman menyediakan validasi kredensial instan yang terintegrasi dengan basis data penyewa aktif di Asri Boarding House. Format tampilan halaman masuk penyewa aktif disajikan pada Gambar 4.36.
 
 <div align="center">
 
@@ -1409,14 +1409,14 @@ Penghuni dapat melakukan otentikasi secara praktis melalui integrasi akun Google
 
 </div>
 
-Berdasarkan Gambar 4.36, halaman antarmuka menampilkan kartu otentikasi bergaya neo-brutalisme dengan bayangan hitam pekat di atas latar bermotif kisi-kisi titik. Panel sisi kiri kartu berlatar hitam pekat menampilkan tajuk Portal Utama Penyewa Kost dengan sorotan kuning cerah, deskripsi layanan, serta tiga poin informasi integrasi Midtrans, unduh nota resmi, dan komunikasi chat langsung. Panel sisi kanan berlatar putih memuat judul Portal Penyewa yang dilengkapi tombol opsi Masuk dengan Google dan garis pembatas pemilihan metode manual. Formulir isian manual menyediakan kolom alamat surel atau nomor WhatsApp beraksen kuning, kolom kata sandi berikon kunci dengan tombol penampil sandi, tautan Lupa Password, kotak centang Ingat Saya, serta tombol kuning Masuk ke Dashboard Penyewa. Pada bagian bawah kartu utama, disematkan tombol berbingkai hitam bertuliskan Kembali ke Beranda untuk memfasilitasi pengguna kembali menuju halaman publik.
+Berdasarkan Gambar 4.36, antarmuka masuk penyewa dirancang dalam kartu neo-brutalisme beraksen kuning cerah dengan tajuk Masuk Portal Penghuni Aktif. Formulir menyediakan kolom isian alamat email, kolom kata sandi berfitur tampilkan sandi, serta tombol centang ingatkan akun. Tombol biru Masuk ke Portal di bawah formulir memproses verifikasi hak akses penghuni secara cepat menuju dasbor personal.
 
 <br>
 
 2. Implementasi Antarmuka Dashboard Penyewa  
-Antarmuka dashboard penyewa menjadi pusat informasi mandiri bagi penghuni aktif untuk memantau status hunian dan administrasi sewa kamar di Asri Boarding House. Halaman utama portal ini memfasilitasi penghuni dalam meninjau rincian unit hunian, status pemenuhan tagihan berkala, serta rekapitulasi riwayat transaksi secara real-time. Transparansi data yang disajikan secara terpadu meningkatkan kenyamanan tinggal sekaligus mempermudah penghuni dalam menyampaikan laporan pemeliharaan fasilitas kamar.
+Dasbor penyewa berfungsi sebagai pusat layanan mandiri bagi penghuni Asri Boarding House selama masa sewa berlangsung. Halaman ini memuat informasi nomor kamar hunian, masa berlaku masa sewa, status tagihan bulan berjalan, dan pengumuman dari pengelola. Akses informasi yang mudah meningkatkan kemandirian penghuni dalam mengelola kebutuhan tempat tinggalnya.
 
-Dasbor menyajikan lima kartu metrik ringkasan status kamar dan keuangan penghuni dengan penataan modular yang responsif. Penghuni dapat memanfaatkan tombol aksi cepat untuk langsung mengajukan laporan kerusakan sarana kamar tanpa perlu mencari menu pelaporan secara manual. Komponen grafik analitis memvisualisasikan tren pengeluaran sewa tahunan serta persentase rasio pelunasan tagihan guna memberikan rekapitulasi finansial yang komunikatif. Visualisasi antarmuka dasbor portal layanan mandiri penghuni aktif ini disajikan pada Gambar 4.37.
+Kartu navigasi cepat memungkinkan penyewa mengakses menu pembayaran tagihan dan pengajuan keluhan fasilitas secara praktis. Tampilan dasbor layanan mandiri penyewa diperlihatkan pada Gambar 4.37.
 
 <div align="center">
 
@@ -1428,14 +1428,14 @@ Dasbor menyajikan lima kartu metrik ringkasan status kamar dan keuangan penghuni
 
 </div>
 
-Berdasarkan Gambar 4.37, halaman antarmuka menampilkan spanduk tajuk kuning bertuliskan Dashboard Penyewa yang memuat lima kartu ringkasan status hunian bergaya neo-brutalisme pada area atas. Kelima kartu tersebut memuat informasi unit Kamar 105 berstatus aktif, tipe kamar Standar seharga Rp 750.000 per bulan, uang jaminan lunas, indikator nol tagihan tertunggak, serta total pembayaran satu lembar tagihan. Bagian tengah menyajikan spanduk pemberitahuan toska bergaris tepi hitam tebal untuk pelaporan kerusakan fasilitas yang dilengkapi tombol kuning bertuliskan Buat Laporan Keluhan. Sisi kiri bawah memuat kartu analitik grafik batang yang memvisualisasikan tren pengeluaran sewa dalam kurun waktu dua belas bulan terakhir. Sisi kanan bawah dilengkapi kartu visualisasi diagram donat yang memperlihatkan rasio status pelunasan tagihan secara proporsional.
+Berdasarkan Gambar 4.37, antarmuka menampilkan spanduk selamat datang personal dan kartu ringkasan hunian yang memuat nomor kamar aktif, tipe sewa, dan tanggal jatuh tempo tagihan berikutnya. Panel tengah menyajikan kartu status tagihan bulanan berlatar kuning cerah yang dilengkapi tombol Bayar Tagihan Sekarang. Sisi bawah antarmuka memuat bilah menu cepat untuk melaporkan keluhan sarana, mengunduh tanda terima sewa, dan meninjau pengumuman pengelola.
 
 <br>
 
 3. Implementasi Antarmuka Tagihan Penyewa  
-Antarmuka tagihan penyewa menyediakan sarana monitoring mandiri bagi penghuni aktif untuk memeriksa kewajiban pembayaran sewa bulanan Asri Boarding House secara transparan. Halaman ini mempermudah penghuni dalam memantau status jatuh tempo pembayaran setiap tanggal sepuluh guna mengantisipasi keterlambatan pembayaran dan denda. Rekapitulasi faktur sewa yang terintegrasi secara digital memberikan kejelasan catatan finansial pribadi selama masa sewa kamar berlangsung.
+Antarmuka tagihan penyewa menyajikan rincian faktur pembayaran sewa kamar bulanan yang harus diselesaikan oleh penghuni. Modul ini menguraikan biaya pokok sewa kamar, denda keterlambatan jika ada, dan batas akhir waktu pembayaran sewa setiap bulannya. Transparansi rincian biaya ini memudahkan penghuni mengatur pembayaran tepat waktu sebelum jatuh tempo.
 
-Tiga kartu metrik di bagian atas merangkum jumlah tagihan tertunggak, kuantitas tagihan yang telah terlunasi, serta akumulasi total pengeluaran sewa penghuni. Tabel riwayat menyajikan catatan lengkap nomor pesanan tagihan, periode kalender, tanggal jatuh tempo, nominal tarif, status transaksi, dan metode pembayaran. Penghuni dapat menekan tautan rincian tagihan untuk memeriksa struk pembayaran lunas maupun melanjutkan proses penyetoran dana melalui gerbang digital Midtrans. Antarmuka pengelolaan dan riwayat tagihan sewa bulanan penghuni tersebut diperlihatkan pada Gambar 4.38.
+Tombol bayar terhubung langsung ke Midtrans Snap sehingga penghuni dapat melunasi tagihan menggunakan dompet digital atau transfer bank secara instan. Visualisasi halaman tagihan sewa bulanan disajikan pada Gambar 4.38.
 
 <div align="center">
 
@@ -1447,14 +1447,14 @@ Tiga kartu metrik di bagian atas merangkum jumlah tagihan tertunggak, kuantitas 
 
 </div>
 
-Berdasarkan Gambar 4.38, halaman antarmuka menampilkan spanduk tajuk kuning bertuliskan Tagihan Saya dengan menu navigasi Tagihan Saya aktif pada bilah samping. Area atas menyajikan tiga kartu metrik ringkasan bergaya neo-brutalisme yang terdiri atas kartu kuning Belum Lunas dengan nol tagihan, kartu hijau toska Tagihan Lunas berstatus lancar, serta kartu toska Total Pengeluaran sebesar Rp 750.000. Area bawah memuat kartu utama bertajuk Riwayat Tagihan Sewa dengan subjudul penjelasan rekapitulasi tagihan kamar hunian. Tabel data bergaris tepi hitam tebal tersusun rapi dengan kepala kolom kuning cerah yang mencakup rincian nomor pesanan, periode, batas jatuh tempo, total tagihan, status, metode, dan kolom aksi. Baris tabel menyajikan faktur pesanan nomor TGH-4-202610 untuk periode Oktober 2026 senilai Rp 750.000 dengan lencana status hijau toska bertuliskan Lunas, kanal Midtrans, serta tautan aksi Detail atau Bayar.
+Berdasarkan Gambar 4.38, halaman menampilkan kartu tagihan sewa bulanan yang mencantumkan nomor invoice, periode bulan sewa, nominal tagihan, dan batas waktu jatuh tempo pembayaran. Terdapat lencana status Belum Dibayar berwarna kuning yang menandakan tagihan sewa sedang menunggu pelunasan. Tombol hijau Bayar Tagihan di bagian bawah kartu langsung memunculkan sembulan Midtrans Snap untuk menyelesaikan setoran secara daring.
 
 <br>
 
 4. Implementasi Antarmuka Profil  
-Antarmuka profil memfasilitasi penghuni indekos untuk memperbarui data identitas pribadi, alamat korespondensi digital, dan nomor kontak komunikasi secara mandiri. Pembaruan data kontak secara berkala memastikan pengelola Asri Boarding House senantiasa memiliki saluran komunikasi aktif guna keperluan penyampaian informasi tagihan maupun situasi darurat. Kemandirian pengelolaan profil ini memberikan fleksibilitas bagi penghuni dalam menjaga kemutakhiran informasi akun tanpa perlu melapor secara manual ke kantor pengelola.
+Antarmuka profil mengelola informasi biodata diri, nomor kontak darurat keluarga, dan kredensial keamanan akun penyewa aktif. Penghuni dapat memperbarui nomor telepon WhatsApp atau mengubah kata sandi akun secara mandiri sewaktu-waktu. Pembaruan kontak yang berkala memastikan pengelola dapat selalu menghubungi penghuni saat terjadi situasi darurat di indekos.
 
-Halaman ini mengelompokkan pengaturan akun ke dalam tab navigasi profil identitas diri dan tab pembaruan kata sandi keamanan. Penghuni dapat menyunting nama lengkap, alamat surel terdaftar, serta nomor WhatsApp aktif melalui kolom isian formulir yang tersedia. Sistem memvalidasi kesesuaian format data input sebelum mengeksekusi penyimpanan data baru ke tabel pengguna di basis data peladen. Tampilan antarmuka formulir pembaruan data profil penghuni aktif tersebut disajikan pada Gambar 4.39.
+Modul ini memproteksi data sensitif dengan enkripsi dan sensor privasi pada tampilan publik guna mencegah kebocoran informasi. Tampilan antarmuka profil penghuni kost tercantum pada Gambar 4.39.
 
 <div align="center">
 
@@ -1466,14 +1466,14 @@ Halaman ini mengelompokkan pengaturan akun ke dalam tab navigasi profil identita
 
 </div>
 
-Berdasarkan Gambar 4.39, bagian atas halaman menampilkan spanduk tajuk kuning bertuliskan Kelola Akun Saya dengan menu Pengaturan Akun aktif pada bilah samping navigasi. Area atas formulir menyediakan dua tombol tab bergaya neo-brutalisme yang meliputi tab aktif Profil Saya berlatar kuning cerah serta tab Ubah Password berlatar putih. Kartu utama berbingkai hitam tebal memuat tajuk Informasi Profil dengan subketerangan pembaruan data yang dipisahkan oleh garis batas horizontal hitam. Tiga kolom isian bergaris batas tegas disajikan secara berurutan untuk memuat data nama lengkap berfokus kursor, alamat surel, serta nomor kontak WhatsApp yang seluruhnya telah disamarkan demi menjaga privasi penghuni. Pada bagian bawah formulir, disematkan tombol kuning bergaris tepi hitam dengan ikon disket bertuliskan Simpan untuk mengeksekusi pembaruan data pengguna.
+Berdasarkan Gambar 4.39, antarmuka menyajikan kartu profil penghuni yang memuat foto akun, nama lengkap, nomor KTP, nomor WhatsApp aktif, dan nomor kontak darurat keluarga yang tersensor demi privasi. Sisi kanan kartu menyediakan formulir pembaruan kata sandi yang dilengkapi validasi sandi lama dan konfirmasi sandi baru. Tombol kuning Simpan Perubahan di sudut bawah memastikan pembaruan data identitas penghuni tersimpan aman di basis data sistem.
 
 <br>
 
 5. Implementasi Antarmuka Riwayat Pembayaran  
-Antarmuka riwayat pembayaran mendokumentasikan seluruh rekam jejak transaksi keuangan yang berhasil diselesaikan oleh penghuni selama menempati Asri Boarding House. Arsip digital terpadu ini memberikan jaminan rasa aman bagi penghuni karena setiap dana reservasi maupun sewa bulanan yang disetorkan memiliki bukti pencatatan resmi di sistem. Transparansi histori pembayaran mempermudah penghuni dalam meninjau rincian biaya sewa terdahulu tanpa perlu menyimpan tumpukan kuitansi fisik konvensional.
+Antarmuka riwayat pembayaran mendokumentasikan arsip seluruh transaksi sewa yang pernah diselesaikan penghuni selama tinggal di indekos. Halaman mencatat nomor transaksi, tanggal setor dana, metode pembayaran yang digunakan, serta nominal uang yang dibayarkan. Arsip digital yang rapi memberikan bukti transaksi yang sah bagi penghuni maupun pengelola indekos.
 
-Tiga kartu metrik pada sisi atas merangkum akumulasi pembayaran pemesanan awal, total penyetoran sewa bulanan, serta jumlah transaksi berhasil secara real-time. Halaman ini memisahkan log pembayaran ke dalam tabel pemesanan kamar reservasi awal dan tabel pelunasan tagihan sewa rutin bulanan. Penghuni dapat menekan tombol rincian pada setiap baris transaksi untuk memeriksa bukti transaksi digital serta detail metode pembayaran yang telah divalidasi sistem. Tampilan antarmuka catatan riwayat pembayaran sewa penghuni tersebut diperlihatkan pada Gambar 4.40.
+Setiap baris riwayat transaksi dilengkapi tombol unduh kuitansi resmi dalam format PDF yang dapat diakses kapan saja. Susunan antarmuka rekapitulasi pembayaran penyewa ditampilkan pada Gambar 4.40.
 
 <div align="center">
 
@@ -1485,14 +1485,14 @@ Tiga kartu metrik pada sisi atas merangkum akumulasi pembayaran pemesanan awal, 
 
 </div>
 
-Berdasarkan Gambar 4.40, bagian atas antarmuka memuat spanduk tajuk kuning bertuliskan Riwayat Pembayaran dengan menu navigasi Riwayat Pembayaran aktif pada bilah samping. Area atas menyajikan tiga kartu metrik ringkasan bergaya neo-brutalisme yang meliputi kartu toska Total Bayar Booking senilai Rp 750.000, kartu ungu Total Bayar Bulanan senilai Rp 0, serta kartu kuning Transaksi Berhasil sebanyak satu transaksi. Area tengah menampilkan kartu Pembayaran Booking Kamar (Reservasi) yang memuat tabel data bergaris batas hitam tegas dengan kepala kolom berlatar kuning cerah. Baris data menyajikan transaksi pemesanan awal bernomor RSV-4-1792501872 untuk unit Kamar 105 dengan skema sewa bulanan penuh senilai Rp 750.000 tertanggal 20 Oktober 2026. Kolom status menampilkan lencana persegi hijau toska bertuliskan Dikonfirmasi yang berdampingan dengan tombol kuning bergaris tepi tebal bertuliskan Rincian guna membuka lembar detail pembayaran.
+Berdasarkan Gambar 4.40, antarmuka menyajikan tabel rekapitulasi transaksi pembayaran yang memuat tanggal pembayaran, nomor referensi pesanan, metode bayar transfer virtual account, nominal dana lunas, dan lencana status Berhasil berwarna hijau. Ujung kanan setiap baris transaksi menyediakan tombol biru Cetak Nota untuk mengunduh bukti tanda terima sewa dalam format berkas digital. Tata letak tabel yang teratur mempermudah penghuni memeriksa jejak pelunasan sewa kamar dari bulan ke bulan.
 
 <br>
 
 6. Implementasi Antarmuka Keluhan  
-Antarmuka keluhan memfasilitasi penghuni untuk menyampaikan laporan kendala fasilitas unit kamar secara mandiri dan terdokumentasi kepada pengelola Asri Boarding House. Saluran pengaduan digital ini mengeliminasi risiko keluhan yang terlewat atau lambat ditangani akibat pesan personal yang tenggelam di aplikasi perpesanan instan. Dokumentasi tiket aduan yang transparan mempermudah penghuni dalam memastikan setiap keluhan sarana fisik lekas memperoleh tindakan perbaikan dari pihak pengelola.
+Antarmuka keluhan memfasilitasi penghuni dalam menyampaikan laporan gangguan sarana atau ketertiban di lingkungan Asri Boarding House. Penghuni dapat memilih kategori kendala fasilitas kamar, melampirkan foto bukti fisik kerusakan, dan menuliskan penjelasan masalah secara detail. Saluran laporan mandiri ini mempercepat penanganan perbaikan fasilitas tanpa harus mencari pengelola secara tatap muka.
 
-Penghuni dapat mendaftarkan keluhan baru dengan menekan tombol penambahan aduan untuk mengisi rincian kendala, kategori sarana, serta mengunggah lampiran foto bukti kerusakan. Halaman ini menyediakan panel penyaring terpadu berbasis tab status guna memantau aduan yang sedang menunggu peninjauan, dalam proses pengerjaan, maupun yang telah tuntas diperbaiki. Bilah pencarian kata kunci turut disematkan di sisi kanan panel filter guna mempercepat pelacakan arsip pengaduan kerusakan terdahulu. Tampilan antarmuka pemantauan dan pengajuan keluhan fasilitas kamar oleh penghuni disajikan pada Gambar 4.41.
+Halaman menampilkan linimasa status penanganan aduan mulai dari laporan diterima hingga selesai diperbaiki oleh staf indekos. Tampilan antarmuka pelaporan keluhan penghuni diperlihatkan pada Gambar 4.41.
 
 <div align="center">
 
@@ -1504,14 +1504,14 @@ Penghuni dapat mendaftarkan keluhan baru dengan menekan tombol penambahan aduan 
 
 </div>
 
-Berdasarkan Gambar 4.41, bagian atas antarmuka menampilkan spanduk tajuk kuning bertuliskan Keluhan & Pengaduan Saya dengan menu navigasi Keluhan Saya berlatar kuning aktif pada bilah samping. Area utama memuat kartu berbingkai hitam tebal bertajuk Riwayat Keluhan Anda yang dilengkapi tombol kuning bertuliskan Buat Keluhan Baru pada sudut kanan atas. Di bawah tajuk kartu, tersedia panel penyaring status yang memuat tombol toska Semua Keluhan, Pending, Diproses, dan Selesai yang bersanding dengan bilah pencarian kata kunci dan tombol kuning Cari. Bagian bawah memuat tabel data bergaya neo-brutalisme dengan kepala kolom berlatar kuning cerah yang mencakup judul aduan, kategori fasilitas, tanggal lapor, status penanganan, tanggapan admin, dan kolom aksi. Baris tabel menyajikan keadaan awal tanpa rekaman keluhan dengan teks miring abu-abu yang menyatakan bahwa belum ada data keluhan yang terdaftar pada sistem.
+Berdasarkan Gambar 4.41, halaman menampilkan formulir Tambah Laporan Keluhan di sisi atas yang memuat pilihan kategori kendala, deskripsi kerusakan fasilitas, dan bidang unggah foto dokumentasi fisik. Bagian bawah menyajikan riwayat keluhan yang pernah dikirimkan lengkap dengan lencana status proses perbaikan fasilitas. Tabel ini membantu penghuni memantau tindak lanjut staf teknisi indekos terhadap kendala sarana yang dilaporkan.
 
 <br>
 
 7. Implementasi Nota PDF  
-Implementasi nota PDF menghasilkan lembar tanda terima pembayaran digital resmi berukuran A5 secara otomatis sesaat setelah transaksi dinyatakan lunas. Dokumen elektronik ini menggantikan kuitansi nota fisik rangkap dua yang selama ini ditulis tangan secara manual oleh penjaga kost. Penghuni memperoleh bukti pembayaran berkekuatan hukum yang rapi dan dapat diunduh langsung untuk arsip pertanggungjawaban kepada orang tua.
+Implementasi nota PDF menghasilkan dokumen tanda terima pembayaran sewa kamar yang sah secara otomatis dari sistem. Berkas digital ini mencantumkan nomor faktur resmi, identitas penghuni, nomor kamar hunian, rincian biaya pokok sewa, serta stempel lunas digital. Penerbitan nota digital menjamin bukti transaksi yang akuntabel bagi penyewa dan pengelola indekos.
 
-Sistem memanfaatkan pustaka html2pdf.js untuk mengompilasi tampilan data transaksi menjadi dokumen PDF siap cetak di sisi peramban pengguna. Dokumen kuitansi memuat kop surat resmi Asri Boarding House, identitas unit kamar penghuni, rincian nomor faktur transaksi, serta rincian biaya sewa kamar bulanan. Penerbitan kuitansi secara otomatis ini memangkas antrean pengambilan nota di meja penjaga kost saat periode penagihan tiba. Tampilan fisik lembar kuitansi digital berformat PDF tersebut diperlihatkan pada Gambar 4.42.
+Berkas nota dirancang menggunakan ukuran cetak termal rapi dengan tata letak proporsional yang bebas dari risiko terpotong. Bukti fisik cetak nota digital dalam format dokumen PDF disajikan pada Gambar 4.42.
 
 <div align="center">
 
@@ -1523,7 +1523,7 @@ Sistem memanfaatkan pustaka html2pdf.js untuk mengompilasi tampilan data transak
 
 </div>
 
-Berdasarkan Gambar 4.42, lembar kuitansi digital dirancang menggunakan tata letak dokumen formal berukuran A5 vertikal dengan bingkai neo-brutalisme bergaris batas hitam tegas. Bagian atas memuat tabel kop berlatar kuning cerah yang mencantumkan nama Asri Boarding House, slogan sistem manajemen kost, serta alamat Maera Sari Tembalang dan kontak resmi WhatsApp pengelola. Area tengah menyajikan dua kartu berdampingan berlabel Ditagihkan Kepada yang memuat data kamar penghuni serta Detail Pembayaran yang memuat nomor faktur, tanggal pembayaran, dan kanal pembayaran Midtrans. Tabel rincian di bawah kartu identitas menampilkan pos sewa kost periode berjalan dengan subtotal pembayaran lunas senilai Rp 750.000. Bagian bawah dokumen dilengkapi stempel miring hijau bertuliskan LUNAS, kotak tanda tangan pengelola kost, garis pembatas putus-putus, serta catatan sistem yang mengesahkan lembar kuitansi sebagai bukti pembayaran sah.
+Berdasarkan Gambar 4.42, dokumen nota pembayaran tampil dalam format faktur bersih berbingkai garis tegas dengan tajuk resmi Asri Boarding House dan alamat lengkap indekos di bagian kepala nota. Badan kuitansi memuat rincian nomor nota transaksi, tanggal bayar, nomor kamar hunian, identitas penyewa yang tersensor privasi, serta rincian nominal sewa sebesar Rp 1.700.000 dengan cap LUNAS tebal di tengah dokumen. Bagian bawah nota memuat catatan konfirmasi pembayaran digital otomatis serta kode verifikasi transaksi sistem sebagai jaminan keabsahan dokumen sewa.
 
 <br>
 
