@@ -913,7 +913,7 @@ Berdasarkan Gambar 4.12, halaman testimoni menampilkan susunan kartu ulasan yang
 7. Implementasi Antarmuka FAQ  
 Antarmuka FAQ menyajikan daftar jawaban resmi atas pertanyaan yang paling sering diajukan oleh calon penyewa indekos. Halaman ini memangkas waktu pengelola dalam menjawab pertanyaan umum yang berulang seputar jam malam, biaya tambahan, dan aturan tamu. Calon penghuni memperoleh kepastian informasi secara instan tanpa perlu menunggu balasan pesan manual dari penjaga kost.
 
-Daftar tanya jawab mencakup topik kebijakan membawa kendaraan, ketersediaan kasur tambahan, periode pembayaran sewa bulanan, dan prosedur pembatalan reservasi. Teks pertanyaan disusun menggunakan model akordeon interaktif yang dapat dibuka dan ditutup sesuai minat baca pengunjung. Penerapan model akordeon ini menjaga tampilan layar tetap rapi dan tidak terlalu panjang saat dibaca di ponsel. Tampilan antarmuka pusat pertanyaan umum tersebut diperlihatkan pada Gambar 4.13.
+Pengunjung dapat mengetikkan kata kunci tertentu pada kolom pencarian bantuan untuk menemukan pertanyaan relevan secara cepat. Daftar tanya jawab disajikan dalam format bilah lipat interaktif yang dapat dibuka dan ditutup dengan sekali klik. Setiap bilah memuat ulasan seputar tata cara pemesanan daring, komponen biaya sewa, ketersediaan fasilitas kamar, hingga regulasi jam malam gerbang indekos. Tampilan antarmuka pusat pertanyaan umum tersebut diperlihatkan pada Gambar 4.13.
 
 <div align="center">
 
@@ -925,7 +925,7 @@ Daftar tanya jawab mencakup topik kebijakan membawa kendaraan, ketersediaan kasu
 
 </div>
 
-Berdasarkan Gambar 4.13, daftar pertanyaan disusun secara vertikal dalam wadah bilah yang dapat ditekan untuk membuka rincian jawaban. Setiap bilah memuat kalimat pertanyaan dengan teks tebal serta tanda panah navigasi pada sudut kanan bilah. Ketika bilah ditekan, teks jawaban muncul dengan animasi pergeseran halus tepat di bawah pertanyaan yang bersangkutan. Pengelompokan topik pertanyaan diberi label penanda kategori seperti aturan tinggal, mekanisme pembayaran, dan sarana umum. Desain halaman dibuat bersih dengan jarak spasi yang lebar agar pengguna leluasa menemukan jawaban atas kendala yang ingin diketahui.
+Berdasarkan Gambar 4.13, antarmuka menampilkan tajuk Pusat Bantuan FAQ berlatar kuning cerah dengan aksen ikon petir dan bingkai garis tepi tegas. Di bawah tajuk, terpasang kotak deskripsi yang menjelaskan bahwa pengunjung dapat mengeklik setiap pertanyaan untuk membuka rincian jawaban seputar operasional kost. Area pencarian dilengkapi bilah masukan berikon kaca pembesar yang memungkinkan pengguna mencari solusi berdasarkan kata kunci bantuan tertentu. Daftar tanya jawab tersusun dalam empat bilah horizontal warna putih dengan penulisan huruf kapital tebal dan simbol tambah pada sisi kanan. Topik pertanyaan yang ditampilkan mencakup alur pemesanan daring, inklusi biaya listrik dan air, kelengkapan fasilitas kamar, serta aturan jam malam akses gerbang.
 
 <br>
 
