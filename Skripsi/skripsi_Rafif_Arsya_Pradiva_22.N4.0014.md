@@ -1354,9 +1354,9 @@ Berdasarkan Gambar 4.35, antarmuka menampilkan spanduk tajuk kuning bertuliskan 
 ### 4.2.4 Implementasi Penyewa Aktif
 
 1. Implementasi Antarmuka Login Penyewa Aktif  
-Antarmuka login penyewa aktif merupakan pintu masuk khusus bagi penghuni resmi untuk mengakses portal layanan mandiri kamar indekos. Akses masuk ini mengamankan informasi tagihan sewa berkala dan data administrasi kontrak hunian milik masing-masing penyewa. Otentikasi yang teratur mencegah risiko kebocoran data pribadi antarpenghuni di dalam sistem web indekos.
+Antarmuka login penyewa aktif merupakan gerbang otentikasi khusus bagi penghuni resmi untuk mengakses seluruh layanan mandiri sewa kamar Asri Boarding House. Pintu akses terproteksi ini memastikan privasi data tagihan bulanan, pencatatan transaksi pembayaran digital, dan dokumen kontrak hunian hanya dapat dibuka oleh penghuni bersangkutan. Pembatasan hak akses berbasis verifikasi akun menjaga integritas data operasional indekos serta menghindarkan risiko kebocoran data antarpenghuni.
 
-Penghuni cukup memasukkan alamat surel terdaftar dan kata sandi pribadi yang telah diverifikasi saat awal akad sewa kamar. Sistem segera mengenali status keaktifan kontrak hunian pengguna dan memblokir akses jika masa sewa dinyatakan telah berakhir atau ditangguhkan. Setelah kredensial terverifikasi sah, peramban seketika mengarahkan pengguna menuju beranda portal layanan personal kamar. Tampilan antarmuka masuk akun penghuni aktif indekos diperlihatkan pada Gambar 4.36.
+Penghuni dapat melakukan otentikasi secara praktis melalui integrasi akun Google maupun memasukkan kombinasi alamat surel atau nomor WhatsApp beserta kata sandi terdaftar. Sistem turut menyediakan opsi pengingat sesi login dan tautan pemulihan kata sandi bagi pengguna yang mengalami kendala lupa kredensial akun sewa. Jika identitas terverifikasi aktif, sistem seketika mengalihkan sesi pengguna menuju dasbor layanan mandiri hunian secara aman. Tampilan antarmuka formulir masuk akun bagi penghuni aktif indekos diperlihatkan pada Gambar 4.36.
 
 <div align="center">
 
@@ -1368,7 +1368,7 @@ Penghuni cukup memasukkan alamat surel terdaftar dan kata sandi pribadi yang tel
 
 </div>
 
-Berdasarkan Gambar 4.36, formulir login penghuni ditempatkan di bagian tengah layar dengan bingkai kartu putih bergaris batas abu-abu gelap. Bagian atas kartu memuat lambang visual kunci kamar yang melambangkan portal khusus penghuni resmi Asri Boarding House. Kolom isian surel dan kata sandi dirancang lapang dengan teks placeholder yang memandu format pengetikan data pengguna. Terdapat tautan bantuan masuk di bawah kolom isian bagi penghuni yang mengalami kendala lupa sandi akun sewa. Tombol masuk menggunakan aksen warna hijau dengan ukuran teks tebal yang menegaskan fungsinya sebagai tombol eksekusi otentikasi akun.
+Berdasarkan Gambar 4.36, halaman antarmuka menampilkan kartu otentikasi bergaya neo-brutalisme dengan bayangan hitam pekat di atas latar bermotif kisi-kisi titik. Panel sisi kiri kartu berlatar hitam pekat menampilkan tajuk Portal Utama Penyewa Kost dengan sorotan kuning cerah, deskripsi layanan, serta tiga poin informasi integrasi Midtrans, unduh nota resmi, dan komunikasi chat langsung. Panel sisi kanan berlatar putih memuat judul Portal Penyewa yang dilengkapi tombol opsi Masuk dengan Google dan garis pembatas pemilihan metode manual. Formulir isian manual menyediakan kolom alamat surel atau nomor WhatsApp beraksen kuning, kolom kata sandi berikon kunci dengan tombol penampil sandi, tautan Lupa Password, kotak centang Ingat Saya, serta tombol kuning Masuk ke Dashboard Penyewa. Pada bagian bawah kartu utama, disematkan tombol berbingkai hitam bertuliskan Kembali ke Beranda untuk memfasilitasi pengguna kembali menuju halaman publik.
 
 <br>
 
