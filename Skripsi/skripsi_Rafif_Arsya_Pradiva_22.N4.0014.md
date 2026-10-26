@@ -894,7 +894,7 @@ Berdasarkan Gambar 4.11, antarmuka menampilkan lencana Panduan Lengkap Reservasi
 6. Implementasi Antarmuka Testimoni Penyewa Kost  
 Antarmuka testimoni menyajikan ulasan dan tanggapan dari para penghuni yang sedang atau pernah tinggal di Asri Boarding House. Informasi pengalaman nyata ini menjadi bahan pertimbangan sosial yang berharga bagi masyarakat umum sebelum menentukan pilihan tempat tinggal. Kumpulan evaluasi penghuni juga menjadi cermin bagi pengelola untuk mempertahankan kualitas pelayanan harian.
 
-Ulasan yang dimuat mencakup kepuasan terhadap kebersihan kamar, keramahan penjaga kost, kelancaran internet, serta rasa aman lingkungan indekos. Data ulasan dihimpun secara berkala dari penghuni aktif yang telah merasakan operasional hunian secara langsung. Pengunjung dapat membaca penilaian berupa rating bintang dan testimoni tertulis secara transparan pada halaman ini. Antarmuka daftar ulasan penghuni kost ditampilkan pada Gambar 4.12.
+Pengunjung dapat meninjau umpan balik mengenai kenyamanan fasilitas kamar, kestabilan koneksi internet, serta keramahan layanan kebersihan mingguan. Setiap kartu ulasan merangkum perspektif otentik dari kalangan mahasiswa rantau maupun pekerja kantoran yang tinggal di kawasan indekos. Navigasi tombol di sudut kiri atas memudahkan calon penyewa kembali ke halaman beranda utama setelah membaca testimoni. Antarmuka daftar ulasan penghuni kost ditampilkan pada Gambar 4.12.
 
 <div align="center">
 
@@ -906,7 +906,7 @@ Ulasan yang dimuat mencakup kepuasan terhadap kebersihan kamar, keramahan penjag
 
 </div>
 
-Berdasarkan Gambar 4.12, halaman testimoni menampilkan susunan kartu ulasan yang ditata dalam format kolom sejajar. Bagian atas kartu memuat deretan ikon bintang kuning yang menunjukkan nilai kepuasan penghuni terhadap layanan indekos. Di bawah ikon bintang, tercantum kutipan kalimat ulasan yang menceritakan pengalaman tinggal penghuni selama masa sewa berjalan. Sisi bawah kartu menampilkan inisial penghuni, tipe kamar yang ditempati, serta tanggal publikasi ulasan tersebut. Seluruh kartu didesain dengan latar belakang cerah dan pembatas bayangan tipis untuk memberikan keterbacaan teks yang optimal bagi pembaca.
+Berdasarkan Gambar 4.12, halaman menampilkan kotak tajuk Testimoni Penyewa Kost berlatar kuning cerah dengan ilustrasi balon obrolan dan tombol kembali ke beranda di sisi kiri atas. Di bawah tajuk, tertera kalimat pengantar yang menegaskan keaslian ulasan dari rekan-rekan mahasiswa dan pekerja perantau. Area konten menyajikan tiga kartu ulasan sejajar bergaris tepi tebal dengan aksen bayangan blok hitam serta tanda petik kutipan berwarna kuning. Setiap kartu memuat penilaian sempurna berupa deretan lima bintang kuning di atas narasi kepuasan seputar fasilitas pendingin ruangan, pembersihan kamar, serta ketenangan suasana belajar. Bagian bawah kartu dilengkapi kotak inisial kuning dan identitas peran penghuni yang mencantumkan status sebagai mahasiswa perguruan tinggi sekitar maupun pekerja korporat di Semarang.
 
 <br>
 
