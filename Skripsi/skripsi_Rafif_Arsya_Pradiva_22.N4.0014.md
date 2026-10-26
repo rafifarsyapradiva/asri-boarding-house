@@ -989,11 +989,11 @@ Berdasarkan Gambar 4.16, antarmuka registrasi menerapkan tata letak kartu ganda 
 11. Implementasi Antarmuka Chat Real Time Guest  
 Antarmuka obrolan langsung tamu (*chat real time guest*) menyediakan media komunikasi interaktif dua arah antara pengunjung publik dengan pengelola indekos. Fitur ini membantu calon penyewa menanyakan ketersediaan kamar tertentu tanpa harus menyimpan nomor telepon pribadi pengelola. Obrolan daring yang responsif memangkas keraguan calon penyewa saat hendak memesan hunian jarak jauh.
 
-Widget percakapan ini dapat dibuka dari sudut layar pada seluruh halaman publik situs web Asri Boarding House. Tamu cukup memasukkan nama dan nomor kontak singkat untuk memulai sesi percakapan baru pada sistem. Pesan yang dikirim tamu tersimpan pada tabel riwayat pesan basis data dan langsung memunculkan notifikasi di meja kerja admin. Antarmuka jendela obrolan langsung tamu publik ini diperlihatkan pada Gambar 4.17.
+Widget percakapan ini dapat dipanggil secara fleksibel melalui tombol melayang di sudut layar pada seluruh halaman publik situs web. Pengunjung cukup memasukkan nama lengkap serta nomor WhatsApp aktif sebelum memulai interaksi dengan admin hunian. Informasi identitas awal tersebut memudahkan pengelola mengidentifikasi calon penyewa sekaligus menindaklanjuti percakapan ke kanal komunikasi lanjutan jika diperlukan. Antarmuka jendela obrolan langsung tamu publik ini diperlihatkan pada Gambar 4.17.
 
 <div align="center">
 
-<img src="images/gambar_4_17_chat_real_time_guest.png" alt="Gambar 4.17 Antarmuka Fitur Chat Real Time Pengunjung" width="600">
+<img src="images/gambar_4_17_chat_real_time_guest.png" alt="Gambar 4.17 Antarmuka Fitur Chat Real Time Pengunjung" width="400">
 
 <br>
 
@@ -1001,7 +1001,7 @@ Widget percakapan ini dapat dibuka dari sudut layar pada seluruh halaman publik 
 
 </div>
 
-Berdasarkan Gambar 4.17, jendela obrolan tampil sebagai panel layang pada sudut kanan bawah layar peramban web. Bagian tajuk panel memuat status keaktifan pengelola kost dan tombol tanda silang untuk menutup jendela percakapan. Ruang obrolan di bagian tengah menampilkan gelembung pesan masuk dan keluar yang dibedakan dengan warna latar gelembung kontras. Pada bagian dasar jendela, terdapat kolom input pesan teks yang berdampingan dengan tombol kirim berikon panah kirim. Panel obrolan dirancang dengan proporsi ukuran kompak agar tidak menutupi konten informasi utama yang sedang dibaca pengunjung web.
+Berdasarkan Gambar 4.17, antarmuka obrolan tampil dalam bentuk jendela melayang kompak dengan bilah tajuk berlatar kuning cerah. Bagian tajuk memuat ikon petir, tulisan Tanya Admin Kost dengan huruf kapital tebal, serta tombol silang pada sudut kanan atas untuk menutup jendela. Area konten utama menampilkan ilustrasi tangan melambai yang disertai teks sapaan Ada Pertanyaan dan kalimat ajakan konsultasi seputar operasional kost. Formulir inisiasi percakapan menyediakan dua kolom berbingkai garis tepi hitam tebal untuk memasukkan nama lengkap dan nomor kontak WhatsApp calon penyewa. Pada bagian dasar jendela, disematkan tombol blok hitam tebal bertuliskan Mulai Chat dengan ikon roket sebagai pemicu pembukaan sesi percakapan interaktif.
 
 <br>
 
