@@ -856,7 +856,7 @@ Berdasarkan Gambar 4.9, antarmuka menampilkan tajuk Katalog Unit Kamar berlatar 
 4. Implementasi Antarmuka Galeri Kost  
 Antarmuka galeri kost mendokumentasikan kondisi fisik bangunan dan lingkungan Asri Boarding House melalui media foto nyata. Dokumentasi visual ini memberikan gambaran asli situasi indekos bagi calon mahasiswa maupun pekerja luar kota yang belum sempat berkunjung langsung. Kehadiran foto lapangan yang transparan dapat meningkatkan rasa percaya calon penyewa terhadap kredibilitas pengelola kost.
 
-Foto-foto yang diunggah mencakup penampakan gedung tampak depan, lorong kamar, area dapur bersama, serta kondisi kebersihan area parkir kendaraan. Pengguna dapat memilih salah satu foto untuk melihat tampilan dalam resolusi lebih besar tanpa berpindah halaman web. Seluruh berkas gambar dioptimalkan ukurannya oleh sistem agar proses pemuatan halaman tetap berlangsung cepat dan hemat kuota data. Tampilan susunan album foto lingkungan indekos diperlihatkan pada Gambar 4.10.
+Pengunjung dapat memanfaatkan kolom pencarian kata kunci untuk menyaring dokumentasi fasilitas spesifik seperti kamar, dapur, internet, maupun tipe hunian. Setiap foto disajikan dalam kartu berbingkai tegas yang dilengkapi tombol pratinjau resolusi tinggi serta tombol konsultasi langsung via WhatsApp. Navigasi tombol di sudut kiri atas memudahkan calon penyewa kembali ke halaman beranda tanpa perlu menekan tombol mundur peramban. Tampilan susunan album foto lingkungan dan fasilitas indekos diperlihatkan pada Gambar 4.10.
 
 <div align="center">
 
@@ -868,7 +868,7 @@ Foto-foto yang diunggah mencakup penampakan gedung tampak depan, lorong kamar, a
 
 </div>
 
-Berdasarkan Gambar 4.10, antarmuka galeri menerapkan tata letak kisi-kisi foto dengan jarak pemisah yang seragam. Setiap foto menampilkan sudut bangunan yang berbeda lengkap dengan keterangan singkat mengenai area yang dipotret pada sisi bawah gambar. Ketika kursor diarahkan ke salah satu bingkai gambar, sistem memberikan efek interaktif berupa sedikit perbesaran skala foto. Pada sisi atas galeri, tersedia tombol filter kategori yang membedakan dokumentasi area kamar, area bersama, dan tampak luar gedung. Susunan foto ditata dengan perataan simetris agar pengunjung dapat meninjau kebersihan fisik lingkungan kost secara menyeluruh.
+Berdasarkan Gambar 4.10, halaman menampilkan tajuk Galeri Foto Kost Asri berlatar kuning cerah dengan ilustrasi bingkai lukisan serta keterangan ringkas jelajah fasilitas. Di atas tajuk utama, terpasang tombol navigasi berbingkai tebal untuk kembali ke halaman beranda secara cepat. Area pencarian dilengkapi panel berlabel Cari Foto atau Dokumentasi yang memuat formulir masukan kata kunci untuk memfilter gambar berdasarkan kategori tertentu. Bagian galeri tersusun ke dalam tiga kartu foto yang memperlihatkan visual nyata Kamar VIP Eksklusif, Kamar Deluxe Nyaman, dan Kamar Standar Fungsional dengan penataan interior masing-masing. Pada bagian bawah setiap kartu, tercantum deskripsi spesifikasi ruangan serta sepasang tombol aksi untuk memperbesar foto dan menanyakan ketersediaan melalui aplikasi perpesanan WhatsApp.
 
 <br>
 
