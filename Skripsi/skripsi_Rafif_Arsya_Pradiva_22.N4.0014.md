@@ -1065,21 +1065,21 @@ Berdasarkan Gambar 4.20, antarmuka menyajikan tata letak dua kolom bergaya neo-b
 <br>
 
 4. Implementasi Antarmuka Pembayaran 5 Tahap Reservasi  
-Antarmuka pembayaran 5 tahap reservasi menyusun alur pengajuan sewa kamar ke dalam formulir bertahap yang tertata runtut. Model alur bertahap ini memecah proses pendaftaran yang panjang menjadi langkah-langkah ringkas agar pengguna tidak merasa kewalahan mengisi data. Setiap langkah memandu pemesan menyelesaikan kewajiban administratif secara runtut sebelum transaksi diterbitkan.
+Antarmuka pembayaran reservasi lima tahap berfungsi sebagai pusat kendali transaksi bagi calon penghuni untuk meninjau rincian sewa sekaligus memantau posisi tahapan pemesanan kamar yang sedang berjalan. Penerapan indikator tahapan bertingkat memberikan transparansi prosedur yang jelas sehingga pemesan memahami langkah administratif berikutnya tanpa rasa bingung. Halaman ini menjamin kepastian komitmen penyewaan dengan menyajikan ringkasan kewajiban biaya sebelum pengguna diarahkan ke gerbang pembayaran digital.
 
-Kelima tahap tersebut mencakup peninjauan kamar, pengisian data penghuni, konfirmasi aturan hunian, pemeriksaan ringkasan data, dan penerbitan kode pembayaran. Pengguna dapat berpindah kembali ke tahap sebelumnya untuk memeriksa ulang data sewa tanpa kehilangan ketikan yang sudah diisi. Sistem memvalidasi setiap tahap secara ketat agar tidak ada kolom penting yang terlewatkan sebelum beralih ke tahap selanjutnya. Tampilan alur 5 tahap formulir pemesanan kamar ini disajikan pada Gambar 4.21.
+Calon penyewa memeriksa kesesuaian unit kamar, periode tanggal sewa, serta nominal tagihan yang tertera pada kartu rincian pemesanan. Pengguna diarahkan berkoordinasi terlebih dahulu dengan pengelola indekos melalui fitur obrolan bawaan guna mengonfirmasi kesiapan fisik kamar sebelum mengeksekusi pelunasan. Sistem menyediakan tombol pembatalan pemesanan secara mandiri apabila calon penghuni memutuskan untuk mengubah rencana hunian sebelum transaksi diproses. Visualisasi antarmuka pemantauan alur lima tahap dan pembayaran reservasi kamar indekos ini disajikan pada Gambar 4.21.
 
 <div align="center">
 
-<img src="images/gambar_4_21_pembayaran_5_tahap_reservasi.png" alt="Gambar 4.21 Antarmuka Alur 5 Tahap Pemesanan Kamar (Stepper Form)" width="600">
+<img src="images/gambar_4_21_pembayaran_5_tahap_reservasi.png" alt="Gambar 4.21 Antarmuka Pemantauan Alur Lima Tahap dan Pembayaran Reservasi" width="600">
 
 <br>
 
-*Gambar 4.21 Antarmuka Alur 5 Tahap Pemesanan Kamar (Stepper Form)*  
+*Gambar 4.21 Antarmuka Pemantauan Alur Lima Tahap dan Pembayaran Reservasi*  
 
 </div>
 
-Berdasarkan Gambar 4.21, bagian atas formulir memuat bilah kemajuan langkah yang menampilkan lingkaran nomor satu sampai lima secara berjajar. Lingkaran tahap yang sedang aktif ditandai dengan warna hijau menyala, sementara tahap yang telah selesai diberi tanda centang verifikasi. Area badan formulir menampilkan kolom data khusus sesuai tahapan yang sedang dikerjakan oleh calon penyewa. Tombol navigasi kembali dan tombol lanjut ditempatkan simetris pada sudut bawah formulir untuk memandu pergerakan pengguna. Seluruh kotak formulir dibungkus garis tepi tegas yang menjaga fokus pandangan pengguna pada proses pengisian berkas sewa.
+Berdasarkan Gambar 4.21, bagian atas konten memuat spanduk pemberitahuan berlatar kuning cerah yang menandakan bahwa reservasi unit hunian telah berhasil dibuat dan siap untuk dibayar. Tepat di bawah spanduk, terpasang bilah kemajuan lima langkah reservasi yang menampilkan kotak hitam bertanda centang pada tahap pemesanan awal serta kotak kuning menyala pada langkah diskusi dan pembayaran. Kotak instruksi langkah saat ini memberikan panduan tegas bagi pemesan untuk menghubungi penjaga kost melalui kotak obrolan sebelum menekan tombol transaksi di panel samping. Sisi kiri bawah memuat kartu rincian pemesanan Kamar 105 lengkap dengan tanggal sewa, total nilai tagihan Rp 750.000, serta lencana status berwarna kuning bertuliskan Pending. Panel metode pembayaran pada sisi kanan menyediakan tombol kuning mencolok bertuliskan Bayar Sekarang menggunakan Midtrans berdampingan dengan tombol merah untuk opsi pembatalan reservasi.
 
 <br>
 
