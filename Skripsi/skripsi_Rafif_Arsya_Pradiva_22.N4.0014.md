@@ -1029,7 +1029,7 @@ Berdasarkan Gambar 4.18, antarmuka menampilkan kartu formulir terpusat bergaris 
 2. Implementasi Antarmuka Dashboard Reservasi  
 Antarmuka dashboard reservasi menjadi portal utama bagi calon penyewa untuk memantau status pesanan kamar yang sedang diproses oleh sistem. Halaman ini memberikan kejelasan informasi mengenai tahapan reservasi yang telah diselesaikan maupun yang masih tertunda. Calon penghuni dapat melihat batas waktu penyelesaian pembayaran sewa tanpa perlu menanyakan status pemesanan secara manual.
 
-Dasbor menampilkan kartu ringkasan unit kamar yang dipilih, tanggal pengajuan sewa, dan lencana status transaksi seperti menunggu bayar atau berhasil diverifikasi. Jika transaksi belum diselesaikan, dasbor menyajikan tombol langsung untuk membuka jendela pembayaran digital secara instan. Calon penyewa juga dapat membatalkan pesanan kamar jika terdapat perubahan rencana jadwal tinggal di indekos. Tampilan dasbor pemantauan reservasi calon penghuni dapat dilihat pada Gambar 4.19.
+Dasbor menyajikan bilah navigasi samping untuk mengakses riwayat pemesanan, riwayat pembayaran, arsip percakapan, hingga pengaturan akun pribadi. Apabila pengguna baru belum memilih hunian, sistem memunculkan pemberitahuan status pemesanan kosong yang dilengkapi tombol pencarian kamar secara instan. Panel samping kanan merinci lima tahapan aktivasi hunian mulai dari registrasi akun, pemilihan kamar, pembayaran deposit, verifikasi pengelola, hingga serah terima kunci. Tampilan dasbor pemantauan reservasi calon penghuni dapat dilihat pada Gambar 4.19.
 
 <div align="center">
 
@@ -1041,7 +1041,7 @@ Dasbor menampilkan kartu ringkasan unit kamar yang dipilih, tanggal pengajuan se
 
 </div>
 
-Berdasarkan Gambar 4.19, bagian atas dasbor memuat salam pembuka ramah beserta nomor referensi unik pesanan kamar yang sedang aktif. Di bawah salam pembuka, terdapat kartu rincian kamar yang menampilkan foto tipe hunian, nomor unit kamar, dan durasi sewa bulanan. Lencana status transaksi ditampilkan menggunakan warna kuning mencolok untuk menandakan pesanan yang masih menunggu pelunasan uang sewa. Terdapat bilah waktu hitung mundur yang memperingatkan sisa waktu calon penyewa sebelum pesanan kamar kedaluwarsa secara otomatis. Pada bagian dasar kartu, tersedia tombol hijau untuk melanjutkan pelunasan pembayaran dan tombol merah untuk membatalkan pesanan sewa.
+Berdasarkan Gambar 4.19, antarmuka dasbor menampilkan bilah judul kuning cerah bertuliskan Dashboard Reservasi dengan tombol navigasi kembali ke beranda pada sisi kanan. Sisi kiri halaman memuat panel menu vertikal yang merangkum opsi riwayat pemesanan, riwayat pembayaran, riwayat obrolan, pengaturan akun, serta tombol keluar sesi. Bagian atas konten utama menampilkan kartu sambutan berlatar biru muda terang dengan ilustrasi tangan melambai dan salam pembuka personal bagi pengguna baru. Area tengah memuat kartu status berbingkai tebal yang menginformasikan bahwa pemesanan kamar belum ditemukan, lengkap dengan tombol kuning untuk memulai pencarian unit. Pada sisi kanan, tersaji kartu panduan lima tahapan reservasi dengan penanda centang hijau pada langkah registrasi serta penanda kuning aktif pada tahap pemilihan kamar.
 
 <br>
 
