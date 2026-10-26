@@ -1373,9 +1373,9 @@ Berdasarkan Gambar 4.36, halaman antarmuka menampilkan kartu otentikasi bergaya 
 <br>
 
 2. Implementasi Antarmuka Dashboard Penyewa  
-Antarmuka dashboard penyewa menjadi pusat kendali layanan mandiri bagi penghuni aktif selama menempati kamar di Asri Boarding House. Dasbor personal ini menyajikan ringkasan kamar hunian, sisa durasi masa sewa, serta status tagihan bulanan dalam satu tampilan terpadu. Kehadiran dasbor ini memberikan transparansi hak dan kewajiban tinggal bagi penghuni secara mandiri dari perangkat ponsel.
+Antarmuka dashboard penyewa menjadi pusat informasi mandiri bagi penghuni aktif untuk memantau status hunian dan administrasi sewa kamar di Asri Boarding House. Halaman utama portal ini memfasilitasi penghuni dalam meninjau rincian unit hunian, status pemenuhan tagihan berkala, serta rekapitulasi riwayat transaksi secara real-time. Transparansi data yang disajikan secara terpadu meningkatkan kenyamanan tinggal sekaligus mempermudah penghuni dalam menyampaikan laporan pemeliharaan fasilitas kamar.
 
-Halaman ini menampilkan kartu nomor kamar yang ditempati, tipe hunian, tanggal mulai kontrak, dan tanggal jatuh tempo pembayaran sewa berikutnya. Penghuni dapat langsung menekan tombol pembayaran jika terdapat tagihan bulanan yang telah terbit dari sistem pengelola. Dasbor juga memuat pintasan menu untuk melaporkan kerusakan fasilitas kamar dan melihat pengumuman resmi dari penjaga kost. Visualisasi antarmuka dasbor portal penghuni aktif ini disajikan pada Gambar 4.37.
+Dasbor menyajikan lima kartu metrik ringkasan status kamar dan keuangan penghuni dengan penataan modular yang responsif. Penghuni dapat memanfaatkan tombol aksi cepat untuk langsung mengajukan laporan kerusakan sarana kamar tanpa perlu mencari menu pelaporan secara manual. Komponen grafik analitis memvisualisasikan tren pengeluaran sewa tahunan serta persentase rasio pelunasan tagihan guna memberikan rekapitulasi finansial yang komunikatif. Visualisasi antarmuka dasbor portal layanan mandiri penghuni aktif ini disajikan pada Gambar 4.37.
 
 <div align="center">
 
@@ -1387,7 +1387,7 @@ Halaman ini menampilkan kartu nomor kamar yang ditempati, tipe hunian, tanggal m
 
 </div>
 
-Berdasarkan Gambar 4.37, bagian atas halaman menyambut penghuni dengan kartu profil personal yang menampilkan nama lengkap dan nomor kamar hunian. Sisi tengah dasbor menampilkan kartu status kontrak sewa yang memuat sisa hari masa aktif tinggal dalam bentuk grafik batang kemajuan. Terdapat kotak peringatan tagihan berwarna kuning jika terdapat tagihan sewa bulanan yang mendekati tanggal jatuh tempo pembayaran. Di bawah informasi kontrak, tersedia empat tombol menu pintas menuju halaman pembayaran tagihan, riwayat transaksi, pelaporan keluhan, dan tata tertib kost. Tampilan antarmuka didominasi oleh palet warna bersih dengan penataan kartu modular yang sangat nyaman dibaca pada layar ponsel pintar.
+Berdasarkan Gambar 4.37, halaman antarmuka menampilkan spanduk tajuk kuning bertuliskan Dashboard Penyewa yang memuat lima kartu ringkasan status hunian bergaya neo-brutalisme pada area atas. Kelima kartu tersebut memuat informasi unit Kamar 105 berstatus aktif, tipe kamar Standar seharga Rp 750.000 per bulan, uang jaminan lunas, indikator nol tagihan tertunggak, serta total pembayaran satu lembar tagihan. Bagian tengah menyajikan spanduk pemberitahuan toska bergaris tepi hitam tebal untuk pelaporan kerusakan fasilitas yang dilengkapi tombol kuning bertuliskan Buat Laporan Keluhan. Sisi kiri bawah memuat kartu analitik grafik batang yang memvisualisasikan tren pengeluaran sewa dalam kurun waktu dua belas bulan terakhir. Sisi kanan bawah dilengkapi kartu visualisasi diagram donat yang memperlihatkan rasio status pelunasan tagihan secara proporsional.
 
 <br>
 
