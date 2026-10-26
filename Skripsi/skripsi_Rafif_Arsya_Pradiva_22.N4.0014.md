@@ -1048,19 +1048,19 @@ Berdasarkan Gambar 4.19, antarmuka dasbor menampilkan bilah judul kuning cerah b
 3. Implementasi Antarmuka Simulasi Biaya Kamar  
 Antarmuka simulasi biaya kamar dirancang untuk menghitung estimasi pengeluaran sewa indekos secara transparan berdasarkan durasi tinggal yang diinginkan. Fitur kalkulasi otomatis ini mempermudah calon penghuni merencanakan anggaran tanpa khawatir menemui biaya tersembunyi di kemudian hari. Sistem langsung menghitung total biaya sewa dan uang jaminan secara akurat dari basis data tarif kamar.
 
-Pengguna dapat memilih tipe kamar yang diminati, menentukan tanggal mulai tinggal, serta memilih durasi kontrak sewa bulanan. Sistem segera memproses perkalian tarif per bulan dan menambahkan biaya fasilitas tambahan jika calon penyewa memilih opsi sarana tambahan. Apabila kamar yang dipilih sedang terisi, sistem seketika memberikan peringatan visual bahwa kamar tersebut tidak dapat dipilih. Tampilan antarmuka simulasi perhitungan biaya kamar sewa diperlihatkan pada Gambar 4.20.
+Calon penghuni dapat menentukan skema durasi sewa bulanan, memasukkan tanggal rencana masuk hunian, serta memilih opsi skema pelunasan penuh maupun uang muka. Sistem memanfaatkan komputasi interaktif sisi klien untuk mengalikan tarif sewa kamar secara langsung tanpa mengharuskan pemuatan ulang peramban. Kalkulasi otomatis ini juga menyajikan batas minimal pembayaran uang muka sebesar tiga puluh persen guna memberikan fleksibilitas komitmen finansial bagi pemesan. Tampilan antarmuka simulasi perhitungan biaya dan pemesanan kamar sewa disajikan pada Gambar 4.20.
 
 <div align="center">
 
-<img src="images/gambar_4_20_simulasi_biaya_kamar.png" alt="Gambar 4.20 Antarmuka Simulasi Biaya dan Pemilihan Unit Kamar" width="600">
+<img src="images/gambar_4_20_simulasi_biaya_kamar.png" alt="Gambar 4.20 Antarmuka Simulasi Biaya Kamar dan Reservasi" width="600">
 
 <br>
 
-*Gambar 4.20 Antarmuka Simulasi Biaya dan Pemilihan Unit Kamar*  
+*Gambar 4.20 Antarmuka Simulasi Biaya Kamar dan Reservasi*  
 
 </div>
 
-Berdasarkan Gambar 4.20, halaman simulasi menyajikan panel interaktif yang memadukan menu pemilihan kamar dengan kalkulator biaya sewa. Kolom tanggal sewa dilengkapi kalender pemilihan tanggal yang memudahkan pengguna menentukan hari pertama mulai menempati hunian kost. Pada kotak ringkasan biaya di sisi kanan, tercantum rincian harga pokok sewa, biaya fasilitas tambahan, dan total nominal yang harus disetor. Jika pengguna mengubah pilihan durasi bulan sewa, angka total pembayaran seketika diperbarui secara otomatis tanpa memuat ulang halaman peramban. Tombol konfirmasi di bawah rincian harga mengarahkan calon penyewa langsung menuju tahapan pengisian formulir reservasi resmi.
+Berdasarkan Gambar 4.20, antarmuka menyajikan tata letak dua kolom bergaya neo-brutalisme dengan panel informasi unit kamar di sisi kiri serta widget kalkulator simulasi di sisi kanan. Panel kiri memuat tajuk Kamar 105 yang dilengkapi galeri foto interior ruangan beresolusi tinggi beserta kartu rincian spesifikasi unit seperti tipe standar, lantai satu, dan luas dua belas meter persegi. Panel kanan menampilkan kartu simulasi berbingkai hitam tegas yang menyediakan pilihan tipe sewa bulanan, isian durasi waktu, kalender penentuan tanggal masuk hunian, dan menu pilihan pembayaran penuh. Pada area tengah kartu simulasi, tersaji kotak ringkasan tarif berlatar kuning cerah yang merinci harga pokok per bulan, total nominal estimasi sewa, serta nilai minimal uang muka sebesar tiga puluh persen. Bagian bawah widget dilengkapi tombol aksi berwarna kuning mencolok bertuliskan Pesan Kamar Sekarang yang mengarahkan calon pemesan menuju alur transaksi resmi.
 
 <br>
 
