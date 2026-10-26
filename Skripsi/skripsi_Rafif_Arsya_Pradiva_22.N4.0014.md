@@ -811,7 +811,7 @@ Pengguna dapat mengakses halaman ini secara langsung melalui peramban web tanpa 
 
 </div>
 
-Berdasarkan Gambar 4.7, bagian atas halaman memuat bilah navigasi utama yang berisi tautan menuju informasi kamar, fasilitas, dan portal akun. Sisi tengah layar menampilkan spanduk pengenalan indekos yang dilengkapi tombol pintas untuk langsung memeriksa katalog kamar sewa. Pada area berikutnya, pengguna disajikan deretan kartu kamar yang memuat tipe hunian beserta besaran tarif bulanan secara jelas. Sudut kanan bawah antarmuka dilengkapi tombol obrolan interaktif yang menghubungkan calon penyewa dengan pengelola kost. Tata warna antarmuka menerapkan kontras tajam dengan garis batas tegas untuk memastikan setiap tulisan dan tombol mudah dibaca.
+Berdasarkan Gambar 4.7, bagian atas halaman memuat bilah navigasi utama yang berisi tautan menuju informasi kamar, fasilitas, cara booking, serta tombol akses akun. Sisi kiri layar menampilkan spanduk pengenalan indekos bertuliskan Hunian Kost Exclusive dan Modern yang diperkuat foto gedung fisik hunian pada sisi kanan. Kotak informasi di bawah tajuk menerangkan keunggulan sarana hunian mulai dari internet cepat hingga kepastian ketersediaan 32 unit kamar sewa. Bagian bawah spanduk menyediakan tombol aksi cepat untuk langsung mencari kamar maupun berkonsultasi lebih lanjut melalui pesan instan. Sudut kanan bawah antarmuka dilengkapi tombol obrolan tamu interaktif yang memudahkan calon penyewa berinteraksi langsung dengan pengelola kost.
 
 <br>
 
