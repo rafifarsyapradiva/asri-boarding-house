@@ -1392,21 +1392,21 @@ Berdasarkan Gambar 4.37, halaman antarmuka menampilkan spanduk tajuk kuning bert
 <br>
 
 3. Implementasi Antarmuka Tagihan Penyewa  
-Antarmuka tagihan penyewa menyajikan rincian invoice pembayaran sewa bulanan yang wajib diselesaikan oleh penghuni aktif setiap tanggal 10. Halaman ini memberikan transparansi penuh mengenai komponen biaya sewa pokok, biaya fasilitas tambahan, serta denda keterlambatan jika ada. Penghuni dapat memeriksa rincian biaya secara jelas sebelum melanjutkan proses pelunasan melalui gerbang pembayaran digital.
+Antarmuka tagihan penyewa menyediakan sarana monitoring mandiri bagi penghuni aktif untuk memeriksa kewajiban pembayaran sewa bulanan Asri Boarding House secara transparan. Halaman ini mempermudah penghuni dalam memantau status jatuh tempo pembayaran setiap tanggal sepuluh guna mengantisipasi keterlambatan pembayaran dan denda. Rekapitulasi faktur sewa yang terintegrasi secara digital memberikan kejelasan catatan finansial pribadi selama masa sewa kamar berlangsung.
 
-Sistem secara otomatis menghitung akumulasi tagihan dan menampilkan status tagihan secara jelas, baik berstatus belum dibayar, menunggu verifikasi, maupun lunas. Penghuni cukup menekan tombol bayar sekarang untuk seketika memunculkan jendela transaksi Midtrans Snap tanpa harus menyalin nomor rekening secara manual. Pelunasan tagihan melalui gerbang digital langsung memperbarui status invoice menjadi lunas tanpa perlu menunggu konfirmasi penjaga kost. Antarmuka rincian invoice tagihan sewa penghuni ditampilkan pada Gambar 4.38.
+Tiga kartu metrik di bagian atas merangkum jumlah tagihan tertunggak, kuantitas tagihan yang telah terlunasi, serta akumulasi total pengeluaran sewa penghuni. Tabel riwayat menyajikan catatan lengkap nomor pesanan tagihan, periode kalender, tanggal jatuh tempo, nominal tarif, status transaksi, dan metode pembayaran. Penghuni dapat menekan tautan rincian tagihan untuk memeriksa struk pembayaran lunas maupun melanjutkan proses penyetoran dana melalui gerbang digital Midtrans. Antarmuka pengelolaan dan riwayat tagihan sewa bulanan penghuni tersebut diperlihatkan pada Gambar 4.38.
 
 <div align="center">
 
-<img src="images/gambar_4_38_tagihan_penyewa.png" alt="Gambar 4.38 Antarmuka Rincian Tagihan Sewa Penyewa" width="600">
+<img src="images/gambar_4_38_tagihan_penyewa.png" alt="Gambar 4.38 Antarmuka Riwayat dan Pembayaran Tagihan Sewa Penyewa" width="600">
 
 <br>
 
-*Gambar 4.38 Antarmuka Rincian Tagihan Sewa Penyewa*  
+*Gambar 4.38 Antarmuka Riwayat dan Pembayaran Tagihan Sewa Penyewa*  
 
 </div>
 
-Berdasarkan Gambar 4.38, antarmuka menampilkan kartu rincian tagihan resmi yang memuat nomor faktur sewa dan periode bulan tagihan yang ditagihkan. Pada tabel rincian biaya, tertulis rincian tarif dasar kamar sewa yang dipisahkan secara transparan dari kolom denda keterlambatan pembayaran. Total nominal pembayaran ditampilkan dengan ukuran teks besar dan tebal pada sudut kanan bawah kartu tagihan sewa. Tombol bayar digital ditempatkan di bawah total harga dengan warna hijau mencolok yang menarik perhatian penghuni untuk segera melunasi sewa. Lencana status di sudut atas kartu menunjukkan indikator belum lunas dengan warna merah tegas guna mengingatkan batas tanggal jatuh tempo sewa.
+Berdasarkan Gambar 4.38, halaman antarmuka menampilkan spanduk tajuk kuning bertuliskan Tagihan Saya dengan menu navigasi Tagihan Saya aktif pada bilah samping. Area atas menyajikan tiga kartu metrik ringkasan bergaya neo-brutalisme yang terdiri atas kartu kuning Belum Lunas dengan nol tagihan, kartu hijau toska Tagihan Lunas berstatus lancar, serta kartu toska Total Pengeluaran sebesar Rp 750.000. Area bawah memuat kartu utama bertajuk Riwayat Tagihan Sewa dengan subjudul penjelasan rekapitulasi tagihan kamar hunian. Tabel data bergaris tepi hitam tebal tersusun rapi dengan kepala kolom kuning cerah yang mencakup rincian nomor pesanan, periode, batas jatuh tempo, total tagihan, status, metode, dan kolom aksi. Baris tabel menyajikan faktur pesanan nomor TGH-4-202610 untuk periode Oktober 2026 senilai Rp 750.000 dengan lencana status hijau toska bertuliskan Lunas, kanal Midtrans, serta tautan aksi Detail atau Bayar.
 
 <br>
 
