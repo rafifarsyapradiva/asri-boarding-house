@@ -372,10 +372,10 @@ DAFTAR LAMPIRAN &emsp; xii
 &emsp; 4.2.3 Implementasi Admin &emsp; 44  
 &emsp; 4.2.4 Implementasi Penyewa Aktif &emsp; 55  
 4.3 Implementasi Kode Program &emsp; 62  
-&emsp; 4.3.1 Implementasi Autentikasi dan Kontrol Akses Pengguna &emsp; 62  
-&emsp; 4.3.2 Implementasi Logika Bisnis Pemesanan Kamar (Reservasi) &emsp; 64  
-&emsp; 4.3.3 Implementasi Integrasi Layanan Payment Gateway Midtrans &emsp; 66  
-&emsp; 4.3.4 Implementasi Penjadwalan Otomatis dan Notifikasi Multi-Kanal &emsp; 68  
+&emsp; 4.3.1 Implementasi Autentikasi dan Hak Akses &emsp; 62  
+&emsp; 4.3.2 Implementasi Pemesanan Kamar &emsp; 64  
+&emsp; 4.3.3 Implementasi Payment Gateway &emsp; 66  
+&emsp; 4.3.4 Implementasi Penjadwalan dan Notifikasi &emsp; 68  
 
 **DAFTAR PUSTAKA** &emsp; **71**  
 
@@ -1513,11 +1513,11 @@ Sebagaimana terlihat pada Gambar 4.42, kuitansi digital dirancang dengan bingkai
 <br>
 
 ## 4.3 Implementasi Kode Program
-Tahap implementasi kode program menerjemahkan seluruh rancangan arsitektur dan alur proses bisnis ke dalam instruksi terstruktur menggunakan bahasa pemrograman PHP pada kerangka kerja Laravel 11. Modul program dirancang menggunakan pemisahan logika layanan (*Service Layer*) agar proses validasi data, penguncian transaksi kamar, dan integrasi API eksternal dapat berjalan mandiri serta aman. Pembahasan kode program ini dikelompokkan ke dalam empat sub-bab tematik sesuai domain fungsinya, meliputi implementasi autentikasi dan kontrol akses, logika bisnis pemesanan kamar, integrasi gerbang pembayaran digital, serta penjadwalan otomatis dan notifikasi multi-kanal.
+Tahap implementasi kode program menerjemahkan seluruh rancangan arsitektur dan alur proses bisnis ke dalam instruksi terstruktur menggunakan bahasa pemrograman PHP pada kerangka kerja Laravel 11. Modul program dirancang menggunakan pemisahan logika layanan (*Service Layer*) agar proses validasi data, penguncian transaksi kamar, dan integrasi API eksternal dapat berjalan mandiri serta aman. Pembahasan kode program ini dikelompokkan ke dalam empat sub-bab tematik sesuai domain fungsinya, meliputi implementasi autentikasi dan hak akses, pemesanan kamar, payment gateway, serta penjadwalan dan notifikasi.
 
 <br>
 
-### 4.3.1 Implementasi Autentikasi dan Kontrol Akses Pengguna
+### 4.3.1 Implementasi Autentikasi dan Hak Akses
 Kelompok modul autentikasi bertugas mengatur keamanan hak masuk serta mengarahkan pengguna ke portal kerja yang tepat sesuai perannya di Asri Boarding House. Lapisan ini memisahkan wewenang antara calon penyewa, penjaga kost, dan penyewa aktif agar tidak terjadi pelanggaran hak akses pada rute privat sistem.
 
 1. Implementasi Pembatasan Hak Akses Peran Pengguna (*Role Middleware*)  
@@ -1554,7 +1554,7 @@ Sebagaimana tampak pada Gambar 4.44, akun berstatus admin langsung dialihkan men
 
 <br>
 
-### 4.3.2 Implementasi Logika Bisnis Pemesanan Kamar (Reservasi)
+### 4.3.2 Implementasi Pemesanan Kamar
 Logika bisnis pemesanan kamar menangani seluruh alur penguncian inventaris 32 unit kamar di Asri Boarding House secara akurat. Modul ini menjadi benteng utama dalam mencegah terjadinya benturan pesanan ganda (*double booking*) saat banyak calon penghuni mengakses sistem secara bersamaan.
 
 1. Implementasi Transaksi ACID dan Penguncian Baris Unit Kamar  
@@ -1591,7 +1591,7 @@ Mengacu pada Gambar 4.46, kueri pertama menyaring data reservasi aktif yang memi
 
 <br>
 
-### 4.3.3 Implementasi Integrasi Layanan Payment Gateway Midtrans
+### 4.3.3 Implementasi Payment Gateway
 Penerapan gerbang pembayaran digital Midtrans memfasilitasi transaksi non-tunai melalui *Virtual Account*, QRIS, dan dompet digital secara aman. Modul ini menghubungkan antarmuka web dengan server perbankan serta memperbarui status tagihan secara otomatis melalui mekanisme *webhook*.
 
 1. Implementasi Pembuatan Transaksi dan Snap Token Midtrans  
@@ -1628,7 +1628,7 @@ Melalui tampilan Gambar 4.48, tanda tangan digital diverifikasi menggunakan fung
 
 <br>
 
-### 4.3.4 Implementasi Penjadwalan Otomatis dan Notifikasi Multi-Kanal
+### 4.3.4 Implementasi Penjadwalan dan Notifikasi
 Otomasi operasional dijalankan melalui perpaduan penjadwal tugas berkala di tingkat server dengan layanan pengiriman pesan instan dan dokumen surat elektronik resmi. Modul ini menghapus ketergantungan pada pengingat manual penjaga kost sehingga penagihan bulanan tanggal 10 dan penerbitan bukti kuitansi selalu tiba tepat waktu.
 
 1. Implementasi Penjadwalan Tugas Otomatis (*Task Scheduler Cron Job*)  
