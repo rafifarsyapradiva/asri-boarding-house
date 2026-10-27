@@ -1778,7 +1778,11 @@ Berdasarkan hasil pengujian pada Tabel 4.1, seluruh 60 skenario uji fungsional b
 <br>
 
 ## 4.5 Hasil Wawancara
-Pengujian penerimaan pengguna (*User Acceptance Testing*) dilakukan untuk mengukur tingkat penerimaan, kenyamanan, serta efektivitas sistem informasi manajemen Asri Boarding House oleh pengguna akhir pada lingkungan operasional riil. Evaluasi ini melibatkan sebanyak satu orang informan kunci pengelola operasional, yaitu Bapak Asep selaku penjaga kost senior dengan pengalaman kerja selama kurang lebih 20 tahun, serta lima orang mahasiswa penghuni kost aktif (Arjun, Farrel, Iman, Ammar, dan Sindhu) yang bertindak sebagai pengguna representatif (*surrogate users*). Pendekatan yang diterapkan memadukan pengujian langsung secara berdampingan (*side-by-side usability testing*) dan wawancara semiterstruktur guna mengevaluasi seluruh alur interaksi secara berkesinambungan. Aspek yang diuji mencakup kejelasan katalog daring, formulir reservasi bertahap, mekanisme pembayaran digital Midtrans Snap BCA Virtual Account, konfirmasi lunas otomatis, pengarsipan kuitansi digital format A5, kemudahan navigasi portal mandiri, hingga penanganan aduan fasilitas dan pengelolaan pembukuan kas harian. Rangkuman tanggapan, evaluasi, serta masukan yang diberikan oleh masing-masing narasumber dijabarkan sebagai berikut:
+Pengujian penerimaan pengguna (*User Acceptance Testing*) dilaksanakan untuk mengukur kelayakan operasional sistem informasi Asri Boarding House dengan melibatkan pengelola operasional senior dan lima mahasiswa penghuni kost aktif. Seluruh rangkaian evaluasi dijalankan melalui uji coba langsung berdampingan (*side-by-side usability testing*) serta wawancara semiterstruktur yang didokumentasikan melalui rekaman suara sebagai bukti otentik pengujian. Ruang lingkup wawancara ini meninjau aspek kejelasan katalog daring, formulir reservasi bertahap, pembayaran digital Midtrans, kuitansi instan, hingga pembukuan kas harian.
+
+<br>
+
+Sesi evaluasi bersama Bapak Asep difokuskan untuk menguji fungsionalitas panel pengelola serta kemudahan operasional harian kost setelah 20 tahun terbiasa menggunakan buku besar manual. Seluruh dialog berlangsung secara tatap muka di kantor pengelola dengan rekaman audio sebagai bukti verifikasi yang otentik.
 
 <br>
 
@@ -1790,7 +1794,7 @@ Pengujian penerimaan pengguna (*User Acceptance Testing*) dilakukan untuk menguk
 
 **Tabel 4.2** Hasil Wawancara Penjaga Kost (Bapak Asep)
 
-| No | Tahapan Alur | Pertanyaan | Tanggapan |
+| No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
 | 1 | Halaman Depan Publik: Tipografi, foto kamar, dan transparansi harga | Pak Asep, ini tampilan website depan kost kita yang bisa dibuka siapa saja lewat HP atau laptop. Di sini ada foto-foto 32 kamar, fasilitas, dan harga sewanya. Menurut pandangan Bapak, apakah tulisannya sudah cukup jelas dan fotonya pas menggambarkan kost kita? | Tampilannya jelas sekali Mas Rafif, tulisannya besar-besar dan kontrasnya tegas jadi mata saya yang sudah berumur tidak cepat capek bacanya. Fotonya terang, terus harga sewanya langsung kelihatan di depan. Ini bagus sekali supaya calon anak kost atau orang tuanya dari luar kota tidak perlu bolak-balik telepon tanya harga lagi. |
 | 2 | Tombol WhatsApp Melayang: Sudut kanan bawah | Tombol hijau lambang WhatsApp di pojok kanan bawah ini selalu menempel saat layar digulirkan, dan kalau diklik langsung membuka obrolan ke nomor admin. Menurut Bapak tombol ini gampang dilihat atau mengganggu? | Sangat pas di situ Mas. Posisinya gampang dijangkau jempol kalau buka lewat HP, dan langsung nyambung ke nomor WhatsApp saya jadi kalau ada calon penyewa yang mau tanya-tanya ketersediaan kamar bisa langsung saya respon cepat. |
@@ -1809,9 +1813,13 @@ Berdasarkan hasil wawancara pada Tabel 4.2, Bapak Asep memberikan skor kepuasan 
 
 <br>
 
+Wawancara dengan Arjun menggali pengalaman penghuni lama dalam menelusuri katalog kamar dan menyelesaikan transaksi sewa lewat m-Banking. Sesi pengujian mandiri ini direkam secara audio guna memastikan seluruh impresi penggunaan antarmuka tercatat secara utuh.
+
+<br>
+
 **Tabel 4.3** Hasil Wawancara Responden 1 (Arjun, Mahasiswa UNDIP - Penghuni Kost)
 
-| No | Tahapan Alur | Pertanyaan | Tanggapan |
+| No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
 | 1 | Katalog Kamar & Ketersediaan | Sebagai mahasiswa yang sudah 3 tahun mengekos di Tembalang, bagaimana penilaian Mas Arjun terhadap katalog kamar di website ini? Apakah sajian foto fasilitas dan informasi ketersediaan unitnya sudah cukup jelas? | Tampilannya tegas dan modern ala Neo-Brutalism. Foto fasilitas kayak kasur, AC, kamar mandi dalam, sampai video room tour-nya kelihatan jelas banget. Paling ngebantu itu badge status Tersedia yang warna hijau, jadi aku langsung tahu kamar mana yang masih kosong tanpa perlu panas-panasan keliling Tembalang atau bolak-balik nanya ke penjaga kos. |
 | 2 | Formulir Pemesanan Bertahap | Saat mencoba mengisi formulir pemesanan 5 tahap di sistem, bagaimana alurnya menurut Mas? Apakah ada bagian yang membingungkan? | Alurnya runtut karena dibagi bertahap pakai stepper, jadinya nggak berasa numpuk di satu halaman panjang yang bikin malas. Validasi otomatis di kolom NIK sama nomor kontak orang tua juga oke banget, langsung ngasih tanda kalau semisal ada salah ketik. |
@@ -1830,9 +1838,13 @@ Berdasarkan hasil wawancara pada Tabel 4.3, Arjun memberikan skor kepuasan 8,5 d
 
 <br>
 
+Pengujian bersama Farrel menyoroti perspektif mahasiswa perantau luar kota saat mengakses sistem reservasi melalui ponsel Android. Seluruh proses tanya jawab didokumentasikan lewat rekaman suara guna merekam kendala pembayaran non-BCA secara presisi.
+
+<br>
+
 **Tabel 4.4** Hasil Wawancara Responden 2 (Farrel, Mahasiswa USM - Penghuni Kost)
 
-| No | Tahapan Alur | Pertanyaan | Tanggapan |
+| No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
 | 1 | Katalog Kamar & Ketersediaan | Sebagai mahasiswa perantau luar kota yang mengakses web lewat ponsel Android, bagaimana kesan Mas Farrel melihat katalog kamar online ini? | Ngebantu banget buat anak rantau kayak aku. Jadi bisa langsung ngeliat sudut kamar, fasilitas kamar mandi, sampai tarifnya secara jelas tanpa harus jauh-jauh datang ke Semarang cuma buat ngecek kamar doang. |
 | 2 | Formulir Pemesanan Bertahap | Saat mengisi formulir reservasi bertahap di layar ponsel, bagaimana alur pengisian datanya menurut Mas? | Formulirnya cukup simpel dan gampang diikutin. Tombol buat lanjut ke langkah berikutnya responsif di layar HP dan kolom isiannya juga nggak bikin pusing karena nggak terlalu padat. |
@@ -1851,9 +1863,13 @@ Merujuk pada Tabel 4.4, Farrel memberikan nilai kepuasan 7,0 dari skala 10 dan m
 
 <br>
 
+Wawancara bersama Iman membedah keandalan pencatatan pembayaran digital pada portal penghuni serta transparansi riwayat mutasi bulanan. Sesi interaksi diuji langsung pada laptop dengan bukti rekaman audio untuk memvalidasi tanggapan pengguna.
+
+<br>
+
 **Tabel 4.5** Hasil Wawancara Responden 3 (Iman, Mahasiswa UDINUS - Penghuni Kost)
 
-| No | Tahapan Alur | Pertanyaan | Tanggapan |
+| No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
 | 1 | Katalog Kamar & Ketersediaan | Berdasarkan pengalaman Mas Iman selama kuliah, bagaimana penilaian Mas terhadap katalog kamar online dan status ketersediaannya di web ini? | Infonya benar-benar real-time. Jadi nggak perlu buang-buang pulsa buat telepon atau repot datang jauh-jauh cuma buat ngecek ada kamar kosong atau nggak. Indikator warnanya juga langsung bikin jelas dan pasti. |
 | 2 | Formulir Pemesanan Bertahap | Saat mencoba formulir pemesanan 5 langkah di layar laptop, bagaimana alurnya menurut Mas? | Tampilan form di laptop rapi dan petunjuknya jelas. Cuma menurut saya alur 5 tahapannya agak kerasa kepanjangan pas klik tombol Lanjut-nya berkali-kali, walau validasi datanya memang rapi. |
@@ -1872,9 +1888,13 @@ Berdasarkan hasil wawancara pada Tabel 4.5, Iman memberikan skor kepuasan 9,0 da
 
 <br>
 
+Pengujian bersama Ammar meninjau respon mahasiswa baru saat menavigasi alur pemesanan dan pembayaran via peramban Safari di iPhone. Diskusi pengujian terekam dalam audio guna menangkap masukan terkait integrasi tautan pesan WhatsApp secara mendalam.
+
+<br>
+
 **Tabel 4.6** Hasil Wawancara Responden 4 (Ammar, Mahasiswa PKN STAN - Penghuni Kost)
 
-| No | Tahapan Alur | Pertanyaan | Tanggapan |
+| No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
 | 1 | Katalog Kamar & Ketersediaan | Sebagai mahasiswa baru, bagaimana kesan Mas Ammar saat pertama kali membuka katalog kamar kos di Safari iPhone? | Tampilannya clean dan gampang banget dipahami. Foto-foto fasilitasnya juga jelas, jadi maba kayak aku bisa langsung ngebandingin tipe kamar mana yang paling pas. |
 | 2 | Formulir Pemesanan Bertahap | Saat mengisi formulir reservasi bertahap di ponsel, bagaimana alurnya menurut Mas? | Alurnya udah cukup jelas. Terus adanya kolom kontak darurat wali itu ngebantu banget, bikin orang tua di kampung juga jadi lebih tenang. |
@@ -1893,9 +1913,13 @@ Mengacu pada Tabel 4.6, Ammar memberikan nilai kepuasan 7,5 dari skala 10 dan me
 
 <br>
 
+Sesi wawancara bersama Sindhu difokuskan pada pengujian kenyamanan navigasi dasbor portal hunian serta kecepatan verifikasi pembayaran instan. Percakapan evaluasi didokumentasikan lewat rekaman suara untuk menjaring saran terkait panduan interaktif bagi pengguna baru.
+
+<br>
+
 **Tabel 4.7** Hasil Wawancara Responden 5 (Sindhu, Mahasiswa UI - Penghuni Kost)
 
-| No | Tahapan Alur | Pertanyaan | Tanggapan |
+| No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
 | 1 | Katalog Kamar & Ketersediaan | Bagaimana penilaian Mas Sindhu mengenai tampilan foto katalog kamar di website? Apakah representasinya sudah sesuai untuk melihat kondisi kamar? | Foto fasilitas kamarnya sesuai sama kondisi aslinya di lapangan, jadi calon anak kos bisa langsung tahu kondisinya dan nggak ragu buat milih. |
 | 2 | Formulir Pemesanan Bertahap | Saat mencoba mengisi formulir pemesanan kamar, bagaimana alur pengisian identitas dan validasinya menurut Mas? | Formulirnya simpel dan nggak ribet diisi. Adanya deteksi otomatis buat nomor HP sama NIK ngebantu banget biar nggak ada data yang salah ketik. |
