@@ -833,8 +833,8 @@ Berdasarkan Gambar 4.6, alur proses berawal ketika calon penyewa membuka situs w
 
 <br>
 
-## 4.2 Implementasi Sistem
-Tahap implementasi sistem menerjemahkan rancangan arsitektur basis data dan alur proses bisnis ke dalam aplikasi web fungsional menggunakan kerangka kerja Laravel. Seluruh halaman antarmuka dibangun dengan pendekatan visual *Neo-Brutalism* yang responsif serta dihubungkan langsung ke gerbang pembayaran Midtrans, layanan pesan WhatsApp Fonnte, dan server email SMTP. Pembahasan implementasi ini dikelompokkan ke dalam empat bagian sesuai pembagian hak akses pengguna, meliputi implementasi umum, calon penyewa, admin atau penjaga kost, serta penyewa aktif.
+## 4.2 Implementasi Antarmuka Sistem
+Implementasi antarmuka sistem menerjemahkan hasil perancangan visual ke dalam wujud halaman web fungsional yang siap diakses pengguna. Seluruh komponen antarmuka dibangun menggunakan pendekatan visual *Neo-Brutalism* dengan garis tepi tegas, kontras tinggi, dan tata letak yang responsif. Pembahasan antarmuka pada sub-bab ini dikelompokkan ke dalam empat bagian sesuai hak akses pengguna, meliputi antarmuka umum, calon penyewa, admin atau penjaga kost, serta penyewa aktif.
 
 <br>
 
@@ -1495,6 +1495,176 @@ Format ukuran dan tata letak nota telah diatur secara proporsional agar siap dic
 </div>
 
 Sebagaimana terlihat pada Gambar 4.42, kuitansi digital dirancang dengan bingkai garis tegas yang memuat kepala surat resmi Asri Boarding House beserta alamat lengkapnya di kawasan Tembalang. Bagian isi dokumen merinci nomor referensi nota, tanggal pelunasan, nomor unit kamar, nama penyewa yang disamarkan sebagian untuk keamanan data, serta nilai transaksi sebesar Rp1.700.000 dengan teraan stempel **"LUNAS"** di bagian tengah. Pada kaki dokumen, tercantum keterangan bahwa pembayaran telah diverifikasi secara otomatis oleh sistem beserta kode unik transaksi sebagai bukti keabsahan dokumen.
+
+<br>
+
+## 4.3 Implementasi Kode Program
+Tahap implementasi kode program menerjemahkan seluruh rancangan arsitektur dan alur proses bisnis ke dalam instruksi terstruktur menggunakan bahasa pemrograman PHP pada kerangka kerja Laravel 11. Modul program dirancang menggunakan pemisahan logika layanan (*Service Layer*) agar proses validasi data, penguncian transaksi kamar, dan integrasi API eksternal dapat berjalan mandiri serta aman. Pembahasan kode program ini dikelompokkan ke dalam empat sub-bab tematik sesuai domain fungsinya, meliputi implementasi autentikasi dan kontrol akses, logika bisnis pemesanan kamar, integrasi gerbang pembayaran digital, serta penjadwalan otomatis dan notifikasi multi-kanal.
+
+<br>
+
+### 4.3.1 Implementasi Autentikasi dan Kontrol Akses Pengguna
+Kelompok modul autentikasi bertugas mengatur keamanan hak masuk serta mengarahkan pengguna ke portal kerja yang tepat sesuai perannya di Asri Boarding House. Lapisan ini memisahkan wewenang antara calon penyewa, penjaga kost, dan penyewa aktif agar tidak terjadi pelanggaran hak akses pada rute privat sistem.
+
+1. Implementasi Pembatasan Hak Akses Peran Pengguna (*Role Middleware*)  
+Lapisan penengah (*middleware*) ini bekerja mencegat setiap permintaan halaman web sebelum diteruskan ke fungsi pengontrol. Sistem memeriksa apakah pengguna telah masuk ke dalam akun dan memiliki label peran yang diizinkan untuk membuka rute tersebut. Mekanisme pengamanan hak akses berbasis peran ini diperlihatkan pada Gambar 4.43.
+
+<div align="center">
+
+<img src="images/gambar_4_43_kode_autentikasi_multi_role.png" alt="Gambar 4.43 Potongan Kode Pembatasan Hak Akses Peran Pengguna (Role Middleware)" width="600">
+
+<br>
+
+*Gambar 4.43 Potongan Kode Pembatasan Hak Akses Peran Pengguna (Role Middleware)*  
+
+</div>
+
+Merujuk pada Gambar 4.43, baris awal memeriksa keberadaan data sesi login akun yang sedang aktif. Apabila pengguna belum terautentikasi, sistem langsung mengarahkannya kembali ke formulir login utama. Baris berikutnya memvalidasi kecocokan peran pengguna dan seketika menghentikan eksekusi permintaan jika hak aksesnya tidak sesuai.
+
+<br>
+
+2. Implementasi Pengalihan Portal Pasca Autentikasi (*Auth Redirect*)  
+Setelah kredensial akun tervalidasi benar, sistem memerlukan logika pemandu untuk menentukan rute halaman tujuan pengguna. Logika ini memeriksa kelengkapan data nomor kontak, status aktif penyewa, hingga riwayat reservasi yang sedang menunggu pelunasan. Alur pengalihan sesi pengguna ke portal yang tepat disajikan pada Gambar 4.44.
+
+<div align="center">
+
+<img src="images/gambar_4_44_kode_auth_redirect.png" alt="Gambar 4.44 Potongan Kode Pengalihan Portal Pengguna Pasca Autentikasi" width="600">
+
+<br>
+
+*Gambar 4.44 Potongan Kode Pengalihan Portal Pengguna Pasca Autentikasi*  
+
+</div>
+
+Sebagaimana tampak pada Gambar 4.44, akun berstatus admin langsung dialihkan menuju dasbor pengelolaan operasional. Pengguna yang tercatat sebagai penghuni aktif diarahkan masuk ke portal penyewa untuk memantau sewa kamar. Pengguna dengan transaksi pemesanan berjalan dipandu langsung ke halaman detail reservasi miliknya.
+
+<br>
+
+### 4.3.2 Implementasi Logika Bisnis Pemesanan Kamar (Reservasi)
+Logika bisnis pemesanan kamar menangani seluruh alur penguncian inventaris 32 unit kamar di Asri Boarding House secara akurat. Modul ini menjadi benteng utama dalam mencegah terjadinya benturan pesanan ganda (*double booking*) saat banyak calon penghuni mengakses sistem secara bersamaan.
+
+1. Implementasi Transaksi ACID dan Penguncian Baris Unit Kamar  
+Pencegahan persaingan data saat dua calon penghuni memilih unit kamar yang sama pada detik bersamaan ditangani menggunakan transaksi ACID. Logika pemesanan memanfaatkan metode penguncian baris data kamar secara eksklusif agar tidak dapat diubah oleh proses lain sebelum transaksi selesai. Kepastian integritas penyimpanan data pemesanan kamar tersebut diperlihatkan pada Gambar 4.45.
+
+<div align="center">
+
+<img src="images/gambar_4_45_kode_transaksi_reservasi_acid.png" alt="Gambar 4.45 Potongan Kode Transaksi ACID dan Penguncian Unit Kamar" width="600">
+
+<br>
+
+*Gambar 4.45 Potongan Kode Transaksi ACID dan Penguncian Unit Kamar*  
+
+</div>
+
+Berdasarkan Gambar 4.45, seluruh tahapan pembuatan reservasi dibungkus di dalam transaksi basis data guna menjamin keutuhan relasi data. Pemanggilan metode *lock for update* mengunci baris data kamar terpilih sampai seluruh tahapan validasi tanggal tuntas dieksekusi. Apabila kamar terbukti telah terisi, sistem seketika membatalkan transaksi dan memunculkan peringatan validasi kepada calon penyewa.
+
+<br>
+
+2. Implementasi Algoritma Pengecekan Benturan (*Double Booking*) Kamar  
+Keakuratan ketersediaan 32 unit kamar tidur sewa di Asri Boarding House dijaga melalui algoritma pendeteksi benturan pesanan. Fungsi ini memeriksa apakah rentang tanggal mulai hingga tanggal selesai yang diajukan pemohon bertabrakan dengan jadwal pesanan lain yang masih aktif. Pemeriksaan juga disandingkan dengan masa berlaku kontrak seluruh penghuni kamar eksisting, sebagaimana ditunjukkan pada Gambar 4.46.
+
+<div align="center">
+
+<img src="images/gambar_4_46_kode_cek_double_booking.png" alt="Gambar 4.46 Potongan Kode Algoritma Pengecekan Benturan Jadwal Reservasi" width="600">
+
+<br>
+
+*Gambar 4.46 Potongan Kode Algoritma Pengecekan Benturan Jadwal Reservasi*  
+
+</div>
+
+Mengacu pada Gambar 4.46, kueri pertama menyaring data reservasi aktif yang memiliki irisan tanggal pada unit kamar terkait. Kueri kedua memeriksa catatan penghuni aktif guna memastikan kamar tersebut belum dihuni oleh penyewa lain pada periode yang dipilih. Nilai logika benar akan dikembalikan oleh sistem apabila salah satu dari kedua kondisi benturan jadwal tersebut terpenuhi.
+
+<br>
+
+### 4.3.3 Implementasi Integrasi Layanan Payment Gateway Midtrans
+Penerapan gerbang pembayaran digital Midtrans memfasilitasi transaksi non-tunai melalui *Virtual Account*, QRIS, dan dompet digital secara aman. Modul ini menghubungkan antarmuka web dengan server perbankan serta memperbarui status tagihan secara otomatis melalui mekanisme *webhook*.
+
+1. Implementasi Pembuatan Transaksi dan Snap Token Midtrans  
+Proses pembayaran sewa kamar secara daring diawali dengan pembuatan token transaksi melalui layanan Midtrans Snap. Fungsi ini merangkum rincian sewa pokok beserta akumulasi denda ke dalam struktur data yang terverifikasi sebelum dikirimkan ke server gerbang pembayaran. Integrasi ini memastikan calon penyewa menerima instruksi pembayaran resmi dengan masa berlaku pelunasan selama 24 jam penuh, seperti yang tampak pada Gambar 4.47.
+
+<div align="center">
+
+<img src="images/gambar_4_47_kode_snap_token_midtrans.png" alt="Gambar 4.47 Potongan Kode Pembuatan Snap Token Pembayaran Midtrans" width="600">
+
+<br>
+
+*Gambar 4.47 Potongan Kode Pembuatan Snap Token Pembayaran Midtrans*  
+
+</div>
+
+Sebagaimana tampak pada Gambar 4.47, sistem memetakan nominal pokok dan denda keterlambatan ke dalam larik rincian item transaksi. Bagian tengah kode menetapkan identitas pesanan unik berbasis penanda waktu beserta batas waktu pembayaran selama 24 jam. Baris akhir mengeksekusi permintaan HTTP POST terenkripsi menggunakan autentikasi kunci server untuk memperoleh Snap token resmi.
+
+<br>
+
+2. Implementasi Validasi Signature Key dan Webhook Callback Midtrans  
+Pembaruan status transaksi sewa bulanan dan uang muka diproses secara otomatis melalui mekanisme *webhook callback* dari Midtrans. Setiap kiriman data dari server pembayaran wajib melalui verifikasi tanda tangan digital berbasis enkripsi SHA-512 agar terhindar dari manipulasi pihak luar. Mekanisme pemeriksaan keamanan dan pencatatan transaksi lunas tersebut dapat dilihat pada Gambar 4.48.
+
+<div align="center">
+
+<img src="images/gambar_4_48_kode_webhook_signature_midtrans.png" alt="Gambar 4.48 Potongan Kode Validasi Keamanan Signature Key Webhook Midtrans" width="600">
+
+<br>
+
+*Gambar 4.48 Potongan Kode Validasi Keamanan Signature Key Webhook Midtrans*  
+
+</div>
+
+Melalui tampilan Gambar 4.48, tanda tangan digital diverifikasi menggunakan fungsi *hash equals* guna mencegah celah serangan perbedaan waktu respons. Sistem selanjutnya menjalankan pemeriksaan status transaksi terdahulu untuk menjamin sifat idempoten agar tidak terjadi pencatatan kas ganda. Begitu pembayaran dinyatakan terverifikasi, status tagihan pada basis data lokal langsung diubah menjadi lunas secara otomatis.
+
+<br>
+
+### 4.3.4 Implementasi Penjadwalan Otomatis dan Notifikasi Multi-Kanal
+Otomasi operasional dijalankan melalui perpaduan penjadwal tugas berkala di tingkat server dengan layanan pengiriman pesan instan dan dokumen surat elektronik resmi. Modul ini menghapus ketergantungan pada pengingat manual penjaga kost sehingga penagihan bulanan tanggal 10 dan penerbitan bukti kuitansi selalu tiba tepat waktu.
+
+1. Implementasi Penjadwalan Tugas Otomatis (*Task Scheduler Cron Job*)  
+Pengelolaan tagihan rutin tanggal 10 dan pembersihan data kedaluwarsa diotomatisasi melalui penjadwal tugas pada kerangka kerja Laravel. Cukup satu layanan penjadwal di tingkat server yang diaktifkan untuk menggerakkan seluruh perintah konsol sistem informasi secara mandiri di latar belakang. Konfigurasi waktu eksekusi otomatis pada sistem Asri Boarding House tersebut ditampilkan pada Gambar 4.49.
+
+<div align="center">
+
+<img src="images/gambar_4_49_kode_task_scheduler_cron.png" alt="Gambar 4.49 Potongan Kode Konfigurasi Penjadwal Tugas Otomatis Laravel" width="600">
+
+<br>
+
+*Gambar 4.49 Potongan Kode Konfigurasi Penjadwal Tugas Otomatis Laravel*  
+
+</div>
+
+Pada tampilan Gambar 4.49, perintah penerbitan tagihan bulanan dijadwalkan berjalan secara berkala setiap tanggal 1 pukul 00:05 WIB. Perintah kalkulasi denda keterlambatan dijalankan setiap dini hari pukul 01:00 WIB untuk memeriksa tagihan yang melewati batas tanggal 10. Pengaturan *without overlapping* turut disematkan agar proses yang membutuhkan waktu lama tidak dieksekusi secara tumpang-tindih.
+
+<br>
+
+2. Implementasi Integrasi Layanan Pesan WhatsApp Gateway Fonnte  
+Pengiriman notifikasi tagihan bulanan dan konfirmasi pelunasan reservasi kamar dikirimkan langsung ke nomor ponsel penyewa melalui integrasi API Fonnte. Sistem menstandarkan format nomor telepon terlebih dahulu sebelum meneruskan pesan teks melalui protokol pertukaran data HTTP. Rincian fungsi pengiriman pesan instan otomatis tersebut diperlihatkan pada Gambar 4.50.
+
+<div align="center">
+
+<img src="images/gambar_4_50_kode_whatsapp_gateway_fonnte.png" alt="Gambar 4.50 Potongan Kode Integrasi Pengiriman Pesan WhatsApp Fonnte" width="600">
+
+<br>
+
+*Gambar 4.50 Potongan Kode Integrasi Pengiriman Pesan WhatsApp Fonnte*  
+
+</div>
+
+Sebagaimana terlihat pada Gambar 4.50, nomor kontak pengguna diformat ke dalam standar penomoran internasional menggunakan kode negara Indonesia. Fungsi kemudian mengirimkan permintaan HTTP POST yang dilengkapi *header* token otorisasi rahasia menuju peladen Fonnte. Keberhasilan pengiriman dipastikan melalui pemeriksaan ganda terhadap kode status koneksi dan nilai status pada dokumen JSON respons.
+
+<br>
+
+3. Implementasi Integrasi Pengiriman Dokumen Tagihan via Email Gateway SMTP  
+Dokumen penagihan resmi dan rincian kuitansi sewa kamar dikirimkan secara otomatis ke alamat surat elektronik penghuni melalui protokol SMTP dengan enkripsi TLS. Penerapan antrean pesan (*message queue*) membuat proses pengiriman berkas berjalan di latar belakang tanpa memperlambat interaksi pengguna pada antarmuka web. Susunan kelas pengirim surat tagihan digital tersebut disajikan pada Gambar 4.51.
+
+<div align="center">
+
+<img src="images/gambar_4_51_kode_email_gateway_smtp.png" alt="Gambar 4.51 Potongan Kode Pengiriman Dokumen Tagihan via Email Gateway SMTP" width="600">
+
+<br>
+
+*Gambar 4.51 Potongan Kode Pengiriman Dokumen Tagihan via Email Gateway SMTP*  
+
+</div>
+
+Merujuk pada Gambar 4.51, kelas pengirim menerapkan antarmuka *ShouldQueue* agar pemrosesan surat elektronik dieksekusi melalui antrean peladen. Metode amplop menetapkan judul subjek resmi yang memuat nomor pesanan tagihan milik penghuni. Metode konten kemudian memadukan data sewa pokok, biaya denda, dan tautan masuk portal penyewa ke dalam templat tampilan email yang rapi.
 
 <br>
 
