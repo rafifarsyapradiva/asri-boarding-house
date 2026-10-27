@@ -379,7 +379,11 @@ DAFTAR LAMPIRAN &emsp; xii
 4.4 Pengujian Sistem &emsp; 71  
 4.5 Hasil Wawancara &emsp; 71  
 
-**DAFTAR PUSTAKA** &emsp; **71**  
+**BAB 5 KESIMPULAN DAN SARAN** &emsp; **84**  
+5.1 Kesimpulan &emsp; 84  
+5.2 Saran &emsp; 84  
+
+**DAFTAR PUSTAKA** &emsp; **85**  
 
 <div style="page-break-after: always;"></div>
 
@@ -1935,6 +1939,26 @@ Sesi wawancara bersama Sindhu difokuskan pada pengujian kenyamanan navigasi dasb
 <br>
 
 Berdasarkan hasil wawancara pada Tabel 4.7, Sindhu memberikan skor kepuasan 8,0 dari skala 10 dan memuji kesesuaian visual kamar pada web dengan kondisi fisik di lapangan. Transparansi rincian biaya tanpa biaya tersembunyi mempermudah pengelolaan bujet bulanan mahasiswa, serta pelunasan daring menghapus rasa canggung bertatap muka saat membayar sewa. Sebagai penyempurnaan, responden menyarankan penambahan tur panduan visual singkat bagi pengguna baru saat pertama kali masuk ke portal hunian.
+
+<br>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+## BAB 5<br>KESIMPULAN DAN SARAN
+
+</div>
+
+<br>
+
+## 5.1 Kesimpulan
+Sistem Informasi Manajemen Kost pada Asri Boarding House berhasil dibangun menggunakan kerangka kerja Laravel dan basis data MySQL untuk menuntaskan kendala promosi konvensional, pencatatan pembukuan manual, serta risiko benturan pemesanan kamar ganda. Integrasi gerbang pembayaran digital Midtrans mempermudah verifikasi pelunasan uang muka dan biaya sewa secara instan tanpa perlu unggah resi transfer, sekaligus menutup celah selisih pencatatan kas operasional pengelola. Mekanisme otomasi tugas berkala terbukti andal dalam menerbitkan tagihan bulanan secara terjadwal setiap tanggal satu serta menghitung akumulasi denda keterlambatan lewat tanggal sepuluh secara konsisten. Pemanfaatan layanan pesan singkat WhatsApp dan surat elektronik efektif mengingatkan tenggat pembayaran serta mempercepat penyampaian dokumen bukti transaksi kepada penghuni. Seluruh enam puluh skenario uji fungsional sistem berjalan lancar sesuai rancangan awal, didukung respon positif pengelola maupun para penghuni yang merasakan langsung kemudahan tata kelola hunian yang jauh lebih tertib dan efisien.
+
+<br>
+
+## 5.2 Saran
+Pengelola dapat menyematkan tautan pembayaran langsung pada pesan pengingat tagihan WhatsApp agar penghuni bisa menyelesaikan transaksi dalam satu sentuhan tanpa harus membuka menu portal secara manual. Pengembangan antarmuka berikutnya sebaiknya menghadirkan panduan interaktif singkat bagi penghuni baru demi mempermudah pengenalan fitur sejak pertama kali masuk ke sistem. Penambahan variasi saluran perbankan pada sistem gerbang pembayaran perlu dipertimbangkan guna memberikan keleluasaan bagi penyewa yang menggunakan rekening selain mitra utama saat ini. Sistem dapat diperluas dengan fitur pemantauan penggunaan daya listrik kamar secara mandiri agar rincian biaya utilitas bulanan tercatat makin transparan. Pengembang berikutnya dapat menjajaki integrasi perangkat keras kunci pintu digital yang tersinkronisasi langsung dengan status aktif kontrak sewa penghuni.
 
 <br>
 
