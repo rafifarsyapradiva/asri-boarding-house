@@ -304,13 +304,31 @@ Rafif Arsya Pradiva
 
 <br>
 
-<br>
+Pengelolaan operasional 32 unit kamar di Asri Boarding House selama ini bertumpu pada pembukuan buku besar fisik dan pesan singkat manual. Ketiadaan sistem pemantauan terpusat memicu benturan reservasi kamar, penagihan sewa bulanan yang kerap terlewat, serta penumpukan selisih kas akibat rekonsiliasi bukti transfer bank yang memakan waktu berhari-hari. Untuk mengatasi hambatan tersebut, penelitian ini merancang dan membangun sistem informasi manajemen kost berbasis web dengan integrasi gerbang pembayaran Midtrans Snap serta otomasi pengingat via WhatsApp dan surel. Pengembangan sistem menerapkan metode *Waterfall* menggunakan kerangka kerja Laravel dan basis data MySQL yang dilengkapi penguncian baris pesimis guna menjamin ketersediaan kamar secara *real-time* tanpa risiko alokasi ganda.
+
+Hasil pengujian fungsionalitas melalui 60 skenario *black box* menunjukkan seluruh fitur bekerja stabil tanpa kegagalan alur transaksi maupun validasi data. Evaluasi langsung bersama pengelola indekos membuktikan bahwa sistem memangkas waktu penutupan buku bulanan dari beberapa hari menjadi instan, meniadakan selisih kas fisik, dan mencegah benturan jadwal sewa. Selain itu, wawancara terhadap mahasiswa penghuni menegaskan kepuasan tinggi terhadap kemudahan pemesanan jarak jauh, kepraktisan pembayaran tagihan melalui *virtual account*, serta keterbukaan informasi kuitansi digital.
 
 <br>
 
+**Kata Kunci:** Asri Boarding House, gerbang pembayaran Midtrans, Laravel, penguncian pesimis, sistem informasi manajemen kost.
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+### ABSTRACT
+
+</div>
+
 <br>
 
-Kata Kunci:
+Operational management across 32 rental units at Asri Boarding House previously relied on physical paper ledgers and unstructured instant messaging. The absence of a centralized system caused frequent room booking collisions, overlooked monthly rental collections, and recurring cash reconciliation delays driven by manual bank transfer verification. To eliminate these bottlenecks, this study designs and implements a web-based boarding house management information system integrated with the Midtrans Snap payment gateway alongside automated WhatsApp and email notification engines. Developed under the Waterfall software development lifecycle, the application leverages the Laravel framework and MySQL database, incorporating pessimistic row-level locking to ensure real-time room availability without duplicate allocations.
+
+Functional evaluation across 60 black-box testing scenarios verified that all operational modules executed reliably without transaction failures or validation errors. Direct assessment with the boarding house manager confirmed that the platform compressed monthly book-closing from several working days to instant reporting, eliminated physical cash discrepancies, and prevented reservation schedule conflicts. Furthermore, evaluative interviews with resident students revealed high satisfaction regarding straightforward remote room booking, practical bill settlements through virtual accounts, and transparent digital receipts.
+
+<br>
+
+**Keywords:** Asri Boarding House, automated billing, boarding house management system, Midtrans payment gateway, pessimistic locking.
 
 <div style="page-break-after: always;"></div>
 
@@ -329,10 +347,11 @@ HALAMAN PENGESAHAN &emsp; iv
 HALAMAN PERNYATAAN PUBLIKASI KARYA ILMIAH UNTUK KEPENTINGAN AKADEMIS &emsp; v  
 KATA PENGANTAR &emsp; vi  
 ABSTRAK &emsp; viii  
-DAFTAR ISI &emsp; ix  
-DAFTAR TABEL &emsp; x  
-DAFTAR GAMBAR &emsp; xi  
-DAFTAR LAMPIRAN &emsp; xii  
+ABSTRACT &emsp; ix  
+DAFTAR ISI &emsp; x  
+DAFTAR TABEL &emsp; xi  
+DAFTAR GAMBAR &emsp; xii  
+DAFTAR LAMPIRAN &emsp; xiii  
 
 **BAB 1 PENDAHULUAN** &emsp; **1**  
 1.1 Latar Belakang &emsp; 1  
