@@ -376,7 +376,7 @@ DAFTAR LAMPIRAN &emsp; xii
 &emsp; 4.3.2 Implementasi Pemesanan Kamar &emsp; 64  
 &emsp; 4.3.3 Implementasi *Payment Gateway* &emsp; 66  
 &emsp; 4.3.4 Implementasi Penjadwalan dan Notifikasi &emsp; 68  
-4.5 Pengujian Sistem &emsp; 71  
+4.4 Pengujian Sistem &emsp; 71  
 
 **DAFTAR PUSTAKA** &emsp; **71**  
 
@@ -1687,7 +1687,7 @@ Merujuk pada Gambar 4.51, kelas pengirim menerapkan antarmuka *ShouldQueue* agar
 
 <br>
 
-## 4.5 Pengujian Sistem
+## 4.4 Pengujian Sistem
 Verifikasi fungsionalitas sistem informasi Asri Boarding House dilakukan menggunakan metode pengujian kotak hitam (*black box testing*) guna memastikan kinerja setiap fitur berjalan sesuai kebutuhan pengguna. Evaluasi ini menitikberatkan pada kesesuaian antara masukan data pengguna dengan respon antarmuka tanpa memeriksa susunan kode program internal. Seluruh skenario uji dikelompokkan ke dalam enam domain operasional utama, mencakup gerbang autentikasi, katalog hunian, alur reservasi mandiri, portal penghuni, tata kelola admin, hingga mesin penjadwal otomatis di peladen. Rincian prosedur pengujian, respon sistem yang diharapkan, serta status keberhasilan fungsionalitas dirangkum pada Tabel 4.1.
 
 <br>
