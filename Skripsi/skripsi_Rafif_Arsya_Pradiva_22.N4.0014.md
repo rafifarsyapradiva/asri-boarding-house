@@ -366,13 +366,18 @@ DAFTAR LAMPIRAN &emsp; xii
 &emsp; 4.1.2 Entity Relationship Diagram (ERD) &emsp; 21  
 &emsp; 4.1.3 Activity Diagram &emsp; 22  
 &emsp; 4.1.4 Flowchart Sistem &emsp; 25  
-4.2 Implementasi Sistem &emsp; 26  
+4.2 Implementasi Antarmuka Sistem &emsp; 26  
 &emsp; 4.2.1 Implementasi Umum &emsp; 26  
 &emsp; 4.2.2 Implementasi Calon Penyewa &emsp; 37  
 &emsp; 4.2.3 Implementasi Admin &emsp; 44  
 &emsp; 4.2.4 Implementasi Penyewa Aktif &emsp; 55  
+4.3 Implementasi Kode Program &emsp; 62  
+&emsp; 4.3.1 Implementasi Autentikasi dan Kontrol Akses Pengguna &emsp; 62  
+&emsp; 4.3.2 Implementasi Logika Bisnis Pemesanan Kamar (Reservasi) &emsp; 64  
+&emsp; 4.3.3 Implementasi Integrasi Layanan Payment Gateway Midtrans &emsp; 66  
+&emsp; 4.3.4 Implementasi Penjadwalan Otomatis dan Notifikasi Multi-Kanal &emsp; 68  
 
-**DAFTAR PUSTAKA** &emsp; **62**  
+**DAFTAR PUSTAKA** &emsp; **71**  
 
 <div style="page-break-after: always;"></div>
 
@@ -438,6 +443,15 @@ Gambar 4.39 &emsp; Antarmuka Pengaturan Profil Penghuni &emsp; 58
 Gambar 4.40 &emsp; Antarmuka Riwayat Transaksi Pembayaran &emsp; 59  
 Gambar 4.41 &emsp; Antarmuka Riwayat dan Pengajuan Keluhan Kamar &emsp; 60  
 Gambar 4.42 &emsp; Antarmuka Tanda Terima Kuitansi Digital (Nota PDF) &emsp; 61  
+Gambar 4.43 &emsp; Potongan Kode Pembatasan Hak Akses Peran Pengguna (Role Middleware) &emsp; 62  
+Gambar 4.44 &emsp; Potongan Kode Pengalihan Portal Pengguna Pasca Autentikasi &emsp; 63  
+Gambar 4.45 &emsp; Potongan Kode Transaksi ACID dan Penguncian Unit Kamar &emsp; 64  
+Gambar 4.46 &emsp; Potongan Kode Algoritma Pengecekan Benturan Jadwal Reservasi &emsp; 65  
+Gambar 4.47 &emsp; Potongan Kode Pembuatan Snap Token Pembayaran Midtrans &emsp; 66  
+Gambar 4.48 &emsp; Potongan Kode Validasi Keamanan Signature Key Webhook Midtrans &emsp; 67  
+Gambar 4.49 &emsp; Potongan Kode Konfigurasi Penjadwal Tugas Otomatis Laravel &emsp; 68  
+Gambar 4.50 &emsp; Potongan Kode Integrasi Pengiriman Pesan WhatsApp Fonnte &emsp; 69  
+Gambar 4.51 &emsp; Potongan Kode Pengiriman Dokumen Tagihan via Email Gateway SMTP &emsp; 70  
 
 <div style="page-break-after: always;"></div>
 
