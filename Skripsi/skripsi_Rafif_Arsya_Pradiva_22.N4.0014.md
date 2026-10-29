@@ -414,13 +414,13 @@ DAFTAR LAMPIRAN &emsp; xiii
 
 <br>
 
-Tabel 4.1 &emsp; Hasil Pengujian Fungsionalitas Sistem (*Black Box Testing*) &emsp; 71  
-Tabel 4.2 &emsp; Hasil Wawancara Penjaga Kost (Bapak Asep) &emsp; 72  
-Tabel 4.3 &emsp; Hasil Wawancara Responden 1 (Arjun, Mahasiswa UNDIP - Penghuni Kost) &emsp; 74  
-Tabel 4.4 &emsp; Hasil Wawancara Responden 2 (Farrel, Mahasiswa USM - Penghuni Kost) &emsp; 76  
-Tabel 4.5 &emsp; Hasil Wawancara Responden 3 (Iman, Mahasiswa UDINUS - Penghuni Kost) &emsp; 78  
-Tabel 4.6 &emsp; Hasil Wawancara Responden 4 (Ammar, Mahasiswa PKN STAN - Penghuni Kost) &emsp; 80  
-Tabel 4.7 &emsp; Hasil Wawancara Responden 5 (Sindhu, Mahasiswa UI - Penghuni Kost) &emsp; 82  
+Tabel 4.1 &emsp; Pengujian Fungsionalitas Sistem &emsp; 71  
+Tabel 4.2 &emsp; Wawancara Penjaga Kost &emsp; 72  
+Tabel 4.3 &emsp; Wawancara Responden 1 &emsp; 74  
+Tabel 4.4 &emsp; Wawancara Responden 2 &emsp; 76  
+Tabel 4.5 &emsp; Wawancara Responden 3 &emsp; 78  
+Tabel 4.6 &emsp; Wawancara Responden 4 &emsp; 80  
+Tabel 4.7 &emsp; Wawancara Responden 5 &emsp; 82  
 
 <br>
 
@@ -434,60 +434,60 @@ Tabel 4.7 &emsp; Hasil Wawancara Responden 5 (Sindhu, Mahasiswa UI - Penghuni Ko
 
 <br>
 
-Gambar 3.1 &emsp; Tahapan Metode SDLC Waterfall &emsp; 18  
+Gambar 3.1 &emsp; Tahapan Metode Waterfall &emsp; 18  
 Gambar 3.2 &emsp; Kerangka Pemikiran Penelitian &emsp; 19  
 Gambar 4.1 &emsp; Use Case Diagram &emsp; 20  
-Gambar 4.2 &emsp; Entity Relationship Diagram (ERD) &emsp; 21  
-Gambar 4.3 &emsp; Activity Diagram Calon Penyewa &emsp; 22  
-Gambar 4.4 &emsp; Activity Diagram Admin (Penjaga Kost) &emsp; 23  
-Gambar 4.5 &emsp; Activity Diagram Penyewa Aktif &emsp; 24  
-Gambar 4.6 &emsp; Flowchart Sistem &emsp; 25  
-Gambar 4.7 &emsp; Antarmuka Halaman Beranda (Home Page) &emsp; 26  
-Gambar 4.8 &emsp; Antarmuka Daftar Fasilitas Kost &emsp; 27  
-Gambar 4.9 &emsp; Antarmuka Tipe dan Spesifikasi Kamar Kost &emsp; 28  
-Gambar 4.10 &emsp; Antarmuka Galeri Foto Kost &emsp; 29  
-Gambar 4.11 &emsp; Antarmuka Panduan Alur Cara Reservasi &emsp; 30  
-Gambar 4.12 &emsp; Antarmuka Testimoni dan Ulasan Penghuni &emsp; 31  
-Gambar 4.13 &emsp; Antarmuka Pertanyaan Umum (FAQ) &emsp; 32  
-Gambar 4.14 &emsp; Antarmuka Halaman Tentang Kami &emsp; 33  
-Gambar 4.15 &emsp; Antarmuka Halaman Login Pengguna &emsp; 34  
-Gambar 4.16 &emsp; Antarmuka Halaman Pendaftaran Akun (Register) &emsp; 35  
-Gambar 4.17 &emsp; Antarmuka Fitur Chat Real Time Pengunjung &emsp; 36  
-Gambar 4.18 &emsp; Antarmuka Pengisian Kelengkapan Profil Pemesan &emsp; 37  
-Gambar 4.19 &emsp; Antarmuka Dasbor Reservasi Calon Penyewa &emsp; 38  
-Gambar 4.20 &emsp; Antarmuka Simulasi Biaya Kamar dan Reservasi &emsp; 39  
-Gambar 4.21 &emsp; Antarmuka Pemantauan Alur Lima Tahap dan Pembayaran Reservasi &emsp; 40  
-Gambar 4.22 &emsp; Antarmuka Jendela Pembayaran Digital Midtrans Snap &emsp; 41  
-Gambar 4.23 &emsp; Implementasi Pesan Aktivasi Hunian via WhatsApp Fonnte &emsp; 42  
-Gambar 4.24 &emsp; Implementasi Surat Elektronik Konfirmasi Aktivasi Penyewa via SMTP &emsp; 43  
-Gambar 4.25 &emsp; Antarmuka Halaman Login Administrator &emsp; 44  
-Gambar 4.26 &emsp; Antarmuka Dasbor Operasional dan Keuangan Administrator &emsp; 45  
-Gambar 4.27 &emsp; Antarmuka Pengelolaan Master Data Kamar &emsp; 46  
-Gambar 4.28 &emsp; Antarmuka Pengelolaan Fasilitas Kost &emsp; 47  
-Gambar 4.29 &emsp; Antarmuka Pengelolaan Data Penghuni Kost &emsp; 48  
-Gambar 4.30 &emsp; Antarmuka Pengelolaan Pesanan Reservasi Masuk &emsp; 49  
-Gambar 4.31 &emsp; Antarmuka Pengelolaan Tagihan Sewa Bulanan dan Denda &emsp; 50  
-Gambar 4.32 &emsp; Antarmuka Pencatatan Pengeluaran Operasional Kost &emsp; 51  
-Gambar 4.33 &emsp; Antarmuka Laporan Rekapitulasi Kas dan Ekspor Dokumen &emsp; 52  
-Gambar 4.34 &emsp; Antarmuka Pengelolaan Tiket Keluhan Fasilitas &emsp; 53  
-Gambar 4.35 &emsp; Antarmuka Pengelolaan Obrolan Tamu (Guest Chat Admin) &emsp; 54  
-Gambar 4.36 &emsp; Antarmuka Login Portal Penyewa Aktif &emsp; 55  
-Gambar 4.37 &emsp; Antarmuka Dasbor Portal Penyewa Aktif &emsp; 56  
-Gambar 4.38 &emsp; Antarmuka Riwayat dan Pembayaran Tagihan Sewa Penyewa &emsp; 57  
-Gambar 4.39 &emsp; Antarmuka Pengaturan Profil Penghuni &emsp; 58  
-Gambar 4.40 &emsp; Antarmuka Riwayat Transaksi Pembayaran &emsp; 59  
-Gambar 4.41 &emsp; Antarmuka Riwayat dan Pengajuan Keluhan Kamar &emsp; 60  
-Gambar 4.42 &emsp; Antarmuka Tanda Terima Kuitansi Digital (Nota PDF) &emsp; 61  
-Gambar 4.43 &emsp; Potongan Kode Pembatasan Hak Akses Peran Pengguna (Role Middleware) &emsp; 62  
-Gambar 4.44 &emsp; Potongan Kode Pengalihan Portal Pengguna Pasca Autentikasi &emsp; 63  
-Gambar 4.45 &emsp; Potongan Kode Transaksi ACID dan Penguncian Unit Kamar &emsp; 64  
-Gambar 4.46 &emsp; Potongan Kode Algoritma Pengecekan Benturan Jadwal Reservasi &emsp; 65  
-Gambar 4.47 &emsp; Potongan Kode Pembuatan Snap Token Pembayaran Midtrans &emsp; 66  
-Gambar 4.48 &emsp; Potongan Kode Validasi Keamanan Signature Key Webhook Midtrans &emsp; 67  
-Gambar 4.49 &emsp; Potongan Kode Konfigurasi Penjadwal Tugas Otomatis Laravel &emsp; 68  
-Gambar 4.50 &emsp; Potongan Kode Integrasi Pengiriman Pesan WhatsApp Fonnte &emsp; 69  
-Gambar 4.51 &emsp; Potongan Kode Pengiriman Dokumen Tagihan via Email Gateway SMTP &emsp; 70  
-Gambar 4.52 &emsp; Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep) &emsp; 72  
+Gambar 4.2 &emsp; Entity Relationship Diagram &emsp; 21  
+Gambar 4.3 &emsp; Activity Diagram Pemesan &emsp; 22  
+Gambar 4.4 &emsp; Activity Diagram Admin &emsp; 23  
+Gambar 4.5 &emsp; Activity Diagram Penghuni &emsp; 24  
+Gambar 4.6 &emsp; Flowchart Sistem Aplikasi &emsp; 25  
+Gambar 4.7 &emsp; Halaman Beranda Utama &emsp; 26  
+Gambar 4.8 &emsp; Daftar Fasilitas Kost &emsp; 27  
+Gambar 4.9 &emsp; Katalog Tipe Kamar &emsp; 28  
+Gambar 4.10 &emsp; Galeri Foto Kost &emsp; 29  
+Gambar 4.11 &emsp; Panduan Alur Reservasi &emsp; 30  
+Gambar 4.12 &emsp; Halaman Testimoni Penghuni &emsp; 31  
+Gambar 4.13 &emsp; Halaman Pertanyaan Umum &emsp; 32  
+Gambar 4.14 &emsp; Halaman Tentang Kami &emsp; 33  
+Gambar 4.15 &emsp; Halaman Login Pengguna &emsp; 34  
+Gambar 4.16 &emsp; Halaman Pendaftaran Akun &emsp; 35  
+Gambar 4.17 &emsp; Jendela Obrolan Pengunjung &emsp; 36  
+Gambar 4.18 &emsp; Kelengkapan Profil Pemesan &emsp; 37  
+Gambar 4.19 &emsp; Dasbor Reservasi Pemesan &emsp; 38  
+Gambar 4.20 &emsp; Simulasi Biaya Kamar &emsp; 39  
+Gambar 4.21 &emsp; Tahapan Pembayaran Reservasi &emsp; 40  
+Gambar 4.22 &emsp; Jendela Pembayaran Midtrans &emsp; 41  
+Gambar 4.23 &emsp; Pesan Aktivasi WhatsApp &emsp; 42  
+Gambar 4.24 &emsp; Email Konfirmasi Reservasi &emsp; 43  
+Gambar 4.25 &emsp; Halaman Login Administrator &emsp; 44  
+Gambar 4.26 &emsp; Dasbor Operasional Administrator &emsp; 45  
+Gambar 4.27 &emsp; Pengelolaan Data Kamar &emsp; 46  
+Gambar 4.28 &emsp; Pengelolaan Fasilitas Kost &emsp; 47  
+Gambar 4.29 &emsp; Pengelolaan Data Penghuni &emsp; 48  
+Gambar 4.30 &emsp; Pengelolaan Reservasi Masuk &emsp; 49  
+Gambar 4.31 &emsp; Pengelolaan Tagihan Bulanan &emsp; 50  
+Gambar 4.32 &emsp; Pencatatan Pengeluaran Operasional &emsp; 51  
+Gambar 4.33 &emsp; Laporan Rekapitulasi Kas &emsp; 52  
+Gambar 4.34 &emsp; Pengelolaan Keluhan Fasilitas &emsp; 53  
+Gambar 4.35 &emsp; Pengelolaan Obrolan Tamu &emsp; 54  
+Gambar 4.36 &emsp; Login Penyewa Aktif &emsp; 55  
+Gambar 4.37 &emsp; Dasbor Penyewa Aktif &emsp; 56  
+Gambar 4.38 &emsp; Tagihan Sewa Penyewa &emsp; 57  
+Gambar 4.39 &emsp; Pengaturan Profil Penghuni &emsp; 58  
+Gambar 4.40 &emsp; Riwayat Transaksi Pembayaran &emsp; 59  
+Gambar 4.41 &emsp; Pengajuan Keluhan Kamar &emsp; 60  
+Gambar 4.42 &emsp; Dokumen Kuitansi Digital &emsp; 61  
+Gambar 4.43 &emsp; Kode Pembatasan Akses &emsp; 62  
+Gambar 4.44 &emsp; Kode Pengalihan Portal &emsp; 63  
+Gambar 4.45 &emsp; Kode Penguncian Kamar &emsp; 64  
+Gambar 4.46 &emsp; Kode Pemeriksaan Jadwal &emsp; 65  
+Gambar 4.47 &emsp; Kode Token Midtrans &emsp; 66  
+Gambar 4.48 &emsp; Kode Validasi Webhook &emsp; 67  
+Gambar 4.49 &emsp; Kode Penjadwal Tugas &emsp; 68  
+Gambar 4.50 &emsp; Kode Integrasi WhatsApp &emsp; 69  
+Gambar 4.51 &emsp; Kode Pengiriman Email &emsp; 70  
+Gambar 4.52 &emsp; Dokumentasi Wawancara Pengelola &emsp; 72  
 
 <div style="page-break-after: always;"></div>
 
@@ -683,11 +683,9 @@ Metode *Waterfall* dipilih karena kebutuhan pengelolaan indekos, seperti alur pe
 
 <div align="center">
 
-<img src="images/metode_sdlc_waterfall.png" alt="Tahapan Metode SDLC Waterfall" width="550">
+<img src="images/metode_sdlc_waterfall.png" alt="Gambar 3.1 Tahapan Metode Waterfall" width="550">
 
-<br>
-
-*Gambar 3.1 Tahapan Metode SDLC Waterfall [30]*  
+*Gambar 3.1 Tahapan Metode Waterfall [30]*
 
 </div>
 
@@ -702,11 +700,9 @@ Kerangka pemikiran dalam penelitian ini disusun mengikuti alur pendekatan *Resea
 
 <div align="center">
 
-<img src="images/kerangka_pemikiran_bw.png" alt="Kerangka Pemikiran Penelitian" width="550">
+<img src="images/kerangka_pemikiran_bw.png" alt="Gambar 3.2 Kerangka Pemikiran Penelitian" width="550">
 
-<br>
-
-*Gambar 3.2 Kerangka Pemikiran Penelitian*  
+*Gambar 3.2 Kerangka Pemikiran Penelitian*
 
 </div>
 <br>
@@ -740,9 +736,7 @@ Batasan hak akses dan fungsi layanan pada Sistem Informasi Manajemen Kost Asri B
 
 <img src="images/gambar_4_1_use_case.png" alt="Gambar 4.1 Use Case Diagram" width="550">
 
-<br>
-
-*Gambar 4.1 Use Case Diagram*  
+*Gambar 4.1 Use Case Diagram*
 
 </div>
 
@@ -768,23 +762,19 @@ Struktur penyimpanan data pada sistem manajemen kost ini dirancang menggunakan m
 
 <div align="center">
 
-<img src="images/gambar_4_2_a_erd_modul_inti.png" alt="Gambar 4.2 (a) Modul Pengelolaan Kamar, Pengguna, Reservasi, dan Pembayaran" width="650">
+<img src="images/gambar_4_2_a_erd_modul_inti.png" alt="Gambar 4.2 (a) ERD Modul Inti" width="650">
+
+*(a) ERD Modul Inti*
 
 <br>
 
-*(a) Modul Pengelolaan Kamar, Pengguna, Reservasi, dan Pembayaran*  
+<img src="images/gambar_4_2_b_erd_modul_pendukung.png" alt="Gambar 4.2 (b) ERD Modul Pendukung" width="650">
 
-<br><br>
-
-<img src="images/gambar_4_2_b_erd_modul_pendukung.png" alt="Gambar 4.2 (b) Modul Layanan Keluhan, Operasional Kost, Komunikasi, dan Informasi" width="650">
+*(b) ERD Modul Pendukung*
 
 <br>
 
-*(b) Modul Layanan Keluhan, Operasional Kost, Komunikasi, dan Informasi*  
-
-<br><br>
-
-*Gambar 4.2 Entity Relationship Diagram (ERD)*  
+*Gambar 4.2 Entity Relationship Diagram*
 
 </div>
 
@@ -818,11 +808,9 @@ Alur aktivitas calon penyewa dirancang untuk mempermudah pemesanan unit kamar se
 
 <div align="center">
 
-<img src="images/gambar_4_3_calon_penyewa.png" alt="Gambar 4.3 Activity Diagram Calon Penyewa" width="650">
+<img src="images/gambar_4_3_calon_penyewa.png" alt="Gambar 4.3 Activity Diagram Pemesan" width="650">
 
-<br>
-
-*Gambar 4.3 Activity Diagram Calon Penyewa*  
+*Gambar 4.3 Activity Diagram Pemesan*
 
 </div>
 
@@ -839,11 +827,9 @@ Pada sisi pengelola, aktivitas sistem berfokus pada kemudahan mengelola inventar
 
 <div align="center">
 
-<img src="images/gambar_4_4_admin.png" alt="Gambar 4.4 Activity Diagram Admin (Penjaga Kost)" width="650">
+<img src="images/gambar_4_4_admin.png" alt="Gambar 4.4 Activity Diagram Admin" width="650">
 
-<br>
-
-*Gambar 4.4 Activity Diagram Admin (Penjaga Kost)*  
+*Gambar 4.4 Activity Diagram Admin*
 
 </div>
 
@@ -860,11 +846,9 @@ Aktivitas penyewa aktif berpusat pada penggunaan portal layanan mandiri selama m
 
 <div align="center">
 
-<img src="images/gambar_4_5_penyewa_aktif.png" alt="Gambar 4.5 Activity Diagram Penyewa Aktif" width="650">
+<img src="images/gambar_4_5_penyewa_aktif.png" alt="Gambar 4.5 Activity Diagram Penghuni" width="650">
 
-<br>
-
-*Gambar 4.5 Activity Diagram Penyewa Aktif*  
+*Gambar 4.5 Activity Diagram Penghuni*
 
 </div>
 
@@ -881,11 +865,9 @@ Urutan logika kerja sistem dari tahap pemesanan awal hingga pengaktifan status p
 
 <div align="center">
 
-<img src="images/gambar_4_6_flowchart_sistem.png" alt="Gambar 4.6 Flowchart Sistem" width="650">
+<img src="images/gambar_4_6_flowchart_sistem.png" alt="Gambar 4.6 Flowchart Sistem Aplikasi" width="650">
 
-<br>
-
-*Gambar 4.6 Flowchart Sistem*  
+*Gambar 4.6 Flowchart Sistem Aplikasi*
 
 </div>
 
@@ -908,11 +890,9 @@ Halaman beranda utama (*home page*) menjadi titik temu pertama bagi mahasiswa ma
 
 <div align="center">
 
-<img src="images/gambar_4_7_home_page.png" alt="Gambar 4.7 Antarmuka Halaman Beranda (Home Page)" width="600">
+<img src="images/gambar_4_7_home_page.png" alt="Gambar 4.7 Halaman Beranda Utama" width="600">
 
-<br>
-
-*Gambar 4.7 Antarmuka Halaman Beranda (Home Page)*  
+*Gambar 4.7 Halaman Beranda Utama*
 
 </div>
 
@@ -927,11 +907,9 @@ Setiap item fasilitas disertai keterangan singkat mengenai fungsi serta aturan p
 
 <div align="center">
 
-<img src="images/gambar_4_8_fasilitas_kost.png" alt="Gambar 4.8 Antarmuka Daftar Fasilitas Kost" width="600">
+<img src="images/gambar_4_8_fasilitas_kost.png" alt="Gambar 4.8 Daftar Fasilitas Kost" width="600">
 
-<br>
-
-*Gambar 4.8 Antarmuka Daftar Fasilitas Kost*  
+*Gambar 4.8 Daftar Fasilitas Kost*
 
 </div>
 
@@ -944,11 +922,9 @@ Katalog tipe kamar kost menampilkan spesifikasi ruang dan kelengkapan perabot un
 
 <div align="center">
 
-<img src="images/gambar_4_9_tipe_kamar_kost.png" alt="Gambar 4.9 Antarmuka Tipe dan Spesifikasi Kamar Kost" width="600">
+<img src="images/gambar_4_9_tipe_kamar_kost.png" alt="Gambar 4.9 Katalog Tipe Kamar" width="600">
 
-<br>
-
-*Gambar 4.9 Antarmuka Tipe dan Spesifikasi Kamar Kost*  
+*Gambar 4.9 Katalog Tipe Kamar*
 
 </div>
 
@@ -963,11 +939,9 @@ Seluruh dokumentasi visual tersebut ditata dalam susunan kisi yang proporsional 
 
 <div align="center">
 
-<img src="images/gambar_4_10_galeri_kost.png" alt="Gambar 4.10 Antarmuka Galeri Foto Kost" width="600">
+<img src="images/gambar_4_10_galeri_kost.png" alt="Gambar 4.10 Galeri Foto Kost" width="600">
 
-<br>
-
-*Gambar 4.10 Antarmuka Galeri Foto Kost*  
+*Gambar 4.10 Galeri Foto Kost*
 
 </div>
 
@@ -980,11 +954,9 @@ Agar pengunjung baru tidak mengalami kebingungan saat hendak menyewa kamar secar
 
 <div align="center">
 
-<img src="images/gambar_4_11_alur_cara_reservasi.png" alt="Gambar 4.11 Antarmuka Panduan Alur Cara Reservasi" width="600">
+<img src="images/gambar_4_11_alur_cara_reservasi.png" alt="Gambar 4.11 Panduan Alur Reservasi" width="600">
 
-<br>
-
-*Gambar 4.11 Antarmuka Panduan Alur Cara Reservasi*  
+*Gambar 4.11 Panduan Alur Reservasi*
 
 </div>
 
@@ -997,11 +969,9 @@ Bagian testimoni menampilkan ulasan serta penilaian langsung dari para penghuni 
 
 <div align="center">
 
-<img src="images/gambar_4_12_testimoni_penyewa_kost.png" alt="Gambar 4.12 Antarmuka Testimoni dan Ulasan Penghuni" width="600">
+<img src="images/gambar_4_12_testimoni_penyewa_kost.png" alt="Gambar 4.12 Halaman Testimoni Penghuni" width="600">
 
-<br>
-
-*Gambar 4.12 Antarmuka Testimoni dan Ulasan Penghuni*  
+*Gambar 4.12 Halaman Testimoni Penghuni*
 
 </div>
 
@@ -1016,11 +986,9 @@ Penyediaan halaman tanya jawab mandiri ini turut meringankan beban penjaga kost 
 
 <div align="center">
 
-<img src="images/gambar_4_13_faq.png" alt="Gambar 4.13 Antarmuka Pertanyaan Umum (FAQ)" width="600">
+<img src="images/gambar_4_13_faq.png" alt="Gambar 4.13 Halaman Pertanyaan Umum" width="600">
 
-<br>
-
-*Gambar 4.13 Antarmuka Pertanyaan Umum (FAQ)*  
+*Gambar 4.13 Halaman Pertanyaan Umum*
 
 </div>
 
@@ -1033,11 +1001,9 @@ Antarmuka Tentang Kami memperkenalkan profil usaha, komitmen kenyamanan hunian, 
 
 <div align="center">
 
-<img src="images/gambar_4_14_tentang_kami.png" alt="Gambar 4.14 Antarmuka Halaman Tentang Kami" width="600">
+<img src="images/gambar_4_14_tentang_kami.png" alt="Gambar 4.14 Halaman Tentang Kami" width="600">
 
-<br>
-
-*Gambar 4.14 Antarmuka Halaman Tentang Kami*  
+*Gambar 4.14 Halaman Tentang Kami*
 
 </div>
 
@@ -1052,11 +1018,9 @@ Apabila pengguna lupa kata sandi akunnya, tersedia tautan pemulihan akses yang t
 
 <div align="center">
 
-<img src="images/gambar_4_15_login_user.png" alt="Gambar 4.15 Antarmuka Halaman Login Pengguna" width="600">
+<img src="images/gambar_4_15_login_user.png" alt="Gambar 4.15 Halaman Login Pengguna" width="600">
 
-<br>
-
-*Gambar 4.15 Antarmuka Halaman Login Pengguna*  
+*Gambar 4.15 Halaman Login Pengguna*
 
 </div>
 
@@ -1069,11 +1033,9 @@ Calon penyewa yang baru pertama kali hendak memesan kamar diwajibkan membuat aku
 
 <div align="center">
 
-<img src="images/gambar_4_16_register_user.png" alt="Gambar 4.16 Antarmuka Halaman Pendaftaran Akun (Register)" width="600">
+<img src="images/gambar_4_16_register_user.png" alt="Gambar 4.16 Halaman Pendaftaran Akun" width="600">
 
-<br>
-
-*Gambar 4.16 Antarmuka Halaman Pendaftaran Akun (Register)*  
+*Gambar 4.16 Halaman Pendaftaran Akun*
 
 </div>
 
@@ -1088,11 +1050,9 @@ Seluruh pesan yang dikirim melalui jendela ini langsung diteruskan ke dasbor pen
 
 <div align="center">
 
-<img src="images/gambar_4_17_chat_real_time_guest.png" alt="Gambar 4.17 Antarmuka Fitur Chat Real Time Pengunjung" width="400">
+<img src="images/gambar_4_17_chat_real_time_guest.png" alt="Gambar 4.17 Jendela Obrolan Pengunjung" width="400">
 
-<br>
-
-*Gambar 4.17 Antarmuka Fitur Chat Real Time Pengunjung*  
+*Gambar 4.17 Jendela Obrolan Pengunjung*
 
 </div>
 
@@ -1110,11 +1070,9 @@ Seluruh dokumen identitas yang diunggah disimpan ke dalam direktori terbatas yan
 
 <div align="center">
 
-<img src="images/gambar_4_18_lengkapi_profil.png" alt="Gambar 4.18 Antarmuka Pengisian Kelengkapan Profil Pemesan" width="500">
+<img src="images/gambar_4_18_lengkapi_profil.png" alt="Gambar 4.18 Kelengkapan Profil Pemesan" width="500">
 
-<br>
-
-*Gambar 4.18 Antarmuka Pengisian Kelengkapan Profil Pemesan*  
+*Gambar 4.18 Kelengkapan Profil Pemesan*
 
 </div>
 
@@ -1127,11 +1085,9 @@ Pada Gambar 4.18, halaman menyajikan kolom isian nomor KTP, kontak darurat kelua
 
 <div align="center">
 
-<img src="images/gambar_4_19_dashboard_reservasi.png" alt="Gambar 4.19 Antarmuka Dasbor Reservasi Calon Penyewa" width="600">
+<img src="images/gambar_4_19_dashboard_reservasi.png" alt="Gambar 4.19 Dasbor Reservasi Pemesan" width="600">
 
-<br>
-
-*Gambar 4.19 Antarmuka Dasbor Reservasi Calon Penyewa*  
+*Gambar 4.19 Dasbor Reservasi Pemesan*
 
 </div>
 
@@ -1146,11 +1102,9 @@ Pengguna bebas mengganti opsi durasi sewa mulai dari bulanan, tiga bulanan, hing
 
 <div align="center">
 
-<img src="images/gambar_4_20_simulasi_biaya_kamar.png" alt="Gambar 4.20 Antarmuka Simulasi Biaya Kamar dan Reservasi" width="600">
+<img src="images/gambar_4_20_simulasi_biaya_kamar.png" alt="Gambar 4.20 Simulasi Biaya Kamar" width="600">
 
-<br>
-
-*Gambar 4.20 Antarmuka Simulasi Biaya Kamar dan Reservasi*  
+*Gambar 4.20 Simulasi Biaya Kamar*
 
 </div>
 
@@ -1163,11 +1117,9 @@ Proses penyelesaian reservasi dirancang ke dalam antarmuka pemantauan lima tahap
 
 <div align="center">
 
-<img src="images/gambar_4_21_pembayaran_5_tahap_reservasi.png" alt="Gambar 4.21 Antarmuka Pemantauan Alur Lima Tahap dan Pembayaran Reservasi" width="600">
+<img src="images/gambar_4_21_pembayaran_5_tahap_reservasi.png" alt="Gambar 4.21 Tahapan Pembayaran Reservasi" width="600">
 
-<br>
-
-*Gambar 4.21 Antarmuka Pemantauan Alur Lima Tahap dan Pembayaran Reservasi*  
+*Gambar 4.21 Tahapan Pembayaran Reservasi*
 
 </div>
 
@@ -1182,11 +1134,9 @@ Begitu dana berhasil ditransfer, mekanisme *webhook callback* dari server Midtra
 
 <div align="center">
 
-<img src="images/gambar_4_22_payment_gateway_midtrans.png" alt="Gambar 4.22 Antarmuka Jendela Pembayaran Digital Midtrans Snap" width="400">
+<img src="images/gambar_4_22_payment_gateway_midtrans.png" alt="Gambar 4.22 Jendela Pembayaran Midtrans" width="400">
 
-<br>
-
-*Gambar 4.22 Antarmuka Jendela Pembayaran Digital Midtrans Snap*  
+*Gambar 4.22 Jendela Pembayaran Midtrans*
 
 </div>
 
@@ -1199,11 +1149,9 @@ Sesaat setelah pembayaran uang muka terkonfirmasi lunas oleh Midtrans, sistem me
 
 <div align="center">
 
-<img src="images/gambar_4_23_whatsapp_gateway_fonnte.png" alt="Gambar 4.23 Implementasi Pesan Aktivasi Hunian via WhatsApp Fonnte" width="380">
+<img src="images/gambar_4_23_whatsapp_gateway_fonnte.png" alt="Gambar 4.23 Pesan Aktivasi WhatsApp" width="380">
 
-<br>
-
-*Gambar 4.23 Implementasi Pesan Aktivasi Hunian via WhatsApp Fonnte*  
+*Gambar 4.23 Pesan Aktivasi WhatsApp*
 
 </div>
 
@@ -1218,11 +1166,9 @@ Pesan dikirimkan dalam format templat HTML beridentitas resmi Asri Boarding Hous
 
 <div align="center">
 
-<img src="images/gambar_4_24_email_gateway_smtp.png" alt="Gambar 4.24 Implementasi Surat Elektronik Konfirmasi Aktivasi Penyewa via SMTP" width="600">
+<img src="images/gambar_4_24_email_gateway_smtp.png" alt="Gambar 4.24 Email Konfirmasi Reservasi" width="600">
 
-<br>
-
-*Gambar 4.24 Implementasi Surat Elektronik Konfirmasi Aktivasi Penyewa via SMTP*  
+*Gambar 4.24 Email Konfirmasi Reservasi*
 
 </div>
 
@@ -1238,11 +1184,9 @@ Halaman *admin login* dirancang khusus sebagai jalur masuk terbatas bagi penjaga
 
 <div align="center">
 
-<img src="images/gambar_4_25_admin_login.png" alt="Gambar 4.25 Antarmuka Halaman Login Administrator" width="600">
+<img src="images/gambar_4_25_admin_login.png" alt="Gambar 4.25 Halaman Login Administrator" width="600">
 
-<br>
-
-*Gambar 4.25 Antarmuka Halaman Login Administrator*  
+*Gambar 4.25 Halaman Login Administrator*
 
 </div>
 
@@ -1257,11 +1201,9 @@ Penyajian data ringkas yang dilengkapi grafik tren bulanan ini memudahkan pengel
 
 <div align="center">
 
-<img src="images/gambar_4_26_dashboard_admin.png" alt="Gambar 4.26 Antarmuka Dasbor Operasional dan Keuangan Administrator" width="600">
+<img src="images/gambar_4_26_dashboard_admin.png" alt="Gambar 4.26 Dasbor Operasional Administrator" width="600">
 
-<br>
-
-*Gambar 4.26 Antarmuka Dasbor Operasional dan Keuangan Administrator*  
+*Gambar 4.26 Dasbor Operasional Administrator*
 
 </div>
 
@@ -1274,11 +1216,9 @@ Modul manajemen kamar memberikan wewenang penuh kepada penjaga kost untuk mengel
 
 <div align="center">
 
-<img src="images/gambar_4_27_manajemen_kamar.png" alt="Gambar 4.27 Antarmuka Pengelolaan Master Data Kamar" width="600">
+<img src="images/gambar_4_27_manajemen_kamar.png" alt="Gambar 4.27 Pengelolaan Data Kamar" width="600">
 
-<br>
-
-*Gambar 4.27 Antarmuka Pengelolaan Master Data Kamar*  
+*Gambar 4.27 Pengelolaan Data Kamar*
 
 </div>
 
@@ -1293,11 +1233,9 @@ Selain mengubah teks dan gambar, pengelola juga dapat mengatur urutan tampil set
 
 <div align="center">
 
-<img src="images/gambar_4_28_manajemen_fasilitas.png" alt="Gambar 4.28 Antarmuka Pengelolaan Fasilitas Kost" width="600">
+<img src="images/gambar_4_28_manajemen_fasilitas.png" alt="Gambar 4.28 Pengelolaan Fasilitas Kost" width="600">
 
-<br>
-
-*Gambar 4.28 Antarmuka Pengelolaan Fasilitas Kost*  
+*Gambar 4.28 Pengelolaan Fasilitas Kost*
 
 </div>
 
@@ -1310,11 +1248,9 @@ Seluruh data penghuni yang sedang aktif menempati kamar di Asri Boarding House d
 
 <div align="center">
 
-<img src="images/gambar_4_29_manajemen_penyewa.png" alt="Gambar 4.29 Antarmuka Pengelolaan Data Penghuni Kost" width="600">
+<img src="images/gambar_4_29_manajemen_penyewa.png" alt="Gambar 4.29 Pengelolaan Data Penghuni" width="600">
 
-<br>
-
-*Gambar 4.29 Antarmuka Pengelolaan Data Penghuni Kost*  
+*Gambar 4.29 Pengelolaan Data Penghuni*
 
 </div>
 
@@ -1329,11 +1265,9 @@ Sistem juga menyediakan mekanisme pembatalan untuk pesanan yang melewati batas w
 
 <div align="center">
 
-<img src="images/gambar_4_30_manajemen_reservasi.png" alt="Gambar 4.30 Antarmuka Pengelolaan Pesanan Reservasi Masuk" width="600">
+<img src="images/gambar_4_30_manajemen_reservasi.png" alt="Gambar 4.30 Pengelolaan Reservasi Masuk" width="600">
 
-<br>
-
-*Gambar 4.30 Antarmuka Pengelolaan Pesanan Reservasi Masuk*  
+*Gambar 4.30 Pengelolaan Reservasi Masuk*
 
 </div>
 
@@ -1346,11 +1280,9 @@ Siklus penagihan sewa bulanan dan perhitungan denda keterlambatan bagi seluruh p
 
 <div align="center">
 
-<img src="images/gambar_4_31_manajemen_tagihan.png" alt="Gambar 4.31 Antarmuka Pengelolaan Tagihan Sewa Bulanan dan Denda" width="600">
+<img src="images/gambar_4_31_manajemen_tagihan.png" alt="Gambar 4.31 Pengelolaan Tagihan Bulanan" width="600">
 
-<br>
-
-*Gambar 4.31 Antarmuka Pengelolaan Tagihan Sewa Bulanan dan Denda*  
+*Gambar 4.31 Pengelolaan Tagihan Bulanan*
 
 </div>
 
@@ -1365,11 +1297,9 @@ Setiap transaksi pengeluaran yang dicatat dapat disertai keterangan peruntukan d
 
 <div align="center">
 
-<img src="images/gambar_4_32_manajemen_pengeluaran.png" alt="Gambar 4.32 Antarmuka Pencatatan Pengeluaran Operasional Kost" width="600">
+<img src="images/gambar_4_32_manajemen_pengeluaran.png" alt="Gambar 4.32 Pencatatan Pengeluaran Operasional" width="600">
 
-<br>
-
-*Gambar 4.32 Antarmuka Pencatatan Pengeluaran Operasional Kost*  
+*Gambar 4.32 Pencatatan Pengeluaran Operasional*
 
 </div>
 
@@ -1382,11 +1312,9 @@ Modul laporan pemasukan mengolah seluruh data pembayaran sewa yang masuk melalui
 
 <div align="center">
 
-<img src="images/gambar_4_33_manajemen_laporan_pemasukan.png" alt="Gambar 4.33 Antarmuka Laporan Rekapitulasi Kas dan Ekspor Dokumen" width="600">
+<img src="images/gambar_4_33_manajemen_laporan_pemasukan.png" alt="Gambar 4.33 Laporan Rekapitulasi Kas" width="600">
 
-<br>
-
-*Gambar 4.33 Antarmuka Laporan Rekapitulasi Kas dan Ekspor Dokumen*  
+*Gambar 4.33 Laporan Rekapitulasi Kas*
 
 </div>
 
@@ -1401,11 +1329,9 @@ Setiap perkembangan tindak lanjut perbaikan dapat diperbarui statusnya oleh admi
 
 <div align="center">
 
-<img src="images/gambar_4_34_manajemen_keluhan_penyewa.png" alt="Gambar 4.34 Antarmuka Pengelolaan Tiket Keluhan Fasilitas" width="600">
+<img src="images/gambar_4_34_manajemen_keluhan_penyewa.png" alt="Gambar 4.34 Pengelolaan Keluhan Fasilitas" width="600">
 
-<br>
-
-*Gambar 4.34 Antarmuka Pengelolaan Tiket Keluhan Fasilitas*  
+*Gambar 4.34 Pengelolaan Keluhan Fasilitas*
 
 </div>
 
@@ -1418,11 +1344,9 @@ Pertanyaan yang dikirimkan oleh pengunjung publik melalui *widget* obrolan di ha
 
 <div align="center">
 
-<img src="images/gambar_4_35_manajemen_fitur_chat_guest.png" alt="Gambar 4.35 Antarmuka Pengelolaan Obrolan Tamu (Guest Chat Admin)" width="600">
+<img src="images/gambar_4_35_manajemen_fitur_chat_guest.png" alt="Gambar 4.35 Pengelolaan Obrolan Tamu" width="600">
 
-<br>
-
-*Gambar 4.35 Antarmuka Pengelolaan Obrolan Tamu (Guest Chat Admin)*  
+*Gambar 4.35 Pengelolaan Obrolan Tamu*
 
 </div>
 
@@ -1440,11 +1364,9 @@ Setiap sesi masuk dilindungi menggunakan enkripsi kredensial agar riwayat tagiha
 
 <div align="center">
 
-<img src="images/gambar_4_36_login_penyewa_aktif.png" alt="Gambar 4.36 Antarmuka Login Portal Penyewa Aktif" width="600">
+<img src="images/gambar_4_36_login_penyewa_aktif.png" alt="Gambar 4.36 Login Penyewa Aktif" width="600">
 
-<br>
-
-*Gambar 4.36 Antarmuka Login Portal Penyewa Aktif*  
+*Gambar 4.36 Login Penyewa Aktif*
 
 </div>
 
@@ -1457,11 +1379,9 @@ Merujuk pada Gambar 4.36, halaman autentikasi penghuni tampil dengan bingkai kar
 
 <div align="center">
 
-<img src="images/gambar_4_37_dashboard_penyewa.png" alt="Gambar 4.37 Antarmuka Dasbor Portal Penyewa Aktif" width="600">
+<img src="images/gambar_4_37_dashboard_penyewa.png" alt="Gambar 4.37 Dasbor Penyewa Aktif" width="600">
 
-<br>
-
-*Gambar 4.37 Antarmuka Dasbor Portal Penyewa Aktif*  
+*Gambar 4.37 Dasbor Penyewa Aktif*
 
 </div>
 
@@ -1476,11 +1396,9 @@ Untuk memudahkan pelunasan, tombol pembayaran pada halaman ini telah diintegrasi
 
 <div align="center">
 
-<img src="images/gambar_4_38_tagihan_penyewa.png" alt="Gambar 4.38 Antarmuka Riwayat dan Pembayaran Tagihan Sewa Penyewa" width="600">
+<img src="images/gambar_4_38_tagihan_penyewa.png" alt="Gambar 4.38 Tagihan Sewa Penyewa" width="600">
 
-<br>
-
-*Gambar 4.38 Antarmuka Riwayat dan Pembayaran Tagihan Sewa Penyewa*  
+*Gambar 4.38 Tagihan Sewa Penyewa*
 
 </div>
 
@@ -1493,11 +1411,9 @@ Antarmuka profil memberikan keleluasaan bagi penyewa aktif untuk memperbarui dat
 
 <div align="center">
 
-<img src="images/gambar_4_39_profil.png" alt="Gambar 4.39 Antarmuka Pengaturan Profil Penghuni" width="600">
+<img src="images/gambar_4_39_profil.png" alt="Gambar 4.39 Pengaturan Profil Penghuni" width="600">
 
-<br>
-
-*Gambar 4.39 Antarmuka Pengaturan Profil Penghuni*  
+*Gambar 4.39 Pengaturan Profil Penghuni*
 
 </div>
 
@@ -1512,11 +1428,9 @@ Keberadaan arsip pembayaran digital ini memudahkan penghuni melacak pengeluaran 
 
 <div align="center">
 
-<img src="images/gambar_4_40_riwayat_pembayaran.png" alt="Gambar 4.40 Antarmuka Riwayat Transaksi Pembayaran" width="600">
+<img src="images/gambar_4_40_riwayat_pembayaran.png" alt="Gambar 4.40 Riwayat Transaksi Pembayaran" width="600">
 
-<br>
-
-*Gambar 4.40 Antarmuka Riwayat Transaksi Pembayaran*  
+*Gambar 4.40 Riwayat Transaksi Pembayaran*
 
 </div>
 
@@ -1529,11 +1443,9 @@ Apabila penghuni mendapati kerusakan fasilitas di dalam kamar maupun di area umu
 
 <div align="center">
 
-<img src="images/gambar_4_41_keluhan.png" alt="Gambar 4.41 Antarmuka Riwayat dan Pengajuan Keluhan Kamar" width="600">
+<img src="images/gambar_4_41_keluhan.png" alt="Gambar 4.41 Pengajuan Keluhan Kamar" width="600">
 
-<br>
-
-*Gambar 4.41 Antarmuka Riwayat dan Pengajuan Keluhan Kamar*  
+*Gambar 4.41 Pengajuan Keluhan Kamar*
 
 </div>
 
@@ -1548,11 +1460,9 @@ Format ukuran dan tata letak nota telah diatur secara proporsional agar siap dic
 
 <div align="center">
 
-<img src="images/gambar_4_42_nota_pdf.png" alt="Gambar 4.42 Antarmuka Tanda Terima Kuitansi Digital (Nota PDF)" width="600">
+<img src="images/gambar_4_42_nota_pdf.png" alt="Gambar 4.42 Dokumen Kuitansi Digital" width="600">
 
-<br>
-
-*Gambar 4.42 Antarmuka Tanda Terima Kuitansi Digital (Nota PDF)*  
+*Gambar 4.42 Dokumen Kuitansi Digital*
 
 </div>
 
@@ -1573,11 +1483,9 @@ Lapisan penengah (*middleware*) ini bekerja mencegat setiap permintaan halaman w
 
 <div align="center">
 
-<img src="images/gambar_4_43_kode_autentikasi_multi_role.png" alt="Gambar 4.43 Potongan Kode Pembatasan Hak Akses Peran Pengguna (Role Middleware)" width="600">
+<img src="images/gambar_4_43_kode_autentikasi_multi_role.png" alt="Gambar 4.43 Kode Pembatasan Akses" width="600">
 
-<br>
-
-*Gambar 4.43 Potongan Kode Pembatasan Hak Akses Peran Pengguna (Role Middleware)*  
+*Gambar 4.43 Kode Pembatasan Akses*
 
 </div>
 
@@ -1590,11 +1498,9 @@ Setelah kredensial akun tervalidasi benar, sistem menjalankan logika pemandu unt
 
 <div align="center">
 
-<img src="images/gambar_4_44_kode_auth_redirect.png" alt="Gambar 4.44 Potongan Kode Pengalihan Portal Pengguna Pasca Autentikasi" width="600">
+<img src="images/gambar_4_44_kode_auth_redirect.png" alt="Gambar 4.44 Kode Pengalihan Portal" width="600">
 
-<br>
-
-*Gambar 4.44 Potongan Kode Pengalihan Portal Pengguna Pasca Autentikasi*  
+*Gambar 4.44 Kode Pengalihan Portal*
 
 </div>
 
@@ -1610,11 +1516,9 @@ Persaingan akses data saat dua calon penghuni memilih unit kamar yang sama pada 
 
 <div align="center">
 
-<img src="images/gambar_4_45_kode_transaksi_reservasi_acid.png" alt="Gambar 4.45 Potongan Kode Transaksi ACID dan Penguncian Unit Kamar" width="600">
+<img src="images/gambar_4_45_kode_transaksi_reservasi_acid.png" alt="Gambar 4.45 Kode Penguncian Kamar" width="600">
 
-<br>
-
-*Gambar 4.45 Potongan Kode Transaksi ACID dan Penguncian Unit Kamar*  
+*Gambar 4.45 Kode Penguncian Kamar*
 
 </div>
 
@@ -1627,11 +1531,9 @@ Keakuratan status ketersediaan 32 unit kamar sewa di Asri Boarding House dijaga 
 
 <div align="center">
 
-<img src="images/gambar_4_46_kode_cek_double_booking.png" alt="Gambar 4.46 Potongan Kode Algoritma Pengecekan Benturan Jadwal Reservasi" width="600">
+<img src="images/gambar_4_46_kode_cek_double_booking.png" alt="Gambar 4.46 Kode Pemeriksaan Jadwal" width="600">
 
-<br>
-
-*Gambar 4.46 Potongan Kode Algoritma Pengecekan Benturan Jadwal Reservasi*  
+*Gambar 4.46 Kode Pemeriksaan Jadwal*
 
 </div>
 
@@ -1647,11 +1549,9 @@ Proses pembayaran sewa kamar secara daring diawali dengan pembuatan token transa
 
 <div align="center">
 
-<img src="images/gambar_4_47_kode_snap_token_midtrans.png" alt="Gambar 4.47 Potongan Kode Pembuatan Snap Token Pembayaran Midtrans" width="600">
+<img src="images/gambar_4_47_kode_snap_token_midtrans.png" alt="Gambar 4.47 Kode Token Midtrans" width="600">
 
-<br>
-
-*Gambar 4.47 Potongan Kode Pembuatan Snap Token Pembayaran Midtrans*  
+*Gambar 4.47 Kode Token Midtrans*
 
 </div>
 
@@ -1664,11 +1564,9 @@ Pembaruan status transaksi sewa bulanan dan uang muka reservasi diproses secara 
 
 <div align="center">
 
-<img src="images/gambar_4_48_kode_webhook_signature_midtrans.png" alt="Gambar 4.48 Potongan Kode Validasi Keamanan Signature Key Webhook Midtrans" width="600">
+<img src="images/gambar_4_48_kode_webhook_signature_midtrans.png" alt="Gambar 4.48 Kode Validasi Webhook" width="600">
 
-<br>
-
-*Gambar 4.48 Potongan Kode Validasi Keamanan Signature Key Webhook Midtrans*  
+*Gambar 4.48 Kode Validasi Webhook*
 
 </div>
 
@@ -1684,11 +1582,9 @@ Pengelolaan tagihan rutin tanggal 10 dan pembersihan transaksi kedaluwarsa dioto
 
 <div align="center">
 
-<img src="images/gambar_4_49_kode_task_scheduler_cron.png" alt="Gambar 4.49 Potongan Kode Konfigurasi Penjadwal Tugas Otomatis Laravel" width="600">
+<img src="images/gambar_4_49_kode_task_scheduler_cron.png" alt="Gambar 4.49 Kode Penjadwal Tugas" width="600">
 
-<br>
-
-*Gambar 4.49 Potongan Kode Konfigurasi Penjadwal Tugas Otomatis Laravel*  
+*Gambar 4.49 Kode Penjadwal Tugas*
 
 </div>
 
@@ -1701,11 +1597,9 @@ Notifikasi tagihan bulanan dan konfirmasi pelunasan reservasi kamar dikirimkan l
 
 <div align="center">
 
-<img src="images/gambar_4_50_kode_whatsapp_gateway_fonnte.png" alt="Gambar 4.50 Potongan Kode Integrasi Pengiriman Pesan WhatsApp Fonnte" width="600">
+<img src="images/gambar_4_50_kode_whatsapp_gateway_fonnte.png" alt="Gambar 4.50 Kode Integrasi WhatsApp" width="600">
 
-<br>
-
-*Gambar 4.50 Potongan Kode Integrasi Pengiriman Pesan WhatsApp Fonnte*  
+*Gambar 4.50 Kode Integrasi WhatsApp*
 
 </div>
 
@@ -1718,11 +1612,9 @@ Dokumen penagihan resmi dan rincian kuitansi sewa kamar dikirimkan secara otomat
 
 <div align="center">
 
-<img src="images/gambar_4_51_kode_email_gateway_smtp.png" alt="Gambar 4.51 Potongan Kode Pengiriman Dokumen Tagihan via Email Gateway SMTP" width="600">
+<img src="images/gambar_4_51_kode_email_gateway_smtp.png" alt="Gambar 4.51 Kode Pengiriman Email" width="600">
 
-<br>
-
-*Gambar 4.51 Potongan Kode Pengiriman Dokumen Tagihan via Email Gateway SMTP*  
+*Gambar 4.51 Kode Pengiriman Email*
 
 </div>
 
@@ -1735,7 +1627,7 @@ Pengujian fungsionalitas sistem informasi Asri Boarding House dilakukan mengguna
 
 <br>
 
-**Tabel 4.1** Hasil Pengujian Fungsionalitas Sistem (*Black Box Testing*)
+**Tabel 4.1** Pengujian Fungsionalitas Sistem
 
 | No | Modul / Skenario Uji | Prosedur Pengujian / Masukan Data | Hasil yang Diharapkan | Hasil Pengujian | Status |
 | :---: | :--- | :--- | :--- | :--- | :---: |
@@ -1821,13 +1713,17 @@ Sesi evaluasi bersama Bapak Asep difokuskan untuk menguji fungsionalitas panel p
 
 <br>
 
-<img src="images/gambar_4_21.jpg" alt="Gambar 4.52 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)" width="600">
+<div align="center">
 
-*Gambar 4.52 Dokumentasi Sesi Wawancara Bersama Penjaga Kost (Bapak Asep)*  
+<img src="images/gambar_4_21.jpg" alt="Gambar 4.52 Dokumentasi Wawancara Pengelola" width="600">
+
+*Gambar 4.52 Dokumentasi Wawancara Pengelola*
+
+</div>
 
 <br>
 
-**Tabel 4.2** Hasil Wawancara Penjaga Kost (Bapak Asep)
+**Tabel 4.2** Wawancara Penjaga Kost
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
@@ -1848,11 +1744,11 @@ Berdasarkan hasil wawancara pada Tabel 4.2, Bapak Asep memberikan skor kepuasan 
 
 <br>
 
-Wawancara dengan Arjun menggali pengalaman penghuni lama dalam menelusuri katalog kamar dan menyelesaikan transaksi sewa lewat m-Banking. Sesi pengujian mandiri ini direkam secara audio guna memastikan seluruh impresi penggunaan antarmuka tercatat secara utuh.
+Wawancara dengan Arjun selaku mahasiswa UNDIP menggali pengalaman penghuni lama dalam menelusuri katalog kamar dan menyelesaikan transaksi sewa lewat m-Banking. Sesi pengujian mandiri ini direkam secara audio guna memastikan seluruh impresi penggunaan antarmuka tercatat secara utuh.
 
 <br>
 
-**Tabel 4.3** Hasil Wawancara Responden 1 (Arjun, Mahasiswa UNDIP - Penghuni Kost)
+**Tabel 4.3** Wawancara Responden 1
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
@@ -1873,11 +1769,11 @@ Berdasarkan hasil wawancara pada Tabel 4.3, Arjun memberikan skor kepuasan 8,5 d
 
 <br>
 
-Pengujian bersama Farrel menyoroti perspektif mahasiswa perantau luar kota saat mengakses sistem reservasi melalui ponsel Android. Seluruh proses tanya jawab didokumentasikan lewat rekaman suara guna merekam kendala pembayaran non-BCA secara presisi.
+Pengujian bersama Farrel, penghuni kost yang berkuliah di USM, menyoroti perspektif mahasiswa perantau luar kota saat mengakses sistem reservasi melalui ponsel Android. Seluruh proses tanya jawab didokumentasikan lewat rekaman suara guna merekam kendala pembayaran non-BCA secara presisi.
 
 <br>
 
-**Tabel 4.4** Hasil Wawancara Responden 2 (Farrel, Mahasiswa USM - Penghuni Kost)
+**Tabel 4.4** Wawancara Responden 2
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
@@ -1898,11 +1794,11 @@ Merujuk pada Tabel 4.4, Farrel memberikan nilai kepuasan 7,0 dari skala 10 dan m
 
 <br>
 
-Wawancara bersama Iman membedah keandalan pencatatan pembayaran digital pada portal penghuni serta transparansi riwayat mutasi bulanan. Sesi interaksi diuji langsung pada laptop dengan bukti rekaman audio untuk memvalidasi tanggapan pengguna.
+Wawancara bersama Iman selaku mahasiswa UDINUS membedah keandalan pencatatan pembayaran digital pada portal penghuni serta transparansi riwayat mutasi bulanan. Sesi interaksi diuji langsung pada laptop dengan bukti rekaman audio untuk memvalidasi tanggapan pengguna.
 
 <br>
 
-**Tabel 4.5** Hasil Wawancara Responden 3 (Iman, Mahasiswa UDINUS - Penghuni Kost)
+**Tabel 4.5** Wawancara Responden 3
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
@@ -1923,11 +1819,11 @@ Berdasarkan hasil wawancara pada Tabel 4.5, Iman memberikan skor kepuasan 9,0 da
 
 <br>
 
-Pengujian bersama Ammar meninjau respon mahasiswa baru saat menavigasi alur pemesanan dan pembayaran via peramban Safari di iPhone. Diskusi pengujian terekam dalam audio guna menangkap masukan terkait integrasi tautan pesan WhatsApp secara mendalam.
+Pengujian bersama Ammar dari PKN STAN meninjau respon mahasiswa baru saat menavigasi alur pemesanan dan pembayaran via peramban Safari di iPhone. Diskusi pengujian terekam dalam audio guna menangkap masukan terkait integrasi tautan pesan WhatsApp secara mendalam.
 
 <br>
 
-**Tabel 4.6** Hasil Wawancara Responden 4 (Ammar, Mahasiswa PKN STAN - Penghuni Kost)
+**Tabel 4.6** Wawancara Responden 4
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
@@ -1948,11 +1844,11 @@ Mengacu pada Tabel 4.6, Ammar memberikan nilai kepuasan 7,5 dari skala 10 dan me
 
 <br>
 
-Sesi wawancara bersama Sindhu difokuskan pada pengujian kenyamanan navigasi dasbor portal hunian serta kecepatan verifikasi pembayaran instan. Percakapan evaluasi didokumentasikan lewat rekaman suara untuk menjaring saran terkait panduan interaktif bagi pengguna baru.
+Sesi wawancara bersama Sindhu, penghuni kost berstatus mahasiswa UI, difokuskan pada pengujian kenyamanan navigasi dasbor portal hunian serta kecepatan verifikasi pembayaran instan. Percakapan evaluasi didokumentasikan lewat rekaman suara untuk menjaring saran terkait panduan interaktif bagi pengguna baru.
 
 <br>
 
-**Tabel 4.7** Hasil Wawancara Responden 5 (Sindhu, Mahasiswa UI - Penghuni Kost)
+**Tabel 4.7** Wawancara Responden 5
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
