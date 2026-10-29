@@ -396,7 +396,7 @@ DAFTAR LAMPIRAN &emsp; xiii
 &emsp; 4.3.3 Implementasi *Payment Gateway* &emsp; 66  
 &emsp; 4.3.4 Implementasi Penjadwalan dan Notifikasi &emsp; 68  
 4.4 Pengujian Sistem &emsp; 71  
-4.5 Hasil Wawancara &emsp; 71  
+4.5 Hasil Wawancara &emsp; 72  
 
 **BAB 5 KESIMPULAN DAN SARAN** &emsp; **84**  
 5.1 Kesimpulan &emsp; 84  
@@ -416,11 +416,11 @@ DAFTAR LAMPIRAN &emsp; xiii
 
 Tabel 4.1 &emsp; Hasil Pengujian Fungsionalitas Sistem (*Black Box Testing*) &emsp; 71  
 Tabel 4.2 &emsp; Hasil Wawancara Penjaga Kost (Bapak Asep) &emsp; 72  
-Tabel 4.3 &emsp; Hasil Wawancara Responden 1 (Arjun, Mahasiswa UNDIP) &emsp; 74  
-Tabel 4.4 &emsp; Hasil Wawancara Responden 2 (Farrel, Mahasiswa USM) &emsp; 76  
-Tabel 4.5 &emsp; Hasil Wawancara Responden 3 (Iman, Mahasiswa UDINUS) &emsp; 78  
-Tabel 4.6 &emsp; Hasil Wawancara Responden 4 (Ammar, Mahasiswa PKN STAN) &emsp; 80  
-Tabel 4.7 &emsp; Hasil Wawancara Responden 5 (Sindhu, Mahasiswa UI) &emsp; 82  
+Tabel 4.3 &emsp; Hasil Wawancara Responden 1 (Arjun, Mahasiswa UNDIP - Penghuni Kost) &emsp; 74  
+Tabel 4.4 &emsp; Hasil Wawancara Responden 2 (Farrel, Mahasiswa USM - Penghuni Kost) &emsp; 76  
+Tabel 4.5 &emsp; Hasil Wawancara Responden 3 (Iman, Mahasiswa UDINUS - Penghuni Kost) &emsp; 78  
+Tabel 4.6 &emsp; Hasil Wawancara Responden 4 (Ammar, Mahasiswa PKN STAN - Penghuni Kost) &emsp; 80  
+Tabel 4.7 &emsp; Hasil Wawancara Responden 5 (Sindhu, Mahasiswa UI - Penghuni Kost) &emsp; 82  
 
 <br>
 
@@ -1970,6 +1970,10 @@ Sesi wawancara bersama Sindhu difokuskan pada pengujian kenyamanan navigasi dasb
 <br>
 
 Berdasarkan hasil wawancara pada Tabel 4.7, Sindhu memberikan skor kepuasan 8,0 dari skala 10 dan memuji kesesuaian visual kamar pada web dengan kondisi fisik di lapangan. Transparansi rincian biaya tanpa biaya tersembunyi mempermudah pengelolaan bujet bulanan mahasiswa, serta pelunasan daring menghapus rasa canggung bertatap muka saat membayar sewa. Sebagai penyempurnaan, responden menyarankan penambahan tur panduan visual singkat bagi pengguna baru saat pertama kali masuk ke portal hunian.
+
+<br>
+
+Pada skala 10, evaluasi wawancara mencatat skor kepuasan 9,5 dari penjaga kost dan rata-rata 8,0 dari lima penghuni. Pekerjaan tutup buku bulanan pengelola kini selesai dalam hitungan detik tanpa selisih kas fisik. Sementara itu, penghuni dapat memesan kamar jarak jauh dan melunasi sewa via *Virtual Account* Midtrans yang terverifikasi otomatis lengkap dengan kuitansi PDF resmi. Responden turut menyarankan penambahan kanal QRIS dan *e-wallet*, tautan bayar langsung di WhatsApp, serta panduan singkat bagi pengguna baru. Temuan lapangan ini menegaskan kelayakan sistem dalam menunjang operasional harian Asri Boarding House.
 
 <br>
 
