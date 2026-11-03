@@ -312,7 +312,7 @@ DAFTAR TABEL &emsp; xiv
 2.6 RDBMS &emsp; 6  
 2.7 MySQL Database &emsp; 7  
 2.8 Payment Gateway &emsp; 7  
-2.9 Whatsapp Gateway API &emsp; 8  
+2.9 WhatsApp Gateway API &emsp; 8  
 2.10 Email Gateway API &emsp; 9  
 2.11 Cronjob &emsp; 9  
 
@@ -330,8 +330,20 @@ DAFTAR TABEL &emsp; xiv
 
 **BAB 4 HASIL DAN PEMBAHASAN** &emsp; **17**  
 4.1 Perancangan Aplikasi &emsp; 17  
+&emsp; 4.1.1 Use Case Diagram &emsp; 17  
+&emsp; 4.1.2 Entity Relationship Diagram (ERD) &emsp; 19  
+&emsp; 4.1.3 Activity Diagram &emsp; 21  
+&emsp; 4.1.4 Flowchart Sistem &emsp; 24  
 4.2 Implementasi Antarmuka Sistem &emsp; 25  
+&emsp; 4.2.1 Implementasi Umum &emsp; 25  
+&emsp; 4.2.2 Implementasi Calon Penyewa &emsp; 36  
+&emsp; 4.2.3 Implementasi Admin &emsp; 43  
+&emsp; 4.2.4 Implementasi Penyewa Aktif &emsp; 54  
 4.3 Implementasi Kode Program &emsp; 60  
+&emsp; 4.3.1 Implementasi Autentikasi dan Hak Akses &emsp; 60  
+&emsp; 4.3.2 Implementasi Pemesanan Kamar &emsp; 63  
+&emsp; 4.3.3 Implementasi *Payment Gateway* &emsp; 65  
+&emsp; 4.3.4 Implementasi Penjadwalan dan Notifikasi &emsp; 67  
 4.4 Pengujian Sistem &emsp; 69  
 4.5 Hasil Wawancara &emsp; 80  
 
@@ -355,60 +367,60 @@ DAFTAR TABEL &emsp; xiv
 
 <br>
 
-Gambar 3. 1 Tahapan Metode SDLC Waterfall &emsp; 13  
-Gambar 3. 2 Kerangka Pemikiran &emsp; 14  
-Gambar 4. 1 Use Case Diagram &emsp; 17  
-Gambar 4. 2 Entity Relationship Diagram &emsp; 19  
-Gambar 4. 3 Activity Diagram Calon Penyewa &emsp; 21  
-Gambar 4. 4 Activity Diagram Admin (Penjaga Kost) &emsp; 22  
-Gambar 4. 5 Activity Diagram Penyewa Aktif &emsp; 23  
-Gambar 4. 6 Flowchart Sistem &emsp; 24  
-Gambar 4. 7 Halaman Beranda Utama &emsp; 26  
-Gambar 4. 8 Daftar Fasilitas Kost &emsp; 27  
-Gambar 4. 9 Katalog Tipe Kamar &emsp; 28  
-Gambar 4. 10 Galeri Foto Kost &emsp; 29  
-Gambar 4. 11 Panduan Alur Reservasi &emsp; 30  
-Gambar 4. 12 Halaman Testimoni Penghuni &emsp; 31  
-Gambar 4. 13 Halaman Pertanyaan Umum &emsp; 32  
-Gambar 4. 14 Halaman Tentang Kami &emsp; 32  
-Gambar 4. 15 Halaman Login Pengguna &emsp; 33  
-Gambar 4. 16 Halaman Pendaftaran Akun &emsp; 34  
-Gambar 4. 17 Chat Real Time Guest &emsp; 35  
-Gambar 4. 18 Kelengkapan Profil Pemesan &emsp; 36  
-Gambar 4. 19 Dasbor Reservasi Pemesan &emsp; 37  
-Gambar 4. 20 Simulasi Biaya Kamar &emsp; 38  
-Gambar 4. 21 Tahapan Pembayaran Reservasi &emsp; 39  
-Gambar 4. 22 Jendela Pembayaran Midtrans &emsp; 40  
-Gambar 4. 23 Pesan Aktivasi WhatsApp &emsp; 41  
-Gambar 4. 24 Email Konfirmasi Reservasi &emsp; 42  
-Gambar 4. 25 Halaman Login Administrator &emsp; 43  
-Gambar 4. 26 Dasbor Operasional Administrator &emsp; 44  
-Gambar 4. 27 Pengelolaan Data Kamar &emsp; 45  
-Gambar 4. 28 Pengelolaan Fasilitas Kost &emsp; 46  
-Gambar 4. 29 Pengelolaan Data Penghuni &emsp; 47  
-Gambar 4. 30 Pengelolaan Reservasi Masuk &emsp; 48  
-Gambar 4. 31 Pengelolaan Tagihan Bulanan &emsp; 49  
-Gambar 4. 32 Pencatatan Pengeluaran Operasional &emsp; 50  
-Gambar 4. 33 Laporan Rekapitulasi Kas &emsp; 51  
-Gambar 4. 34 Pengelolaan Keluhan Fasilitas &emsp; 52  
-Gambar 4. 35 Pengelolaan Obrolan Tamu &emsp; 53  
-Gambar 4. 36 Login Penyewa Aktif &emsp; 54  
-Gambar 4. 37 Dasbor Penyewa Aktif &emsp; 55  
-Gambar 4. 38 Tagihan Sewa Penyewa &emsp; 56  
-Gambar 4. 39 Pengaturan Profil Penghuni &emsp; 57  
-Gambar 4. 40 Riwayat Transaksi Pembayaran &emsp; 58  
-Gambar 4. 41 Pengajuan Keluhan Kamar &emsp; 59  
-Gambar 4. 42 Dokumen Kuitansi Digital &emsp; 60  
-Gambar 4. 43 Kode Pembatasan Akses &emsp; 61  
-Gambar 4. 44 Kode Pengalihan Portal &emsp; 62  
-Gambar 4. 45 Kode Penguncian Kamar &emsp; 63  
-Gambar 4. 46 Kode Pemeriksaan Jadwal &emsp; 64  
-Gambar 4. 47 Kode Token Midtrans &emsp; 65  
-Gambar 4. 48 Kode Validasi Webhook &emsp; 66  
-Gambar 4. 49 Kode Penjadwal Tugas &emsp; 67  
-Gambar 4. 50 Kode Integrasi WhatsApp &emsp; 68  
-Gambar 4. 51 Kode Pengiriman Email &emsp; 69  
-Gambar 4. 52 Dokumentasi Wawancara Bapak Asep &emsp; 81  
+Gambar 3.1 Tahapan Metode SDLC Waterfall &emsp; 13  
+Gambar 3.2 Kerangka Pemikiran &emsp; 14  
+Gambar 4.1 Use Case Diagram &emsp; 17  
+Gambar 4.2 Entity Relationship Diagram &emsp; 19  
+Gambar 4.3 Activity Diagram Calon Penyewa &emsp; 21  
+Gambar 4.4 Activity Diagram Admin (Penjaga Kost) &emsp; 22  
+Gambar 4.5 Activity Diagram Penyewa Aktif &emsp; 23  
+Gambar 4.6 Flowchart Sistem &emsp; 24  
+Gambar 4.7 Halaman Beranda Utama &emsp; 26  
+Gambar 4.8 Daftar Fasilitas Kost &emsp; 27  
+Gambar 4.9 Katalog Tipe Kamar &emsp; 28  
+Gambar 4.10 Galeri Foto Kost &emsp; 29  
+Gambar 4.11 Panduan Alur Reservasi &emsp; 30  
+Gambar 4.12 Halaman Testimoni Penghuni &emsp; 31  
+Gambar 4.13 Halaman Pertanyaan Umum &emsp; 32  
+Gambar 4.14 Halaman Tentang Kami &emsp; 32  
+Gambar 4.15 Halaman Login Pengguna &emsp; 33  
+Gambar 4.16 Halaman Pendaftaran Akun &emsp; 34  
+Gambar 4.17 Chat Real Time Guest &emsp; 35  
+Gambar 4.18 Kelengkapan Profil Pemesan &emsp; 36  
+Gambar 4.19 Dasbor Reservasi Pemesan &emsp; 37  
+Gambar 4.20 Simulasi Biaya Kamar &emsp; 38  
+Gambar 4.21 Tahapan Pembayaran Reservasi &emsp; 39  
+Gambar 4.22 Jendela Pembayaran Midtrans &emsp; 40  
+Gambar 4.23 Pesan Aktivasi WhatsApp &emsp; 41  
+Gambar 4.24 Email Konfirmasi Reservasi &emsp; 42  
+Gambar 4.25 Halaman Login Administrator &emsp; 43  
+Gambar 4.26 Dasbor Operasional Administrator &emsp; 44  
+Gambar 4.27 Pengelolaan Data Kamar &emsp; 45  
+Gambar 4.28 Pengelolaan Fasilitas Kost &emsp; 46  
+Gambar 4.29 Pengelolaan Data Penghuni &emsp; 47  
+Gambar 4.30 Pengelolaan Reservasi Masuk &emsp; 48  
+Gambar 4.31 Pengelolaan Tagihan Bulanan &emsp; 49  
+Gambar 4.32 Pencatatan Pengeluaran Operasional &emsp; 50  
+Gambar 4.33 Laporan Rekapitulasi Kas &emsp; 51  
+Gambar 4.34 Pengelolaan Keluhan Fasilitas &emsp; 52  
+Gambar 4.35 Pengelolaan Obrolan Tamu &emsp; 53  
+Gambar 4.36 Login Penyewa Aktif &emsp; 54  
+Gambar 4.37 Dasbor Penyewa Aktif &emsp; 55  
+Gambar 4.38 Tagihan Sewa Penyewa &emsp; 56  
+Gambar 4.39 Pengaturan Profil Penghuni &emsp; 57  
+Gambar 4.40 Riwayat Transaksi Pembayaran &emsp; 58  
+Gambar 4.41 Pengajuan Keluhan Kamar &emsp; 59  
+Gambar 4.42 Dokumen Kuitansi Digital &emsp; 60  
+Gambar 4.43 Kode Pembatasan Akses &emsp; 61  
+Gambar 4.44 Kode Pengalihan Portal &emsp; 62  
+Gambar 4.45 Kode Penguncian Kamar &emsp; 63  
+Gambar 4.46 Kode Pemeriksaan Jadwal &emsp; 64  
+Gambar 4.47 Kode Token Midtrans &emsp; 65  
+Gambar 4.48 Kode Validasi Webhook &emsp; 66  
+Gambar 4.49 Kode Penjadwal Tugas &emsp; 67  
+Gambar 4.50 Kode Integrasi WhatsApp &emsp; 68  
+Gambar 4.51 Kode Pengiriman Email &emsp; 69  
+Gambar 4.52 Dokumentasi Wawancara Bapak Asep &emsp; 81  
 
 <div style="page-break-after: always;"></div>
 
@@ -420,13 +432,13 @@ Gambar 4. 52 Dokumentasi Wawancara Bapak Asep &emsp; 81
 
 <br>
 
-Tabel 4. 1 Hasil Pengujian Fungsionalitas Sistem (Black Box Testing) &emsp; 70  
-Tabel 4. 2 Hasil Wawancara Penjaga Kost (Bapak Asep) &emsp; 81  
-Tabel 4. 3 Wawancara dengan Arjun &emsp; 85  
-Tabel 4. 4 Wawancara dengan Farrel &emsp; 87  
-Tabel 4. 5 Wawancara dengan Iman &emsp; 89  
-Tabel 4. 6 Wawancara dengan Ammar &emsp; 91  
-Tabel 4. 7 Wawancara dengan Sindhu &emsp; 93  
+Tabel 4.1 Hasil Pengujian Fungsionalitas Sistem (Black Box Testing) &emsp; 70  
+Tabel 4.2 Hasil Wawancara Penjaga Kost (Bapak Asep) &emsp; 81  
+Tabel 4.3 Wawancara dengan Arjun &emsp; 85  
+Tabel 4.4 Wawancara dengan Farrel &emsp; 87  
+Tabel 4.5 Wawancara dengan Iman &emsp; 89  
+Tabel 4.6 Wawancara dengan Ammar &emsp; 91  
+Tabel 4.7 Wawancara dengan Sindhu &emsp; 93  
 
 <div style="page-break-after: always;"></div>
 
