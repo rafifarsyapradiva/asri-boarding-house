@@ -5,7 +5,7 @@
 
 <br>
 
-## SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY<br>PADA ASRI BOARDING HOUSE
+## SISTEM INFORMASI MANAJEMEN KOST<br>TERINTEGRASI PAYMENT GATEWAY<br>PADA ASRI BOARDING HOUSE
 
 <br><br>
 
@@ -13,11 +13,7 @@
 
 <br><br><br>
 
-**Disusun oleh:**
-
-<br>
-
-**Rafif Arsya Pradiva**
+**RAFIF ARSYA PRADIVA**
 
 <br>
 
@@ -41,13 +37,13 @@
 
 <br>
 
-## SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY<br>PADA ASRI BOARDING HOUSE
+## SISTEM INFORMASI MANAJEMEN KOST<br>TERINTEGRASI PAYMENT GATEWAY<br>PADA ASRI BOARDING HOUSE
 
 <br><br>
 
 **Diajukan dalam Rangka Memenuhi**<br><br>
-**Salah Satu Syarat Memperoleh**<br><br>
-**Gelar Sarjana Komputer**
+**Salah Satu Syarat Memperoleh Gelar**<br><br>
+**Sarjana Komputer**
 
 <br><br>
 
@@ -55,11 +51,7 @@
 
 <br><br><br>
 
-**Disusun oleh:**
-
-<br>
-
-**Rafif Arsya Pradiva**
+**RAFIF ARSYA PRADIVA**
 
 <br>
 
@@ -79,30 +71,71 @@
 
 <div align="center">
 
-### HALAMAN PERNYATAAN ORISINALITAS
+### HALAMAN PENGESAHAN
+
+<br>
+
+## SISTEM INFORMASI MANAJEMEN KOST<br>TERINTEGRASI PAYMENT GATEWAY<br>PADA ASRI BOARDING HOUSE
+
+<br><br>
+
+Diajukan oleh :<br>
+**RAFIF ARSYA PRADIVA**<br>
+**22.N4.0014**
+
+<br><br>
+
+Telah disetujui tanggal 10 April 2026<br>
+Oleh
+
+<br><br>
+
+| Dosen Pembimbing 1, | Dosen Pembimbing 2, |
+| :---: | :---: |
+| <br><br><br><br> | <br><br><br><br> |
+| **Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling.** | **Erdhi Widyarto Nugroho, S.T., M.T.** |
+| NPP. 058.1.1994.161 | NPP. .................... |
+
+<br><br>
+
+Mengetahui / menyetujui<br>
+Kaprodi Sistem Informasi,
+
+<br><br><br><br>
+
+**Dr. Albertus Dwiyoga Widiantoro, S.Kom., M.Kom.**<br>
+NPP. ....................
+
+</div>
+
+<div style="page-break-after: always;"></div>
+
+<div align="center">
+
+### HALAMAN PERNYATAAN KEASLIAN
 
 </div>
 
 <br>
 
-Yang bertanda tangan di bawah ini:
+Yang bertanda tangan di bawah ini :
 
 <br>
 
 Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva<br><br>
 NIM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 22.N4.0014<br><br>
-Progdi / Konsentrasi &nbsp;: Sistem Informasi<br><br>
+Progdi / Konsentrasi &nbsp;: Sistem Informasi / E-Commerce<br><br>
 Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer
 
 <br><br>
 
-Dengan ini menyatakan bahwa Laporan Tugas Akhir dengan judul Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House tersebut bebas plagiasi. Akan tetapi bila terbukti melakukan plagiasi maka bersedia menerima sanksi sesuai dengan ketentuan yang berlaku.
+Dengan ini menyatakan bahwa laporan skripsi dengan judul **SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY PADA ASRI BOARDING HOUSE** benar-benar bebas dari plagiasi, dan apabila terbukti tidak benar bersedia menerima sanksi dengan ketentuan yang berlaku.
 
 <br><br><br>
 
 <div align="right">
 
-Semarang, 13 Juli 2026<br>
+Semarang, 10 April 2026<br>
 Yang menyatakan,
 
 <br><br>
@@ -120,116 +153,26 @@ Yang menyatakan,
 
 <div align="center">
 
-### HALAMAN PERNYATAAN BEBAS PLAGIASI
+### HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI
 
 </div>
 
 <br>
 
-Yang bertanda tangan di bawah ini:
-
-Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva  
-NIM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 22.N4.0014  
-Program Studi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Sistem Informasi  
-Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer  
-
-Dengan ini menyatakan bahwa naskah Tugas Akhir dengan judul:  
-**“SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY* PADA ASRI BOARDING HOUSE”**  
-benar-benar bebas dari segala bentuk dan unsur plagiasi. Seluruh gagasan, kutipan, tabel, kode program, serta ilustrasi yang bersumber dari karya pihak lain telah diakui dan dikutip sesuai kaidah tata cara pengutipan ilmiah yang baku.
-
-Apabila di kemudian hari ditemukan dan/atau terbukti bahwa karya ilmiah ini mengandung unsur plagiasi, saya menyatakan bersedia bertanggung jawab sepenuhnya dan bersedia menerima sanksi akademik yang berlaku di lingkungan Fakultas Ilmu Komputer Universitas Katolik Soegijapranata Semarang, termasuk pencabutan gelar kesarjanaan yang telah dianugerahkan.
-
-<br><br>
-
-<div align="right">
-
-Semarang, 13 Juli 2026<br>
-Yang menyatakan,
-
-<br><br>
-
-*Meterai Rp10.000*<br>
-*(tanda tangan)*
-
-<br><br>
-
-**Rafif Arsya Pradiva**<br>
-NIM. 22.N4.0014
-
-</div>
-
-<div style="page-break-after: always;"></div>
-
-<div align="center">
-
-### HALAMAN PENGESAHAN
+Sebagai sivitas akademik Universitas Katolik Soegijapranata, saya yang bertanda tangan di bawah ini:
 
 <br>
 
-**SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI *PAYMENT GATEWAY*<br>PADA ASRI BOARDING HOUSE**
+Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva<br><br>
+Program Studi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Sistem Informasi<br><br>
+Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer<br><br>
+Jenis Karya &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Skripsi
 
 <br><br>
 
-Diajukan oleh :<br>
-**RAFIF ARSYA PRADIVA**<br>
-**22.N4.0014**
-
-<br><br>
-
-Telah disetujui, tanggal 13 Juli 2026<br>
-Oleh
-
-<br><br>
-
-| Dosen Pembimbing 1, | Dosen Pembimbing 2, |
-| :---: | :---: |
-| <br><br><br><br> | <br><br><br><br> |
-| **Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling.** | **Erdhi Widyarto Nugroho, S.T., M.T.** |
-| NPP. 058.1.1994.161 | NPP. .................... |
-
-<br><br>
-
-Mengetahui / menyetujui<br>
-Ka. Progdi Sistem Informasi,
-
-<br><br><br><br>
-
-**( ............................................................ )**<br>
-NPP. ....................
-
-</div>
-
-<div style="page-break-after: always;"></div>
-
-<div align="center">
-
-### HALAMAN PERNYATAAN PUBLIKASI KARYA ILMIAH<br>UNTUK KEPENTINGAN AKADEMIS
-
-</div>
+Demi pengembangan ilmu pengetahuan, menyetujui untuk memberikan kepada Universitas Katolik Soegijapranata Hak Bebas Royalti Non-eksklusif atas karya ilmiah saya yang berjudul **SISTEM INFORMASI MANAJEMEN KOST TERINTEGRASI PAYMENT GATEWAY PADA ASRI BOARDING HOUSE**. Dengan Hak Bebas Royalti Non-eksklusif ini Universitas Katolik Soegijapranata berhak menyimpan, mengalih media/formatkan, mengelola dalam bentuk pangkalan data (database), merawat, dan memublikasikan skripsi saya selama tetap mencantumkan nama saya sebagai penulis/pencipta dan sebagai pemilik Hak Cipta.
 
 <br>
-
-Yang bertanda tangan di bawah ini:
-
-<br>
-
-Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Rafif Arsya Pradiva  
-
-<br>
-
-Program Studi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Sistem Informasi  
-
-<br>
-
-Fakultas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Ilmu Komputer  
-
-<br>
-
-Jenis Karya &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Skripsi  
-
-<br>
-
-Menyetujui untuk memberikan kepada Universitas Katolik Soegijapranata Semarang Hak Bebas Royalti Nonekslusif atas karya ilmiah yang berjudul **“Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House”** beserta perangkat yang ada (jika diperlukan). Dengan Hak Bebas Royalti Nonekslusif ini Universitas Katolik Soegijapranata berhak menyimpan, mengalihkan media/formatkan, mengelola dalam bentuk pangkalan data (database), merawat, dan mempublikasikan tugas akhir ini selama tetap mencantumkan nama saya sebagai penulis / pencipta dan sebagai pemilik Hak Cipta.
 
 Demikian pernyataan ini saya buat dengan sebenarnya.
 
@@ -237,16 +180,17 @@ Demikian pernyataan ini saya buat dengan sebenarnya.
 
 <div align="right">
 
-Semarang, 13 Juli 2026<br><br>
-Yang menyatakan
+Dibuat di &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Semarang<br>
+Pada tanggal &nbsp;&nbsp;: 10 April 2026<br><br>
+Yang menyatakan,
 
-<br><br><br><br>
+<br><br><br>
 
 *(tanda tangan)*
 
 <br><br>
 
-Rafif Arsya Pradiva
+**Rafif Arsya Pradiva**
 
 </div>
 
@@ -260,29 +204,29 @@ Rafif Arsya Pradiva
 
 <br>
 
-Dengan penuh rasa syukur kepada Allah SWT atas rahmat dan petunjuk-Nya, sehingga skripsi yang berjudul "Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House" ini dapat terselesaikan dengan baik. Skripsi ini ditulis untuk memenuhi sebagian syarat memperoleh gelar Sarjana Komputer (S.Kom.) pada Program Studi Sistem Informasi di Universitas Katolik Soegijapranata Semarang.
+Puji dan syukur penulis panjatkan ke hadirat Tuhan Yang Maha Esa atas segala rahmat dan karunia-Nya sehingga penulis dapat menyelesaikan penyusunan skripsi yang berjudul "Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway Pada Asri Boarding House". Skripsi ini disusun sebagai salah satu syarat akademis untuk menyelesaikan masa studi dan memperoleh gelar Sarjana pada Program Studi Sistem Informasi di Universitas Katolik Soegijapranata.
 
-Dalam proses penyusunan skripsi ini, penulis menyadari masih terdapat berbagai kekurangan, sehingga penulis sangat terbuka terhadap kritik dan saran yang membangun. Penulis juga mengucapkan terima kasih yang tulus kepada seluruh pihak yang telah memberikan bantuan, bimbingan, serta dukungan. Dengan ini, penulis ingin menyampaikan terima kasih yang sebesar-besarnya kepada:
+Dalam proses penyusunan skripsi ini, penulis menyadari bahwa banyak hambatan dan kesulitan yang dihadapi. Namun, berkat bimbingan, arahan, dan dukungan dari berbagai pihak, skripsi ini dapat diselesaikan dengan baik. Oleh karena itu, pada kesempatan ini penulis ingin menyampaikan rasa terima kasih yang sebesar-besarnya kepada:
 
 1. Bapak Prof. Dr. Ridwan Sanjaya S.E., S.Kom., MS.IEC selaku Dekan Fakultas Ilmu Komputer, yang telah memberikan fasilitas dan kemudahan selama masa studi.
 2. Bapak Dr. Albertus Dwiyoga Widiantoro S.Kom., M.Kom selaku Ketua Program Studi Sistem Informasi, atas dukungan dan sarana yang memungkinkan penulis menyelesaikan pendidikan dengan baik.
-3. Bapak Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling. selaku dosen pembimbing 1, yang telah memberikan bimbingan, arahan, serta dukungan penuh selama proses penulisan skripsi ini.
-4. Bapak Erdhi Widyarto Nugroho, S.T., M.T. selaku dosen pembimbing 2, atas segala masukan, perhatian, serta pendampingan selama proses penulisan skripsi ini.
-5. Bapak/Ibu dosen dan staf di lingkungan Fakultas Ilmu Komputer, khususnya Program Studi Sistem Informasi yang telah banyak membantu selama masa studi.
-6. Orang tua dan keluarga tercinta yang selalu memberikan doa, dukungan moral, serta motivasi kepada penulis.
+3. Bapak Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling. selaku dosen pembimbing 1, yang telah memberikan kritik dan saran bimbingan maupun arahan yang sangat berguna dalam penyusunan skripsi ini.
+4. Bapak Erdhi Widyarto Nugroho S.T., M.T. selaku dosen pembimbing 2, atas segala masukan, perhatian, serta pendampingan selama proses penulisan skripsi ini.
+5. Bapak/Ibu dosen dan staf di lingkungan Fakultas Ilmu Komputer, khususnya Program Studi Sistem Informasi yang telah banyak membantu kami untuk dapat melaksanakan studi.
+6. Terkhusus Orang tua dan keluarga tercinta yang selalu memberikan doa, dukungan moral, serta motivasi kepada penulis.
 
 <div style="page-break-after: always;"></div>
 
 7. Teman-teman dan kolega di Universitas Katolik Soegijapranata yang telah memberikan bantuan dan dukungan selama proses penyusunan skripsi.
-8. Semua pihak yang tidak dapat penulis sebutkan satu per satu, yang telah memberikan dukungan secara langsung dan tidak langsung selama proses penyusunan skripsi ini.
+8. Dan yang terakhir, Semua pihak yang tidak dapat penulis sebutkan satu per satu, yang telah memberikan dukungan secara langsung dan tidak langsung selama proses penyusunan skripsi ini.
 
-Akhir kata penulis mengucapkan terima kasih kepada semua pihak yang telah membantu dan penulis berharap semoga skripsi ini dapat bermanfaat dan berkontribusi bagi dunia pendidikan, khususnya di bidang teknologi informasi dan sistem informasi.
+Penulis menyadari sepenuhnya bahwa penyusunan skripsi ini masih jauh dari kata sempurna mengingat keterbatasan kemampuan dan pengetahuan yang dimiliki. Penulis sangat terbuka dan mengharapkan segala bentuk kritik serta saran yang membangun demi perbaikan di masa mendatang. Akhir kata, penulis berharap semoga skripsi ini dapat memberikan manfaat yang nyata bagi pengembangan ilmu pengetahuan serta bagi para pembaca.
 
 <br><br><br>
 
 <div align="right">
 
-Semarang, 13 Juli 2026
+Semarang, 10 April 2026
 
 <br><br><br><br>
 
@@ -290,7 +234,7 @@ Semarang, 13 Juli 2026
 
 <br><br>
 
-Rafif Arsya Pradiva
+**Rafif Arsya Pradiva**
 
 </div>
 
@@ -340,89 +284,66 @@ Functional evaluation across 60 black-box testing scenarios verified that all op
 
 <br>
 
-HALAMAN JUDUL &emsp; i  
-HALAMAN PERNYATAAN ORISINALITAS &emsp; ii  
-HALAMAN PERNYATAAN BEBAS PLAGIASI &emsp; iii  
-HALAMAN PENGESAHAN &emsp; iv  
-HALAMAN PERNYATAAN PUBLIKASI KARYA ILMIAH UNTUK KEPENTINGAN AKADEMIS &emsp; v  
+HALAMAN PENGESAHAN &emsp; iii  
+HALAMAN PERNYATAAN KEASLIAN &emsp; iv  
+HALAMAN PERNYATAAN PERSETUJUAN PUBLIKASI &emsp; v  
 KATA PENGANTAR &emsp; vi  
 ABSTRAK &emsp; viii  
 ABSTRACT &emsp; ix  
 DAFTAR ISI &emsp; x  
-DAFTAR TABEL &emsp; xi  
 DAFTAR GAMBAR &emsp; xii  
-DAFTAR LAMPIRAN &emsp; xiii  
+DAFTAR TABEL &emsp; xiv  
+
+<br>
 
 **BAB 1 PENDAHULUAN** &emsp; **1**  
 1.1 Latar Belakang &emsp; 1  
-1.2 Rumusan Masalah &emsp; 3  
-1.3 Tujuan Penelitian &emsp; 4  
-
-**BAB 2 TINJAUAN PUSTAKA** &emsp; **5**  
-2.1 Sistem Informasi Manajemen &emsp; 5  
-2.2 E-Commerce B2C &emsp; 6  
-2.3 Web Application &emsp; 7  
-2.4 UI & UX &emsp; 8  
-2.5 Laravel &emsp; 9  
-2.6 RDBMS &emsp; 10  
-2.7 MySQL Database &emsp; 11  
-2.8 Payment Gateway &emsp; 12  
-2.9 WhatsApp Gateway API &emsp; 13  
-2.10 Email Gateway API &emsp; 14  
-2.11 Cron Job &emsp; 15  
-
-**BAB 3 METODE PENELITIAN** &emsp; **16**  
-3.1 Objek Penelitian &emsp; 16  
-3.2 Jenis Penelitian &emsp; 16  
-3.3 Sumber Data &emsp; 17  
-3.4 Teknik Pengumpulan Data &emsp; 17  
-3.5 Metode Pengembangan Sistem &emsp; 18  
-3.6 Kerangka Pemikiran &emsp; 19  
-
-**BAB 4 HASIL DAN PEMBAHASAN** &emsp; **20**  
-4.1 Perancangan Aplikasi &emsp; 20  
-&emsp; 4.1.1 Use Case Diagram &emsp; 20  
-&emsp; 4.1.2 Entity Relationship Diagram (ERD) &emsp; 21  
-&emsp; 4.1.3 Activity Diagram &emsp; 22  
-&emsp; 4.1.4 Flowchart Sistem &emsp; 25  
-4.2 Implementasi Antarmuka Sistem &emsp; 26  
-&emsp; 4.2.1 Implementasi Umum &emsp; 26  
-&emsp; 4.2.2 Implementasi Calon Penyewa &emsp; 37  
-&emsp; 4.2.3 Implementasi Admin &emsp; 44  
-&emsp; 4.2.4 Implementasi Penyewa Aktif &emsp; 55  
-4.3 Implementasi Kode Program &emsp; 62  
-&emsp; 4.3.1 Implementasi Autentikasi dan Hak Akses &emsp; 62  
-&emsp; 4.3.2 Implementasi Pemesanan Kamar &emsp; 64  
-&emsp; 4.3.3 Implementasi *Payment Gateway* &emsp; 66  
-&emsp; 4.3.4 Implementasi Penjadwalan dan Notifikasi &emsp; 68  
-4.4 Pengujian Sistem &emsp; 71  
-4.5 Hasil Wawancara &emsp; 72  
-
-**BAB 5 KESIMPULAN DAN SARAN** &emsp; **84**  
-5.1 Kesimpulan &emsp; 84  
-5.2 Saran &emsp; 84  
-
-**DAFTAR PUSTAKA** &emsp; **85**  
-
-<div style="page-break-after: always;"></div>
-
-<div align="center">
-
-## DAFTAR TABEL
-
-</div>
+1.2 Rumusan Masalah &emsp; 2  
+1.3 Tujuan Penelitian &emsp; 2  
 
 <br>
 
-Tabel 4.1 &emsp; Pengujian Fungsionalitas Sistem &emsp; 71  
-Tabel 4.2 &emsp; Wawancara Penjaga Kost &emsp; 72  
-Tabel 4.3 &emsp; Wawancara Responden 1 &emsp; 74  
-Tabel 4.4 &emsp; Wawancara Responden 2 &emsp; 76  
-Tabel 4.5 &emsp; Wawancara Responden 3 &emsp; 78  
-Tabel 4.6 &emsp; Wawancara Responden 4 &emsp; 80  
-Tabel 4.7 &emsp; Wawancara Responden 5 &emsp; 82  
+**BAB 2 TINJAUAN PUSTAKA** &emsp; **4**  
+2.1 Sistem Informasi Manajemen &emsp; 4  
+2.2 E-Commerce B2C &emsp; 4  
+2.3 Web Application &emsp; 5  
+2.4 UI & UX &emsp; 5  
+2.5 Laravel &emsp; 6  
+2.6 RDBMS &emsp; 6  
+2.7 MySQL Database &emsp; 7  
+2.8 Payment Gateway &emsp; 7  
+2.9 Whatsapp Gateway API &emsp; 8  
+2.10 Email Gateway API &emsp; 9  
+2.11 Cronjob &emsp; 9  
 
 <br>
+
+**BAB 3 METODE PENELITIAN** &emsp; **11**  
+3.1 Objek Penelitian &emsp; 11  
+3.2 Jenis Penelitian &emsp; 11  
+3.3 Sumber Data &emsp; 11  
+3.4 Teknik Pengumpulan Data &emsp; 12  
+3.5 Metode Pengembangan Sistem &emsp; 13  
+3.6 Kerangka Pemikiran &emsp; 14  
+
+<br>
+
+**BAB 4 HASIL DAN PEMBAHASAN** &emsp; **17**  
+4.1 Perancangan Aplikasi &emsp; 17  
+4.2 Implementasi Antarmuka Sistem &emsp; 25  
+4.3 Implementasi Kode Program &emsp; 60  
+4.4 Pengujian Sistem &emsp; 69  
+4.5 Hasil Wawancara &emsp; 80  
+
+<br>
+
+**BAB 5 KESIMPULAN DAN SARAN** &emsp; **96**  
+5.1 Kesimpulan &emsp; 96  
+5.2 Saran &emsp; 96  
+
+<br>
+
+**DAFTAR PUSTAKA** &emsp; **98**  
 
 <div style="page-break-after: always;"></div>
 
@@ -434,70 +355,78 @@ Tabel 4.7 &emsp; Wawancara Responden 5 &emsp; 82
 
 <br>
 
-Gambar 3.1 &emsp; Tahapan Metode Waterfall &emsp; 18  
-Gambar 3.2 &emsp; Kerangka Pemikiran Penelitian &emsp; 19  
-Gambar 4.1 &emsp; Use Case Diagram &emsp; 20  
-Gambar 4.2 &emsp; Entity Relationship Diagram &emsp; 21  
-Gambar 4.3 &emsp; Activity Diagram Pemesan &emsp; 22  
-Gambar 4.4 &emsp; Activity Diagram Admin &emsp; 23  
-Gambar 4.5 &emsp; Activity Diagram Penghuni &emsp; 24  
-Gambar 4.6 &emsp; Flowchart Sistem Aplikasi &emsp; 25  
-Gambar 4.7 &emsp; Halaman Beranda Utama &emsp; 26  
-Gambar 4.8 &emsp; Daftar Fasilitas Kost &emsp; 27  
-Gambar 4.9 &emsp; Katalog Tipe Kamar &emsp; 28  
-Gambar 4.10 &emsp; Galeri Foto Kost &emsp; 29  
-Gambar 4.11 &emsp; Panduan Alur Reservasi &emsp; 30  
-Gambar 4.12 &emsp; Halaman Testimoni Penghuni &emsp; 31  
-Gambar 4.13 &emsp; Halaman Pertanyaan Umum &emsp; 32  
-Gambar 4.14 &emsp; Halaman Tentang Kami &emsp; 33  
-Gambar 4.15 &emsp; Halaman Login Pengguna &emsp; 34  
-Gambar 4.16 &emsp; Halaman Pendaftaran Akun &emsp; 35  
-Gambar 4.17 &emsp; Jendela Obrolan Pengunjung &emsp; 36  
-Gambar 4.18 &emsp; Kelengkapan Profil Pemesan &emsp; 37  
-Gambar 4.19 &emsp; Dasbor Reservasi Pemesan &emsp; 38  
-Gambar 4.20 &emsp; Simulasi Biaya Kamar &emsp; 39  
-Gambar 4.21 &emsp; Tahapan Pembayaran Reservasi &emsp; 40  
-Gambar 4.22 &emsp; Jendela Pembayaran Midtrans &emsp; 41  
-Gambar 4.23 &emsp; Pesan Aktivasi WhatsApp &emsp; 42  
-Gambar 4.24 &emsp; Email Konfirmasi Reservasi &emsp; 43  
-Gambar 4.25 &emsp; Halaman Login Administrator &emsp; 44  
-Gambar 4.26 &emsp; Dasbor Operasional Administrator &emsp; 45  
-Gambar 4.27 &emsp; Pengelolaan Data Kamar &emsp; 46  
-Gambar 4.28 &emsp; Pengelolaan Fasilitas Kost &emsp; 47  
-Gambar 4.29 &emsp; Pengelolaan Data Penghuni &emsp; 48  
-Gambar 4.30 &emsp; Pengelolaan Reservasi Masuk &emsp; 49  
-Gambar 4.31 &emsp; Pengelolaan Tagihan Bulanan &emsp; 50  
-Gambar 4.32 &emsp; Pencatatan Pengeluaran Operasional &emsp; 51  
-Gambar 4.33 &emsp; Laporan Rekapitulasi Kas &emsp; 52  
-Gambar 4.34 &emsp; Pengelolaan Keluhan Fasilitas &emsp; 53  
-Gambar 4.35 &emsp; Pengelolaan Obrolan Tamu &emsp; 54  
-Gambar 4.36 &emsp; Login Penyewa Aktif &emsp; 55  
-Gambar 4.37 &emsp; Dasbor Penyewa Aktif &emsp; 56  
-Gambar 4.38 &emsp; Tagihan Sewa Penyewa &emsp; 57  
-Gambar 4.39 &emsp; Pengaturan Profil Penghuni &emsp; 58  
-Gambar 4.40 &emsp; Riwayat Transaksi Pembayaran &emsp; 59  
-Gambar 4.41 &emsp; Pengajuan Keluhan Kamar &emsp; 60  
-Gambar 4.42 &emsp; Dokumen Kuitansi Digital &emsp; 61  
-Gambar 4.43 &emsp; Kode Pembatasan Akses &emsp; 62  
-Gambar 4.44 &emsp; Kode Pengalihan Portal &emsp; 63  
-Gambar 4.45 &emsp; Kode Penguncian Kamar &emsp; 64  
-Gambar 4.46 &emsp; Kode Pemeriksaan Jadwal &emsp; 65  
-Gambar 4.47 &emsp; Kode Token Midtrans &emsp; 66  
-Gambar 4.48 &emsp; Kode Validasi Webhook &emsp; 67  
-Gambar 4.49 &emsp; Kode Penjadwal Tugas &emsp; 68  
-Gambar 4.50 &emsp; Kode Integrasi WhatsApp &emsp; 69  
-Gambar 4.51 &emsp; Kode Pengiriman Email &emsp; 70  
-Gambar 4.52 &emsp; Dokumentasi Wawancara Pengelola &emsp; 72  
+Gambar 3. 1 Tahapan Metode SDLC Waterfall &emsp; 13  
+Gambar 3. 2 Kerangka Pemikiran &emsp; 14  
+Gambar 4. 1 Use Case Diagram &emsp; 17  
+Gambar 4. 2 Entity Relationship Diagram &emsp; 19  
+Gambar 4. 3 Activity Diagram Calon Penyewa &emsp; 21  
+Gambar 4. 4 Activity Diagram Admin (Penjaga Kost) &emsp; 22  
+Gambar 4. 5 Activity Diagram Penyewa Aktif &emsp; 23  
+Gambar 4. 6 Flowchart Sistem &emsp; 24  
+Gambar 4. 7 Halaman Beranda Utama &emsp; 26  
+Gambar 4. 8 Daftar Fasilitas Kost &emsp; 27  
+Gambar 4. 9 Katalog Tipe Kamar &emsp; 28  
+Gambar 4. 10 Galeri Foto Kost &emsp; 29  
+Gambar 4. 11 Panduan Alur Reservasi &emsp; 30  
+Gambar 4. 12 Halaman Testimoni Penghuni &emsp; 31  
+Gambar 4. 13 Halaman Pertanyaan Umum &emsp; 32  
+Gambar 4. 14 Halaman Tentang Kami &emsp; 32  
+Gambar 4. 15 Halaman Login Pengguna &emsp; 33  
+Gambar 4. 16 Halaman Pendaftaran Akun &emsp; 34  
+Gambar 4. 17 Chat Real Time Guest &emsp; 35  
+Gambar 4. 18 Kelengkapan Profil Pemesan &emsp; 36  
+Gambar 4. 19 Dasbor Reservasi Pemesan &emsp; 37  
+Gambar 4. 20 Simulasi Biaya Kamar &emsp; 38  
+Gambar 4. 21 Tahapan Pembayaran Reservasi &emsp; 39  
+Gambar 4. 22 Jendela Pembayaran Midtrans &emsp; 40  
+Gambar 4. 23 Pesan Aktivasi WhatsApp &emsp; 41  
+Gambar 4. 24 Email Konfirmasi Reservasi &emsp; 42  
+Gambar 4. 25 Halaman Login Administrator &emsp; 43  
+Gambar 4. 26 Dasbor Operasional Administrator &emsp; 44  
+Gambar 4. 27 Pengelolaan Data Kamar &emsp; 45  
+Gambar 4. 28 Pengelolaan Fasilitas Kost &emsp; 46  
+Gambar 4. 29 Pengelolaan Data Penghuni &emsp; 47  
+Gambar 4. 30 Pengelolaan Reservasi Masuk &emsp; 48  
+Gambar 4. 31 Pengelolaan Tagihan Bulanan &emsp; 49  
+Gambar 4. 32 Pencatatan Pengeluaran Operasional &emsp; 50  
+Gambar 4. 33 Laporan Rekapitulasi Kas &emsp; 51  
+Gambar 4. 34 Pengelolaan Keluhan Fasilitas &emsp; 52  
+Gambar 4. 35 Pengelolaan Obrolan Tamu &emsp; 53  
+Gambar 4. 36 Login Penyewa Aktif &emsp; 54  
+Gambar 4. 37 Dasbor Penyewa Aktif &emsp; 55  
+Gambar 4. 38 Tagihan Sewa Penyewa &emsp; 56  
+Gambar 4. 39 Pengaturan Profil Penghuni &emsp; 57  
+Gambar 4. 40 Riwayat Transaksi Pembayaran &emsp; 58  
+Gambar 4. 41 Pengajuan Keluhan Kamar &emsp; 59  
+Gambar 4. 42 Dokumen Kuitansi Digital &emsp; 60  
+Gambar 4. 43 Kode Pembatasan Akses &emsp; 61  
+Gambar 4. 44 Kode Pengalihan Portal &emsp; 62  
+Gambar 4. 45 Kode Penguncian Kamar &emsp; 63  
+Gambar 4. 46 Kode Pemeriksaan Jadwal &emsp; 64  
+Gambar 4. 47 Kode Token Midtrans &emsp; 65  
+Gambar 4. 48 Kode Validasi Webhook &emsp; 66  
+Gambar 4. 49 Kode Penjadwal Tugas &emsp; 67  
+Gambar 4. 50 Kode Integrasi WhatsApp &emsp; 68  
+Gambar 4. 51 Kode Pengiriman Email &emsp; 69  
+Gambar 4. 52 Dokumentasi Wawancara Bapak Asep &emsp; 81  
 
 <div style="page-break-after: always;"></div>
 
 <div align="center">
 
-## DAFTAR LAMPIRAN
+## DAFTAR TABEL
 
 </div>
 
 <br>
+
+Tabel 4. 1 Hasil Pengujian Fungsionalitas Sistem (Black Box Testing) &emsp; 70  
+Tabel 4. 2 Hasil Wawancara Penjaga Kost (Bapak Asep) &emsp; 81  
+Tabel 4. 3 Wawancara dengan Arjun &emsp; 85  
+Tabel 4. 4 Wawancara dengan Farrel &emsp; 87  
+Tabel 4. 5 Wawancara dengan Iman &emsp; 89  
+Tabel 4. 6 Wawancara dengan Ammar &emsp; 91  
+Tabel 4. 7 Wawancara dengan Sindhu &emsp; 93  
 
 <div style="page-break-after: always;"></div>
 
