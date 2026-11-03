@@ -691,15 +691,15 @@ Struktur penyimpanan data pada sistem manajemen kost ini dirancang menggunakan m
 
 <div align="center">
 
-<img src="images/gambar_4_2_a_erd_modul_inti.png" alt="Gambar 4.2 (a) ERD Modul Inti" width="650">
+<img src="images/gambar_4_2_a_erd_modul_inti.png" alt="Gambar 4.2 (a) Modul Pengelolaan Kamar, Pengguna, Reservasi, Pembayaran" width="650">
 
-*(a) ERD Modul Inti*
+*(a) Modul Pengelolaan Kamar, Pengguna, Reservasi, Pembayaran*
 
 <br>
 
-<img src="images/gambar_4_2_b_erd_modul_pendukung.png" alt="Gambar 4.2 (b) ERD Modul Pendukung" width="650">
+<img src="images/gambar_4_2_b_erd_modul_pendukung.png" alt="Gambar 4.2 (b) Modul Layanan Keluhan, Operasional Kost, Komunikasi, Informasi" width="650">
 
-*(b) ERD Modul Pendukung*
+*(b) Modul Layanan Keluhan, Operasional Kost, Komunikasi, Informasi*
 
 <br>
 
@@ -737,9 +737,9 @@ Alur aktivitas calon penyewa dirancang untuk mempermudah pemesanan unit kamar se
 
 <div align="center">
 
-<img src="images/gambar_4_3_calon_penyewa.png" alt="Gambar 4.3 Activity Diagram Pemesan" width="650">
+<img src="images/gambar_4_3_calon_penyewa.png" alt="Gambar 4.3 Activity Diagram Calon Penyewa" width="650">
 
-*Gambar 4.3 Activity Diagram Pemesan*
+*Gambar 4.3 Activity Diagram Calon Penyewa*
 
 </div>
 
@@ -756,9 +756,9 @@ Pada sisi pengelola, aktivitas sistem berfokus pada kemudahan mengelola inventar
 
 <div align="center">
 
-<img src="images/gambar_4_4_admin.png" alt="Gambar 4.4 Activity Diagram Admin" width="650">
+<img src="images/gambar_4_4_admin.png" alt="Gambar 4.4 Activity Diagram Admin (Penjaga Kost)" width="650">
 
-*Gambar 4.4 Activity Diagram Admin*
+*Gambar 4.4 Activity Diagram Admin (Penjaga Kost)*
 
 </div>
 
@@ -775,9 +775,9 @@ Aktivitas penyewa aktif berpusat pada penggunaan portal layanan mandiri selama m
 
 <div align="center">
 
-<img src="images/gambar_4_5_penyewa_aktif.png" alt="Gambar 4.5 Activity Diagram Penghuni" width="650">
+<img src="images/gambar_4_5_penyewa_aktif.png" alt="Gambar 4.5 Activity Diagram Penyewa Aktif" width="650">
 
-*Gambar 4.5 Activity Diagram Penghuni*
+*Gambar 4.5 Activity Diagram Penyewa Aktif*
 
 </div>
 
@@ -794,9 +794,9 @@ Urutan logika kerja sistem dari tahap pemesanan awal hingga pengaktifan status p
 
 <div align="center">
 
-<img src="images/gambar_4_6_flowchart_sistem.png" alt="Gambar 4.6 Flowchart Sistem Aplikasi" width="650">
+<img src="images/gambar_4_6_flowchart_sistem.png" alt="Gambar 4.6 Flowchart Sistem" width="650">
 
-*Gambar 4.6 Flowchart Sistem Aplikasi*
+*Gambar 4.6 Flowchart Sistem*
 
 </div>
 
@@ -979,9 +979,9 @@ Seluruh pesan yang dikirim melalui jendela ini langsung diteruskan ke dasbor pen
 
 <div align="center">
 
-<img src="images/gambar_4_17_chat_real_time_guest.png" alt="Gambar 4.17 Jendela Obrolan Pengunjung" width="400">
+<img src="images/gambar_4_17_chat_real_time_guest.png" alt="Gambar 4.17 Chat Real Time Guest" width="400">
 
-*Gambar 4.17 Jendela Obrolan Pengunjung*
+*Gambar 4.17 Chat Real Time Guest*
 
 </div>
 
@@ -1556,7 +1556,7 @@ Pengujian fungsionalitas sistem informasi Asri Boarding House dilakukan mengguna
 
 <br>
 
-**Tabel 4.1** Pengujian Fungsionalitas Sistem
+**Tabel 4.1** Hasil Pengujian Fungsionalitas Sistem (Black Box Testing)
 
 | No | Modul / Skenario Uji | Prosedur Pengujian / Masukan Data | Hasil yang Diharapkan | Hasil Pengujian | Status |
 | :---: | :--- | :--- | :--- | :--- | :---: |
@@ -1638,21 +1638,22 @@ Pengujian penerimaan pengguna (*User Acceptance Testing*) dilaksanakan untuk men
 
 <br>
 
+1. Wawancara dengan Penjaga Kost  
 Sesi evaluasi bersama Bapak Asep difokuskan untuk menguji fungsionalitas panel pengelola serta kemudahan operasional harian kost setelah 20 tahun terbiasa menggunakan buku besar manual. Seluruh dialog berlangsung secara tatap muka di kantor pengelola dengan rekaman audio sebagai bukti verifikasi yang otentik.
 
 <br>
 
 <div align="center">
 
-<img src="images/gambar_4_21.jpg" alt="Gambar 4.52 Dokumentasi Wawancara Pengelola" width="600">
+<img src="images/gambar_4_21.jpg" alt="Gambar 4.52 Dokumentasi Wawancara Bapak Asep" width="600">
 
-*Gambar 4.52 Dokumentasi Wawancara Pengelola*
+*Gambar 4.52 Dokumentasi Wawancara Bapak Asep*
 
 </div>
 
 <br>
 
-**Tabel 4.2** Wawancara Penjaga Kost
+**Tabel 4.2** Hasil Wawancara Penjaga Kost (Bapak Asep)
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
@@ -1673,11 +1674,12 @@ Berdasarkan hasil wawancara pada Tabel 4.2, Bapak Asep memberikan skor kepuasan 
 
 <br>
 
+2. Hasil Wawancara dengan Arjun  
 Wawancara dengan Arjun selaku mahasiswa UNDIP menggali pengalaman penghuni lama dalam menelusuri katalog kamar dan menyelesaikan transaksi sewa lewat m-Banking. Sesi pengujian mandiri ini direkam secara audio guna memastikan seluruh impresi penggunaan antarmuka tercatat secara utuh.
 
 <br>
 
-**Tabel 4.3** Wawancara Responden 1
+**Tabel 4.3** Wawancara dengan Arjun
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
@@ -1698,11 +1700,12 @@ Berdasarkan hasil wawancara pada Tabel 4.3, Arjun memberikan skor kepuasan 8,5 d
 
 <br>
 
+3. Hasil Wawancara dengan Farrel  
 Pengujian bersama Farrel, penghuni kost yang berkuliah di USM, menyoroti perspektif mahasiswa perantau luar kota saat mengakses sistem reservasi melalui ponsel Android. Seluruh proses tanya jawab didokumentasikan lewat rekaman suara guna merekam kendala pembayaran non-BCA secara presisi.
 
 <br>
 
-**Tabel 4.4** Wawancara Responden 2
+**Tabel 4.4** Wawancara dengan Farrel
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
@@ -1723,11 +1726,12 @@ Merujuk pada Tabel 4.4, Farrel memberikan nilai kepuasan 7,0 dari skala 10 dan m
 
 <br>
 
+4. Hasil Wawancara dengan Iman  
 Wawancara bersama Iman selaku mahasiswa UDINUS membedah keandalan pencatatan pembayaran digital pada portal penghuni serta transparansi riwayat mutasi bulanan. Sesi interaksi diuji langsung pada laptop dengan bukti rekaman audio untuk memvalidasi tanggapan pengguna.
 
 <br>
 
-**Tabel 4.5** Wawancara Responden 3
+**Tabel 4.5** Wawancara dengan Iman
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
@@ -1748,11 +1752,12 @@ Berdasarkan hasil wawancara pada Tabel 4.5, Iman memberikan skor kepuasan 9,0 da
 
 <br>
 
+5. Hasil Wawancara dengan Ammar  
 Pengujian bersama Ammar dari PKN STAN meninjau respon mahasiswa baru saat menavigasi alur pemesanan dan pembayaran via peramban Safari di iPhone. Diskusi pengujian terekam dalam audio guna menangkap masukan terkait integrasi tautan pesan WhatsApp secara mendalam.
 
 <br>
 
-**Tabel 4.6** Wawancara Responden 4
+**Tabel 4.6** Wawancara dengan Ammar
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
@@ -1773,11 +1778,12 @@ Mengacu pada Tabel 4.6, Ammar memberikan nilai kepuasan 7,5 dari skala 10 dan me
 
 <br>
 
+6. Hasil Wawancara dengan Sindhu  
 Sesi wawancara bersama Sindhu, penghuni kost berstatus mahasiswa UI, difokuskan pada pengujian kenyamanan navigasi dasbor portal hunian serta kecepatan verifikasi pembayaran instan. Percakapan evaluasi didokumentasikan lewat rekaman suara untuk menjaring saran terkait panduan interaktif bagi pengguna baru.
 
 <br>
 
-**Tabel 4.7** Wawancara Responden 5
+**Tabel 4.7** Wawancara dengan Sindhu
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
@@ -1813,7 +1819,7 @@ Pada skala 10, evaluasi wawancara mencatat skor kepuasan 9,5 dari penjaga kost d
 <br>
 
 ## 5.1 Kesimpulan
-Pembangunan Sistem Informasi Manajemen Kost pada Asri Boarding House berbasis kerangka kerja Laravel dan basis data MySQL berhasil mendigitalisasi tata kelola hunian secara terpusat untuk mengatasi kelemahan promosi konvensional, risiko benturan pemesanan kamar ganda, dan kerumitan pembukuan manual. Sistem ini memadukan gerbang pembayaran digital Midtrans dengan penjadwal tugas otomatis yang mengeksekusi penerbitan tagihan bulanan setiap awal bulan, perhitungan denda keterlambatan secara konsisten, serta pengiriman notifikasi pengingat melalui WhatsApp dan surat elektronik. Pengujian penerimaan sistem melalui enam puluh skenario fungsional *black box* membuktikan seluruh modul bekerja stabil dan akurat sesuai spesifikasi kebutuhan tanpa ditemukannya galat teknis. Hasil wawancara mendalam bersama pengelola indekos mengonfirmasi bahwa aplikasi ini memangkas waktu rekapitulasi tutup buku bulanan, meniadakan selisih kas fisik melalui verifikasi pembayaran non-tunai instan, dan mempermudah pemantauan okupansi tiga puluh dua unit kamar. Di sisi lain, evaluasi wawancara bersama lima mahasiswa penghuni kost menunjukkan tingkat kepuasan yang tinggi terhadap kepraktisan pelunasan sewa jarak jauh lewat *virtual account*, keterbukaan rincian tarif tanpa biaya tersembunyi, serta kemudahan akses kuitansi digital resmi.
+Perancangan Sistem Informasi Manajemen Kost pada Asri Boarding House berbasis kerangka kerja Laravel dan basis data MySQL berhasil mendigitalisasi tata kelola hunian secara terpusat untuk mengatasi kelemahan promosi konvensional, risiko benturan pemesanan kamar ganda, dan kerumitan pembukuan manual. Sistem ini memadukan gerbang pembayaran digital Midtrans dengan penjadwal tugas otomatis yang mengeksekusi penerbitan tagihan bulanan setiap awal bulan, perhitungan denda keterlambatan secara konsisten, serta pengiriman notifikasi pengingat melalui WhatsApp dan surat elektronik. Pengujian penerimaan sistem melalui enam puluh skenario fungsional *black box* membuktikan seluruh modul bekerja stabil dan akurat sesuai spesifikasi kebutuhan tanpa ditemukannya galat teknis. Hasil wawancara mendalam bersama pengelola indekos mengonfirmasi bahwa aplikasi ini memangkas waktu rekapitulasi tutup buku bulanan, meniadakan selisih kas fisik melalui verifikasi pembayaran non-tunai instan, dan mempermudah pemantauan okupansi tiga puluh dua unit kamar. Di sisi lain, evaluasi wawancara bersama lima mahasiswa penghuni kost menunjukkan tingkat kepuasan yang tinggi terhadap kepraktisan pelunasan sewa jarak jauh lewat *virtual account*, keterbukaan rincian tarif tanpa biaya tersembunyi, serta kemudahan akses kuitansi digital resmi.
 
 <br>
 
@@ -1888,6 +1894,6 @@ Pesan pengingat tagihan WhatsApp disarankan memuat tautan pembayaran langsung ag
 
 [28] M. W. Mauludy and Fathahillah, “Pengembangan Sistem Informasi Pengarsipan File Menggunakan Metode R&D,” *J. Informatics Manag. Inf. Technol.*, vol. 5, no. 2, pp. 118–125, 2025, doi: [10.47065/jimat.v5i2.484](https://doi.org/10.47065/jimat.v5i2.484).
 
-[29] Sugiyono, *Metode Penelitian Kuantitatif, Kualitatif, dan R&D*, Bandung: Alfabeta, 2022.
+[29] Sugiyono, *Metode Penelitian Kuantitatif, Kualitatif, dan R&D*. Bandung: Alfabeta, 2022.
 
 [30] E. Rahmi, E. Yumami, and N. Hidayasari, “Analisis Metode Pengembangan Sistem Informasi Berbasis Website: Systematic Literature Review,” *REMIK Ris. dan E-Jurnal Manaj. Inform. Komput.*, vol. 7, no. 1, pp. 821–834, 2023, doi: [10.33395/remik.v7i1.12177](https://doi.org/10.33395/remik.v7i1.12177).
