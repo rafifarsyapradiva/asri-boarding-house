@@ -107,31 +107,15 @@
 #### **A. RESULT**
 
 <p align="justify">
-  Architectural modeling established clear operational boundaries across prospective tenants, the boarding house administrator, and active tenants. The 3NF relational database schema separates core residency and financial tables (<em>users</em>, <em>kamar</em>, <em>penyewa</em>, <em>reservasi</em>, <em>tagihan</em>, and <em>pembayaran</em>) from supporting operational tables (<em>keluhan</em>, <em>pengeluaran</em>, <em>log_notifikasi</em>, <em>guest_chat_threads</em>, <em>chat_messages</em>, <em>customer_reviews</em>, <em>peraturan</em>, and <em>faqs</em>) [18]. Through a one-to-many relationship, the <em>penyewa</em> table locks a snapshot of the agreed room rate, entry date, lease expiration, and emergency guardian contact so historical contracts remain intact when room tariffs change. The end-to-end decision logic from initial room browsing to official tenant activation is illustrated in Figure 1.
+  Architectural modeling established clear operational boundaries across prospective tenants, the boarding house administrator, and active tenants. The 3NF relational database schema separates core residency and financial tables (<em>users</em>, <em>kamar</em>, <em>penyewa</em>, <em>reservasi</em>, <em>tagihan</em>, and <em>pembayaran</em>) from supporting operational tables (<em>keluhan</em>, <em>pengeluaran</em>, <em>log_notifikasi</em>, <em>guest_chat_threads</em>, <em>chat_messages</em>, <em>customer_reviews</em>, <em>peraturan</em>, and <em>faqs</em>) [18]. Through a one-to-many relationship, the <em>penyewa</em> table locks a snapshot of the agreed room rate, entry date, lease expiration, and emergency guardian contact so historical contracts remain intact even when master room tariffs change.
 </p>
 
-<div align="center">
-  <img src="images/gambar_4_6_flowchart_sistem.png" alt="Figure 1. End-to-end reservation and payment verification system flowchart" width="500">
-  <br>
-  <sub>Figure 1. End-to-end reservation and payment verification system flowchart.</sub>
-</div>
-
-<br>
-
 <p align="justify">
-  As shown in Figure 1, when an applicant selects a vacant unit from the 32 available rooms, completes identity verification, and initiates payment through Midtrans, the backend executes an ACID transaction using <em>lockForUpdate()</em> and schedule overlap checks to block duplicate reservations [19]. System implementation produced 36 responsive Neo-Brutalism web interfaces [7] alongside nine core backend modules covering multi-role middleware, post-login routing, ACID room locking, schedule conflict detection, 24-hour Midtrans Snap token generation, SHA-512 webhook verification via <em>hash_equals()</em> [20], cron task scheduling with <em>withoutOverlapping()</em> [12], Fonnte WhatsApp dispatches [13], and queued SMTP/TLS email delivery via <em>ShouldQueue</em> [14]. For daily property oversight, the administrator dashboard employs an OLED dark theme that automatically calculates room occupancy, incoming rent, operational expenses, and net cash balance, as shown in Figure 2.
+  In the end-to-end reservation workflow, when an applicant selects a vacant unit from the 32 available rooms, completes identity verification, and initiates payment through Midtrans, the backend executes an ACID transaction using <em>lockForUpdate()</em> and schedule overlap checks to block duplicate reservations [19]. System implementation produced 36 responsive Neo-Brutalism web interfaces [7] alongside nine core backend modules covering multi-role middleware, post-login routing, ACID room locking, schedule conflict detection, 24-hour Midtrans Snap token generation, SHA-512 webhook verification via <em>hash_equals()</em> [20], cron task scheduling with <em>withoutOverlapping()</em> [12], Fonnte WhatsApp dispatches [13], and queued SMTP/TLS email delivery via <em>ShouldQueue</em> [14]. For daily property oversight, the administrator dashboard employs an OLED dark theme that automatically aggregates room occupancy, incoming rent, operational expenses, and net cash balance.
 </p>
 
-<div align="center">
-  <img src="images/gambar_4_26_dashboard_admin.png" alt="Figure 2. Administrator operational dashboard and automated cash ledger" width="600">
-  <br>
-  <sub>Figure 2. Administrator operational dashboard and automated cash ledger.</sub>
-</div>
-
-<br>
-
 <p align="justify">
-  Functional verification across all 60 black-box test scenarios in the six operational domains achieved a 100% pass rate without validation or transaction errors [10]. Every form filter, 16-digit National Identity (NIK) check, post-checkout room quarantine hold, PDF receipt download, and PDF/Excel financial export performed as specified. Subsequent User Acceptance Testing (UAT) through side-by-side trials and recorded interviews with the senior boarding house manager and five active student tenants yielded high satisfaction scores, as summarized in Table 2 [16].
+  Functional verification across all 60 black-box test scenarios in the six operational domains achieved a 100% pass rate without validation or transaction errors [10]. Every form filter, 16-digit National Identity (NIK) check, post-checkout room quarantine hold, PDF receipt download, and PDF/Excel financial export performed as specified. Subsequent User Acceptance Testing (UAT) conducted through side-by-side usability trials and video-recorded face-to-face interviews with the senior boarding house manager and five active student tenants yielded high satisfaction scores, as summarized in Table 2 [16].
 </p>
 
 <div align="center">
@@ -150,23 +134,15 @@
 #### **B. DISCUSSION**
 
 <p align="justify">
-  The empirical results confirm that integrating automated payment verification with database concurrency control directly resolves manual boarding house bottlenecks [5]. Within the billing engine, the monthly invoice obligation <em>T</em><sub>bill</sub> for an active room tariff <em>R</em><sub>base</sub> enforces an intra-month grace period past the 10th and applies an idempotent 5% rollover fine upon crossing into the next calendar month, expressed in IEEE equation format as (1):
-</p>
-
-$$T_{\text{bill}} = R_{\text{base}} + \delta \cdot (0.05 \times R_{\text{base}}) \dots (1)$$
-
-<p align="justify">
-  where <em>&delta;</em> &isin; {0, 1} is a binary indicator equal to 1 if an invoice remains unpaid across the calendar month boundary and 0 otherwise [12]. Furthermore, monthly financial reconciliation across <em>n</em> settled tenant payments and <em>m</em> recorded operational expenditures <em>E<sub>j</sub></em> computes the net cash balance <em>N</em><sub>cash</sub> instantaneously as (2):
-</p>
-
-$$N_{\text{cash}} = \sum_{i=1}^{n} \left( R_{\text{base},i} + \delta_{i} \cdot 0.05 R_{\text{base},i} \right) - \sum_{j=1}^{m} E_{j} \dots (2)$$
-
-<p align="justify">
-  Compared with earlier boarding house systems by Cornellya and Afriyadi [1] and Nizar [2], which relied on manual bank slip uploads and lacked row-level locking, our implementation pairs ACID transactions with <em>lockForUpdate()</em> and a physical post-checkout room quarantine hold [19]. This combination guarantees zero double bookings across all 32 rooms even when multiple applicants submit reservations simultaneously. Moreover, whereas the monitoring platform by Malaikosa and Mokola [3] still required manual payment checks, integrating Midtrans Snap with SHA-512 signature validation via <em>hash_equals()</em> updates ledger records automatically upon payment settlement [11].
+  Qualitative findings from the video-recorded interviews confirm that integrating automated payment verification with database concurrency control directly resolves manual boarding house bottlenecks [5]. From the management perspective, the senior resident manager (Mr. Asep) awarded a 9.5/10 rating and highlighted that automated ledger reconciliation reduced month-end book closing from three or four days of matching paper receipts to instant PDF and Excel exports with zero cash discrepancy. Within the billing engine, the daily scheduler enforces an intra-month grace period past the 10th due date and automatically applies an idempotent 5% rollover fine only when an unpaid invoice crosses into the next calendar month [12]. Furthermore, the post-checkout room quarantine lock prevents newly vacated units from reappearing in the public catalog before physical cleaning and inspection are completed.
 </p>
 
 <p align="justify">
-  In addition, unlike single-checkout retail payment integrations [4], this system couples payment webhooks with scheduled cron jobs [12], the Fonnte WhatsApp API [13], and queued SMTP email relays to manage multi-month tenancy lifecycles [14]. As reflected in Table 2, the senior manager awarded a 9.5/10 rating because automated ledger aggregation in (2) reduced month-end book closing from several days of manual receipt matching to instant PDF and Excel exports with zero cash variance. Meanwhile, the five student tenants recorded an average satisfaction score of 8.0/10, confirming that B2C self-service transparency [6] and Neo-Brutalism UI ergonomics simplify remote room booking and monthly rent settlement [7]. Constructive tenant feedback regarding QRIS expansion, direct WhatsApp payment links, and a first-login onboarding guide provides clear priorities for future iterative upgrades.
+  From the resident perspective, video-recorded interviews with the five student tenants produced an average satisfaction score of 8.0/10. Tenants emphasized that the B2C self-service catalog [6] and high-contrast Neo-Brutalism interface [7] allowed them to inspect facilities, book rooms remotely from their hometowns, and pay monthly rent via Virtual Account on Android and iPhone browsers without queuing at ATMs at night. In addition, downloadable A5 landscape PDF receipts gave students official proof of payment to forward to their parents, eliminating disputes over misplaced paper receipts. Constructive suggestions captured during the recorded interviews, including adding QRIS and e-wallet channels, embedding direct payment links inside WhatsApp reminders, and providing a first-login onboarding guide, establish clear priorities for future upgrades.
+</p>
+
+<p align="justify">
+  Compared with earlier boarding house systems by Cornellya and Afriyadi [1] and Nizar [2], which relied on manual bank slip uploads and lacked row-level locking, our implementation pairs ACID transactions with <em>lockForUpdate()</em> and a post-checkout quarantine hold [19]. This combination guarantees zero double bookings across all 32 rooms even when multiple applicants submit reservations simultaneously. Moreover, whereas the monitoring platform by Malaikosa and Mokola [3] still required manual payment checks, integrating Midtrans Snap with SHA-512 signature validation via <em>hash_equals()</em> updates ledger records automatically upon payment settlement [11]. Finally, unlike single-checkout retail payment integrations [4], coupling payment webhooks with scheduled cron jobs [12], the Fonnte WhatsApp API [13], and queued SMTP email relays automates the entire multi-month tenancy lifecycle [14].
 </p>
 
 <!-- TAHAP 7: BAB IV. CONCLUSION -->
