@@ -527,7 +527,7 @@ Melalui mesin penyimpanan (*storage engine*) InnoDB, MySQL telah mendukung prins
 <br>
 
 ## 2.8 Payment Gateway
-Gerbang pembayaran (*payment gateway*) adalah layanan perantara transaksi elektronik yang menghubungkan aplikasi web langsung dengan jaringan perbankan dan penyedia dompet digital. Di Indonesia, salah satu penyedia layanan ini adalah Midtrans, yang memfasilitasi pembayaran tagihan lewat *Virtual Account* berbagai bank, *e-wallet*, hingga kartu kredit dalam satu pintu. Pengelola usaha tidak perlu lagi membuka rekening penampung di tiap bank secara terpisah. Bagi penyewa, pilihan metode bayar yang beragam ini mempermudah pelunasan tagihan tanpa harus mengunggah foto bukti transfer yang rawan manipulasi [20].
+Gerbang pembayaran (*payment gateway*) adalah layanan perantara transaksi elektronik yang menghubungkan aplikasi web langsung dengan jaringan perbankan dan penyedia dompet digital. Di Indonesia, salah satu penyedia layanan ini adalah Midtrans, yang memfasilitasi pembayaran tagihan lewat *Virtual Account* berbagai bank, QRIS, *e-wallet*, hingga kartu kredit dalam satu pintu. Pengelola usaha tidak perlu lagi membuka rekening penampung di tiap bank secara terpisah. Bagi penyewa, pilihan metode bayar yang beragam ini mempermudah pelunasan tagihan tanpa harus mengunggah foto bukti transfer yang rawan manipulasi [20].
 
 Dalam tahap pengembangannya, layanan *payment gateway* menyediakan dua ruang kerja terpisah, yakni mode *Sandbox* untuk uji coba transaksi dan mode *Production* untuk transaksi uang asli. Lewat mode simulasi, pengembang dapat menguji alur pembayaran, memeriksa respons perbankan, hingga menangani status tagihan kedaluwarsa dengan aman sebelum aplikasi diluncurkan. Pengaturan kunci akses melalui berkas konfigurasi (*environment variable*) juga memudahkan peralihan sistem dari mode uji coba ke mode produksi tanpa harus mengubah kode program.
 
@@ -549,7 +549,7 @@ Pada kerangka kerja web, pengiriman *email* memanfaatkan layanan *mail relay* te
 
 <br>
 
-## 2.11 Cron Job
+## 2.11 Cronjob
 *Cron job* adalah fitur penjadwal tugas berbasis waktu (*time-based job scheduler*) pada sistem operasi keluarga Unix yang menjalankan perintah program secara otomatis pada jadwal menit, jam, tanggal, atau bulan tertentu. Proses latar belakang ini bekerja mandiri di *server* tanpa perlu dijalankan secara manual oleh operator di depan layar komputer. Fitur penjadwal ini sangat dibutuhkan untuk menjalankan pemeliharaan data, perhitungan denda berkala, maupun tugas berulang lainnya agar selalu dieksekusi tepat waktu sesuai jadwal yang telah diatur [26].
 
 Dalam pengelolaan notifikasi aplikasi, konfigurasi *cron job* bertugas menjalankan perintah konsol secara berkala untuk mengirimkan pengingat tagihan lewat WhatsApp dan *email*. Melalui pengaturan waktu yang presisi, skrip penjadwal akan memeriksa tanggal jatuh tempo *invoice* di basis data, lalu secara otomatis meneruskan perintah pengiriman pesan ke gerbang komunikasi eksternal [27].
@@ -612,9 +612,9 @@ Metode *Waterfall* dipilih karena kebutuhan pengelolaan indekos, seperti alur pe
 
 <div align="center">
 
-<img src="images/metode_sdlc_waterfall.png" alt="Gambar 3.1 Tahapan Metode Waterfall" width="550">
+<img src="images/metode_sdlc_waterfall.png" alt="Gambar 3.1 Tahapan Metode SDLC Waterfall" width="550">
 
-*Gambar 3.1 Tahapan Metode Waterfall [30]*
+*Gambar 3.1 Tahapan Metode SDLC Waterfall [30]*
 
 </div>
 
@@ -629,9 +629,9 @@ Kerangka pemikiran dalam penelitian ini disusun mengikuti alur pendekatan *Resea
 
 <div align="center">
 
-<img src="images/kerangka_pemikiran_bw.png" alt="Gambar 3.2 Kerangka Pemikiran Penelitian" width="550">
+<img src="images/kerangka_pemikiran_bw.png" alt="Gambar 3.2 Kerangka Pemikiran" width="550">
 
-*Gambar 3.2 Kerangka Pemikiran Penelitian*
+*Gambar 3.2 Kerangka Pemikiran*
 
 </div>
 <br>
