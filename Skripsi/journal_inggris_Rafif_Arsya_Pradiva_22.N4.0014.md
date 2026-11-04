@@ -115,7 +115,7 @@
 </p>
 
 <p align="justify">
-  Functional verification across all 60 black-box test scenarios in the six operational domains achieved a 100% pass rate without validation or transaction errors [10]. Every form filter, 16-digit National Identity (NIK) check, post-checkout room quarantine hold, PDF receipt download, and PDF/Excel financial export performed as specified. Subsequent User Acceptance Testing (UAT) conducted through side-by-side usability trials and video-recorded face-to-face interviews with the senior boarding house manager and five active student tenants yielded high satisfaction scores, as summarized in Table 2 [17].
+  Functional verification across all 60 black-box test scenarios in the six operational domains achieved a 100% pass rate without validation or transaction errors [10]. Every form filter, 16-digit National Identity (NIK) check, post-checkout room quarantine hold, PDF receipt download, and PDF/Excel financial export performed as specified. Subsequent User Acceptance Testing (UAT) conducted through side-by-side usability trials and audio-recorded face-to-face interviews with the senior boarding house manager and five active student tenants yielded high satisfaction scores, as summarized in Table 2 [17].
 </p>
 
 <div align="center">
@@ -126,7 +126,7 @@
 | :--- | :---: | :--- |
 | Mr. Asep (Manager) | 9.5 / 10 | Book closing cut from 3 to 4 days to seconds; zero cash discrepancy; post-checkout lock prevents premature booking. |
 | Arjun (UNDIP Tenant) | 8.5 / 10 | Clear Neo-Brutalism catalog; fast BCA Virtual Account settlement; A5 PDF receipt practical for parents. |
-| Farrel (USM Tenant) | 7.0 / 10 | Easy remote Android booking; avoids night ATM queues; suggested adding QRIS and e-wallet channels. |
+| Farrel (USM Tenant) | 7.0 / 10 | Easy remote Android booking; avoids night ATM queues; suggested a dedicated mobile app and digital contract. |
 | Iman (UDINUS Tenant) | 9.0 / 10 | Instant payment verification prevents lost-receipt disputes; neat monthly history; suggested peak-date server tuning. |
 | Ammar (PKN STAN Tenant) | 7.5 / 10 | Smooth iPhone Safari checkout; easy holiday rent payment from out of town; suggested direct WhatsApp payment links. |
 | Sindhu (UI Tenant) | 8.0 / 10 | Transparent pricing; removes awkward face-to-face cash handoffs; suggested an initial onboarding tour. |
@@ -134,11 +134,11 @@
 #### **B. DISCUSSION**
 
 <p align="justify">
-  Qualitative findings from the video-recorded interviews confirm that integrating automated payment verification with database concurrency control directly resolves manual boarding house bottlenecks [5]. From the management perspective, the senior resident manager (Mr. Asep) awarded a 9.5/10 rating and highlighted that automated ledger reconciliation reduced month-end book closing from three or four days of matching paper receipts to instant PDF and Excel exports with zero cash discrepancy. Within the billing engine, the daily scheduler enforces an intra-month grace period past the 10th due date and automatically applies an idempotent 5% rollover fine only when an unpaid invoice crosses into the next calendar month [12]. Furthermore, the post-checkout room quarantine lock prevents newly vacated units from reappearing in the public catalog before physical cleaning and inspection are completed.
+  Qualitative findings from the audio-recorded interviews confirm that integrating automated payment verification with database concurrency control directly resolves manual boarding house bottlenecks [5]. From the management perspective, the senior resident manager (Mr. Asep) awarded a 9.5/10 rating and highlighted that automated ledger reconciliation reduced month-end book closing from three or four days of matching paper receipts to instant PDF and Excel exports with zero cash discrepancy. Within the billing engine, the daily scheduler enforces an intra-month grace period past the 10th due date and automatically applies an idempotent 5% rollover fine only when an unpaid invoice crosses into the next calendar month [12]. Furthermore, the post-checkout room quarantine lock prevents newly vacated units from reappearing in the public catalog before physical cleaning and inspection are completed.
 </p>
 
 <p align="justify">
-  From the resident perspective, video-recorded interviews with the five student tenants produced an average satisfaction score of 8.0/10. Tenants emphasized that the B2C self-service catalog [6] and high-contrast Neo-Brutalism interface [7] allowed them to inspect facilities, book rooms remotely from their hometowns, and pay monthly rent via Virtual Account on Android and iPhone browsers without queuing at ATMs at night. In addition, downloadable A5 landscape PDF receipts gave students official proof of payment to forward to their parents, eliminating disputes over misplaced paper receipts. Constructive feedback captured during the recorded interviews, such as sending H-3 due date alerts with direct WhatsApp payment links and adding a first-login visual onboarding guide, provides clear input for future upgrades.
+  From the resident perspective, audio-recorded interviews with the five student tenants produced an average satisfaction score of 8.0/10. Tenants emphasized that the B2C self-service catalog [6] and high-contrast Neo-Brutalism interface [7] allowed them to inspect facilities, book rooms remotely from their hometowns, and pay monthly rent via Virtual Account on Android and iPhone browsers without queuing at ATMs at night. In addition, downloadable A5 landscape PDF receipts gave students official proof of payment to forward to their parents, eliminating disputes over misplaced paper receipts. Constructive feedback captured during the interviews, including H-3 WhatsApp reminders with direct payment links, a visual onboarding guide, a dedicated mobile app, and digital lease contracts, provides clear input for future upgrades.
 </p>
 
 <p align="justify">

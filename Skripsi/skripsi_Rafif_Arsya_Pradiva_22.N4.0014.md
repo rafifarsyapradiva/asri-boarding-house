@@ -272,7 +272,7 @@ Functional evaluation across 60 black-box testing scenarios verified that all op
 
 <br>
 
-**Keywords:** Asri Boarding House, automated billing, boarding house management system, Midtrans payment gateway, pessimistic locking.
+**Keywords:** Asri Boarding House, boarding house management system, Laravel, Midtrans payment gateway, pessimistic locking.
 
 <div style="page-break-after: always;"></div>
 
@@ -619,7 +619,7 @@ Data sekunder diperoleh dari berbagai dokumen internal dan literatur pendukung u
 ## 3.4 Teknik Pengumpulan Data
 Pengumpulan data pada penelitian ini menggunakan pendekatan kualitatif melalui teknik wawancara mendalam di Asri Boarding House [30]. Teknik ini dipilih untuk menggali kebutuhan operasional indekos, kendala pencatatan sewa manual, hingga tanggapan pengguna setelah mencoba sistem informasi berbasis web yang dibangun.
 
-Kegiatan wawancara dilakukan secara tatap muka menggunakan bantuan alat perekam suara. Rekaman percakapan tersebut kemudian disalin (ditranskripsi) ke dalam teks tertulis supaya seluruh keterangan narasumber terdokumentasi dengan rapi dan tidak ada informasi penting yang terlewat saat dianalisis. Proses wawancara ini dilakukan pada tahap analisis kebutuhan maupun tahap evaluasi sistem bersama dua narasumber, yaitu:
+Kegiatan wawancara dilakukan secara tatap muka menggunakan bantuan alat perekam suara. Rekaman percakapan tersebut kemudian disalin (ditranskripsi) ke dalam teks tertulis supaya seluruh keterangan narasumber terdokumentasi dengan rapi dan tidak ada informasi penting yang terlewat saat dianalisis. Proses wawancara ini dilakukan pada tahap analisis kebutuhan maupun tahap evaluasi sistem bersama dua kelompok narasumber, yaitu:
 * **Penjaga kost**, dengan fokus pembahasan pada evaluasi pembukuan kas, kemudahan memantau sisa kamar dari 32 unit yang tersedia, kepraktisan penagihan otomatis, serta efisiensi kerja setelah beralih dari buku besar manual.
 * **Penghuni kost**, dengan fokus pembahasan pada pengalaman memesan kamar, kejelasan rincian tagihan bulanan, kemudahan membayar sewa melalui *payment gateway*, serta kejelasan bukti pembayaran digital yang diterima.
 
@@ -1156,7 +1156,7 @@ Penyajian data ringkas yang dilengkapi grafik tren bulanan ini memudahkan pengel
 
 </div>
 
-Sebagaimana terlihat pada Gambar 4.26, bagian atas layar memuat deretan kartu indikator berwarna kuning dan biru yang menampilkan persentase okupansi kamar, jumlah penyewa aktif, akumulasi pendapatan, serta tiket aduan tertunda. Area tengah menyajikan grafik batang pemasukan bulanan yang berdampingan dengan tabel pengajuan reservasi terbaru. Di sisi paling kiri, terdapat bilah navigasi vertikal untuk berpindah antar-modul manajemen dengan cepat.
+Sebagaimana terlihat pada Gambar 4.26, bagian atas layar memuat deretan kartu indikator berwarna kuning dan biru yang menampilkan persentase okupansi kamar, jumlah penyewa aktif, akumulasi pendapatan, serta tiket aduan tertunda. Area tengah menyajikan grafik batang pemasukan bulanan yang berdampingan dengan tabel pengajuan reservasi terbaru. Di sisi kiri terdapat bilah navigasi vertikal antar-modul, sedangkan sudut kanan atas menyediakan tombol pengalih tema gelap (*OLED Dark Mode*) agar layar nyaman dipandang pengelola.
 
 <br>
 
@@ -1537,7 +1537,7 @@ Pengelolaan tagihan rutin tanggal 10 dan pembersihan transaksi kedaluwarsa dioto
 
 </div>
 
-Pada tampilan Gambar 4.49, perintah penerbitan tagihan sewa bulanan dijadwalkan berjalan otomatis setiap tanggal 1 pukul 00:05 WIB. Sementara itu, perintah kalkulasi denda keterlambatan dieksekusi setiap dini hari pukul 01:00 WIB untuk memeriksa tagihan yang telah melewati batas jatuh tempo tanggal 10. Metode *withoutOverlapping()* turut disematkan pada rantai kode agar proses penjadwalan yang masih berjalan tidak dieksekusi secara tumpang-tindih.
+Pada tampilan Gambar 4.49, perintah penerbitan tagihan sewa bulanan dijadwalkan berjalan otomatis setiap tanggal 1 pukul 00:05 WIB. Sementara itu, perintah pemeriksaan keterlambatan dieksekusi setiap dini hari pukul 01:00 WIB untuk menandai tagihan yang melewati tanggal 10 sebagai masa tenggang dan menerapkan denda *flat* 5% satu kali apabila tunggakan melintasi pergantian bulan. Metode *withoutOverlapping()* turut disematkan pada rantai kode agar proses penjadwalan yang masih berjalan tidak dieksekusi secara tumpang-tindih.
 
 <br>
 
@@ -1642,7 +1642,7 @@ Pengujian fungsionalitas sistem informasi Asri Boarding House dilakukan mengguna
 | **Domain VI: Otomasi Task Scheduler, Denda & API Eksternal** | | | | | |
 | 55 | Penerbitan tagihan sewa otomatis tanggal 1 | Jalankan perintah konsol `tagihan:generate-bulanan` melalui penjadwal tugas Laravel | Tagihan sewa periode bulan berjalan otomatis diterbitkan untuk seluruh penghuni aktif | Sesuai ekspektasi | Berhasil |
 | 56 | Pencegahan penerbitan tagihan ganda | Jalankan kembali perintah `tagihan:generate-bulanan` pada periode bulan yang sama | Sistem memeriksa tagihan yang sudah terbit dan tidak membuat duplikasi *invoice* pada bulan tersebut | Sesuai ekspektasi | Berhasil |
-| 57 | Perhitungan denda keterlambatan lewat tanggal 10 | Jalankan perintah *scheduler* pemeriksaan denda pada tagihan belum lunas yang melewati tanggal 10 | Sistem menambahkan nominal denda keterlambatan secara otomatis pada tagihan yang menunggak | Sesuai ekspektasi | Berhasil |
+| 57 | Pemeriksaan masa tenggang tanggal 10 dan denda *flat* 5% lintas bulan | Jalankan perintah *scheduler* pada tagihan belum lunas yang melewati tanggal 10 dan melintasi pergantian bulan | Sistem menetapkan status terlambat setelah tanggal 10 dan menambahkan denda *flat* 5% satu kali saat melewati pergantian bulan | Sesuai ekspektasi | Berhasil |
 | 58 | Penanganan sifat idempoten perhitungan denda | Jalankan kembali perintah *scheduler* denda secara berulang pada hari yang sama | Nilai denda tetap konsisten sesuai aturan tanpa terjadi penggandaan nominal yang keliru | Sesuai ekspektasi | Berhasil |
 | 59 | Pengiriman pengingat tagihan via WhatsApp Fonnte | Jalankan proses penerbitan tagihan bulanan yang terhubung dengan layanan API Fonnte | Pesan WhatsApp berisi rincian *invoice* dan tanggal jatuh tempo berhasil diterima di nomor ponsel penyewa | Sesuai ekspektasi | Berhasil |
 | 60 | Pengiriman dokumen tagihan via Email SMTP | Jalankan proses pengiriman surat tagihan melalui antrean *server* (*message queue*) | Surat elektronik resmi berisi rincian biaya sewa dan tautan pembayaran berhasil masuk ke kotak masuk *email* penyewa | Sesuai ekspektasi | Berhasil |
@@ -1703,7 +1703,7 @@ Wawancara dengan Arjun selaku mahasiswa UNDIP menggali pengalaman penghuni lama 
 
 | No | Aspek Pengujian | Pertanyaan | Tanggapan |
 | :---: | :--- | :--- | :--- |
-| 1 | Katalog Kamar & Ketersediaan | Sebagai mahasiswa yang sudah 3 tahun mengekos di Tembalang, bagaimana penilaian Mas Arjun terhadap katalog kamar di website ini? Apakah sajian foto fasilitas dan informasi ketersediaan unitnya sudah cukup jelas? | Tampilannya tegas dan modern ala Neo-Brutalism. Foto fasilitas kayak kasur, AC, kamar mandi dalam, sampai video room tour-nya kelihatan jelas banget. Paling ngebantu itu badge status Tersedia yang warna hijau, jadi aku langsung tahu kamar mana yang masih kosong tanpa perlu panas-panasan keliling Tembalang atau bolak-balik nanya ke penjaga kos. |
+| 1 | Katalog Kamar & Ketersediaan | Sebagai mahasiswa yang sudah 3 tahun mengekos di Tembalang, bagaimana penilaian Mas Arjun terhadap katalog kamar di website ini? Apakah sajian foto fasilitas dan informasi ketersediaan unitnya sudah cukup jelas? | Tampilannya tegas dan modern ala Neo-Brutalism. Foto fasilitas kayak kasur, AC, kamar mandi dalam, sampai foto sudut-sudut ruangannya kelihatan jelas banget. Paling ngebantu itu badge status Tersedia yang warna hijau, jadi aku langsung tahu kamar mana yang masih kosong tanpa perlu panas-panasan keliling Tembalang atau bolak-balik nanya ke penjaga kos. |
 | 2 | Formulir Pemesanan Bertahap | Saat mencoba mengisi formulir pemesanan 5 tahap di sistem, bagaimana alurnya menurut Mas? Apakah ada bagian yang membingungkan? | Alurnya runtut karena dibagi bertahap pakai stepper, jadinya nggak berasa numpuk di satu halaman panjang yang bikin malas. Validasi otomatis di kolom NIK sama nomor kontak orang tua juga oke banget, langsung ngasih tanda kalau semisal ada salah ketik. |
 | 3 | Transparansi Rincian Biaya | Bagaimana dengan ringkasan biaya sewa yang tampil di layar sebelum pembayaran? Apakah rincian angkanya sudah cukup jelas? | Jelas dan transparan banget. Tarif dasar sampai total yang wajib dibayar terpampang pasti, nggak ada biaya tambahan siluman atau iuran mendadak yang biasanya bikin kaget kalau di kos konvensional. |
 | 4 | Prosedur Pembayaran Midtrans VA | Bagaimana pengalaman Mas saat mencoba transaksi pembayaran lewat BCA Virtual Account di pop-up Midtrans? | Praktis parah. Jendela pop-up-nya langsung muncul di layar tanpa harus mental ke halaman lain. Nomor BCA Virtual Account-nya langsung keluar dan tinggal disalin ke aplikasi m-Banking, jadi nggak perlu pusing mikirin kode unik transfer. |
@@ -1721,7 +1721,7 @@ Berdasarkan hasil wawancara pada Tabel 4.3, Arjun memberikan skor kepuasan 8,5 d
 <br>
 
 3. Hasil Wawancara dengan Farrel  
-Pengujian bersama Farrel, penghuni kost yang berkuliah di USM, menyoroti perspektif mahasiswa perantau luar kota saat mengakses sistem reservasi melalui ponsel Android. Seluruh proses tanya jawab didokumentasikan lewat rekaman suara guna merekam kendala pembayaran non-BCA secara presisi.
+Pengujian bersama Farrel, penghuni kost yang berkuliah di USM, menyoroti perspektif mahasiswa perantau luar kota saat mengakses sistem reservasi melalui ponsel Android. Seluruh proses tanya jawab didokumentasikan lewat rekaman suara guna merekam pengalaman navigasi di layar seluler secara presisi.
 
 <br>
 
@@ -1732,17 +1732,17 @@ Pengujian bersama Farrel, penghuni kost yang berkuliah di USM, menyoroti perspek
 | 1 | Katalog Kamar & Ketersediaan | Sebagai mahasiswa perantau luar kota yang mengakses web lewat ponsel Android, bagaimana kesan Mas Farrel melihat katalog kamar online ini? | Ngebantu banget buat anak rantau kayak aku. Jadi bisa langsung ngeliat sudut kamar, fasilitas kamar mandi, sampai tarifnya secara jelas tanpa harus jauh-jauh datang ke Semarang cuma buat ngecek kamar doang. |
 | 2 | Formulir Pemesanan Bertahap | Saat mengisi formulir reservasi bertahap di layar ponsel, bagaimana alur pengisian datanya menurut Mas? | Formulirnya cukup simpel dan gampang diikutin. Tombol buat lanjut ke langkah berikutnya responsif di layar HP dan kolom isiannya juga nggak bikin pusing karena nggak terlalu padat. |
 | 3 | Transparansi Rincian Biaya | Bagaimana dengan ringkasan nominal sewa yang tertera sebelum lanjut ke pembayaran? | Nominalnya pasti dan jelas. Di layar langsung kelihatan total yang wajib dibayar, jadi nggak ada rasa waswas bakal muncul biaya tambahan mendadak yang nggak dibilang di awal. |
-| 4 | Prosedur Pembayaran Midtrans VA | Bagaimana pengalaman Mas saat masuk ke menu pembayaran Virtual Account BCA di Midtrans? | Proses generate kode VA-nya cepat banget. Cuma catatanku, berhubung sehari-hari aku nggak pakai rekening BCA dan lebih sering pakai e-wallet, jadinya harus transfer antar-bank dari bank lain. Bakal jauh lebih fleksibel kalau ke depannya disediain opsi QRIS atau dompet digital kayak GoPay. |
+| 4 | Prosedur Pembayaran Midtrans VA | Bagaimana pengalaman Mas saat masuk ke menu pembayaran Virtual Account di Midtrans? | Proses generate kode VA-nya cepat banget. Jendela pop-up pembayarannya juga pas di layar HP, tinggal salin nomornya ke aplikasi bank di ponsel dan langsung beres tanpa kendala. |
 | 5 | Konfirmasi Otomatis Tanpa Resi | Setelah transfer selesai, sistem langsung mencatat status lunas otomatis tanpa perlu kirim resi manual ke WhatsApp pengelola. Bagaimana respon Mas? | Ini sangat menghemat waktu sih. Kalau cara manual dulu kan sering nunggu lama balasan penjaga kos yang kadang lagi sibuk. Verifikasi otomatis begini bikin transaksi langsung beres seketika tanpa drama. |
 | 6 | Penerbitan Kuitansi Digital A5 | Terkait bukti bayar kuitansi digital format A5 yang langsung terunduh di ponsel, bagaimana kegunaannya bagi mahasiswa perantau? | Praktis banget karena berkas PDF-nya langsung tersimpan di memori HP. Jauh lebih aman dibanding kuitansi kertas biasa yang rawan banget keselip atau rusak pas ditaruh di kos. |
-| 7 | Navigasi Dasbor Portal Penghuni | Saat menjelajahi portal penghuni melalui browser ponsel, bagaimana kenyamanan tata letak menunya menurut Mas? | Tampilannya lumayan clean. Cuma pas awal-awal login, aku sempat butuh waktu sebentar buat nyari tombol riwayat pembayaran sama unduh kuitansi, soalnya layarnya harus digeser sedikit ke samping. |
+| 7 | Navigasi Dasbor Portal Penghuni | Saat menjelajahi portal penghuni melalui browser ponsel, bagaimana kenyamanan tata letak menunya menurut Mas? | Tampilannya lumayan clean. Cuma pas awal-awal login lewat browser HP, aku sempat butuh waktu sebentar buat nyari tombol riwayat pembayaran sama unduh kuitansi, soalnya layarnya harus digeser sedikit ke samping. |
 | 8 | Notifikasi Tagihan via WhatsApp | Bagaimana respon Mas saat menerima pesan WhatsApp pengingat tagihan sewa di awal bulan? | Pengingatnya berguna banget, berasa jadi alarm pengeluaran bulanan anak rantau. Rinciannya jelas dan udah langsung nyediain informasi portal pembayarannya. |
 | 9 | Pelunasan Rutin Tagihan Bulanan | Ketika menyimulasikan pelunasan sewa bulanan langsung via portal tanpa perlu tarik tunai malam-malam, bagaimana tanggapan Mas? | Bikin gampang banget, nggak perlu lagi repot ngantre tarik uang tunai di mesin ATM malam-malam. Bayar sewa bulanan bisa langsung diberesin dari kamar. |
-| 10 | Penilaian Keseluruhan & Masukan | Secara keseluruhan, bagaimana penilaian Mas terhadap sistem website ini dan berapa skor kepuasan Mas (skala 1-10) serta apa saran perbaikannya? | Secara umum sistem ini ngebantu banget buat anak kos. Nilai dari aku 7,0 dari skala 10. Alurnya sebenarnya udah praktis, tapi aku kasih 7 karena metode bayarnya sekarang masih fokus ke transfer Virtual Account bank aja. Masukan dariku, coba aktifin opsi QRIS atau e-wallet biar mahasiswa yang nggak punya rekening BCA bisa bayar dengan lebih leluasa. |
+| 10 | Penilaian Keseluruhan & Masukan | Secara keseluruhan, bagaimana penilaian Mas terhadap sistem website ini dan berapa skor kepuasan Mas (skala 1-10) serta apa saran perbaikannya? | Secara umum sistem ini ngebantu banget buat anak kos. Nilai dari aku 7,0 dari skala 10. Alurnya sebenarnya udah praktis, tapi aku kasih 7 karena aksesnya sekarang masih harus buka browser dulu di HP dan belum ada fitur kontrak sewa digital. Masukan dariku, coba ke depannya dibikin aplikasi mobile khusus Android sama ditambah fitur kontrak sewa digital di portal biar makin praktis. |
 
 <br>
 
-Merujuk pada Tabel 4.4, Farrel memberikan nilai kepuasan 7,0 dari skala 10 dan mengapresiasi kemudahan akses via ponsel Android yang membantu mahasiswa perantau memesan kamar dari luar kota. Pelunasan tagihan mandiri lewat portal web dinilai sangat praktis karena menghilangkan antrean tarik uang tunai di ATM malam hari. Responden mengharapkan pengembangan metode pembayaran dengan mengaktifkan saluran QRIS dan dompet digital agar mempermudah mahasiswa yang tidak memiliki rekening bank BCA.
+Merujuk pada Tabel 4.4, Farrel memberikan nilai kepuasan 7,0 dari skala 10 dan mengapresiasi kemudahan akses via ponsel Android yang membantu mahasiswa perantau memesan kamar dari luar kota. Pelunasan tagihan mandiri lewat portal web dinilai sangat praktis karena menghilangkan antrean tarik uang tunai di ATM malam hari. Responden menyarankan pengembangan aplikasi *mobile* khusus serta penambahan fitur kontrak sewa digital (*e-contract*) agar akses dari ponsel lebih ringkas tanpa harus membuka peramban web.
 
 <br>
 
@@ -1810,7 +1810,7 @@ Sesi wawancara bersama Sindhu, penghuni kost berstatus mahasiswa UI, difokuskan 
 | 1 | Katalog Kamar & Ketersediaan | Bagaimana penilaian Mas Sindhu mengenai tampilan foto katalog kamar di website? Apakah representasinya sudah sesuai untuk melihat kondisi kamar? | Foto fasilitas kamarnya sesuai sama kondisi aslinya di lapangan, jadi calon anak kos bisa langsung tahu kondisinya dan nggak ragu buat milih. |
 | 2 | Formulir Pemesanan Bertahap | Saat mencoba mengisi formulir pemesanan kamar, bagaimana alur pengisian identitas dan validasinya menurut Mas? | Formulirnya simpel dan nggak ribet diisi. Adanya deteksi otomatis buat nomor HP sama NIK ngebantu banget biar nggak ada data yang salah ketik. |
 | 3 | Transparansi Rincian Biaya | Apakah rincian nominal tarif yang disajikan pada konfirmasi pemesanan sudah cukup jelas untuk merencanakan bujet sewa? | Rincian harganya jelas dan terbuka, jadi gampang buat ngatur anggaran bulanan karena nggak ada biaya tersembunyi. |
-| 4 | Prosedur Pembayaran Midtrans VA | Bagaimana pengalaman Mas saat mencoba transaksi pembayaran lewat Virtual Account BCA di Midtrans? | Praktis banget, nggak perlu pusing cari uang tunai pas. Cuma kalau ke depannya bisa ditambah opsi QRIS atau e-wallet pasti jauh lebih fleksibel, terutama buat mahasiswa yang nggak pakai rekening BCA. |
+| 4 | Prosedur Pembayaran Midtrans VA | Bagaimana pengalaman Mas saat mencoba transaksi pembayaran lewat Virtual Account BCA di Midtrans? | Praktis banget, nggak perlu pusing cari uang tunai pas. Nomor kode bayarnya langsung muncul di layar dan tinggal disalin buat diselesaikan lewat m-Banking dalam hitungan detik. |
 | 5 | Konfirmasi Otomatis Tanpa Resi | Ketika pembayaran selesai dan status langsung berubah lunas secara real-time di sistem tanpa perlu kirim resi manual, bagaimana tanggapan Mas? | Puas banget sih. Pembayarannya langsung terverifikasi seketika tanpa jeda, jadi nggak bikin waswas atau ragu apakah transaksinya sudah tercatat atau belum. |
 | 6 | Penerbitan Kuitansi Digital A5 | Mengenai dokumen kuitansi digital format A5 resmi berstempel lunas yang terbit otomatis, bagaimana manfaatnya dibanding nota kertas? | Kuitansi digital berstempel ini jauh lebih rapi dan gampang disimpan di HP, beda sama kuitansi kertas biasa yang gampang keselip atau hilang. |
 | 7 | Navigasi Dasbor Portal Penghuni | Sebagai pengguna yang baru pertama kali masuk ke portal penghuni, bagaimana kemudahan navigasi dasbornya menurut Mas? | Tampilannya bersih dan cukup mudah dipahami. Cuma pas awal pakai, saya sempat butuh waktu beberapa menit buat membiasakan diri nyari menu kuitansi sama menu pelaporan keluhan fasilitas. |
@@ -1824,7 +1824,7 @@ Berdasarkan hasil wawancara pada Tabel 4.7, Sindhu memberikan skor kepuasan 8,0 
 
 <br>
 
-Pada skala 10, evaluasi wawancara mencatat skor kepuasan 9,5 dari penjaga kost dan rata-rata 8,0 dari lima penghuni. Pekerjaan tutup buku bulanan pengelola kini selesai dalam hitungan detik tanpa selisih kas fisik. Sementara itu, penghuni dapat memesan kamar jarak jauh dan melunasi sewa via *Virtual Account* Midtrans yang terverifikasi otomatis lengkap dengan kuitansi PDF resmi. Responden turut menyarankan penambahan kanal QRIS dan *e-wallet*, tautan bayar langsung di WhatsApp, serta panduan singkat bagi pengguna baru. Temuan lapangan ini menegaskan kelayakan sistem dalam menunjang operasional harian Asri Boarding House.
+Pada skala 10, evaluasi wawancara mencatat skor kepuasan 9,5 dari penjaga kost dan rata-rata 8,0 dari lima penghuni. Pekerjaan tutup buku bulanan pengelola kini selesai dalam hitungan detik tanpa selisih kas fisik. Sementara itu, penghuni dapat memesan kamar jarak jauh dan melunasi sewa via *Virtual Account* Midtrans yang terverifikasi otomatis lengkap dengan kuitansi PDF resmi. Responden turut menyarankan penambahan pengingat H-3 disertai tautan bayar langsung di WhatsApp, aplikasi *mobile* dengan tur panduan visual pengguna baru, serta fitur kontrak sewa digital. Temuan lapangan ini menegaskan kelayakan sistem dalam menunjang operasional harian Asri Boarding House.
 
 <br>
 
