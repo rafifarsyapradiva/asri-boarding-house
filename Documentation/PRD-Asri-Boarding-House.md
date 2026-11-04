@@ -143,7 +143,7 @@ Sistem menjalankan 9 perintah terjadwal otomatis yang didefinisikan pada `routes
 ## 3. Core Features
 
 ### 3.1. Katalog Kamar Interaktif dan Kalkulator Harga Promo Dinamis
-Halaman katalog dan detail kamar menyajikan informasi ketersediaan unit secara aktual beserta spesifikasi luas kamar ($m^2$), posisi lantai, daftar fasilitas berikon, dan galeri foto. Pengguna dapat mencoba simulasi biaya sewa sebelum mendaftar. Mesin kalkulasi pada `ReservasiService` menghitung tarif dasar secara proporsional: sewa bulanan menggunakan `harga_bulan`, sewa mingguan dihitung sebesar $\text{round}((\text{harga\_bulan} / 4) \times 1.15, -3)$ per minggu, dan sewa harian dihitung sebesar $\text{round}((\text{harga\_bulan} / 30) \times 1.3, -3)$ per hari. Apabila pengguna memilih durasi bulanan yang sesuai dengan paket promo aktif di tabel `settings` (misalnya 3 bulan dengan diskon 5% atau 12 bulan dengan diskon 8,33%), potongan harga langsung diterapkan secara otomatis.
+Halaman katalog dan detail kamar menyajikan informasi ketersediaan unit secara aktual beserta spesifikasi luas kamar (m²), posisi lantai, daftar fasilitas berikon, dan galeri foto. Pengguna dapat mencoba simulasi biaya sewa sebelum mendaftar. Mesin kalkulasi pada `ReservasiService` menghitung tarif dasar secara proporsional: sewa bulanan menggunakan `harga_bulan`, sewa mingguan dihitung sebesar `round((harga_bulan / 4) * 1.15, -3)` per minggu, dan sewa harian dihitung sebesar `round((harga_bulan / 30) * 1.3, -3)` per hari. Apabila pengguna memilih durasi bulanan yang sesuai dengan paket promo aktif di tabel `settings` (misalnya 3 bulan dengan diskon 5% atau 12 bulan dengan diskon 8,33%), potongan harga langsung diterapkan secara otomatis.
 
 ### 3.2. Mesin Reservasi Daring dengan Proteksi *Anti-Double Booking* dan Opsi DP 30%
 Saat calon penyewa mengajukan reservasi, sistem menjalankan validasi berlapis melalui `KamarTersediaRule` dan `TanpaPenyewaAktifLainRule`. Sistem menolak pemesanan apabila kamar sedang tidak berstatus `tersedia`, apabila terdapat irisan tanggal (*date overlap*) dengan reservasi aktif lain pada kamar tersebut, atau apabila akun pemesan masih tercatat memiliki kontrak aktif maupun reservasi yang sedang berjalan. Pemesan diberi keleluasaan memilih metode pelunasan penuh atau uang muka (*Down Payment*) sebesar 30%. Seluruh perjalanan reservasi dipandu oleh komponen visual *5-Step Stepper* yang menyesuaikan instruksi layar berdasarkan status reservasi (`pending`, `dp`, `lunas`, `dikonfirmasi`, `batal`).
@@ -305,23 +305,23 @@ Aplikasi **Asri Boarding House** dibangun di atas pola arsitektur berlapis (*3-T
 ```mermaid
 flowchart TB
     subgraph Tier1 ["Tier 1: Presentation Layer (Client Browser)"]
-        BladeUI["Blade Views & Reusable Components<br/>(Admin, Penyewa, Reservasi, Landing, PDF, Nota)"]
-        AssetsUI["Tailwind CSS (Neo-Brutalism + OLED Dark Mode)<br/>Alpine.js, Chart.js, Axios, html2pdf.js"]
+        BladeUI["Blade Views & Reusable Components (Admin, Penyewa, Reservasi, Landing, PDF, Nota)"]
+        AssetsUI["Tailwind CSS (Neo-Brutalism + OLED Dark Mode), Alpine.js, Chart.js, Axios, html2pdf.js"]
         SnapClient["Midtrans Snap.js Popup SDK"]
     end
 
     subgraph Tier2 ["Tier 2: Application Layer (Laravel Backend)"]
-        Ingress["Routing & Middleware Pipeline<br/>(Auth, Role, EnsureProfileIsComplete, EnsurePasswordChanged,<br/>EnsureTenantIsActive, VerifyMidtransSignature, PortalRedirectResolver)"]
-        CtrlLayer["Controllers (41 Kelas)<br/>(Public, Auth, Penyewa, Admin, API/Webhook)"]
-        ValidPolicy["Form Requests (14 Kelas), Custom Rules (3 Kelas)<br/>& Eloquent Policies (4 Kelas Anti-IDOR)"]
-        ServiceLayer["Service Layer (15 Kelas & Interface SOLID)<br/>(Billing, Reservasi, TransisiPenyewa, Tagihan, Midtrans,<br/>Fonnte, Notifikasi, DashboardAnalytics, PdfGeneratorInterface)"]
-        EventQueue["Event-Driven Bus & Background Workers<br/>(11 Events, 12 Listeners, 8 Queue Jobs, 5 Observers, 11 CLI Commands)"]
+        Ingress["Routing & Middleware Pipeline (Auth, Role, Profile, Password, TenantActive, MidtransSignature)"]
+        CtrlLayer["Controllers (41 Kelas: Public, Auth, Penyewa, Admin, API/Webhook)"]
+        ValidPolicy["Form Requests (14 Kelas), Custom Rules (3 Kelas), & Eloquent Policies (4 Kelas Anti-IDOR)"]
+        ServiceLayer["Service Layer (15 Kelas & Interface SOLID: Billing, Reservasi, TransisiPenyewa, Midtrans, Fonnte, Dompdf)"]
+        EventQueue["Event-Driven Bus & Background Workers (11 Events, 12 Listeners, 8 Queue Jobs, 5 Observers, 11 CLI Commands)"]
     end
 
     subgraph Tier3 ["Tier 3: Data & Persistence Layer"]
         ORM["Eloquent ORM (21 Domain Models)"]
-        MySQL[("MySQL 8.x Relational Database<br/>(22 Tabel Bisnis + Tabel Sesi, Cache, & Antrean)")]
-        StorageDisk[("Local Filesystem Storage<br/>(storage/app/public & storage/app/private)")]
+        MySQL[("MySQL 8.x Relational Database (22 Tabel Bisnis + Tabel Sesi, Cache, & Antrean)")]
+        StorageDisk[("Local Filesystem Storage (storage/app/public & storage/app/private)")]
     end
 
     subgraph ExtGateways ["Layanan Cloud Pihak Ketiga"]
