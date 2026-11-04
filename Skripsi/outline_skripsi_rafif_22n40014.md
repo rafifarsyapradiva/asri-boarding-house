@@ -57,7 +57,7 @@ Bab pertama menguraikan latar belakang masalah di lapangan, rumusan masalah, ser
 
 ## BAB 2: TINJAUAN PUSTAKA
 
-Bab kedua mengulas 11 landasan teori dan komponen teknologi yang menopang perancangan serta pengembangan sistem informasi manajemen kost.
+Bab kedua mengulas 12 landasan teori dan komponen teknologi yang menopang perancangan serta pengembangan sistem informasi manajemen kost.
 
 ### 2.1 Sistem Informasi Manajemen (2 Paragraf)
 * **Paragraf 1 (Konsep Dasar dan Fungsi Manajerial SIM):** Sistem Informasi Manajemen (SIM) menyatukan perangkat keras, perangkat lunak, prosedur kerja, dan sumber daya manusia untuk mengolah data transaksi mentah menjadi informasi yang siap pakai. Pengolahan data yang terstruktur membantu pengelola memantau kinerja organisasi secara menyeluruh dan mengambil keputusan secara tepat `[6]`.
@@ -105,6 +105,10 @@ Bab kedua mengulas 11 landasan teori dan komponen teknologi yang menopang peranc
 * **Paragraf 2 (Otomasi Pemeriksaan Jatuh Tempo Tagihan):** Konfigurasi *cron job* mengeksekusi perintah konsol secara rutin untuk memeriksa tanggal jatuh tempo *invoice* di basis data, lalu memicu pengiriman pengingat tagihan melalui gerbang WhatsApp dan *email* `[27]`.
 * **Paragraf 3 (*Task Scheduling* Tingkat *Framework* dan Prinsip Idempoten):** Pada tingkat *framework*, cukup satu *daemon cron* sistem operasi yang diaktifkan untuk menggerakkan seluruh jadwal tugas di latar belakang. Penerapan prinsip idempoten pada skrip penjadwal menjamin eksekusi berulang tidak akan menerbitkan tagihan ganda.
 
+### 2.12 Metode Waterfall (2 Paragraf)
+* **Paragraf 1 (Konsep Dasar dan Tahapan Berurutan Metode *Waterfall*):** Metode *Waterfall* merupakan model rekayasa perangkat lunak yang bekerja secara berurutan dari awal hingga akhir, di mana setiap tahapan wajib diselesaikan secara tuntas sebelum berlanjut ke fase berikutnya. Urutan prosesnya meliputi analisis kebutuhan, perancangan desain, pengkodean program, pengujian sistem, serta pemeliharaan berkala `[28]`.
+* **Paragraf 2 (Kesesuaian pada Pengembangan Sistem Informasi):** Model sekuensial ini cocok untuk sistem berspesifikasi jelas. Dokumentasi yang lengkap di setiap tahap memudahkan pengembang menerjemahkan rancangan basis data maupun antarmuka menjadi kode aplikasi, sekaligus menekan risiko perubahan fitur mendadak selama proses pembangunan.
+
 ---
 
 ## BAB 3: METODE PENELITIAN
@@ -115,7 +119,7 @@ Bab ketiga memaparkan lokasi penelitian, pendekatan metodologi, sumber dan cara 
 * **Paragraf 1:** Penelitian ini dilaksanakan di Asri Boarding House yang beralamat di Jalan Maera Sari Nomor 1, Tembalang, Kota Semarang. Indekos ini mengelola 32 unit kamar dalam tipe VIP, Deluxe, dan Standar bagi mahasiswa maupun pekerja. Kajian difokuskan pada alur reservasi kamar, penagihan sewa bulanan, serta pembukuan kas operasional yang sebelumnya masih dicatat manual di buku besar fisik.
 
 ### 3.2 Jenis Penelitian (2 Paragraf)
-* **Paragraf 1 (Pendekatan *Research and Development*):** Penelitian ini menggunakan metode Penelitian dan Pengembangan (*Research and Development* / R&D) berbasis rekayasa perangkat lunak. Pendekatan R&D dipilih karena tujuan utama penelitian adalah merancang, membangun, dan menguji aplikasi fungsional guna menyelesaikan permasalahan operasional nyata di lapangan `[28]`.
+* **Paragraf 1 (Pendekatan *Research and Development*):** Penelitian ini menggunakan metode Penelitian dan Pengembangan (*Research and Development* / R&D) berbasis rekayasa perangkat lunak. Pendekatan R&D dipilih karena tujuan utama penelitian adalah merancang, membangun, dan menguji aplikasi fungsional guna menyelesaikan permasalahan operasional nyata di lapangan `[29]`.
 * **Paragraf 2 (Studi Kasus Tunggal dan Evaluasi Kualitatif):** Metode R&D tersebut dipadukan dengan studi kasus tunggal di Asri Boarding House. Tahap awal menggunakan analisis deskriptif kualitatif untuk memetakan kendala kas manual, jatuh tempo tagihan, dan pemesanan kamar, sedangkan tahap akhir melakukan pengujian fungsi serta evaluasi penggunaan sistem bersama pengguna.
 
 ### 3.3 Sumber Data (1 Paragraf Pengantar dan 2 Poin Utama)
@@ -129,15 +133,15 @@ Bab ketiga memaparkan lokasi penelitian, pendekatan metodologi, sumber dan cara 
   * *Sub-poin 3:* Artikel jurnal ilmiah, buku referensi, serta publikasi akademik terkait sistem informasi indekos dan *payment gateway*.
 
 ### 3.4 Teknik Pengumpulan Data (2 Paragraf dan 2 Poin Narasumber)
-* **Paragraf 1 (Wawancara Mendalam Kualitatif):** Pengumpulan data menerapkan teknik wawancara mendalam di Asri Boarding House `[29]` untuk menggali kebutuhan operasional, kendala pencatatan manual, hingga tanggapan pengguna setelah mencoba aplikasi web yang dibangun.
+* **Paragraf 1 (Wawancara Mendalam Kualitatif):** Pengumpulan data menerapkan teknik wawancara mendalam di Asri Boarding House `[30]` untuk menggali kebutuhan operasional, kendala pencatatan manual, hingga tanggapan pengguna setelah mencoba aplikasi web yang dibangun.
 * **Paragraf 2 dan Rincian Narasumber (Tatap Muka, Rekaman Audio, dan Transkripsi):** Wawancara dilakukan secara tatap muka dengan bantuan alat perekam suara, lalu disalin menjadi transkripsi tertulis agar tidak ada informasi yang terlewat saat dianalisis. Pengambilan data ini melibatkan penjaga kost dan penghuni kost:
   * *Sub-poin Penjaga kost:* Pembahasan berfokus pada evaluasi pembukuan kas, pemantauan sisa kamar dari 32 unit yang tersedia, kepraktisan penagihan otomatis, dan efisiensi kerja dibanding buku besar manual.
   * *Sub-poin Penghuni kost:* Pembahasan berfokus pada pengalaman memesan kamar, kejelasan rincian tagihan bulanan, kemudahan membayar sewa lewat *payment gateway*, dan kejelasan bukti pembayaran digital.
 
 ### 3.5 Metode Pengembangan Sistem (3 Paragraf dan Gambar 3.1)
-* **Paragraf 1 (Tahapan Berurutan SDLC *Waterfall*):** Pengembangan perangkat lunak menerapkan metode *Waterfall* dalam *Software Development Life Cycle* (SDLC) `[30]`. Setiap tahapan mulai dari analisis kebutuhan, perancangan antarmuka, penulisan kode, pengujian, hingga pemeliharaan harus diselesaikan secara tuntas sebelum beralih ke tahap berikutnya.
-* **Paragraf 2 (Alasan Pemilihan Metode *Waterfall*):** Metode ini dipilih karena aturan bisnis pengelolaan indekos, seperti alur pemesanan kamar dan jadwal penagihan sewa bulanan, sudah terpetakan dengan jelas sejak awal melalui studi lapangan. Spesifikasi yang matang membuat pembangunan sistem dan integrasi *payment gateway* berjalan terarah tanpa perubahan di tengah jalan.
-* **Paragraf 3 (Uraian Gambar 3.1 Tahapan Metode SDLC *Waterfall*):** Lima tahapan rekayasa sistem pada Gambar 3.1 dijalankan secara berurutan:
+* **Paragraf 1 (Penerapan Bertahap Metode *Waterfall*):** Pembangunan sistem informasi manajemen pada Asri Boarding House menerapkan metode *Waterfall*. Seluruh pengerjaan aplikasi dilakukan bertahap sesuai urutan kerja yang telah ditetapkan sejak awal penelitian, disertai pemeriksaan pada setiap akhir tahap agar tidak ada kebutuhan fungsional yang terlewat.
+* **Paragraf 2 (Alasan Pemilihan Metode *Waterfall*):** Metode *Waterfall* dipilih karena alur operasional indekos, mulai dari pemesanan kamar hingga penagihan bulanan, sudah terpetakan jelas melalui studi lapangan. Kepastian aturan bisnis ini membuat pembuatan kode program dan integrasi *payment gateway* berjalan lebih terarah.
+* **Paragraf 3 (Uraian Gambar 3.1 Tahapan Metode *Waterfall*):** Lima tahapan rekayasa sistem pada Gambar 3.1 dijalankan secara berurutan:
   1. *Requirement gathering and analysis:* Menghimpun kebutuhan operasional indekos melalui wawancara mendalam.
   2. *Design:* Menyusun rancangan antarmuka visual, alur kerja sistem, dan skema basis data.
   3. *Implementation:* Menulis kode program menggunakan *framework* Laravel dan mengintegrasikan *payment gateway* Midtrans.
@@ -452,28 +456,26 @@ Bab keempat menyajikan hasil perancangan teknis, implementasi 36 antarmuka pengg
 
 ## BAB 5: KESIMPULAN DAN SARAN
 
-Bab penutup merangkum capaian akhir dari seluruh tahapan penelitian dan rekayasa sistem, diikuti rekomendasi pengembangan untuk penelitian maupun pembaruan sistem berikutnya.
+Bab penutup merangkum capaian akhir dari seluruh tahapan penelitian untuk menjawab ketiga rumusan masalah, diikuti rekomendasi pengembangan untuk pembaruan sistem berikutnya.
 
-### 5.1 Kesimpulan (1 Paragraf Utuh Memuat 5 Pokok Simpulan)
-Paragraf kesimpulan merangkai lima temuan utama penelitian secara padat dan berkesinambungan:
-1. **Keberhasilan Perancangan dan Digitalisasi Terpusat:** Perancangan Sistem Informasi Manajemen Kost pada Asri Boarding House berbasis Laravel dan MySQL berhasil mendigitalisasi tata kelola hunian secara terpusat untuk mengatasi kelemahan promosi konvensional, risiko benturan pemesanan kamar ganda (*double booking*), dan kerumitan pembukuan manual.
-2. **Keberhasilan Integrasi Pembayaran, Penjadwalan, dan Notifikasi:** Aplikasi memadukan gerbang pembayaran digital Midtrans dengan penjadwal tugas otomatis (*cron job*) yang mengeksekusi penerbitan tagihan bulanan setiap awal bulan, perhitungan denda keterlambatan secara konsisten, serta pengiriman pengingat melalui WhatsApp dan surat elektronik (*email*).
-3. **Keberhasilan Pengujian Fungsionalitas (*Black Box*):** Pengujian sistem melalui 60 skenario fungsional *black box* membuktikan seluruh modul bekerja stabil dan akurat sesuai spesifikasi kebutuhan tanpa ditemukannya galat teknis.
-4. **Dampak Efektivitas bagi Pengelola Indekos:** Wawancara mendalam bersama penjaga kost mengonfirmasi bahwa aplikasi memangkas waktu rekapitulasi tutup buku bulanan, meniadakan selisih kas fisik berkat verifikasi pembayaran non-tunai instan, dan mempermudah pemantauan okupansi 32 unit kamar.
-5. **Dampak Kepuasan bagi Mahasiswa Penghuni Kost:** Evaluasi bersama lima mahasiswa penghuni kost menunjukkan kepuasan yang tinggi terhadap kepraktisan pelunasan sewa jarak jauh lewat *Virtual Account*, keterbukaan rincian tarif tanpa biaya tersembunyi, serta kemudahan akses kuitansi digital resmi.
+### 5.1 Kesimpulan (3 Paragraf Menjawab 3 Rumusan Masalah)
+Bagian kesimpulan disusun menjadi tiga paragraf ringkas (masing-masing tiga kalimat *to the point*) yang menjawab ketiga butir rumusan masalah secara berurutan:
+1. **Paragraf 1 (Jawaban Rumusan Masalah 1 - Perancangan Arsitektur):** Arsitektur sistem informasi manajemen kost Asri Boarding House dirancang menggunakan *use case diagram*, ERD, *activity diagram*, dan *flowchart*. Skema basis data MySQL dan pembagian tiga aktor pengguna menyatukan pengelolaan 32 unit kamar beserta pembukuan kas dalam satu pusat data untuk mencegah benturan pesanan kamar ganda sekaligus menggantikan pencatatan manual.
+2. **Paragraf 2 (Jawaban Rumusan Masalah 2 - Implementasi Laravel, Midtrans, Penjadwalan, dan Pengujian):** Aplikasi dibangun menggunakan kerangka kerja Laravel dengan penguncian baris basis data (`lockForUpdate`) serta integrasi pembayaran Midtrans Snap. Penjadwal tugas (*cron job*) otomatis menerbitkan tagihan bulanan, menghitung denda, dan mengirim pengingat via WhatsApp serta *email*, yang seluruhnya berjalan stabil berdasarkan pengujian 60 skenario *black box*.
+3. **Paragraf 3 (Jawaban Rumusan Masalah 3 - Evaluasi Wawancara Penjaga & Penghuni Kost):** Hasil wawancara penjaga kost mencatat skor kepuasan 9,5 dari 10 karena rekapitulasi kas bulanan selesai secara instan tanpa selisih uang, sedangkan lima mahasiswa penghuni kost memberikan rata-rata skor 8,0 dari 10 atas kepraktisan reservasi daring, pembayaran *Virtual Account*, dan kuitansi PDF. Penerapan sistem ini terbukti mempermudah operasional harian Asri Boarding House.
 
-### 5.2 Saran (1 Paragraf Utuh Memuat 5 Pokok Rekomendasi Pengembangan)
-Paragraf saran menyajikan lima usulan konkret untuk penyempurnaan sistem di masa mendatang:
-1. **Penyematan *Direct Link* Pembayaran di WhatsApp:** Pesan pengingat tagihan WhatsApp disarankan memuat tautan pembayaran langsung agar penghuni dapat menyelesaikan kewajiban sewa dalam satu kali klik tanpa harus mencari menu tagihan secara mandiri.
-2. **Tur Panduan Visual Interaktif (*Onboarding Tour*):** Pengelola bersama pengembang sebaiknya melengkapi dasbor portal dengan tur panduan visual interaktif guna mempercepat adaptasi pengguna baru dalam mengenali tata letak menu dan fitur layanan.
-3. **Perluasan Kanal Pembayaran Digital:** Kanal transaksi pada modul gerbang pembayaran digital dapat diperluas ke berbagai jaringan perbankan nasional tambahan serta dompet digital dan QRIS untuk memudahkan penghuni yang tidak memiliki rekening pada mitra utama saat ini.
-4. **Pemantauan Utilitas Mandiri (Meteran Listrik Digital):** Fitur pemantauan utilitas mandiri berbasis pencatatan meteran listrik digital perlu dipertimbangkan agar kalkulasi pengeluaran energi tiap kamar tercatat lebih transparan bagi penghuni.
-5. **Integrasi Kunci Pintu Digital Berbasis IoT:** Pengembangan sistem selanjutnya dapat mengintegrasikan kunci pintu digital berbasis *Internet of Things* (IoT) yang terhubung langsung dengan status keaktifan kontrak sewa di basis data.
+### 5.2 Saran (1 Kalimat Pengantar dan 5 Poin Rekomendasi Pengembangan)
+Bagian saran menyajikan lima poin usulan konkret dan singkat *to the point* untuk pengembangan sistem ke depannya:
+1. **Integrasi Perangkat IoT (*Smart Lock* & Meteran Listrik Digital):** Sistem dapat diintegrasikan dengan perangkat IoT berupa kunci pintu pintar (*smart lock*) dan meteran listrik digital pada tiap kamar.
+2. **Perluasan Platform Multi-Cabang:** Cakupan aplikasi dapat diperluas menjadi platform multi-cabang untuk mengelola inventaris kamar dan keuangan di cabang indekos berikutnya.
+3. **Pengingat H-3 dan *Direct Link* Pembayaran di WhatsApp:** Notifikasi WhatsApp sebaiknya dilengkapi pengingat H-3 jatuh tempo beserta tautan pembayaran langsung (*direct link*) menuju halaman tagihan.
+4. **Aplikasi *Mobile* dan Tur Panduan Visual Interaktif:** Pengembangan selanjutnya dapat menghadirkan aplikasi *mobile* Android dan iOS yang disertai tur panduan visual (*onboarding tour*) bagi penghuni baru.
+5. **Kontrak Sewa Digital (*E-Contract*) dan *Chatbot* 24 Jam:** Portal web dapat ditambahkan fitur kontrak sewa digital (*e-contract*) dan *chatbot* otomatis untuk melayani calon penyewa selama 24 jam.
 
 ---
 
 ## DAFTAR PUSTAKA (`[1]` sampai `[30]`)
 Naskah ditutup dengan 30 referensi ilmiah berformat IEEE yang menopang seluruh argumen pada Bab 1 hingga Bab 3:
 * **Referensi `[1]` sampai `[5]`:** Mendukung pemetaan masalah dan solusi pada latar belakang Bab 1, meliputi sistem pemesanan kost berbasis web Laravel, *e-kost*, pemantauan rumah kos dan pembayarannya, integrasi *payment gateway* Midtrans, serta aplikasi kas berbasis web dan WhatsApp Gateway.
-* **Referensi `[6]` sampai `[27]`:** Menopang 11 sub-bab tinjauan pustaka pada Bab 2, mencakup konsep SIM `[6, 7]`, *E-Commerce* B2C dan *Property Management System* `[8, 9]`, *Web Application* `[10, 11]`, UI/UX dan *Design System* `[12, 13]`, arsitektur MVC Laravel `[14, 15]`, RDBMS dan normalisasi basis data `[16, 17]`, MySQL dan pengindeksan `[18, 19]`, Midtrans *Payment Gateway* `[20, 21]`, WhatsApp Gateway Fonnte `[22, 23]`, SMTP *Mail Gateway* dan notifikasi surel `[24, 25]`, serta *Cron Job* dan penjadwalan notifikasi otomatis `[26, 27]`.
-* **Referensi `[28]` sampai `[30]`:** Melandasi metode penelitian pada Bab 3, yaitu metode *Research and Development* (R&D) `[28]`, metode penelitian kualitatif dan R&D menurut Sugiyono `[29]`, serta pengembangan perangkat lunak menggunakan metode SDLC *Waterfall* `[30]`.
+* **Referensi `[6]` sampai `[28]`:** Menopang 12 sub-bab tinjauan pustaka pada Bab 2, mencakup konsep SIM `[6, 7]`, *E-Commerce* B2C dan *Property Management System* `[8, 9]`, *Web Application* `[10, 11]`, UI/UX dan *Design System* `[12, 13]`, arsitektur MVC Laravel `[14, 15]`, RDBMS dan normalisasi basis data `[16, 17]`, MySQL dan pengindeksan `[18, 19]`, Midtrans *Payment Gateway* `[20, 21]`, WhatsApp Gateway Fonnte `[22, 23]`, SMTP *Mail Gateway* dan notifikasi surel `[24, 25]`, *Cron Job* dan penjadwalan notifikasi otomatis `[26, 27]`, serta metode pengembangan sistem *Waterfall* `[28]`.
+* **Referensi `[29]` sampai `[30]`:** Melandasi metode penelitian pada Bab 3, yaitu metode *Research and Development* (R&D) `[29]` serta metode penelitian kualitatif dan R&D menurut Sugiyono `[30]`.

@@ -31,7 +31,7 @@ Di balik struktur utamanya yang kuat, pemeriksaan silang baris demi baris terhad
 | :---: | :--- | :---: | :---: | :--- |
 | 1 | **Kesinambungan Alur Antarbab** | **97 / 100** | Sangat Selaras | Masalah di Bab 1 terhubung langsung ke teori Bab 2, metode Bab 3, implementasi Bab 4, hingga simpulan Bab 5. |
 | 2 | **Kesesuaian Rumusan Masalah, Tujuan, dan Kesimpulan** | **98 / 100** | Sangat Selaras | Tiga poin rumusan masalah (1.2) dan tujuan penelitian (1.3) terjawab tuntas di Bab 4 serta dirangkum di Bab 5.1. |
-| 3 | **Ketepatan Tinjauan Pustaka (Bab 2) terhadap Bab 4** | **96 / 100** | Sangat Selaras | Sebelas sub-bab teori di Bab 2 diterapkan seluruhnya pada desain antarmuka, basis data, dan kode program di Bab 4. |
+| 3 | **Ketepatan Tinjauan Pustaka (Bab 2) terhadap Bab 4** | **96 / 100** | Sangat Selaras | Dua belas sub-bab teori di Bab 2 diterapkan seluruhnya pada desain antarmuka, basis data, dan kode program di Bab 4. |
 | 4 | **Konsistensi Data dan Logika Bisnis Antarsubbab** | **86 / 100** | Perlu Penyelarasan Minor | Ada sedikit perbedaan rincian aturan masa keringanan denda, kanal pembayaran aktif, dan tema gelap dasbor admin antara Bab 4.2/4.3 dan Bab 4.5. |
 | 5 | **Tata Bahasa, Sitasi IEEE, dan Kerapian Format** | **93 / 100** | Sangat Baik | Tiga puluh sitasi IEEE `[1]` sampai `[30]` tersusun urut dan valid. Catatan minor hanya pada kata kunci *Abstract* dan spasi nomor gambar/tabel. |
 | | **RATA-RATA SKOR KESELARASAN** | **94 / 100** | **Layak & Solid** | **Alur pembahasan sangat mengalir, cukup selaraskan 7 detail mikro.** |
@@ -52,14 +52,14 @@ flowchart TD
         M1 & M2 & M3 --> RM
     end
 
-    subgraph BAB2["BAB 2: TINJAUAN PUSTAKA (11 Landasan Teori)"]
+    subgraph BAB2["BAB 2: TINJAUAN PUSTAKA (12 Landasan Teori)"]
         T1["2.1 SIM, 2.2 E-Commerce B2C, 2.3 Web App, 2.4 UI/UX Neo-Brutalism"]
         T2["2.5 Laravel MVC/Service Layer, 2.6 RDBMS ACID/3NF, 2.7 MySQL Row-Locking"]
-        T3["2.8 Payment Gateway Midtrans SHA-512, 2.9 WA Fonnte, 2.10 Email SMTP, 2.11 Cronjob"]
+        T3["2.8 Payment Gateway Midtrans SHA-512, 2.9 WA Fonnte, 2.10 Email SMTP, 2.11 Cronjob, 2.12 Waterfall"]
     end
 
     subgraph BAB3["BAB 3: METODE PENELITIAN"]
-        MP["3.1 Objek: Asri Boarding House (32 Kamar: VIP, Deluxe, Standar)<br/>3.2 Jenis: R&D + Studi Kasus Kualitatif<br/>3.3 & 3.4 Data Primer (Penjaga & Penghuni) + Sekunder<br/>3.5 SDLC Waterfall & 3.6 Kerangka Pemikiran (Input, Process, Output, Outcome)"]
+        MP["3.1 Objek: Asri Boarding House (32 Kamar: VIP, Deluxe, Standar)<br/>3.2 Jenis: R&D + Studi Kasus Kualitatif<br/>3.3 & 3.4 Data Primer (Penjaga & Penghuni) + Sekunder<br/>3.5 Metode Waterfall & 3.6 Kerangka Pemikiran (Input, Process, Output, Outcome)"]
     end
 
     subgraph BAB4["BAB 4: HASIL DAN PEMBAHASAN"]
@@ -88,7 +88,7 @@ Tabel berikut menunjukkan keterkaitan langsung antara masalah di Bab 1, teori di
 
 | Fokus Masalah (Bab 1.1) | Rumusan & Tujuan (Bab 1.2 & 1.3) | Landasan Teori (Bab 2) | Metode & Objek (Bab 3) | Perancangan & Kode (Bab 4.1 sampai 4.3) | Pengujian & Evaluasi (Bab 4.4 & 4.5) | Kesimpulan & Saran (Bab 5) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Promosi konvensional & risiko *double booking* 32 kamar** | Poin 1 (Arsitektur) & Poin 2 (Implementasi Laravel) | 2.1 SIM, 2.2 B2C, 2.3 Web App, 2.4 UI/UX *Neo-Brutalism*, 2.5 Laravel, 2.6 RDBMS ACID, 2.7 MySQL *Row-level locking* | 3.1 Objek 32 kamar (VIP, Deluxe, Standar); 3.5 *Waterfall* (*Requirement* & *Design*) | 4.1 Use Case, ERD Modul Inti, Activity & Flowchart; 4.2.1 Katalog Publik; 4.2.2 Reservasi 5 Tahap; 4.3.2 `lockForUpdate()` & Cek *Double Booking* | 4.4 Domain II & III (Skenario 13 sampai 32); 4.5 Aspek 1 & 2 pada Tabel 4.2 sampai 4.7 | 5.1 Digitalisasi tata kelola & pencegahan benturan kamar ganda |
+| **Promosi konvensional & risiko *double booking* 32 kamar** | Poin 1 (Arsitektur) & Poin 2 (Implementasi Laravel) | 2.1 SIM, 2.2 B2C, 2.3 Web App, 2.4 UI/UX *Neo-Brutalism*, 2.5 Laravel, 2.6 RDBMS ACID, 2.7 MySQL *Row-level locking*, 2.12 *Waterfall* | 3.1 Objek 32 kamar (VIP, Deluxe, Standar); 3.5 *Waterfall* (*Requirement* & *Design*) | 4.1 Use Case, ERD Modul Inti, Activity & Flowchart; 4.2.1 Katalog Publik; 4.2.2 Reservasi 5 Tahap; 4.3.2 `lockForUpdate()` & Cek *Double Booking* | 4.4 Domain II & III (Skenario 13 sampai 32); 4.5 Aspek 1 & 2 pada Tabel 4.2 sampai 4.7 | 5.1 Digitalisasi tata kelola & pencegahan benturan kamar ganda |
 | **Penagihan tanggal 10 & perhitungan denda manual yang sering terlewat** | Poin 1 (Arsitektur) & Poin 2 (Penjadwalan otomatis + Notifikasi WA & *Email*) | 2.9 WhatsApp Gateway API, 2.10 *Email* Gateway API (SMTP/TLS), 2.11 *Cronjob* (*Task Scheduling* & Idempoten) | 3.3 Data Primer & Sekunder; 3.5 *Waterfall* (*Implementation*) | 4.1.2 ERD (`tagihan`, `log_notifikasi`); 4.2.2 Gambar 4.23 & 4.24; 4.2.3 Manajemen Tagihan; 4.3.4 *Task Scheduler*, Fonnte, & *Email* `ShouldQueue` | 4.4 Domain VI (Skenario 55 sampai 60: *cron* tanggal 1, denda tanggal 10, idempoten, WA & SMTP); 4.5 Aspek 6 & 8 | 5.1 Otomasi tagihan awal bulan, denda konsisten, & pengingat WA/surel; 5.2 Saran *direct link* WA |
 | **Verifikasi bukti transfer manual & tutup buku berhari-hari rawan selisih kas** | Poin 1, Poin 2 (Integrasi Midtrans), & Poin 3 (Evaluasi wawancara penjaga & penghuni) | 2.1 SIM (Laporan kas), 2.8 *Payment Gateway* Midtrans (*Sandbox/Production*, *Webhook* SHA-512) | 3.2 R&D + Kualitatif; 3.4 Wawancara tatap muka & transkripsi; 3.6 Kerangka Pemikiran (*Outcome*) | 4.1.2 ERD (`pembayaran`, `pengeluaran`); 4.2.2 Midtrans Snap; 4.2.3 Laporan Kas & Pengeluaran; 4.2.4 Nota PDF; 4.3.3 Snap Token & *Webhook* `hash_equals()` | 4.4 Domain III, IV, V (Skenario 30 sampai 37, 48, 53, 54); 4.5 Tabel 4.2 (Skor 9,5/10) & Tabel 4.3 sampai 4.7 (Rata-rata 8,0/10) | 5.1 Tutup buku instan, bebas selisih kas, & kepuasan tinggi penghuni; 5.2 Perluasan kanal pembayaran |
 
@@ -114,17 +114,17 @@ Tabel berikut menunjukkan keterkaitan langsung antara masalah di Bab 1, teori di
 - **1.2 Rumusan Masalah & 1.3 Tujuan Penelitian (Baris 454 sampai 466)**:
   - Tiga butir rumusan masalah (perancangan arsitektur, implementasi teknis Laravel dan Midtrans, serta evaluasi efektivitas operasional) berpasangan langsung dengan tiga butir tujuan penelitian.
 
-### 3.3 Bab 2: Tinjauan Pustaka (Baris 474 sampai 559)
+### 3.3 Bab 2: Tinjauan Pustaka
 - **Urutan dan Keterkaitan Subbab**:
-  - Sebelas sub-bab disusun berjenjang mulai dari konsep manajerial dan bisnis (2.1 SIM, 2.2 *E-Commerce* B2C), arsitektur platform dan visual (2.3 *Web Application*, 2.4 UI & UX *Neo-Brutalism*), kerangka kerja dan basis data (2.5 Laravel MVC & *Service Layer*, 2.6 RDBMS ACID & 3NF, 2.7 MySQL InnoDB *row-level locking*), hingga integrasi layanan pihak ketiga dan otomasi server (2.8 *Payment Gateway* Midtrans SHA-512, 2.9 WhatsApp Gateway API, 2.10 *Email* Gateway API SMTP/TLS, 2.11 *Cronjob* & prinsip idempoten).
-  - Tiap sub-bab terdiri atas 2 sampai 3 paragraf. Paragraf pertama selalu mengulas konsep dasar teknologi, lalu paragraf berikutnya langsung mengaitkannya dengan kebutuhan pengelolaan indekos sehingga menyambung mulus ke Bab 4.
+  - Dua belas sub-bab disusun berjenjang mulai dari konsep manajerial dan bisnis (2.1 SIM, 2.2 *E-Commerce* B2C), arsitektur platform dan visual (2.3 *Web Application*, 2.4 UI & UX *Neo-Brutalism*), kerangka kerja dan basis data (2.5 Laravel MVC & *Service Layer*, 2.6 RDBMS ACID & 3NF, 2.7 MySQL InnoDB *row-level locking*), integrasi layanan pihak ketiga dan otomasi server (2.8 *Payment Gateway* Midtrans SHA-512, 2.9 WhatsApp Gateway API, 2.10 *Email* Gateway API SMTP/TLS, 2.11 *Cronjob* & prinsip idempoten), hingga metodologi rekayasa perangkat lunak (2.12 Metode *Waterfall* [28]).
+  - Tiap sub-bab terdiri atas 2 sampai 3 paragraf. Paragraf pertama selalu mengulas konsep dasar teknologi, lalu paragraf berikutnya langsung mengaitkannya dengan kebutuhan pengelolaan indekos sehingga menyambung mulus ke Bab 3 dan Bab 4.
 
-### 3.4 Bab 3: Metode Penelitian (Baris 565 sampai 640)
+### 3.4 Bab 3: Metode Penelitian
 - **Kesinambungan Metodologis**:
   - **3.1 Objek Penelitian**: Menetapkan lokasi di Jl. Maera Sari No. 1, Tembalang dengan kapasitas 32 unit kamar (VIP, Deluxe, Standar), konsisten dengan Bab 1.1.
-  - **3.2 Jenis Penelitian**: Memadukan *Research and Development* (R&D) [28] dengan studi kasus tunggal kualitatif. Pendekatan ini pas untuk penelitian rekayasa perangkat lunak yang diuji langsung bersama pengguna di lapangan.
-  - **3.3 Sumber Data & 3.4 Teknik Pengumpulan Data**: Menjelaskan pengumpulan data primer dari penjaga kost dan penghuni kost melalui wawancara tatap muka yang direkam audio dan ditranskripsi [29], menjadi pijakan metodologis bagi Bab 4.5.
-  - **3.5 Metode Pengembangan Sistem**: Menguraikan lima tahapan SDLC *Waterfall* (Gambar 3.1) [30] dari *Requirement Gathering* hingga *Operation & Maintenance*, yang tercermin langsung pada struktur pembahasan Bab 4.
+  - **3.2 Jenis Penelitian**: Memadukan *Research and Development* (R&D) [29] dengan studi kasus tunggal kualitatif. Pendekatan ini pas untuk penelitian rekayasa perangkat lunak yang diuji langsung bersama pengguna di lapangan.
+  - **3.3 Sumber Data & 3.4 Teknik Pengumpulan Data**: Menjelaskan pengumpulan data primer dari penjaga kost dan penghuni kost melalui wawancara tatap muka yang direkam audio dan ditranskripsi [30], menjadi pijakan metodologis bagi Bab 4.5.
+  - **3.5 Metode Pengembangan Sistem**: Menguraikan lima tahapan metode *Waterfall* (Gambar 3.1) dari *Requirement Gathering* hingga *Operation & Maintenance*, yang tercermin langsung pada struktur pembahasan Bab 4.
   - **3.6 Kerangka Pemikiran**: Memetakan alur kerja penelitian ke dalam bagan *Input, Process, Output,* dan *Outcome* (Gambar 3.2).
 
 ### 3.5 Bab 4: Hasil dan Pembahasan (Baris 647 sampai 1808)
@@ -135,10 +135,10 @@ Tabel berikut menunjukkan keterkaitan langsung antara masalah di Bab 1, teori di
   - **4.4 Pengujian Sistem (Baris 1554 sampai 1633)**: Menguji seluruh fitur ke dalam **60 skenario *Black Box Testing*** pada Tabel 4.1 yang terbagi atas 6 domain operasional. Skenario uji sudah mencakup pengujian input positif maupun negatif (seperti NIK kurang dari 16 digit, unggahan berkas non-gambar pada tiket keluhan, penolakan hapus kamar berpenghuni, serta uji idempoten *cron job*).
   - **4.5 Hasil Wawancara (Baris 1636 sampai 1808)**: Menjawab rumusan masalah ketiga melalui wawancara evaluasi bersama Bapak Asep selaku penjaga kost (Tabel 4.2) dan 5 mahasiswa penghuni aktif dari berbagai kampus (Arjun, Farrel, Iman, Ammar, dan Sindhu pada Tabel 4.3 sampai 4.7). Setiap tabel memuat 10 aspek pertanyaan dan diakhiri analisis sintesis beserta skor kepuasan (9,5/10 dari penjaga kost dan rata-rata 8,0/10 dari penghuni).
 
-### 3.6 Bab 5: Kesimpulan dan Saran serta Daftar Pustaka (Baris 1815 sampai 1899)
-- **5.1 Kesimpulan (Baris 1821 sampai 1822)**: Merangkum pencapaian ketiga tujuan penelitian dalam satu paragraf utuh yang menyatukan hasil rancang bangun Laravel dan MySQL, integrasi Midtrans dan *cron job* beserta notifikasi WA/surel, keberhasilan 60 skenario *black box*, hingga bukti efisiensi tutup buku dan kepuasan penghuni.
-- **5.2 Saran (Baris 1826 sampai 1827)**: Tiga saran pertama diambil langsung dari masukan responden pada Bab 4.5 (tautan pembayaran langsung di WA dari usulan Ammar di Tabel 4.6, tur panduan visual interaktif dari usulan Sindhu di Tabel 4.7, dan perluasan kanal pembayaran dari usulan Farrel serta Sindhu di Tabel 4.4 dan 4.7). Dua saran berikutnya menawarkan pengembangan lanjutan berupa pencatatan meteran listrik digital dan kunci pintu berbasis IoT.
-- **Daftar Pustaka (Baris 1835 sampai 1899)**: Mencantumkan 30 referensi ilmiah berformat IEEE (`[1]` sampai `[30]`) dengan tahun terbit dominan 2021 hingga 2026 disertai tautan DOI aktif. Seluruh nomor sitasi muncul berurutan di dalam naskah.
+### 3.6 Bab 5: Kesimpulan dan Saran serta Daftar Pustaka
+- **5.1 Kesimpulan**: Disusun ke dalam tiga paragraf padat (masing-masing tiga kalimat *to the point* dengan ritme *burstiness* dinamis) yang menjawab ketiga butir rumusan masalah secara berurutan: perancangan arsitektur sistem terpusat 32 kamar, implementasi Laravel terintegrasi Midtrans beserta penjadwal *cron job* dan pengujian 60 skenario *black box*, hingga evaluasi wawancara penjaga kost (9,5/10) dan lima penghuni kost (rata-rata 8,0/10).
+- **5.2 Saran**: Disajikan dalam 5 poin bernomor bersubjek SPOK yang singkat dan *to the point*, mencakup integrasi perangkat IoT (*smart lock* dan meteran listrik digital), perluasan platform multi-cabang untuk cabang indekos baru, pengingat H-3 disertai *direct link* pembayaran di WhatsApp, pengembangan aplikasi *mobile* (Android & iOS) dengan tur panduan visual (*onboarding tour*), serta fitur kontrak sewa digital (*e-contract*) dan *chatbot* otomatis 24 jam.
+- **Daftar Pustaka**: Mencantumkan 30 referensi ilmiah berformat IEEE (`[1]` sampai `[30]`) dengan tahun terbit dominan 2021 hingga 2026 disertai tautan DOI aktif. Seluruh nomor sitasi muncul berurutan di dalam naskah.
 
 ---
 

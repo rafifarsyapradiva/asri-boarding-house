@@ -266,7 +266,7 @@ Hasil pengujian fungsionalitas melalui 60 skenario *black box* menunjukkan selur
 
 <br>
 
-Operational management across 32 rental units at Asri Boarding House previously relied on physical paper ledgers and unstructured instant messaging. The absence of a centralized system caused frequent room booking collisions, overlooked monthly rental collections, and recurring cash reconciliation delays driven by manual bank transfer verification. To eliminate these bottlenecks, this study designs and implements a web-based boarding house management information system integrated with the Midtrans Snap payment gateway alongside automated WhatsApp and email notification engines. Developed under the Waterfall software development lifecycle, the application leverages the Laravel framework and MySQL database, incorporating pessimistic row-level locking to ensure real-time room availability without duplicate allocations.
+Operational management across 32 rental units at Asri Boarding House previously relied on physical paper ledgers and unstructured instant messaging. The absence of a centralized system caused frequent room booking collisions, overlooked monthly rental collections, and recurring cash reconciliation delays driven by manual bank transfer verification. To eliminate these bottlenecks, this study designs and implements a web-based boarding house management information system integrated with the Midtrans Snap payment gateway alongside automated WhatsApp and email notification engines. Developed using the Waterfall method, the application leverages the Laravel framework and MySQL database, incorporating pessimistic row-level locking to ensure real-time room availability without duplicate allocations.
 
 Functional evaluation across 60 black-box testing scenarios verified that all operational modules executed reliably without transaction failures or validation errors. Direct assessment with the boarding house manager confirmed that the platform compressed monthly book-closing from several working days to instant reporting, eliminated physical cash discrepancies, and prevented reservation schedule conflicts. Furthermore, evaluative interviews with resident students revealed high satisfaction regarding straightforward remote room booking, practical bill settlements through virtual accounts, and transparent digital receipts.
 
@@ -315,6 +315,7 @@ DAFTAR TABEL &emsp; xiv
 2.9 WhatsApp Gateway API &emsp; 8  
 2.10 Email Gateway API &emsp; 9  
 2.11 Cronjob &emsp; 9  
+2.12 Metode Waterfall &emsp; 10  
 
 <br>
 
@@ -367,7 +368,7 @@ DAFTAR TABEL &emsp; xiv
 
 <br>
 
-Gambar 3.1 Tahapan Metode SDLC Waterfall &emsp; 13  
+Gambar 3.1 Tahapan Metode Waterfall &emsp; 13  
 Gambar 3.2 Kerangka Pemikiran &emsp; 14  
 Gambar 4.1 Use Case Diagram &emsp; 17  
 Gambar 4.2 Entity Relationship Diagram &emsp; 19  
@@ -570,6 +571,13 @@ Pada tingkat kerangka kerja aplikasi (*task scheduling*), cukup satu *daemon cro
 
 <br>
 
+## 2.12 Metode Waterfall
+Metode *Waterfall* merupakan model rekayasa perangkat lunak yang bekerja secara berurutan dari awal hingga akhir. Setiap tahapan wajib diselesaikan secara tuntas sebelum berlanjut ke fase berikutnya. Urutan prosesnya meliputi analisis kebutuhan, perancangan desain, pengkodean program, pengujian sistem, serta pemeliharaan berkala [28].
+
+Model sekuensial ini cocok untuk sistem berspesifikasi jelas. Dokumentasi yang lengkap di setiap tahap memudahkan pengembang menerjemahkan rancangan basis data maupun antarmuka menjadi kode aplikasi. Alur kerja yang terukur juga menekan risiko perubahan fitur mendadak selama proses pembangunan.
+
+<br>
+
 <div style="page-break-after: always;"></div>
 
 <div align="center">
@@ -586,7 +594,7 @@ Objek penelitian ini adalah Asri Boarding House yang berlokasi di Jalan Maera Sa
 <br>
 
 ## 3.2 Jenis Penelitian
-Penelitian ini menerapkan metode Penelitian dan Pengembangan atau *Research and Development* (R&D) melalui pendekatan rekayasa perangkat lunak. Metode ini dipilih karena tujuan utama penelitian bukan sekadar mengkaji fenomena secara teoretis, melainkan merancang, membangun, dan menguji perangkat lunak fungsional untuk menyelesaikan masalah operasional di lapangan [28]. Lewat tahapan pengembangan yang terukur, sistem informasi yang dihasilkan diharapkan dapat menjawab kebutuhan pengelolaan bisnis indekos secara akurat.
+Penelitian ini menerapkan metode Penelitian dan Pengembangan atau *Research and Development* (R&D) melalui pendekatan rekayasa perangkat lunak. Metode ini dipilih karena tujuan utama penelitian bukan sekadar mengkaji fenomena secara teoretis, melainkan merancang, membangun, dan menguji perangkat lunak fungsional untuk menyelesaikan masalah operasional di lapangan [29]. Lewat tahapan pengembangan yang terukur, sistem informasi yang dihasilkan diharapkan dapat menjawab kebutuhan pengelolaan bisnis indekos secara akurat.
 
 Metode R&D tersebut dipadukan dengan studi kasus tunggal untuk membedah alur bisnis sewa kamar di Asri Boarding House secara menyeluruh. Pada tahap awal, pengumpulan data lapangan menggunakan analisis deskriptif kualitatif untuk memetakan kendala pencatatan kas manual, penagihan jatuh tempo, dan pemesanan kamar. Selanjutnya, pada tahap akhir dilakukan pengujian fungsi serta evaluasi penggunaan sistem bersama pengguna untuk memastikan aplikasi berjalan sesuai kebutuhan.
 
@@ -609,7 +617,7 @@ Data sekunder diperoleh dari berbagai dokumen internal dan literatur pendukung u
 <br>
 
 ## 3.4 Teknik Pengumpulan Data
-Pengumpulan data pada penelitian ini menggunakan pendekatan kualitatif melalui teknik wawancara mendalam di Asri Boarding House [29]. Teknik ini dipilih untuk menggali kebutuhan operasional indekos, kendala pencatatan sewa manual, hingga tanggapan pengguna setelah mencoba sistem informasi berbasis web yang dibangun.
+Pengumpulan data pada penelitian ini menggunakan pendekatan kualitatif melalui teknik wawancara mendalam di Asri Boarding House [30]. Teknik ini dipilih untuk menggali kebutuhan operasional indekos, kendala pencatatan sewa manual, hingga tanggapan pengguna setelah mencoba sistem informasi berbasis web yang dibangun.
 
 Kegiatan wawancara dilakukan secara tatap muka menggunakan bantuan alat perekam suara. Rekaman percakapan tersebut kemudian disalin (ditranskripsi) ke dalam teks tertulis supaya seluruh keterangan narasumber terdokumentasi dengan rapi dan tidak ada informasi penting yang terlewat saat dianalisis. Proses wawancara ini dilakukan pada tahap analisis kebutuhan maupun tahap evaluasi sistem bersama dua narasumber, yaitu:
 * **Penjaga kost**, dengan fokus pembahasan pada evaluasi pembukuan kas, kemudahan memantau sisa kamar dari 32 unit yang tersedia, kepraktisan penagihan otomatis, serta efisiensi kerja setelah beralih dari buku besar manual.
@@ -618,15 +626,15 @@ Kegiatan wawancara dilakukan secara tatap muka menggunakan bantuan alat perekam 
 <br>
 
 ## 3.5 Metode Pengembangan Sistem
-Pengembangan sistem informasi manajemen pada Asri Boarding House menerapkan metode *Waterfall* dalam *Software Development Life Cycle* (SDLC) [30]. Metode ini menjalankan proses pengembangan perangkat lunak secara bertahap mulai dari analisis kebutuhan, perancangan antarmuka, penulisan kode, pengujian, hingga pemeliharaan berkala. Ciri utama alur ini yaitu setiap tahap harus diselesaikan dan dicek terlebih dahulu sebelum melangkah ke tahap berikutnya.
+Pembangunan sistem informasi manajemen pada Asri Boarding House menerapkan metode *Waterfall*. Seluruh pengerjaan aplikasi dilakukan bertahap sesuai urutan kerja yang telah ditetapkan sejak awal penelitian. Pemeriksaan dilakukan pada setiap akhir tahap agar tidak ada kebutuhan fungsional yang terlewat.
 
-Metode *Waterfall* dipilih karena kebutuhan pengelolaan indekos, seperti alur pemesanan kamar dan penagihan sewa bulanan, sudah terpetakan dengan jelas sejak awal melalui studi lapangan. Tahapan kerja yang terstruktur ini membuat pembangunan sistem dan integrasi *payment gateway* dapat berjalan terarah tanpa terkendala perubahan spesifikasi di tengah jalan.
+Metode *Waterfall* dipilih karena alur operasional indekos, mulai dari pemesanan kamar hingga penagihan bulanan, sudah terpetakan jelas melalui studi lapangan. Kepastian aturan bisnis ini membuat pembuatan kode program dan integrasi *payment gateway* berjalan lebih terarah.
 
 <div align="center">
 
-<img src="images/metode_sdlc_waterfall.png" alt="Gambar 3.1 Tahapan Metode SDLC Waterfall" width="550">
+<img src="images/metode_sdlc_waterfall.png" alt="Gambar 3.1 Tahapan Metode Waterfall" width="550">
 
-*Gambar 3.1 Tahapan Metode SDLC Waterfall [30]*
+*Gambar 3.1 Tahapan Metode Waterfall*
 
 </div>
 
@@ -1831,12 +1839,21 @@ Pada skala 10, evaluasi wawancara mencatat skor kepuasan 9,5 dari penjaga kost d
 <br>
 
 ## 5.1 Kesimpulan
-Perancangan Sistem Informasi Manajemen Kost pada Asri Boarding House berbasis kerangka kerja Laravel dan basis data MySQL berhasil mendigitalisasi tata kelola hunian secara terpusat untuk mengatasi kelemahan promosi konvensional, risiko benturan pemesanan kamar ganda, dan kerumitan pembukuan manual. Sistem ini memadukan gerbang pembayaran digital Midtrans dengan penjadwal tugas otomatis yang mengeksekusi penerbitan tagihan bulanan setiap awal bulan, perhitungan denda keterlambatan secara konsisten, serta pengiriman notifikasi pengingat melalui WhatsApp dan surat elektronik. Pengujian penerimaan sistem melalui enam puluh skenario fungsional *black box* membuktikan seluruh modul bekerja stabil dan akurat sesuai spesifikasi kebutuhan tanpa ditemukannya galat teknis. Hasil wawancara mendalam bersama pengelola indekos mengonfirmasi bahwa aplikasi ini memangkas waktu rekapitulasi tutup buku bulanan, meniadakan selisih kas fisik melalui verifikasi pembayaran non-tunai instan, dan mempermudah pemantauan okupansi tiga puluh dua unit kamar. Di sisi lain, evaluasi wawancara bersama lima mahasiswa penghuni kost menunjukkan tingkat kepuasan yang tinggi terhadap kepraktisan pelunasan sewa jarak jauh lewat *virtual account*, keterbukaan rincian tarif tanpa biaya tersembunyi, serta kemudahan akses kuitansi digital resmi.
+Arsitektur sistem informasi manajemen kost Asri Boarding House dirancang menggunakan *use case diagram*, ERD, *activity diagram*, dan *flowchart*. Skema basis data MySQL dan pembagian tiga aktor pengguna menyatukan pengelolaan 32 unit kamar beserta pembukuan kas dalam satu pusat data. Rancangan terpusat ini mencegah benturan pesanan kamar ganda sekaligus menggantikan pencatatan manual.
+
+Aplikasi dibangun menggunakan kerangka kerja Laravel dengan penguncian baris basis data (`lockForUpdate`) serta integrasi pembayaran Midtrans Snap. Penjadwal tugas (*cron job*) secara otomatis menerbitkan tagihan bulanan, menghitung denda, dan mengirim pengingat via WhatsApp serta *email*. Seluruh fitur tersebut berjalan stabil berdasarkan pengujian 60 skenario *black box*.
+
+Hasil wawancara penjaga kost mencatat skor kepuasan 9,5 dari 10 karena rekapitulasi kas bulanan selesai secara instan tanpa selisih uang. Lima mahasiswa penghuni kost memberikan rata-rata skor 8,0 dari 10 atas kepraktisan reservasi daring, pembayaran *Virtual Account*, dan kuitansi PDF. Penerapan sistem ini terbukti mempermudah operasional harian Asri Boarding House.
 
 <br>
 
 ## 5.2 Saran
-Pesan pengingat tagihan WhatsApp disarankan memuat tautan pembayaran langsung agar penghuni dapat segera menyelesaikan kewajiban sewa dalam satu kali klik tanpa harus mencari menu tagihan secara mandiri. Pengelola bersama pengembang sebaiknya melengkapi dasbor portal dengan tur panduan visual interaktif guna mempercepat adaptasi pengguna baru dalam mengenali tata letak menu dan fitur layanan. Kanal transaksi pada modul gerbang pembayaran digital dapat diperluas ke berbagai jaringan perbankan nasional tambahan untuk memudahkan penghuni yang tidak memiliki rekening pada mitra utama saat ini. Fitur pemantauan utilitas mandiri berbasis pencatatan meteran listrik digital perlu dipertimbangkan agar kalkulasi pengeluaran energi tiap kamar tercatat lebih transparan bagi penghuni. Pengembangan sistem di masa mendatang dapat mengintegrasikan mekanisme kunci pintu digital berbasis IoT yang terhubung langsung dengan status keaktifan kontrak sewa di basis data.
+Berdasarkan hasil penelitian dan evaluasi di lapangan, saran pengembangan sistem ke depannya meliputi:
+1. Sistem dapat diintegrasikan dengan perangkat IoT berupa kunci pintu pintar (*smart lock*) dan meteran listrik digital pada tiap kamar.
+2. Cakupan aplikasi dapat diperluas menjadi platform multi-cabang untuk mengelola inventaris kamar dan keuangan di cabang indekos berikutnya.
+3. Notifikasi WhatsApp sebaiknya dilengkapi pengingat H-3 jatuh tempo beserta tautan pembayaran langsung (*direct link*) menuju halaman tagihan.
+4. Pengembangan selanjutnya dapat menghadirkan aplikasi *mobile* Android dan iOS yang disertai tur panduan visual (*onboarding tour*) bagi penghuni baru.
+5. Portal web dapat ditambahkan fitur kontrak sewa digital (*e-contract*) dan *chatbot* otomatis untuk melayani calon penyewa selama 24 jam.
 
 <br>
 
@@ -1904,8 +1921,8 @@ Pesan pengingat tagihan WhatsApp disarankan memuat tautan pembayaran langsung ag
 
 [27] Iqbal, W. Nugraha, and R. Sa'adah, “Optimasi Notifikasi Agenda Kegiatan Pemerintahan Berbasis Web Menggunakan Firebase Cloud Messaging dan WhatsApp Gateway,” *JSITIK J. Sist. Inf. dan Teknol. Inf. Komput.*, vol. 5, no. 1, pp. 29–38, 2026, doi: [10.53624/jsitik.v5i1.951](https://doi.org/10.53624/jsitik.v5i1.951).
 
-[28] M. W. Mauludy and Fathahillah, “Pengembangan Sistem Informasi Pengarsipan File Menggunakan Metode R&D,” *J. Informatics Manag. Inf. Technol.*, vol. 5, no. 2, pp. 118–125, 2025, doi: [10.47065/jimat.v5i2.484](https://doi.org/10.47065/jimat.v5i2.484).
+[28] E. Rahmi, E. Yumami, and N. Hidayasari, “Analisis Metode Pengembangan Sistem Informasi Berbasis Website: Systematic Literature Review,” *REMIK Ris. dan E-Jurnal Manaj. Inform. Komput.*, vol. 7, no. 1, pp. 821–834, 2023, doi: [10.33395/remik.v7i1.12177](https://doi.org/10.33395/remik.v7i1.12177).
 
-[29] Sugiyono, *Metode Penelitian Kuantitatif, Kualitatif, dan R&D*. Bandung: Alfabeta, 2022.
+[29] M. W. Mauludy and Fathahillah, “Pengembangan Sistem Informasi Pengarsipan File Menggunakan Metode R&D,” *J. Informatics Manag. Inf. Technol.*, vol. 5, no. 2, pp. 118–125, 2025, doi: [10.47065/jimat.v5i2.484](https://doi.org/10.47065/jimat.v5i2.484).
 
-[30] E. Rahmi, E. Yumami, and N. Hidayasari, “Analisis Metode Pengembangan Sistem Informasi Berbasis Website: Systematic Literature Review,” *REMIK Ris. dan E-Jurnal Manaj. Inform. Komput.*, vol. 7, no. 1, pp. 821–834, 2023, doi: [10.33395/remik.v7i1.12177](https://doi.org/10.33395/remik.v7i1.12177).
+[30] Sugiyono, *Metode Penelitian Kuantitatif, Kualitatif, dan R&D*. Bandung: Alfabeta, 2022.

@@ -63,7 +63,7 @@
 </p>
 
 <p align="justify">
-  Although several prior works have digitized boarding house catalogs, most still rely on manual transfer slip verification and lack database concurrency locks paired with automated billing schedulers [10]. Integrating the Midtrans payment gateway via SHA-512 authenticated webhooks verifies Virtual Account and digital payments automatically, removing manual bank mutation checks [11]. Furthermore, configuring server cron jobs automates recurring monthly invoice issuance and idempotent late fee calculation without manual intervention [12]. Real-time billing alerts and official payment receipts can then be dispatched automatically through the Fonnte WhatsApp API [13] and TLS-encrypted SMTP email relays [14].
+  Although several prior works have digitized boarding house catalogs, most still rely on manual transfer slip verification and lack database concurrency locks paired with automated billing schedulers [10]. Integrating the Midtrans payment gateway via SHA-512 authenticated webhooks verifies Virtual Account and digital payments automatically, removing manual bank mutation checks [11]. Furthermore, configuring server cron jobs automates recurring monthly invoice issuance and idempotent late fee calculation without manual intervention [12]. Real-time billing alerts and official payment receipts can then be dispatched automatically through the Fonnte WhatsApp API [13] and TLS-encrypted SMTP email relays [14]. The Waterfall method organizes these components through sequential stages from requirement analysis and design to coding, testing, and maintenance [15].
 </p>
 
 <p align="justify">
@@ -74,15 +74,15 @@
 ### **II. METHOD**
 
 <p align="justify">
-  This study was conducted at Asri Boarding House on Jalan Maera Sari No. 1, Tembalang, Semarang, which manages 32 rental rooms across VIP, Deluxe, and Standard tiers. The investigation applies a software engineering Research and Development (R&amp;D) approach combined with a single case study. This research design connects four sequential components within the conceptual framework: (1) Input, covering existing manual ledger bottlenecks and operational requirements; (2) Process, spanning system design, coding, and functional testing; (3) Output, delivering a verified web-based boarding house management application; and (4) Outcome, establishing accurate cash bookkeeping and practical rent settlement for management and tenants [15].
+  This study was conducted at Asri Boarding House on Jalan Maera Sari No. 1, Tembalang, Semarang, which manages 32 rental rooms across VIP, Deluxe, and Standard tiers. The investigation applies a software engineering Research and Development (R&amp;D) approach combined with a single case study. This research design connects four sequential components within the conceptual framework: (1) Input, covering existing manual ledger bottlenecks and operational requirements; (2) Process, spanning system design, coding, and functional testing; (3) Output, delivering a verified web-based boarding house management application; and (4) Outcome, establishing accurate cash bookkeeping and practical rent settlement for management and tenants [16].
 </p>
 
 <p align="justify">
-  Primary data were collected through face-to-face in-depth interviews recorded and transcribed with two core informant groups: the resident manager regarding daily bookkeeping and room monitoring, and active student tenants regarding room booking and monthly payment experiences. Secondary data were gathered from internal paper ledgers, transfer slips, operational expense notes, the tariff list of all 32 rooms, technical documentation for the Midtrans API, Fonnte WhatsApp API, and Laravel framework, as well as related scientific literature [16].
+  Primary data were collected through face-to-face in-depth interviews recorded and transcribed with two core informant groups: the resident manager regarding daily bookkeeping and room monitoring, and active student tenants regarding room booking and monthly payment experiences. Secondary data were gathered from internal paper ledgers, transfer slips, operational expense notes, the tariff list of all 32 rooms, technical documentation for the Midtrans API, Fonnte WhatsApp API, and Laravel framework, as well as related scientific literature [17].
 </p>
 
 <p align="justify">
-  Software construction followed the five sequential stages of the Waterfall Software Development Life Cycle (SDLC), as summarized in Table 1 [17]. First, requirement gathering and analysis mapped operational rules from field interviews. Second, system design modeled access boundaries across three actors (prospective tenant, administrator, and active tenant) using a Use Case Diagram, Activity Diagrams, and a System Flowchart, alongside a Third Normal Form (3NF) Entity Relationship Diagram (ERD) divided into core transactional and supporting operational modules [18]. Third, implementation built the application on the Laravel MVC framework and a MySQL InnoDB database. Concurrent booking collisions were prevented using ACID database transactions and pessimistic row-level locking (<em>lockForUpdate()</em>) [19]. Cashless payments were integrated with Midtrans Snap tokens (24-hour expiry) and verified via SHA-512 webhook callbacks (<em>hash_equals()</em>), while a server cron scheduler was configured to generate recurring bills on the 1st of each month (<em>tagihan:generate-bulanan</em>), evaluate late fees daily (<em>tagihan:proses-keterlambatan</em>), and dispatch automated alerts via the Fonnte WhatsApp API and queued SMTP/TLS email relays [20].
+  Application development applied the five stages of the Waterfall method, as summarized in Table 1. First, requirement gathering and analysis mapped operational rules from field interviews. Second, system design modeled access boundaries across three actors (prospective tenant, administrator, and active tenant) using a Use Case Diagram, Activity Diagrams, and a System Flowchart, alongside a Third Normal Form (3NF) Entity Relationship Diagram (ERD) divided into core transactional and supporting operational modules [18]. Third, implementation built the application on the Laravel MVC framework and a MySQL InnoDB database. Concurrent booking collisions were prevented using ACID database transactions and pessimistic row-level locking (<em>lockForUpdate()</em>) [19]. Cashless payments were integrated with Midtrans Snap tokens (24-hour expiry) and verified via SHA-512 webhook callbacks (<em>hash_equals()</em>), while a server cron scheduler was configured to generate recurring bills on the 1st of each month (<em>tagihan:generate-bulanan</em>), evaluate late fees daily (<em>tagihan:proses-keterlambatan</em>), and dispatch automated alerts via the Fonnte WhatsApp API and queued SMTP/TLS email relays [20].
 </p>
 
 <div align="center">
@@ -91,14 +91,14 @@
 
 | Stage | Procedure and Testing Scope |
 | :--- | :--- |
-| 1. Analysis | Field interviews with manager and tenants; audit of 32-room ledger and cash slips [16]. |
+| 1. Analysis | Field interviews with manager and tenants; audit of 32-room ledger and cash slips [17]. |
 | 2. Design | UML modeling (3 actors) and 3NF relational MySQL schema across core and support modules [18]. |
 | 3. Coding | Laravel MVC, ACID *lockForUpdate()*, Midtrans SHA-512 webhook, cron scheduler, Fonnte, and SMTP [19]. |
 | 4. Testing | Black-box testing across 6 domains (60 scenarios) and user evaluation with 6 informants [10]. |
-| 5. Rollout | Production hosting deployment, daily operational monitoring, and periodic maintenance [17]. |
+| 5. Rollout | Production hosting deployment, daily operational monitoring, and periodic maintenance. |
 
 <p align="justify">
-  Fourth, data and system testing combined functional verification with empirical user evaluation. Functional correctness was tested using black-box testing across 60 test scenarios grouped into six operational domains: (1) authentication, access rights, and user profiles (12 scenarios); (2) public portal, room catalog, and guest chat (10 scenarios); (3) prospective tenant five-step booking flow (10 scenarios); (4) active tenant portal, billing, and maintenance complaints (9 scenarios); (5) administrator operational and financial management (13 scenarios); and (6) task scheduler automation, late fees, and external APIs (6 scenarios) [10]. Finally, after deploying the platform to production hosting for operation and maintenance, operational effectiveness was evaluated through side-by-side usability trials and semi-structured interviews with the boarding house manager (Mr. Asep) and five active student tenants across a 10-point assessment scale [16].
+  Fourth, data and system testing combined functional verification with empirical user evaluation. Functional correctness was tested using black-box testing across 60 test scenarios grouped into six operational domains: (1) authentication, access rights, and user profiles (12 scenarios); (2) public portal, room catalog, and guest chat (10 scenarios); (3) prospective tenant five-step booking flow (10 scenarios); (4) active tenant portal, billing, and maintenance complaints (9 scenarios); (5) administrator operational and financial management (13 scenarios); and (6) task scheduler automation, late fees, and external APIs (6 scenarios) [10]. Finally, after deploying the platform to production hosting for operation and maintenance, operational effectiveness was evaluated through side-by-side usability trials and semi-structured interviews with the boarding house manager (Mr. Asep) and five active student tenants across a 10-point assessment scale [17].
 </p>
 
 <!-- TAHAP 6: BAB III. RESULTS AND DISCUSSION -->
@@ -115,7 +115,7 @@
 </p>
 
 <p align="justify">
-  Functional verification across all 60 black-box test scenarios in the six operational domains achieved a 100% pass rate without validation or transaction errors [10]. Every form filter, 16-digit National Identity (NIK) check, post-checkout room quarantine hold, PDF receipt download, and PDF/Excel financial export performed as specified. Subsequent User Acceptance Testing (UAT) conducted through side-by-side usability trials and video-recorded face-to-face interviews with the senior boarding house manager and five active student tenants yielded high satisfaction scores, as summarized in Table 2 [16].
+  Functional verification across all 60 black-box test scenarios in the six operational domains achieved a 100% pass rate without validation or transaction errors [10]. Every form filter, 16-digit National Identity (NIK) check, post-checkout room quarantine hold, PDF receipt download, and PDF/Excel financial export performed as specified. Subsequent User Acceptance Testing (UAT) conducted through side-by-side usability trials and video-recorded face-to-face interviews with the senior boarding house manager and five active student tenants yielded high satisfaction scores, as summarized in Table 2 [17].
 </p>
 
 <div align="center">
@@ -138,7 +138,7 @@
 </p>
 
 <p align="justify">
-  From the resident perspective, video-recorded interviews with the five student tenants produced an average satisfaction score of 8.0/10. Tenants emphasized that the B2C self-service catalog [6] and high-contrast Neo-Brutalism interface [7] allowed them to inspect facilities, book rooms remotely from their hometowns, and pay monthly rent via Virtual Account on Android and iPhone browsers without queuing at ATMs at night. In addition, downloadable A5 landscape PDF receipts gave students official proof of payment to forward to their parents, eliminating disputes over misplaced paper receipts. Constructive suggestions captured during the recorded interviews, including adding QRIS and e-wallet channels, embedding direct payment links inside WhatsApp reminders, and providing a first-login onboarding guide, establish clear priorities for future upgrades.
+  From the resident perspective, video-recorded interviews with the five student tenants produced an average satisfaction score of 8.0/10. Tenants emphasized that the B2C self-service catalog [6] and high-contrast Neo-Brutalism interface [7] allowed them to inspect facilities, book rooms remotely from their hometowns, and pay monthly rent via Virtual Account on Android and iPhone browsers without queuing at ATMs at night. In addition, downloadable A5 landscape PDF receipts gave students official proof of payment to forward to their parents, eliminating disputes over misplaced paper receipts. Constructive feedback captured during the recorded interviews, such as sending H-3 due date alerts with direct WhatsApp payment links and adding a first-login visual onboarding guide, provides clear input for future upgrades.
 </p>
 
 <p align="justify">
@@ -149,12 +149,26 @@
 ### **IV. CONCLUSION**
 
 <p align="justify">
-  The design and implementation of the web-based boarding house management information system at Asri Boarding House directly fulfill the three research objectives established in the introduction and verified in the results and discussion. First, centralizing the governance of 32 rental rooms on the Laravel MVC framework and a 3NF MySQL InnoDB database replaces conventional promotions and manual paper ledgers while preventing concurrent double bookings through ACID transactions and pessimistic row-level locking (<em>lockForUpdate()</em>). Second, integrating the Midtrans Snap payment gateway via SHA-512 authenticated webhooks with an automated server cron scheduler executes recurring monthly billing on the 1st of each month, calculates idempotent 5% rollover late fees past the intra-month grace period, and dispatches real-time alerts through the Fonnte WhatsApp API and queued SMTP emails. Third, functional testing across all 60 black-box scenarios achieved a 100% pass rate without technical defects. Field evaluation confirmed strong operational benefits: the resident manager awarded a 9.5/10 satisfaction score as month-end book closing dropped from several days to seconds with zero cash discrepancy, while five resident students recorded an average score of 8.0/10 for straightforward remote booking, virtual account settlements, and official A5 PDF receipts.
+  The system architecture for Asri Boarding House uses use case diagrams, Entity Relationship Diagrams (ERD), activity diagrams, and flowcharts. A 3NF MySQL database and three distinct user roles unify the management of 32 rental rooms and cash records in one platform. This structure prevents double bookings while replacing manual paper ledgers.
 </p>
 
 <p align="justify">
-  For future system development and further research, five practical enhancements are recommended based on field evaluation findings. First, WhatsApp billing reminders can embed direct payment links so tenants can settle invoices in a single click without navigating menus manually. Second, adding an interactive visual onboarding tour on the tenant portal will help first-time users locate receipt downloads and maintenance ticketing faster. Third, payment gateway channels should be expanded to include additional national banks, QRIS, and digital e-wallets for broader payment flexibility. Fourth, incorporating digital electricity sub-meter tracking will provide transparent per-room utility billing. Finally, future studies can integrate Internet of Things (IoT) smart door locks synchronized directly with active lease statuses in the database.
+  The web application combines the Laravel framework, database row locking (<em>lockForUpdate</em>), and Midtrans Snap payment integration. Automated server cron jobs issue monthly invoices, calculate late fees, and dispatch reminders via the Fonnte WhatsApp API and SMTP email. All features operated reliably across 60 black-box test scenarios.
 </p>
+
+<p align="justify">
+  Interview evaluation with the boarding house manager recorded a 9.5/10 satisfaction score as monthly book closing became instant without cash discrepancies. Five resident students gave an average score of 8.0/10 for practical remote booking, Virtual Account payment, and PDF receipts. The system effectively streamlines daily operations at Asri Boarding House.
+</p>
+
+<p align="justify">
+  Based on the research findings and field evaluation, future system development can implement five targeted improvements:
+</p>
+
+1. Hardware integration can connect IoT smart door locks and digital electricity meters in each room directly to active lease records.
+2. Platform architecture may expand into a multi-branch system to manage room inventory and finances across new boarding house locations.
+3. WhatsApp notifications should include an H-3 due date reminder with a direct payment link to the invoice page.
+4. Subsequent releases could provide Android and iOS mobile apps equipped with a visual onboarding tour for new tenants.
+5. Portal services can incorporate digital lease contracts (<em>e-contract</em>) and an automated chatbot to assist prospective tenants 24 hours a day.
 
 <!-- TAHAP 8: ACKNOWLEDGMENT (TANPA NOMOR BAB) -->
 ### **ACKNOWLEDGMENT**
@@ -181,9 +195,9 @@
   <sub>[12] A. Wibowo, A. Fathimah, D. Waskito, and R. A. Aprilianto, "Cron Job Implementation for Automated Data Processing and Transfer in Cloud Infrastructure," <em>Sainteknol J. Sains dan Teknol.</em>, vol. 23, no. 1, pp. 11-20, 2025, doi: 10.15294/sainteknol.v23i1.22649.</sub><br>
   <sub>[13] I. M. B. Waton, A. N. Weking, and B. Deta, "Penerapan Api Whatsapp Fonnte Untuk Sistem Pengingat Jadwal Bimbingan Tugas Akhir Mahasiswa Berbasis Web," <em>J. Tek. Mesin, Elektro dan Ilmu Komput.</em>, vol. 5, no. 2, pp. 229-241, 2025, doi: 10.55606/teknik.v5i2.7614.</sub><br>
   <sub>[14] M. A. Syahputra and R. A. Putri, "Sistem Informasi Monitoring Pembelajaran dengan Fitur Notifikasi Email Berbasis Web," <em>Decode J. Pendidik. Teknol. Inf.</em>, vol. 5, no. 2, pp. 505-515, 2025, doi: 10.51454/decode.v5i2.1206.</sub><br>
-  <sub>[15] M. W. Mauludy and Fathahillah, "Pengembangan Sistem Informasi Pengarsipan File Menggunakan Metode R&amp;D," <em>J. Informatics Manag. Inf. Technol.</em>, vol. 5, no. 2, pp. 118-125, 2025, doi: 10.47065/jimat.v5i2.484.</sub><br>
-  <sub>[16] Sugiyono, <em>Metode Penelitian Kuantitatif, Kualitatif, dan R&amp;D</em>. Bandung: Alfabeta, 2022.</sub><br>
-  <sub>[17] E. Rahmi, E. Yumami, and N. Hidayasari, "Analisis Metode Pengembangan Sistem Informasi Berbasis Website: Systematic Literature Review," <em>REMIK Ris. dan E-Jurnal Manaj. Inform. Komput.</em>, vol. 7, no. 1, pp. 821-834, 2023, doi: 10.33395/remik.v7i1.12177.</sub><br>
+  <sub>[15] E. Rahmi, E. Yumami, and N. Hidayasari, "Analisis Metode Pengembangan Sistem Informasi Berbasis Website: Systematic Literature Review," <em>REMIK Ris. dan E-Jurnal Manaj. Inform. Komput.</em>, vol. 7, no. 1, pp. 821-834, 2023, doi: 10.33395/remik.v7i1.12177.</sub><br>
+  <sub>[16] M. W. Mauludy and Fathahillah, "Pengembangan Sistem Informasi Pengarsipan File Menggunakan Metode R&amp;D," <em>J. Informatics Manag. Inf. Technol.</em>, vol. 5, no. 2, pp. 118-125, 2025, doi: 10.47065/jimat.v5i2.484.</sub><br>
+  <sub>[17] Sugiyono, <em>Metode Penelitian Kuantitatif, Kualitatif, dan R&amp;D</em>. Bandung: Alfabeta, 2022.</sub><br>
   <sub>[18] Y. Adisa and M. I. P. Nasution, "Konsep Dan Peran Sistem Manajemen Basis Data Relasional Pada Sistem Informasi Manajemen," <em>MASIP J. Manaj. Adm. Bisnis dan Publik Terapan</em>, vol. 1, no. 3, pp. 76-83, 2023, doi: 10.59061/masip.v1i3.314.</sub><br>
   <sub>[19] J. V. Dachi and J. Suhada, "Implementasi Basis Data Sederhana Menggunakan MySQL/PostgreSQL," <em>Router J. Tek. Inform. dan Terap.</em>, vol. 3, no. 1, pp. 49-59, 2025, doi: 10.62951/router.v3i1.621.</sub><br>
   <sub>[20] R. C. Buwono, R. Kartadie, and M. K. Ramadhan, "Perancangan dan Implementasi Sistem Payment Gateway MIDTRANS untuk UMKM Batik Lurik," <em>INFOTECH J. Inform. dan Teknol.</em>, vol. 5, no. 2, pp. 228-238, 2024, doi: 10.37373/infotech.v5i2.1334.</sub>
