@@ -1,637 +1,663 @@
-# Architecture & Functional Design (AFD): Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway pada Asri Boarding House
+# App Flow Document (AFD): Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway pada Asri Boarding House
 
-## 1. Document Overview & Context
+## 1. Document Overview & Metadata
 
-### 1.1. Identitas Dokumen
+### 1.1. Identitas & Metadata Dokumen
 | Atribut Dokumen | Keterangan |
 | :--- | :--- |
-| **Judul Dokumen** | Architecture & Functional Design (AFD): Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway pada Asri Boarding House |
-| **Versi Dokumen** | Versi 1.0 (Selaras dengan Arsitektur Master v248.0) |
+| **Judul Dokumen & Versi** | App Flow Document (AFD) - Sistem Informasi Manajemen Kost Asri Boarding House v1.0 |
 | **Status Dokumen** | Approved / Production Final |
 | **Tanggal Efektif** | 4 November 2026 |
 | **Penanggung Jawab** | Tim Pengembang Sistem Informasi Asri Boarding House |
 | **Domain Produksi** | `https://asriboardinghouse.weatso.id/` |
-| **Kapasitas Operasional** | 32 Unit Kamar Eksklusif (Tipe Standar, Deluxe, dan VIP) |
+| **Sistem Desain Visual** | Neo-Brutalism UI dengan Adaptabilitas *Light Mode* & *OLED Dark Mode* (`#030712`) |
+| **Dokumen Referensi** | [PRD-Asri-Boarding-House.md](file:///c:/xampp/htdocs/asri-boarding-house/Documentation/PRD-Asri-Boarding-House.md) & [TRD-Asri-Boarding-House.md](file:///c:/xampp/htdocs/asri-boarding-house/Documentation/TRD-Asri-Boarding-House.md) |
 
 ### 1.2. Tujuan Dokumen
-Dokumen Architecture & Functional Design (AFD) ini berfungsi sebagai penghubung antara kebutuhan bisnis di ranah produk (PRD) dan rincian implementasi kode di ranah rekayasa perangkat lunak (TRD). Apabila PRD menitikberatkan pada fitur apa saja yang dibutuhkan oleh pengguna dan TRD menguraikan bagaimana struktur kode serta skema basis data ditulis, maka AFD menjelaskan bagaimana aliran data dan fungsi sistem bekerja secara utuh di balik layar. Penjelasan tersebut mencakup perjalanan sebuah transaksi sejak pengguna menekan tombol di antarmuka peramban, melewati gerbang validasi, diproses oleh mesin logika bisnis, berinteraksi dengan layanan pihak ketiga, hingga akhirnya tersimpan secara permanen di basis data dan sistem berkas.
+Dokumen **App Flow Document (AFD)** atau **UX Flow Document** ini disusun sebagai acuan tunggal bagi *UI/UX Designer*, *Frontend Developer*, dan *Quality Assurance (QA) Tester* dalam memahami struktur navigasi antar-layar (*screen transition*) di dalam aplikasi **Asri Boarding House**. Apabila dokumen PRD menitikberatkan pada spesifikasi kebutuhan fitur dan TRD merinci arsitektur kode di sisi server, maka AFD ini berfokus penuh pada pengalaman visual pengguna, tata letak komponen pada setiap halaman, interaksi langkah demi langkah, kondisi khusus tampilan (*loading*, *empty*, dan *error state*), hingga logika perpindahan dari satu layar ke layar lainnya.
 
-Penyusunan dokumen ini bertujuan untuk memastikan seluruh pemangku kepentingan memiliki kesepahaman yang sama mengenai perilaku sistem dari ujung ke ujung (*end-to-end*). Melalui pemetaan fungsional ini, setiap aturan bisnis operasional Asri Boarding House, seperti perlindungan pemesanan ganda (*anti-double booking*), skema pembayaran uang muka (*Down Payment* 30%), pembekuan tarif sewa individu (*immutable rent snapshot*), perhitungan denda keterlambatan flat 5% yang bersifat *idempotent*, hingga audit pemotongan uang jaminan (*security deposit*) saat penghuni keluar (*check-out*), dapat ditelusuri secara transparan ke modul teknis yang menjalankannya.
+### 1.3. Glosarium / Istilah Umum Elemen Antarmuka (UI Glossary)
+Untuk menyeragamkan penyebutan komponen visual di seluruh bagian dokumen ini, tabel berikut mendefinisikan elemen antarmuka dan penanda interaksi yang digunakan pada aplikasi:
 
-### 1.3. Referensi dan Pemetaan Dokumen Terkait
-Dokumen ini disusun berdampingan dan saling melengkapi dengan tiga dokumen utama proyek berikut:
-1. **Product Requirements Document (PRD)**: [PRD-Asri-Boarding-House.md](file:///c:/xampp/htdocs/asri-boarding-house/Documentation/PRD-Asri-Boarding-House.md), yang memuat latar belakang bisnis, identifikasi 4 aktor utama dan 5 aktor sekunder, 10 aturan bisnis inti, serta daftar 25 *Use Case* fungsional.
-2. **Technical Requirements Document (TRD)**: [TRD-Asri-Boarding-House.md](file:///c:/xampp/htdocs/asri-boarding-house/Documentation/TRD-Asri-Boarding-House.md), yang merinci spesifikasi teknis Laravel 12, definisi kolom pada 22 tabel bisnis MySQL 8.x, konfigurasi *Virtual Generated Columns*, daftar rute endpoint, serta prosedur pengujian dan *deployment*.
-3. **Dokumen Cetak Biru Arsitektur**: [Blueprint_Projek_Web_Asri_Boarding_House.md](file:///c:/xampp/htdocs/asri-boarding-house/Blueprint/Blueprint_Projek_Web_Asri_Boarding_House.md), yang menjadi acuan histori evolusi fitur dan tata kelola antarmuka *Neo-Brutalism*.
-
-#### Matriks Jembatan Fungsional (PRD ke AFD ke TRD)
-| Domain Fungsi Bisnis (PRD) | Orkestrasi Alur & Transformasi Data (AFD) | Komponen Implementasi Teknis (TRD) |
+| Kode / Istilah UI | Lokasi Berkas Blade / JS | Penjelasan Visual & Perilaku Interaksi |
 | :--- | :--- | :--- |
-| Eksplorasi katalog kamar, simulasi harga promo, dan konsultasi tamu anonim (`FR-PUB-01` s.d. `FR-PUB-05`). | Alur kalkulasi tarif proporsional (harian, mingguan, bulanan), potongan paket promo, serta pengelolaan sesi *Guest Live Chat* tanpa login. | `LandingController`, `GuestChatApiController`, `ReservasiService::hitungHargaSewa()`, tabel `kamar`, `settings`, `guest_chat_threads`, dan `whatsapp_clicks`. |
-| Autentikasi tiga portal terisolasi, SSO Google, wajib ganti sandi awal, dan kelengkapan identitas (`FR-AUTH-01` s.d. `FR-AUTH-06`). | Penapisan sesi berlapis, penyimpanan URL tujuan awal (*intended URL*), sinkronisasi data NIK dan wali, serta anonimisasi hapus akun. | `PortalRedirectResolver`, `SocialiteController`, `EnsurePasswordChanged`, `EnsureProfileIsComplete`, `EnsureTenantIsActive`, dan `User::anonymizeAndDelete()`. |
-| Pengajuan reservasi daring, ruang diskusi pra-bayar, pembayaran DP 30% atau lunas, dan konfirmasi admin (`FR-RES-01` s.d. `FR-RES-05`). | Pengecekan irisan tanggal sewa, penerbitan *Snap Token*, verifikasi tanda tangan webhook SHA-512, dan transisi atomik menjadi penyewa aktif. | `StoreReservasiRequest`, `KamarTersediaRule`, `TanpaPenyewaAktifLainRule`, `SnapTokenController`, `MidtransReservasiCallbackController`, dan `TransisiPenyewaService`. |
-| Siklus tagihan bulanan seragam tanggal 1, evaluasi keterlambatan tanggal 10, denda flat 5%, dan cetak nota PDF A5 (`FR-TEN-01` s.d. `FR-TEN-03`). | Eksekusi jadwal otomatis bulanan dan harian, penjaga idempotensi denda pada bulan kedua, eskalasi pesan ke wali, dan perenderan kuitansi di peramban. | `BillingService`, `TagihanService`, `MidtransCallbackController`, `GenerateBulananTagihan`, `ProsesKeterlambatanTagihan`, dan pustaka klien `html2pdf.js`. |
-| Pendaftaran penyewa *walk-in*, perpanjangan kontrak, inspeksi *check-out*, dan audit klaim deposit (`FR-ADM-05` & `FR-ADM-06`). | Pembekuan harga sewa ke profil penyewa, distribusi kredensial via WhatsApp, serta pembukuan otomatis potongan/pengembalian deposit ke tabel pengeluaran. | `Admin\PenyewaController`, `TransisiPenyewaService`, `KirimWelcomeMessageJob`, tabel `penyewa`, `kamar`, dan `pengeluaran`. |
-| Pelaporan tiket keluhan fasilitas, rekapitulasi arus kas laba-rugi, kalender okupansi, dan pengiriman notifikasi (`FR-TEN-04`, `FR-ADM-01` s.d. `FR-ADM-10`). | Alur unggah bukti foto dengan pembersihan berkas gagal, agregasi metrik keuangan, ekspor PDF/CSV, serta antrean pesan berjeda (*staggered queue*). | `KeluhanController`, `LaporanController`, `AdminCalendarController`, `DompdfGenerator`, `FonnteService`, `NotifikasiService`, 11 *Events*, 12 *Listeners*, dan 8 *Queue Jobs*. |
+| **`MODAL-CONF-01`** (*Neo-Brutalist Confirmation Modal*) | `layouts/app.blade.php` (`window.brutalistConfirm`) | Kotak dialog konfirmasi kustom bergaya *Neo-Brutalism* dengan garis tepi tebal (`border-4`) dan bayangan kaku (`8px`). Menggantikan dialog `window.confirm()` bawaan peramban pada setiap aksi penting atau destruktif (seperti hapus data, batalkan reservasi, dan konfirmasi pembayaran). |
+| **`MODAL-SNAP-01`** (*Midtrans Snap Popup*) | SDK Eksternal `snap.js` (`window.snap.pay`) | Jendela *overlay* pembayaran digital interaktif yang menampilkan pilihan QRIS, Virtual Account bank, dan dompet digital tanpa mengharuskan pengguna meninggalkan halaman aplikasi. |
+| **`MODAL-FAC-01`** (*Facility Quick-Manage Modal*) | `admin/kamar/partials/facility-modal.blade.php` & `admin/fasilitas/partials/modal.blade.php` | Jendela modal di atas halaman form kamar atau master fasilitas yang memungkinkan admin menambah, mengubah, atau menghapus item fasilitas secara asinkron (AJAX) tanpa memuat ulang halaman. |
+| **`TOAST-01`** (*Floating Brutalist Toast*) | `components/toast.blade.php` & `window.showToast()` | Kotak pemberitahuan melayang di sudut kanan atas layar (`top-5 right-5`) berwarna hijau zamrud untuk aksi berhasil (`✅ Sukses`) atau merah terang untuk kegagalan (`❌ Gagal`). Muncul dengan animasi geser turun dan menghilang otomatis setelah 4 hingga 4,5 detik. |
+| **`FAB-WA-01`** (*Floating WhatsApp Button*) | `components/wa-float-button.blade.php` | Tombol aksi melayang di pojok kanan bawah halaman publik yang mencatat analitik klik ke server sebelum membuka ruang obrolan WhatsApp pengelola di tab baru. |
+| **`FAB-CHAT-01`** (*Guest Live Chat Widget*) | `components/guest-chat-widget.blade.php` & `guest-chat.js` | Panel obrolan melayang di sudut kanan bawah halaman publik bagi pengunjung anonim untuk berkonsultasi langsung dengan admin tanpa harus login terlebih dahulu. |
+| **5-Step Visual Stepper** | `reservasi/show.blade.php` | Indikator kemajuan horizontal 5 tahap pada halaman detail reservasi yang memandu calon penyewa mulai dari tahap Pengajuan, Diskusi/Pembayaran, Verifikasi Sistem, Konfirmasi Admin, hingga Aktivasi Penghuni. |
+| **Shimmer Placeholder** | `layouts/landing.blade.php` (`removeShimmer()`) | Kerangka pemuat gambar beranimasi kilau (*shimmer*) yang menjaga dimensi kartu kamar dan galeri tetap stabil sebelum berkas foto selesai diunduh peramban. |
+| **Rupiah Live Formatter** | `layouts/app.blade.php` (`.rupiah-input`) | Komponen input nominal uang yang secara otomatis menyisipkan titik pemisah ribuan (contoh: `1.500.000`) saat pengguna mengetik sekaligus menyinkronkan angka murninya ke input tersembunyi. |
+| **Theme Switcher** | `navigation.blade.php`, `navigation-landing.blade.php`, `admin-topbar.blade.php` | Tombol pengalih instan antara tampilan *Light Mode* (latar putih/kuning cerah dengan garis tepi hitam) dan *OLED Dark Mode* (latar hitam pekat `#030712` dengan garis tepi putih kontras tinggi). |
 
 ---
 
-## 2. Functional Architecture Overview (Gambaran Besar Sistem)
+## 2. High-Level Navigation Map (Sitemap)
 
-Secara fungsional, sistem informasi **Asri Boarding House** dibagi menjadi tujuh modul utama yang saling berkomunikasi melalui kontrak layanan (*Service Layer*) dan bus peristiwa (*Event Bus*). Setiap modul memiliki batas tanggung jawab yang tegas agar perubahan aturan bisnis pada satu area tidak merusak stabilitas modul lainnya.
+Aplikasi **Asri Boarding House** membagi struktur navigasinya ke dalam empat zona utama berdasarkan peran dan status sesi pengguna: (1) **Zona Publik / Tamu**, (2) **Zona Autentikasi & Onboarding Akun**, (3) **Zona Portal Calon Penyewa & Penyewa Aktif**, serta (4) **Zona Portal Administrator**.
 
-### 2.1. Component Breakdown (Rincian Modul Fungsional)
-
-#### 1. Public Discovery & Guest Interaction Module
-Modul ini menangani seluruh interaksi pengunjung publik (Tamu) sebelum mereka memiliki akun atau masuk ke dalam sistem.
-- **Katalog & Pemeriksaan Ketersediaan Unit**: Menyajikan daftar kamar beserta spesifikasi luas, lantai, fasilitas, dan status aktualnya. Modul ini memproses permintaan pengecekan ketersediaan kamar pada rentang tanggal tertentu melalui endpoint `/cek-ketersediaan`.
-- **Simulasi Kalkulator Harga & Paket Promo**: Menerima parameter tipe sewa (`harian`, `mingguan`, `bulanan`) dan durasi dari antarmuka detail kamar, lalu menghitung tarif dasar, persentase diskon paket promo (Triwulan 5% atau Tahunan 8,33%), total harga bersih, serta rincian nominal uang muka 30%.
-- **Guest Live Chat & Pelacakan Prospek**: Memungkinkan pengunjung anonim memulai percakapan langsung dengan admin hanya menggunakan nama dan nomor WhatsApp. Sistem menerbitkan `session_token` unik yang dipertahankan di peramban. Selain itu, setiap klik pada tombol konsultasi WhatsApp dicatat secara asinkron ke tabel `whatsapp_clicks` sebagai data analitik konversi.
-
-#### 2. Identity, Multi-Portal Auth & Access Guard Module
-Modul ini mengatur siklus autentikasi, kelengkapan identitas kependudukan, serta otorisasi akses di seluruh halaman aplikasi.
-- **Pemisahan Pintu Masuk (Multi-Portal Isolation)**: Memisahkan jalur autentikasi menjadi tiga gerbang mandiri, yakni Portal Calon Penyewa (`/reservasi/login`), Portal Penyewa Aktif (`/penyewa/login`), dan Portal Administrator (`/admin/login`), ditambah integrasi masuk satu klik melalui Google OAuth 2.0.
-- **Penapisan Bertahap (Sequential Access Guards)**: Setiap permintaan yang lolos autentikasi diperiksa secara berurutan oleh rantai middleware. Jika penanda `require_password_change` bernilai `true`, pengguna dipaksa mengganti kata sandi bawaan terlebih dahulu. Selanjutnya, jika data `nik` (16 digit), `no_hp`, `nama_wali`, atau `no_wali` belum lengkap, pengguna dialihkan ke halaman pelengkapan profil dengan tetap menyimpan alamat halaman yang ingin dituju (*intended URL*).
-- **Penegakan Hak Akses Objek (Anti-IDOR)**: Mengawasi setiap akses ke detail reservasi, tagihan, nota pembayaran, dan tiket keluhan menggunakan kebijakan otorisasi (`ReservasiPolicy`, `TagihanPolicy`, `PembayaranPolicy`, dan `KeluhanPolicy`) agar seorang penghuni hanya dapat mengakses data miliknya sendiri.
-
-#### 3. Reservation & Pre-Payment Negotiation Engine
-Modul ini mengelola proses pemesanan kamar daring dari tahap pengajuan awal hingga siap dikonfirmasi oleh pengelola.
-- **Validasi Anti-Bentrok & Pembatasan Kontrak Ganda**: Memverifikasi bahwa unit kamar berstatus `tersedia`, tidak memiliki irisan tanggal (`tanggal_mulai` hingga `tanggal_selesai`) dengan reservasi aktif lain pada kamar yang sama, serta memastikan akun pemesan tidak sedang terikat pada reservasi atau kontrak sewa aktif lainnya.
-- **Ruang Diskusi Pra-Pembayaran**: Menyediakan kanal obrolan privat antara calon penyewa dan admin yang terikat langsung pada ID reservasi (`chat_messages`), dilengkapi penanda pesan terbaca (`is_read`) dan penarikan pesan delta.
-- **Manajemen Masa Berlaku Reservasi**: Memantau usia reservasi berstatus `pending` dan membatalkannya secara otomatis apabila pembayaran belum diselesaikan setelah melewati batas waktu 24 jam.
-
-#### 4. Transaction, Billing & Hybrid Payment Engine
-Modul ini bertindak sebagai jantung finansial aplikasi yang memproses pembayaran daring maupun tunai, penerbitan tagihan rutin, serta perhitungan denda.
-- **Orkestrasi Pembayaran Hibrida**: Pada jalur daring, modul ini berinteraksi dengan *Midtrans Snap API* untuk menerbitkan token pembayaran (`RSV-*` atau `DP-*` untuk reservasi, serta `INV-*` atau `SISA-DP-*` untuk tagihan) dan memproses webhook notifikasi pembayaran secara atomik. Pada jalur manual, modul ini menyediakan fitur verifikasi kasir tunai bagi admin yang langsung mencatat ID pengonfirmasi (`dikonfirmasi_oleh`).
-- **Mesin Siklus Tagihan & Denda Flat Kalender**: Menerbitkan tagihan sewa bulanan secara serentak setiap tanggal 1 pukul 00:05 WIB dengan jatuh tempo tanggal 10. Mesin evaluasi harian memeriksa keterlambatan pembayaran: memberikan peringatan tanpa denda pada bulan pertama keterlambatan, lalu mengenakan denda flat 5% satu kali secara *idempotent* disertai eskalasi ke wali penyewa apabila tunggakan menyeberang ke bulan kalender berikutnya.
-- **Pencetakan Kuitansi Resmi A5**: Menyediakan antarmuka nota pembayaran terverifikasi yang dapat diunduh langsung menjadi berkas PDF ukuran A5 di sisi klien.
-
-#### 5. Tenant Lifecycle, Contract & Deposit Audit Module
-Modul ini mengatur masa penghunian aktif sejak serah terima kunci kamar hingga penghuni menyelesaikan masa sewanya.
-- **Aktivasi Kontrak & Pembekuan Tarif (*Immutable Rent Snapshot*)**: Mengonversi reservasi yang telah dibayar menjadi entitas `Penyewa` aktif atau mendaftarkan penyewa *walk-in* secara langsung. Tarif kamar saat kontrak dibuat disalin ke kolom `penyewa.harga_sewa` agar tagihan bulanan penghuni lama tidak ikut berubah ketika admin menaikkan harga katalog kamar di kemudian hari.
-- **Perpanjangan Sewa & Pengingat Kontrak**: Memperbarui masa berlaku kontrak (`tanggal_keluar_seharusnya`) beserta penerbitan invoice perpanjangan (`EXT-*`), serta memindai kontrak yang akan habis pada H-14, H-7, H-3, dan H-0.
-- **Inspeksi *Check-Out* & Audit Uang Jaminan (*Security Deposit*)**: Mengelola penghentian kontrak penyewa dengan memeriksa kondisi fisik kamar. Apabila terdapat kerusakan fasilitas, potongan biaya perbaikan secara otomatis dikurangkan dari saldo deposit dan dibukukan sebagai transaksi kas keluar pada tabel `pengeluaran` (kategori `maintenance`). Sisa deposit yang dikembalikan kepada penyewa juga otomatis dibukukan sebagai kas keluar (kategori `lainnya`), sementara status kamar dialihkan ke `maintenance` atau `tersedia` sesuai keputusan inspeksi admin.
-
-#### 6. Property Operations, Executive Analytics & CMS Hub
-Modul ini mendukung kegiatan operasional harian pengelola, pemeliharaan properti, pelaporan keuangan, dan pembaruan konten situs.
-- **Manajemen Master Kamar, Fasilitas, & *Soft Deletes***: Mengelola 32 unit kamar dan fasilitasnya. Penghapusan data menerapkan *Soft Deletes* dengan pembubuhan akhiran `_deleted_[timestamp]` dan kolom virtual MySQL agar data historis terjaga tanpa menghalangi penggunaan ulang nomor kamar yang sama.
-- **Penanganan Tiket Keluhan Penghuni**: Memproses laporan kerusakan fasilitas dari penyewa aktif beserta lampiran foto bukti melalui tahapan status `pending`, `diproses`, hingga `selesai`.
-- **Kalender Okupansi Visual & Laporan Keuangan**: Menyusun jadwal masuk, masa tinggal, dan jadwal keluar seluruh kamar ke dalam matriks kalender 42 sel, serta mengagregasi pemasukan tagihan lunas dan pengeluaran operasional menjadi laporan laba-rugi yang dapat diekspor ke format PDF (via `DompdfGenerator`) maupun Excel/CSV.
-- **Pengaturan Konten Dinamis (CMS)**: Mengelola parameter global situs, rekening bank pembayaran manual, skema diskon promo, FAQ, galeri, testimoni, dan peraturan kost melalui tabel `settings` yang didukung cache memori dan basis data.
-
-#### 7. Notification Service, Event Bus & Storage Handler
-Modul infrastruktur fungsional ini menangani komunikasi keluar dan penyimpanan berkas fisik di latar belakang.
-- **Orkestrasi Notifikasi Berbasis Peristiwa (*Event-Driven Queue*)**: Menangkap 11 *Domain Events* bisnis melalui 12 *Listeners* dan mendorong 8 jenis *Queue Jobs* ke tabel `jobs` dengan penjedaan bertahap (*staggered delay*). Pekerja antrean merakit pesan menggunakan `NotificationTemplateBuilder` lalu mengirimkannya ke WhatsApp melalui `FonnteService` dan ke surel melalui `Symfony Mailer`.
-- **Storage Handler & Pembersihan Berkas Gagal**: Mengelola penyimpanan berkas unggahan pada disk `storage/app/public` (meliputi folder `kamar/`, `keluhan/`, `nota_pengeluaran/`, `galleries/`, `reviews/`, dan `settings/`) yang dilengkapi mekanisme penghapusan berkas otomatis apabila transaksi basis data mengalami kegagalan (*rollback file cleanup*).
-
----
-
-### 2.2. High-Level Context Diagram
-Diagram konteks tingkat tinggi berikut menunjukkan bagaimana data mengalir dari para aktor dan pemicu eksternal, masuk ke dalam tujuh modul fungsional sistem, hingga disimpan ke lapisan persistensi atau diteruskan ke layanan pihak ketiga.
-
-```mermaid
-flowchart TB
-    subgraph Actors ["Aktor Pengguna & Pemicu Waktu"]
-        Guest["Tamu Publik (Guest)"]
-        Prospective["Calon Penyewa"]
-        ActiveTenant["Penyewa Aktif"]
-        Admin["Administrator"]
-        Cron["Laravel Task Scheduler (Cron 1 Menit)"]
-    end
-
-    subgraph FunctionalModules ["Blok Fungsional Sistem (Asri Boarding House)"]
-        ModPublic["1. Public Discovery & Guest Interaction Module"]
-        ModAuth["2. Identity, Multi-Portal Auth & Access Guard"]
-        ModRes["3. Reservation & Pre-Payment Negotiation Engine"]
-        ModPay["4. Transaction, Billing & Hybrid Payment Engine"]
-        ModTenant["5. Tenant Lifecycle, Contract & Deposit Audit"]
-        ModOps["6. Property Operations, Analytics & CMS Hub"]
-        ModNotif["7. Notification Service, Event Bus & Storage Handler"]
-    end
-
-    subgraph Persistence ["Lapisan Penyimpanan Data & Berkas"]
-        ClientStore[("Browser Storage (LocalStorage, SessionStorage, Cookie)")]
-        Database[("MySQL 8.x Database (22 Tabel Bisnis + Antrean & Sesi)")]
-        DiskStore[("Local Filesystem (storage/app/public)")]
-    end
-
-    subgraph ExternalSystems ["Layanan Eksternal Pihak Ketiga"]
-        Midtrans["Midtrans Payment Gateway (Snap API & Webhook)"]
-        Fonnte["Fonnte WhatsApp API Gateway"]
-        GoogleSSO["Google Identity OAuth 2.0"]
-        SMTP["SMTP Mail Server"]
-    end
-
-    Guest -->|Eksplorasi, Simulasi Harga, Guest Chat| ModPublic
-    Prospective -->|Login/OAuth, Lengkapi Profil| ModAuth
-    ActiveTenant -->|Login, Akses Dasbor| ModAuth
-    Admin -->|Login Admin| ModAuth
-
-    ModAuth <-->|Redirect & Verifikasi Token| GoogleSSO
-    ModAuth -->|Simpan Sesi & Preferensi| ClientStore
-    ModPublic -->|Token Guest Chat & Tema| ClientStore
-
-    Prospective -->|Ajukan Reservasi & Chat Pra-Bayar| ModRes
-    ModRes -->|Hitung Tarif & Cek Ketersediaan| ModPay
-    Prospective -->|Bayar DP 30% / Lunas 100%| ModPay
-    ActiveTenant -->|Bayar Tagihan Bulanan & Cetak Nota A5| ModPay
-    ActiveTenant -->|Lapor Keluhan Fasilitas| ModOps
-
-    Admin -->|Konfirmasi Reservasi, Walk-in, Check-Out Deposit| ModTenant
-    Admin -->|Konfirmasi Cash, Pantau Tagihan| ModPay
-    Admin -->|Kelola Kamar, Keluhan, Pengeluaran, Laporan, CMS| ModOps
-
-    Cron -->|Trigger 9 Jadwal Otomatis| ModPay
-    Cron -->|Trigger Reminder Kontrak & Pembersihan| ModTenant
-
-    ModPay <-->|Request Snap Token & Cek Status| Midtrans
-    Midtrans -->|Webhook Callback SHA-512| ModPay
-    ModTenant -->|Terbitkan Tagihan Awal / Sisa DP / Pengeluaran Deposit| ModPay
-
-    ModRes & ModPay & ModTenant & ModOps -->|Pancarkan Domain Events & Unggah Berkas| ModNotif
-    ModNotif -->|Kirim Pesan WA Berjeda| Fonnte
-    ModNotif -->|Kirim Email Transaksional| SMTP
-
-    ModPublic & ModAuth & ModRes & ModPay & ModTenant & ModOps & ModNotif <-->|Transaksi ACID & Kueri Relasional| Database
-    ModNotif & ModOps <-->|Simpan & Hapus Berkas Fisik| DiskStore
-```
-
----
-
-## 3. End-to-End Functional Flows (Alur Fungsional Menyeluruh)
-
-Bagian ini menjabarkan secara rinci bagaimana sistem memproses empat skenario bisnis paling kritis di balik layar, mulai dari pengiriman data di antarmuka pengguna hingga pembaruan basis data dan pemicuan layanan eksternal.
-
-### 3.1. Skenario 1: Alur Transaksi Reservasi Daring, Pembayaran Midtrans (DP 30% / Lunas), Webhook, hingga Konfirmasi Kontrak
-Skenario ini menggambarkan siklus hidup pemesanan kamar secara daring oleh calon penyewa sampai resmi berstatus sebagai penghuni aktif.
-
-#### Tahapan Pemrosesan Sistem:
-1. **Pengiriman Payload Reservasi (*Client Request*)**:
-   Calon penyewa yang telah melewati penapisan `EnsureProfileIsComplete` mengisi formulir pemesanan kamar pada halaman detail kamar dan mengirimkan permintaan `POST /penyewa/reservasi`. Payload berisi `kamar_id`, `tipe_sewa` (`harian`, `mingguan`, atau `bulanan`), `tanggal_mulai`, `durasi`, `metode_pembayaran` (`midtrans` atau `cash`), opsi pembayaran uang muka (`is_dp`), serta `catatan_user`.
-2. **Sanitasi dan Validasi Aturan Bisnis (*Validation Layer*)**:
-   Kelas `StoreReservasiRequest` membersihkan masukan teks, lalu menjalankan dua aturan validasi kustom:
-   - `KamarTersediaRule`: Memeriksa bahwa baris pada tabel `kamar` berstatus `tersedia` dan melakukan kueri ke indeks komposit `idx_reservasi_overlap` untuk memastikan tidak ada reservasi aktif lain (`pending`, `dp`, `lunas`, `dikonfirmasi`) yang memiliki irisan tanggal antara `tanggal_mulai` dan `tanggal_selesai`.
-   - `TanpaPenyewaAktifLainRule`: Memastikan `user_id` pemesan tidak sedang memiliki kontrak `penyewa` berstatus `aktif` ataupun pengajuan `reservasi` lain yang masih berjalan.
-3. **Kalkulasi Harga, Pemecahan DP, dan Penyimpanan Awal (*Service & Persistence*)**:
-   `ReservasiService::buatReservasi()` membuka blok `DB::transaction()` dan mengunci baris kamar menggunakan `lockForUpdate()`. Sistem menghitung `tanggal_selesai` serta `total_harga` (termasuk memotong diskon paket promo jika sewa bulanan memenuhi syarat 3 bulan atau 12 bulan). Apabila `is_dp` bernilai `true`, sistem menghitung `nominal_dp = round(total_harga * 0.30)` dan `nominal_sisa = total_harga - nominal_dp`. Data disimpan ke tabel `reservasi` dengan status `pending`.
-4. **Pemicuan Notifikasi Pengajuan Awal (*Event Dispatch*)**:
-   Begitu transaksi penyimpanan selesai, sistem memancarkan event `ReservasiDibuat`. Listener `HandleReservasiDibuat` mendorong `KirimNotifikasiUserReservasiJob` dan `KirimNotifikasiAdminReservasiJob` ke tabel `jobs` untuk mengirimkan rincian pemesanan ke WhatsApp calon penyewa dan admin melalui *Fonnte API*, sementara `NotifikasiKhususSubscriber` mencatat jejak audit ke tabel `notifikasi_khusus`.
-5. **Penerbitan *Snap Token* dan Pembayaran Digital (*Payment Gateway Interaction*)**:
-   Pada halaman detail reservasi (`/penyewa/reservasi/{reservasi}`), calon penyewa menekan tombol bayar yang memicu permintaan AJAX `POST /penyewa/reservasi/{reservasi}/token`. `SnapTokenController` memverifikasi kepemilikan melalui `ReservasiPolicy`, membentuk kode `order_id` unik (berawalan `DP-` jika membayar uang muka atau `RSV-` jika membayar lunas), lalu memanggil `MidtransService` untuk meminta `snap_token` ke server Midtrans. Token disimpan ke kolom `reservasi.snap_token` dan dikembalikan ke peramban untuk membuka jendela *Midtrans Snap*.
-6. **Penerimaan Webhook dan Pembaruan Status Pembayaran (*Webhook Callback*)**:
-   Setelah pengguna menyelesaikan pembayaran (misalnya melalui QRIS atau Virtual Account), server Midtrans mengirimkan paket HTTP `POST` ke `/api/midtrans/callback-reservasi`:
-   - Middleware `VerifyMidtransSignature` menghitung hash SHA-512 dari gabungan `order_id + status_code + gross_amount + server_key` dan mencocokkannya dengan `signature_key` menggunakan `hash_equals()`. Jika tidak cocok, permintaan langsung ditolak (`HTTP 403`).
-   - `MidtransReservasiCallbackController` membuka transaksi basis data dengan `lockForUpdate()` pada baris `reservasi` terkait.
-   - Jika `transaction_status` bernilai `settlement` atau `capture`, status reservasi diperbarui menjadi `dp` (apabila `is_dp == true`) atau `lunas` (apabila bayar penuh 100%), disertai pencatatan `transaction_id`. Sistem memancarkan event `ReservasiDibayar` untuk memberi tahu admin dan calon penyewa bahwa pembayaran telah diterima.
-7. **Verifikasi Admin dan Konversi Menjadi Penyewa Aktif (*Contract Activation*)**:
-   Admin membuka halaman verifikasi reservasi di `/admin/reservasi/{reservasi}`, memeriksa kesesuaian data, memasukkan nilai uang jaminan (`deposit`), lalu mengirimkan formulir konfirmasi. `TransisiPenyewaService` menjalankan langkah atomik berikut di dalam satu transaksi basis data:
-   - Membuat baris baru pada tabel `penyewa` dengan status `aktif`, menyalin tarif sewa ke `penyewa.harga_sewa` (*immutable rent snapshot*), serta menyalin data `nik`, `nama_wali`, dan `no_wali`.
-   - Mengubah status pada tabel `kamar` menjadi `terisi`.
-   - Mengubah status pada tabel `reservasi` menjadi `dikonfirmasi`, mengisi `penyewa_id`, `dikonfirmasi_oleh`, dan `tanggal_konfirmasi`.
-   - Membuat baris `tagihan` awal (`order_id: RSV-INITIAL-*`) berstatus `lunas` beserta catatan pelunasannya di tabel `pembayaran`.
-   - Apabila reservasi menggunakan skema DP (`is_dp == true`), sistem secara otomatis menerbitkan baris `tagihan` kedua berstatus `pending` sebesar 70% (`nominal_sisa`) dengan awalan `order_id: SISA-DP-*` agar penyewa dapat melunasi sisanya melalui portal penyewa aktif.
-   - Memancarkan event `ReservasiDikonfirmasi` yang memicu pengiriman pesan selamat datang via WhatsApp dan membuka akses penuh ke Dasbor Penyewa Aktif.
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor User as Calon Penyewa
-    participant UI as Antarmuka Web (Blade/JS)
-    participant Guard as Request & Middleware Guard
-    participant Svc as Reservasi & Transisi Service
-    participant DB as MySQL 8.x (InnoDB)
-    participant Midtrans as Midtrans Gateway
-    participant Worker as Queue Worker & Fonnte WA
-
-    User->>UI: Kirim form pemesanan kamar (POST /penyewa/reservasi)
-    UI->>Guard: Validasi StoreReservasiRequest (KamarTersediaRule & TanpaPenyewaAktifLainRule)
-    Guard->>Svc: buatReservasi(validatedData)
-    Svc->>DB: DB::transaction() + lockForUpdate() pada Kamar
-    Svc->>DB: Hitung tarif promo & pecah DP 30% (jika is_dp = true)
-    Svc->>DB: INSERT reservasi (status: 'pending')
-    Svc-->>Worker: Pancarkan Event ReservasiDibuat (Staggered Delay)
-    Worker->>Worker: Kirim WA ke Calon Penyewa & Admin via Fonnte API
-    Svc-->>UI: Redirect ke /penyewa/reservasi/{id} (Tampilkan 5-Step Stepper)
-
-    User->>UI: Klik tombol Bayar Sekarang
-    UI->>Guard: POST /penyewa/reservasi/{id}/token (Cek ReservasiPolicy)
-    Guard->>Svc: Minta Snap Token (order_id: DP-* atau RSV-*)
-    Svc->>Midtrans: POST Snap API v2 (gross_amount sesuai DP atau Lunas)
-    Midtrans-->>Svc: Kembalikan snap_token
-    Svc->>DB: UPDATE reservasi SET snap_token, order_id
-    Svc-->>UI: JSON { snap_token }
-    UI->>Midtrans: Buka Popup window.snap.pay(snap_token)
-    User->>Midtrans: Bayar melalui QRIS / Virtual Account / e-Wallet
-
-    Midtrans->>Guard: POST /api/midtrans/callback-reservasi (Webhook Payload)
-    Guard->>Guard: VerifyMidtransSignature (Validasi Hash SHA-512)
-    Guard->>DB: DB::transaction() + lockForUpdate() pada Reservasi
-    Guard->>DB: UPDATE reservasi SET status = 'dp' atau 'lunas', transaction_id
-    Guard-->>Worker: Pancarkan Event ReservasiDibayar
-    Guard-->>Midtrans: HTTP 200 OK
-
-    Note over UI,DB: Admin memeriksa pembayaran & mengonfirmasi reservasi disertai input Deposit
-    UI->>Svc: POST /admin/reservasi/{id}/konfirmasi (KonfirmasiReservasiRequest)
-    Svc->>DB: DB::transaction() + lockForUpdate()
-    Svc->>DB: INSERT penyewa (status: 'aktif', harga_sewa: snapshot, deposit)
-    Svc->>DB: UPDATE kamar SET status = 'terisi'
-    Svc->>DB: INSERT tagihan (RSV-INITIAL-*) & pembayaran (status: 'lunas')
-    opt Jika Reservasi Menggunakan DP 30% (is_dp == true)
-        Svc->>DB: INSERT tagihan kedua sebesar 70% (order_id: SISA-DP-*, status: 'pending')
-    end
-    Svc->>DB: UPDATE reservasi SET status = 'dikonfirmasi', penyewa_id, dikonfirmasi_oleh
-    Svc-->>Worker: Pancarkan Event ReservasiDikonfirmasi (Kirim WA Selamat Datang)
-```
-
----
-
-### 3.2. Skenario 2: Alur Penagihan Bulanan Otomatis, Evaluasi Keterlambatan Bertingkat, Denda Flat 5% Idempotent, dan Pelunasan Hibrida
-Skenario ini menjelaskan bagaimana mesin penagihan latar belakang mengelola piutang bulanan secara otomatis, menerapkan aturan denda satu kali tanpa risiko duplikasi, serta memproses pelunasannya.
-
-#### Tahapan Pemrosesan Sistem:
-1. **Penerbitan Tagihan Serentak Tanggal 1 (`tagihan:generate-bulanan`)**:
-   Setiap tanggal 1 pukul `00:05` WIB, *Laravel Task Scheduler* memicu perintah `GenerateBulananTagihan` yang memanggil `BillingService::generateTagihanBulanan()`.
-   - Sistem mengambil daftar seluruh entitas `penyewa` yang berstatus `aktif`.
-   - Untuk setiap penyewa, sistem memeriksa apakah baris pada tabel `tagihan` untuk kombinasi `penyewa_id`, `periode_bulan` saat ini, dan `periode_tahun` saat ini sudah tersedia. Jika sudah ada, penyewa tersebut dilewati (*idempotent skip*).
-   - Jika belum ada, sistem menentukan nilai pokok tagihan dari kolom `penyewa.harga_sewa` (atau menggunakan `kamar.harga_bulan` apabila `harga_sewa` kosong), menetapkan `tanggal_jatuh_tempo` pada tanggal 10 bulan berjalan, dan menyimpan baris baru ke tabel `tagihan` dengan status `pending` serta kode `order_id` berformat `INV-{YYYYMM}-{ID_PENYEWA}-{TIMESTAMP}`.
-   - Sistem memancarkan event `TagihanDibuat` yang menjadwalkan `KirimNotifikasiTagihanJob` untuk mengirim rincian tagihan ke WhatsApp dan surel penyewa.
-2. **Evaluasi Keterlambatan Harian & Penjaga Idempotensi Denda (`tagihan:proses-keterlambatan`)**:
-   Setiap hari pukul `01:00` WIB, penjadwal menjalankan `BillingService::prosesKeterlambatan()` untuk memindai seluruh tagihan berstatus `pending` atau `terlambat` yang memiliki `tanggal_jatuh_tempo < today()`:
-   - **Tahap 1: Keterlambatan Bulan Pertama (Lewat Tanggal 10 pada Bulan Tagihan Berjalan)**:
-     Apabila tagihan masih berada di bulan dan tahun yang sama dengan periode terbitnya, sistem membuka transaksi basis data dengan `lockForUpdate()`, mengubah `status` menjadi `terlambat`, dan menetapkan `bulan_keterlambatan = 1` sementara `nominal_denda` tetap `0.00`. Sistem memancarkan event `ReminderPenyewa` (`KirimReminderJatuhTempoJob`) untuk mengirim pesan pengingat ramah ke WhatsApp penyewa.
-   - **Tahap 2: Eskalasi Bulan Kedua (Memasuki Bulan Kalender Berikutnya)**:
-     Apabila bulan kalender telah berganti (misalnya tagihan periode Oktober belum dibayar hingga memasuki tanggal 1 November atau setelahnya), sistem menaikkan `bulan_keterlambatan` menjadi `>= 2`. Di titik ini, sistem memeriksa **Idempotency Guard** (`nominal_denda == 0`):
-     - Jika `nominal_denda` masih bernilai `0`, sistem menghitung denda flat sebesar **5% dari `nominal_pokok`** (`nominal_denda = 0.05 * nominal_pokok`), memperbarui `nominal_total = nominal_pokok + nominal_denda`, lalu menyimpan perubahan tersebut. Sistem kemudian memancarkan event `DendaDikenakan` (ke penyewa) dan `NotifikasiWali` (`KirimNotifikasiWaliJob`) yang mengirimkan surat pemberitahuan tunggakan resmi ke nomor WhatsApp orang tua/wali (`penyewa.no_wali`).
-     - Jika pada hari-hari berikutnya penjadwal kembali memindai tagihan yang sama, kondisi `nominal_denda == 0` sudah tidak terpenuhi sehingga nominal denda tidak akan pernah ditambahkan dua kali.
-3. **Pelunasan Tagihan melalui Dua Kanal (Hibrida)**:
-   - **Jalur Daring (*Midtrans Snap*)**: Penyewa aktif menekan tombol bayar pada `/penyewa/tagihan`, meminta *Snap Token* melalui `POST /penyewa/pembayaran/{tagihan}/token` (dilindungi `TagihanPolicy` dan `EnsureTenantIsActive`), lalu menyelesaikan pembayaran. Saat webhook Midtrans masuk ke `/api/midtrans/callback` dan lolos verifikasi SHA-512, `MidtransCallbackController` mengunci baris `tagihan` dan `pembayaran`, mengubah status tagihan menjadi `lunas` beserta `metode_pembayaran = 'midtrans'`, menyimpan bukti kriptografi (`signature_key` dan `response_json`) di tabel `pembayaran`, lalu memancarkan event `PembayaranBerhasil`.
-   - **Jalur Kasir Tunai / Transfer Manual (`konfirmasiCash`)**: Penyewa menyerahkan uang tunai atau mentransfer ke rekening bank kost yang tertera di halaman tagihan. Admin membuka `/admin/tagihan`, memverifikasi dana masuk, dan mengirim formulir `POST /admin/tagihan/{tagihan}/konfirmasi-cash`. `TagihanService` mengunci baris tagihan, membuat catatan di tabel `pembayaran` dengan kode transaksi `CASH-*` dan mencatat ID admin pada `dikonfirmasi_oleh`, mengubah status tagihan menjadi `lunas` (`metode_pembayaran = 'cash'`), lalu memancarkan event `PembayaranCashDikonfirmasi` dan `PembayaranBerhasil`.
-4. **Distribusi Bukti Lunas dan Unduh Kuitansi PDF A5**:
-   Event pelunasan memicu `KirimNotifikasiPembayaranJob` untuk mengirim ucapan terima kasih dan ringkasan pelunasan ke WhatsApp serta surel penyewa. Penyewa maupun admin selanjutnya dapat mengakses `/penyewa/nota/{pembayaran}/cetak` (dijaga oleh `PembayaranPolicy`), di mana peramban merender tata letak kuitansi A5 berstempel digital menjadi berkas PDF siap unduh menggunakan `html2pdf.js`.
+### 2.1. Diagram Visual Peta Navigasi Seluruh Sistem
+Diagram di bawah ini memetakan hierarki perpindahan layar dari halaman utama (*Root* `/`) menuju seluruh layar di setiap portal.
 
 ```mermaid
 flowchart TD
-    A["Scheduler Tgl 1 (00:05 WIB): tagihan:generate-bulanan"] --> B{"Tagihan Periode Ini Sudah Ada?"}
-    B -- "Sudah Ada" --> C["Lewati Penyewa (Idempotent Skip)"]
-    B -- "Belum Ada" --> D["Ambil Tarif penyewa.harga_sewa (Snapshot)"]
-    D --> E["INSERT tagihan (status: 'pending', Jatuh Tempo Tgl 10)"]
-    E --> F["Pancarkan Event TagihanDibuat (Kirim WA & Email)"]
+    subgraph PublicZone ["1. Zona Publik & Eksplorasi Tamu (Guest)"]
+        PUB01["SCR-PUB-01: Beranda Utama (/)"]
+        PUB02["SCR-PUB-02: Fasilitas Kost (/fasilitas)"]
+        PUB03["SCR-PUB-03: Katalog Kamar (/kamar)"]
+        PUB04["SCR-PUB-04: Detail Kamar & Kalkulator (/kamar/{kamar})"]
+        PUB05["SCR-PUB-05: Cara Booking (/cara-booking)"]
+        PUB06["SCR-PUB-06: Testimoni Penghuni (/testimoni)"]
+        PUB07["SCR-PUB-07: Tentang Kami (/tentang-kami)"]
+        PUB08["SCR-PUB-08: Tanya Jawab FAQ (/faq)"]
+        PUB09["SCR-PUB-09: Galeri Properti (/galeri)"]
+        FAB["FAB-CHAT-01: Widget Guest Chat & FAB-WA-01: Tombol WA"]
+    end
 
-    F --> G{"Dilunasi Sebelum Lewat Tgl 10?"}
-    G -- "Ya" --> H["Proses Pelunasan (Midtrans Webhook / Admin Cash)"]
+    subgraph AuthZone ["2. Zona Autentikasi & Onboarding Profil"]
+        AUTH01["SCR-AUTH-01: Login Calon Penyewa (/reservasi/login)"]
+        AUTH02["SCR-AUTH-02: Registrasi Akun (/reservasi/register)"]
+        AUTH03["SCR-AUTH-03: Login Penyewa Aktif (/penyewa/login)"]
+        AUTH04["SCR-AUTH-04: Login Administrator (/admin/login)"]
+        AUTH05["SCR-AUTH-05: Lupa Kata Sandi (/forgot-password & /admin/forgot-password)"]
+        AUTH06["SCR-AUTH-06: Reset Kata Sandi (/reset-password/{token})"]
+        AUTH07["SCR-AUTH-07: Wajib Ganti Sandi Awal (/admin/force-change-password)"]
+        AUTH08["SCR-AUTH-08: Onboarding Lengkapi Profil (/profil/complete)"]
+    end
 
-    G -- "Tidak" --> I["Scheduler Harian (01:00 WIB): tagihan:proses-keterlambatan"]
-    I --> J{"Sudah Masuk Bulan Kalender Berikutnya?"}
-    J -- "Belum (Masih Bulan ke-1)" --> K["lockForUpdate: Set status = 'terlambat', bulan_keterlambatan = 1"]
-    K --> L["Denda = Rp 0 & Pancarkan Event ReminderPenyewa (WA Pengingat)"]
-    L --> H
+    subgraph TenantZone ["3. Zona Portal Calon Penyewa & Penyewa Aktif"]
+        RES01["SCR-RES-01: Daftar Pemesanan Reservasi (/penyewa/reservasi/pemesanan)"]
+        RES02["SCR-RES-02: Detail Reservasi & 5-Step Stepper (/penyewa/reservasi/{id})"]
+        RES03["SCR-RES-03: Ruang Obrolan Reservasi (/penyewa/reservasi/{id}/chat)"]
+        RES04["SCR-RES-04: Riwayat Pembayaran Reservasi (/penyewa/reservasi/pembayaran)"]
+        RES05["SCR-RES-05: Riwayat Obrolan Reservasi (/penyewa/reservasi/riwayat-chat)"]
 
-    J -- "Sudah (Bulan ke-2 atau Lebih)" --> M{"Cek Idempotency Guard: nominal_denda == 0?"}
-    M -- "Tidak (Sudah Pernah Dikenai Denda)" --> N["Pertahankan Nominal (Tanpa Duplikasi Denda)"]
-    M -- "Ya (Belum Pernah Dikenai Denda)" --> O["lockForUpdate: Hitung Denda Flat 5% dari nominal_pokok"]
-    O --> P["Update nominal_total = nominal_pokok + nominal_denda"]
-    P --> Q["Pancarkan Event DendaDikenakan & NotifikasiWali (WA ke Orang Tua/Wali)"]
-    N --> H
-    Q --> H
+        TEN01["SCR-TEN-01: Dasbor Penyewa Aktif (/penyewa/dashboard)"]
+        TEN02["SCR-TEN-02: Daftar Tagihan Sewa (/penyewa/tagihan)"]
+        TEN03["SCR-TEN-03: Detail & Bayar Tagihan (/penyewa/tagihan/{id})"]
+        TEN04["SCR-TEN-04: Cetak Kuitansi PDF A5 (/penyewa/nota/{id}/cetak)"]
+        TEN05["SCR-TEN-05: Daftar Keluhan Fasilitas (/penyewa/keluhan)"]
+        TEN06["SCR-TEN-06: Form & Detail Keluhan (/penyewa/keluhan/create & /{id})"]
+        TEN07["SCR-TEN-07: Peraturan & Kotak Notifikasi (/penyewa/peraturan & /notifikasi)"]
+        TEN08["SCR-TEN-08: Pengaturan Profil & Akun (/profile)"]
+    end
 
-    H --> R["DB::transaction: INSERT pembayaran & UPDATE tagihan SET status = 'lunas'"]
-    R --> S["Pancarkan Event PembayaranBerhasil & Render Kuitansi PDF A5 (html2pdf.js)"]
+    subgraph AdminZone ["4. Zona Portal Administrator"]
+        ADM01["SCR-ADM-01: Dasbor Analitik Eksekutif (/admin/dashboard)"]
+        ADM02["SCR-ADM-02: Kalender Okupansi 42 Sel (/admin/kalender)"]
+        ADM03["SCR-ADM-03: Manajemen Kamar & Form (/admin/kamar)"]
+        ADM04["SCR-ADM-04: Master Fasilitas (/admin/fasilitas)"]
+        ADM05["SCR-ADM-05: Manajemen Penyewa & Form Walk-in (/admin/penyewa)"]
+        ADM06["SCR-ADM-06: Detail Kontrak & Perpanjang (/admin/penyewa/{id})"]
+        ADM07["SCR-ADM-07: Form Check-Out & Klaim Deposit (/admin/penyewa/{id}/checkout)"]
+        ADM08["SCR-ADM-08: Daftar & Verifikasi Reservasi (/admin/reservasi)"]
+        ADM09["SCR-ADM-09: Manajemen Tagihan & Kasir Cash (/admin/tagihan)"]
+        ADM10["SCR-ADM-10: Pembukuan Pengeluaran (/admin/pengeluaran)"]
+        ADM11["SCR-ADM-11: Laporan Keuangan Laba-Rugi (/admin/laporan)"]
+        ADM12["SCR-ADM-12: Tiket Keluhan Penghuni (/admin/keluhan)"]
+        ADM13["SCR-ADM-13: Konsol Guest Live Chat (/admin/guest-chats)"]
+        ADM14["SCR-ADM-14: Broadcast Notifikasi & Audit Log (/admin/notifikasi & /notifikasi-khusus)"]
+        ADM15["SCR-ADM-15: Pengaturan CMS, FAQ, Galeri, Review, Peraturan (/admin/pengaturan-konten)"]
+    end
+
+    PUB01 --> PUB02 & PUB03 & PUB05 & PUB06 & PUB07 & PUB08 & PUB09 & FAB
+    PUB03 --> PUB04
+    PUB04 -->|Klik Pesan Kamar| AUTH01
+    AUTH01 <--> AUTH02
+    AUTH01 & AUTH03 & AUTH04 --> AUTH05 --> AUTH06
+    AUTH01 & AUTH02 & AUTH03 & AUTH04 --> AUTH07 --> AUTH08
+
+    AUTH08 -->|Role: Calon Penyewa| RES01
+    RES01 --> RES02 & RES04 & RES05
+    RES02 --> RES03
+    RES02 -->|Setelah Dikonfirmasi Admin| TEN01
+
+    AUTH08 -->|Role: Penyewa Aktif| TEN01
+    TEN01 --> TEN02 & TEN05 & TEN07 & TEN08
+    TEN02 --> TEN03 --> TEN04
+    TEN05 --> TEN06
+
+    AUTH08 -->|Role: Admin| ADM01
+    ADM01 --> ADM02 & ADM03 & ADM04 & ADM05 & ADM08 & ADM09 & ADM10 & ADM11 & ADM12 & ADM13 & ADM14 & ADM15
+    ADM05 --> ADM06 --> ADM07
 ```
 
 ---
 
-### 3.3. Skenario 3: Alur Kontrak Penyewa Walk-in, Penanganan Keluhan, Check-Out, dan Audit Klaim Deposit
-Skenario ini merangkum pemrosesan fungsional untuk pendaftaran penghuni langsung di lokasi kost (*offline*), pemeliharaan fasilitas selama masa huni, hingga penutupan kontrak dan pembukuan uang jaminan.
-
-#### Tahapan Pemrosesan Sistem:
-1. **Pendaftaran Penyewa *Walk-in* & Distribusi Akun Otomatis**:
-   Saat calon penghuni datang langsung ke lokasi kost, admin mengisi formulir `/admin/penyewa/create` (`StorePenyewaRequest`). Di dalam `TransisiPenyewaService`, sistem membuka transaksi basis data:
-   - Membuat akun baru di tabel `users` dengan alamat surel penyewa, menyetel kata sandi awal menggunakan nomor HP penyewa yang di-hash dengan Bcrypt, serta mengaktifkan penanda `require_password_change = true`.
-   - Membuat baris kontrak di tabel `penyewa` berstatus `aktif`, membekukan tarif kamar ke `penyewa.harga_sewa`, menyimpan nominal `deposit`, dan menghitung `tanggal_keluar_seharusnya`.
-   - Mengubah status kamar di tabel `kamar` menjadi `terisi` dan menerbitkan tagihan sewa awal.
-   - Mendorong `KirimWelcomeMessageJob` ke antrean latar belakang untuk mengirimkan informasi nomor kamar beserta kredensial login (surel dan kata sandi awal) ke WhatsApp penyewa. Ketika penyewa login pertama kali, middleware `EnsurePasswordChanged` memaksanya mengganti kata sandi tersebut sebelum masuk ke dasbor.
-2. **Alur Pelaporan dan Resolusi Tiket Keluhan Fasilitas**:
-   - Penyewa aktif yang mendapati kerusakan fasilitas mengirim laporan melalui `POST /penyewa/keluhan` (`StoreKeluhanRequest`) disertai unggahan foto bukti maksimal 2MB.
-   - `Penyewa\KeluhanController` menyimpan berkas foto ke `storage/app/public/keluhan/` dan membuat baris baru di tabel `keluhan` dengan status `pending`. Apabila penyimpanan ke basis data gagal, blok `catch` langsung menghapus berkas foto yang baru diunggah (*rollback file cleanup*).
-   - Event `KeluhanDibuat` memicu pengiriman pesan peringatan WhatsApp ke admin.
-   - Admin menindaklanjuti laporan melalui `/admin/keluhan/{keluhan}` dengan mengubah status menjadi `diproses` atau `selesai` disertai pengisian `tanggapan_admin`. Saat status berubah menjadi `selesai`, sistem mengisi kolom `tanggal_selesai` secara otomatis dan memancarkan event `KeluhanDitanggapi` untuk mengabarkan hasil perbaikan ke WhatsApp penyewa.
-3. **Proses *Check-Out*, Inspeksi Kamar, dan Pembukuan Otomatis Klaim Deposit**:
-   Ketika masa kontrak berakhir dan penghuni menyerahkan kunci kamar, admin membuka menu `/admin/penyewa/{penyewa}/checkout` dan mengirimkan hasil pemeriksaan fisik kamar:
-   - `TransisiPenyewaService` memulai `DB::transaction()` dan mengunci baris `penyewa` serta `kamar`.
-   - **Audit Kerusakan & Potongan Deposit**: Apabila admin menandai adanya kerusakan fasilitas dan memasukkan nominal `potongan_deposit` (beserta unggahan foto nota perbaikan ke `storage/app/public/nota_pengeluaran/`), sistem memvalidasi bahwa potongan tidak melebihi saldo `penyewa.deposit`. Nilai potongan tersebut langsung dicatat sebagai baris baru pada tabel `pengeluaran` dengan kategori `maintenance`.
-   - **Pengembalian Sisa Deposit**: Sistem menghitung sisa uang jaminan (`sisa_deposit = deposit - potongan_deposit`). Apabila `sisa_deposit > 0`, sistem secara otomatis membuat baris baru pada tabel `pengeluaran` dengan kategori `lainnya` sebagai catatan kas keluar pengembalian deposit kepada penyewa, lalu mereset saldo deposit pada kontrak menjadi `0`.
-   - **Penutupan Kontrak & Penahanan Status Kamar**: Status penyewa diubah menjadi `nonaktif` disertai pencatatan `tanggal_keluar` aktual. Status unit kamar pada tabel `kamar` tidak langsung dibuka secara sembarangan, melainkan diubah menjadi `maintenance` (jika perlu perbaikan lanjutan) atau `tersedia` sesuai pilihan inspeksi admin.
-
----
-
-### 3.4. Skenario 4: Proses Penanganan Error, Gangguan Jaringan, dan Mekanisme Fallback
-Sistem dirancang dengan mekanisme pertahanan berlapis (*defensive fallback*) agar gangguan jaringan sementara atau penghentian proses oleh pengguna tidak menyebabkan inkonsistensi data maupun kebocoran sumber daya.
-
-#### 1. Keterlambatan atau Kegagalan Pengiriman Webhook Midtrans
-- **Kondisi Masalah**: Pengguna telah menyelesaikan pembayaran di jendela *Midtrans Snap*, namun webhook dari server Midtrans ke endpoint `/api/midtrans/callback` atau `/api/midtrans/callback-reservasi` terlambat masuk akibat gangguan rute jaringan internet.
-- **Perilaku Fungsional & Fallback**:
-  - Sistem menyediakan mekanisme pemeriksaan status sinkron (*Synchronous API Fallback*) melalui metode `MidtransService::checkTransactionStatus($orderId)` yang melakukan panggilan HTTP `GET` langsung ke endpoint status Midtrans API v2 untuk menarik status transaksi terkini dan menyinkronkannya ke basis data.
-  - Apabila pengguna menutup jendela *Snap* sebelum membayar lalu menekan tombol **Bayar Sekarang** kembali, `SnapTokenController` memeriksa apakah `snap_token` yang tersimpan pada baris reservasi masih valid. Jika masih berlaku, token lama digunakan kembali tanpa memanggil API eksternal berulang kali. Jika token sudah kedaluwarsa, sistem membuat `order_id` baru dengan *timestamp* segar dan meminta token baru.
-  - Apabila webhook yang sama dikirimkan lebih dari satu kali oleh Midtrans (*duplicate webhook delivery*), pengecekan status di dalam blok `lockForUpdate()` memastikan reservasi atau tagihan yang sudah berstatus `lunas` tidak akan diproses ulang atau memicu pengiriman notifikasi ganda.
-
-#### 2. Reservasi Menggantung Tanpa Penyelesaian Pembayaran (*Abandoned Reservation*)
-- **Kondisi Masalah**: Calon penyewa mengajukan reservasi kamar daring (status `pending`), namun meninggalkan aplikasi dan tidak kunjung membayar hingga berhari-hari.
-- **Perilaku Fungsional & Fallback**:
-  - Setiap satu jam sekali, penjadwal latar belakang menjalankan perintah `reservasi:cancel-expired` (`CancelExpiredReservations`).
-  - Perintah ini memindai seluruh baris pada tabel `reservasi` yang masih berstatus `pending` dan memiliki waktu pembuatan (`created_at`) lebih lama dari batas kedaluwarsa (`config('reservasi.expire_hours')`, yakni 24 jam).
-  - Baris reservasi yang kedaluwarsa dikunci dengan `lockForUpdate()`, diubah statusnya menjadi `batal`, dan dicatat ke jejak audit `notifikasi_khusus`, sehingga unit kamar dan rentang tanggal tersebut kembali bebas untuk dipesan oleh calon penyewa lain.
-
-#### 3. Kegagalan Pengiriman Pesan pada Gateway Eksternal (Fonnte WhatsApp / SMTP Down)
-- **Kondisi Masalah**: Saat sistem memancarkan event bisnis (misalnya penerbitan tagihan bulanan atau konfirmasi reservasi), layanan *Fonnte API* mengalami *timeout* atau server SMTP gagal dihubungi.
-- **Perilaku Fungsional & Fallback**:
-  - Karena seluruh pengiriman pesan dijalankan secara asinkron di belakang layar melalui tabel `jobs`, kegagalan pada *Fonnte API* atau *SMTP* sama sekali tidak menggagalkan transaksi utama yang dilihat oleh pengguna di peramban.
-  - Klien HTTP di dalam `FonnteService` menangkap eksepsi koneksi maupun respons non-200, lalu mengembalikan rincian pesan kesalahan kepada `NotifikasiService`.
-  - Sistem tetap merekam upaya pengiriman tersebut ke tabel `log_notifikasi` dengan nilai `status = 'gagal'` dan menyimpan alasan teknis kegagalannya pada kolom `error_msg`.
-  - Apabila sebuah *Queue Job* mengalami kegagalan fatal atau entitas datanya telah dihapus sebelum antrean sempat dieksekusi, metode `failed(\Throwable $exception)` pada seluruh kelas di `app/Jobs/` menggunakan pelindung *nullsafe operator* (`$this->model?->getKey()`) agar pekerja antrean (`queue:work`) tidak berhenti mendadak.
-  - Administrator dapat membuka halaman `/admin/notifikasi`, memantau daftar pengiriman yang berstatus `gagal`, dan menekan tombol **Retry** untuk memicu pengiriman ulang pesan secara manual setelah jaringan normal kembali.
-
-#### 4. Kegagalan Transaksi Basis Data Setelah Unggah Berkas Fisik
-- **Kondisi Masalah**: Pengguna mengunggah foto bukti keluhan atau admin mengunggah foto kamar/nota pengeluaran. Berkas fisik berhasil ditulis ke folder `storage/app/public/`, namun sesaat kemudian operasi `INSERT` atau `UPDATE` ke tabel MySQL gagal akibat kendala basis data.
-- **Perilaku Fungsional & Fallback**:
-  - Seluruh *Controller* yang menangani unggahan berkas (`KeluhanController`, `KamarController`, `PengeluaranController`, `PenyewaController`) membungkus proses penyimpanan di dalam blok `try-catch`.
-  - Ketika eksepsi basis data tertangkap dan transaksi SQL di-*rollback*, blok `catch` secara otomatis memanggil `Storage::disk('public')->delete($uploadedFilePath)` untuk menghapus berkas yang baru saja ditulis. Langkah ini memastikan disk server selalu bersih dari berkas yatim (*dangling files*).
-
-#### 5. Kedaluwarsa Sesi Pengguna pada Ruang Obrolan dan Formulir (*Session Expiration*)
-- **Kondisi Masalah**: Sesi autentikasi pengguna habis masa berlakunya (`SESSION_LIFETIME = 120` menit) ketika tab ruang obrolan reservasi masih terbuka atau saat pengguna hendak mengirim formulir.
-- **Perilaku Fungsional & Fallback**:
-  - Pada ruang obrolan reservasi (`reservasi/chat-box.blade.php`), ketika siklus *polling* AJAX menerima kode status `HTTP 401 Unauthorized`, skrip klien memeriksa `sessionStorage.getItem('chat_auth_reloaded')`. Jika belum bernilai `'true'`, skrip menyetel kunci tersebut menjadi `'true'` dan memuat ulang halaman tepat satu kali agar `PortalRedirectResolver` mengarahkan pengguna ke halaman login dengan rapi tanpa terjebak dalam pengulangan muat ulang tanpa henti (*infinite reload loop*).
-  - Pada pengiriman formulir web, apabila token CSRF telah kedaluwarsa (`TokenMismatchException` / `HTTP 419`), penangkap eksepsi khusus di `bootstrap/app.php` mencegat halaman galat bawaan dan mengembalikan pengguna ke halaman formulir sebelumnya dengan mempertahankan masukan yang telah diketik (`withInput()`) disertai pesan peringatan berbahasa Indonesia.
+### 2.2. Hierarki Struktur Halaman (Daftar Sitemap Berjenjang)
+- **Root Publik (`/`)**
+  - `SCR-PUB-01`: Beranda Utama (`/`)
+  - `SCR-PUB-02`: Halaman Fasilitas (`/fasilitas`)
+  - `SCR-PUB-03`: Katalog Daftar Kamar (`/kamar`)
+    - `SCR-PUB-04`: Detail Kamar, Kalkulator Simulasi Harga, & Form Pengajuan Reservasi (`/kamar/{kamar}`)
+  - `SCR-PUB-05`: Panduan Cara Booking (`/cara-booking`)
+  - `SCR-PUB-06`: Halaman Testimoni Penghuni (`/testimoni`)
+  - `SCR-PUB-07`: Halaman Tentang Kami & Peta Lokasi (`/tentang-kami`)
+  - `SCR-PUB-08`: Halaman Tanya Jawab Interaktif (`/faq`)
+  - `SCR-PUB-09`: Halaman Galeri Dokumentasi Kost (`/galeri`)
+- **Gerbang Autentikasi & Onboarding (`/reservasi/*`, `/penyewa/*`, `/admin/*`, `/profil/*`)**
+  - `SCR-AUTH-01`: Login Portal Reservasi Calon Penyewa (`/reservasi/login`)
+  - `SCR-AUTH-02`: Registrasi Akun Calon Penyewa (`/reservasi/register`)
+  - `SCR-AUTH-03`: Login Portal Penyewa Aktif (`/penyewa/login`)
+  - `SCR-AUTH-04`: Login Portal Administrator (`/admin/login`)
+  - `SCR-AUTH-05`: Form Permintaan Lupa Kata Sandi (`/forgot-password`, `/penyewa/forgot-password`, `/admin/forgot-password`)
+  - `SCR-AUTH-06`: Form Atur Ulang Kata Sandi Baru (`/reset-password/{token}`, `/penyewa/reset-password/{token}`, `/admin/reset-password/{token}`)
+  - `SCR-AUTH-07`: Layar Paksa Ganti Kata Sandi Bawaan (`/admin/force-change-password`)
+  - `SCR-AUTH-08`: Layar Onboarding Kelengkapan Identitas Profil (`/profil/complete`)
+- **Portal Calon Penyewa (`/penyewa/reservasi/*`)**
+  - `SCR-RES-01`: Dasbor & Daftar Pemesanan Kamar (`/penyewa/reservasi/pemesanan` & `/penyewa/reservasi-dashboard`)
+  - `SCR-RES-02`: Detail Reservasi, *5-Step Visual Stepper*, & Pembayaran (`/penyewa/reservasi/{reservasi}`)
+  - `SCR-RES-03`: Ruang Obrolan Pra-Pembayaran Reservasi (`/penyewa/reservasi/{reservasi}/chat`)
+  - `SCR-RES-04`: Riwayat Pembayaran Reservasi (`/penyewa/reservasi/pembayaran`)
+  - `SCR-RES-05`: Riwayat Obrolan Reservasi (`/penyewa/reservasi/riwayat-chat`)
+- **Portal Penyewa Aktif (`/penyewa/*`)**
+  - `SCR-TEN-01`: Dasbor Utama Penyewa Aktif (`/penyewa/dashboard`)
+  - `SCR-TEN-02`: Daftar Tagihan Sewa Bulanan & Sisa DP (`/penyewa/tagihan`)
+  - `SCR-TEN-03`: Detail Tagihan & Instruksi Pembayaran (`/penyewa/tagihan/{tagihan}`)
+  - `SCR-TEN-04`: Layar Pratinjau & Unduh Kuitansi Resmi PDF A5 (`/penyewa/nota/{pembayaran}/cetak`)
+  - `SCR-TEN-05`: Daftar Tiket Keluhan Fasilitas (`/penyewa/keluhan`)
+  - `SCR-TEN-06`: Form Buat Keluhan Baru & Detail Progres Keluhan (`/penyewa/keluhan/create` & `/penyewa/keluhan/{keluhan}`)
+  - `SCR-TEN-07`: Halaman Tata Tertib Kost & Kotak Masuk Notifikasi (`/penyewa/peraturan` & `/penyewa/notifikasi`)
+  - `SCR-TEN-08`: Pengaturan Profil, Ganti Kata Sandi, & Hapus Akun (`/profile` & `/penyewa/profile`)
+- **Portal Administrator (`/admin/*`)**
+  - `SCR-ADM-01`: Dasbor Analitik Eksekutif (`/admin/dashboard`)
+  - `SCR-ADM-02`: Kalender Okupansi Visual 42 Sel (`/admin/kalender`)
+  - `SCR-ADM-03`: Daftar, Tambah, Ubah, & Detail Master Kamar (`/admin/kamar`, `/create`, `/{kamar}/edit`, `/{kamar}`)
+  - `SCR-ADM-04`: Manajemen Master Fasilitas (`/admin/fasilitas`)
+  - `SCR-ADM-05`: Daftar Penyewa & Form Tambah Penyewa *Walk-in* (`/admin/penyewa` & `/admin/penyewa/create`)
+  - `SCR-ADM-06`: Detail Kontrak Penyewa, Edit Data, & Perpanjangan Sewa (`/admin/penyewa/{penyewa}` & `/{penyewa}/edit`)
+  - `SCR-ADM-07`: Formulir *Check-Out* Penghuni & Audit Klaim Deposit (`/admin/penyewa/{penyewa}/checkout`)
+  - `SCR-ADM-08`: Daftar & Detail Verifikasi Reservasi Daring (`/admin/reservasi` & `/admin/reservasi/{reservasi}`)
+  - `SCR-ADM-09`: Daftar, Detail Tagihan, & Konfirmasi Kasir Tunai (`/admin/tagihan` & `/admin/tagihan/{tagihan}`)
+  - `SCR-ADM-10`: Daftar, Tambah, Ubah, & Detail Pengeluaran Operasional (`/admin/pengeluaran`)
+  - `SCR-ADM-11`: Laporan Keuangan Arus Kas & Laba-Rugi (`/admin/laporan`)
+  - `SCR-ADM-12`: Daftar & Detail Penanganan Tiket Keluhan (`/admin/keluhan` & `/admin/keluhan/{keluhan}`)
+  - `SCR-ADM-13`: Konsol Balas *Guest Live Chat* (`/admin/guest-chats`)
+  - `SCR-ADM-14`: Manajemen Broadcast Notifikasi, Retry Log, & Jejak Audit Sistem (`/admin/notifikasi` & `/admin/notifikasi-khusus`)
+  - `SCR-ADM-15`: Pengaturan Konten Situs (CMS), Rekening, Promo, FAQ, Galeri, Testimoni, Peraturan, & Profil Admin (`/admin/pengaturan-konten`, `/admin/faq`, `/admin/gallery`, `/admin/reviews`, `/admin/peraturan`, `/admin/profil`)
 
 ---
 
-## 4. Data Flow & Transformation (Alur & Transformasi Data)
+## 3. Screen-by-Screen Flow & Wireframe References
 
-Bab ini menjelaskan bagaimana data mentah yang masuk dari perangkat klien maupun sistem eksternal dibersihkan, divalidasi, dihitung ulang oleh aturan bisnis, hingga disimpan ke dalam struktur penyimpanan atau dikembalikan sebagai respons ke pengguna.
-
-```mermaid
-flowchart LR
-    subgraph Ingestion ["1. Data Ingestion (Masukan Mentah)"]
-        RawForm["Form URL-Encoded & Multipart (String Rupiah, Nomor HP Lokal, Berkas Foto)"]
-        RawAjax["Payload JSON AJAX (Simulasi Harga, Cek Tanggal, Pesan Chat)"]
-        RawWebhook["Payload JSON Webhook Midtrans (order_id, gross_amount, signature_key)"]
-    end
-
-    subgraph Transformation ["2. Data Processing, Sanitization & Validation"]
-        Sanitize["Sanitizer & Traits: Strip HTML, Format '1.500.000' -> 1500000, '0812..' -> '62812..'"]
-        RuleCheck["Custom Rules & Crypto: KamarTersediaRule, TanpaPenyewaAktifLainRule, SHA-512 Check"]
-        MathEngine["Business Math Engine: Tarif Harian/Mingguan, Diskon Promo, Pecah DP 30%, Denda Flat 5%"]
-        VirtualKey["Soft-Delete Transformer: Suffix '_deleted_[timestamp]' & Evaluasi Kolom Virtual MySQL"]
-    end
-
-    subgraph Output ["3. Data Output & Storage Persistence"]
-        MySQLOut[("MySQL 8.x InnoDB (DECIMAL(12,2), ENUM, JSON, Virtual Unique Index)")]
-        DiskOut[("Public Storage Disk (kamar/, keluhan/, nota_pengeluaran/, galleries/)")]
-        ClientOut["Respons Klien: HTML Blade, JSON Delta Chat, CSV UTF-8 BOM, PDF A4 Dompdf & PDF A5 html2pdf"]
-    end
-
-    RawForm & RawAjax & RawWebhook --> Sanitize
-    Sanitize --> RuleCheck
-    RuleCheck --> MathEngine
-    MathEngine --> VirtualKey
-    MathEngine & VirtualKey --> MySQLOut
-    Sanitize --> DiskOut
-    MySQLOut & DiskOut --> ClientOut
-```
+Bagian ini membedah setiap layar di dalam aplikasi secara mendetail, mencakup susunan komponen visual, pemicu masuk, aksi navigasi pengguna, serta perilaku tampilan pada kondisi khusus.
 
 ---
 
-### 4.1. Data Ingestion (Format Data Mentah yang Masuk ke Sistem)
-Sistem menerima masukan data mentah melalui tiga saluran utama dengan karakteristik format yang berbeda:
+### 3.1. Zona 1: Halaman Publik & Eksplorasi Tamu (`layouts/landing.blade.php`)
 
-1. **Formulir Web Standar & Unggahan Multipart (`application/x-www-form-urlencoded` & `multipart/form-data`)**:
-   - **Data Identitas & Kontrak**: Pengguna dan admin sering kali mengetikkan nomor telepon dalam beragam format lokal (seperti `0812-3456-7890`, `+62 812 3456 7890`, atau `81234567890`), NIK 16 digit, serta teks bebas pada kolom catatan dan deskripsi keluhan yang berpotensi mengandung spasi berlebih atau karakter HTML.
-   - **Data Nominal Keuangan**: Pada formulir harga kamar, uang jaminan (*deposit*), potongan kerusakan *check-out*, dan pencatatan pengeluaran operasional, nilai uang dikirimkan dari antarmuka dalam format string berpemisah ribuan Indonesia (contoh: `"1.500.000"` atau `"Rp 750.000"`).
-   - **Berkas Biner (*Binary Streams*)**: Unggahan foto kamar, bukti kerusakan fasilitas keluhan, struk pengeluaran, foto galeri, dan avatar ulasan masuk sebagai objek `UploadedFile` dengan batas ukuran maksimal `2048 KB` (`2 MB`).
-2. **Permintaan Asinkron AJAX (`application/json`)**:
-   - **Simulasi Harga & Cek Ketersediaan**: Mengirimkan objek JSON ringan yang berisi `kamar_id`, `tipe_sewa` (`harian`, `mingguan`, `bulanan`), `durasi` (angka bulat), serta `tanggal_mulai`.
-   - **Pesan Obrolan (*Guest Chat* & *Reservation Chat*)**: Mengirimkan `session_token` (untuk tamu anonim) atau `reservasi_id` (untuk calon penyewa), teks `message`, serta parameter kueri `?after={last_message_id}` untuk menarik pesan baru secara bertahap.
-3. **Paket Server-ke-Server Webhook Midtrans (`application/json`)**:
-   - Server Midtrans mengirimkan objek JSON mentah yang memuat `transaction_id`, `order_id`, `transaction_status` (`capture`, `settlement`, `pending`, `deny`, `expire`, `cancel`), `status_code`, `gross_amount` (string desimal seperti `"1500000.00"`), `payment_type`, `va_numbers`, serta hash keamanan `signature_key`.
-
----
-
-### 4.2. Data Processing, Sanitization, & Validation Rules (Transformasi & Aturan Bisnis)
-Sebelum data menyentuh lapisan penyimpanan, sistem menerapkan serangkaian transformasi deterministik dan aturan validasi bisnis:
-
-#### A. Sanitasi String, Normalisasi Nomor Telepon, dan Konversi Mata Uang
-1. **Pembersihan Teks & Pelucutan Tag Berbahaya (`App\Support\Sanitizer` & `HasSanitizedInput`)**:
-   Seluruh kelas *Form Request* memanggil metode sanitasi pada tahap `prepareForValidation()`. Spasi kosong di awal dan akhir teks dipangkas (`trim`), tag HTML atau skrip berbahaya dilucuti (`strip_tags`) untuk mencegah serangan *Cross-Site Scripting* (XSS), dan iframe Google Maps pada pengaturan situs diperiksa secara ketat oleh `ValidGoogleMapsEmbed` agar hanya menerima URL resmi `https://www.google.com/maps/embed...`.
-2. **Konversi String Rupiah ke Angka Murni (`SanitizesCurrency`)**:
-   Trait `SanitizesCurrency` mencegat kolom finansial (`harga_bulan`, `harga_sewa`, `deposit`, `potongan_deposit`, `nominal`) lalu menghapus seluruh karakter non-digit seperti `"Rp"`, spasi, dan titik pemisah ribuan. Sebagai contoh, masukan string `"1.750.000"` diubah menjadi nilai numerik `1750000` sehingga siap divalidasi sebagai angka dan disimpan ke kolom `DECIMAL(12,2)`.
-3. **Normalisasi Nomor WhatsApp Standar Gateway (`628...`)**:
-   Nomor telepon pengguna (`no_hp`) dan wali (`no_wali`) dibersihkan dari tanda hubung atau spasi, kemudian awalan `08...` atau `+628...` diubah secara konsisten menjadi format kode negara `628...`. Aturan validasi juga memastikan nomor WhatsApp wali tidak boleh sama dengan nomor WhatsApp pribadi penyewa (`different:no_hp`) agar eskalasi tunggakan benar-benar sampai ke pihak orang tua/wali.
-
-#### B. Rumus Transformasi Matematika Bisnis
-Seluruh perhitungan harga dan denda dilakukan di sisi server menggunakan fungsi pembulatan yang konsisten untuk menghindari selisih pecahan rupiah:
-
-| Jenis Transformasi Bisnis | Rumus & Logika Kalkulasi Sistem | Kelas Pemroses |
-| :--- | :--- | :--- |
-| **Tarif Sewa Harian (1 s.d. 30 Hari)** | $\text{Tarif Harian} = \text{round}\left(\frac{\text{Harga Bulanan}}{30} \times 1,30,\ -3\right)$ dikalikan jumlah hari sewa (dibulatkan ke ribuan terdekat). | `ReservasiService` |
-| **Tarif Sewa Mingguan (1 s.d. 8 Minggu)** | $\text{Tarif Mingguan} = \text{round}\left(\frac{\text{Harga Bulanan}}{4} \times 1,15,\ -3\right)$ dikalikan jumlah minggu sewa (dibulatkan ke ribuan terdekat). | `ReservasiService` |
-| **Tarif Sewa Bulanan & Diskon Promo** | `Subtotal = harga_bulan * durasi`. Jika durasi cocok dengan paket promo aktif di tabel `settings` (Triwulan 3 bulan = diskon 5%; Tahunan 12 bulan = diskon 8,33%), maka $\text{Total Harga} = \text{Subtotal} - \text{round}(\text{Subtotal} \times \text{Persen Diskon})$. | `ReservasiService` |
-| **Pemecahan Skema Uang Muka (DP 30%)** | Jika `is_dp == true`: `nominal_dp = round(total_harga * 0.30)` dan `nominal_sisa = total_harga - nominal_dp` (70% diterbitkan sebagai tagihan `SISA-DP-*` saat konfirmasi). | `ReservasiService` & `TransisiPenyewaService` |
-| **Denda Keterlambatan Flat Kalender 5%** | Jika melewati tanggal 10 dan memasuki bulan kedua (`bulan_keterlambatan >= 2`) serta `nominal_denda == 0`: `nominal_denda = 0.05 * nominal_pokok` dan `nominal_total = nominal_pokok + nominal_denda`. | `BillingService` |
-| **Audit Klaim Deposit Saat *Check-Out*** | `potongan_deposit <= deposit` (dicatat ke `pengeluaran` kategori `maintenance`). `sisa_deposit = deposit - potongan_deposit` (jika `> 0`, dicatat ke `pengeluaran` kategori `lainnya`). | `TransisiPenyewaService` |
-
-#### C. Transformasi Kunci Unik pada *Soft Deletes* dan Kolom Virtual MySQL
-Untuk menjaga keutuhan riwayat transaksi tanpa memblokir penggunaan ulang data unik, sistem melakukan transformasi khusus saat entitas `User`, `Kamar`, `Penyewa`, atau `Reservasi` dihapus sementara (*soft delete*) maupun dipulihkan (*restore*):
-1. **Saat Dihapus Sementara (*Soft Delete*)**: Kolom `deleted_at` diisi dengan waktu saat ini, dan atribut unik (seperti `nomor_kamar`, `email`, `no_hp`, `nik`, atau `order_id`) dimodifikasi dengan menambahkan akhiran `_deleted_{timestamp}` (contoh: `"101"` menjadi `"101_deleted_1730723400"`). Pada tingkat mesin MySQL 8.x, kolom virtual `active_nomor_kamar`, `active_email`, `active_no_hp`, `active_nik`, dan `active_order_id` yang didefinisikan dengan rumus `IF(deleted_at IS NULL, nama_kolom, NULL)` secara otomatis berubah nilainya menjadi `NULL`. Karena indeks `UNIQUE` dipasang pada kolom virtual tersebut, nomor kamar `"101"` atau alamat surel yang sama dapat langsung dipakai kembali oleh baris aktif baru.
-2. **Saat Dipulihkan (*Restore*)**: Ketika admin memulihkan data dari tempat sampah, sistem memotong kembali akhiran `_deleted_{timestamp}` ke nilai aslinya, memeriksa terlebih dahulu apakah nilai asli tersebut sedang dipakai oleh baris aktif lain (deteksi tabrakan kunci unik), lalu mengosongkan kolom `deleted_at`.
-3. **Saat Penghapusan Akun Mandiri (`anonymizeAndDelete`)**: Apabila calon penyewa tanpa kontrak aktif menghapus akunnya sendiri, sistem mengganti nama menjadi `"Pengguna Terhapus"`, mengacak surel serta nomor telepon, mengosongkan NIK dan data wali, menghapus sesi aktifnya dari tabel `sessions`, lalu menandai `deleted_at`.
+#### `SCR-PUB-01`: Beranda Utama (`/` -> `landing/index.blade.php`)
+- **Deskripsi Visual**:
+  - **Topbar Navigasi Publik (`navigation-landing.blade.php`)**: Logo merek dinamis di sisi kiri, tautan menu utama (Beranda, Fasilitas, Kamar, Cara Booking, Testimoni, Tentang Kami, FAQ, Galeri) di tengah, serta tombol pengalih tema (*Theme Switcher*) dan tombol masuk/dasbor di sisi kanan.
+  - **Hero Section**: Judul promosi berhuruf *Space Grotesk* tebal, lencana lokasi Tembalang Semarang, tombol aksi utama `"Lihat Katalog Kamar"` dan `"Konsultasi via WhatsApp"`, serta bingkai foto utama kost bertepi tebal (`border-4`).
+  - **Section Cuplikan Katalog, Fasilitas Unggulan, & Testimoni**: Barisan kartu kamar pilihan (`components/landing/kamar-card.blade.php`), kartu fasilitas berikon (`facility-card.blade.php`), kartu ulasan bintang penghuni (`review-card.blade.php`), serta akordeon FAQ ringkas (`faq-item.blade.php`).
+  - **Widget Melayang Global**: Tombol WhatsApp (`FAB-WA-01`) dan tombol *Guest Live Chat* (`FAB-CHAT-01`) di sudut kanan bawah layar.
+- **Trigger / Cara Masuk**: Pengguna membuka alamat domain utama `https://asriboardinghouse.weatso.id/` atau menekan logo merek dari halaman mana pun.
+- **Interaksi & Alur Navigasi**:
+  - *Jika pengguna klik tombol `"Lihat Katalog Kamar"`*: Pindah ke `SCR-PUB-03 (/kamar)`.
+  - *Jika pengguna klik salah satu kartu kamar*: Pindah ke `SCR-PUB-04 (/kamar/{kamar})`.
+  - *Jika pengguna klik tombol `"Masuk / Booking"` di bilah navigasi (kondisi belum login)*: Pindah ke `SCR-AUTH-01 (/reservasi/login)`.
+  - *Jika pengguna klik tombol `"Dashboard"` di bilah navigasi (kondisi sudah login)*: Sistem mengarahkan ke `SCR-ADM-01`, `SCR-TEN-01`, atau `SCR-RES-01` sesuai peran akun.
+  - *Jika pengguna klik `FAB-CHAT-01`*: Membuka jendela *overlay* *Guest Live Chat* di sudut kanan bawah tanpa berpindah halaman.
+- **State Khusus**:
+  - *Loading State*: Gambar hero dan foto kartu kamar menampilkan kerangka abu-abu berkilau (*Shimmer Placeholder*) yang memudar halus (`opacity-0` selama 300ms) begitu foto selesai dimuat.
+  - *Empty State*: Apabila belum ada data kamar atau testimoni aktif, section terkait menampilkan kotak informasi bertuliskan data sedang diperbarui oleh pengelola.
 
 ---
 
-### 4.3. Data Output, Persistence, & Response Representation (Keluaran & Penyimpanan Data)
-Setelah melewati proses validasi dan transformasi, data disimpan atau dikembalikan dalam lima bentuk representasi akhir:
-
-1. **Persistensi Relasional MySQL 8.x (`InnoDB`)**:
-   - Seluruh angka finansial disimpan secara presisi menggunakan tipe `DECIMAL(12,2)`.
-   - Status siklus hidup entitas disimpan menggunakan tipe `ENUM` yang ketat (contoh: `reservasi.status` bernilai `'pending'`, `'dp'`, `'lunas'`, `'dikonfirmasi'`, atau `'batal'`).
-   - Bukti mentah respons webhook Midtrans disimpan secara utuh ke kolom `pembayaran.response_json` bertipe `JSON`, sedangkan rincian perubahan model pada jejak audit disimpan ke `notifikasi_khusus.data_detail` bertipe `JSON`.
-2. **Penyimpanan Berkas Fisik (`storage/app/public/`)**:
-   Berkas gambar dan dokumen PDF yang lolos validasi MIME disimpan dengan nama berkas acak ber-hash unik ke dalam sub-direktori terpisah (`kamar/`, `keluhan/`, `nota_pengeluaran/`, `galleries/`, `reviews/`, `settings/`), sementara tabel basis data hanya menyimpan jalur relatifnya (contoh: `"keluhan/x8Jk92LmP.webp"`).
-3. **Respons Antarmuka HTML Server-Side (`Laravel Blade`)**:
-   Data model dirender ke dalam komponen Blade bergaya *Neo-Brutalism*, lengkap dengan pemformatan mata uang `Rp X.XXX.XXX`, lencana status berwarna kontekstual (`reservation-status-badge`), serta penyuntikan pengaturan global dari `LayoutSettingComposer`.
-4. **Payload JSON Terstruktur untuk Komponen Interaktif**:
-   - **Delta Chat Response**: Endpoint `/chat-box/{reservasi}/fetch` dan `/api/guest-chat/messages` mengembalikan array objek pesan yang sudah disanitasi beserta waktu relatif dan status `is_read`.
-   - **Matriks Kalender 42 Sel**: Endpoint `/admin/kalender/events` mengubah baris kontrak `penyewa` dan `reservasi` menjadi daftar peristiwa harian berformat JSON yang dipetakan oleh `CalendarStyleHelper` ke dalam kisi kalender 6 minggu x 7 hari di Alpine.js.
-5. **Dokumen Ekspor PDF dan Aliran Berkas CSV/Excel**:
-   - **Laporan Server-Side PDF (A4/Landscape)**: Kelas `DompdfGenerator` (implementasi dari `PdfGeneratorInterface`) merender view laporan keuangan laba-rugi, daftar pengeluaran, dan daftar penyewa menjadi aliran biner `application/pdf` lengkap dengan penomoran halaman otomatis.
-   - **Nota Pembayaran Client-Side PDF (A5)**: Halaman `/penyewa/nota/{pembayaran}/cetak` menyajikan tata letak kuitansi resmi berstempel yang langsung diubah menjadi berkas PDF di peramban pengguna oleh `html2pdf.js`.
-   - **Ekspor CSV/Excel Berpenanda UTF-8 BOM**: Ekspor data penyewa, pengeluaran, dan laporan keuangan mengalirkan respons `text/csv` yang diawali karakter *Byte Order Mark* (`\xEF\xBB\xBF`) agar perangkat lunak Microsoft Excel langsung mengenali pengodean UTF-8 dan memisahkan kolom secara rapi.
+#### `SCR-PUB-03`: Katalog Daftar Kamar (`/kamar` -> `landing/kamar-list.blade.php`)
+- **Deskripsi Visual**:
+  - **Header Halaman**: Banner kuning bergaya Neo-Brutalist dengan judul `"Katalog Kamar Eksklusif"` dan subjudul informasi total 32 unit kamar.
+  - **Bilah Penyaring (Filter Bar)**: Pilihan filter tipe kamar (`Semua`, `Standar`, `Deluxe`, `VIP`) dan filter status ketersediaan (`Semua Status`, `Tersedia`, `Terisi`), dilengkapi formulir pengecekan ketersediaan tanggal sewa.
+  - **Grid Kartu Kamar**: Susunan kartu 3 kolom di layar desktop (1 kolom di ponsel) yang memuat foto kamar, lencana tipe, lencana status (`Tersedia` berwarna hijau, `Terisi` berwarna merah, `Maintenance` berwarna kuning), luas ruangan (m²), posisi lantai, tarif bulanan, daftar ikon fasilitas, serta tombol `"Lihat Detail & Pesan"`.
+  - **Paginasi Neo-Brutalist**: Deretan tombol halaman berkotak tegas di bagian bawah (`vendor/pagination/neo-brutalist.blade.php`).
+- **Trigger / Cara Masuk**: Klik menu `"Kamar"` pada navigasi atas atau klik tombol `"Lihat Semua Kamar"` dari `SCR-PUB-01`.
+- **Interaksi & Alur Navigasi**:
+  - *Jika pengguna memilih filter Tipe atau Status Kamar*: Halaman memuat ulang daftar kamar yang sesuai dan mempertahankan parameter filter pada tombol paginasi.
+  - *Jika pengguna mengisi rentang tanggal pada kotak Cek Ketersediaan lalu menekan `"Cek"`*: Sistem mengirim permintaan ke `/cek-ketersediaan` dan menyoroti unit kamar yang bebas bentrok tanggal.
+  - *Jika pengguna klik tombol `"Lihat Detail & Pesan"` pada kartu kamar*: Pindah ke `SCR-PUB-04 (/kamar/{kamar})`.
+- **State Khusus**:
+  - *Empty State*: Jika kombinasi filter tidak menemukan kamar yang cocok, sistem menampilkan kotak ilustrasi kosong dengan tombol `"Reset Filter"` untuk mengembalikan seluruh daftar kamar.
 
 ---
 
-## 5. Cross-Cutting Functional Concerns (Aspek Lintas Fungsi)
-
-Aspek lintas fungsi mencakup mekanisme fungsional yang bekerja secara seragam di balik layar dan memengaruhi seluruh modul aplikasi.
-
-### 5.1. Session, Multi-Portal Routing, & Client State Management
-
-#### A. Pengenalan Sesi Lintas Halaman dan Isolasi Tiga Portal
-Sistem menggunakan driver sesi berbasis basis data (`SESSION_DRIVER=database`) yang mengikat kuki terenkripsi `laravel_session` (`HttpOnly`, `SameSite=Lax`, masa aktif 120 menit) ke baris pada tabel `sessions`. Untuk menjaga ketertiban navigasi antar-aktor, pengenalan sesi dikombinasikan dengan pengarah rute cerdas `App\Services\Auth\PortalRedirectResolver`:
-- Ketika pengguna yang belum terautentikasi mencoba mengakses URL terproteksi, sistem memeriksa segmen awal URL: akses ke `/admin/*` diarahkan ke `/admin/login`, akses ke `/penyewa/reservasi/*` diarahkan ke `/reservasi/login`, dan akses ke `/penyewa/*` lainnya diarahkan ke `/penyewa/login`.
-- Ketika pengguna yang sudah login mengakses halaman tamu (seperti halaman login), `PortalRedirectResolver` memeriksa peran dan status kontraknya:
-  1. Akun dengan `role === 'admin'` langsung diarahkan ke `/admin/dashboard`.
-  2. Akun dengan `role === 'penyewa'` yang telah memiliki kontrak `penyewa` berstatus `aktif` diarahkan ke `/penyewa/dashboard`.
-  3. Akun dengan `role === 'penyewa'` yang belum memiliki kontrak aktif (calon penyewa) diarahkan ke halaman pemesanan `/penyewa/reservasi/pemesanan`.
-
-#### B. Rantai Penapisan Akses Bertahap (*Sequential Middleware Pipeline*)
-Setiap permintaan HTTP menuju portal internal harus melewati urutan pemeriksaan status akun berikut sebelum mencapai *Controller*:
-
-```mermaid
-flowchart LR
-    Req["Permintaan HTTP Masuk"] --> M1{"1. Auth & is_active == 1?"}
-    M1 -- "Tidak" --> R1["Redirect ke Login Portal Terkait"]
-    M1 -- "Ya" --> M2{"2. RoleMiddleware Sesuai?"}
-    M2 -- "Tidak" --> R2["Tolak Akses (HTTP 403 Forbidden)"]
-    M2 -- "Ya" --> M3{"3. EnsurePasswordChanged?"}
-    M3 -- "require_password_change == true" --> R3["Paksa ke Halaman Ganti Sandi"]
-    M3 -- "Lolos" --> M4{"4. EnsureProfileIsComplete?"}
-    M4 -- "NIK / HP / Wali Kosong" --> R4["Simpan url.intended & Arahkan ke /profil/complete"]
-    M4 -- "Lengkap" --> M5{"5. Rute Khusus Penyewa Aktif?"}
-    M5 -- "Ya (Cek EnsureTenantIsActive)" --> M6{"Punya Kontrak Aktif?"}
-    M6 -- "Tidak" --> R5["Arahkan ke Portal Calon Penyewa"]
-    M6 -- "Ya" --> Ctrl["Eksekusi Controller & Eloquent Policy"]
-    M5 -- "Tidak" --> Ctrl
-```
-
-#### C. Pengelolaan State Sisi Klien & *Smart Adaptive Polling*
-1. **Sinkronisasi Tema *Anti-Flicker* (`localStorage.theme`)**:
-   Untuk menghindari kedipan layar putih saat pengguna menjelajahi aplikasi dalam mode gelap (*OLED Dark Mode* `#030712`), skrip sinkron di bagian `<head>` membaca kunci `theme` dari `localStorage` sebelum elemen visual dirender. Pembacaan dan penulisan ke penyimpanan peramban pada modul utama dibungkus oleh fungsi aman `getSafeStorage()` dan `setSafeStorage()` agar tidak menimbulkan galat JavaScript pada peramban yang memblokir penyimpanan lokal.
-2. **Persistensi Ganda Token *Guest Live Chat***:
-   Agar tamu publik yang belum memiliki akun tidak kehilangan jejak percakapannya ketika menutup atau memuat ulang tab peramban, `guest_chat_token` (64 karakter) disimpan secara bersamaan di `localStorage` dan di dalam kuki peramban (`guest_chat_token` dengan masa berlaku 30 hari yang dikecualikan dari enkripsi kuki Laravel).
-3. **Mekanisme *Smart Adaptive Polling* Hemat Sumber Daya**:
-   Pada widget *Guest Live Chat* maupun ruang obrolan reservasi, klien menarik pesan baru menggunakan parameter delta `?after={lastMessageId}`. Saat percakapan sedang aktif (ada pesan baru masuk), *polling* berjalan setiap **4 detik**. Apabila tidak ada pesan baru selama beberapa siklus berturut-turut, interval otomatis melambat secara bertahap hingga **12 detik**. Lebih jauh lagi, ketika pengguna berpindah tab (`document.visibilityState === 'hidden'` atau event `pagehide`), timer *polling* dihentikan sepenuhnya dan baru dinyalakan kembali saat pengguna membuka tab tersebut.
+#### `SCR-PUB-04`: Detail Kamar, Kalkulator Simulasi Harga, & Form Reservasi (`/kamar/{kamar}` -> `landing/show.blade.php`)
+- **Deskripsi Visual**:
+  - **Kolom Kiri (Informasi & Spesifikasi Unit)**: Bingkai foto besar kamar, lencana nomor kamar, lantai, luas m², tipe kamar, status ketersediaan, deskripsi lengkap ruangan, serta daftar fasilitas yang dimiliki unit tersebut.
+  - **Kolom Kanan Atas (Kalkulator Simulasi Harga & Paket Promo)**: Pilihan dropdown Tipe Sewa (`Bulanan`, `Mingguan`, `Harian`), input Durasi, serta kartu pilihan Paket Promo aktif (Paket Fleksibel 1 Bulan diskon 0%, Paket Hemat Triwulan 3 Bulan diskon 5%, Paket Tahunan Super Promo 12 Bulan diskon 8,33%). Di bawahnya terdapat kotak rincian hasil hitung (Harga Satuan, Subtotal, Potongan Diskon Promo, Total Harga Akhir, serta estimasi DP 30% dan Sisa 70%).
+  - **Kolom Kanan Bawah (Panel Aksi / Formulir Pengajuan Reservasi)**:
+    - Bagi tamu belum login: Menampilkan tombol mencolok `"Login untuk Memesan Kamar Ini"` dan `"Konsultasi via WhatsApp"`.
+    - Bagi calon penyewa yang sudah login & profil lengkap: Menampilkan formulir langsung berisi input Tanggal Mulai Masuk, Tipe Sewa, Durasi, Metode Pembayaran (`Midtrans Snap` atau `Cash / Transfer Manual`), pilihan skema bayar (`Bayar Lunas 100%` atau `Bayar DP 30%`), Catatan Tambahan, dan tombol `"Ajukan Reservasi Sekarang"`.
+- **Trigger / Cara Masuk**: Klik kartu kamar dari `SCR-PUB-01` atau `SCR-PUB-03`, atau kembali otomatis setelah melengkapi profil dari `SCR-AUTH-08` (*intended URL*).
+- **Interaksi & Alur Navigasi**:
+  - *Jika pengguna mengubah Tipe Sewa, Durasi, atau klik salah satu kartu Paket Promo*: Klien mengirim permintaan AJAX `POST /kamar/{kamar}/hitung-harga` dan memperbarui angka Subtotal, Diskon, Total Harga, serta nominal DP 30% secara *real-time* tanpa memuat ulang halaman.
+  - *Jika tamu (belum login) klik `"Login untuk Memesan Kamar Ini"`*: Pindah ke `SCR-AUTH-01 (/reservasi/login)`.
+  - *Jika calon penyewa (sudah login) mengisi form reservasi dan klik `"Ajukan Reservasi Sekarang"`*:
+    - *Jika validasi gagal (misal tanggal bentrok atau akun sudah punya reservasi aktif)*: Tetap di `SCR-PUB-04` dan tampilkan kotak peringatan kesalahan merah di atas formulir.
+    - *Jika validasi lolos*: Simpan reservasi baru, tampilkan `TOAST-01` `"Reservasi berhasil diajukan"`, lalu pindah ke `SCR-RES-02 (/penyewa/reservasi/{reservasi})`.
+- **State Khusus**:
+  - *Unavailable / Locked State*: Apabila status kamar sedang `terisi` atau `maintenance`, tombol pengajuan reservasi dikunci (berwarna abu-abu nonaktif) disertai keterangan `"Kamar Tidak Tersedia Saat Ini"`, namun pengguna tetap dapat menggunakan tombol konsultasi WhatsApp untuk menanyakan jadwal kosong berikutnya.
 
 ---
 
-### 5.2. Event & Notification Handling (Orkestrasi Peristiwa & Penjadwalan)
-
-#### A. Arsitektur Pengiriman Notifikasi Berbasis Antrean Berjeda (*Staggered Queue*)
-Sistem memisahkan proses pengiriman notifikasi eksternal dari siklus transaksi utama melalui pola *Publish-Subscribe* yang bermuara ke tabel antrean `jobs`. Seluruh *Listener* yang menjadwalkan pekerjaan pengiriman pesan menggunakan trait `App\Support\StaggersJobs` untuk memberikan jeda tunda bertahap antar-pengiriman, sehingga server WhatsApp Fonnte maupun server SMTP tidak menolak permintaan akibat lonjakan trafik serentak (*rate limiting*).
-
-| Domain Event (`app/Events/`) | Pemicu Fungsional | Listener Penangkap (`app/Listeners/`) | Queue Job & Kanal Tujuan (`app/Jobs/`) |
+#### `SCR-PUB-02`, `SCR-PUB-05` s.d. `SCR-PUB-09`: Halaman Informasi Publik Pendukung
+| Kode Layar | Nama Layar & Rute | Deskripsi Visual & Komponen Utama | Interaksi & Navigasi Utama |
 | :--- | :--- | :--- | :--- |
-| `ReservasiDibuat` | Calon penyewa mengajukan reservasi kamar baru. | `HandleReservasiDibuat` | `KirimNotifikasiUserReservasiJob` (WA Calon Penyewa) & `KirimNotifikasiAdminReservasiJob` (WA Admin). |
-| `ReservasiDibayar` | Webhook Midtrans mengonfirmasi pembayaran DP 30% atau Lunas 100%. | `HandleReservasiDibayar` | `KirimNotifikasiUserReservasiJob` & `KirimNotifikasiAdminReservasiJob` (WA pemberitahuan verifikasi). |
-| `ReservasiDikonfirmasi` | Admin menyetujui reservasi menjadi kontrak penyewa aktif. | `HandleReservasiDikonfirmasi` & `ProsesTransisiPenyewa` | `KirimWelcomeMessageJob` (WA selamat datang & info kamar ke Penyewa Aktif). |
-| `TagihanDibuat` | Penerbitan tagihan bulanan tanggal 1 atau tagihan kontrak baru. | `HandleTagihanDibuat` | `KirimNotifikasiTagihanJob` (WA & Email rincian invoice dan jatuh tempo tanggal 10). |
-| `ReminderPenyewa` | Tagihan belum dibayar melewati tanggal 10 pada bulan berjalan (`bulan_keterlambatan = 1`). | `HandleReminderPenyewa` | `KirimReminderJatuhTempoJob` (WA pengingat ramah ke Penyewa tanpa denda). |
-| `DendaDikenakan` | Tagihan menunggak hingga masuk bulan berikutnya (`bulan_keterlambatan >= 2`). | `HandleDendaDikenakan` | `KirimNotifikasiTagihanJob` (WA pemberitahuan pengenaan denda flat 5% ke Penyewa). |
-| `NotifikasiWali` | Eskalasi tunggakan bulan kedua bersamaan dengan pengenaan denda 5%. | `HandleNotifikasiWali` | `KirimNotifikasiWaliJob` (WA pemberitahuan resmi ke nomor Orang Tua / Wali Penyewa). |
-| `PembayaranBerhasil` | Pelunasan tagihan via webhook Midtrans atau konfirmasi kasir tunai. | Listener Pembayaran | `KirimNotifikasiPembayaranJob` (WA & Email bukti pelunasan tagihan). |
-| `PembayaranCashDikonfirmasi` | Admin mengonfirmasi penerimaan uang tunai / transfer manual. | `KirimEmailPembayaranCashListener` | Pengiriman bukti konfirmasi pembayaran tunai via Email & WA. |
-| `KeluhanDibuat` | Penyewa aktif mengirim laporan kerusakan fasilitas baru. | `KirimNotifikasiKeluhanDibuat` | Pengiriman peringatan tiket keluhan baru ke WhatsApp Admin. |
-| `KeluhanDitanggapi` | Admin memperbarui status penanganan dan memberi tanggapan keluhan. | `KirimNotifikasiKeluhanDitanggapi` | Pengiriman kabar perkembangan atau penyelesaian perbaikan ke WhatsApp Penyewa. |
-
-#### B. Otomasi Waktu Latar Belakang (*Scheduled Background Tasks*)
-Selain pemicu berbasis interaksi pengguna, sistem mengandalkan 9 jadwal otomatis di [`routes/console.php`](file:///c:/xampp/htdocs/asri-boarding-house/routes/console.php) yang berjalan pada zona waktu `Asia/Jakarta` dengan pelindung `withoutOverlapping()`:
-1. **Siklus Finansial**: `tagihan:generate-bulanan` (bulanan tiap tanggal 1 pukul `00:05`) dan `tagihan:proses-keterlambatan` (harian pukul `01:00`).
-2. **Siklus Kontrak & Reservasi**: `kontrak:reminder-habis` (harian pukul `08:00` untuk pengingat kontrak H-14, H-7, H-3, dan H-0) serta `reservasi:cancel-expired` (setiap jam untuk membatalkan reservasi `pending` yang melewati 24 jam).
-3. **Pemeliharaan Penyimpanan & Kebersihan Data**: `session:cleanup` (harian pukul `01:30`), `log-notifikasi:clear` (harian pukul `02:00` untuk menghapus log > 90 hari), `chat-guest:prune` (harian pukul `03:00` untuk membersihkan obrolan tamu yang sudah ditutup), `log:truncate` (mingguan untuk memangkas ukuran `laravel.log`), dan `abh:purge-trash` (bulanan untuk menghapus permanen data *soft-deleted* yang melewati masa retensi).
+| **`SCR-PUB-02`** | Fasilitas Kost (`/fasilitas`) | Grid kartu seluruh fasilitas kamar dan fasilitas bersama lengkap dengan ikon vektor dan deskripsi fungsi. | Klik CTA bagian bawah -> Pindah ke `SCR-PUB-03 (/kamar)`. |
+| **`SCR-PUB-05`** | Cara Booking (`/cara-booking`) | Infografis alur 5 langkah pemesanan kamar, penjelasan aturan DP 30%, dan metode pembayaran Midtrans/Tunai. | Klik tombol `"Mulai Cari Kamar"` -> Pindah ke `SCR-PUB-03 (/kamar)`. |
+| **`SCR-PUB-06`** | Testimoni (`/testimoni`) | Grid kartu ulasan penghuni kost berisi foto avatar, nama, pekerjaan/kampus, peringkat bintang, dan kutipan ulasan. | Klik tombol `"Pesan Kamar Sekarang"` -> Pindah ke `SCR-PUB-03`. |
+| **`SCR-PUB-07`** | Tentang Kami (`/tentang-kami`) | Profil sejarah Asri Boarding House, visi-misi, informasi kontak resmi, serta sematan peta interaktif Google Maps. | Klik tombol `"Hubungi Admin"` -> Memicu `FAB-WA-01` ke WhatsApp. |
+| **`SCR-PUB-08`** | Tanya Jawab FAQ (`/faq`) | Daftar pertanyaan umum dalam komponen akordeon interaktif Alpine.js yang dapat dibuka-tutup per butir pertanyaan. | Klik baris pertanyaan -> Membuka panel jawaban secara halus di layar yang sama. |
+| **`SCR-PUB-09`** | Galeri Properti (`/galeri`) | Kisi dokumentasi foto bangunan, area parkir, ruang bersama, dan interior kamar dengan pratinjau penuh. | Klik kartu foto -> Menampilkan keterangan judul dan deskripsi foto; mendukung paginasi. |
 
 ---
 
-### 5.3. Logging, Auditing, & Security Traceability
+### 3.2. Zona 2: Portal Autentikasi & Onboarding Akun (`layouts/guest.blade.php`)
 
-Untuk menjamin transparansi operasional dan memudahkan penelusuran masalah (*debugging*) maupun pemeriksaan keamanan, sistem memisahkan pencatatan log ke dalam empat lapisan:
-
-1. **Jejak Audit Aktivitas Bisnis (`notifikasi_khusus`)**:
-   - **Pencatatan Peristiwa Domain**: Kelas `NotifikasiKhususSubscriber` mendengarkan seluruh 11 *Domain Events* dan secara otomatis menulis baris audit ke tabel `notifikasi_khusus` yang berisi `sumber`, `tipe_aktivitas`, `deskripsi`, `data_detail` (JSON), dan `user_id` pelaku.
-   - **Pengawasan Perubahan Model (*Eloquent Observers*)**: Lima kelas *Observer* (`KamarObserver`, `PenyewaObserver`, `FasilitasObserver`, `PengeluaranObserver`, dan `SettingObserver`) memantau siklus penambahan, pembaruan, dan penghapusan data. Menggunakan metode `wasChanged()`, *Observer* hanya mencatat perubahan yang benar-benar terjadi (misalnya perubahan status kamar dari `terisi` ke `maintenance` atau perubahan nominal pengeluaran) sekaligus menyegarkan cache pengaturan/fasilitas secara otomatis. Seluruh rekaman ini dapat dipantau oleh pengelola melalui menu `/admin/notifikasi-khusus`.
-2. **Log Pengiriman Komunikasi Eksternal (`log_notifikasi`)**:
-   Setiap upaya pengiriman pesan melalui WhatsApp (`FonnteService`), surel (`Symfony Mailer`), maupun pengumuman sistem dicatat ke tabel `log_notifikasi` lengkap dengan referensi `penyewa_id`, `tagihan_id`, `channel`, nama `event`, isi `pesan`, status (`sukses` atau `gagal`), serta `error_msg`. Tabel ini menjadi dasar bagi fitur kirim ulang (*Retry*) pada panel admin.
-3. **Log Analitik Konversi Prospek (`whatsapp_clicks`)**:
-   Setiap kali pengunjung publik menekan tombol konsultasi WhatsApp pada halaman beranda, kartu kamar, atau detail kamar, sistem merekam sumber klik (`source`), `kamar_id`, alamat IP pengunjung, dan *user agent* ke tabel `whatsapp_clicks` untuk disajikan sebagai metrik konversi pada dasbor eksekutif admin.
-4. **Log Teknis Aplikasi & Pemeriksaan Kesehatan (`laravel.log` & `abh:check-health`)**:
-   Kesalahan tingkat sistem, kegagalan tanda tangan webhook Midtrans, dan eksepsi tak terduga dicatat ke berkas `storage/logs/laravel.log` tanpa pernah menampilkan jejak *stack trace* mentah ke layar pengguna produksi (`public/index.php`). Admin atau tim teknis juga dapat menjalankan perintah `php artisan abh:check-health` (`CheckSystemHealthCommand`) untuk memverifikasi konektivitas basis data, keterbacaan direktori penyimpanan, dan kelengkapan konfigurasi lingkungan.
-
----
-
-## 6. Integration & External System Specifications
-
-Aplikasi **Asri Boarding House** terhubung dengan empat layanan eksternal pihak ketiga. Bab ini menetapkan kontrak fungsional, mekanisme komunikasi, serta langkah penanganan apabila salah satu layanan eksternal tersebut mengalami gangguan (*graceful degradation*).
-
-### 6.1. Daftar Integrasi Eksternal & Kontrak Fungsional
-
-| No | Layanan Eksternal | Kelas Pengelola Internal | Fungsi Bisnis Utama | Arah & Pola Komunikasi |
-| :-: | :--- | :--- | :--- | :--- |
-| 1 | **Midtrans Payment Gateway** (*Snap API v2 & Webhook*) | `MidtransService`, `SnapTokenController`, `MidtransCallbackController`, `MidtransReservasiCallbackController`, `VerifyMidtransSignature` | Menerbitkan token pembayaran digital (QRIS, Virtual Account BCA/Mandiri/BNI/BRI/Permata, e-Wallet) untuk transaksi reservasi (`RSV-*` / `DP-*`) dan tagihan sewa (`INV-*` / `SISA-DP-*`), serta menerima konfirmasi lunas otomatis. | **Dua Arah**: (1) *Outbound REST POST* untuk meminta `snap_token` & *GET* untuk cek status transaksi; (2) *Inbound HTTP POST Webhook* dari server Midtrans ke `/api/midtrans/callback*`. |
-| 2 | **Fonnte WhatsApp API Gateway** (`https://api.fonnte.com/send`) | `FonnteService`, `NotifikasiService`, `NotificationTemplateBuilder`, 8 *Queue Jobs* | Mengirimkan pesan WhatsApp transaksional secara otomatis kepada calon penyewa, penyewa aktif, orang tua/wali penyewa, dan administrator. | **Satu Arah (*Outbound Asynchronous*)**: Pekerja antrean (`queue:work`) mengirim permintaan *HTTP POST* berotorisasi token perangkat (*Authorization Header*). |
-| 3 | **Google Identity Services** (*OAuth 2.0*) | `SocialiteController` (`laravel/socialite`), `initOAuthProtection()` | Memfasilitasi pendaftaran dan masuk akun satu klik (*Single Sign-On*) bagi calon penyewa maupun penyewa menggunakan akun Google mereka. | **Dua Arah (*Browser Redirect & Token Exchange*)**: Pengalihan ke `GET /auth/google` dan penerimaan kode otorisasi di `GET /auth/google/callback`. |
-| 4 | **SMTP Mail Server** (*Google SMTP / Hostinger Mail*) | `Symfony Mailer`, `NotifikasiService`, `PenyewaPasswordResetController`, `AdminPasswordResetController` | Mengirimkan tautan pengaturan ulang kata sandi (*password reset*), surat tagihan bulanan, bukti pelunasan, dan pesan siaran pengelola. | **Satu Arah (*Outbound SMTP TLS*)**: Koneksi terenkripsi pada *Port 587* melalui antrean latar belakang maupun pengiriman langsung untuk pemulihan sandi. |
+#### `SCR-AUTH-01`, `SCR-AUTH-03`, & `SCR-AUTH-04`: Tiga Layar Login Terisolasi
+- **Rute & Berkas Blade**:
+  - `SCR-AUTH-01`: Login Calon Penyewa (`/reservasi/login` -> `auth/reservasi-login.blade.php`)
+  - `SCR-AUTH-03`: Login Penyewa Aktif (`/penyewa/login` -> `auth/penyewa-login.blade.php`)
+  - `SCR-AUTH-04`: Login Administrator (`/admin/login` -> `auth/admin-login.blade.php`)
+- **Deskripsi Visual**:
+  - Kartu tengah berbingkai tebal (`border-4 border-black`) di atas latar belakang berpola geometris.
+  - Lencana identitas portal di bagian atas kartu (membedakan dengan jelas apakah pengguna sedang berada di Portal Reservasi, Portal Penghuni Aktif, atau Portal Admin).
+  - Input Email, input Kata Sandi dengan tombol mata pengintip sandi (`components/auth/password-input.blade.php`), kotak centang `"Ingat Saya"`, tautan `"Lupa Kata Sandi?"`, serta tombol submit utama.
+  - Khusus pada `SCR-AUTH-01`: Dilengkapi tombol `"Masuk / Daftar dengan Google"` (`components/auth/google-button.blade.php`) dan tautan menuju halaman pendaftaran `SCR-AUTH-02`.
+- **Trigger / Cara Masuk**: Klik tombol Login dari halaman publik, atau diarahkan otomatis oleh `PortalRedirectResolver` saat mengakses URL terproteksi tanpa sesi aktif.
+- **Interaksi & Alur Navigasi**:
+  - *Jika pengguna klik tombol `"Masuk dengan Google"` pada `SCR-AUTH-01`*: Tombol langsung dikunci (`disabled`) dengan teks `"Mengarahkan ke Google..."`, lalu beralih ke halaman persetujuan Google OAuth 2.0.
+  - *Jika kredensial salah atau akun nonaktif*: Tetap di layar login dan tampilkan pesan kesalahan merah di bawah kolom input. Jika gagal lebih dari 5 kali dalam 1 menit (`throttle:5,1`), tampilkan peringatan batas percobaan.
+  - *Jika kredensial benar*:
+    - *Jika akun memiliki flag `require_password_change == true`*: Pindah paksa ke `SCR-AUTH-07`.
+    - *Jika data NIK, No HP, atau Kontak Wali belum lengkap*: Pindah paksa ke `SCR-AUTH-08 (/profil/complete)`.
+    - *Jika akun sudah lengkap*: Pindah ke `SCR-RES-01` (Calon Penyewa), `SCR-TEN-01` (Penyewa Aktif), atau `SCR-ADM-01` (Admin).
+  - *Jika pengguna klik `"Lupa Kata Sandi?"`*: Pindah ke `SCR-AUTH-05`.
 
 ---
 
-### 6.2. Mekanisme Interaksi, Keamanan, dan Penanganan Gangguan (*Graceful Degradation*)
+#### `SCR-AUTH-02`: Registrasi Akun Calon Penyewa (`/reservasi/register` -> `auth/reservasi-register.blade.php`)
+- **Deskripsi Visual**: Formulir pendaftaran berisi input Nama Lengkap, Alamat Email, Nomor WhatsApp, Kata Sandi, Konfirmasi Kata Sandi, tombol `"Daftar Sekarang"`, tombol alternatif `"Daftar dengan Google"`, serta tautan kembali ke `SCR-AUTH-01`.
+- **Trigger / Cara Masuk**: Klik tautan `"Belum punya akun? Daftar di sini"` pada `SCR-AUTH-01`.
+- **Interaksi & Alur Navigasi**:
+  - *Jika pengguna submit form dan email/nomor HP sudah terdaftar pada akun aktif*: Tampilkan pesan validasi di bawah kolom terkait.
+  - *Jika pendaftaran berhasil*: Buat sesi login otomatis lalu arahkan pengguna ke `SCR-AUTH-08 (/profil/complete)` untuk melengkapi NIK 16 digit dan informasi orang tua/wali.
+
+---
+
+#### `SCR-AUTH-05` & `SCR-AUTH-06`: Lupa & Atur Ulang Kata Sandi
+- **Rute & Berkas Blade**:
+  - `SCR-AUTH-05`: `/forgot-password`, `/penyewa/forgot-password`, `/admin/forgot-password` (`auth/forgot-password.blade.php`, `auth/penyewa-forgot-password.blade.php`, `auth/admin-forgot-password.blade.php`).
+  - `SCR-AUTH-06`: `/reset-password/{token}`, `/penyewa/reset-password/{token}`, `/admin/reset-password/{token}` (`auth/reset-password.blade.php`, dll.).
+- **Deskripsi Visual & Interaksi**:
+  - Pada `SCR-AUTH-05`, pengguna memasukkan alamat email terdaftar dan menekan `"Kirim Tautan Reset"`. Sistem menampilkan banner status hijau bahwa tautan telah dikirim ke email.
+  - Saat pengguna membuka tautan dari email, pengguna masuk ke `SCR-AUTH-06`, mengisi Kata Sandi Baru dan Konfirmasi Kata Sandi, lalu menekan `"Simpan Kata Sandi"`. Setelah berhasil, pengguna diarahkan kembali ke layar login portal yang sesuai (`SCR-AUTH-01`, `SCR-AUTH-03`, atau `SCR-AUTH-04`) disertai notifikasi sukses.
+
+---
+
+#### `SCR-AUTH-07`: Wajib Ganti Kata Sandi Awal (`/admin/force-change-password` -> `auth/admin-force-change-password.blade.php`)
+- **Deskripsi Visual**: Kartu peringatan kuning-hitam yang menjelaskan bahwa akun baru (seperti penyewa *walk-in* yang didaftarkan admin dengan kata sandi awal berupa nomor HP) wajib memperbarui kata sandinya demi keamanan. Berisi input Kata Sandi Baru (minimal 8 karakter kombinasi huruf dan angka) dan Konfirmasi Kata Sandi.
+- **Trigger / Cara Masuk**: Pencegatan otomatis oleh middleware `EnsurePasswordChanged` sesaat setelah pengguna login. Selama berada di kondisi ini, seluruh menu navigasi lain dikunci.
+- **Interaksi & Alur Navigasi**:
+  - *Jika kata sandi baru masih sama dengan kata sandi lama atau kurang dari 8 karakter*: Tampilkan pesan error validasi.
+  - *Jika valid*: Simpan kata sandi baru, ubah penanda `require_password_change` menjadi `false`, tampilkan `TOAST-01`, lalu lanjutkan ke `SCR-AUTH-08` (jika profil belum lengkap) atau langsung ke dasbor (`SCR-TEN-01` / `SCR-ADM-01`).
+
+---
+
+#### `SCR-AUTH-08`: Onboarding Kelengkapan Identitas Profil (`/profil/complete` -> `auth/complete-profile.blade.php`)
+- **Deskripsi Visual**:
+  - Banner instruksi onboarding yang menjelaskan bahwa data kependudukan dan kontak darurat wali wajib dilengkapi satu kali sebelum mengajukan sewa kamar.
+  - Input Nomor WhatsApp Aktif (`no_hp`), Nomor Induk Kependudukan (`nik` tepat 16 digit angka), Nama Lengkap Orang Tua / Wali (`nama_wali`), dan Nomor WhatsApp Wali (`no_wali`), serta tombol `"Simpan & Lanjutkan"`.
+- **Trigger / Cara Masuk**: Pencegatan otomatis oleh middleware `EnsureProfileIsComplete` ketika pengguna baru (terutama dari Google OAuth atau registrasi cepat) belum memiliki data NIK dan wali yang lengkap.
+- **Interaksi & Alur Navigasi**:
+  - *Jika NIK bukan 16 digit angka atau nomor WhatsApp wali sama dengan nomor pribadi penyewa*: Tampilkan pesan kesalahan di bawah kolom input.
+  - *Jika valid dan disimpan*: Sistem mengarahkan pengguna kembali ke halaman tujuan awal yang sempat tertunda (*intended URL*, misalnya kembali ke halaman detail kamar `SCR-PUB-04` yang sedang ingin dipesan) atau menuju `SCR-RES-01`.
+
+---
+
+### 3.3. Zona 3: Portal Calon Penyewa & Penyewa Aktif (`layouts/app.blade.php` & `layouts/penyewa.blade.php`)
+
+#### `SCR-RES-01`: Dasbor & Daftar Pemesanan Calon Penyewa (`/penyewa/reservasi/pemesanan` -> `reservasi/index.blade.php` & `penyewa/dashboard-pending.blade.php`)
+- **Deskripsi Visual**:
+  - **Sidebar & Topbar Portal Calon Penyewa**: Menampilkan menu khusus tahap pra-hunian, yaitu Daftar Pemesanan, Riwayat Pembayaran, Riwayat Chat, Peraturan Kost, dan Profil.
+  - **Daftar Kartu Reservasi**: Menampilkan seluruh pengajuan reservasi kamar milik pengguna beserta foto unit, nomor kamar, tipe sewa, tanggal mulai dan selesai, total biaya, lencana status (`Pending`, `DP 30%`, `Lunas`, `Dikonfirmasi`, `Batal`), serta tombol aksi `"Lihat Detail / Bayar"` dan `"Buka Chat Admin"`.
+- **Trigger / Cara Masuk**: Pengguna berstatus calon penyewa berhasil login atau menekan menu `"Pemesanan Saya"` di sidebar.
+- **Interaksi & Alur Navigasi**:
+  - *Jika pengguna belum memiliki pengajuan reservasi sama sekali*: Tampilkan *Empty State* dengan ilustrasi kamar dan tombol `"Cari Kamar Tersedia"` yang mengarahkan ke `SCR-PUB-03 (/kamar)`.
+  - *Jika pengguna klik `"Lihat Detail / Bayar"`*: Pindah ke `SCR-RES-02 (/penyewa/reservasi/{reservasi})`.
+  - *Jika pengguna klik `"Buka Chat Admin"`*: Pindah ke `SCR-RES-03 (/penyewa/reservasi/{reservasi}/chat)`.
+
+---
+
+#### `SCR-RES-02`: Detail Reservasi, *5-Step Visual Stepper*, & Pembayaran (`/penyewa/reservasi/{reservasi}` -> `reservasi/show.blade.php`)
+- **Deskripsi Visual**:
+  - **Komponen *5-Step Visual Stepper***: Baris indikator 5 tahap berangka tegas: (1) *Reservasi Diajukan*, (2) *Diskusi & Pembayaran*, (3) *Verifikasi Pembayaran*, (4) *Konfirmasi Admin*, dan (5) *Akses Penghuni Aktif*. Tahap yang sedang berlangsung diberi warna aksen kuning menyala dan ikon animasi aktif.
+  - **Kartu Rincian Pemesanan & Tagihan Awal**: Menampilkan spesifikasi kamar, durasi sewa, total harga, skema pembayaran yang dipilih (Lunas 100% atau DP 30% beserta rincian nominal DP dan sisa 70%), serta batas waktu kedaluwarsa pembayaran (24 jam sejak dibuat).
+  - **Panel Pembayaran & Aksi**:
+    - Jika memilih jalur `Midtrans`: Menampilkan tombol utama `"Bayar Sekarang via Midtrans"`.
+    - Jika memilih jalur `Cash`: Menampilkan kotak instruksi nomor rekening bank kost dinamis dan arahan untuk berkoordinasi melalui ruang obrolan.
+    - Tombol sekunder `"Diskusi dengan Admin (Chat)"` dan tombol merah `"Batalkan Reservasi"` (hanya muncul selama status masih `pending`).
+- **Trigger / Cara Masuk**: Diarahkan otomatis setelah mengirim form reservasi di `SCR-PUB-04` atau memilih salah satu item dari `SCR-RES-01`.
+- **Interaksi & Alur Navigasi**:
+  - *Jika pengguna klik `"Bayar Sekarang via Midtrans"`*:
+    1. Tombol berubah menjadi status memuat (*loading spinner*) dan mengirim permintaan AJAX `POST /penyewa/reservasi/{reservasi}/token`.
+    2. Begitu `snap_token` diterima, sistem membuka jendela **`MODAL-SNAP-01`** (*Midtrans Snap Popup*) di atas layar.
+    3. *Jika pembayaran selesai (`onSuccess`)*: Jendela popup tertutup, halaman memuat ulang otomatis, lencana status berubah menjadi `DP` atau `Lunas`, dan *Stepper* maju ke tahap menunggu Konfirmasi Admin.
+    4. *Jika pengguna menutup popup sebelum membayar (`onClose`)*: Menampilkan `TOAST-01` peringatan bahwa pembayaran belum diselesaikan dan tombol bayar aktif kembali.
+  - *Jika pengguna klik `"Batalkan Reservasi"`*: Memunculkan **`MODAL-CONF-01`** (`"Apakah Anda yakin ingin membatalkan reservasi kamar ini?"`). Jika dikonfirmasi, status berubah menjadi `Batal` disertai `TOAST-01`.
+  - *Jika pengguna klik `"Diskusi dengan Admin"`*: Pindah ke `SCR-RES-03`.
+
+---
+
+#### `SCR-RES-03`: Ruang Obrolan Pra-Pembayaran Reservasi (`/penyewa/reservasi/{reservasi}/chat` -> `penyewa/chat.blade.php` & `reservasi/chat-box.blade.php`)
+- **Deskripsi Visual**:
+  - Header informasi nomor kamar dan status reservasi beserta tombol kembali ke `SCR-RES-02`.
+  - Area percakapan bergaya balon pesan (*chat bubbles*): pesan dari calon penyewa berada di sisi kanan (latar kuning tegas), sedangkan balasan admin berada di sisi kiri (latar putih/abu-abu gelap) lengkap dengan jam pengiriman dan tanda centang status baca (`is_read`).
+  - Bilah input pesan di bagian bawah dengan kolom ketik teks dan tombol `"Kirim"`.
+- **Trigger / Cara Masuk**: Klik tombol `"Diskusi dengan Admin"` dari `SCR-RES-02`, `SCR-RES-01`, atau daftar riwayat obrolan `SCR-RES-05`.
+- **Interaksi & Alur Navigasi**:
+  - *Jika pengguna mengetik pesan dan menekan Enter atau tombol `"Kirim"`*: Pesan dikirim secara asinkron (`POST /chat-box/{reservasi}/send`), kolom input dikosongkan, dan balon pesan langsung ditambahkan ke bagian bawah layar dengan gulir otomatis (*auto-scroll*).
+  - *Penarikan Pesan Baru Otomatis*: Layar menjalankan *Smart Adaptive Polling* (`GET /chat-box/{reservasi}/fetch?after=last_id`) setiap 4 hingga 12 detik untuk menampilkan balasan admin secara langsung tanpa memuat ulang halaman.
+
+---
+
+#### `SCR-RES-04` & `SCR-RES-05`: Riwayat Pembayaran & Riwayat Obrolan Calon Penyewa
+- **`SCR-RES-04` (`/penyewa/reservasi/pembayaran` -> `penyewa/riwayat-pembayaran.blade.php`)**: Menampilkan tabel dan kartu riwayat pembayaran reservasi awal (kode transaksi, nominal DP/lunas, metode pembayaran, waktu bayar, dan tautan kembali ke detail reservasi `SCR-RES-02`).
+- **`SCR-RES-05` (`/penyewa/reservasi/riwayat-chat` -> `penyewa/riwayat-chat.blade.php`)**: Menampilkan daftar seluruh utas percakapan reservasi beserta cuplikan pesan terakhir dan lencana jumlah pesan belum dibaca. Klik pada salah satu baris langsung mengarahkan pengguna ke ruang obrolan `SCR-RES-03`.
+
+---
+
+#### `SCR-TEN-01`: Dasbor Utama Penyewa Aktif (`/penyewa/dashboard` -> `penyewa/dashboard.blade.php`)
+- **Deskripsi Visual**:
+  - **Banner Sapaan & Status Hunian**: Menampilkan nama penghuni, nomor kamar yang dihuni, tipe kamar, lantai, serta lencana status kontrak `AKTIF`.
+  - **Kartu Metrik Kontrak Personal**: Menampilkan tarif sewa bulanan yang telah dibekukan (*Immutable Rent Snapshot*), nominal uang jaminan (*deposit*) yang tersimpan, tanggal masuk, tanggal berakhir kontrak, serta hitung mundur sisa hari masa sewa.
+  - **Kartu Peringatan Tagihan Bulan Berjalan**: Jika terdapat tagihan berstatus `pending` atau `terlambat` (maupun tagihan pelunasan `SISA-DP-*`), sistem menampilkan kotak sorotan mencolok beserta tombol cepat `"Bayar Tagihan Sekarang"`.
+  - **Papan Pengumuman Kost**: Menampilkan daftar pengumuman aktif dari pengelola.
+- **Trigger / Cara Masuk**: Login melalui `SCR-AUTH-03` bagi pengguna yang sudah memiliki kontrak aktif (`EnsureTenantIsActive`), atau setelah reservasi daringnya dikonfirmasi oleh admin.
+- **Interaksi & Alur Navigasi**:
+  - *Jika pengguna klik `"Bayar Tagihan Sekarang"` atau menu `"Tagihan Sewa"`*: Pindah ke `SCR-TEN-02 (/penyewa/tagihan)`.
+  - *Jika pengguna klik tombol `"Laporkan Keluhan Kamar"`*: Pindah ke `SCR-TEN-06 (/penyewa/keluhan/create)`.
+  - *Jika pengguna klik pengumuman*: Membuka isi lengkap pengumuman atau pindah ke `SCR-TEN-07 (/penyewa/notifikasi)`.
+
+---
+
+#### `SCR-TEN-02` & `SCR-TEN-03`: Daftar & Detail Pembayaran Tagihan Sewa (`/penyewa/tagihan` & `/penyewa/tagihan/{tagihan}`)
+- **Berkas Blade**: `penyewa/tagihan/index.blade.php` (`SCR-TEN-02`) dan `penyewa/tagihan/show.blade.php` (`SCR-TEN-03`).
+- **Deskripsi Visual**:
+  - Pada `SCR-TEN-02`: Daftar seluruh invoice sewa bulanan (`INV-*`), tagihan awal (`RSV-INITIAL-*`), maupun tagihan pelunasan sisa uang muka (`SISA-DP-*`). Setiap baris menampilkan periode bulan/tahun, tanggal jatuh tempo (tanggal 10), nominal pokok, nominal denda (jika ada), total tagihan, lencana status (`Pending`, `Terlambat`, `Lunas`), serta tombol `"Detail / Bayar"` atau `"Cetak Nota"`.
+  - Pada `SCR-TEN-03`:
+    - **Indikator 3 Tahap Eskalasi Keterlambatan**: Menjelaskan posisi tagihan saat ini, mulai dari Masa Normal (tanggal 1 s.d. 10), Masa Tenggang / Peringatan Bulan Pertama (`bulan_keterlambatan = 1`, denda Rp 0), hingga Tahap Denda Flat 5% & Pemberitahuan Wali (`bulan_keterlambatan >= 2`).
+    - **Panel Pelunasan Hibrida**: Tombol `"Bayar Instan via Midtrans"` dan kotak informasi rekening bank kost untuk pembayaran manual/tunai.
+- **Interaksi & Alur Navigasi**:
+  - *Jika pengguna klik `"Detail / Bayar"` pada `SCR-TEN-02`*: Pindah ke `SCR-TEN-03`.
+  - *Jika pengguna klik `"Bayar Instan via Midtrans"` pada `SCR-TEN-03`*: Meminta token pembayaran ke `/penyewa/pembayaran/{tagihan}/token` dan memunculkan **`MODAL-SNAP-01`**. Setelah lunas, halaman disegarkan dan menampilkan tombol `"Unduh / Cetak Kuitansi Resmi (A5)"`.
+  - *Jika pengguna klik `"Cetak Nota"` pada tagihan yang sudah lunas*: Membuka `SCR-TEN-04 (/penyewa/nota/{pembayaran}/cetak)`.
+
+---
+
+#### `SCR-TEN-04`: Pratinjau & Unduh Kuitansi Resmi PDF A5 (`/penyewa/nota/{pembayaran}/cetak` -> `nota/cetak.blade.php`)
+- **Deskripsi Visual**:
+  - Bilah kendali di bagian atas layar berisi tombol `"Unduh PDF (A5)"`, tombol `"Cetak Printer"`, dan tombol `"Kembali"`.
+  - Kanvas kuitansi berukuran kertas A5 lanskap bergaya resmi yang menampilkan kop Asri Boarding House, nomor referensi invoice (`order_id`), ID transaksi pembayaran, nama penyewa, nomor kamar, rincian nominal pokok dan denda, total pembayaran, tanggal lunas, metode pembayaran, serta stempel digital **`LUNAS / VERIFIED`**.
+- **Trigger / Cara Masuk**: Klik tombol `"Cetak Nota"` dari `SCR-TEN-02`, `SCR-TEN-03`, atau dari halaman tagihan admin `SCR-ADM-09`.
+- **Interaksi & Alur Navigasi**:
+  - *Jika pengguna klik `"Unduh PDF (A5)"`*: Pustaka klien `html2pdf.js` mengubah elemen kanvas kuitansi menjadi berkas PDF bernama `Nota-Pembayaran-{order_id}.pdf` dan langsung mengunduhnya ke perangkat pengguna tanpa memuat ulang halaman.
+  - *Jika pengguna klik `"Cetak Printer"`*: Memicu dialog cetak bawaan peramban (`window.print()`) dengan aturan CSS `@media print` yang menyembunyikan bilah tombol kendali.
+
+---
+
+#### `SCR-TEN-05` & `SCR-TEN-06`: Daftar, Form Buat, & Detail Tiket Keluhan Fasilitas (`/penyewa/keluhan/*`)
+- **Berkas Blade**: `penyewa/keluhan/index.blade.php` (`SCR-TEN-05`), `penyewa/keluhan/create.blade.php`, dan `penyewa/keluhan/show.blade.php` (`SCR-TEN-06`).
+- **Deskripsi Visual & Interaksi**:
+  - Pada `SCR-TEN-05`: Menampilkan daftar laporan kerusakan fasilitas yang pernah diajukan penyewa beserta lencana kategori (`Kamar`, `Fasilitas Bersama`, `Kebersihan`, `Keamanan`, `Lainnya`), lencana status (`Pending`, `Diproses`, `Selesai`), dan tombol `"+ Buat Laporan Keluhan"`.
+  - Klik `"+ Buat Laporan Keluhan"` mengarahkan ke form `SCR-TEN-06`: Pengguna mengisi Judul Keluhan, memilih Kategori, menuliskan Deskripsi Detail, dan mengunggah Foto Bukti Kerusakan (maksimal 2MB dengan pratinjau gambar langsung).
+  - Saat disimpan, pengguna kembali ke `SCR-TEN-05` disertai `TOAST-01` `"Laporan keluhan berhasil dikirim"`.
+  - Klik pada salah satu item keluhan membuka halaman detail `SCR-TEN-06` yang menampilkan foto bukti, linimasa status penanganan, serta kotak **Tanggapan Resmi Admin** apabila keluhan telah ditindaklanjuti.
+
+---
+
+#### `SCR-TEN-07` & `SCR-TEN-08`: Peraturan Kost, Kotak Notifikasi, & Pengaturan Profil
+- **`SCR-TEN-07` (`/penyewa/peraturan` & `/penyewa/notifikasi`)**:
+  - Layar Peraturan (`penyewa/peraturan.blade.php`) menampilkan daftar kartu tata tertib hunian kost berikon dan bernomor urut.
+  - Layar Notifikasi (`penyewa/notifikasi/index.blade.php`) menampilkan kotak masuk pengumuman dari pengelola serta riwayat pemberitahuan tagihan dan pembayaran milik penyewa.
+- **`SCR-TEN-08` (`/profile` -> `profile/edit.blade.php`)**:
+  - Memuat tiga kartu formulir terpisah: (1) *Perbarui Informasi Profil & Kontak Wali* (`update-profile-information-form.blade.php`), (2) *Ubah Kata Sandi Akun* (`update-password-form.blade.php`), serta (3) *Zona Berbahaya: Hapus Akun Mandiri* (`delete-user-form.blade.php`).
+  - *State Khusus Hapus Akun*: Apabila pengguna masih memiliki kontrak sewa aktif atau reservasi berjalan, tombol hapus akun ditolak oleh sistem dengan pesan peringatan bahwa akun yang sedang terikat kontrak aktif tidak dapat dihapus.
+
+---
+
+### 3.4. Zona 4: Portal Administrator (`layouts/app.blade.php` dengan `admin-sidebar.blade.php`)
+
+#### `SCR-ADM-01`: Dasbor Analitik Eksekutif (`/admin/dashboard` -> `admin/dashboard.blade.php`)
+- **Deskripsi Visual**:
+  - **Sidebar Navigasi Admin (`admin-sidebar.blade.php`) & Topbar (`admin-topbar.blade.php`)**: Menyediakan navigasi terkelompok menuju seluruh modul operasional, tombol pengalih tema (*Theme Switcher*), indikator profil admin, dan tombol keluar. Pada layar ponsel, sidebar tersembunyi di balik tombol *hamburger* dengan penguncian gulir layar (`window.toggleScrollLock`).
+  - **Baris Kartu KPI Utama**: Menampilkan tingkat keterisian kamar (*Occupancy Rate* %), jumlah kamar `Tersedia`, `Terisi`, dan `Maintenance`, total pemasukan lunas bulan berjalan, total pengeluaran, laba bersih, serta total piutang tagihan tertunggak.
+  - **Grafik Tren Arus Kas 12 Bulan (`Chart.js`)**: Grafik batang/garis komparasi pemasukan sewa terhadap pengeluaran operasional selama satu tahun terakhir, dilengkapi metrik analitik konversi klik tombol WhatsApp (`whatsapp_clicks`).
+  - **Panel Pintasan Operasional**: Tabel ringkas daftar tagihan yang mendekati atau melewati jatuh tempo, pengajuan reservasi baru berstatus `pending`/`dp`/`lunas`, serta tiket keluhan terbaru yang membutuhkan tindakan.
+- **Trigger / Cara Masuk**: Login berhasil melalui `SCR-AUTH-04 (/admin/login)` atau klik menu `"Dashboard"` pada sidebar admin.
+- **Interaksi & Alur Navigasi**:
+  - *Jika admin klik kartu KPI Kamar*: Pindah ke `SCR-ADM-03 (/admin/kamar)`.
+  - *Jika admin klik baris reservasi baru*: Pindah ke `SCR-ADM-08 (/admin/reservasi/{reservasi})`.
+  - *Jika admin klik baris tagihan jatuh tempo*: Pindah ke `SCR-ADM-09 (/admin/tagihan/{tagihan})`.
+  - *Jika admin klik baris keluhan terbaru*: Pindah ke `SCR-ADM-12 (/admin/keluhan/{keluhan})`.
+
+---
+
+#### `SCR-ADM-02`: Kalender Okupansi Visual 42 Sel (`/admin/kalender` -> `admin/calendar/index.blade.php`)
+- **Deskripsi Visual**:
+  - **Bilah Navigasi Bulan & Legenda Warna**: Tombol geser bulan (`< Bulan Sebelumnya`, `Hari Ini`, `Bulan Berikutnya >`), pemilih tahun/bulan, serta legenda warna status agenda (Jadwal Masuk *Check-In*, Masa Tinggal Aktif, Jadwal Keluar *Check-Out*, dan Reservasi Terjadwal).
+  - **Matriks Kisi 42 Sel (6 Minggu x 7 Hari)**: Setiap sel tanggal menampilkan pita agenda kamar beserta nomor kamar dan nama penghuni.
+- **Trigger / Cara Masuk**: Klik menu `"Kalender Okupansi"` pada sidebar admin.
+- **Interaksi & Alur Navigasi**:
+  - *Jika admin mengganti bulan atau tahun*: Komponen Alpine.js memanggil `GET /admin/kalender/events` untuk memuat dan menggambar ulang pita agenda pada 42 sel kalender tanpa memuat ulang halaman penuh.
+  - *Jika admin klik salah satu pita agenda penghuni di dalam sel tanggal*: Menampilkan *popover* rincian kontrak (nomor kamar, nama penyewa, durasi, tanggal keluar) dengan tautan langsung menuju `SCR-ADM-06 (/admin/penyewa/{penyewa})`.
+
+---
+
+#### `SCR-ADM-03` & `SCR-ADM-04`: Manajemen Master Kamar & Fasilitas (`/admin/kamar/*` & `/admin/fasilitas`)
+- **Berkas Blade**: `admin/kamar/index.blade.php`, `create.blade.php`, `edit.blade.php`, `show.blade.php` (`SCR-ADM-03`), serta `admin/fasilitas/index.blade.php` (`SCR-ADM-04`).
+- **Deskripsi Visual**:
+  - Pada daftar kamar `SCR-ADM-03`: Dilengkapi bilah pencarian nomor kamar, filter tipe (`Standar`, `Deluxe`, `VIP`), filter status (`Tersedia`, `Terisi`, `Maintenance`, `Terhapus / Trash`), tombol pengalih tampilan **Tabel vs Grid Kartu** (disimpan di `localStorage.kamar_view_mode`), serta tombol `"+ Tambah Kamar Baru"`.
+  - Pada form Tambah/Edit Kamar: Input Nomor Kamar, Lantai, Tipe Kamar, Luas (`m²`), Harga Bulanan (menggunakan `.rupiah-input`), Status, Deskripsi, Unggah Foto Kamar, daftar kotak centang (*checkbox*) fasilitas kamar, serta tombol `"+ Kelola Master Fasilitas"` yang membuka **`MODAL-FAC-01`**.
+- **Interaksi & Alur Navigasi**:
+  - *Jika admin klik pengalih tampilan Tabel / Grid*: Tata letak daftar kamar langsung berubah secara instan dan preferensinya diingat oleh peramban.
+  - *Jika admin mengubah dropdown Status Cepat pada baris kamar*: Mengirim `PATCH /admin/kamar/{kamar}/status` dan menampilkan `TOAST-01` `"Status kamar berhasil diperbarui"`.
+  - *Jika admin klik tombol `"Kelola Master Fasilitas"` di dalam form kamar*: Membuka **`MODAL-FAC-01`** (`admin/kamar/partials/facility-modal.blade.php`). Admin dapat menambah atau menghapus master fasilitas via AJAX, dan daftar kotak centang fasilitas di form kamar langsung diperbarui (`GET /admin/fasilitas-list`) tanpa menghilangkan data kamar yang sedang diketik.
+  - *Jika admin klik `"Hapus"` pada kamar*: Memunculkan **`MODAL-CONF-01`**. Jika dikonfirmasi, kamar dipindahkan ke tab *Trash* (*Soft Delete* dengan pembubuhan akhiran `_deleted_[timestamp]`). Pada tab *Trash*, admin dapat menekan tombol `"Pulihkan (Restore)"` untuk mengembalikan kamar ke daftar aktif.
+
+---
+
+#### `SCR-ADM-05`, `SCR-ADM-06`, & `SCR-ADM-07`: Siklus Kontrak Penyewa, Perpanjangan, & Audit *Check-Out* Deposit (`/admin/penyewa/*`)
+- **Berkas Blade**: `admin/penyewa/index.blade.php` & `create.blade.php` (`SCR-ADM-05`), `show.blade.php` & `edit.blade.php` (`SCR-ADM-06`), serta `checkout.blade.php` (`SCR-ADM-07`).
+- **Deskripsi Visual**:
+  - **`SCR-ADM-05` (Daftar & Tambah Penyewa *Walk-in*)**: Tabel daftar seluruh penyewa aktif maupun nonaktif dengan filter status, pencarian nama/NIK/kamar, tombol `"Export PDF"`, tombol `"Export CSV"`, serta tombol `"+ Tambah Penyewa (Walk-in)"`. Formulir tambah penyewa memuat input identitas lengkap (Nama, Email, No HP WhatsApp, NIK 16 digit, Nama & No WA Wali) serta rincian kontrak (Pilih Kamar Tersedia, Tipe Sewa, Durasi, Tanggal Masuk, Tarif Sewa, dan Nominal Deposit dengan `.rupiah-input`).
+  - **`SCR-ADM-06` (Detail Kontrak & Perpanjangan Sewa)**: Menampilkan profil penghuni, tarif sewa terbekukan (*Immutable Rent Snapshot*), saldo deposit aktif, daftar riwayat tagihan milik penyewa tersebut, formulir **Perpanjang Kontrak** (input tambahan durasi sewa), serta tombol `"Proses Check-Out"`.
+  - **`SCR-ADM-07` (Formulir *Check-Out* & Klaim Deposit)**: Menampilkan ringkasan kontrak dan saldo uang jaminan (`deposit`) saat ini. Memuat pilihan radio Status Kamar Pasca-Keluar (`Maintenance / Inspeksi` atau `Langsung Tersedia`), pilihan ada tidaknya kerusakan fasilitas kamar, input Nominal Potongan Kerusakan (`.rupiah-input`), unggah Foto Bukti Nota Perbaikan, kalkulasi otomatis Sisa Deposit yang Dikembalikan ke Penyewa, serta tombol `"Konfirmasi Check-Out & Tutup Kontrak"`.
+- **Interaksi & Alur Navigasi**:
+  - *Saat admin menyimpan form penyewa baru di `SCR-ADM-05`*: Sistem membuat akun pengguna dan kontrak aktif, mengunci kamar menjadi `terisi`, mengirim kredensial login ke WhatsApp penyewa, menampilkan `TOAST-01`, lalu mengarahkan ke `SCR-ADM-06`.
+  - *Saat admin mengirim form Perpanjang Kontrak di `SCR-ADM-06`*: Memunculkan **`MODAL-CONF-01`**. Setelah disetujui, tanggal keluar kontrak bergeser, tagihan perpanjangan diterbitkan, dan daftar tagihan di layar diperbarui.
+  - *Saat admin mengisi Potongan Kerusakan di `SCR-ADM-07`*: Skrip layar langsung menghitung selisih `Sisa Deposit Kembali = Saldo Deposit - Potongan Kerusakan`. Saat tombol submit ditekan dan dikonfirmasi melalui **`MODAL-CONF-01`**, sistem mencatat potongan perbaikan dan pengembalian sisa deposit ke modul Pengeluaran (`SCR-ADM-10`), mengubah status penyewa menjadi `nonaktif`, lalu mengarahkan admin kembali ke `SCR-ADM-05` dengan `TOAST-01`.
+
+---
+
+#### `SCR-ADM-08`: Daftar & Verifikasi Reservasi Daring (`/admin/reservasi` & `/admin/reservasi/{reservasi}`)
+- **Berkas Blade**: `admin/reservasi/index.blade.php` dan `admin/reservasi/show.blade.php`.
+- **Deskripsi Visual**:
+  - Pada halaman daftar: Tabel pengajuan reservasi daring dengan filter status (`Pending`, `DP 30%`, `Lunas`, `Dikonfirmasi`, `Batal`, `Terhapus`), menampilkan nama pemesan, nomor kamar, durasi, skema bayar, dan lencana status pembayaran.
+  - Pada halaman detail verifikasi: Menampilkan kartu identitas calon penyewa (termasuk NIK 16 digit dan nomor WhatsApp wali), rincian harga reservasi, bukti status transaksi Midtrans (atau metode tunai), kotak obrolan langsung dengan calon penyewa (`reservasi/chat-box.blade.php`), input **Nominal Uang Jaminan (Deposit)**, tombol hijau `"Konfirmasi Reservasi & Aktifkan Penyewa"`, serta tombol merah `"Tolak / Batalkan Reservasi"`.
+- **Interaksi & Alur Navigasi**:
+  - *Jika admin mengisi nominal Deposit lalu menekan `"Konfirmasi Reservasi"`*: Memunculkan **`MODAL-CONF-01`**. Setelah dikonfirmasi:
+    1. Sistem membuat kontrak penyewa aktif baru dan mengunci kamar menjadi `terisi`.
+    2. Jika reservasi dibayar dengan skema DP 30%, sistem otomatis menerbitkan tagihan pelunasan 70% (`SISA-DP-*`).
+    3. Menampilkan `TOAST-01` `"Reservasi berhasil dikonfirmasi menjadi penyewa aktif"` dan memperbarui tampilan halaman ke status `Dikonfirmasi` beserta tautan menuju profil penyewa `SCR-ADM-06`.
+
+---
+
+#### `SCR-ADM-09`: Manajemen Tagihan & Konfirmasi Kasir Tunai (`/admin/tagihan` & `/admin/tagihan/{tagihan}`)
+- **Berkas Blade**: `admin/tagihan/index.blade.php` dan `admin/tagihan/show.blade.php`.
+- **Deskripsi Visual**:
+  - Tabel seluruh tagihan sewa dengan filter bulan, tahun, dan status (`Pending`, `Terlambat`, `Lunas`), dilengkapi ringkasan total tagihan lunas vs belum lunas pada periode terpilih.
+  - Pada halaman detail `SCR-ADM-09`: Menampilkan rincian pokok tagihan, status bulan keterlambatan, nominal denda flat 5% (jika ada), riwayat percobaan pembayaran Midtrans, tombol `"Konfirmasi Pembayaran Tunai (Cash)"` (untuk tagihan yang belum lunas), serta tombol `"Cetak Kuitansi A5"` (untuk tagihan yang sudah lunas).
+- **Interaksi & Alur Navigasi**:
+  - *Jika admin klik `"Konfirmasi Pembayaran Tunai (Cash)"`*: Memunculkan **`MODAL-CONF-01`** (`"Konfirmasi bahwa uang tunai/transfer manual sebesar Rp ... telah diterima?"`). Jika disetujui, status tagihan berubah menjadi `Lunas`, nama admin dicatat sebagai pengonfirmasi, dan tombol `"Cetak Kuitansi A5"` langsung muncul untuk membuka `SCR-TEN-04`.
+
+---
+
+#### `SCR-ADM-10` & `SCR-ADM-11`: Pembukuan Pengeluaran & Laporan Keuangan Laba-Rugi (`/admin/pengeluaran/*` & `/admin/laporan`)
+- **Berkas Blade**: `admin/pengeluaran/index.blade.php`, `create.blade.php`, `edit.blade.php`, `show.blade.php` (`SCR-ADM-10`), serta `admin/laporan/index.blade.php` (`SCR-ADM-11`).
+- **Deskripsi Visual & Interaksi**:
+  - **`SCR-ADM-10` (Pengeluaran Operasional)**: Menampilkan tabel kas keluar (termasuk biaya perbaikan dari potongan deposit dan pengembalian sisa deposit saat *check-out*), filter kategori (`Maintenance`, `Utilitas`, `Operasional`, `Lainnya`), filter rentang tanggal, tombol `"Export PDF"`, `"Export Excel/CSV"`, serta tombol `"+ Catat Pengeluaran"`. Form pengeluaran menggunakan `.rupiah-input` dan mendukung unggahan foto/PDF bukti nota belanja.
+  - **`SCR-ADM-11` (Laporan Keuangan Laba-Rugi)**: Menyajikan filter periode bulan dan tahun, tiga kartu neraca utama (**Total Pemasukan Sewa Lunas**, **Total Pengeluaran Operasional**, dan **Laba / Rugi Bersih**), tabel rincian transaksi masuk dan keluar, serta tombol `"Unduh Laporan PDF (A4)"` dan `"Unduh Excel/CSV"` yang mempertahankan parameter filter aktif (*state-preserving export*).
+
+---
+
+#### `SCR-ADM-12`, `SCR-ADM-13`, `SCR-ADM-14`, & `SCR-ADM-15`: Keluhan, Guest Chat, Notifikasi/Audit, & CMS
+| Kode Layar | Nama Layar & Rute | Deskripsi Visual & Komponen Utama | Interaksi & Transisi Layar |
+| :--- | :--- | :--- | :--- |
+| **`SCR-ADM-12`** | Penanganan Tiket Keluhan (`/admin/keluhan` & `/{keluhan}`) | Daftar tiket keluhan dengan filter kategori dan status. Halaman detail menampilkan foto bukti kerusakan dari penyewa, pemilih status (`Pending`, `Diproses`, `Selesai`), dan area teks `Tanggapan Admin`. | Pilih status baru & isi tanggapan -> Klik `"Simpan Pembaruan"` -> Tampilkan `TOAST-01` & kirim notifikasi WA otomatis ke penyewa. |
+| **`SCR-ADM-13`** | Konsol *Guest Live Chat* (`/admin/guest-chats`) | Tata letak panel ganda (*split-pane*): kolom kiri berisi daftar utas tamu anonim beserta indikator pesan belum dibaca; kolom kanan menampilkan ruang percakapan aktif, tombol `"Tutup Sesi"`, dan `"Hapus"`. | Klik salah satu utas tamu di kiri -> Muat pesan via AJAX di kanan -> Ketik balasan & kirim tanpa memuat ulang halaman. |
+| **`SCR-ADM-14`** | Broadcast Notifikasi & Audit Log (`/admin/notifikasi` & `/notifikasi-khusus`) | Form pengiriman pesan siaran (*broadcast* WA/Email/Pengumuman), tabel log pengiriman pesan (`log_notifikasi`) dengan tombol `"Retry"` pada baris berstatus `Gagal`, serta tabel jejak audit sistem (`notifikasi_khusus`). | Klik tombol `"Retry"` pada log gagal -> Kirim ulang pesan via gateway & perbarui lencana status menjadi `Sukses` disertai `TOAST-01`. |
+| **`SCR-ADM-15`** | Pengaturan Konten Situs CMS (`/admin/pengaturan-konten`, `/faq`, `/gallery`, `/reviews`, `/peraturan`, `/profil`) | Form terpusat untuk mengubah nama kost, gambar hero, alamat, iframe Google Maps, nomor WA admin, daftar rekening bank manual, dan persentase diskon paket promo, ditambah halaman CRUD untuk FAQ, Galeri, Testimoni, dan Peraturan. | Simpan perubahan -> Cache pengaturan otomatis disegarkan di belakang layar -> Tampilkan `TOAST-01` & perbarui tampilan publik (`SCR-PUB-*`). |
+
+---
+
+## 4. Key User Journeys (Skenario Alur Utama)
+
+Bagian ini menguraikan rangkaian perpindahan layar dari awal hingga akhir (*end-to-end user story*) untuk lima skenario penggunaan utama di dalam aplikasi.
+
+---
+
+### 4.1. Skenario 1: Alur Eksplorasi Tamu, Simulasi Harga Promo, Konsultasi Guest Chat, hingga Registrasi & Onboarding Profil
+Skenario ini menggambarkan perjalanan seorang pengunjung baru sejak membuka situs web hingga siap memesan kamar.
+
+1. Pengunjung membuka **Beranda Utama (`SCR-PUB-01`)** -> menekan tombol `"Lihat Katalog Kamar"`.
+2. Sistem menampilkan **Katalog Kamar (`SCR-PUB-03`)**. Pengunjung memilih filter tipe `Deluxe` dan status `Tersedia` -> menekan tombol `"Lihat Detail & Pesan"` pada salah satu kartu kamar.
+3. Sistem membuka **Detail Kamar & Kalkulator (`SCR-PUB-04`)**. Pengunjung memilih kartu **Paket Hemat Triwulan (3 Bulan, Diskon 5%)** pada kalkulator:
+   - Klien memperbarui angka rincian Total Harga dan nominal opsi DP 30% secara langsung di layar.
+4. Pengunjung ingin memastikan ketersediaan parkir mobil terlebih dahulu -> menekan tombol melayang **`FAB-CHAT-01` (*Guest Live Chat*)** di kanan bawah layar **Detail Kamar (`SCR-PUB-04`)**.
+5. Pengunjung mengisi Nama, Nomor WhatsApp, dan pertanyaan -> menekan `"Mulai Chat"`. Admin membalas melalui **Konsol Guest Chat (`SCR-ADM-13`)** dan balasan muncul secara langsung di widget pengunjung.
+6. Merasa cocok, pengunjung menutup widget chat lalu menekan tombol `"Login untuk Memesan Kamar Ini"` pada **Detail Kamar (`SCR-PUB-04`)**.
+7. Sistem mengarahkan pengunjung ke **Login Calon Penyewa (`SCR-AUTH-01`)**. Pengunjung menekan tombol `"Masuk / Daftar dengan Google"` (atau mendaftar melalui **`SCR-AUTH-02`**).
+8. Karena akun baru belum memiliki data NIK dan kontak wali, sistem mencegat navigasi dan menampilkan **Onboarding Lengkapi Profil (`SCR-AUTH-08`)**.
+9. Pengguna mengisi NIK 16 digit, Nomor WhatsApp, Nama Wali, dan Nomor WhatsApp Wali -> menekan `"Simpan & Lanjutkan"`:
+   - *Jika gagal validasi:* Pesan kesalahan muncul di bawah kolom input terkait dan pengguna tetap berada di **`SCR-AUTH-08`**.
+   - *Jika sukses:* Sistem menampilkan **`TOAST-01`** `"Profil berhasil dilengkapi"` dan mengarahkan pengguna kembali ke halaman **Detail Kamar (`SCR-PUB-04`)** yang tadi dilihat (*intended URL*).
 
 ```mermaid
-flowchart TD
-    subgraph App ["Sistem Internal Asri Boarding House"]
-        TxEngine["Transaction & Billing Engine"]
-        QueueEngine["Event Queue & Notification Worker"]
-        AuthEngine["Authentication Engine"]
-    end
-
-    subgraph Gateways ["Layanan Eksternal Pihak Ketiga"]
-        Midtrans["1. Midtrans Snap & Webhook API"]
-        Fonnte["2. Fonnte WhatsApp API"]
-        SMTP["3. SMTP Mail Server"]
-        Google["4. Google OAuth 2.0"]
-    end
-
-    subgraph Fallbacks ["Mekanisme Graceful Degradation & Fallback"]
-        FB_Midtrans["Fallback: Cek Status Sinkron API v2 / Alihkan ke Pembayaran Cash & Transfer Manual Rekening Dinamis"]
-        FB_Fonnte["Fallback: Tangkap Timeout, Catat 'gagal' + error_msg di log_notifikasi, Sediakan Tombol Retry Admin"]
-        FB_SMTP["Fallback: Isolasi di Queue Worker agar Transaksi Utama Tetap Sukses & Catat Status di log_notifikasi"]
-        FB_Google["Fallback: Tangkap Eksepsi OAuth & Kembalikan ke Login Email/Password Standar dengan Pesan Ramah"]
-    end
-
-    TxEngine -->|Request Token / Terima Webhook| Midtrans
-    Midtrans -. "Jika Down / Webhook Terlambat" .-> FB_Midtrans
-
-    QueueEngine -->|HTTP POST Berjeda (Staggered)| Fonnte
-    Fonnte -. "Jika Timeout / Device Disconnected" .-> FB_Fonnte
-
-    QueueEngine -->|SMTP TLS Port 587| SMTP
-    SMTP -. "Jika Koneksi SMTP Gagal" .-> FB_SMTP
-
-    AuthEngine -->|OAuth 2.0 Redirect| Google
-    Google -. "Jika Batal / Token Invalid" .-> FB_Google
+flowchart LR
+    S1["SCR-PUB-01: Beranda"] -->|Klik Katalog| S2["SCR-PUB-03: Katalog Kamar"]
+    S2 -->|Pilih Unit Kamar| S3["SCR-PUB-04: Detail Kamar & Kalkulator"]
+    S3 <-->|Tanya Admin Tanpa Login| C1["FAB-CHAT-01: Widget Guest Chat"]
+    S3 -->|Klik Pesan Kamar| S4["SCR-AUTH-01: Login / Google OAuth"]
+    S4 -->|Profil Belum Lengkap| S5["SCR-AUTH-08: Onboarding Lengkapi Profil"]
+    S5 -->|Simpan NIK & Wali| S3
 ```
 
-#### 1. Spesifikasi Interaksi & Ketahanan Midtrans Payment Gateway
-- **Mekanisme Interaksi**:
-  - Saat meminta token pembayaran, `MidtransService` mengirimkan rincian transaksi (`order_id`, `gross_amount`), identitas pelanggan (`first_name`, `email`, `phone`), dan daftar item ke endpoint *Midtrans Snap API* menggunakan otorisasi *Basic Auth* (`base64(ServerKey + ":")`).
-  - Saat pembayaran berhasil, server Midtrans mengirim webhook `POST` ke `/api/midtrans/callback` (untuk tagihan) atau `/api/midtrans/callback-reservasi` (untuk reservasi). Middleware `VerifyMidtransSignature` memverifikasi keaslian paket dengan membandingkan hash `SHA-512` secara waktu konstan (`hash_equals`).
-- **Penanganan Saat Layanan Down (*Graceful Degradation*)**:
-  - **Jika Webhook Terlambat Masuk**: Sistem dapat memanggil fungsi pengecekan status sinkron (`MidtransService::checkTransactionStatus`) langsung ke API Midtrans untuk menarik status terbaru (`settlement` atau `capture`) dan memperbarui status tagihan/reservasi tanpa harus menunggu webhook.
-  - **Jika Server Midtrans Mengalami Gangguan Total**: Penangkapan eksepsi pada `SnapTokenController` mengembalikan pesan pemberitahuan yang jelas kepada pengguna. Pengguna maupun calon penyewa tetap dapat melanjutkan proses pemesanan atau pelunasan tagihan dengan memilih metode **Cash / Transfer Manual**, melihat nomor rekening bank kost yang ditampilkan secara dinamis dari pengaturan sistem, berkoordinasi melalui *Reservation Chat*, dan meminta verifikasi manual kepada admin melalui fitur **Konfirmasi Cash**.
+---
 
-#### 2. Spesifikasi Interaksi & Ketahanan Fonnte WhatsApp API
-- **Mekanisme Interaksi**:
-  - Pekerja antrean memanggil `FonnteService::sendMessage($targetPhone, $message)` yang melakukan permintaan `POST` ke `https://api.fonnte.com/send` dengan menyertakan header `Authorization: {FONNTE_TOKEN}`, nomor tujuan berformat `628...`, dan isi pesan teks yang dirakit oleh `NotificationTemplateBuilder`.
-  - Seluruh pengiriman masal (seperti tagihan tanggal 1 untuk puluhan penyewa) diberi jeda waktu bertahap oleh trait `StaggersJobs` agar antrean pesan keluar mengalir secara teratur.
-- **Penanganan Saat Layanan Down (*Graceful Degradation*)**:
-  - Apabila server Fonnte sedang tidak dapat diakses, waktu tunggu habis (*connection timeout*), atau perangkat WhatsApp pengelola terputus, `FonnteService` menangkap kegagalan tersebut tanpa melempar kesalahan fatal ke antarmuka pengguna.
-  - Status kegagalan beserta pesan galat dari API disimpan ke tabel `log_notifikasi` (`status = 'gagal'`, `channel = 'whatsapp'`).
-  - Selama gangguan berlangsung, penyewa tetap dapat melihat seluruh rincian tagihan, pengumuman, dan status keluhan langsung di halaman `/penyewa/notifikasi` dan `/penyewa/tagihan` pada portal web. Begitu layanan Fonnte kembali normal, admin cukup menekan tombol **Retry** di halaman `/admin/notifikasi` untuk mengirim ulang pesan-pesan yang tertunda.
+### 4.2. Skenario 2: Alur Pengajuan Reservasi Kamar, Diskusi Pra-Bayar, hingga Pembayaran Midtrans Snap (DP 30% / Lunas)
+Skenario ini melanjutkan perjalanan calon penyewa yang sudah berada kembali di halaman detail kamar untuk mengajukan pemesanan dan membayar uang muka.
 
-#### 3. Spesifikasi Interaksi & Ketahanan Google Identity OAuth 2.0
-- **Mekanisme Interaksi**:
-  - Di sisi peramban, fungsi `initOAuthProtection()` menonaktifkan tombol Google sesaat setelah diklik guna mencegah pengiriman permintaan ganda.
-  - `SocialiteController` mengarahkan pengguna ke halaman persetujuan Google, menerima panggilan balik di `/auth/google/callback`, lalu mencocokkan alamat surel akun Google dengan tabel `users`. Jika surel belum terdaftar, sistem otomatis membuatkan akun baru dengan `role = 'penyewa'` dan menandai `email_verified_at = now()`, kemudian mengarahkannya ke halaman pelengkapan profil (`/profil/complete` melalui `EnsureProfileIsComplete`).
-- **Penanganan Saat Layanan Down (*Graceful Degradation*)**:
-  - Apabila pengguna membatalkan persetujuan di halaman Google, token negara (*state token*) tidak cocok, atau layanan Google OAuth gagal dihubungi, blok `try-catch` pada `SocialiteController` menangkap eksepsi tersebut, mencatatnya ke log sistem, dan mengembalikan pengguna ke halaman `/reservasi/login` disertai pesan pemberitahuan ramah. Pengguna tetap dapat mendaftar atau masuk menggunakan formulir surel dan kata sandi standar.
+1. Pada **Detail Kamar (`SCR-PUB-04`)**, calon penyewa mengisi Tanggal Mulai Masuk, memilih durasi 3 bulan, memilih metode `Midtrans Snap`, mencentang opsi **`Bayar DP 30%`**, lalu menekan `"Ajukan Reservasi Sekarang"`.
+2. Sistem memvalidasi ketersediaan tanggal kamar:
+   - *Jika tanggal bentrok dengan reservasi lain:* Tetap di **`SCR-PUB-04`** dan tampilkan kotak peringatan merah di atas form.
+   - *Jika tersedia:* Sistem menyimpan reservasi berstatus `Pending`, memunculkan **`TOAST-01`**, dan mengarahkan pengguna ke **Detail Reservasi & 5-Step Stepper (`SCR-RES-02`)** (posisi Stepper berada di Tahap 2: *Diskusi & Pembayaran*).
+3. Calon penyewa ingin memberi tahu jam kedatangan -> menekan tombol `"Diskusi dengan Admin"` -> berpindah ke **Ruang Obrolan Reservasi (`SCR-RES-03`)** -> mengirim pesan singkat -> menekan tombol `"Kembali ke Detail Reservasi"` menuju **`SCR-RES-02`**.
+4. Pada **`SCR-RES-02`**, calon penyewa menekan tombol `"Bayar Sekarang via Midtrans"`.
+5. Sistem mengambil token pembayaran dan memunculkan jendela *overlay* **`MODAL-SNAP-01` (*Midtrans Snap Popup*)** di atas **`SCR-RES-02`**.
+6. Calon penyewa memilih metode QRIS dan menyelesaikan pembayaran:
+   - Jendela **`MODAL-SNAP-01`** menutup otomatis -> halaman **`SCR-RES-02`** memuat ulang -> lencana status berubah menjadi **`DP (30% Terbayar)`** -> indikator *5-Step Stepper* bergeser maju ke Tahap 4 (*Menunggu Konfirmasi Admin*).
 
-#### 4. Spesifikasi Interaksi & Ketahanan SMTP Mail Server
-- **Mekanisme Interaksi**:
-  - Pengiriman surel menggunakan komponen `Symfony Mailer` melalui protokol `SMTP` berenkripsi `TLS` (Port 587) dengan templat HTML responsif (`resources/views/layouts/email.blade.php`).
-- **Penanganan Saat Layanan Down (*Graceful Degradation*)**:
-  - Pengiriman surel pemberitahuan tagihan dan bukti pembayaran dijalankan di dalam *Queue Job* yang terpisah dari permintaan HTTP pengguna, serta dilengkapi pencatatan status di tabel `log_notifikasi`. Apabila server SMTP mengalami gangguan atau batas kuota pengiriman harian terlampaui, kegagalan dicatat pada `log_notifikasi.error_msg` dan dapat dikirim ulang melalui fitur **Retry**, sementara saluran pemberitahuan pendamping (WhatsApp dan kotak masuk notifikasi internal web) tetap menyampaikan informasi secara utuh kepada penyewa.
+```mermaid
+flowchart LR
+    R1["SCR-PUB-04: Form Reservasi Kamar"] -->|Submit Valid| R2["SCR-RES-02: Detail Reservasi (Stepper Tahap 2)"]
+    R2 <-->|Diskusi Pra-Bayar| R3["SCR-RES-03: Ruang Obrolan Reservasi"]
+    R2 -->|Klik Bayar Sekarang| M1["MODAL-SNAP-01: Midtrans Snap Popup"]
+    M1 -->|Pembayaran Berhasil| R4["SCR-RES-02: Status 'DP / Lunas' (Stepper Tahap 4)"]
+```
+
+---
+
+### 4.3. Skenario 3: Alur Verifikasi Reservasi oleh Admin, Aktivasi Penghuni, Pelunasan Tagihan, & Unduh Kuitansi PDF A5
+Skenario ini menjelaskan perpindahan layar sejak admin mengonfirmasi reservasi hingga penyewa aktif melunasi tagihan dan mengunduh kuitansi resminya.
+
+1. Administrator berada di **Dasbor Eksekutif (`SCR-ADM-01`)** -> melihat pemberitahuan reservasi yang sudah dibayar -> menekan baris reservasi tersebut untuk masuk ke **Detail Verifikasi Reservasi (`SCR-ADM-08`)**.
+2. Pada **`SCR-ADM-08`**, admin memeriksa NIK dan data wali calon penyewa, mengetikkan nominal uang jaminan pada kolom **Deposit** (misal `Rp 500.000` dengan pemformatan `.rupiah-input`), lalu menekan tombol `"Konfirmasi Reservasi & Aktifkan Penyewa"`.
+3. Sistem memunculkan **`MODAL-CONF-01`** di atas layar -> Admin menekan `"Ya, Lanjutkan"`.
+4. Sistem mengaktifkan kontrak penyewa, mengubah status kamar menjadi `Terisi`, menerbitkan invoice sisa pembayaran 70% (`SISA-DP-*`), menampilkan **`TOAST-01`**, dan memperbarui tampilan **`SCR-ADM-08`** menjadi `Dikonfirmasi`.
+5. Di sisi penghuni, ketika pengguna membuka kembali aplikasinya atau menekan tombol masuk, sistem langsung mengarahkannya ke **Dasbor Penyewa Aktif (`SCR-TEN-01`)**.
+6. Pada **`SCR-TEN-01`**, penyewa melihat kartu peringatan tagihan aktif (`SISA-DP-*` atau tagihan bulanan `INV-*`) -> menekan tombol `"Bayar Tagihan Sekarang"` -> berpindah ke **Daftar Tagihan (`SCR-TEN-02`)** -> menekan `"Detail / Bayar"` menuju **Detail Tagihan (`SCR-TEN-03`)**.
+7. Penyewa melunasi tagihan melalui **`MODAL-SNAP-01`** (atau melalui pembayaran tunai yang dikonfirmasi admin di **`SCR-ADM-09`**).
+8. Setelah berstatus `Lunas`, penyewa menekan tombol `"Cetak / Unduh Nota Resmi"` pada **`SCR-TEN-03`** -> berpindah ke layar **Pratinjau Kuitansi A5 (`SCR-TEN-04`)** -> menekan `"Unduh PDF (A5)"` untuk menyimpan berkas PDF kuitansi berstempel ke perangkatnya.
+
+```mermaid
+flowchart LR
+    A1["SCR-ADM-01: Dasbor Admin"] --> A2["SCR-ADM-08: Verifikasi Reservasi"]
+    A2 -->|Input Deposit & Klik Konfirmasi| MC["MODAL-CONF-01: Konfirmasi Admin"]
+    MC -->|Disetujui| T1["SCR-TEN-01: Dasbor Penyewa Aktif"]
+    T1 --> T2["SCR-TEN-02: Daftar Tagihan"]
+    T2 --> T3["SCR-TEN-03: Detail & Bayar Tagihan"]
+    T3 -->|Setelah Lunas| T4["SCR-TEN-04: Unduh Kuitansi PDF A5"]
+```
+
+---
+
+### 4.4. Skenario 4: Alur Pelaporan Tiket Keluhan Fasilitas hingga Penyelesaian oleh Admin
+1. Penyewa aktif berada di **Dasbor Penyewa Aktif (`SCR-TEN-01`)** -> memilih menu `"Keluhan Fasilitas"` menuju **Daftar Keluhan (`SCR-TEN-05`)** -> menekan tombol `"+ Buat Laporan Keluhan"`.
+2. Sistem membuka **Form Buat Keluhan (`SCR-TEN-06`)**. Penyewa mengisi judul `"AC Kamar Kurang Dingin"`, memilih kategori `Kamar`, menulis deskripsi, mengunggah foto bukti, lalu menekan `"Kirim Laporan"`.
+3. Sistem menyimpan tiket dengan status `Pending`, memunculkan **`TOAST-01`**, dan mengembalikan penyewa ke **Daftar Keluhan (`SCR-TEN-05`)**.
+4. Admin membuka **Daftar Keluhan Admin (`SCR-ADM-12`)** -> menekan tiket baru tersebut untuk membuka detailnya -> mengubah status menjadi `Diproses` saat teknisi datang, lalu mengubahnya menjadi `Selesai` disertai pengisian catatan `"Freon AC telah ditambah dan filter dibersihkan"` -> menekan `"Simpan Pembaruan"`.
+5. Sistem menampilkan **`TOAST-01`** di layar admin dan mengirim notifikasi WhatsApp ke penyewa. Saat penyewa membuka **Detail Keluhan (`SCR-TEN-06`)**, lencana status telah berubah hijau (`Selesai`) lengkap dengan catatan tanggapan admin dan waktu penyelesaian.
+
+---
+
+### 4.5. Skenario 5: Alur Pendaftaran Penyewa Walk-in, Wajib Ganti Sandi, hingga Check-Out & Audit Klaim Deposit
+1. Calon penghuni datang langsung ke lokasi kost. Admin membuka **Daftar Penyewa (`SCR-ADM-05`)** -> menekan `"+ Tambah Penyewa (Walk-in)"`.
+2. Admin mengisi biodata penyewa, memilih unit kamar, menentukan durasi sewa dan deposit, lalu menekan `"Simpan Penyewa"`. Sistem mengarahkan admin ke **Detail Kontrak Penyewa (`SCR-ADM-06`)** disertai **`TOAST-01`**, sementara penyewa menerima pesan WhatsApp berisi email dan kata sandi awal (nomor HP).
+3. Saat penyewa login pertama kali di **Login Penyewa (`SCR-AUTH-03`)**, sistem langsung mengalihkannya ke layar **Wajib Ganti Kata Sandi Awal (`SCR-AUTH-07`)**. Setelah mengganti kata sandi, penyewa masuk ke **Dasbor Penyewa Aktif (`SCR-TEN-01`)**.
+4. Ketika masa kontrak berakhir, admin membuka **Detail Kontrak Penyewa (`SCR-ADM-06`)** -> menekan tombol `"Proses Check-Out"` -> berpindah ke **Form Check-Out & Klaim Deposit (`SCR-ADM-07`)**.
+5. Pada **`SCR-ADM-07`**, admin memilih status akhir kamar `Maintenance`, menandai adanya kerusakan lampu/kunci, mengisi nominal potongan perbaikan `Rp 150.000` dari total deposit `Rp 500.000`, mengunggah foto nota perbaikan, dan menekan `"Konfirmasi Check-Out"`.
+6. Sistem memunculkan **`MODAL-CONF-01`** -> Admin menekan `"Ya, Lanjutkan"`.
+7. Sistem menutup kontrak penyewa menjadi `Nonaktif`, mengubah status kamar menjadi `Maintenance`, membukukan potongan `Rp 150.000` dan pengembalian sisa deposit `Rp 350.000` secara otomatis ke **Pembukuan Pengeluaran (`SCR-ADM-10`)**, lalu mengarahkan admin kembali ke **Daftar Penyewa (`SCR-ADM-05`)** dengan **`TOAST-01`**.
+
+---
+
+## 5. Interaction Guidelines & Micro-Interactions
+
+Untuk menghadirkan pengalaman pengguna yang tanggap, konsisten, dan memenuhi standar aksesibilitas **WCAG 2.1 Level AA**, seluruh layar di dalam aplikasi mematuhi aturan mikro-interaksi berikut:
+
+### 5.1. Standar Transisi Layar, Efek Mekanis Tombol, & Penguncian Gulir (*Scroll Lock*)
+1. **Efek Tekan Mekanis *Neo-Brutalism* (`neo-btn-interactive`)**:
+   - Seluruh tombol aksi utama memiliki garis tepi tegas (`border-2` hingga `border-4`) dan bayangan kaku tanpa kabur (`box-shadow: 4px 4px 0px #000000` pada mode terang dan `#ffffff` pada mode gelap).
+   - Saat kursor diarahkan ke tombol (*hover* pada perangkat berpenunjuk), tombol bergeser menekan bayangannya sejauh `translate(2px, 2px)` diikuti penyusutan bayangan menjadi `2px 2px 0px` dalam waktu `100ms` (`cubic-bezier(0.16, 1, 0.3, 1)`). Saat ditekan (*active*), tombol rata sepenuhnya dengan bayangan (`translate(0px, 0px)`), memberikan sensasi fisik layaknya menekan tombol mekanis.
+2. **Transisi Kemunculan Modal & Panel Melayang**:
+   - Jendela modal (`MODAL-CONF-01`, `MODAL-FAC-01`) dan panel *Guest Live Chat* (`FAB-CHAT-01`) muncul menggunakan kombinasi latar belakang redup (`bg-black/60 backdrop-blur-sm`) dengan transisi opasitas dan pergeseran vertikal selama `200ms` hingga `300ms`.
+3. **Penguncian Gulir Latar Belakang Otomatis (`window.toggleScrollLock`)**:
+   - Pada layar ponsel dan tablet (`lebar < 1024px`), setiap kali *sidebar* navigasi, jendela *Guest Live Chat*, atau modal konfirmasi dibuka, fungsi `window.toggleScrollLock()` menyematkan kelas `overflow-hidden` pada elemen `<body>` dalam jeda `50ms`. Hal ini mencegah halaman di belakang modal ikut tergulir secara tidak sengaja oleh sentuhan jari pengguna.
+
+---
+
+### 5.2. Aturan Umpan Balik Aksi (*Feedback Aksi: Toast & Custom Confirmation Modal*)
+1. **Durasi dan Perilaku *Toast Notification* (`TOAST-01`)**:
+   - Notifikasi *Toast* yang dipicu dari sesi server (`components/toast.blade.php`) muncul `50ms` setelah halaman selesai dimuat dengan animasi geser dari atas (`translate-y-[-20px]` ke `translate-y-0` selama `300ms`), bertahan selama **4,5 detik (`4500ms`)**, lalu memudar keluar secara otomatis dalam `200ms`.
+   - Notifikasi *Toast* yang dipicu secara asinkron melalui JavaScript (`window.showToast(message, type)`) bertahan selama **4 detik (`4000ms`)** sebelum dihapus otomatis dari *DOM tree*. Pengguna juga dapat menutupnya lebih cepat menggunakan tombol silang (`✕`).
+2. **Pencegahan Dialog Bawaan Peramban dengan `MODAL-CONF-01`**:
+   - Aplikasi ini meniadakan penggunaan `window.confirm()` bawaan peramban agar tampilan visual tidak terputus.
+   - Setiap elemen `<form>` yang memiliki atribut `data-confirm="Pesan konfirmasi..."` dicegat secara otomatis oleh *Form Submit Interceptor* di `layouts/app.blade.php`. Sistem menahan pengiriman formulir, menampilkan **`MODAL-CONF-01`** dengan judul, pesan, dan warna tombol yang sesuai (`bg-red-500` untuk aksi berbahaya atau `bg-yellow-400` untuk konfirmasi standar), serta hanya mengirimkan formulir apabila pengguna menekan tombol konfirmasi.
+
+---
+
+### 5.3. Validasi Input Real-Time, Pemformatan Otomatis, & Perilaku Asinkron
+1. **Pemformatan Mata Uang Rupiah Langsung dengan Penjaga Kursor (`.rupiah-input`)**:
+   - Saat pengguna mengetikkan angka pada kolom harga, deposit, atau pengeluaran, skrip pemformat langsung membersihkan karakter non-angka dan menambahkan titik pemisah ribuan setiap tiga digit secara *real-time*, sembari menyalin nilai angka murninya ke elemen `<input type="hidden">` pasangan (`data-target`).
+   - Skrip menghitung selisih jumlah digit sebelum posisi kursor dan memulihkan posisi kursor (`setSelectionRange`) secara presisi, sehingga kursor tidak pernah melompat ke ujung kanan saat pengguna menyunting angka di tengah nominal.
+2. **Pemuatan Gambar *Anti-Layout Shift* (*Shimmer Placeholder*)**:
+   - Seluruh elemen gambar kamar dan galeri dibungkus bersama lapisan `.shimmer-placeholder`. Begitu peristiwa `onload` gambar terpicu, fungsi `removeShimmer(this)` menurunkan opasitas *shimmer* menjadi `0` dan menghapusnya dari DOM setelah `300ms`.
+3. **Deteksi Tema *Anti-Flicker* (*Light Mode* & *OLED Dark Mode*)**:
+   - Skrip di dalam tag `<head>` memeriksa `localStorage.theme` atau preferensi sistem operasi sebelum peramban menggambar elemen `<body>`. Ketika pengguna menekan tombol *Theme Switcher*, kelas `.dark` pada `<html>` langsung diperbarui tanpa memuat ulang halaman, mengubah latar menjadi hitam OLED (`#030712`) dan membalik seluruh garis tepi serta bayangan brutalist dari hitam (`#000000`) menjadi putih (`#ffffff`).
+4. **Proteksi Klik Ganda Tombol OAuth (`initOAuthProtection`)**:
+   - Saat tombol `"Masuk dengan Google"` ditekan, skrip langsung menyetel atribut `pointer-events: none` dan `opacity-60` agar pengguna yang menekan tombol dua kali secara cepat tidak memicu kesalahan *invalid state token* pada panggilan balik OAuth.
+5. **Irama *Smart Adaptive Polling* pada Layar Obrolan**:
+   - Ruang obrolan reservasi (`SCR-RES-03`) dan widget *Guest Live Chat* (`FAB-CHAT-01`) menarik pesan baru setiap **4 detik** ketika percakapan sedang berlangsung aktif, melambat secara bertahap hingga **12 detik** saat tidak ada pesan baru, dan berhenti sepenuhnya ketika tab peramban tidak terlihat di layar pengguna (`document.visibilityState === 'hidden'`).
