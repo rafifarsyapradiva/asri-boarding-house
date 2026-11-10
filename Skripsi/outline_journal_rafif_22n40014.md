@@ -19,10 +19,10 @@ Bagian pembuka dokumen menetapkan aturan tata letak cetak standar jurnal ilmiah 
    * `12 pt Bold & Italic`: Judul sub-bagian *Abstract* dan label *Keywords*.
    * `12 pt Bold`: Isi paragraf abstrak serta judul bab dan sub-bab.
    * `12 pt Regular`: Nama penulis, afiliasi, surel, paragraf isi artikel, serta isi sel di dalam tabel.
-   * `10 pt Bold`: Label penomoran tabel (`Table 1.`, `Table 2.`).
-   * `10 pt Regular`: Judul keterangan tabel dalam huruf kapital (*in Caps*) dan daftar pustaka (*References*).
+   * `10 pt Bold`: Label penomoran tabel (`Table 1.`, `Table 2.`) dan penomoran gambar (`Figure 1.`, `Figure 2.`, dst.).
+   * `10 pt Regular`: Judul keterangan tabel dalam huruf kapital (*in Caps*), judul keterangan gambar di bawah gambar (*centered in Caps*), dan daftar pustaka (*References*).
    * `10 pt Italic`: Nama jurnal dan judul buku pada daftar pustaka berformat IEEE.
-6. **Batas Panjang Naskah:** Maksimal 7 sampai 8 halaman (panjang aktual naskah sekitar 5 halaman cetak A-4 atau $\approx 3.194$ kata).
+6. **Batas Panjang Naskah:** Maksimal 8 sampai 10 halaman (mengakomodasi integrasi 7 kelompok *figure* visual utama dengan panjang aktual $\approx 8{,}5 - 9{,}5$ halaman cetak A-4 dua kolom atau $\approx 4.467$ kata total).
 
 ---
 
@@ -93,14 +93,53 @@ Bab kedua terdiri atas **4 paragraf** dan **1 tabel ringkasan (`Table 1`)** deng
 ---
 
 ## TAHAP 6: BAB III. RESULTS AND DISCUSSION (*HASIL DAN PEMBAHASAN*)
-Bab ketiga menerapkan **Opsi B (Tanpa Gambar & Tanpa Rumus Matematika)** agar selaras penuh dengan ranah rekayasa perangkat lunak dan evaluasi kualitatif wawancara rekaman suara (*audio*):
+Bab ketiga menguraikan hasil implementasi sistem secara komprehensif dengan memadukan artefak visual arsitektur perangkat lunak, skema basis data, antarmuka pengguna, dan alur transaksi digital (**8 Paragraf Naratif + 7 Kelompok Figure Utama + Table 2**) pada Sub-bab A, serta analisis kualitatif wawancara dan perbandingan komparatif ilmiah (**3 Paragraf Diskusi**) pada Sub-bab B:
 
-### Sub-bab A. RESULT (3 Paragraf + `Table 2`)
-* **Paragraf 1 (Hasil Perancangan Skema Basis Data Relasional 3NF):**  
-  Pemodelan arsitektur menetapkan batas wewenang yang jelas antara calon penyewa, administrator indekos, dan penyewa aktif. Skema basis data relasional 3NF memisahkan 6 tabel hunian dan keuangan inti (`users`, `kamar`, `penyewa`, `reservasi`, `tagihan`, dan `pembayaran`) dari 8 tabel operasional pendukung (`keluhan`, `pengeluaran`, `log_notifikasi`, `guest_chat_threads`, `chat_messages`, `customer_reviews`, `peraturan`, dan `faqs`) `[18]`. Melalui relasi satu-ke-banyak, tabel `penyewa` mengunci *snapshot* tarif kamar yang disepakati, tanggal masuk, akhir kontrak, dan kontak darurat wali agar kontrak historis tetap utuh saat tarif master kamar berubah.
-* **Paragraf 2 (Hasil Implementasi 36 Antarmuka *Neo-Brutalism* dan 9 Modul Kode Inti):**  
-  Pada alur reservasi menyeluruh, ketika pemohon memilih unit kosong dari 32 kamar, melengkapi verifikasi identitas, dan memulai pembayaran lewat Midtrans, sisi *backend* mengeksekusi transaksi ACID menggunakan `lockForUpdate()` dan pemeriksaan tumpang-tindih jadwal untuk memblokir pesanan ganda `[19]`. Implementasi sistem menghasilkan 36 antarmuka web *Neo-Brutalism* responsif `[7]` beserta sembilan modul *backend* inti: *middleware* multi-peran, *routing* pasca-login, penguncian kamar ACID, deteksi bentrok jadwal, pembuatan token Midtrans Snap 24 jam, verifikasi *webhook* SHA-512 via `hash_equals()` `[20]`, penjadwalan *cron* dengan `withoutOverlapping()` `[12]`, pengiriman WhatsApp Fonnte `[13]`, dan antrean surel SMTP/TLS via `ShouldQueue` `[14]`. Untuk pemantauan harian, dasbor administrator menggunakan tema gelap OLED yang menghitung keterisian kamar, uang sewa masuk, pengeluaran operasional, dan saldo kas bersih secara otomatis.
-* **Paragraf 3 (Hasil Pengujian 60 Skenario *Black-Box* 100% Lulus dan Pengantar Evaluasi Wawancara):**  
+### Sub-bab A. RESULT (8 Paragraf Naratif, 7 Kelompok Figure Utama, dan Table 2)
+
+* **Paragraf 1 (Pemodelan Arsitektur Hak Akses Multi-Peran & Pengantar Figure 1):**  
+  Pemodelan arsitektur menetapkan batas wewenang yang tegas antara tiga peran pengguna utama: calon penyewa, penyewa aktif, dan administrator indekos, sebagaimana dipetakan pada `Figure 1`. Calon penyewa dapat menelusuri katalog 32 kamar, berkonsultasi via obrolan langsung (*live chat*), melengkapi verifikasi identitas, dan memulai alur reservasi 5 tahap. Di sisi lain, penyewa aktif memperoleh akses terdedikasi untuk tagihan sewa bulanan, riwayat pembayaran digital, serta tiket keluhan pemeliharaan. Administrator mengawasi seluruh siklus operasional properti, meliputi inventaris kamar, kontrak penyewa, pembukuan keuangan, hingga pemantauan biaya operasional.
+* **Figure 1 (`Figure 1. USE CASE DIAGRAM OF ASRI BOARDING HOUSE MANAGEMENT INFORMATION SYSTEM`):**  
+  *Berkas Gambar:* `images/gambar_4_1_use_case_en.png` (lebar tampilan `88%`).  
+  *Deskripsi Visual:* Diagram *Use Case* berstandar UML yang memetakan relasi 3 aktor utama (*Admin*, *Prospective Tenant*, dan *Active Tenant*) terhadap 14 *use case* fungsional inti berspesifikasi bahasa Inggris.
+
+* **Paragraf 2 (Normalisasi Basis Data Relasional 3NF Dua Modul & Pengantar Figure 2):**  
+  Guna mendukung operasi multi-peran tanpa redundansi data, basis data MySQL InnoDB dinormalisasi ke Bentuk Normal Ketiga (3NF) dan dikelompokkan ke dalam dua modul yang saling terhubung sebagaimana disajikan pada `Figure 2` `[18]`. Modul inti hunian dan keuangan (`Figure 2a`) menghubungkan enam tabel fundamental: `users`, `kamar`, `penyewa`, `reservasi`, `tagihan`, dan `pembayaran`. Melalui relasi *one-to-many*, tabel `penyewa` mengunci *snapshot* tarif sewa yang disepakati, tanggal masuk, batas akhir sewa, dan kontak darurat wali agar data kontrak historis tetap konsisten kendati tarif master kamar mengalami perubahan harga. Sementara itu, modul operasional pendukung (`Figure 2b`) mengelola penanganan keluhan fasilitas (`keluhan`), pencatatan biaya operasional (`pengeluaran`), log audit notifikasi (`log_notifikasi`), utas pesan konsultasi tamu (`guest_chat_threads` dan `chat_messages`), ulasan kepuasan penghuni (`customer_reviews`), tata tertib indekos (`peraturan`), serta pusat bantuan tanya-jawab (`faqs`).
+* **Figure 2 (`Figure 2. ENTITY RELATIONSHIP DIAGRAM (3NF): (a) CORE RESIDENCY AND FINANCIAL MODULE; (b) SUPPORTING OPERATIONAL MODULE`):**  
+  *Berkas Gambar:* `images/gambar_4_2_a_erd_modul_inti_en.png` (lebar `48%`) dan `images/gambar_4_2_b_erd_modul_pendukung_en.png` (lebar `48%`).  
+  *Deskripsi Visual:* Diagram relasi entitas 3NF bersanding (*side-by-side*) yang memperlihatkan kardinalitas relasi, kunci primer (*PK*), kunci asing (*FK*), serta tipe data berbahasa Inggris yang presisi.
+
+* **Paragraf 3 (Alur Algoritma Reservasi, Webhook Midtrans, dan Cron Scheduler & Pengantar Figure 3):**  
+  `Figure 3` mengilustrasikan alur logika menyeluruh (*flowchart*) yang mengatur pemesanan kamar, verifikasi pembayaran otomatis, dan penerbitan tagihan terjadwal. Ketika calon penyewa memilih unit kosong, mengunggah kartu identitas, dan memulai proses pembayaran, sistem mengeksekusi transaksi basis data ACID disertai *pessimistic row-level locking* (`lockForUpdate()`) dan validasi bentrok jadwal guna menggagalkan pesanan ganda pada detik yang sama `[19]`. Begitu *gateway* Midtrans mengirim *webhook callback* SHA-512 yang divalidasi via `hash_equals()`, sistem secara otomatis mengubah status tagihan menjadi lunas, meningkatkan peran akun menjadi penyewa aktif, serta menerbitkan kuitansi digital via WhatsApp dan surel `[20]`. Untuk penyewa aktif, penjadwal *cron job* di *server* menerbitkan tagihan bulanan berulang setiap tanggal 1 (`tagihan:generate-bulanan`) dan mengevaluasi denda tunggakan secara idempoten setelah tanggal 10 (`tagihan:proses-keterlambatan`) dengan proteksi tumpang-tindih eksekusi (`withoutOverlapping()`) `[12]`.
+* **Figure 3 (`Figure 3. END-TO-END RESERVATION, PAYMENT GATEWAY WEBHOOK, AND AUTOMATED BILLING FLOWCHART`):**  
+  *Berkas Gambar:* `images/gambar_4_6_flowchart_sistem_en.png` (lebar `72%`).  
+  *Deskripsi Visual:* Diagram alir sistem (*system flowchart*) komprehensif yang memetakan cabang keputusan calon penyewa, verifikasi kriptografis token Midtrans Snap, mutasi hak akses penyewa, hingga otomatisasi denda sewa lintas bulan.
+
+* **Paragraf 4 (Implementasi Antarmuka Neo-Brutalism & Katalog Publik 32 Kamar & Pengantar Figure 4):**  
+  Implementasi sistem menghasilkan 36 antarmuka web responsif berbalut gaya desain *Neo-Brutalism* berkontras tinggi `[7]`. Pada portal publik (`Figure 4`), calon penyewa dapat menyaring 32 unit kamar indekos berdasarkan kategori VIP, Deluxe, dan Standar, sembari memeriksa status ketersediaan *real-time*, ukuran luas kamar, rincian fasilitas, serta tarif sewa bulanan tanpa harus datang langsung ke lokasi properti.
+* **Figure 4 (`Figure 4. PUBLIC ROOM UNIT CATALOG WITH REAL-TIME OCCUPANCY STATUS AND TIER FILTERS`):**  
+  *Berkas Gambar:* `images/gambar_4_9_tipe_kamar_kost_en.png` (lebar `88%`).  
+  *Deskripsi Visual:* Tangkapan layar antarmuka katalog publik indekos dengan kartu kamar *Neo-Brutalism*, lencana status okupansi (*Occupied* / *Available*), spesifikasi fasilitas kamar, dan tombol tindakan pemesanan langsung.
+
+* **Paragraf 5 (Alur Pemesanan Online 5 Tahap & Modal Midtrans Snap & Pengantar Figure 5):**  
+  Setelah menentukan unit kamar kosong dan lolos verifikasi 16 digit NIK, calon penyewa diarahkan menuju ruang kerja pemesanan lima langkah yang terintegrasi langsung dengan jendela sembulan (*modal*) Midtrans Snap (`Figure 5`). Pelacak reservasi (`Figure 5a`) memandu calon penghuni menyelesaikan tahapan *booking*, konfirmasi kesiapan fisik kamar via obrolan, hingga pemilihan skema pembayaran penuh maupun uang muka (DP). Pada saat bersamaan, gerbang pembayaran Midtrans Snap (`Figure 5b`) menghasilkan kode bayar *Virtual Account* atau QRIS berdurasi 24 jam sehingga meniadakan keharusan konfirmasi manual bukti transfer bank.
+* **Figure 5 (`Figure 5. ONLINE ROOM BOOKING WORKFLOW: (a) FIVE-STEP RESERVATION WORKSPACE; (b) MIDTRANS SNAP VIRTUAL ACCOUNT MODAL`):**  
+  *Berkas Gambar:* `images/gambar_4_21_pembayaran_5_tahap_reservasi_en.png` (lebar `60%`) dan `images/gambar_4_22_payment_gateway_midtrans.png` (lebar `36%`).  
+  *Deskripsi Visual:* Tampilan bersanding (*side-by-side*) alur transaksi: ruang kerja reservasi lima langkah calon penghuni di sisi kiri dan *pop-up modal* pembayaran *Virtual Account* resmi Midtrans di sisi kanan.
+
+* **Paragraf 6 (Portal Back-Office Administrator: Dasbor Eksekutif & Modul Laporan Kas & Pengantar Figure 6):**  
+  Bagi pengelola properti, portal administrator mengintegrasikan operasional harian dan pembukuan kas ke dalam dasbor eksekutif dan modul laporan keuangan bulanan (`Figure 6`). Dasbor eksekutif (`Figure 6a`) memantau metrik bisnis melalui kartu KPI *real-time*—terdiri atas total 32 kamar, kamar tersedia, pendapatan bulan berjalan, pengeluaran operasional, laba bersih, tagihan belum lunas, dan pemesanan masuk—disertai grafik tren keuangan 12 bulan dan diagram donat okupansi kamar. Sementara itu, modul pelaporan keuangan (`Figure 6b`) merekonsiliasi seluruh arus kas masuk dari tagihan sewa lunas dengan pengeluaran operasional secara otomatis untuk menghitung saldo kas bersih akhir, lengkap dengan tombol ekspor dokumen PDF dan Excel dalam satu kali klik.
+* **Figure 6 (`Figure 6. ADMINISTRATOR BACK-OFFICE PORTAL: (a) REAL-TIME EXECUTIVE DASHBOARD; (b) AUTOMATED FINANCIAL RECONCILIATION AND EXPORT MODULE`):**  
+  *Berkas Gambar:* `images/gambar_4_26_dashboard_admin_en.png` (lebar `48%`) dan `images/gambar_4_33_manajemen_laporan_pemasukan_en.png` (lebar `48%`).  
+  *Deskripsi Visual:* Tampilan antarmuka *back-office* pengelola: dasbor metrik bisnis dengan grafik interaktif di sisi kiri serta modul filter dan rekonsiliasi arus kas masuk-keluar di sisi kanan.
+
+* **Paragraf 7 (Portal Penagihan Sewa Penghuni & Kuitansi Pembayaran Digital PDF A5 & Pengantar Figure 7):**  
+  Di sisi penghuni, penyewa aktif dapat memantau kewajiban sewa bulanan dan mengunduh bukti pelunasan resmi secara mandiri melalui portal penagihan penyewa sebagaimana disajikan pada `Figure 7`. Halaman tagihan (`Figure 7a`) merangkum nominal tunggakan berjalan, riwayat tagihan terbayar, dan total akumulasi pengeluaran sewa. Setiap transaksi yang terverifikasi lunas secara otomatis menerbitkan dokumen kuitansi resmi berukuran A5 lanskap format PDF (`Figure 7b`) berstempel digital *PAID* dan referensi *invoice* Midtrans sebagai bukti bayar transparan untuk dilaporkan kepada orang tua mahasiswa.
+* **Figure 7 (`Figure 7. TENANT BILLING AND PROOF OF SETTLEMENT: (a) RENTAL INVOICE HISTORY PORTAL; (b) AUTOMATED A5 DIGITAL PAYMENT RECEIPT (PDF)`):**  
+  *Berkas Gambar:* `images/gambar_4_38_tagihan_penyewa_en.png` (lebar `56%`) dan `images/gambar_4_42_nota_pdf_en.png` (lebar `40%`).  
+  *Deskripsi Visual:* Tampilan portal penagihan mandiri penyewa aktif dengan tabel status pembayaran di sisi kiri dan dokumen kuitansi PDF resmi A5 bertanda cap lunas hijau di sisi kanan.
+
+* **Paragraf 8 (Hasil Pengujian Fungsional 60 Skenario Black-Box 100% Lulus & Pengantar Table 2):**  
   Verifikasi fungsional pada seluruh 60 skenario *black-box* di enam domain operasional mencapai tingkat kelulusan 100% tanpa galat validasi maupun transaksi `[10]`. Seluruh penyaring formulir, validasi 16 digit NIK, karantina kamar pasca-*checkout*, unduhan kuitansi PDF, serta ekspor laporan PDF dan Excel berjalan sesuai spesifikasi. Selanjutnya, *User Acceptance Testing* (UAT) yang dilaksanakan melalui uji pakai berdampingan dan wawancara tatap muka yang direkam secara audio bersama pengelola senior serta lima mahasiswa penghuni aktif menghasilkan skor kepuasan tinggi sebagaimana dirangkum pada `Table 2` `[17]`.
 * **Tabel 2 (`Table 2. USER ACCEPTANCE EVALUATION SCORES AND KEY FINDINGS`):**  
   Menyajikan skor dan temuan utama dari rekaman suara wawancara 6 informan:

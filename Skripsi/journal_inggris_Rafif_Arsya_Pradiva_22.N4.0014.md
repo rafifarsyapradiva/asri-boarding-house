@@ -6,7 +6,7 @@
   - Format Kolom         : Dua Kolom (Two Columns), jarak antar kolom 0.5 cm
   - Huruf Utama (Font)   : Times New Roman, 12 pt, Regular
   - Spasi (Line Spacing) : 1.0 (Single Spacing)
-  - Batas Maksimal       : Maksimal 7 Halaman
+  - Batas Maksimal       : Maksimal 8 - 10 Halaman
   =============================================================================
 -->
 
@@ -107,12 +107,78 @@
 #### **A. RESULT**
 
 <p align="justify">
-  Architectural modeling established clear operational boundaries across prospective tenants, the boarding house administrator, and active tenants. The 3NF relational database schema separates core residency and financial tables (<em>users</em>, <em>kamar</em>, <em>penyewa</em>, <em>reservasi</em>, <em>tagihan</em>, and <em>pembayaran</em>) from supporting operational tables (<em>keluhan</em>, <em>pengeluaran</em>, <em>log_notifikasi</em>, <em>guest_chat_threads</em>, <em>chat_messages</em>, <em>customer_reviews</em>, <em>peraturan</em>, and <em>faqs</em>) [18]. Through a one-to-many relationship, the <em>penyewa</em> table locks a snapshot of the agreed room rate, entry date, lease expiration, and emergency guardian contact so historical contracts remain intact even when master room tariffs change.
+  Architectural modeling defines strict access boundaries across three primary user roles: prospective tenants, active tenants, and the boarding house administrator, as mapped in Figure 1. Prospective tenants can browse the 32-room catalog, consult via live chat, complete identity verification, and initiate five-step room bookings, whereas active tenants gain dedicated access to monthly rent invoices, digital payment history, and maintenance complaint tickets. The administrator oversees the entire property lifecycle, spanning room inventory, tenant contracts, financial ledgers, and operational cost tracking.
 </p>
 
+<div align="center">
+  <img src="images/gambar_4_1_use_case_en.png" alt="Use Case Diagram of Asri Boarding House Management Information System" width="88%">
+  <br>
+  <sub><strong>Figure 1.</strong> USE CASE DIAGRAM OF ASRI BOARDING HOUSE MANAGEMENT INFORMATION SYSTEM</sub>
+</div>
+
 <p align="justify">
-  In the end-to-end reservation workflow, when an applicant selects a vacant unit from the 32 available rooms, completes identity verification, and initiates payment through Midtrans, the backend executes an ACID transaction using <em>lockForUpdate()</em> and schedule overlap checks to block duplicate reservations [19]. System implementation produced 36 responsive Neo-Brutalism web interfaces [7] alongside nine core backend modules covering multi-role middleware, post-login routing, ACID room locking, schedule conflict detection, 24-hour Midtrans Snap token generation, SHA-512 webhook verification via <em>hash_equals()</em> [20], cron task scheduling with <em>withoutOverlapping()</em> [12], Fonnte WhatsApp dispatches [13], and queued SMTP/TLS email delivery via <em>ShouldQueue</em> [14]. For daily property oversight, the administrator dashboard employs an OLED dark theme that automatically aggregates room occupancy, incoming rent, operational expenses, and net cash balance.
+  To support these multi-role operations without data redundancy, the MySQL InnoDB database was normalized to Third Normal Form (3NF) and organized into two interconnected modules, as shown in Figure 2 [18]. The core residency and financial module (Figure 2a) links six foundational tables: <em>users</em>, <em>kamar</em>, <em>penyewa</em>, <em>reservasi</em>, <em>tagihan</em>, and <em>pembayaran</em>. Through a one-to-many relationship, the <em>penyewa</em> table locks a historical snapshot of the agreed room tariff, entry date, lease expiration, and emergency guardian contact so past tenancy contracts remain accurate even when master room rates change. Meanwhile, the supporting operational module (Figure 2b) manages maintenance complaints (<em>keluhan</em>), property expenses (<em>pengeluaran</em>), notification logs (<em>log_notifikasi</em>), live guest chat threads (<em>guest_chat_threads</em> and <em>chat_messages</em>), tenant reviews (<em>customer_reviews</em>), house rules (<em>peraturan</em>), and frequently asked questions (<em>faqs</em>).
 </p>
+
+<div align="center">
+  <img src="images/gambar_4_2_a_erd_modul_inti_en.png" alt="Core Residency and Financial ERD Module" width="48%">
+  <img src="images/gambar_4_2_b_erd_modul_pendukung_en.png" alt="Supporting Operational ERD Module" width="48%">
+  <br>
+  <sub><strong>Figure 2.</strong> ENTITY RELATIONSHIP DIAGRAM (3NF): (a) CORE RESIDENCY AND FINANCIAL MODULE; (b) SUPPORTING OPERATIONAL MODULE</sub>
+</div>
+
+<p align="justify">
+  Figure 3 illustrates the end-to-end algorithmic flow that governs room reservations, automated payment verification, and scheduled monthly billing. Whenever an applicant selects a vacant room, uploads identity documents, and initiates checkout, the backend executes an ACID database transaction paired with pessimistic row-level locking (<em>lockForUpdate()</em>) and date-overlap validation to prevent simultaneous double bookings [19]. Once the Midtrans payment gateway returns a cryptographic SHA-512 webhook callback verified via <em>hash_equals()</em>, the system automatically settles the invoice, upgrades the user role to active tenant, and dispatches an official digital receipt via WhatsApp and email [20]. For ongoing tenancies, a server cron scheduler generates monthly rent bills on the 1st of each month (<em>tagihan:generate-bulanan</em>) and evaluates overdue accounts daily past the 10th due date (<em>tagihan:proses-keterlambatan</em>) with idempotent late-fee locking (<em>withoutOverlapping()</em>) [12].
+</p>
+
+<div align="center">
+  <img src="images/gambar_4_6_flowchart_sistem_en.png" alt="End-to-End System Flowchart" width="72%">
+  <br>
+  <sub><strong>Figure 3.</strong> END-TO-END RESERVATION, PAYMENT GATEWAY WEBHOOK, AND AUTOMATED BILLING FLOWCHART</sub>
+</div>
+
+<p align="justify">
+  System implementation produced 36 responsive web interfaces styled with a high-contrast Neo-Brutalism design system [7]. On the public portal (Figure 4), prospective tenants can filter all 32 rooms across VIP, Deluxe, and Standard tiers while inspecting real-time occupancy badges, room dimensions, facility tags, and monthly rates without visiting the property in person.
+</p>
+
+<div align="center">
+  <img src="images/gambar_4_9_tipe_kamar_kost_en.png" alt="Public Room Unit Catalog Interface" width="88%">
+  <br>
+  <sub><strong>Figure 4.</strong> PUBLIC ROOM UNIT CATALOG WITH REAL-TIME OCCUPANCY STATUS AND TIER FILTERS</sub>
+</div>
+
+<p align="justify">
+  After selecting an available room and passing 16-digit National Identity (NIK) validation, the applicant enters the five-step reservation workspace paired with the Midtrans Snap payment popup, as displayed in Figure 5. The reservation tracker (Figure 5a) guides the applicant through room booking, readiness confirmation via live chat, and full or down-payment settlement, while the embedded Midtrans Snap gateway (Figure 5b) generates a 24-hour Virtual Account or QRIS payment code that eliminates manual transfer slip uploads.
+</p>
+
+<div align="center">
+  <img src="images/gambar_4_21_pembayaran_5_tahap_reservasi_en.png" alt="Five-Step Reservation Payment Workspace" width="60%">
+  <img src="images/gambar_4_22_payment_gateway_midtrans.png" alt="Midtrans Snap Virtual Account Payment Modal" width="36%">
+  <br>
+  <sub><strong>Figure 5.</strong> ONLINE ROOM BOOKING WORKFLOW: (a) FIVE-STEP RESERVATION WORKSPACE; (b) MIDTRANS SNAP VIRTUAL ACCOUNT MODAL</sub>
+</div>
+
+<p align="justify">
+  For property management, the administrator portal consolidates daily operations and cash bookkeeping into an executive dashboard and a monthly financial report module, as shown in Figure 6. The executive dashboard (Figure 6a) tracks real-time KPI cards—including total rooms (32 units), available units, current month revenue, operational expenses, net profit, unpaid invoices, and incoming bookings—alongside a 12-month revenue-versus-expense trend chart and a room status donut chart. The financial reporting module (Figure 6b) automatically reconciles total cash inflow from settled invoices against operational outflows to compute the exact net cash balance, complete with one-click PDF and Excel document exports.
+</p>
+
+<div align="center">
+  <img src="images/gambar_4_26_dashboard_admin_en.png" alt="Administrator Executive Dashboard" width="48%">
+  <img src="images/gambar_4_33_manajemen_laporan_pemasukan_en.png" alt="Monthly Billing and Financial Report Module" width="48%">
+  <br>
+  <sub><strong>Figure 6.</strong> ADMINISTRATOR BACK-OFFICE PORTAL: (a) REAL-TIME EXECUTIVE DASHBOARD; (b) AUTOMATED FINANCIAL RECONCILIATION AND EXPORT MODULE</sub>
+</div>
+
+<p align="justify">
+  On the resident side, active tenants monitor their monthly rent obligations and download official payment proofs directly from the tenant billing portal, as presented in Figure 7. The billing workspace (Figure 7a) summarizes unpaid arrears, settled invoices, and cumulative rent paid, while each verified transaction automatically generates a downloadable A5 landscape PDF receipt (Figure 7b) stamped with a digital <em>PAID</em> badge and the Midtrans invoice reference for transparent parental reporting.
+</p>
+
+<div align="center">
+  <img src="images/gambar_4_38_tagihan_penyewa_en.png" alt="Active Tenant Rental Billing Portal" width="56%">
+  <img src="images/gambar_4_42_nota_pdf_en.png" alt="Official A5 Digital Payment Receipt PDF" width="40%">
+  <br>
+  <sub><strong>Figure 7.</strong> TENANT BILLING AND PROOF OF SETTLEMENT: (a) RENTAL INVOICE HISTORY PORTAL; (b) AUTOMATED A5 DIGITAL PAYMENT RECEIPT (PDF)</sub>
+</div>
 
 <p align="justify">
   Functional verification across all 60 black-box test scenarios in the six operational domains achieved a 100% pass rate without validation or transaction errors [10]. Every form filter, 16-digit National Identity (NIK) check, post-checkout room quarantine hold, PDF receipt download, and PDF/Excel financial export performed as specified. Subsequent User Acceptance Testing (UAT) conducted through side-by-side usability trials and audio-recorded face-to-face interviews with the senior boarding house manager and five active student tenants yielded high satisfaction scores, as summarized in Table 2 [17].
