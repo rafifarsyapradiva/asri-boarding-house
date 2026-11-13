@@ -204,23 +204,20 @@ Yang menyatakan,
 
 <br>
 
-Puji dan syukur penulis panjatkan ke hadirat Tuhan Yang Maha Esa atas segala rahmat dan karunia-Nya sehingga penulis dapat menyelesaikan penyusunan skripsi yang berjudul "Sistem Informasi Manajemen Kost Terintegrasi Payment Gateway Pada Asri Boarding House". Skripsi ini disusun sebagai salah satu syarat akademis untuk menyelesaikan masa studi dan memperoleh gelar Sarjana pada Program Studi Sistem Informasi di Universitas Katolik Soegijapranata.
+Laporan skripsi berjudul "Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House" ini akhirnya rampung. Penulis mengucap syukur kepada Tuhan Yang Maha Esa atas kesehatan dan ketekunan selama merancang sistem hingga menyusun naskah akhir. Tugas akhir ini diajukan sebagai syarat memperoleh gelar Sarjana Komputer pada Program Studi Sistem Informasi, Fakultas Ilmu Komputer, Universitas Katolik Soegijapranata Semarang.
 
-Dalam proses penyusunan skripsi ini, penulis menyadari bahwa banyak hambatan dan kesulitan yang dihadapi. Namun, berkat bimbingan, arahan, dan dukungan dari berbagai pihak, skripsi ini dapat diselesaikan dengan baik. Oleh karena itu, pada kesempatan ini penulis ingin menyampaikan rasa terima kasih yang sebesar-besarnya kepada:
+Merampungkan riset sekaligus membangun aplikasi web yang siap diuji di lapangan bukan kerja satu orang. Banyak pihak ikut menopang proses ini lewat bimbingan, data operasional, maupun dukungan moral. Atas peran tersebut, penulis menyampaikan terima kasih kepada:
 
-1. Bapak Prof. Dr. Ridwan Sanjaya S.E., S.Kom., MS.IEC selaku Dekan Fakultas Ilmu Komputer, yang telah memberikan fasilitas dan kemudahan selama masa studi.
-2. Bapak Dr. Albertus Dwiyoga Widiantoro S.Kom., M.Kom selaku Ketua Program Studi Sistem Informasi, atas dukungan dan sarana yang memungkinkan penulis menyelesaikan pendidikan dengan baik.
-3. Bapak Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling. selaku dosen pembimbing 1, yang telah memberikan kritik dan saran bimbingan maupun arahan yang sangat berguna dalam penyusunan skripsi ini.
-4. Bapak Erdhi Widyarto Nugroho S.T., M.T. selaku dosen pembimbing 2, atas segala masukan, perhatian, serta pendampingan selama proses penulisan skripsi ini.
-5. Bapak/Ibu dosen dan staf di lingkungan Fakultas Ilmu Komputer, khususnya Program Studi Sistem Informasi yang telah banyak membantu kami untuk dapat melaksanakan studi.
-6. Terkhusus Orang tua dan keluarga tercinta yang selalu memberikan doa, dukungan moral, serta motivasi kepada penulis.
+1. Bapak Prof. Dr. Ridwan Sanjaya, S.E., S.Kom., MS.IEC selaku Dekan Fakultas Ilmu Komputer yang menyediakan lingkungan belajar dan fasilitas akademik selama penulis menempuh studi.
+2. Bapak Dr. Albertus Dwiyoga Widiantoro, S.Kom., M.Kom., Ketua Program Studi Sistem Informasi, atas dukungan administrasi dan kelancaran penyelenggaraan tugas akhir.
+3. Bapak Ir. Andre Kurniawan Pamudji, S.Kom., M.Ling. selaku Dosen Pembimbing 1 yang meluangkan waktu untuk mengarahkan alur riset, mengoreksi rancangan sistem, dan mempertajam penyusunan naskah.
+4. Bapak Erdhi Widyarto Nugroho, S.T., M.T., Dosen Pembimbing 2, atas ketelitian evaluasi, masukan teknis, serta pendampingan hingga sistem siap diujikan.
+5. Bapak dan Ibu dosen serta tenaga kependidikan Fakultas Ilmu Komputer, khususnya Program Studi Sistem Informasi, atas bekal keilmuan dan layanan akademik sepanjang masa kuliah penulis.
+6. Pengelola, penjaga kost, dan para penghuni Asri Boarding House Tembalang yang bersedia membuka data operasional, meluangkan waktu wawancara, serta menguji coba aplikasi secara langsung.
+7. Orang tua beserta keluarga di rumah atas doa, kepercayaan, dan kesabaran yang mengiringi setiap tahap perjuangan kuliah.
+8. Rekan-rekan mahasiswa Universitas Katolik Soegijapranata serta berbagai pihak lain yang membantu penulis secara teknis maupun moral sampai skripsi ini selesai.
 
-<div style="page-break-after: always;"></div>
-
-7. Teman-teman dan kolega di Universitas Katolik Soegijapranata yang telah memberikan bantuan dan dukungan selama proses penyusunan skripsi.
-8. Dan yang terakhir, Semua pihak yang tidak dapat penulis sebutkan satu per satu, yang telah memberikan dukungan secara langsung dan tidak langsung selama proses penyusunan skripsi ini.
-
-Penulis menyadari sepenuhnya bahwa penyusunan skripsi ini masih jauh dari kata sempurna mengingat keterbatasan kemampuan dan pengetahuan yang dimiliki. Penulis sangat terbuka dan mengharapkan segala bentuk kritik serta saran yang membangun demi perbaikan di masa mendatang. Akhir kata, penulis berharap semoga skripsi ini dapat memberikan manfaat yang nyata bagi pengembangan ilmu pengetahuan serta bagi para pembaca.
+Penulis menyadari bahwa naskah dan sistem ini masih memiliki ruang penyempurnaan. Masukan dari pembaca maupun pengembang berikutnya tetap terbuka demi peningkatan kualitas aplikasi pada masa mendatang. Semoga karya ini bermanfaat langsung bagi operasional Asri Boarding House sekaligus menjadi rujukan bagi pengembangan sistem informasi sejenis.
 
 <br><br><br>
 
@@ -248,13 +245,15 @@ Semarang, 10 April 2026
 
 <br>
 
-Pengelolaan operasional 32 unit kamar di Asri Boarding House selama ini bertumpu pada pembukuan buku besar fisik dan pesan singkat manual. Ketiadaan sistem pemantauan terpusat memicu benturan reservasi kamar, penagihan sewa bulanan yang kerap terlewat, serta penumpukan selisih kas akibat rekonsiliasi bukti transfer bank yang memakan waktu berhari-hari. Untuk mengatasi hambatan tersebut, penelitian ini merancang dan membangun sistem informasi manajemen kost berbasis web dengan integrasi gerbang pembayaran Midtrans Snap serta otomasi pengingat via WhatsApp dan surel. Pengembangan sistem menerapkan metode *Waterfall* menggunakan kerangka kerja Laravel dan basis data MySQL yang dilengkapi penguncian baris pesimis guna menjamin ketersediaan kamar secara *real-time* tanpa risiko alokasi ganda.
+Administrasi harian 32 kamar sewa milik Asri Boarding House di Tembalang selama ini bertumpu pada buku tulis manual dan pesan WhatsApp pribadi. Pencatatan yang lambat membuat pemesanan ganda (*double booking*) sulit dihindari. Penagihan jatuh tempo tanggal 10 juga kerap terlewat, sementara pencocokan bukti transfer akhir bulan menyita waktu tiga sampai empat hari. Penelitian ini merancang sistem informasi manajemen kost berbasis web terintegrasi *payment gateway* untuk menertibkan reservasi kamar sekaligus pembukuan kas.
 
-Hasil pengujian fungsionalitas melalui 60 skenario *black box* menunjukkan seluruh fitur bekerja stabil tanpa kegagalan alur transaksi maupun validasi data. Evaluasi langsung bersama pengelola indekos membuktikan bahwa sistem memangkas waktu penutupan buku bulanan dari beberapa hari menjadi instan, meniadakan selisih kas fisik, dan mencegah benturan jadwal sewa. Selain itu, wawancara terhadap mahasiswa penghuni menegaskan kepuasan tinggi terhadap kemudahan pemesanan jarak jauh, kepraktisan pembayaran tagihan melalui *virtual account*, serta keterbukaan informasi kuitansi digital.
+Dengan pendekatan *Research and Development* (R&D), pengumpulan data memakai wawancara lapangan sementara pembangunan aplikasi mengikuti model *Waterfall*. Aplikasi dibangun memakai kerangka kerja Laravel dan basis data MySQL yang menerapkan penguncian baris pesimis guna mencegah benturan pemesanan kamar. Layanan Midtrans Snap menangani pelunasan sewa nontunai melalui validasi *webhook* SHA-512 yang langsung menerbitkan kuitansi PDF. Penjadwal tugas (*cron job*) juga otomatis menerbitkan tagihan tanggal 1, menghitung denda keterlambatan lintas bulan, dan mengirimkan pengingat lewat WhatsApp maupun *email*.
+
+Sebanyak 60 skenario uji *black box* berjalan tuntas dengan tingkat keberhasilan 100% tanpa kendala validasi maupun transaksi. Penjaga kost memberi skor kepuasan 9,5 dari 10 karena tutup buku bulanan menyusut dari tiga sampai empat hari menjadi hitungan detik tanpa selisih kas. Lima mahasiswa penghuni mencatat nilai rata-rata 8,0 dari 10 atas kepraktisan memesan kamar dari luar kota dan melunasi *Virtual Account* tanpa kirim resi. Hasil ini membuktikan sistem mampu menertibkan tata kelola harian Asri Boarding House.
 
 <br>
 
-**Kata Kunci:** Asri Boarding House, gerbang pembayaran Midtrans, Laravel, penguncian pesimis, sistem informasi manajemen kost.
+**Kata Kunci:** Asri Boarding House, gerbang pembayaran Midtrans, Laravel, penguncian baris pesimis, sistem informasi manajemen kost.
 
 <div style="page-break-after: always;"></div>
 
@@ -266,13 +265,15 @@ Hasil pengujian fungsionalitas melalui 60 skenario *black box* menunjukkan selur
 
 <br>
 
-Operational management across 32 rental units at Asri Boarding House previously relied on physical paper ledgers and unstructured instant messaging. The absence of a centralized system caused frequent room booking collisions, overlooked monthly rental collections, and recurring cash reconciliation delays driven by manual bank transfer verification. To eliminate these bottlenecks, this study designs and implements a web-based boarding house management information system integrated with the Midtrans Snap payment gateway alongside automated WhatsApp and email notification engines. Developed using the Waterfall method, the application leverages the Laravel framework and MySQL database, incorporating pessimistic row-level locking to ensure real-time room availability without duplicate allocations.
+Day-to-day operations across Asri Boarding House's 32 rooms in Tembalang previously depended on handwritten ledgers and personal WhatsApp chats. Because room status updated slowly, overlapping bookings were hard to avoid. Rent due on the 10th often slipped past schedule, while matching transfer proofs at month end took three to four days. This research builds a web management information system integrated with a payment gateway for boarding house reservations and cash bookkeeping.
 
-Functional evaluation across 60 black-box testing scenarios verified that all operational modules executed reliably without transaction failures or validation errors. Direct assessment with the boarding house manager confirmed that the platform compressed monthly book-closing from several working days to instant reporting, eliminated physical cash discrepancies, and prevented reservation schedule conflicts. Furthermore, evaluative interviews with resident students revealed high satisfaction regarding straightforward remote room booking, practical bill settlements through virtual accounts, and transparent digital receipts.
+The study applies a Research and Development (R&D) approach supported by field interviews and the Waterfall development model. Built on Laravel and MySQL, the application uses pessimistic row locking to prevent conflicting room reservations. Midtrans Snap handles cashless payments through SHA-512 webhook verification and issues official PDF receipts immediately. For routine operations, a server cron scheduler generates bills on the 1st, computes cross-month late fees, and dispatches WhatsApp and email reminders.
+
+All 60 functional black-box cases passed at 100% without validation or transaction failures. In field evaluations, the resident caretaker gave a satisfaction score of 9.5 out of 10 because monthly bookkeeping shrank from three to four days down to seconds with zero cash discrepancies. Five student tenants rated the platform 8.0 out of 10 on average, citing practical remote bookings and Virtual Account payments without manual receipt uploads. This platform brings reliable order to daily room management and financial tracking at Asri Boarding House.
 
 <br>
 
-**Keywords:** Asri Boarding House, boarding house management system, Laravel, Midtrans payment gateway, pessimistic locking.
+**Keywords:** Asri Boarding House, boarding house management information system, Laravel, Midtrans payment gateway, pessimistic row locking.
 
 <div style="page-break-after: always;"></div>
 
@@ -371,7 +372,8 @@ DAFTAR TABEL &emsp; xiv
 Gambar 3.1 Tahapan Metode Waterfall &emsp; 13  
 Gambar 3.2 Kerangka Pemikiran &emsp; 14  
 Gambar 4.1 Use Case Diagram &emsp; 17  
-Gambar 4.2 Entity Relationship Diagram &emsp; 19  
+Gambar 4.2(a) Entity Relationship Diagram (Modul Inti) &emsp; 19  
+Gambar 4.2(b) Entity Relationship Diagram (Modul Pendukung) &emsp; 20  
 Gambar 4.3 Activity Diagram Calon Penyewa &emsp; 21  
 Gambar 4.4 Activity Diagram Admin (Penjaga Kost) &emsp; 22  
 Gambar 4.5 Activity Diagram Penyewa Aktif &emsp; 23  
@@ -452,31 +454,31 @@ Tabel 4.7 Wawancara dengan Sindhu &emsp; 93
 <br>
 
 ## 1.1 Latar Belakang
-Kawasan pendidikan Tembalang di Kota Semarang terus dipadati mahasiswa perantau setiap tahunnya. Kondisi ini meningkatkan kebutuhan akan hunian sewa yang praktis, transparan, dan mudah diakses dari luar kota. Sayangnya, media promosi konvensional masih menyulitkan calon penyewa untuk mengecek sisa kamar kosong tanpa datang sendiri ke lokasi. Kehadiran sistem pemesanan berbasis web dapat mengatasi kendala jarak tersebut sekaligus merapikan pencatatan reservasi sejak awal [1].
+Setiap tahun ajaran baru, kawasan pendidikan Tembalang di Kota Semarang dipadati mahasiswa perantau. Kebutuhan akan hunian sewa pun terus meningkat. Calon penghuni dari luar kota membutuhkan kepastian sisa kamar secara cepat, sementara promosi konvensional masih memaksa mereka datang ke lokasi atau menunggu balasan pesan. Sistem pemesanan berbasis web memangkas kendala jarak tersebut sekaligus menertibkan pencatatan reservasi sejak awal [1].
 
-Kendala serupa terjadi di Asri Boarding House Tembalang yang menyediakan 32 unit kamar sewa dalam tipe VIP, Deluxe, dan Standar. Selama ini, seluruh pendataan kamar masih dicatat pada buku besar fisik sehingga penjaga kost kesulitan memperbarui status keterisian unit dengan cepat. Akibatnya, benturan pemesanan ganda (*double booking*) sering tidak terhindarkan ketika beberapa calon penghuni memesan kamar yang sama dalam waktu berdekatan [2].
+Asri Boarding House menghadapi persoalan serupa dalam mengelola 32 unit kamar bertipe VIP, Deluxe, dan Standar. Penjaga kost selama ini mencatat ketersediaan unit di buku tulis manual sembari melayani tanya jawab calon penghuni lewat WhatsApp pribadi. Pembaruan status kamar berjalan lambat. Ketika dua pemesan mengincar unit yang sama dalam waktu berdekatan, benturan pemesanan ganda (*double booking*) sulit dicegah [2].
 
-Masalah operasional juga muncul pada proses penagihan sewa bulanan. Pengingat jatuh tempo setiap tanggal 10 beserta perhitungan dendanya masih dikirim lewat pesan pribadi satu per satu kepada penghuni. Cara manual ini membuat jadwal penagihan sering terlewat dan memicu menumpuknya tunggakan sewa. Padahal, fitur pengawasan jadwal otomatis pada sistem informasi dapat membantu pengelola menertibkan siklus tagihan bulanan serta menekan keterlambatan pembayaran [3].
+Ketidakteraturan pencatatan itu ikut membebani siklus penagihan sewa bulanan. Penjaga kost masih mengirim pengingat tagihan jatuh tempo tanggal 10 serta menghitung denda tunggakan secara manual lewat pesan pribadi. Rutinitas manual itu membuat jadwal tagih kerap terlewat. Tunggakan pun menumpuk karena belum ada penjadwal otomatis yang menjaga ketertiban siklus tagihan setiap bulan [3].
 
-Urusan pembukuan menjadi semakin rumit karena pemeriksaan pembayaran sewa masih mengandalkan bukti tangkapan layar transfer bank dan setoran tunai. Saat tutup buku di akhir bulan, penjaga kost membutuhkan waktu berhari-hari hanya untuk mencocokkan nota pengeluaran dengan bukti kas masuk. Masalah ini sebenarnya dapat diatasi melalui integrasi gerbang pembayaran digital (*payment gateway*). Verifikasi transaksi non-tunai yang berjalan otomatis akan menutup celah selisih kas fisik dan memastikan catatan keuangan selalu akurat [4].
+Di sisi keuangan, pencatatan kas masih bertumpu pada setoran tunai dan kiriman tangkapan layar bukti transfer dari penghuni. Saat tutup buku akhir bulan, penjaga kost butuh waktu tiga sampai empat hari hanya untuk mencocokkan nota pengeluaran dan bukti kas masuk. Celah salah hitung dan selisih kas pun terbuka lebar. Integrasi gerbang pembayaran digital (*payment gateway*) mampu memverifikasi transaksi nontunai secara otomatis sehingga pembukuan lebih tertib tanpa pemeriksaan berulang [4].
 
-Berangkat dari rangkaian masalah tersebut, Asri Boarding House membutuhkan sistem manajemen terpusat yang menggabungkan fitur reservasi daring, penjadwalan tagihan otomatis, dan gerbang pembayaran Midtrans. Dukungan pengingat tagihan melalui WhatsApp dan *email* pada aplikasi web juga diperlukan agar informasi tagihan tersampaikan secara *real-time* sekaligus menjaga transparansi pembukuan [5]. Oleh karena itu, penelitian ini membangun Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House untuk menghadirkan tata kelola indekos yang rapi, efisien, dan bebas selisih kas.
+Untuk membereskan ketiga persoalan tersebut, Asri Boarding House membutuhkan aplikasi web terpusat berbasis kerangka kerja Laravel dan basis data MySQL. Penguncian baris pesimis menjaga transaksi reservasi kamar dari benturan pesanan ganda. Gerbang pembayaran Midtrans Snap menangani pelunasan sewa lewat validasi *webhook* otomatis tanpa pemeriksaan bukti transfer. Di sisi penagihan, *cron job* menerbitkan faktur tanggal 1, menghitung denda lintas bulan, serta mengirim pengingat lewat WhatsApp dan *email* [5]. Penelitian ini merancang dan membangun sistem tersebut agar operasional harian berjalan tertib dan akuntabel.
 
 <br>
 
 ## 1.2 Rumusan Masalah
-Berdasarkan latar belakang permasalahan yang telah diuraikan, rumusan masalah dalam penelitian ini dirumuskan sebagai berikut:
-1. Bagaimana merancang arsitektur Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House sebagai solusi atas kendala pemesanan unit, pencatatan pembukuan manual, dan keterlambatan penagihan sewa?
-2. Bagaimana mengimplementasikan sistem tersebut menggunakan kerangka kerja Laravel yang dipadukan dengan gerbang pembayaran Midtrans, penjadwalan tagihan otomatis berkala, serta pengiriman notifikasi melalui WhatsApp dan *email*?
-3. Bagaimana hasil penerapan dan efektivitas sistem berdasarkan evaluasi wawancara bersama penjaga kost serta penghuni kost pada operasional harian Asri Boarding House?
+Merujuk pada persoalan operasional yang telah dipetakan, penelitian ini menjawab tiga pertanyaan utama:
+1. Bagaimana merancang arsitektur Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House untuk menertibkan pemesanan 32 unit kamar, penagihan sewa bulanan, dan pencatatan kas?
+2. Bagaimana mengimplementasikan aplikasi web tersebut menggunakan kerangka kerja Laravel, penguncian baris pesimis MySQL, gerbang pembayaran Midtrans Snap, *cron job* penagihan berkala, serta notifikasi WhatsApp dan *email*?
+3. Bagaimana tingkat keandalan fungsi dan efektivitas penerapan sistem berdasarkan pengujian *black box* serta evaluasi wawancara bersama penjaga kost dan penghuni aktif Asri Boarding House?
 
 <br>
 
 ## 1.3 Tujuan Penelitian
-Berpijak pada rumusan masalah yang telah diuraikan, tujuan yang hendak dicapai dalam penelitian ini adalah sebagai berikut:
-1. Merancang arsitektur Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* pada Asri Boarding House sebagai solusi terpadu atas kendala pemesanan unit, pencatatan pembukuan manual, dan keterlambatan penagihan sewa.
-2. Mengimplementasikan sistem tersebut menggunakan kerangka kerja Laravel yang dipadukan dengan gerbang pembayaran Midtrans, penjadwalan tagihan otomatis berkala, serta pengiriman notifikasi melalui WhatsApp dan *email*.
-3. Menganalisis hasil penerapan dan efektivitas sistem berdasarkan evaluasi wawancara bersama penjaga kost serta penghuni kost pada operasional harian Asri Boarding House.
+Sejalan dengan rumusan masalah di atas, penelitian ini bertujuan untuk:
+1. Menghasilkan rancangan arsitektur sistem manajemen kost terpadu yang memisahkan peran pengguna, memodelkan basis data relasional, serta menyatukan alur reservasi hingga laporan kas Asri Boarding House.
+2. Membangun aplikasi web berbasis Laravel dan MySQL yang menerapkan penguncian baris pesimis, integrasi Midtrans Snap, penjadwal tugas otomatis (*cron job*), serta pengiriman pengingat melalui WhatsApp dan *email*.
+3. Memverifikasi kelayakan seluruh modul lewat pengujian *black box* dan menganalisis dampaknya terhadap ketertiban penagihan, kecepatan tutup buku, serta kepuasan penjaga dan penghuni kost.
 
 <br>
 
@@ -491,90 +493,90 @@ Berpijak pada rumusan masalah yang telah diuraikan, tujuan yang hendak dicapai d
 <br>
 
 ## 2.1 Sistem Informasi Manajemen
-Sistem Informasi Manajemen (SIM) memadukan perangkat keras, perangkat lunak, prosedur kerja, dan sumber daya manusia untuk mengolah data transaksi mentah menjadi informasi yang siap pakai. Melalui pengolahan data yang terstruktur, pencatatan tidak lagi tercecer secara manual. Pihak pengelola pun dapat memantau jalannya organisasi secara menyeluruh. Informasi yang akurat dan cepat ini sangat membantu proses evaluasi kerja serta pengambilan keputusan manajerial [6].
+Sistem Informasi Manajemen (SIM) memadukan perangkat keras, perangkat lunak, prosedur kerja, dan sumber daya manusia untuk mengolah data mentah transaksi menjadi laporan operasional yang siap ditindaklanjuti. Pencatatan tidak lagi tercecer di lembaran terpisah. Ketika seluruh arus data terhimpun dalam satu basis terstruktur, pengelola dapat mengawasi jalannya operasional, mengevaluasi kinerja, serta mengambil keputusan secara cepat [6].
 
-Dalam pengelolaan indekos, SIM berperan sebagai pusat data tunggal yang menyatukan daftar inventaris kamar, identitas penghuni, riwayat pembayaran sewa, hingga laporan kas operasional. Penyimpanan data yang terpusat mampu mencegah salah catat pada buku besar dan menghindarkan risiko kamar terpesan ganda (*double booking*). Selain mempermudah pemantauan masa sewa penghuni, sistem berbasis web juga menyajikan laporan keuangan yang transparan bagi pengelola properti [7].
+Pada bisnis penyewaan indekos, SIM berfungsi sebagai sumber data tunggal (*single source of truth*) yang menyatukan stok kamar, identitas penghuni, riwayat pembayaran, dan pembukuan kas. Pembaruan status hunian berjalan terpusat sehingga kesalahan tulis buku besar dan benturan pemesanan ganda (*double booking*) dapat dicegah. Data masa aktif sewa tiap unit pun terpantau langsung, sementara kas masuk dan pengeluaran operasional terekonsiliasi menjadi laporan keuangan yang akuntabel [7].
 
 <br>
 
 ## 2.2 E-Commerce B2C
-Perdagangan elektronik model *Business-to-Consumer* (B2C) mempertemukan penyedia jasa langsung dengan konsumen akhir melalui internet. Model ini memotong jalur distribusi konvensional. Calon pelanggan pun bebas melihat katalog, memilih layanan, dan bertransaksi secara mandiri kapan saja. Rincian harga yang jelas serta alur pesan yang praktis membuat calon pembeli lebih yakin untuk segera menyelesaikan pembayaran. Oleh sebab itu, penerapan konsep B2C banyak dimanfaatkan bisnis lokal untuk menjangkau pasar yang lebih luas sekaligus mempermudah transaksi digital [8].
+Model perdagangan elektronik *Business-to-Consumer* (B2C) menghubungkan penyedia layanan langsung dengan konsumen akhir melalui jaringan internet. Perantara distribusi konvensional tidak lagi diperlukan. Calon penyewa bebas menelusuri katalog, membandingkan rincian tarif, dan bertransaksi kapan saja secara mandiri tanpa terikat jam layanan luring [8].
 
-Pada usaha penyewaan indekos, situs web berbasis B2C menghubungkan pengelola langsung dengan calon penghuni tanpa perantara pihak ketiga. Pengelola dapat menerima pendapatan sewa secara utuh tanpa potongan komisi agen sekaligus lebih leluasa mengatur tarif kamar. Di sisi lain, calon penghuni bisa langsung mengecek sisa kamar kosong, memesan unit dari jarak jauh, dan menerima tagihan bulanan secara rapi. Perpaduan antara pemasaran B2C dan sistem manajemen properti ini berdampak positif pada peningkatan keterisian kamar serta kerapian administrasi reservasi [9].
+Bagi pengelola indekos, portal B2C memangkas ketergantungan pada agen perantara sehingga pendapatan sewa diterima utuh tanpa potongan komisi. Pemilik usaha pun leluasa menyesuaikan harga sewa maupun promo durasi hunian. Calon penghuni di luar kota juga terbantu karena sisa unit kosong dapat dicek dan dipesan langsung dari jarak jauh [9].
 
 <br>
 
 ## 2.3 Web Application
-Aplikasi berbasis web beroperasi menggunakan arsitektur *client-server* yang mengandalkan protokol HTTP atau HTTPS sebagai jalur komunikasi data melalui jaringan internet. Peramban web (*web browser*) pada komputer maupun ponsel cerdas berperan sebagai *thin client* yang menampilkan antarmuka visual, sedangkan *web server* bertugas mengeksekusi logika bisnis serta mengelola pertukaran kueri basis data. Pola komputasi terpusat ini memungkinkan pengguna mengakses seluruh fitur operasional sistem secara langsung tanpa memerlukan instalasi aplikasi tambahan pada perangkat masing-masing [10].
+Aplikasi web bekerja di atas arsitektur *client-server* yang mempertukarkan data melalui protokol HTTP atau HTTPS. Peramban pada komputer maupun ponsel pintar bertindak sebagai *thin client* penampil antarmuka, sedangkan *web server* mengeksekusi logika bisnis dan kueri basis data. Pengguna tidak perlu memasang aplikasi tambahan pada perangkat masing-masing [10].
 
-Kemampuan memperbarui informasi secara *real-time* menjadikan aplikasi web sangat cocok untuk menunjang operasional bisnis modern. Proses perawatan sistem pun jauh lebih praktis karena setiap pembaruan fitur cukup dilakukan di *server* pusat tanpa perlu mengatur perangkat pengguna satu per satu. Umumnya, aplikasi web komersial memisahkan bagian tampilan, pengatur logika bisnis, dan penyimpanan data agar sistem mudah dikembangkan ke skala yang lebih besar. Struktur modular seperti ini membuat waktu respons transaksi lebih cepat serta memudahkan penambahan fitur baru di kemudian hari [11].
+Pemeliharaan sistem menjadi jauh lebih ringkas karena pembaruan fitur cukup dikerjakan satu kali di *server* pusat. Setiap penghuni dan pengelola langsung menerima versi terbaru begitu halaman dimuat ulang. Pemisahan lapisan tampilan, pengatur logika, dan penyimpanan data juga menjaga waktu respons tetap cepat ketika modul baru ditambahkan [11].
 
 <br>
 
 ## 2.4 UI & UX
-Antarmuka pengguna (*User Interface* atau UI) merupakan tampilan visual yang menjembatani interaksi antara manusia dan perangkat lunak. Salah satu pendekatan visual modern pada aplikasi web adalah gaya *Neo-Brutalism*, yang identik dengan garis tepi tebal, bayangan tegas berkontras tinggi, serta tata letak geometris yang lugas. Ciri visual tersebut membuat tombol aksi dan formulir data terlihat menonjol sehingga pengguna dapat langsung mengenali fungsi setiap elemen di layar. Pembagian ruang yang tegas tanpa gradasi rumit juga mempermudah pengguna membaca status transaksi. Konsistensi desain antarmuka ini membantu menjaga kerapian tata letak sekaligus mempercepat adaptasi pengguna saat mengoperasikan aplikasi [12].
+Antarmuka pengguna (*User Interface* atau UI) menjadi jembatan visual antara manusia dan logika perangkat lunak. Penerapan *design system* menjaga keseragaman komponen tombol, tipografi, dan hierarki warna agar pengguna cepat mengenali fungsi tiap elemen di layar [12]. Pendekatan visual *Neo-Brutalism* menerapkan prinsip tersebut melalui garis tepi tebal, bayangan tegas berkontras tinggi, serta bidang geometris lugas. Elemen aksi dan status transaksi pun langsung terbaca jelas.
 
-Sementara itu, pengalaman pengguna (*User Experience* atau UX) menitikberatkan pada kenyamanan dan kemudahan alur kerja sistem. Alur interaksi yang baik dirancang ringkas agar pengguna dapat menyelesaikan keperluannya tanpa kebingungan. Susunan menu yang terarah membantu pengguna menuntaskan transaksi hanya dalam beberapa langkah sederhana, sedangkan penyajian data yang bertingkat memudahkan pembacaan ringkasan operasional harian. Perancangan UX yang berfokus pada kebutuhan pengguna ini mampu menghemat waktu kerja operasional dan memudahkan pengguna saat bertransaksi [13].
+Jika UI mengatur rupa tampilan, pengalaman pengguna (*User Experience* atau UX) mengukur kelancaran alur kerja dari awal hingga akhir. Navigasi yang terarah membantu calon penyewa menuntaskan reservasi dalam beberapa langkah terukur tanpa kebingungan [13]. Penyajian ringkasan angka operasional secara bertingkat pada halaman pengelola juga mempercepat pembacaan status hunian dan tagihan harian.
 
 <br>
 
 ## 2.5 Laravel
-Laravel adalah kerangka kerja (*framework*) pengembangan web berbasis PHP yang menggunakan pola arsitektur *Model-View-Controller* (MVC) untuk memisahkan pengelolaan data, tampilan antarmuka, dan logika bisnis. Kerangka kerja ini menyediakan fitur *Eloquent Object-Relational Mapping* (ORM) yang memudahkan pengolahan tabel basis data lewat pemodelan objek, serta mesin templat *Blade* untuk merakit halaman web dinamis. Selain itu, Laravel sudah dilengkapi fitur keamanan bawaan terhadap serangan *Cross-Site Request Forgery* (CSRF) dan injeksi SQL sehingga aplikasi lebih terlindungi sejak awal pembuatan [14].
+Laravel merupakan kerangka kerja PHP berpola arsitektur *Model-View-Controller* (MVC) yang memisahkan pengelolaan data, tampilan antarmuka, dan alur kendali permintaan. Kerangka kerja ini membekali pengembang dengan *Eloquent Object-Relational Mapping* (ORM) untuk memodelkan relasi tabel serta mesin templat *Blade* guna merakit halaman dinamis [14]. Lapisan keamanannya pun sudah melindungi rute web dari serangan *Cross-Site Request Forgery* (CSRF) dan injeksi SQL lewat parameter kueri terikat.
 
-Dalam pengembangan aplikasi web berskala menengah hingga besar, struktur kode perlu disusun secara modular agar mudah dirawat. Logika bisnis yang rumit dapat dipisahkan dari *controller* ke dalam lapisan khusus (*Service Layer*) supaya setiap komponen kode memiliki tugas yang spesifik. Pemisahan ini mencegah penumpukan kode pada satu berkas dan mempermudah proses pengujian fitur. Penataan kode yang rapi pada arsitektur MVC ini membuat kinerja sistem lebih optimal serta memudahkan pengembangan aplikasi dalam jangka panjang [15].
+Ketika aturan bisnis bertumbuh kompleks, *controller* MVC rawan menumpuk terlalu banyak logika dalam satu berkas [15]. Lapisan layanan khusus (*Service Layer*) memecah kebuntuan itu. Proses rumit seperti kalkulasi denda dan transaksi reservasi ditarik keluar menuju *Service Layer*, sementara *middleware* menyaring hak akses di setiap rute halaman. Struktur berlapis ini membuat setiap modul mudah diuji dan dirawat secara mandiri.
 
 <br>
 
 ## 2.6 RDBMS
-Sistem Manajemen Basis Data Relasional (Relational Database Management System atau RDBMS) mengelola kumpulan data terstruktur ke dalam tabel-tabel dua dimensi yang saling terhubung melalui relasi kunci utama (*primary key*) dan kunci asing (*foreign key*). Arsitektur relasional ini menjaga integritas referensial antar-tabel serta mendukung kepatuhan transaksi ACID (*Atomicity, Consistency, Isolation, Durability*) agar setiap pencatatan operasional tetap akurat dan terlindungi dari korupsi data. Penggunaan model data relasional menjadi fondasi utama dalam sistem informasi modern karena mampu memproses kueri data berskala besar secara konsisten dan terorganisasi dengan baik [16].
+Sistem Manajemen Basis Data Relasional (*Relational Database Management System* atau RDBMS) menyusun data ke dalam tabel dua dimensi. Tiap tabel terhubung lewat kunci utama (*primary key*) dan kunci asing (*foreign key*). Relasi tersebut menjaga integritas referensial antartabel sekaligus mematuhi prinsip transaksi ACID (*Atomicity, Consistency, Isolation, Durability*) agar pencatatan tetap utuh bila proses gagal [16].
 
-Agar basis data bekerja optimal, skema tabel yang kompleks perlu dirancang melalui proses normalisasi hingga Bentuk Normal Ketiga (3NF). Tahapan ini memecah tabel menjadi struktur yang lebih sederhana untuk mencegah duplikasi data maupun anomali saat proses tambah, ubah, dan hapus data. Basis data yang telah dinormalisasi membuat seluruh riwayat transaksi dan status operasional tersimpan secara konsisten setiap hari [17].
+Skema tabel yang kompleks perlu dinormalisasi hingga Bentuk Normal Ketiga (3NF). Duplikasi data pun berhasil ditekan. Tahap ini membuang ketergantungan transitif sehingga anomali tambah, ubah, maupun hapus data dapat dihindari [17]. Pada skema penyewaan berkala, relasi 3NF tetap dipadukan dengan pencatatan nilai historis kontrak (*snapshot* tarif) agar pembaruan harga kamar tidak mengubah nominal tagihan penghuni aktif.
 
 <br>
 
 ## 2.7 MySQL Database
-MySQL merupakan perangkat lunak RDBMS sumber terbuka (*open-source*) yang menggunakan bahasa *Structured Query Language* (SQL) sebagai standar pengolahan datanya. Sistem ini bekerja dengan arsitektur *client-server multithread* yang mampu menangani proses baca dan tulis data secara bersamaan tanpa membebani kinerja *server*. Penggunaan memori yang hemat serta dukungannya yang penuh terhadap *framework* Laravel menjadikan MySQL sangat andal untuk menjalankan operasi CRUD (*Create, Read, Update, Delete*) secara cepat dan stabil [18].
+MySQL adalah RDBMS sumber terbuka berbasis *Structured Query Language* (SQL) dengan arsitektur *client-server multithread* yang sanggup melayani baca dan tulis data secara paralel. Konsumsi memorinya efisien dan dukungannya pada ekosistem Laravel memudahkan eksekusi operasi CRUD (*Create, Read, Update, Delete*) secara stabil [18].
 
-Melalui mesin penyimpanan (*storage engine*) InnoDB, MySQL telah mendukung prinsip transaksi ACID serta fitur penguncian tingkat baris (*row-level locking*). Fitur tersebut mencegah bentrokan data ketika beberapa pengguna mengakses baris data yang sama di waktu bersamaan. Selain itu, penggunaan indeks (*indexing*) dan aturan kunci asing (*foreign key constraints*) pada MySQL menjaga keutuhan relasi transaksi sekaligus mempercepat waktu respons pencarian data [19].
+Mesin penyimpanan (*storage engine*) InnoDB pada MySQL mendukung transaksi ACID beserta penguncian baris pesimis (*pessimistic row-level locking*). Benturan reservasi kamar ganda pun dapat dicegah. Ketika dua pemesan mengklik kamar yang sama pada detik berdekatan, kunci baris menahan transaksi kedua hingga transaksi pertama selesai. Penerapan indeks (*indexing*) dan aturan kunci asing ikut menjaga kecepatan kueri serta keutuhan relasi ketika volume transaksi meningkat [19].
 
 <br>
 
 ## 2.8 Payment Gateway
-Gerbang pembayaran (*payment gateway*) adalah layanan perantara transaksi elektronik yang menghubungkan aplikasi web langsung dengan jaringan perbankan dan penyedia dompet digital. Di Indonesia, salah satu penyedia layanan ini adalah Midtrans, yang memfasilitasi pembayaran tagihan lewat *Virtual Account* berbagai bank, QRIS, *e-wallet*, hingga kartu kredit dalam satu pintu. Pengelola usaha tidak perlu lagi membuka rekening penampung di tiap bank secara terpisah. Bagi penyewa, pilihan metode bayar yang beragam ini mempermudah pelunasan tagihan tanpa harus mengunggah foto bukti transfer yang rawan manipulasi [20].
+Gerbang pembayaran (*payment gateway*) bertindak sebagai perantara elektronik yang menyambungkan aplikasi web dengan jaringan perbankan dan dompet digital. Di Indonesia, Midtrans menyediakan jalur pelunasan lewat *Virtual Account* berbagai bank, QRIS, *e-wallet*, hingga kartu kredit dalam satu pintu integrasi. Pemilik indekos tidak lagi perlu membuka rekening penampung di tiap bank, sedangkan penghuni terbebas dari keharusan mengunggah tangkapan layar bukti transfer [20].
 
-Dalam tahap pengembangannya, layanan *payment gateway* menyediakan dua ruang kerja terpisah, yakni mode *Sandbox* untuk uji coba transaksi dan mode *Production* untuk transaksi uang asli. Lewat mode simulasi, pengembang dapat menguji alur pembayaran, memeriksa respons perbankan, hingga menangani status tagihan kedaluwarsa dengan aman sebelum aplikasi diluncurkan. Pengaturan kunci akses melalui berkas konfigurasi (*environment variable*) juga memudahkan peralihan sistem dari mode uji coba ke mode produksi tanpa harus mengubah kode program.
+Pada tahap pengembangan, layanan ini memisahkan ruang uji *Sandbox* dari ruang transaksi nyata *Production*. Pengembang dapat mensimulasikan pembayaran sukses, gagal, maupun kedaluwarsa di *Sandbox* tanpa melibatkan uang asli. Peralihan menuju lingkungan *Production* cukup diatur lewat berkas konfigurasi (*environment variable*) tanpa mengubah baris logika kode.
 
-Secara teknis, integrasi *payment gateway* bekerja menggunakan API dan mekanisme *webhook callback* yang dilengkapi validasi keamanan *signature key* berstandar kriptografi SHA-512. Begitu pembayaran diverifikasi oleh bank, *webhook* akan langsung memperbarui status tagihan di basis data secara otomatis. Mekanisme ini menghapus kebutuhan pengecekan mutasi manual, mencegah salah catat kas, dan menjaga keakuratan rekapitulasi keuangan. Oleh karena itu, integrasi *payment gateway* berperan penting agar pencatatan keuangan daring tetap rapi dan dapat dipertanggungjawabkan [21].
+Secara teknis, aplikasi meminta token transaksi lewat API terautentikasi lalu menunggu konfirmasi asinkron melalui *webhook callback* [21]. Status tagihan pun langsung berubah lunas. Sebelum mengubah status basis data, *server* memverifikasi *signature key* SHA-512 secara *constant-time* serta mengecek riwayat transaksi agar kiriman ulang *webhook* tidak mencatat pemasukan ganda.
 
 <br>
 
 ## 2.9 WhatsApp Gateway API
-Layanan antarmuka pemrograman aplikasi (API) pada *gateway* WhatsApp memungkinkan aplikasi web mengirim pesan notifikasi secara otomatis ke nomor pengguna tanpa perlu mengoperasikan ponsel fisik secara manual. Integrasi pesan instan ini banyak dipilih karena tingkat keterbacaannya (*open rate*) jauh lebih tinggi dan cepat direspons dibandingkan SMS maupun *email* [22].
+Antarmuka pemrograman aplikasi (API) pada *gateway* WhatsApp memungkinkan *server* web mengirim notifikasi otomatis ke ponsel pengguna tanpa mengoperasikan perangkat fisik. Jalur pesan instan ini dipilih karena tingkat keterbacaannya (*open rate*) jauh melampaui SMS maupun *email* [22].
 
-Pertukaran data pada gerbang pesan instan ini berjalan melalui protokol *HTTP POST request* yang diamankan dengan autentikasi token khusus untuk mengirim pesan secara terprogram. Berkat pengiriman terjadwal, pengelola tidak perlu lagi mengetik dan mengirim pesan pengingat satu per satu secara manual. Informasi penting pun dapat diterima pengguna tepat waktu. Otomatisasi pesan instan ini membantu meningkatkan kedisiplinan respons pengguna sekaligus menjaga keandalan layanan informasi pada sistem [23].
+Layanan seperti Fonnte melayani pengiriman pesan terprogram melalui permintaan *HTTP POST* yang diamankan token otorisasi rahasia [23]. Pesan pengingat tidak lagi diketik manual. Sebelum dikirim, nomor kontak pengguna terlebih dahulu dinormalisasi ke format kode negara internasional agar terbaca akurat oleh *gateway*, sehingga tagihan dan konfirmasi reservasi sampai tepat waktu.
 
 <br>
 
 ## 2.10 Email Gateway API
-Pengiriman surat elektronik (*email*) pada jaringan internet bekerja menggunakan aturan baku *Simple Mail Transfer Protocol* (SMTP) yang dilengkapi enkripsi keamanan TLS (*Transport Layer Security*). Di dalam aplikasi web, *email* berperan penting sebagai media pengiriman dokumen administrasi yang sifatnya resmi dan permanen. Pengguna pun dapat dengan mudah menyimpan dan mengarsipkan pesan tersebut sebagai bukti transaksi yang sah [24].
+Pengiriman surat elektronik mengandalkan standar *Simple Mail Transfer Protocol* (SMTP) yang dilindungi enkripsi TLS (*Transport Layer Security*). Dalam transaksi daring, *email* berfungsi mengirimkan dokumen administrasi resmi yang mudah diarsipkan oleh pengguna [24].
 
-Pada kerangka kerja web, pengiriman *email* memanfaatkan layanan *mail relay* terenkripsi agar kerahasiaan dan keaslian dokumen digital tetap terjaga. Jalur komunikasi ini digunakan untuk mengirimkan berbagai dokumen administrasi secara otomatis, mulai dari bukti pembayaran, *invoice* digital, hingga tautan verifikasi keamanan akun. Penggunaan layanan pengirim *email* dengan reputasi keamanan yang baik juga mencegah pesan masuk ke folder *spam*, sehingga melengkapi pesan instan WhatsApp sebagai jalur pengiriman bukti resmi kepada pengguna [25].
+Aplikasi web memanfaatkan *mail relay* terenkripsi dengan reputasi pengirim terjaga agar *invoice*, kuitansi PDF, dan tautan pemulihan akun tidak masuk ke folder *spam* [25]. Proses pengiriman dijalankan melalui antrean pesan asinkron (*message queue*) di latar belakang. Antarmuka web pun tetap responsif tanpa menunggu respons *server* surat elektronik.
 
 <br>
 
 ## 2.11 Cronjob
-*Cron job* adalah fitur penjadwal tugas berbasis waktu (*time-based job scheduler*) pada sistem operasi keluarga Unix yang menjalankan perintah program secara otomatis pada jadwal menit, jam, tanggal, atau bulan tertentu. Proses latar belakang ini bekerja mandiri di *server* tanpa perlu dijalankan secara manual oleh operator di depan layar komputer. Fitur penjadwal ini sangat dibutuhkan untuk menjalankan pemeliharaan data, perhitungan denda berkala, maupun tugas berulang lainnya agar selalu dieksekusi tepat waktu sesuai jadwal yang telah diatur [26].
+*Cron job* adalah penjadwal tugas berbasis waktu pada sistem operasi keluarga Unix yang menjalankan perintah program di latar belakang pada menit, jam, tanggal, atau bulan tertentu. Berbagai tugas rutin seperti penerbitan tagihan dan pembersihan sesi kedaluwarsa berjalan mandiri tepat waktu tanpa intervensi operator [26].
 
-Dalam pengelolaan notifikasi aplikasi, konfigurasi *cron job* bertugas menjalankan perintah konsol secara berkala untuk mengirimkan pengingat tagihan lewat WhatsApp dan *email*. Melalui pengaturan waktu yang presisi, skrip penjadwal akan memeriksa tanggal jatuh tempo *invoice* di basis data, lalu secara otomatis meneruskan perintah pengiriman pesan ke gerbang komunikasi eksternal [27].
+Pada penagihan sewa bulanan, skrip terjadwal memeriksa tanggal jatuh tempo *invoice* di basis data lalu memicu pengiriman pengingat melalui gerbang WhatsApp dan *email* [27]. Cukup satu entri *daemon cron* yang diaktifkan di sistem operasi untuk menggerakkan seluruh jadwal *task scheduling* pada kerangka kerja web.
 
-Pada tingkat kerangka kerja aplikasi (*task scheduling*), cukup satu *daemon cron* di sistem operasi yang diaktifkan untuk menjalankan seluruh jadwal pemrosesan data di latar belakang. Cara ini membuat penerbitan tagihan dan perhitungan denda selalu berjalan tepat waktu sesuai aturan bisnis tanpa membebani operator dengan pekerjaan berulang. Penerapan prinsip idempoten pada skrip penjadwal juga memastikan bahwa meskipun perintah dieksekusi berulang, sistem tidak akan menerbitkan tagihan ganda sehingga siklus transaksi tetap stabil.
+Agar siklus tagihan tetap aman, penjadwal tugas wajib menerapkan pengaman anti-tumpang-tindih (*overlap prevention*) dan prinsip idempoten. Satu tagihan hanya terbit sekali per periode. Kalaupun skrip berjalan ulang akibat gangguan teknis, denda dan faktur ganda tidak akan pernah tercipta.
 
 <br>
 
 ## 2.12 Metode Waterfall
-Metode *Waterfall* merupakan model rekayasa perangkat lunak yang bekerja secara berurutan dari awal hingga akhir. Setiap tahapan wajib diselesaikan secara tuntas sebelum berlanjut ke fase berikutnya. Urutan prosesnya meliputi analisis kebutuhan, perancangan desain, pengkodean program, pengujian sistem, serta pemeliharaan berkala [28].
+Metode *Waterfall* adalah model rekayasa perangkat lunak berurutan yang mewajibkan setiap tahap selesai tuntas sebelum melangkah ke tahap berikutnya. Urutannya bergerak linear dari pengumpulan dan analisis kebutuhan, perancangan sistem, implementasi kode, integrasi dan pengujian, hingga operasi serta pemeliharaan [28].
 
-Model sekuensial ini cocok untuk sistem berspesifikasi jelas. Dokumentasi yang lengkap di setiap tahap memudahkan pengembang menerjemahkan rancangan basis data maupun antarmuka menjadi kode aplikasi. Alur kerja yang terukur juga menekan risiko perubahan fitur mendadak selama proses pembangunan.
+Alur sekuensial ini sesuai untuk sistem dengan aturan bisnis yang sudah jelas sejak awal. Risiko perubahan mendadak di tengah proyek ikut menyusut. Rancangan basis data dan antarmuka yang terdokumentasi utuh memudahkan pengembang menerjemahkannya menjadi kode program dan skenario uji.
 
 <br>
 
@@ -589,46 +591,53 @@ Model sekuensial ini cocok untuk sistem berspesifikasi jelas. Dokumentasi yang l
 <br>
 
 ## 3.1 Objek Penelitian
-Objek penelitian ini adalah Asri Boarding House yang berlokasi di Jalan Maera Sari Nomor 1, Tembalang, Kota Semarang. Usaha penyewaan indekos ini menyediakan 32 unit kamar dalam tipe VIP, Deluxe, dan Standar untuk memenuhi kebutuhan tempat tinggal mahasiswa maupun pekerja di sekitar kawasan kampus. Fokus kajian pada objek ini meliputi alur reservasi kamar, penagihan sewa bulanan, hingga pembukuan kas operasional. Selama ini, seluruh aktivitas tersebut masih dicatat secara manual pada buku besar fisik. Kondisi operasional itulah yang mendasari perancangan sistem informasi manajemen kost berbasis web dengan integrasi gerbang pembayaran digital di Asri Boarding House.
+Penelitian ini bertempat di Asri Boarding House, Jalan Maera Sari Nomor 1, Tembalang, Kota Semarang. Bangunan indekos dua lantai itu mengoperasikan 32 unit kamar, mencakup 6 unit VIP, 3 unit Deluxe, dan 23 unit Standar untuk mahasiswa maupun pekerja. Kajian berpusat pada tiga proses harian: reservasi unit, penagihan sewa bulanan, serta pembukuan kas. Sebelumnya, transaksi penyewa dicatat di atas buku tulis manual sambil melayani calon penghuni lewat WhatsApp pribadi. Keterlambatan pembaruan status itu kerap memicu pesanan ganda (*double booking*). Untuk tutup buku bulanan saja, pencocokan nota dan setoran sewa bisa menghabiskan tiga hingga empat hari kerja.
 
 <br>
 
 ## 3.2 Jenis Penelitian
-Penelitian ini menerapkan metode Penelitian dan Pengembangan atau *Research and Development* (R&D) melalui pendekatan rekayasa perangkat lunak. Metode ini dipilih karena tujuan utama penelitian bukan sekadar mengkaji fenomena secara teoretis, melainkan merancang, membangun, dan menguji perangkat lunak fungsional untuk menyelesaikan masalah operasional di lapangan [29]. Lewat tahapan pengembangan yang terukur, sistem informasi yang dihasilkan diharapkan dapat menjawab kebutuhan pengelolaan bisnis indekos secara akurat.
+Penelitian ini menerapkan metode Penelitian dan Pengembangan atau *Research and Development* (R&D) dalam kerangka rekayasa perangkat lunak [29]. Pendekatan tersebut dipilih karena sasaran penelitian bukan sekadar menguji teori, melainkan membangun perangkat lunak fungsional untuk menyelesaikan kendala operasional di lapangan. Sistem web dirancang agar pencatatan kamar hingga penagihan berjalan tertib.
 
-Metode R&D tersebut dipadukan dengan studi kasus tunggal untuk membedah alur bisnis sewa kamar di Asri Boarding House secara menyeluruh. Pada tahap awal, pengumpulan data lapangan menggunakan analisis deskriptif kualitatif untuk memetakan kendala pencatatan kas manual, penagihan jatuh tempo, dan pemesanan kamar. Selanjutnya, pada tahap akhir dilakukan pengujian fungsi serta evaluasi penggunaan sistem bersama pengguna untuk memastikan aplikasi berjalan sesuai kebutuhan.
+Rancangan R&D itu dikombinasikan dengan studi kasus tunggal di Asri Boarding House. Analisis deskriptif kualitatif pada tahap awal memetakan praktik pembukuan buku besar, jatuh tempo tanggal 10, dan mekanisme pesan kamar. Setelah perangkat lunak rampung, kelayakan sistem diverifikasi lewat *black box testing* serta evaluasi pemakaian di lokasi. Kedua uji tersebut memastikan aplikasi siap menggantikan catatan manual.
 
 <br>
 
 ## 3.3 Sumber Data
-Sumber data yang dihimpun dalam penelitian ini dikelompokkan menjadi dua kategori utama, yaitu data primer dan data sekunder. Kedua kelompok data tersebut dimanfaatkan untuk memetakan alur proses bisnis serta mendasari perancangan modul pada Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway* di Asri Boarding House.
+Data penelitian terbagi menjadi dua kategori, yakni data primer dan data sekunder. Keduanya mendasari perancangan aturan bisnis, struktur basis data, serta modul pembayaran pada aplikasi manajemen kost.
 
 1. Data Primer  
-Data primer merupakan data utama yang dihimpun dari narasumber di Asri Boarding House melalui wawancara mendalam, meliputi:
-* **Penjaga kost**, sebagai sumber informasi mengenai prosedur operasional harian, alur pencatatan sewa kamar, serta kendala pembukuan pada buku kas fisik.
-* **Penghuni kost**, sebagai sumber informasi terkait alur pemesanan kamar, kendala pembayaran sewa bulanan, serta kebutuhan akan bukti transaksi yang rapi.
+Data primer dikumpulkan langsung dari dua kelompok narasumber di Asri Boarding House melalui wawancara tatap muka:
+* **Penjaga kost**, satu pengelola harian berpengalaman sekitar 20 tahun yang menguasai prosedur penerimaan penghuni baru, struktur tarif 32 kamar, aturan denda, pemeriksaan unit pasca-*checkout*, serta kendala pembukuan kas fisik.
+* **Penghuni kost aktif**, yang diwakili lima mahasiswa penyewa untuk menggali kendala pemesanan kamar dari luar kota, pelunasan sewa bulanan, hingga kebutuhan bukti bayar resmi.
 
 2. Data Sekunder  
-Data sekunder diperoleh dari berbagai dokumen internal dan literatur pendukung untuk melengkapi landasan analisis penelitian, yaitu:
-* Arsip pembukuan internal yang mencakup buku besar manual, bukti transfer sewa, nota pengeluaran operasional, serta daftar tarif 32 unit kamar Asri Boarding House.
-* Dokumentasi teknis API Midtrans, *gateway* notifikasi WhatsApp, serta dokumentasi resmi kerangka kerja Laravel.
-* Artikel jurnal ilmiah, buku referensi, dan publikasi akademik yang membahas pengembangan sistem informasi indekos serta integrasi gerbang pembayaran digital.
+Data sekunder bersumber dari arsip internal dan dokumentasi teknis guna melengkapi spesifikasi rancangan sistem, meliputi:
+* Arsip operasional indekos berupa buku besar manual, bukti transfer sewa, nota pengeluaran harian, tata tertib penghuni, serta daftar tarif beserta diskon durasi sewa 32 unit kamar.
+* Dokumentasi teknis resmi kerangka kerja Laravel 12, basis data MySQL InnoDB, API Midtrans Snap, layanan *WhatsApp gateway* Fonnte, serta protokol surat elektronik SMTP.
+* Artikel jurnal ilmiah dan buku metode penelitian yang mengkaji sistem informasi indekos, penguncian transaksi basis data, serta integrasi gerbang pembayaran digital.
 
 <br>
 
 ## 3.4 Teknik Pengumpulan Data
-Pengumpulan data pada penelitian ini menggunakan pendekatan kualitatif melalui teknik wawancara mendalam di Asri Boarding House [30]. Teknik ini dipilih untuk menggali kebutuhan operasional indekos, kendala pencatatan sewa manual, hingga tanggapan pengguna setelah mencoba sistem informasi berbasis web yang dibangun.
+Penelitian ini mengandalkan pendekatan kualitatif dengan wawancara mendalam sebagai teknik pengumpulan data utama [30], didukung oleh observasi langsung serta studi dokumentasi. Perpaduan ketiga cara tersebut memastikan kebutuhan sistem dan hasil evaluasi terverifikasi lintas sumber.
 
-Kegiatan wawancara dilakukan secara tatap muka menggunakan bantuan alat perekam suara. Rekaman percakapan tersebut kemudian disalin (ditranskripsi) ke dalam teks tertulis supaya seluruh keterangan narasumber terdokumentasi dengan rapi dan tidak ada informasi penting yang terlewat saat dianalisis. Proses wawancara ini dilakukan pada tahap analisis kebutuhan maupun tahap evaluasi sistem bersama dua kelompok narasumber, yaitu:
-* **Penjaga kost**, dengan fokus pembahasan pada evaluasi pembukuan kas, kemudahan memantau sisa kamar dari 32 unit yang tersedia, kepraktisan penagihan otomatis, serta efisiensi kerja setelah beralih dari buku besar manual.
-* **Penghuni kost**, dengan fokus pembahasan pada pengalaman memesan kamar, kejelasan rincian tagihan bulanan, kemudahan membayar sewa melalui *payment gateway*, serta kejelasan bukti pembayaran digital yang diterima.
+1. Wawancara Mendalam dan Uji Coba Pengguna  
+Wawancara dijalankan tatap muka memakai perekam suara digital, lalu hasilnya disalin menjadi transkrip teks agar setiap keterangan tercatat utuh. Pengambilan data berlangsung pada fase analisis kebutuhan dan fase evaluasi akhir bersama dua kelompok narasumber (satu penjaga kost serta lima mahasiswa penghuni kost aktif):
+* **Penjaga kost**: Sebelum pembangunan aplikasi, tanya jawab menelusuri tarif sewa, aturan jatuh tempo tanggal 10, masa keringanan bulan berjalan, denda *flat* 5% lintas bulan, pendaftaran tamu datang langsung (*walk-in*), dan penguncian kamar pasca-*checkout*. Pada tahap evaluasi (*side-by-side usability testing*), penilaian berfokus pada keterbacaan dasbor admin, kemudahan memantau 32 unit kamar, kepraktisan penagihan otomatis, serta kecepatan tutup buku kas.
+* **Penghuni kost aktif**: Sebelum sistem dibangun, wawancara memetakan hambatan survei kamar jarak jauh, keterlambatan cek bukti transfer, dan risiko nota kertas hilang. Pada sesi evaluasi, kelima mahasiswa mencoba alur reservasi lima tahap, transparansi nominal tagihan, pembayaran *Virtual Account* Midtrans tanpa kirim resi, pengunduhan kuitansi PDF, serta ketepatan pengingat WhatsApp.
+
+2. Observasi Langsung  
+Pengamatan lapangan dikerjakan di kantor pengelola Asri Boarding House untuk melihat rutinitas kerja secara langsung. Fokus pengamatan mencakup pencatatan tamu baru, pengecekan kebersihan kamar sebelum dihuni ulang, dan penyimpanan nota pengeluaran rutin.
+
+3. Studi Dokumentasi  
+Penelaahan dokumen menghimpun data dari buku besar sewa, bukti transfer, bundel nota operasional, serta daftar tarif 32 kamar. Di sisi teknis, studi dokumen juga memeriksa panduan API Midtrans, Fonnte, SMTP, dan Laravel 12 guna mengunci spesifikasi integrasi sistem.
 
 <br>
 
 ## 3.5 Metode Pengembangan Sistem
-Pembangunan sistem informasi manajemen pada Asri Boarding House menerapkan metode *Waterfall*. Seluruh pengerjaan aplikasi dilakukan bertahap sesuai urutan kerja yang telah ditetapkan sejak awal penelitian. Pemeriksaan dilakukan pada setiap akhir tahap agar tidak ada kebutuhan fungsional yang terlewat.
+Pengembangan aplikasi pada Asri Boarding House mengikuti model *Waterfall* secara berurutan. Setiap tahapan wajib tuntas dan diperiksa keluarannya sebelum bergeser ke fase selanjutnya. Pendekatan linier ini menekan risiko salah rancang sejak awal.
 
-Metode *Waterfall* dipilih karena alur operasional indekos, mulai dari pemesanan kamar hingga penagihan bulanan, sudah terpetakan jelas melalui studi lapangan. Kepastian aturan bisnis ini membuat pembuatan kode program dan integrasi *payment gateway* berjalan lebih terarah.
+Metode *Waterfall* dipilih karena seluruh aturan operasional kost sudah terbaca jelas dari hasil studi lapangan. Kapasitas 32 kamar, jatuh tempo tanggal 10, denda *flat* 5% lintas bulan, hingga karantina kamar pasca-*checkout* merupakan ketetapan baku yang jarang berubah. Kepastian aturan bisnis tersebut menjaga penulisan kode dan integrasi *payment gateway* tetap terarah tanpa perluasan fitur mendadak.
 
 <div align="center">
 
@@ -640,12 +649,20 @@ Metode *Waterfall* dipilih karena alur operasional indekos, mulai dari pemesanan
 
 <br>
 
-Berdasarkan Gambar 3.1, pengembangan sistem dimulai dari tahap *requirement gathering and analysis* untuk menghimpun kebutuhan operasional indekos melalui wawancara mendalam. Tahap kedua adalah *design*, yakni menyusun rancangan tampilan antarmuka, alur kerja sistem, serta skema basis data. Rancangan tersebut selanjutnya diterjemahkan pada tahap *implementation* dengan menulis kode program menggunakan *framework* Laravel dan mengintegrasikan *payment gateway* Midtrans. Begitu seluruh modul selesai dibangun, proses masuk ke tahap *integration & testing* serta *verification* melalui pengujian *black box testing*. Pengujian ini memastikan setiap fitur dan transaksi pembayaran sewa berjalan bebas kendala. Tahap terakhir, *operation & maintenance*, meliputi pengunggahan aplikasi ke *server hosting*, pemantauan operasional harian, serta perbaikan berkala apabila ditemukan kendala teknis.
+Merujuk pada Gambar 3.1, pengerjaan perangkat lunak berlangsung dalam enam tahap berurutan yang dilengkapi jalur umpan balik (*feedback loop*):
+1. ***Requirement gathering and analysis***: Merangkum kebutuhan fungsional maupun nonfungsional dari wawancara penjaga serta penghuni kost, observasi lapangan, dan telaah buku besar manual.
+2. ***Design***: Menyusun cetak biru teknis berupa *use case diagram* (tiga aktor), *Entity Relationship Diagram* (ERD) ternormalisasi, *activity diagram*, *flowchart* sistem, serta rancangan antarmuka bergaya *Neo-Brutalism*.
+3. ***Implementation***: Membangun logika program menggunakan Laravel 12 berarsitektur *Service Layer* dan basis data MySQL InnoDB dengan penguncian baris pesimis (*lockForUpdate()*). Lapisan ini juga mengintegrasikan Midtrans Snap beserta validasi *webhook* SHA-512, *WhatsApp gateway* Fonnte, antrean *email* SMTP, serta penjadwal *cron job*.
+4. ***Integration & testing***: Menguji keterpaduan seluruh modul internal dan API eksternal lewat 60 skenario *black box testing* pada enam domain operasional. Uji ini memastikan validasi input, penguncian kamar, kalkulasi denda, dan pembaruan status pembayaran berjalan tanpa galat.
+5. ***Verification***: Memvalidasi kelayakan sistem bersama pengguna akhir melalui *side-by-side usability testing* dan wawancara semiterstruktur bersama satu penjaga kost serta lima penghuni kost aktif.
+6. ***Operation & maintenance***: Mengunggah aplikasi ke *server hosting*, mengaktifkan penjadwal tugas otomatis, memantau kinerja operasional harian, serta menjalankan perbaikan teknis berkala.
+
+Apabila ditemukan ketidaksesuaian spesifikasi atau celah logika di tengah jalan, garis umpan balik pada Gambar 3.1 mengarahkan perbaikan ke tahap sebelumnya sebelum aplikasi beroperasi penuh.
 
 <br>
 
 ## 3.6 Kerangka Pemikiran
-Kerangka pemikiran dalam penelitian ini disusun mengikuti alur pendekatan *Research and Development* (R&D) untuk menghasilkan produk sistem informasi yang teruji bagi Asri Boarding House. Melalui kerangka ini, berbagai kendala operasional di lapangan dihubungkan secara terukur dengan solusi perancangan aplikasi berbasis web, mulai dari identifikasi masalah hingga evaluasi akhir.
+Kerangka pemikiran dirancang mengikuti alur *Research and Development* (R&D) untuk memetakan hubungan antara masalah di Asri Boarding House dan aplikasi web yang dibangun. Bagan ini merangkai seluruh proses riset dari akar persoalan hingga dampak penerapannya.
 
 <div align="center">
 
@@ -656,7 +673,11 @@ Kerangka pemikiran dalam penelitian ini disusun mengikuti alur pendekatan *Resea
 </div>
 <br>
 
-Sebagaimana ditunjukkan pada Gambar 3.2, alur penelitian dimulai dari bagian masukan (*input*) yang merangkum kondisi operasional indekos, masalah pencatatan manual, serta rincian kebutuhan sistem. Bagian kedua adalah proses (*process*), yang mencakup tahapan analisis dan perancangan, penulisan kode program, hingga pengujian fitur aplikasi. Seluruh tahapan tersebut menghasilkan keluaran (*output*) berupa perangkat lunak manajemen kost yang telah teruji dan siap dioperasikan. Pada bagian akhir, dampak (*outcome*) penelitian ini terlihat dari tertatanya pembukuan kas serta makin praktisnya proses pembayaran sewa bagi penjaga maupun penghuni kost.
+Sebagaimana tersaji pada Gambar 3.2, kerangka penelitian tersusun atas empat blok utama:
+1. **Masukan (*Input*)**: Memetakan kondisi operasional 32 unit kamar, mengidentifikasi masalah pencatatan manual (*double booking*, tagihan tanggal 10 yang terlewat, dan tutup buku berhari-hari), serta mengunci spesifikasi kebutuhan sistem.
+2. **Proses (*Process*)**: Menjalankan tiga kegiatan rekayasa inti, yakni analisis dan perancangan arsitektur, implementasi sistem web terintegrasi gerbang pembayaran dan penjadwal otomatis, serta pengujian dan validasi kelayakan bersama pengguna.
+3. **Keluaran (*Output*)**: Menghasilkan artefak perangkat lunak teruji berupa Sistem Informasi Manajemen Kost Terintegrasi *Payment Gateway*, mencakup katalog publik, modul reservasi lima tahap, dasbor kas admin, dan portal mandiri penyewa aktif.
+4. **Dampak (*Outcome*)**: Menghadirkan manfaat nyata bagi operasional kost, mulai dari nihilnya benturan pesanan ganda, ketertiban penagihan bulanan otomatis lewat WhatsApp dan *email*, hingga rekapitulasi kas instan bebas selisih.
 
 <br>
 
@@ -672,12 +693,12 @@ Sebagaimana ditunjukkan pada Gambar 3.2, alur penelitian dimulai dari bagian mas
 
 ## 4.1 Perancangan Aplikasi
 
-Perancangan aplikasi dilakukan untuk menerjemahkan kebutuhan operasional Asri Boarding House ke dalam cetak biru teknis sebelum tahap penulisan kode program dimulai. Pemodelan sistem pada tahap ini mencakup perancangan *use case diagram*, *Entity Relationship Diagram* (ERD), *activity diagram*, serta *flowchart* sistem.
+Tahap perancangan menerjemahkan kebutuhan operasional Asri Boarding House ke dalam cetak biru teknis sebelum pengkodean dimulai. Pemodelan sistem pada bagian ini mencakup *use case diagram*, *Entity Relationship Diagram* (ERD), *activity diagram*, serta *flowchart* sistem.
 
 <br>
 
 ### 4.1.1 Use Case Diagram
-Batasan hak akses dan fungsi layanan pada Sistem Informasi Manajemen Kost Asri Boarding House dipetakan menggunakan *use case diagram*. Melalui Gambar 4.1, dapat dilihat pembagian wewenang beserta cakupan fitur yang dapat diakses oleh setiap pengguna di dalam aplikasi web.
+Batasan hak akses dan cakupan layanan aplikasi dipetakan lewat *use case diagram* pada Gambar 4.1. Diagram ini memisahkan fitur publik, portal transaksi pemesanan, serta panel pengelolaan operasional agar setiap pengguna bekerja sesuai wewenangnya.
 
 <br>
 
@@ -691,67 +712,63 @@ Batasan hak akses dan fungsi layanan pada Sistem Informasi Manajemen Kost Asri B
 
 <br>
 
-Berdasarkan Gambar 4.1, operasional sistem melibatkan tiga aktor utama, yakni calon penyewa, admin (penjaga kost), dan penyewa aktif. Setiap aktor memiliki hak akses yang terpisah agar alur pemesanan kamar hingga pengelolaan tagihan bulanan tetap terkontrol.
+Gambar 4.1 melibatkan tiga aktor utama: admin (penjaga kost), calon penyewa, dan penyewa aktif (penghuni kost). Relasi *include* menghubungkan fungsi inti masing-masing peran dengan proses *login* dan *logout* sistem.
 
 1. Calon Penyewa  
-Calon penyewa merupakan pengunjung publik yang mencari informasi kamar kosong, fasilitas, dan tarif sewa Asri Boarding House melalui situs web. Apabila menemukan unit yang cocok, calon penghuni harus mendaftarkan akun terlebih dahulu untuk mengisi formulir reservasi secara daring tanpa perlu datang ke lokasi. Pemesanan kamar baru dinyatakan sah setelah pemesan melunasi uang muka lewat gerbang pembayaran Midtrans. Pembayaran yang berhasil akan langsung mengunci status unit kamar di sistem sehingga terhindar dari benturan pesanan ganda.
+Pengunjung yang belum memiliki akun dapat langsung mengakses katalog untuk meninjau ketersediaan, spesifikasi, serta tarif 32 unit kamar. Saat berminat memesan, calon penyewa mendaftarkan akun, *login*, mengajukan *booking* reservasi, dan menyelesaikan pembayaran awal melalui Midtrans. Begitu pembayaran awal terverifikasi, baik dengan skema uang muka (DP) 30% maupun pelunasan penuh 100%, unit kamar terkunci otomatis agar tidak dipesan pengguna lain.
 
 2. Admin (Penjaga Kost)  
-Kendali operasional harian indekos dipegang sepenuhnya oleh admin atau penjaga kost. Melalui dasbor pengelola, admin mengatur ketersediaan 32 unit kamar, memperbarui harga sewa, serta memeriksa kelengkapan identitas penghuni baru. Pemantauan kas masuk juga berjalan lebih praktis. Penjaga kost tidak perlu lagi memeriksa mutasi rekening bank secara manual karena status pelunasan sewa diperbarui otomatis oleh sistem, sehingga waktu kerjanya dapat difokuskan untuk menindaklanjuti laporan kerusakan fasilitas dari penghuni.
+Kendali operasional harian berada di tangan penjaga kost. Melalui panel admin, pengelola mengatur data kamar dan penyewa, memverifikasi reservasi, memantau kas, serta menindaklanjuti keluhan. Status pembayaran diperbarui langsung oleh sistem. Penjaga kost pun tidak perlu mengecek mutasi bank satu per satu sehingga fokus kerjanya bergeser ke verifikasi fisik.
 
-3. Penyewa Kost (Penyewa Aktif)  
-Aktor ini adalah penghuni resmi yang telah menempati kamar dan memiliki akun khusus untuk mengakses portal penyewa. Setiap awal periode penagihan, penghuni dapat melihat rincian *invoice* bulanan beserta tanggal jatuh tempo secara transparan. Pelunasan sewa maupun denda keterlambatan dilakukan langsung melalui kanal pembayaran digital yang otomatis menerbitkan kuitansi elektronik begitu transaksi terverifikasi. Selain urusan pembayaran, penghuni juga dapat mengirimkan tiket keluhan lewat portal ini apabila mendapati kerusakan sarana di kamarnya.
+3. Penyewa Aktif (Penghuni Kost)  
+Penghuni yang telah menempati kamar memperoleh akses ke portal layanan mandiri. Setiap bulan, penyewa aktif dapat mengecek tagihan sewa beserta potensi denda keterlambatan, melunasinya melalui Midtrans, dan mengunduh kuitansi digital. Jika menemukan kerusakan sarana di kamar, penghuni cukup mengirimkan tiket laporan keluhan langsung dari portal yang sama.
 
 <br>
 
 ### 4.1.2 Entity Relationship Diagram (ERD)
-Struktur penyimpanan data pada sistem manajemen kost ini dirancang menggunakan model basis data relasional. Mengingat kompleksitas relasi dan banyaknya atribut kolom, diagram ERD pada Gambar 4.2 dipisahkan menjadi dua bagian tampilan, yaitu bagian (a) untuk modul transaksi dan hunian inti, serta bagian (b) untuk modul operasional dan layanan informasi.
+Struktur penyimpanan aplikasi dibangun menggunakan model basis data relasional MySQL. Mengingat jumlah tabel dan atributnya cukup padat, rancangan ERD pada Gambar 4.2 dipisah menjadi modul inti dan modul pendukung.
 
 <br>
 
 <div align="center">
 
-<img src="images/gambar_4_2_a_erd_modul_inti.png" alt="Gambar 4.2 (a) Modul Pengelolaan Kamar, Pengguna, Reservasi, Pembayaran" width="650">
+<img src="images/gambar_4_2_a_erd_modul_inti.png" alt="Gambar 4.2(a) Entity Relationship Diagram (Modul Inti)" width="650">
 
-*(a) Modul Pengelolaan Kamar, Pengguna, Reservasi, Pembayaran*
-
-<br>
-
-<img src="images/gambar_4_2_b_erd_modul_pendukung.png" alt="Gambar 4.2 (b) Modul Layanan Keluhan, Operasional Kost, Komunikasi, Informasi" width="650">
-
-*(b) Modul Layanan Keluhan, Operasional Kost, Komunikasi, Informasi*
+*Gambar 4.2(a) Entity Relationship Diagram (Modul Inti)*
 
 <br>
 
-*Gambar 4.2 Entity Relationship Diagram*
+<img src="images/gambar_4_2_b_erd_modul_pendukung.png" alt="Gambar 4.2(b) Entity Relationship Diagram (Modul Pendukung)" width="650">
+
+*Gambar 4.2(b) Entity Relationship Diagram (Modul Pendukung)*
 
 </div>
 
 <br>
 
-Secara keseluruhan, skema basis data pada Gambar 4.2 dirancang untuk memisahkan domain transaksi inti dari layanan pendukung operasional yang terbagi ke dalam dua modul fungsional berikut:
+Pemetaan antarentitas pada kedua diagram tersebut memisahkan alur hunian dan transaksi finansial utama dari fitur penunjang harian:
 
-1. Modul Pengelolaan Kamar, Pengguna, Reservasi, dan Pembayaran (Gambar 4.2 (a))  
-Pendataan hunian bertumpu pada keterkaitan antara tabel *users*, *kamar*, dan tabel penghubung *penyewa*. Tabel *users* mengelola akun login pengelola serta penyewa, sedangkan tabel *kamar* memuat rincian fisik 32 unit kamar beserta tarif dan status ketersediaannya. Kedua tabel master tersebut dipersatukan oleh tabel *penyewa* melalui relasi satu-ke-banyak (1:N) untuk mencatat penempatan unit kamar secara spesifik. Struktur ini mengunci nilai sewa riil (*snapshot* harga), tanggal masuk, batas akhir sewa, dan nomor darurat wali agar data kontrak tetap konsisten meskipun harga kamar di masa depan disesuaikan pengelola.
+1. Modul Pengelolaan Kamar, Pengguna, Reservasi, dan Pembayaran (Gambar 4.2(a))  
+Kluster pengelolaan kamar dan pengguna bertumpu pada relasi tabel *users*, *kamar*, dan *penyewa*. Tabel *users* menyimpan kredensial akun, tabel *kamar* menampung data fisik 32 unit kamar, lalu tabel *penyewa* menghubungkan keduanya dengan relasi satu-ke-banyak (1:N). Pencatatan kontrak pada tabel *penyewa* mengunci nilai *harga_sewa*, *tanggal_masuk*, *tgl_keluar_seharusnya*, dan kontak darurat wali (*no_wali*). Jadi, penyesuaian tarif kamar pada periode mendatang tidak mengubah tagihan penghuni yang sedang berjalan.
 
-Arus transaksi keuangan dikelola melalui keterhubungan tabel *reservasi*, *tagihan*, dan *pembayaran*. Pengajuan sewa daring dicatat ke tabel *reservasi* dengan kode pemesanan unik, lalu sistem menerbitkan rincian uang muka atau sewa berkala pada tabel *tagihan*. Begitu tagihan dilunasi via *payment gateway* Midtrans, sinyal *webhook* otomatis mencatat nomor transaksi perbankan dan waktu penyelesaian ke tabel *pembayaran*.
+Kluster transaksi memetakan relasi tabel *reservasi*, *tagihan*, dan *pembayaran*. Pengajuan *booking* masuk ke tabel *reservasi*, sedangkan faktur sewa bulanan tercatat di tabel *tagihan*. Setiap pelunasan tervalidasi Midtrans disimpan ke tabel *pembayaran* dalam relasi satu-ke-banyak (1:N) terhadap *tagihan*. Sebagai catatan implementasi, atribut berbahasa Inggris pada diagram (seperti `room_number` atau `total_price`) dan garis konseptual 1:1 antara *tagihan* dan *reservasi* disederhanakan untuk kejelasan desain. Pada migrasi MySQL aktual, kolom memakai bahasa Indonesia seperti *nomor_kamar*, *order_id*, dan *nominal_total*. Selain itu, tabel *tagihan* terhubung langsung ke *penyewa*, sementara *reservasi* merujuk ke *users* dan *kamar*.
 
 <br>
 
-2. Modul Layanan Keluhan, Operasional Kost, Komunikasi, dan Informasi (Gambar 4.2 (b))  
-Pemeliharaan sarana hunian dan pencatatan kas keluar dipusatkan pada tabel *keluhan*, *pengeluaran*, serta *log_notifikasi*. Laporan kerusakan fasilitas dari penghuni dihimpun ke dalam tabel *keluhan* lengkap dengan kategori sarana dan foto bukti agar segera diperbaiki oleh penjaga kost. Seluruh biaya operasional rutin seperti pembelian token listrik bersama, iuran air, dan jasa teknisi gedung dicatat pada tabel *pengeluaran* sebagai acuan perhitungan kas bersih. Sementara itu, tabel *log_notifikasi* merekam jejak pengiriman pesan pengingat tagihan otomatis melalui gerbang WhatsApp Fonnte dan *email* SMTP.
+2. Modul Layanan Keluhan, Operasional Kost, Komunikasi, dan Informasi (Gambar 4.2(b))  
+Kluster keluhan dan operasional menghimpun tabel *keluhan*, *pengeluaran*, dan *log_notifikasi*. Aduan kerusakan penghuni tersimpan di tabel *keluhan*, sementara belanja rutin dan perbaikan gedung masuk ke tabel *pengeluaran*. Riwayat pengingat WhatsApp maupun *email* direkam otomatis pada tabel *log_notifikasi*.
 
-Kebutuhan informasi publik dan komunikasi pengunjung ditangani oleh tabel *guest_chat_threads*, *chat_messages*, *customer_reviews*, serta tabel *peraturan* dan *faqs*. Pengunjung situs web dapat berkonsultasi langsung tanpa membuat akun melalui sesi *guest_chat_threads* yang berelasi satu-ke-banyak (1:N) dengan tabel *chat_messages*. Sebagai pelengkap transparansi, tabel *customer_reviews* menampilkan ulasan pengalaman penghuni, sedangkan tabel *peraturan* dan *faqs* memuat tata tertib hunian serta tanya-jawab umum di halaman beranda.
+Kluster komunikasi tamu dan pusat informasi terdiri atas *guest_chat_threads*, *chat_messages*, *customer_reviews*, serta kotak gabungan *peraturan & faqs*. Pengunjung tanpa akun bisa bertanya lewat sesi *guest_chat_threads* yang berelasi satu-ke-banyak (1:N) dengan pesan obrolan. Ulasan penghuni ditampung pada tabel *customer_reviews*. Pada basis data fisik, aturan kost dan daftar pertanyaan umum dipisah ke tabel *peraturan* serta *faqs*, sedangkan pesan tamu menempati tabel *guest_chat_messages*.
 
 <br>
 
 ### 4.1.3 Activity Diagram
-Urutan proses bisnis dan interaksi antara pengguna, aplikasi web, serta layanan pihak ketiga dijabarkan menggunakan *activity diagram*. Pada Gambar 4.3, Gambar 4.4, dan Gambar 4.5, alur aktivitas ini dipisahkan menjadi tiga bagian mengikuti peran calon penyewa, admin, dan penyewa aktif agar pembagian hak aksesnya terlihat jelas.
+Alur interaksi antara pengguna, aplikasi web, dan layanan pihak ketiga dimodelkan ke dalam tiga *activity diagram* yang dibedakan menurut peran aktornya.
 
 <br>
 
 1. Calon Penyewa  
-Alur aktivitas calon penyewa dirancang untuk mempermudah pemesanan unit kamar secara mandiri dari jarak jauh. Seluruh tahapan mulai dari pemilihan kamar di katalog, pengisian biodata sewa, hingga pembayaran uang muka dapat diselesaikan langsung seperti yang tampak pada Gambar 4.3.
+Diagram pada Gambar 4.3 membagi alur menjadi tiga *swimlane*: Calon Penyewa, Sistem Web Kost, serta Midtrans & WhatsApp Gateway.
 
 <br>
 
@@ -765,12 +782,12 @@ Alur aktivitas calon penyewa dirancang untuk mempermudah pemesanan unit kamar se
 
 <br>
 
-Sebagaimana ditunjukkan pada Gambar 4.3, proses diawali ketika calon penyewa memilih salah satu unit kosong dari 32 kamar yang tersedia. Aplikasi kemudian memeriksa kelengkapan data pemesanan sebelum meminta token transaksi ke *server* Midtrans Snap. Setelah jendela pembayaran tampil, pemesan dapat melunasi uang muka melalui transfer *Virtual Account* atau dompet digital. Begitu pembayaran terkonfirmasi lunas, sistem otomatis mengunci status unit kamar di basis data dan mengirimkan bukti reservasi ke nomor WhatsApp pemesan melalui layanan Fonnte.
+Proses bermula ketika calon penyewa membuka katalog 32 kamar lalu memilih unit yang tersedia. Sistem memvalidasi status unit sebelum membuka formulir reservasi. Setelah identitas dan durasi sewa terisi, aplikasi meminta *Snap token* ke Midtrans agar pemesan bisa membayar lewat jendela *pop-up*. Bila pembayaran gagal, pemesan kembali ke tahap pelunasan. Jika sukses, sistem mengunci kamar, memproses *webhook*, dan mengirim bukti ke WhatsApp lewat Fonnte.
 
 <br>
 
 2. Admin (Penjaga Kost)  
-Pada sisi pengelola, aktivitas sistem berfokus pada kemudahan mengelola inventaris kamar, memvalidasi penghuni, serta menyusun pembukuan kas bulanan. Rangkaian aktivitas penjaga kost dalam mengoperasikan sistem ditunjukkan pada Gambar 4.4.
+Aktivitas pengelola digambarkan pada Gambar 4.4 melalui tiga *swimlane*, yakni Admin (Penjaga Kost), Sistem Manajemen Kost, serta Basis Data & Notifikasi WA.
 
 <br>
 
@@ -784,12 +801,12 @@ Pada sisi pengelola, aktivitas sistem berfokus pada kemudahan mengelola inventar
 
 <br>
 
-Alur kerja pada Gambar 4.4 dimulai saat penjaga kost melakukan autentikasi akun untuk masuk ke dasbor admin. Melalui halaman tersebut, pengelola memantau keterisian 32 unit kamar, memperbarui tarif sewa, serta memverifikasi berkas identitas penghuni baru. Sistem selanjutnya memperbarui data hunian dan menerbitkan tagihan bulanan yang dikirimkan otomatis ke WhatsApp penyewa. Di akhir periode, admin cukup memeriksa rekapitulasi pembayaran yang masuk dan mencatat pengeluaran rutin untuk menutup laporan keuangan bulanan.
+Alur dimulai dengan autentikasi kredensial akun pengelola. Jika valid, sistem membuka dasbor kontrol untuk memantau status 32 kamar, memverifikasi data penghuni baru, serta menyetel tarif unit. Perubahan data langsung tersinkronisasi ke basis data sekaligus menggerakkan penerbitan tagihan sewa rutin. Pada siklus harian, penjaga kost memantau pembayaran masuk secara *real-time*, menindaklanjuti tiket keluhan, dan mencatat pengeluaran operasional. Kalkulasi laba-rugi bersih berjalan otomatis bersama pengiriman pengingat jatuh tempo via WhatsApp sehingga rekap pembukuan selesai tepat waktu.
 
 <br>
 
 3. Penyewa Aktif  
-Aktivitas penyewa aktif berpusat pada penggunaan portal layanan mandiri selama masa sewa berlangsung. Melalui portal ini, penghuni dapat memeriksa tagihan rutin, melunasi sewa secara non-tunai, serta melaporkan kerusakan fasilitas kamar sebagaimana diperlihatkan pada Gambar 4.5.
+Interaksi penghuni tetap dirangkum pada Gambar 4.5 dengan *swimlane* Penyewa Aktif, Portal Layanan Penghuni, serta Midtrans Payment Gateway.
 
 <br>
 
@@ -803,12 +820,12 @@ Aktivitas penyewa aktif berpusat pada penggunaan portal layanan mandiri selama m
 
 <br>
 
-Merujuk pada Gambar 4.5, penghuni yang telah masuk ke portal penyewa dapat langsung meninjau rincian tagihan sewa yang mendekati jatuh tempo. Saat tombol bayar ditekan, layar akan menampilkan jendela *pop-up* Midtrans Snap tanpa harus berpindah halaman situs. Pelunasan tagihan lewat transfer bank maupun dompet digital akan langsung memperpanjang masa aktif sewa kamar di dalam sistem. Setelah transaksi selesai, penghuni dapat mengunduh kuitansi digital berformat PDF atau membuka menu keluhan apabila membutuhkan perbaikan sarana kamar.
+Begitu masuk ke portal, penyewa aktif langsung melihat daftar tagihan, tanggal jatuh tempo, dan masa aktif sewa. Memilih tagihan dan menekan tombol bayar memicu validasi *invoice* sekaligus memuat *pop-up* Midtrans Snap. Penghuni melunasi tagihan lewat kanal yang tersedia, lalu Midtrans memverifikasi status pembayaran bank. Jika sudah lunas, sistem mengubah status tagihan menjadi lunas, memperpanjang periode sewa, serta membuka akses pengunduhan kuitansi digital maupun pengajuan tiket keluhan sarana.
 
 <br>
 
 ### 4.1.4 Flowchart Sistem
-Urutan logika kerja sistem dari tahap pemesanan awal hingga pengaktifan status penghuni di Asri Boarding House dipetakan secara utuh menggunakan *flowchart* sistem pada Gambar 4.6. Bagan alir ini memperlihatkan titik-titik pengambilan keputusan (*decision*) saat sistem memproses reservasi dan memvalidasi transaksi pembayaran.
+Logika proses menyeluruh dari penelusuran awal sampai penghuni resmi menempati unit digambarkan pada *flowchart* sistem di Gambar 4.6. Bagan alir ini memisahkan alur pengajuan reservasi dari alur pelunasan dan verifikasi lapangan.
 
 <br>
 
@@ -822,20 +839,20 @@ Urutan logika kerja sistem dari tahap pemesanan awal hingga pengaktifan status p
 
 <br>
 
-Berdasarkan Gambar 4.6, alur proses berawal ketika calon penyewa membuka situs web Asri Boarding House untuk mengecek ketersediaan 32 unit kamar. Apabila unit yang diminati masih kosong, pemesan diarahkan untuk mengisi formulir reservasi, mengunggah foto kartu identitas, serta menentukan durasi sewa. Sistem kemudian meneruskan proses ke gerbang pembayaran Midtrans agar pemesan dapat memilih metode transfer bank atau dompet digital. Pada tahap pengecekan transaksi, pembayaran yang gagal atau melewati batas waktu akan dikembalikan ke menu pemilihan metode bayar. Sebaliknya, jika pembayaran tervalidasi lunas oleh sistem, unit kamar langsung dikunci pada basis data dan bukti reservasi resmi dikirimkan otomatis melalui pesan WhatsApp Fonnte. Seluruh rangkaian alur ini berakhir saat calon penghuni tiba di lokasi kost, menyerahkan berkas fisik untuk diverifikasi penjaga kost, menerima kunci kamar, dan diaktifkan statusnya sebagai penyewa resmi.
+Alur pada Gambar 4.6 terbagi ke dalam fase pengajuan reservasi dan fase transaksi hingga penempatan kamar. Proses diawali saat calon penyewa mengecek kamar kosong di situs web. Bila unit tersedia, pemohon mengisi formulir sewa serta durasinya. Khusus label pengisian identitas pada bagan tersebut, aplikasi meminta input NIK 16 digit dan kontak wali di halaman kelengkapan profil, tanpa unggah foto KTP. Sistem lalu memuat token Midtrans untuk pelunasan setoran awal. Pembayaran yang gagal dikembalikan ke pemilihan kanal bayar. Transaksi sah mengunci kamar dan mengirim bukti ke WhatsApp pemesan, lalu ditutup dengan cek KTP fisik oleh penjaga kost saat kedatangan.
 
 <br>
 
 ## 4.2 Implementasi Antarmuka Sistem
-Implementasi antarmuka sistem menerjemahkan hasil perancangan visual ke dalam wujud halaman web fungsional yang siap diakses pengguna. Seluruh komponen antarmuka dibangun menggunakan pendekatan visual *Neo-Brutalism* dengan garis tepi tegas, kontras tinggi, dan tata letak yang responsif. Pembahasan antarmuka pada sub-bab ini dikelompokkan ke dalam empat bagian sesuai hak akses pengguna, meliputi antarmuka umum, calon penyewa, admin atau penjaga kost, serta penyewa aktif.
+Tahap implementasi antarmuka menerjemahkan rancangan visual ke dalam halaman web yang siap digunakan. Seluruh tampilan mengusung gaya *Neo-Brutalism* dengan garis tepi hitam tegas, warna kontras tinggi, dan tata letak responsif. Pembahasan pada subbab ini dibagi ke dalam empat kelompok peran pengguna, yaitu halaman umum, calon penyewa, admin atau penjaga kost, dan penyewa aktif.
 
 <br>
 
 ### 4.2.1 Implementasi Umum
-Implementasi umum mencakup sebelas antarmuka publik yang dapat diakses langsung oleh pengunjung tanpa harus masuk ke dalam akun terlebih dahulu. Kumpulan halaman ini menyajikan informasi seputar profil indekos, ketersediaan kamar, rincian fasilitas, panduan pemesanan, hingga gerbang autentikasi dan layanan obrolan tamu.
+Kelompok antarmuka umum berisi sebelas halaman publik yang dapat dibuka pengunjung tanpa harus masuk akun terlebih dahulu. Pengunjung bisa meninjau profil indekos, ketersediaan kamar, fasilitas, panduan pemesanan, hingga akses masuk akun dan obrolan tamu secara langsung.
 
-1. Implementasi Antarmuka *Home Page*  
-Halaman beranda utama (*home page*) menjadi titik temu pertama bagi mahasiswa maupun pekerja yang mencari hunian sewa di kawasan Tembalang. Melalui halaman ini, pengunjung dapat melihat gambaran umum Asri Boarding House beserta pilihan tipe kamar dan fasilitas unggulan tanpa perlu datang langsung ke lokasi. Tata letaknya juga telah disesuaikan agar rincian tarif sewa tetap terbaca jelas baik melalui layar komputer maupun ponsel pintar, sebagaimana ditampilkan pada Gambar 4.7.
+1. Halaman Beranda (*Home Page*)  
+Beranda utama menjadi titik temu pertama bagi mahasiswa maupun pekerja yang mencari hunian sewa di Tembalang. Melalui halaman ini, pengunjung langsung memperoleh gambaran singkat Asri Boarding House dan pintasan menuju pencarian kamar kosong. Tata letak halaman pada Gambar 4.7 juga menyesuaikan ukuran layar komputer maupun ponsel pintar.
 
 <div align="center">
 
@@ -845,14 +862,12 @@ Halaman beranda utama (*home page*) menjadi titik temu pertama bagi mahasiswa ma
 
 </div>
 
-Mengacu pada Gambar 4.7, sisi teratas halaman menampilkan bilah navigasi utama yang memuat tautan menuju katalog kamar, daftar fasilitas, panduan *booking*, serta tombol akses akun. Area tengah layar terbagi menjadi dua bagian, yakni spanduk pengenalan indekos lengkap dengan tombol pintasan pencarian kamar di sebelah kiri dan foto fisik bangunan di sebelah kanan. Selain itu, sudut kanan bawah layar dilengkapi tombol obrolan interaktif supaya pengunjung dapat langsung bertanya kepada penjaga kost.
+Bilah navigasi teratas pada Gambar 4.7 menampilkan logo Asri Boarding House, menu utama, pengalih mode gelap, serta tombol Masuk dan Daftar. Area tengah memadukan panel pengenalan 32 unit kamar eksklusif di kiri dan foto gedung tiga lantai di kanan. Pengunjung dapat langsung menekan tombol **Cari & Pesan Kamar Sekarang**, **Tanya Lengkap via WA**, atau membuka obrolan tamu di pojok kanan bawah.
 
 <br>
 
-2. Implementasi Antarmuka Fasilitas Kost  
-Halaman fasilitas kost merinci berbagai sarana penunjang hunian yang dapat dimanfaatkan bersama oleh seluruh penghuni Asri Boarding House. Penyajian informasi sarana secara terbuka ini membantu calon penyewa menilai kelayakan dan kenyamanan lingkungan tempat tinggal sebelum memutuskan untuk memesan kamar.
-
-Setiap item fasilitas disertai keterangan singkat mengenai fungsi serta aturan penggunaannya di lingkungan indekos. Tampilan halaman daftar fasilitas tersebut dapat dilihat pada Gambar 4.8.
+2. Halaman Fasilitas Kost  
+Halaman fasilitas kost merinci sarana penunjang hunian yang tersedia bagi penghuni Asri Boarding House. Penyajian informasi secara terbuka membantu calon penyewa menimbang kenyamanan kamar sebelum memutuskan memesan unit. Daftar fasilitas tersebut ditampilkan pada Gambar 4.8.
 
 <div align="center">
 
@@ -862,12 +877,12 @@ Setiap item fasilitas disertai keterangan singkat mengenai fungsi serta aturan p
 
 </div>
 
-Pada tampilan Gambar 4.8, daftar fasilitas disusun menggunakan tata letak kartu berbasis kisi (*grid*) yang mengelompokkan sarana umum seperti dapur bersama, area parkir kendaraan, jaringan internet nirkabel (*Wi-Fi*), dan kamera pengawas (CCTV). Setiap kartu memuat foto dokumentasi asli di lapangan, judul fasilitas berhuruf tebal, serta deskripsi singkat mengenai peruntukannya. Penyusunan kartu yang rapi ini memudahkan pengunjung memeriksa kelengkapan fasilitas hunian hanya dengan menggulirkan layar.
+Gambar 4.8 menyajikan enam kartu fasilitas dalam kisi tiga kolom berbingkai tebal. Setiap kartu memuat kotak ikon kuning, judul tegas, serta keterangan fungsi untuk AC, *Wi-Fi High Speed*, *Free Listrik*, Kamar Mandi Dalam, Kamar Mandi Luar, dan Lemari Pakaian. Susunan kartu ringkas itu membantu pengunjung menilai kelengkapan kamar dalam satu layar.
 
 <br>
 
-3. Implementasi Antarmuka Tipe Kamar Kost  
-Katalog tipe kamar kost menampilkan spesifikasi ruang dan kelengkapan perabot untuk masing-masing unit sewa di Asri Boarding House. Rincian luas kamar, ketersediaan kamar mandi dalam, hingga harga sewa per bulan dicantumkan secara jelas agar calon penghuni dapat menyesuaikan pilihan unit dengan kebutuhan dan anggaran mereka. Apabila sudah menemukan tipe kamar yang cocok, pengunjung cukup menekan tombol pemesanan pada kartu kamar terkait untuk memulai transaksi sewa seperti yang ditunjukkan pada Gambar 4.9.
+3. Katalog Tipe Kamar Kost  
+Katalog kamar menyajikan daftar unit beserta status ketersediaan dan tarif sewa bulanan di Asri Boarding House. Calon penghuni dapat menyaring kategori maupun mencari nomor kamar secara cepat sesuai anggaran mereka. Tampilan daftar unit tersebut diperlihatkan pada Gambar 4.9.
 
 <div align="center">
 
@@ -877,14 +892,12 @@ Katalog tipe kamar kost menampilkan spesifikasi ruang dan kelengkapan perabot un
 
 </div>
 
-Sebagaimana terlihat pada Gambar 4.9, kartu katalog untuk tipe kamar Deluxe menampilkan foto bagian dalam kamar tidur beserta kamar mandi dalamnya. Tepat di bawah foto tersebut, tertera nominal harga sewa bulanan, lencana penanda sisa unit kosong, serta daftar inventaris kamar yang meliputi kasur, meja belajar, lemari pakaian, AC, dan pemanas air (*water heater*). Tombol **"Pemesanan Kamar"** berwarna biru di bagian bawah kartu berfungsi mengarahkan calon penyewa langsung ke halaman pengajuan reservasi.
+Bagian atas Gambar 4.9 menyediakan tombol filter Semua Tipe, VIP, Deluxe, Standar, serta kolom cari nomor kamar. Di bawahnya berjajar tiga unit lantai satu tipe Standar. Kamar 105 berstatus terisi dengan tombol **Tanya WA / Ketersediaan**, sedangkan Kamar 106 dan Kamar 107 tersedia di tarif Rp 750.000 per bulan beserta tombol **Pesan Unit**.
 
 <br>
 
-4. Implementasi Antarmuka Galeri Kost  
-Antarmuka galeri kost menghimpun dokumentasi foto bangunan fisik dan suasana lingkungan harian di Asri Boarding House. Kehadiran potret tampak depan gedung, lorong antar-kamar, tempat parkir, hingga kondisi ruang komunal ini bertujuan memberikan gambaran nyata kepada calon penyewa dari luar kota.
-
-Seluruh dokumentasi visual tersebut ditata dalam susunan kisi yang proporsional dan dapat diperbesar saat diklik. Rincian tampilan galeri foto indekos disajikan pada Gambar 4.10.
+4. Halaman Galeri Kost  
+Halaman galeri kost menghimpun dokumentasi visual kondisi fisik kamar di Asri Boarding House. Kehadiran foto interior ini memberi gambaran nyata bagi calon penyewa dari luar kota sebelum datang survei. Susunan galeri tersebut disajikan pada Gambar 4.10.
 
 <div align="center">
 
@@ -894,12 +907,12 @@ Seluruh dokumentasi visual tersebut ditata dalam susunan kisi yang proporsional 
 
 </div>
 
-Melalui halaman pada Gambar 4.10, pengunjung dapat mengamati deretan foto area indekos mulai dari fasad bangunan, lahan parkir, koridor kamar di lantai satu dan dua, hingga area dapur bersama. Masing-masing bingkai foto dilengkapi efek transisi halus ketika kursor diarahkan ke atas gambar. Penataan dokumentasi visual ini membantu meyakinkan calon penghuni akan kebersihan dan keteraturan tempat tinggal yang dikelola.
+Gambar 4.10 menampilkan kolom pencarian dokumentasi di bagian atas beserta tiga kartu foto interior kamar bertajuk Kamar VIP Eksklusif, Kamar Deluxe Nyaman, dan Kamar Standar Fungsional. Setiap kartu dilengkapi tombol Perbesar untuk meninjau detail foto lebih jelas serta tombol Tanya WA guna menghubungi pengelola. Penyajian dokumentasi per tipe ini membantu calon penghuni membandingkan nuansa ruang sebelum memilih unit.
 
 <br>
 
-5. Implementasi Antarmuka Alur Cara Reservasi  
-Agar pengunjung baru tidak mengalami kebingungan saat hendak menyewa kamar secara daring, sistem menyediakan halaman panduan alur cara reservasi. Halaman ini menguraikan tahapan pemesanan dari awal hingga akhir, mulai dari pembuatan akun, pemilihan kamar kosong, pengisian biodata, sampai pelunasan uang muka. Dengan adanya petunjuk visual yang tercantum pada Gambar 4.11, calon penyewa dapat menyiapkan dokumen identitas diri yang dibutuhkan sebelum mengisi formulir pemesanan.
+5. Halaman Alur Cara Reservasi  
+Agar pengunjung baru memahami proses sewa daring secara utuh, sistem menyediakan halaman panduan alur reservasi. Halaman ini merangkum urutan pemesanan dari pemilihan kamar hingga penerimaan nota transaksi. Dengan petunjuk pada Gambar 4.11, calon penyewa dapat menyiapkan data diri seperti NIK dan nomor WhatsApp aktif sebelum mengajukan sewa.
 
 <div align="center">
 
@@ -909,12 +922,12 @@ Agar pengunjung baru tidak mengalami kebingungan saat hendak menyewa kamar secar
 
 </div>
 
-Tampilan pada Gambar 4.11 memvisualisasikan lima langkah berurutan dalam memesan kamar, yaitu registrasi akun, pemilihan unit kamar, pengisian kelengkapan profil, pembayaran uang muka melalui Midtrans, serta penerimaan bukti reservasi. Tiap tahapan ditandai dengan nomor urut berbingkai tebal yang disertai kartu penjelasan singkat mengenai tindakan yang harus dilakukan pengguna. Penyajian alur yang runtut ini membuat calon penghuni dapat memahami prosedur sewa tanpa harus berulang kali menanyakannya kepada penjaga kost.
+Gambar 4.11 merangkum empat langkah panduan umum, yaitu Pilih & Cek Kamar, Isi Data Diri, Bayar Instan, dan Terima Nota. Berbeda dari lima tahap transaksi interaktif di portal reservasi pada Subbab 4.2.2.4, halaman ini berfungsi sebagai ringkasan prosedural publik sesuai rancangan Bab 3. Penjelasan ringkas tiap kartu memudahkan calon penghuni memahami alur sewa sebelum bertanya ke penjaga kost.
 
 <br>
 
-6. Implementasi Antarmuka Testimoni Penyewa Kost  
-Bagian testimoni menampilkan ulasan serta penilaian langsung dari para penghuni yang pernah atau sedang menetap di Asri Boarding House. Kehadiran ulasan ini memberikan gambaran objektif mengenai kebersihan lingkungan, keamanan gedung, hingga kesigapan pengelola sehari-hari, sehingga calon penyewa memiliki bahan pertimbangan tambahan sebelum memesan unit kamar. Komponen ulasan penghuni tersebut ditampilkan pada Gambar 4.12.
+6. Halaman Testimoni Penyewa Kost  
+Halaman testimoni memuat ulasan penghuni yang pernah maupun sedang menetap di Asri Boarding House. Penilaian ini memberi sudut pandang tambahan mengenai kenyamanan lingkungan, kebersihan ruang, dan layanan pengelola sehari-hari. Tampilan ulasan tersebut diperlihatkan pada Gambar 4.12.
 
 <div align="center">
 
@@ -924,14 +937,12 @@ Bagian testimoni menampilkan ulasan serta penilaian langsung dari para penghuni 
 
 </div>
 
-Antarmuka pada Gambar 4.12 menyusun ulasan penghuni ke dalam deretan kartu geser (*carousel*) yang dapat digulir ke kanan maupun ke kiri. Masing-masing kartu memuat kutipan pengalaman penyewa, foto profil, nama samaran, tipe kamar yang ditempati, serta deretan lima ikon bintang sebagai indikator kepuasan layanan.
+Antarmuka pada Gambar 4.12 menyusun testimoni ke dalam tiga kartu sejajar yang masing-masing dilengkapi lima ikon bintang kuning dan kutipan pengalaman tinggal. Pada bagian bawah tiap kartu, sistem menampilkan penanda inisial pada kotak kuning, identitas penyewa, beserta keterangan asal kampus atau pekerjaannya. Penggunaan format kartu ringkas tersebut membuat ulasan mudah dipindai calon penghuni tanpa memakan banyak ruang layar.
 
 <br>
 
-7. Implementasi Antarmuka FAQ  
-Halaman *Frequently Asked Questions* (FAQ) merangkum berbagai pertanyaan umum yang paling sering diajukan calon penyewa terkait peraturan dan prosedur sewa di Asri Boarding House. Topik yang dibahas meliputi batas jam malam, aturan membawa tamu menginap, ketentuan uang muka (*down payment*), hingga tata cara perpanjangan sewa bulanan.
-
-Penyediaan halaman tanya jawab mandiri ini turut meringankan beban penjaga kost dalam menjawab pertanyaan dasar yang berulang setiap hari. Susunan antarmuka FAQ tersebut diperlihatkan pada Gambar 4.13.
+7. Halaman *Frequently Asked Questions* (FAQ)  
+Halaman *Frequently Asked Questions* (FAQ) merangkum pertanyaan yang paling sering diajukan calon penyewa seputar aturan dan prosedur sewa di Asri Boarding House. Topik yang dibahas mencakup jadwal jam malam, aturan tamu, uang muka (*down payment*), hingga perpanjangan sewa bulanan. Daftar tanya jawab mandiri pada Gambar 4.13 ini membantu mengurangi pertanyaan berulang ke penjaga kost.
 
 <div align="center">
 
@@ -941,12 +952,12 @@ Penyediaan halaman tanya jawab mandiri ini turut meringankan beban penjaga kost 
 
 </div>
 
-Merujuk pada Gambar 4.13, daftar pertanyaan dikemas menggunakan komponen panel lipat (*accordion*) yang tertata bersih. Pengunjung cukup menekan ikon panah di ujung kanan bilah pertanyaan untuk membuka rincian jawaban atau menutupnya kembali. Pengelompokan informasi seperti ini mempercepat calon penyewa menemukan penjelasan aturan indekos tanpa perlu berpindah-pindah halaman.
+Pusat Bantuan FAQ pada Gambar 4.13 diawali kolom cari pertanyaan tepat di bawah judul halaman. Daftar pertanyaan tersusun memakai panel lipat (*accordion*) berikon tanda tambah (+) di sisi kanan. Pengunjung cukup menekan bilah pertanyaan untuk membaca jawabannya tanpa berpindah halaman.
 
 <br>
 
-8. Implementasi Antarmuka Tentang Kami  
-Antarmuka Tentang Kami memperkenalkan profil usaha, komitmen kenyamanan hunian, serta titik koordinat lokasi Asri Boarding House di kawasan pendidikan Tembalang. Kejelasan identitas pengelola dan lokasi gedung yang terhubung langsung dengan peta digital ini memberikan rasa tenang bagi mahasiswa baru maupun perantau dari luar daerah. Selain informasi profil, halaman yang disajikan pada Gambar 4.14 ini juga mencantumkan saluran komunikasi resmi pengelola indekos.
+8. Halaman Tentang Kami  
+Halaman Tentang Kami memperkenalkan profil singkat, arah layanan, serta prinsip pengelolaan Asri Boarding House bagi mahasiswa dan pekerja di Tembalang. Kejelasan informasi pengelola membantu membangun kepercayaan calon penghuni sebelum mereka memutuskan datang atau memesan kamar secara daring. Susunan halaman profil tersebut ditampilkan pada Gambar 4.14.
 
 <div align="center">
 
@@ -956,14 +967,12 @@ Antarmuka Tentang Kami memperkenalkan profil usaha, komitmen kenyamanan hunian, 
 
 </div>
 
-Pada Gambar 4.14, kartu profil di sisi utama memaparkan latar belakang singkat berdirinya Asri Boarding House beserta standar pelayanan yang diterapkan. Di sebelahnya, terdapat sematan peta interaktif *Google Maps* yang menunjukkan posisi presisi bangunan indekos terhadap area kampus sekitar. Bagian bawah halaman turut melampirkan nomor telepon pengelola, alamat *email* resmi, serta jam layanan administrasi harian.
+Bagian atas Gambar 4.14 menampilkan label miring Tentang Kami berwarna kuning diikuti pengenalan pengelola indekos. Di bawahnya berdiri kartu Visi Kami berikon mata di sebelah kiri. Kartu Misi Kami di sebelah kanan memuat empat poin misi layanan, sementara peta *Google Maps* disematkan di halaman beranda utama.
 
 <br>
 
-9. Implementasi Antarmuka *Login User*  
-Halaman *login user* berfungsi sebagai pintu masuk autentikasi bagi calon penyewa yang telah mendaftar maupun penghuni yang ingin mengakses akunnya. Modul ini mencocokkan alamat *email* dan kata sandi yang dimasukkan pengguna dengan kredensial terenkripsi di dalam basis data MySQL.
-
-Apabila pengguna lupa kata sandi akunnya, tersedia tautan pemulihan akses yang terhubung ke surat elektronik terdaftar. Tampilan halaman autentikasi pengguna tersebut ditunjukkan pada Gambar 4.15.
+9. Halaman *Login User*  
+Halaman *login user* menjadi gerbang autentikasi bagi calon penyewa terdaftar dan penghuni aktif sebelum mengakses dasbor masing-masing. Sistem memverifikasi kecocokan *email* dan kata sandi dengan data terenkripsi di MySQL, serta menyediakan tautan pemulihan bila pengguna lupa kata sandi. Tampilan halaman masuk akun tersebut ditunjukkan pada Gambar 4.15.
 
 <div align="center">
 
@@ -973,12 +982,12 @@ Apabila pengguna lupa kata sandi akunnya, tersedia tautan pemulihan akses yang t
 
 </div>
 
-Sebagaimana tampak pada Gambar 4.15, formulir *login* dirancang menggunakan kartu bergaya *Neo-Brutalism* dengan garis tepi hitam tebal di atas latar berwarna kuning cerah. Di dalamnya tersedia kolom input alamat *email*, kolom kata sandi yang dilengkapi ikon penampil teks, kotak centang **"Ingat Saya"**, serta tombol biru **"Masuk ke Akun"**. Bagi pengunjung yang belum memiliki akun, bagian bawah kartu menyediakan tautan langsung menuju halaman registrasi.
+Gambar 4.15 memakai desain kartu terbagi dengan panel hitam di kiri dan formulir putih di kanan. Formulirnya memuat opsi masuk dengan *Google*, kolom *email*, kata sandi, tautan lupa sandi, kotak centang *Ingat Saya*, serta tombol kuning **Masuk ke Akun**. Pengguna baru juga bisa beralih ke registrasi atau kembali ke beranda lewat tautan di bawah kartu.
 
 <br>
 
-10. Implementasi Antarmuka *Register User*  
-Calon penyewa yang baru pertama kali hendak memesan kamar diwajibkan membuat akun melalui halaman *register user*. Formulir ini menghimpun data awal pemohon yang terdiri atas nama lengkap, nomor WhatsApp aktif, alamat *email*, serta kata sandi akun. Sistem akan langsung memeriksa keunikan alamat *email* dan kecocokan konfirmasi kata sandi sebelum menyimpan data pengguna baru, seperti yang diperlihatkan pada Gambar 4.16.
+10. Halaman *Register User*  
+Calon penyewa baru perlu membuat akun lebih dahulu melalui halaman *register user* sebelum mengajukan pemesanan kamar. Formulir ini menghimpun data dasar pendaftar serta mendukung opsi pendaftaran instan menggunakan akun *Google*. Validasi kesesuaian konfirmasi kata sandi dan keunikan *email* langsung berjalan ketika formulir dikirim, seperti yang ditampilkan pada Gambar 4.16.
 
 <div align="center">
 
@@ -988,14 +997,12 @@ Calon penyewa yang baru pertama kali hendak memesan kamar diwajibkan membuat aku
 
 </div>
 
-Tampilan Gambar 4.16 memperlihatkan kartu formulir bertajuk **"Buat Akun Baru"** yang mengusung aksen geometris tegas. Pengunjung diminta mengisi kolom nama lengkap, nomor WhatsApp, alamat *email*, kata sandi, dan ulangi kata sandi yang disertai indikator peringatan apabila format masukan belum sesuai. Penekanan tombol **"Daftar Akun"** berwarna biru di bagian bawah akan mendaftarkan identitas pengguna ke basis data sekaligus mengarahkannya ke tahap pelengkapan profil.
+Kartu registrasi pada Gambar 4.16 membagi layar menjadi panel hitam di kiri dan formulir **Registrasi Akun** di kanan. Pemohon dapat memilih *Daftar dengan Google* atau mengisi nama, *email*, nomor WhatsApp, dan kata sandi. Penekanan tombol kuning **Daftar Akun Baru** mendaftarkan akun sekaligus mengarahkan pengguna ke pengisian profil.
 
 <br>
 
-11. Implementasi Antarmuka *Chat Real Time Guest*  
-Fitur *chat real-time guest* memfasilitasi pengunjung situs untuk bertanya langsung kepada penjaga kost tanpa harus memiliki akun terlebih dahulu. Tamu cukup mencantumkan nama panggilan dan nomor kontak singkat untuk menanyakan sisa kamar kosong atau membuat janji survei lokasi.
-
-Seluruh pesan yang dikirim melalui jendela ini langsung diteruskan ke dasbor pengelola agar dapat segera dibalas. Wujud *widget* percakapan tamu tersebut dapat dilihat pada Gambar 4.17.
+11. Layanan *Chat Real-Time Guest*  
+Fitur *chat real-time guest* memberi ruang bagi pengunjung untuk bertanya langsung kepada penjaga kost tanpa perlu masuk ke akun terlebih dahulu. Tamu cukup mengisikan identitas singkat guna menanyakan kamar kosong atau menjadwalkan survei lokasi. Wujud jendela prapercakapan tamu tersebut disajikan pada Gambar 4.17.
 
 <div align="center">
 
@@ -1005,17 +1012,17 @@ Seluruh pesan yang dikirim melalui jendela ini langsung diteruskan ke dasbor pen
 
 </div>
 
-Melalui jendela obrolan yang tampak pada Gambar 4.17, *widget* percakapan muncul mengambang di pojok kanan bawah layar dengan kepala jendela berwarna kuning cerah dan tombol pengecil tampilan (*minimize*). Ruang tengah jendela menampilkan riwayat balasan antara pengunjung dan admin lengkap dengan keterangan waktu kirim. Di bagian paling bawah, tersedia kolom pengetikan teks beserta tombol kirim untuk meneruskan pesan secara langsung ke meja kerja pengelola.
+Jendela *widget* obrolan pada Gambar 4.17 terbuka di pojok kanan bawah dengan kepala kuning bertajuk **Tanya Admin Kost**. Formulir singkat **Ada Pertanyaan?** di dalamnya meminta masukan nama lengkap dan nomor WhatsApp aktif. Penekanan tombol hitam **Mulai Chat** langsung membuka sesi obrolan ke dasbor pengelola.
 
 <br>
 
 ### 4.2.2 Implementasi Calon Penyewa
-Sub-bab ini menguraikan tujuh antarmuka dan layanan integrasi yang digunakan oleh calon penyewa setelah berhasil membuat akun. Rangkaian modul di dalamnya mencakup pengisian identitas kependudukan, pemantauan dasbor reservasi, simulasi perhitungan sewa, hingga pelunasan uang muka melalui Midtrans serta pengiriman bukti transaksi via WhatsApp dan *email*.
+Bagian ini membahas tujuh antarmuka serta layanan integrasi bagi calon penyewa setelah mendaftarkan akun. Alurnya berjalan bertahap dari pengisian kelengkapan profil, pemantauan dasbor reservasi, simulasi biaya kamar, pelunasan lewat Midtrans, hingga pengiriman notifikasi aktivasi via WhatsApp dan *email*.
 
-1. Implementasi Antarmuka Lengkapi Profil  
-Sebelum diizinkan memilih dan mengunci unit kamar, calon penyewa diwajibkan melengkapi biodata resmi pada halaman pelengkap profil. Formulir ini meminta Nomor Induk Kependudukan (NIK), nama serta nomor telepon kerabat darurat, asal kampus atau instansi tempat bekerja, hingga unggahan foto Kartu Tanda Penduduk (KTP) asli. Pendataan identitas sejak awal sangat penting untuk menjaga keamanan dan ketertiban lingkungan penghuni di Asri Boarding House.
+1. Halaman Lengkapi Profil  
+Sebelum memesan unit kamar, calon penyewa wajib melengkapi data dasar pada halaman `/profil/complete`. Formulir ini meminta nomor WhatsApp aktif, Nomor Induk Kependudukan (NIK) sebanyak 16 digit, nama wali atau orang tua, dan nomor telepon wali. Pencatatan kontak darurat sejak awal penting agar pengelola memiliki data verifikasi awal tanpa membebani proses unggah dokumen sebelum calon penghuni tiba.
 
-Seluruh dokumen identitas yang diunggah disimpan ke dalam direktori terbatas yang hanya dapat dibuka oleh administrator saat proses verifikasi. Tampilan formulir kelengkapan profil tersebut disajikan pada Gambar 4.18.
+Pemeriksaan kesesuaian fisik Kartu Tanda Penduduk (KTP) tetap dilakukan langsung oleh penjaga kost ketika penghuni tiba di lokasi (*check-in*). Tampilan formulir kelengkapan profil tersebut disajikan pada Gambar 4.18.
 
 <div align="center">
 
@@ -1025,12 +1032,12 @@ Seluruh dokumen identitas yang diunggah disimpan ke dalam direktori terbatas yan
 
 </div>
 
-Pada Gambar 4.18, halaman menyajikan kolom isian nomor KTP, kontak darurat keluarga, nomor telepon penjamin, serta area unggah foto identitas diri. Sistem juga menampilkan petunjuk batas ukuran berkas dan kotak pratinjau gambar guna memastikan foto KTP yang diunggah tidak buram. Setelah seluruh kolom terisi lengkap, pemohon dapat menekan tombol hijau **"Simpan Profil"** untuk melanjutkan proses pemesanan kamar.
+Gambar 4.18 menampilkan satu kartu putih berbingkai hitam tebal berisi kotak imbauan berwarna kuning muda dan empat kolom masukan utama. Pengembang merancang validasi teks 16 digit untuk NIK sehingga sistem tidak perlu menyimpan berkas foto KTP secara daring. Setelah keempat kolom diisi, calon penyewa cukup menekan tombol kuning **"Simpan & Lanjutkan"** untuk membuka akses ke katalog dan dasbor reservasi.
 
 <br>
 
-2. Implementasi Antarmuka *Dashboard* Reservasi  
-*Dashboard* reservasi berperan sebagai halaman pantau utama bagi calon penyewa yang sedang mengajukan pemesanan kamar. Halaman ini merangkum status pengajuan sewa, nomor tagihan uang muka, serta riwayat reservasi yang pernah dibuat sebelumnya, sebagaimana ditampilkan pada Gambar 4.19.
+2. *Dashboard* Reservasi Calon Penyewa  
+*Dashboard* reservasi menjadi pusat navigasi bagi pengguna akun baru yang belum aktif sebagai penghuni tetap. Halaman ini menampilkan kondisi terkini akun calon penyewa serta panduan tahapan menuju aktivasi hunian, seperti pada Gambar 4.19.
 
 <div align="center">
 
@@ -1040,14 +1047,12 @@ Pada Gambar 4.18, halaman menyajikan kolom isian nomor KTP, kontak darurat kelua
 
 </div>
 
-Merujuk pada Gambar 4.19, bagian atas halaman memuat sapaan pengguna dan kartu ringkasan pesanan yang mencantumkan kode reservasi, unit kamar yang dipilih, serta status pemeriksaan berkas. Di bagian tengah, terdapat bilah indikator tahapan yang menunjukkan posisi proses reservasi saat ini, mulai dari verifikasi dokumen hingga konfirmasi pelunasan. Panel sebelah kanan turut menyediakan tombol **"Bayar Uang Muka"** beserta tautan unduh tanda terima pemesanan apabila transaksi telah selesai.
+Tampilan pada Gambar 4.19 memuat menu navigasi samping untuk riwayat pemesanan, pembayaran, obrolan, dan akun. Sebelum pengguna memesan unit, area utama menampilkan kotak **"Pemesanan Kamar Belum Ditemukan"**. Kotak itu dilengkapi tombol **"Cari & Booking Kamar"** serta panel **"Tahapan Reservasi"** di sisi kanan untuk memandu ke tahap pemilihan kamar.
 
 <br>
 
-3. Implementasi Antarmuka Simulasi Biaya Kamar  
-Guna membantu calon penghuni memperkirakan anggaran tempat tinggal, sistem menyediakan fitur kalkulator simulasi biaya kamar. Modul ini menghitung akumulasi tarif sewa pokok, uang jaminan (*deposit*), hingga potongan harga khusus apabila pemohon memilih durasi sewa jangka panjang. Rincian nominal yang terbuka sejak awal menghindarkan kesalahpahaman perhitungan biaya antara calon penyewa dan pihak pengelola indekos.
-
-Pengguna bebas mengganti opsi durasi sewa mulai dari bulanan, tiga bulanan, hingga tahunan untuk membandingkan total tagihan yang harus disiapkan. Antarmuka simulasi perhitungan biaya tersebut diperlihatkan pada Gambar 4.20.
+3. Simulasi Biaya dan Pengajuan Kamar  
+Agar calon penghuni dapat menghitung perkiraan biaya secara mandiri sebelum memesan, halaman detail unit dilengkapi kalkulator simulasi sewa. Pengguna bisa memilih skema sewa bulanan, tiga bulanan, maupun tahunan beserta opsi uang muka 30% atau pelunasan penuh 100%. Rincian estimasi langsung diperbarui secara otomatis setiap kali parameter formulir diubah, seperti diperlihatkan pada Gambar 4.20.
 
 <div align="center">
 
@@ -1057,12 +1062,12 @@ Pengguna bebas mengganti opsi durasi sewa mulai dari bulanan, tiga bulanan, hing
 
 </div>
 
-Sebagaimana ditunjukkan pada Gambar 4.20, sisi kiri layar memuat kartu kalkulator yang dilengkapi menu *dropdown* pilihan durasi sewa dan opsi fasilitas tambahan. Begitu parameter diubah, tabel rincian biaya di sisi kanan langsung menyesuaikan nilai sewa pokok, nominal *deposit*, serta total pembayaran bersih tanpa perlu memuat ulang halaman. Apabila nominal tersebut sudah sesuai, calon penyewa dapat menekan tombol biru **"Lanjutkan Pemesanan"** di bawah tabel untuk masuk ke alur transaksi.
+Sisi kiri Gambar 4.20 memuat foto kamar beserta rincian tipe, lantai, dan luas unit. Di sisi kanan berdiri panel **"Simulasi & Reservasi"** berisi pilihan tipe sewa, durasi, tanggal masuk, dan skema bayar. Kotak kuning di bawahnya langsung menghitung estimasi total serta minimal uang muka 30% sebelum tombol **"Pesan Kamar Sekarang"** ditekan.
 
 <br>
 
-4. Implementasi Antarmuka Pembayaran 5 Tahap Reservasi  
-Proses penyelesaian reservasi dirancang ke dalam antarmuka pemantauan lima tahap agar calon penyewa mengetahui urutan langkah yang sedang berlangsung. Kelima tahapan tersebut meliputi konfirmasi rincian sewa, pemilihan metode bayar, pemeriksaan tagihan, pelunasan melalui gerbang pembayaran, serta penerbitan nota tanda jadi. Pengaturan alur bertahap yang tampak pada Gambar 4.21 ini menjaga agar unit kamar yang sedang dipesan tidak diambil oleh pengguna lain selama batas waktu pembayaran masih aktif.
+4. Portal Pembayaran Lima Tahap Reservasi  
+Setelah pengajuan dibuat, transaksi diarahkan ke portal pembayaran lima tahap agar calon penyewa mudah memantau perkembangan pesanannya. Kelima tahapan tersebut mencakup tahap *booking*, diskusi dengan penjaga kost, pembayaran DP atau penuh, aktivasi akun penyewa oleh pengelola, hingga selesai. Alur bertahap pada Gambar 4.21 memastikan kesiapan kamar fisik sudah dikonfirmasi sebelum dana dikirimkan.
 
 <div align="center">
 
@@ -1072,14 +1077,14 @@ Proses penyelesaian reservasi dirancang ke dalam antarmuka pemantauan lima tahap
 
 </div>
 
-Melalui antarmuka pada Gambar 4.21, bilah langkah di bagian atas menandai tahapan yang sedang aktif menggunakan lingkaran nomor berwarna hijau. Area utama halaman merinci spesifikasi kamar yang dipesan, nominal uang muka yang wajib dilunasi, hitung mundur batas waktu pembayaran, serta tombol pemicu transaksi digital. Di bagian bawah, tertera catatan pengingat agar pemohon tidak menutup peramban web sebelum proses verifikasi pembayaran selesai.
+Gambar 4.21 menyorot lima kotak tahapan di atas layar beserta imbauan untuk menghubungi admin lebih dahulu. Panel **"Detail Booking Kamar"** di sisi kiri merangkum pilihan unit, durasi, jadwal, status *pending*, dan nilai pembayaran. Sementara itu, panel **"Metode Pembayaran"** di kanan menyediakan tombol kuning **"Bayar Sekarang (Midtrans)"** serta tombol merah **"Batalkan Reservasi"**.
 
 <br>
 
-5. Implementasi *Payment Gateway* Midtrans  
-Pelunasan uang muka reservasi maupun sewa kamar ditangani melalui integrasi layanan *payment gateway* Midtrans Snap. Kehadiran modul ini memudahkan calon penghuni memilih berbagai saluran pembayaran non-tunai, mulai dari *Virtual Account* perbankan, dompet digital (*e-wallet*), kode QRIS, hingga gerai ritel modern.
+5. Integrasi *Payment Gateway* Midtrans  
+Transaksi pembayaran reservasi terhubung dengan layanan *payment gateway* Midtrans Snap. Secara arsitektural, integrasi Midtrans mendukung berbagai kanal pembayaran non-tunai sesuai kebutuhan sistem yang diuraikan pada Bab 2. Setelah pembayaran diselesaikan pengguna, server Midtrans mengirimkan notifikasi balik (*webhook callback*) sehingga status pesanan di basis data diperbarui secara otomatis.
 
-Begitu dana berhasil ditransfer, mekanisme *webhook callback* dari server Midtrans akan langsung memperbarui status pesanan di basis data tanpa menunggu pemeriksaan mutasi manual oleh penjaga kost. Tampilan jendela pembayaran Midtrans Snap tersebut disajikan pada Gambar 4.22.
+Pada lingkungan uji sistem yang ditampilkan pada Gambar 4.22, kanal pembayaran yang aktif digunakan untuk memproses tagihan adalah *Virtual Account* Bank BCA. Tampilan antarmuka jendela pembayaran Midtrans tersebut dapat dilihat di bawah ini.
 
 <div align="center">
 
@@ -1089,12 +1094,12 @@ Begitu dana berhasil ditransfer, mekanisme *webhook callback* dari server Midtra
 
 </div>
 
-Pada Gambar 4.22, jendela *pop-up* Midtrans Snap tampil di tengah layar dengan mencantumkan total tagihan beserta batas akhir waktu pelunasan. Pengguna dapat memilih salah satu metode transaksi yang tersedia, seperti GoPay, QRIS, maupun *Virtual Account* BCA, BNI, dan Mandiri, lengkap dengan panduan langkah pembayarannya. Seluruh pertukaran data transaksi pada jendela ini telah diamankan menggunakan validasi kriptografi dari server resmi Midtrans.
+Jendela *pop-up* pada Gambar 4.22 menampilkan nama usaha Asri Boarding House, nominal tagihan Rp 750.000, kode transaksi pemesanan, serta batas waktu pembayaran selama 24 jam. Di bawah bagian instruksi Bank BCA, sistem menyajikan nomor *Virtual Account* beserta tombol salin, panduan langkah transfer, dan tombol **"Check status"** di paling bawah. Seluruh data pembayaran tersebut ditukar secara aman melalui verifikasi tanda tangan kriptografi Midtrans.
 
 <br>
 
-6. Implementasi *WhatsApp Gateway* Fonnte  
-Sesaat setelah pembayaran uang muka terkonfirmasi lunas oleh Midtrans, sistem memicu pengiriman pesan otomatis ke nomor ponsel pemohon melalui integrasi API *WhatsApp Gateway* Fonnte. Pesan instan tersebut memuat nomor referensi transaksi, tipe dan nomor kamar yang berhasil dikunci, nominal setoran, serta tanggal mulai masuk kamar (*check-in*). Bukti konfirmasi yang dikirimkan langsung ke aplikasi WhatsApp pengguna dapat dilihat pada Gambar 4.23.
+6. Integrasi *WhatsApp Gateway* Fonnte  
+Ketika penjaga kost mengaktifkan hunian setelah pembayaran terkonfirmasi, sistem otomatis mengirimkan pesan sambutan ke nomor WhatsApp penghuni melalui API *WhatsApp Gateway* Fonnte. Pemberitahuan instan ini memastikan penyewa segera mengetahui kamar pesanannya telah aktif dan siap digunakan tanpa harus menunggu kabar manual. Pesan aktivasi WhatsApp yang diterima pengguna diperlihatkan pada Gambar 4.23.
 
 <div align="center">
 
@@ -1104,14 +1109,12 @@ Sesaat setelah pembayaran uang muka terkonfirmasi lunas oleh Midtrans, sistem me
 
 </div>
 
-Tangkapan layar pada Gambar 4.23 memperlihatkan pesan otomatis yang diterima calon penyewa dari nomor layanan resmi Asri Boarding House. Isi pesan merangkum ucapan konfirmasi, kode pemesanan, rincian unit kamar, status pembayaran lunas, serta tautan untuk mengunduh nota digital. Notifikasi instan ini menjadi pegangan sah bagi calon penghuni saat datang mengambil kunci kamar di lokasi indekos.
+Tangkapan layar pada Gambar 4.23 memperlihatkan pesan otomatis dengan tajuk sambutan penyewa baru yang dikirim melalui layanan `fonnte.com`. Isi pesannya menyapa nama penyewa, mengonfirmasi bahwa unit yang dipesan seperti Kamar 101 telah berstatus aktif, serta mengarahkan penghuni mengakses portal penyewa guna mengurus administrasi sewa. Pesan penutup beridentitas manajemen Asri Boarding House ini menjadi pemberitahuan resmi paling cepat bagi pengguna.
 
 <br>
 
-7. Implementasi *Email Gateway* SMTP  
-Selain mengirimkan notifikasi pesan singkat via WhatsApp, aplikasi juga meneruskan bukti pembayaran resmi dan rincian ketentuan sewa ke alamat surat elektronik calon penyewa menggunakan protokol SMTP. Pengiriman dokumen melalui *email* ini menyediakan arsip administrasi formal yang mudah disimpan maupun dicetak ulang oleh penghuni kapan saja.
-
-Pesan dikirimkan dalam format templat HTML beridentitas resmi Asri Boarding House beserta lampiran kuitansi digital. Tampilan surat elektronik konfirmasi reservasi tersebut diperlihatkan pada Gambar 4.24.
+7. Integrasi *Email Gateway* SMTP  
+Selain pesan instan WhatsApp, sistem mengirimkan pemberitahuan aktivasi resmi ke surat elektronik pengguna menggunakan protokol SMTP. Arsip digital di dalam kotak masuk *email* ini berguna apabila penyewa memerlukan catatan formal tarif dan nomor kamar dari perangkat lain sewaktu-waktu. Tampilan *email* konfirmasi tersebut disajikan pada Gambar 4.24.
 
 <div align="center">
 
@@ -1121,15 +1124,15 @@ Pesan dikirimkan dalam format templat HTML beridentitas resmi Asri Boarding Hous
 
 </div>
 
-Mengacu pada Gambar 4.24, surat elektronik yang masuk ke kotak pesan penyewa menampilkan kop resmi Asri Boarding House bertajuk **"Bukti Pembayaran Reservasi Kamar Kost"**. Bagian isi pesan menyajikan tabel rincian transaksi, jadwal *check-in*, ringkasan tata tertib penghuni, serta lampiran berkas nota berformat PDF. Kombinasi pengiriman bukti melalui WhatsApp dan *email* ini memastikan setiap transaksi terekam secara rapi di sisi pengguna maupun pengelola.
+Gambar 4.24 menampilkan format surat elektronik bertema *Neo-Brutalism* berkop Asri Boarding House dengan kotak kuning berjudul **"Selamat Datang Penyewa Baru!"**. Area tengah memuat rincian ringkas berupa nomor kamar, tarif sewa bulanan, serta lencana hijau bertuliskan status hunian **AKTIF**. Di bagian bawah pesan tersedia tombol kuning **"Buka Portal Penyewa"** sehingga penghuni dapat langsung masuk ke akunnya dari kotak masuk *email*.
 
 <br>
 
 ### 4.2.3 Implementasi Admin
-Implementasi admin merangkum sebelas antarmuka kendali operasional yang dirancang khusus bagi penjaga kost Asri Boarding House. Melalui ruang kerja ini, pengelola dapat mengawasi keterisian 32 unit kamar, memverifikasi reservasi masuk, mengelola tagihan sewa bulanan, mencatat pengeluaran kas, mengekspor laporan keuangan, hingga menanggapi keluhan fasilitas dan obrolan pengunjung.
+Bagian ini merangkum sebelas antarmuka kendali bagi penjaga kost Asri Boarding House. Lewat panel administrator, pengelola memantau keterisian 32 kamar, memverifikasi reservasi, dan mengawasi tagihan bulanan. Aktivitas pencatatan kas keluar, unduhan laporan keuangan, hingga balasan keluhan dan obrolan tamu juga terpusat di sini.
 
-1. Implementasi Antarmuka *Admin Login*  
-Halaman *admin login* dirancang khusus sebagai jalur masuk terbatas bagi penjaga kost Asri Boarding House. Pemisahan pintu autentikasi ini bertujuan menjaga agar data master kamar, pembukuan kas, dan dokumen identitas penghuni tidak dapat diakses oleh pengguna umum. Selain itu, sistem membatasi jumlah percobaan masuk yang gagal secara beruntun guna mengantisipasi upaya peretasan akun, sebagaimana diperlihatkan pada Gambar 4.25.
+1. Halaman *Admin Login*  
+Halaman *admin login* memisahkan jalur masuk pengelola dari portal tamu maupun penghuni. Isolasi rute ini mencegah akses tidak sah ke data kamar, pembukuan kas, dan biodata penyewa, sekaligus membatasi percobaan masuk yang gagal secara beruntun seperti pada Gambar 4.25.
 
 <div align="center">
 
@@ -1139,14 +1142,12 @@ Halaman *admin login* dirancang khusus sebagai jalur masuk terbatas bagi penjaga
 
 </div>
 
-Pada tampilan Gambar 4.25, formulir autentikasi pengelola dibingkai menggunakan kartu bergaya *Neo-Brutalism* bergaris tepi hitam pekat dengan tajuk **"Masuk Portal Admin"**. Pengelola cukup memasukkan alamat *email* administrator serta kata sandi pada kolom input yang disamarkan, lalu menekan tombol **"Masuk Dasbor"** berwarna hitam di bagian bawah untuk membuka ruang kendali utama.
+Kartu *split screen* pada Gambar 4.25 menampilkan panel informasi hitam di kiri dengan keterangan statistik dan akses terenkripsi. Formulir putih **"Admin Login"** di kanan meminta *email* admin dan kata sandi, disertai opsi lupa sandi serta *Ingat Saya*. Tombol kuning **"Masuk Administrator"** dan tombol kembali ke beranda melengkapi navigasi halaman.
 
 <br>
 
-2. Implementasi Antarmuka *Dashboard Admin*  
-Begitu proses autentikasi berhasil, penjaga kost diarahkan menuju *dashboard admin* yang merangkum metrik operasional dan keuangan Asri Boarding House dalam satu layar. Melalui halaman ini, pengelola dapat langsung melihat tingkat keterisian dari 32 unit kamar, total kas masuk bulan berjalan, jumlah penghuni aktif, serta daftar keluhan fasilitas yang masih menunggu penanganan.
-
-Penyajian data ringkas yang dilengkapi grafik tren bulanan ini memudahkan pengelola memantau perkembangan usaha indekos setiap hari. Tampilan halaman utama dasbor administrator tersebut disajikan pada Gambar 4.26.
+2. Halaman *Dashboard Admin*  
+Setelah berhasil masuk, penjaga kost diarahkan menuju halaman utama *dashboard admin* yang merangkum kondisi operasional Asri Boarding House secara menyeluruh. Pengelola dapat memantau okupansi 32 kamar, arus kas masuk dan keluar bulan berjalan, tagihan belum lunas, hingga reservasi terbaru dalam satu tampilan, seperti pada Gambar 4.26.
 
 <div align="center">
 
@@ -1156,12 +1157,12 @@ Penyajian data ringkas yang dilengkapi grafik tren bulanan ini memudahkan pengel
 
 </div>
 
-Sebagaimana terlihat pada Gambar 4.26, bagian atas layar memuat deretan kartu indikator berwarna kuning dan biru yang menampilkan persentase okupansi kamar, jumlah penyewa aktif, akumulasi pendapatan, serta tiket aduan tertunda. Area tengah menyajikan grafik batang pemasukan bulanan yang berdampingan dengan tabel pengajuan reservasi terbaru. Di sisi kiri terdapat bilah navigasi vertikal antar-modul, sedangkan sudut kanan atas menyediakan tombol pengalih tema gelap (*OLED Dark Mode*) agar layar nyaman dipandang pengelola.
+Gambar 4.26 menyajikan delapan kartu ringkasan warna-warni untuk kamar, pemasukan, pengeluaran, keuntungan bersih, tagihan tertunda, reservasi masuk, dan klik WhatsApp. Tepat di bawahnya berdiri grafik batang **Tren Pemasukan (12 Bulan Terakhir)** berdampingan dengan diagram donat **Status Kamar**, lalu tabel **Tagihan Terbaru**. Menu navigasi vertikal tertata di sisi kiri, sedangkan pojok kanan atas menyediakan mode gelap serta menu admin.
 
 <br>
 
-3. Implementasi Antarmuka Manajemen Kamar  
-Modul manajemen kamar memberikan wewenang penuh kepada penjaga kost untuk mengelola inventaris 32 unit kamar sewa di Asri Boarding House. Pengelola dapat menambahkan data unit baru, memperbarui status keterisian kamar, maupun menyesuaikan tarif sewa dan rincian fasilitas per tipe kamar. Pencatatan status kamar yang terpusat di dalam basis data ini menutup celah terjadinya benturan pesanan ganda (*double booking*), seperti yang ditunjukkan pada Gambar 4.27.
+3. Modul Manajemen Kamar  
+Modul manajemen kamar memberi kendali penuh kepada admin atas seluruh 32 unit kamar sewa. Pengelola dapat menambah unit baru, memantau fasilitas tiap ruang, serta memperbarui status kamar guna mencegah *double booking* seperti pada Gambar 4.27.
 
 <div align="center">
 
@@ -1171,14 +1172,12 @@ Modul manajemen kamar memberikan wewenang penuh kepada penjaga kost untuk mengel
 
 </div>
 
-Merujuk pada Gambar 4.27, daftar seluruh unit kamar disajikan dalam bentuk tabel yang memuat nomor unit, kategori tipe kamar (VIP, Deluxe, atau Standar), posisi lantai, tarif sewa per bulan, serta lencana status ketersediaan. Di bagian atas tabel, tersedia tombol **"Tambah Kamar Baru"** berwarna kuning, kolom pencarian kata kunci, serta *filter* penyaring untuk menampilkan kamar yang masih kosong. Kolom paling kanan pada setiap baris menyediakan tombol **"Edit"** dan **"Hapus"** guna mempermudah pembaruan data unit kamar.
+Kepala halaman Gambar 4.27 menyediakan tombol **"Kelola Fasilitas"** serta tombol kuning **"Tambah Kamar"**. Admin dapat menyaring unit melalui empat kartu status, bilah status cepat, pengalih tampilan **Tabel** atau **Denah/Visual Grid**, serta filter lantai dan tipe. Tabel di bagian bawah merinci foto, nomor kamar, lantai, tipe, fasilitas, tarif, status, penghuni aktif, dan aksi.
 
 <br>
 
-4. Implementasi Antarmuka Manajemen Fasilitas  
-Antarmuka manajemen fasilitas digunakan oleh pengelola untuk mengatur daftar sarana umum yang ditampilkan pada halaman katalog publik. Apabila terdapat penambahan fasilitas baru atau perubahan aturan pemakaian ruang bersama, admin dapat langsung memperbarui foto dokumentasi beserta keterangannya melalui modul ini.
-
-Selain mengubah teks dan gambar, pengelola juga dapat mengatur urutan tampil setiap fasilitas agar sarana unggulan indekos ditempatkan di posisi teratas. Tampilan halaman pengelolaan fasilitas tersebut diperlihatkan pada Gambar 4.28.
+4. Modul Manajemen Fasilitas  
+Halaman manajemen fasilitas mengelola data master sarana kamar kost yang terhubung ke halaman publik maupun katalog kamar admin. Pengelola bisa menambahkan item fasilitas baru, menyunting keterangan ruang, mengganti ikon emoji penanda, atau menghapus sarana yang tidak lagi tersedia, seperti pada Gambar 4.28.
 
 <div align="center">
 
@@ -1188,12 +1187,12 @@ Selain mengubah teks dan gambar, pengelola juga dapat mengatur urutan tampil set
 
 </div>
 
-Melalui halaman pada Gambar 4.28, setiap sarana umum dirangkum ke dalam tabel yang menampilkan nama fasilitas, uraian fungsi ruang, ikon kategori, serta pratinjau foto dokumentasi. Bagian kepala tabel dilengkapi tombol **"Tambah Fasilitas"** dan kolom *filter* pencarian untuk memudahkan pengelolaan data. Apabila suatu sarana sedang dalam masa perbaikan fisik, admin dapat mengubah statusnya melalui kolom aksi di sisi kanan agar informasi di *website* tetap sesuai dengan kondisi lapangan.
+Gambar 4.28 menampilkan card **"Daftar Master Fasilitas"** dengan tombol navigasi **"Kembali ke Kamar"** dan tombol kuning **"Tambah Fasilitas"** di kanan atas. Tabel master di bawahnya terdiri atas kolom ikon emoji, nama fasilitas, deskripsi fungsi, lencana hijau status **Aktif**, serta tautan aksi **Edit** dan **Hapus**. Pengelolaan berbasis tabel master seperti ini menjaga konsistensi penamaan fasilitas di seluruh bagian aplikasi.
 
 <br>
 
-5. Implementasi Antarmuka Manajemen Penyewa  
-Seluruh data penghuni yang sedang aktif menempati kamar di Asri Boarding House dihimpun di dalam antarmuka manajemen penyewa. Halaman ini mencatat identitas lengkap penghuni, nomor telepon darurat kerabat, nomor kamar yang dihuni, hingga masa berlaku kontrak sewanya. Ketika masa sewa seorang penghuni telah berakhir dan yang bersangkutan pindah (*check-out*), penjaga kost dapat langsung menonaktifkan status huniannya melalui halaman yang tercantum pada Gambar 4.29.
+5. Modul Manajemen Penyewa  
+Seluruh data penghuni aktif maupun penghuni yang melakukan pendaftaran langsung di lokasi (*walk-in*) dihimpun di dalam modul manajemen penyewa. Halaman ini mencatat nama, kontak WhatsApp, NIK 16 digit, nomor kamar, durasi sewa, tanggal masuk, serta data wali darurat penghuni. Saat penghuni mengakhiri masa tinggal, penjaga kost juga memproses penonaktifan serta prosedur *check-out* kamar melalui modul yang tampak pada Gambar 4.29.
 
 <div align="center">
 
@@ -1203,14 +1202,12 @@ Seluruh data penghuni yang sedang aktif menempati kamar di Asri Boarding House d
 
 </div>
 
-Pada Gambar 4.29, tabel daftar penghuni memuat informasi nama lengkap penyewa, nomor WhatsApp aktif, unit kamar yang ditempati, tanggal mulai menghuni, serta lencana berstatus **"Aktif"**. Pengelola dapat memanfaatkan kolom pencarian nama atau penyaring lantai kamar di bagian atas tabel untuk mencari data penghuni tertentu dengan cepat. Penekanan tombol **"Detail"** di ujung kanan baris akan menampilkan salinan foto KTP penghuni beserta rekam jejak pembayaran sewanya.
+Bagian atas Gambar 4.29 memuat tombol ekspor **PDF**, **Excel/CSV**, dan tombol kuning **"Tambah Penyewa"** untuk pendaftaran langsung. Kolom pencarian di tengah menyaring nama, *email*, kamar, maupun nomor ponsel, bersama pilihan **Status Keaktifan**. Tabel utama merinci kontak, kamar, NIK 16 digit, durasi sewa, wali, status aktif, serta tombol **"Detail"** untuk riwayat tagihan penghuni.
 
 <br>
 
-6. Implementasi Antarmuka Manajemen Reservasi  
-Antarmuka manajemen reservasi berfungsi memproses daftar pengajuan sewa kamar yang masuk dari calon penyewa baru. Melalui halaman ini, penjaga kost dapat memeriksa kelengkapan berkas KTP pemohon, memastikan uang muka telah terverifikasi lunas oleh Midtrans, lalu menyetujui penempatan unit kamar.
-
-Sistem juga menyediakan mekanisme pembatalan untuk pesanan yang melewati batas waktu pembayaran agar unit kamar tersebut kembali terbuka bagi calon penyewa lain. Rincian tampilan modul pengelolaan reservasi ini dapat dilihat pada Gambar 4.30.
+6. Modul Manajemen Reservasi  
+Antarmuka manajemen reservasi memproses daftar pengajuan kamar dari calon penyewa daring. Penjaga kost mengecek status pelunasan DP atau bayar penuh Midtrans sebelum mengaktifkan kamar. Pencocokan KTP fisik tetap dilakukan saat pemohon tiba di lokasi kost sesuai Gambar 4.30.
 
 <div align="center">
 
@@ -1220,12 +1217,12 @@ Sistem juga menyediakan mekanisme pembatalan untuk pesanan yang melewati batas w
 
 </div>
 
-Tampilan pada Gambar 4.30 menyajikan tabel daftar pesanan kamar yang mencantumkan kode reservasi, nama pemohon, tipe kamar pilihan, rencana tanggal masuk, serta status pelunasan uang muka. Di bagian atas tabel, terdapat deretan tombol *filter* untuk memilah pesanan berdasarkan status **"Menunggu Pembayaran"**, **"Terverifikasi"**, atau **"Dibatalkan"**. Pada kolom aksi di sisi kanan, penjaga kost cukup menekan tombol **"Konfirmasi"** untuk mengaktifkan status hunian pemohon setelah dokumen fisiknya dinyatakan sesuai.
+Gambar 4.30 memuat bilah cari Order ID, nama, maupun kamar bersama filter **Status Reservasi** serta tombol **Filter** dan **Reset**. Tabel pesanan menampilkan Order ID, calon penyewa, kamar, tipe sewa, tanggal mulai, dan lencana status **Dikonfirmasi**. Penjaga kost menekan tombol biru **"Detail"** di kolom aksi untuk memeriksa pelunasan sekaligus mengaktifkan penyewa.
 
 <br>
 
-7. Implementasi Antarmuka Manajemen Tagihan  
-Siklus penagihan sewa bulanan dan perhitungan denda keterlambatan bagi seluruh penghuni dikendalikan melalui antarmuka manajemen tagihan. Modul ini terhubung dengan penjadwal otomatis (*cron job*) yang menerbitkan faktur sewa serta memantau batas jatuh tempo setiap tanggal 10 guna menekan tunggakan pembayaran. Tampilan halaman pengelolaan tagihan bulanan tersebut disajikan pada Gambar 4.31.
+7. Modul Manajemen Tagihan  
+Siklus penagihan sewa bulanan dan denda keterlambatan seluruh penghuni dipantau terpusat melalui modul manajemen tagihan. Tagihan rutin diterbitkan oleh penjadwal otomatis (*cron job*) sehingga penjaga kost cukup memeriksa status pelunasan tanpa membuat faktur manual satu per satu. Tampilan daftar penagihan bulanan tersebut disajikan pada Gambar 4.31.
 
 <div align="center">
 
@@ -1235,14 +1232,12 @@ Siklus penagihan sewa bulanan dan perhitungan denda keterlambatan bagi seluruh p
 
 </div>
 
-Sebagaimana tampak pada Gambar 4.31, kartu bertajuk **"Daftar Tagihan Bulanan Penyewa"** menampilkan tabel rekapitulasi yang memuat nomor *invoice*, nama penghuni, nomor kamar, nominal tagihan beserta denda, tanggal jatuh tempo, dan lencana status pembayaran. Bagian atas tabel dilengkapi tombol sinkronisasi tagihan serta kolom pencarian untuk memudahkan pengawasan kas masuk. Apabila diperlukan, admin dapat menekan tombol **"Detail"** pada baris tagihan untuk memeriksa rincian komponen biaya atau mengirim ulang pengingat tagihan ke penghuni.
+Panel filter pada Gambar 4.31 memudahkan pencarian berdasarkan Order ID, nama penghuni, nomor kamar, atau **Status Pembayaran**. Tabel **"Semua Tagihan Bulanan"** merinci kode tagihan, penyewa, kamar, periode, jatuh tempo, total biaya, status **Lunas**, dan metode Midtrans. Tombol biru **"Detail"** di ujung baris berguna untuk membuka rincian nota atau mengirim pengingat ulang.
 
 <br>
 
-8. Implementasi Antarmuka Manajemen Pengeluaran  
-Agar perhitungan laba bersih indekos tetap akurat, seluruh arus kas keluar untuk kebutuhan operasional harian dicatat melalui antarmuka manajemen pengeluaran. Penjaga kost dapat mendata pembayaran tagihan listrik, air PDAM, pembelian alat kebersihan, hingga biaya perbaikan fasilitas kamar ke dalam sistem.
-
-Setiap transaksi pengeluaran yang dicatat dapat disertai keterangan peruntukan dana dan nama petugas yang bertanggung jawab. Antarmuka pencatatan biaya operasional tersebut diperlihatkan pada Gambar 4.32.
+8. Modul Manajemen Pengeluaran  
+Arus kas keluar untuk kebutuhan operasional harian indekos dicatat melalui modul manajemen pengeluaran. Penjaga kost membukukan pembayaran listrik, air PDAM, perawatan fasilitas, maupun pengeluaran lain-lain lengkap dengan lampiran nota agar laporan laba bersih tetap akurat. Tampilan antarmuka kas keluar tersebut diperlihatkan pada Gambar 4.32.
 
 <div align="center">
 
@@ -1252,12 +1247,12 @@ Setiap transaksi pengeluaran yang dicatat dapat disertai keterangan peruntukan d
 
 </div>
 
-Mengacu pada Gambar 4.32, halaman ini memadukan kartu ringkasan total pengeluaran bulan berjalan di bagian atas dengan tabel riwayat kas keluar di bagian bawah. Tabel tersebut mencantumkan tanggal transaksi, kategori biaya, rincian penggunaan dana, nominal pengeluaran, serta staf pencatat. Ketika terdapat belanja operasional baru, penjaga kost cukup menekan tombol **"Tambah Biaya Operasional"** untuk memasukkan rincian nota ke dalam pembukuan.
+Bagian kanan atas Gambar 4.32 memuat tombol **"Export PDF"**, **"Export Excel"**, dan tombol kuning **"Tambah Pengeluaran"**. Di tengah tersaji bilah pencarian nama pengeluaran, filter kategori, rentang tanggal mulai dan selesai, serta tombol **Filter** dan **Reset**. Tabel daftar pengeluaran merinci tanggal, nama transaksi, kategori, nominal, ketersediaan nota, keterangan, serta tiga tombol aksi **Detail**, **Edit**, dan **Hapus**.
 
 <br>
 
-9. Implementasi Antarmuka Manajemen Laporan Pemasukan  
-Modul laporan pemasukan mengolah seluruh data pembayaran sewa yang masuk melalui Midtrans dan catatan pengeluaran operasional menjadi laporan keuangan terpadu. Melalui rekapitulasi ini, pemilik maupun penjaga kost tidak perlu lagi mencocokkan mutasi bank dan buku kas fisik satu per satu saat tutup buku di akhir bulan. Hasil olahan laporan kas tersebut juga dapat diunduh ke dalam format berkas Excel maupun PDF untuk keperluan arsip resmi, seperti yang ditunjukkan pada Gambar 4.33.
+9. Modul Laporan Keuangan  
+Modul laporan keuangan mengonsolidasikan data tagihan masuk dan pengeluaran operasional ke dalam rekap kas otomatis. Pengelola dapat memantau arus kas dan mengunduh laporannya ke format PDF maupun Excel dalam hitungan detik, seperti pada Gambar 4.33.
 
 <div align="center">
 
@@ -1267,14 +1262,12 @@ Modul laporan pemasukan mengolah seluruh data pembayaran sewa yang masuk melalui
 
 </div>
 
-Pada Gambar 4.33, bagian atas halaman menampilkan tiga kartu metrik utama yang menyandingkan total pendapatan kotor, akumulasi beban operasional, serta nilai laba bersih usaha. Di bawahnya, terdapat grafik garis tren pendapatan bulanan beserta tabel rincian transaksi kas masuk yang dapat disaring menurut rentang tanggal tertentu. Sudut kanan atas kartu dilengkapi tombol hijau **"Ekspor Excel"** dan tombol merah **"Unduh PDF"** guna mencetak dokumen laporan keuangan sewaktu-waktu.
+Kartu **"Filter & Ekspor Laporan"** pada Gambar 4.33 menyediakan filter bulan, tahun, dan status bersama tombol **PDF** dan **Excel**. Baris tengah menampilkan tiga kartu ringkasan berwarna untuk total arus kas masuk, arus kas keluar, dan saldo bersih akhir. Tabel **"Riwayat Keuangan Kost"** di bawahnya merinci Order ID, periode, nama penyewa, nomor kamar, total tagihan, metode, dan status.
 
 <br>
 
-10. Implementasi Antarmuka Manajemen Keluhan Penyewa  
-Laporan kerusakan fasilitas kamar maupun gangguan kenyamanan lingkungan yang dikirimkan oleh penghuni dikelola secara terpusat melalui antarmuka manajemen keluhan penyewa. Modul ini membantu penjaga kost memetakan tingkat urgensi aduan, seperti kebocoran saluran air, gangguan kelistrikan, atau kerusakan perabot kamar, agar perbaikan fisik dapat segera dijadwalkan.
-
-Setiap perkembangan tindak lanjut perbaikan dapat diperbarui statusnya oleh admin sehingga penghuni yang melapor mengetahui progres penanganan keluhannya. Tampilan halaman pengelolaan tiket keluhan tersebut disajikan pada Gambar 4.34.
+10. Modul Manajemen Keluhan Penyewa  
+Laporan kerusakan fasilitas maupun gangguan kenyamanan penghuni diterima terpusat pada halaman manajemen keluhan. Penjaga kost meninjau foto kendala lalu memperbarui status perbaikan agar pelapor mendapat kepastian progres, seperti pada Gambar 4.34.
 
 <div align="center">
 
@@ -1284,12 +1277,12 @@ Setiap perkembangan tindak lanjut perbaikan dapat diperbarui statusnya oleh admi
 
 </div>
 
-Melalui tabel pada Gambar 4.34, setiap tiket aduan memuat informasi nama penghuni pelapor, nomor kamar, kategori kerusakan sarana, tanggal pengajuan, serta lencana status penanganan. Penjaga kost dapat memanfaatkan panel *filter* di bagian atas tabel untuk memprioritaskan laporan yang berstatus baru masuk. Tombol aksi di sisi kanan baris berfungsi membuka lampiran foto bukti kerusakan sekaligus mengubah status tiket menjadi **"Diproses"** atau **"Selesai"**.
+Daftar keluhan pada Gambar 4.34 menyediakan tombol pil **Semua Keluhan**, **Pending**, **Diproses**, **Selesai**, serta kolom cari penyewa atau kamar. Setiap baris mencatat pelapor, nomor kamar, judul, kategori, tanggal lapor, status, dan tombol biru **"Detail"**. Tombol detail tersebut dipakai penjaga kost untuk merespons aduan maupun memperbarui status perbaikan.
 
 <br>
 
-11. Implementasi Antarmuka Manajemen Fitur *Chat Guest*  
-Pertanyaan yang dikirimkan oleh pengunjung publik melalui *widget* obrolan di halaman depan akan masuk ke antarmuka manajemen fitur *chat guest* pada sisi admin. Ruang pesan dua arah ini memudahkan penjaga kost menjawab pertanyaan calon penyewa seputar ketersediaan kamar maupun jadwal kunjungan survei lokasi tanpa harus berpindah perangkat. Tampilan antarmuka pengelolaan obrolan tamu tersebut dapat dilihat pada Gambar 4.35.
+11. Modul Pengelolaan *Chat Guest*  
+Pertanyaan pengunjung publik dari *widget* obrolan beranda masuk langsung ke modul *chat guest* admin. Penjaga kost pun dapat membalas pertanyaan kamar kosong atau jadwal survei dari satu panel, seperti pada Gambar 4.35.
 
 <div align="center">
 
@@ -1299,17 +1292,15 @@ Pertanyaan yang dikirimkan oleh pengunjung publik melalui *widget* obrolan di ha
 
 </div>
 
-Sebagaimana terlihat pada Gambar 4.35, layar obrolan dibagi menjadi dua panel, yaitu daftar antrean pesan pengunjung di sebelah kiri dan ruang percakapan aktif di sebelah kanan. Di dalam jendela percakapan, seluruh riwayat tanya jawab ditampilkan secara berurutan lengkap dengan penanda waktu kirim. Bagian bawah panel turut dilengkapi pilihan templat balasan cepat (*quick reply*) agar penjaga kost dapat merespons pertanyaan umum dengan lebih praktis.
+Layar obrolan pada Gambar 4.35 membagi antarmuka menjadi daftar pertanyaan tamu di kolom kiri dan jendela percakapan aktif di kolom kanan. Di kepala panel percakapan tersedia identitas tamu beserta tombol **Hubungi WA**, **Tandai Selesai**, dan **Hapus** untuk menindaklanjuti percakapan. Bagian tengah memuat riwayat gelembung pesan tamu dan balasan admin bertanda waktu, sedangkan sisi paling bawah berisi kolom ketik pesan dan tombol hitam **"Kirim"**.
 
 <br>
 
 ### 4.2.4 Implementasi Penyewa Aktif
-Bagian terakhir ini membahas tujuh antarmuka khusus yang diakses oleh penyewa aktif selama masa tinggalnya di Asri Boarding House. Portal layanan mandiri ini memfasilitasi penghuni untuk memantau masa sewa, melunasi tagihan bulanan via Midtrans, memperbarui data profil, memeriksa riwayat transaksi, mengajukan tiket keluhan kamar, hingga mengunduh kuitansi pembayaran berformat PDF.
+Bagian terakhir subbab ini memaparkan tujuh antarmuka khusus bagi penghuni tetap Asri Boarding House. Lewat portal layanan mandiri, penyewa dapat memantau tagihan, melunasi sewa via Midtrans, dan memperbarui akun. Fasilitas pelaporan keluhan, riwayat pembayaran, serta unduhan nota PDF juga tersedia di dalamnya.
 
-1. Implementasi Antarmuka *Login* Penyewa Aktif  
-Penghuni yang telah resmi menempati kamar di Asri Boarding House mengakses layanan mandiri melalui halaman *login* penyewa aktif. Pemisahan jalur masuk ini mengarahkan penghuni langsung ke portal pengelolaan sewa bulanan tanpa melewati alur pemesanan kamar lagi.
-
-Setiap sesi masuk dilindungi menggunakan enkripsi kredensial agar riwayat tagihan dan data pribadi penghuni tetap terjaga kerahasiaannya. Tampilan halaman autentikasi penyewa aktif tersebut diperlihatkan pada Gambar 4.36.
+1. Halaman *Login* Penyewa Aktif  
+Penghuni aktif mengakses portal pengelolaan sewa secara langsung melalui halaman *login* penyewa. Jalur autentikasi terpisah ini membawa penghuni ke dasbor hunian tanpa melewati halaman penawaran reservasi lagi. Tampilan halaman masuk penghuni aktif disajikan pada Gambar 4.36.
 
 <div align="center">
 
@@ -1319,12 +1310,12 @@ Setiap sesi masuk dilindungi menggunakan enkripsi kredensial agar riwayat tagiha
 
 </div>
 
-Merujuk pada Gambar 4.36, halaman autentikasi penghuni tampil dengan bingkai kartu *Neo-Brutalism* berlatar kuning cerah dan bertajuk **"Masuk Portal Penghuni Aktif"**. Penghuni cukup mengisi kolom alamat *email* dan kata sandi terdaftar, mencentang opsi pengingat sesi bila diperlukan, lalu menekan tombol biru **"Masuk ke Portal"** untuk membuka dasbor pribadinya.
+Gambar 4.36 membagi layar menjadi panel hitam **"Portal Utama Penyewa Kost"** dan formulir putih **"Portal Penyewa"**. Penghuni dapat masuk via akun *Google* ataupun memakai kombinasi *email* atau WhatsApp dengan kata sandi. Tombol kuning **"Masuk ke Dashboard Penyewa"**, opsi *Ingat Saya*, serta tautan beranda melengkapi halaman ini.
 
 <br>
 
-2. Implementasi Antarmuka *Dashboard* Penyewa  
-*Dashboard* penyewa menyajikan ringkasan informasi hunian dan status kewajiban sewa bagi masing-masing penghuni Asri Boarding House. Pada halaman utama ini, penghuni dapat memeriksa nomor unit kamar yang ditempati, sisa masa berlaku sewa, rincian tagihan bulan berjalan, serta papan pengumuman resmi dari penjaga kost. Seluruh menu layanan mandiri ditata ke dalam pintasan kartu yang mudah dijangkau, sebagaimana ditampilkan pada Gambar 4.37.
+2. Halaman *Dashboard* Penyewa  
+Setelah masuk, penghuni disambut halaman *dashboard* penyewa yang merangkum informasi kamar, tagihan sewa, dan pintasan laporan keluhan. Penyusunan ringkasan hunian pada Gambar 4.37 memudahkan penyewa memantau kewajibannya tiap bulan.
 
 <div align="center">
 
@@ -1334,14 +1325,12 @@ Merujuk pada Gambar 4.36, halaman autentikasi penghuni tampil dengan bingkai kar
 
 </div>
 
-Pada Gambar 4.37, bagian atas halaman menampilkan sapaan nama penghuni beserta kartu informasi hunian yang merinci nomor kamar aktif, kategori tipe kamar, dan tanggal jatuh tempo pembayaran berikutnya. Tepat di bagian tengah, terdapat kartu pemberitahuan tagihan berwarna kuning cerah yang dilengkapi tombol pintasan **"Bayar Tagihan Sekarang"**. Area bawah halaman menyediakan deretan menu cepat untuk mengajukan laporan kerusakan fasilitas, melihat arsip kuitansi sewa, dan membaca pengumuman indekos.
+Baris atas Gambar 4.37 menampilkan lima kartu ringkas untuk kamar, kategori tipe, uang jaminan, tagihan tertunda, dan total terbayar. Di bawahnya berdiri spanduk biru muda **"Ada Fasilitas Rusak atau Bermasalah?"** lengkap dengan tombol **"Buat Laporan Keluhan"**. Area bawah layar menyajikan grafik batang **Tren Pengeluaran Sewa (12 Bulan Terakhir)** dan diagram donat **Status Tagihan**.
 
 <br>
 
-3. Implementasi Antarmuka Tagihan Penyewa  
-Rincian kewajiban pembayaran sewa kamar setiap bulannya dapat diperiksa secara transparan oleh penghuni melalui antarmuka tagihan penyewa. Halaman ini menguraikan nominal sewa pokok, tambahan biaya denda apabila melewati tanggal 10, serta batas waktu pelunasan tagihan.
-
-Untuk memudahkan pelunasan, tombol pembayaran pada halaman ini telah diintegrasikan langsung dengan modul Midtrans Snap. Visualisasi halaman tagihan sewa bulanan tersebut disajikan pada Gambar 4.38.
+3. Halaman Tagihan Penyewa  
+Kewajiban pembayaran bulanan beserta jatuh temponya tersaji terbuka pada halaman tagihan penyewa. Penghuni cukup meninjau faktur tertunda lalu melunasinya lewat Midtrans Snap seperti pada Gambar 4.38.
 
 <div align="center">
 
@@ -1351,12 +1340,12 @@ Untuk memudahkan pelunasan, tombol pembayaran pada halaman ini telah diintegrasi
 
 </div>
 
-Sebagaimana ditunjukkan pada Gambar 4.38, kartu tagihan menampilkan nomor *invoice*, periode bulan penagihan, total biaya yang harus dibayar, serta tanggal jatuh tempo. Tagihan yang masih menunggak ditandai dengan lencana berwarna kuning bertuliskan **"Belum Dibayar"**. Penghuni cukup menekan tombol hijau **"Bayar Tagihan"** di bagian bawah kartu untuk memunculkan jendela *pop-up* Midtrans Snap dan menyelesaikan pembayaran melalui transfer bank atau dompet digital.
+Gambar 4.38 diawali tiga kartu ringkasan tagihan belum lunas, lunas, dan total pengeluaran. Tabel **"Riwayat Tagihan Sewa"** di bawahnya merinci Order ID, periode, jatuh tempo, total biaya, status **Lunas**, dan metode Midtrans. Tautan **"Detail / Bayar"** di ujung baris dipakai untuk membayar tagihan atau mencetak kuitansi transaksi.
 
 <br>
 
-4. Implementasi Antarmuka Profil  
-Antarmuka profil memberikan keleluasaan bagi penyewa aktif untuk memperbarui data kontak pribadi dan pengaturan keamanan akunnya. Apabila penghuni mengganti nomor WhatsApp atau ingin mengubah kata sandi akun, perubahan tersebut dapat dilakukan sendiri tanpa harus meminta bantuan penjaga kost. Keterbaruan nomor kontak penghuni dan kerabat darurat ini sangat penting apabila sewaktu-waktu terjadi keadaan mendesak di lingkungan indekos, seperti yang diperlihatkan pada Gambar 4.39.
+4. Halaman Kelola Akun dan Profil  
+Halaman kelola akun memberi kebebasan kepada penyewa aktif untuk memperbarui data kontak serta kata sandi. Sementara itu, data NIK 16 digit tetap terkunci dari pendaftaran awal dan cek KTP fisik saat kedatangan. Pengaturan akun tersebut tampak pada Gambar 4.39.
 
 <div align="center">
 
@@ -1366,14 +1355,12 @@ Antarmuka profil memberikan keleluasaan bagi penyewa aktif untuk memperbarui dat
 
 </div>
 
-Tampilan pada Gambar 4.39 membagi halaman menjadi dua bagian utama, yakni kartu biodata penghuni di sisi kiri dan formulir pengaturan keamanan di sisi kanan. Kartu biodata menampilkan foto profil, nama lengkap, nomor KTP, nomor WhatsApp aktif, serta kontak darurat keluarga yang sebagian digitnya disamarkan demi menjaga privasi. Sementara itu, panel sebelah kanan menyediakan kolom validasi kata sandi lama dan kata sandi baru yang dapat disimpan dengan menekan tombol kuning **"Simpan Perubahan"**.
+Tampilan pada Gambar 4.39 memakai navigasi dua *tab* di atas kartu utama, yakni **"Profil Saya"** dan **"Ubah Password"**. Pada *tab* pertama, formulir **"Informasi Profil"** memuat masukan nama, *email*, nomor WhatsApp, serta tombol kuning **"Simpan"**. Pemisahan menu ubah kata sandi dan hapus akun mencegah terjadinya perubahan data secara tidak sengaja.
 
 <br>
 
-5. Implementasi Antarmuka Riwayat Pembayaran  
-Seluruh transaksi pelunasan sewa yang pernah dilakukan penghuni selama menetap di Asri Boarding House tercatat secara kronologis di dalam antarmuka riwayat pembayaran. Halaman ini menyimpan kode referensi transaksi, tanggal pelunasan, kanal pembayaran yang digunakan, serta nominal dana yang telah disetorkan.
-
-Keberadaan arsip pembayaran digital ini memudahkan penghuni melacak pengeluaran sewa bulanan sekaligus mengunduh ulang bukti kuitansi resmi kapan pun dibutuhkan. Susunan halaman riwayat transaksi tersebut dapat dilihat pada Gambar 4.40.
+5. Halaman Riwayat Pembayaran  
+Seluruh catatan transaksi reservasi awal maupun pembayaran sewa rutin terhimpun secara berurutan di dalam halaman riwayat pembayaran. Penghuni dapat memisahkan riwayat uang muka pengajuan kamar dari pembayaran bulanan sehingga arsip keuangan pribadi tetap tertata rapi, seperti ditunjukkan pada Gambar 4.40.
 
 <div align="center">
 
@@ -1383,12 +1370,12 @@ Keberadaan arsip pembayaran digital ini memudahkan penghuni melacak pengeluaran 
 
 </div>
 
-Melalui tabel rekapitulasi pada Gambar 4.40, setiap baris transaksi menampilkan tanggal bayar, nomor pesanan, metode pembayaran melalui *Virtual Account* atau dompet digital, jumlah uang yang dibayarkan, serta lencana hijau berstatus **"Berhasil"**. Di ujung kanan masing-masing baris, tersedia tombol biru **"Cetak Nota"** yang berfungsi menghasilkan salinan kuitansi resmi dalam bentuk berkas PDF.
+Gambar 4.40 diawali tiga kartu metrik berisi total bayar *booking*, total bayar bulanan, dan jumlah transaksi berhasil. Di bawahnya tersaji tabel **"Pembayaran Booking Kamar (Reservasi)"** bersama tombol **"Rincian"** dan tabel **"Pembayaran Tagihan Bulanan"**. Pemisahan tabel itu memudahkan penghuni melacak setoran awal dan bayar rutin secara terpisah.
 
 <br>
 
-6. Implementasi Antarmuka Keluhan  
-Apabila penghuni mendapati kerusakan fasilitas di dalam kamar maupun di area umum indekos, laporan kendala dapat langsung diajukan melalui antarmuka keluhan. Penghuni cukup memilih kategori masalah, menuliskan deskripsi kerusakan, dan melampirkan foto bukti fisik tanpa harus mencari penjaga kost secara tatap muka. Selain mempercepat penyampaian laporan, halaman yang disajikan pada Gambar 4.41 ini juga memungkinkan penghuni memantau progres perbaikan yang sedang dikerjakan oleh petugas.
+6. Halaman Pengaduan dan Keluhan  
+Saat fasilitas kamar bermasalah, penghuni cukup melaporkannya melalui halaman keluhan dan pengaduan. Tombol pembuatan laporan baru membuka formulir keluhan berfoto, sedangkan daftar riwayat di Gambar 4.41 memantau progres pengerjaannya.
 
 <div align="center">
 
@@ -1398,14 +1385,12 @@ Apabila penghuni mendapati kerusakan fasilitas di dalam kamar maupun di area umu
 
 </div>
 
-Mengacu pada Gambar 4.41, bagian atas halaman memuat formulir **"Tambah Laporan Keluhan"** yang terdiri dari pilihan kategori sarana, kolom uraian masalah, serta bidang unggah foto dokumentasi kerusakan. Di bagian bawahnya, tertera tabel riwayat aduan yang pernah dikirimkan oleh penghuni lengkap dengan lencana status tindak lanjut dari pihak pengelola.
+Kartu **"Riwayat Keluhan Anda"** pada Gambar 4.41 dilengkapi tombol kuning **"Buat Keluhan Baru"** yang menuju ke halaman formulir aduan. Di tengah kartu tersedia filter status dan kolom cari judul keluhan. Daftar aduan di bawahnya mencatat judul, kategori, tanggal lapor, status pengerjaan, tanggapan admin, serta tombol aksi.
 
 <br>
 
-7. Implementasi Nota PDF  
-Setiap transaksi pembayaran uang muka maupun tagihan sewa bulanan yang telah terverifikasi lunas akan menghasilkan dokumen tanda terima resmi berupa nota PDF. Dokumen elektronik ini mencantumkan nomor faktur, identitas penyewa, nomor kamar yang dihuni, rincian nominal sewa, serta cap lunas digital dari sistem.
-
-Format ukuran dan tata letak nota telah diatur secara proporsional agar siap dicetak kapan saja tanpa ada bagian teks yang terpotong. Wujud dokumen kuitansi digital berformat PDF tersebut ditampilkan pada Gambar 4.42.
+7. Dokumen Kuitansi Nota PDF  
+Setiap tagihan sewa yang telah diverifikasi lunas dilengkapi halaman cetak nota yang dapat diunduh menjadi dokumen PDF berukuran A5 melalui pustaka *html2pdf.js*. Kuitansi elektronik ini memuat informasi tagihan, nomor faktur, serta tanda lunas digital sehingga sah disimpan sebagai bukti transaksi pribadi, seperti pada Gambar 4.42.
 
 <div align="center">
 
@@ -1415,20 +1400,20 @@ Format ukuran dan tata letak nota telah diatur secara proporsional agar siap dic
 
 </div>
 
-Sebagaimana terlihat pada Gambar 4.42, kuitansi digital dirancang dengan bingkai garis tegas yang memuat kepala surat resmi Asri Boarding House beserta alamat lengkapnya di kawasan Tembalang. Bagian isi dokumen merinci nomor referensi nota, tanggal pelunasan, nomor unit kamar, nama penyewa yang disamarkan sebagian untuk keamanan data, serta nilai transaksi sebesar Rp1.700.000 dengan teraan stempel **"LUNAS"** di bagian tengah. Pada kaki dokumen, tercantum keterangan bahwa pembayaran telah diverifikasi secara otomatis oleh sistem beserta kode unik transaksi sebagai bukti keabsahan dokumen.
+Gambar 4.42 memperlihatkan kepala nota kuning Asri Boarding House beserta alamat Tembalang dan kontak WhatsApp resmi. Di bagian tengah termuat kotak **"Ditagihkan Kepada"** dengan nama disamarkan pada gambar dokumentasi, kotak **"Detail Pembayaran"**, serta rincian sewa sebesar Rp 750.000. Stempel hijau **"LUNAS"**, blok tanda tangan Pengelola Kost, dan keterangan validasi otomatis menutup kaki dokumen.
 
 <br>
 
 ## 4.3 Implementasi Kode Program
-Tahap implementasi kode program menerjemahkan seluruh rancangan arsitektur dan alur proses bisnis ke dalam instruksi terstruktur menggunakan bahasa pemrograman PHP pada kerangka kerja Laravel 11. Setiap modul program dirancang menggunakan pemisahan logika layanan (*Service Layer*) agar proses validasi data, penguncian transaksi kamar, dan integrasi API eksternal dapat berjalan mandiri serta aman. Pembahasan kode program ini dikelompokkan ke dalam empat sub-bab tematik sesuai domain fungsinya, meliputi implementasi autentikasi dan hak akses, pemesanan kamar, *payment gateway*, serta penjadwalan dan notifikasi.
+Tahap implementasi kode menerjemahkan seluruh rancangan arsitektur dan aturan bisnis ke dalam aplikasi Laravel 12 berbasis PHP. Logika bisnis penting dipisahkan ke dalam kelas layanan (*Service Layer*) agar validasi data, penguncian transaksi kamar, serta komunikasi API eksternal tetap rapi dan aman. Pembahasan kode dibagi ke dalam empat kelompok fungsi, yakni autentikasi dan hak akses, pemesanan kamar, *payment gateway*, serta penjadwalan dan notifikasi.
 
 <br>
 
 ### 4.3.1 Implementasi Autentikasi dan Hak Akses
-Kelompok modul autentikasi bertugas mengatur keamanan hak masuk serta mengarahkan pengguna ke portal kerja yang tepat sesuai perannya di Asri Boarding House. Lapisan ini memisahkan wewenang antara calon penyewa, penjaga kost, dan penyewa aktif agar tidak terjadi pelanggaran hak akses pada rute privat sistem.
+Lapisan autentikasi mengatur keamanan sesi masuk sekaligus memastikan setiap pengguna hanya bisa membuka portal sesuai perannya. Pemisahan hak akses ini menjaga batas wewenang antara pengunjung umum, calon penyewa, penjaga kost, dan penghuni aktif.
 
-1. Implementasi Pembatasan Hak Akses Peran Pengguna (*Role Middleware*)  
-Lapisan penengah (*middleware*) ini bekerja mencegat setiap permintaan halaman web sebelum diteruskan ke fungsi pengontrol utama. Di dalamnya, sistem memeriksa apakah pengguna telah masuk ke dalam akun dan memiliki label peran yang diizinkan untuk membuka rute tersebut, sebagaimana diperlihatkan pada Gambar 4.43.
+1. Pembatasan Hak Akses Peran (*Role Middleware*)  
+Lapisan penengah `RoleMiddleware` memeriksa setiap permintaan rute privat sebelum diteruskan ke pengendali halaman. Apabila pengguna belum masuk atau memiliki peran yang tidak sesuai dengan daftar peran rute, sistem langsung menghentikan permintaan tersebut seperti pada Gambar 4.43.
 
 <div align="center">
 
@@ -1438,12 +1423,12 @@ Lapisan penengah (*middleware*) ini bekerja mencegat setiap permintaan halaman w
 
 </div>
 
-Merujuk pada Gambar 4.43, baris awal kode memeriksa keberadaan data sesi *login* akun yang sedang aktif. Apabila pengguna belum terautentikasi, sistem langsung mengarahkannya kembali ke formulir *login* utama. Selanjutnya, baris kode di bawahnya memvalidasi kecocokan peran pengguna dan langsung menghentikan eksekusi permintaan halaman apabila hak aksesnya tidak sesuai.
+Potongan kode pada Gambar 4.43 memperlihatkan dua pengecekan berurutan di dalam metode `handle()`. Pemeriksaan pertama menolak pengguna yang belum masuk dengan respons JSON 401 atau pengalihan ke halaman *login*. Pemeriksaan kedua menolak peran yang tidak berhak memakai kode status HTTP 403. Penjagaan berlapis di tingkat *middleware* ini melindungi seluruh rute privat secara konsisten.
 
 <br>
 
-2. Implementasi Pengalihan Portal Pasca-autentikasi (*Auth Redirect*)  
-Setelah kredensial akun tervalidasi benar, sistem menjalankan logika pemandu untuk menentukan rute halaman tujuan masing-masing pengguna. Logika ini memeriksa kelengkapan nomor kontak, status aktif penyewa, hingga riwayat reservasi yang sedang menunggu pelunasan. Alur pengalihan sesi pengguna menuju portal yang tepat disajikan pada Gambar 4.44.
+2. Pengalihan Portal Pasca-autentikasi (*Auth Redirect*)  
+Setelah pengguna berhasil masuk melalui portal penyewa maupun pendaftaran akun, kelas `AuthRedirectService` menentukan rute halaman tujuan secara dinamis. Layanan ini meninjau kelengkapan nomor WhatsApp, URL tujuan sebelumnya (*intended URL*), status aktif penghuni, hingga ada tidaknya transaksi reservasi berjalan seperti pada Gambar 4.44.
 
 <div align="center">
 
@@ -1453,15 +1438,15 @@ Setelah kredensial akun tervalidasi benar, sistem menjalankan logika pemandu unt
 
 </div>
 
-Sebagaimana tampak pada Gambar 4.44, akun berstatus admin langsung dialihkan menuju dasbor pengelolaan operasional indekos. Sementara itu, pengguna yang tercatat sebagai penghuni aktif diarahkan masuk ke portal penyewa untuk memantau tagihan sewa kamar, sedangkan calon penyewa dengan transaksi pemesanan berjalan dipandu langsung ke halaman detail reservasinya.
+Gambar 4.44 menunjukkan urutan keputusan di dalam metode `resolvePostAuthDestination()`. Pengguna yang belum mengisi nomor WhatsApp langsung diarahkan menuju `/profil/complete`. Sementara itu, rute `/admin` dikecualikan dari pengalihan *intended URL* karena pengelola memiliki portal masuk tersendiri. Untuk jalur cadangan (*fallback*), penyewa aktif dibawa ke `penyewa.dashboard`. Calon penyewa yang masih memproses transaksi diarahkan ke `penyewa.reservasi.dashboard`, sedangkan akun lainnya kembali ke beranda.
 
 <br>
 
 ### 4.3.2 Implementasi Pemesanan Kamar
-Logika bisnis pemesanan kamar menangani seluruh alur penguncian inventaris 32 unit kamar di Asri Boarding House secara akurat. Modul ini menjadi benteng utama dalam mencegah terjadinya benturan pesanan ganda (*double booking*) saat banyak calon penghuni mengakses sistem pada waktu bersamaan.
+Logika bisnis pada kelas `ReservasiService` mengendalikan pembuatan transaksi sekaligus menjaga konsistensi status 32 unit kamar. Mekanisme ini memastikan dua pemohon tidak pernah mendapatkan kamar yang sama pada tanggal sewa yang tumpang-tindih.
 
-1. Implementasi Transaksi ACID dan Penguncian Baris Unit Kamar  
-Persaingan akses data saat dua calon penghuni memilih unit kamar yang sama pada detik bersamaan ditangani menggunakan prinsip transaksi ACID. Logika pemesanan ini memanfaatkan metode penguncian baris data kamar secara eksklusif agar status unit tidak dapat diubah oleh proses lain sebelum transaksi selesai, seperti yang diperlihatkan pada Gambar 4.45.
+1. Transaksi ACID dan Penguncian Baris Unit Kamar  
+Untuk mengatasi permintaan serentak (*race condition*) pada unit kamar yang sama, metode `buatReservasi()` membungkus seluruh langkah pemesanan di dalam transaksi basis data berprinsip ACID. Penguncian baris unit kamar mencegah proses lain mengubah data hingga validasi dan penyimpanan selesai, seperti ditampilkan pada Gambar 4.45.
 
 <div align="center">
 
@@ -1471,12 +1456,12 @@ Persaingan akses data saat dua calon penghuni memilih unit kamar yang sama pada 
 
 </div>
 
-Berdasarkan Gambar 4.45, seluruh tahapan pembuatan reservasi dibungkus di dalam blok transaksi basis data guna menjamin keutuhan relasi antar-tabel. Pemanggilan metode *lockForUpdate()* bertugas mengunci baris data kamar terpilih sampai seluruh tahapan validasi tanggal tuntas dieksekusi. Apabila kamar tersebut terbukti telah terisi oleh pemesan terdahulu, sistem langsung membatalkan transaksi dan menampilkan pesan peringatan kepada calon penyewa.
+Di dalam Gambar 4.45, blok `DB::transaction()` diawali pemanggilan `Kamar::lockForUpdate()` untuk mengunci baris unit pilihan secara eksklusif. Sistem lalu menghitung tanggal selesai dan mengecek benturan jadwal melalui `cekDoubleBooking()`. Rincian biaya dihitung lewat `hitungHarga()` sebelum entri berstatus *pending* disimpan dan *event* `ReservasiDibuat` dikirim. Jika jadwal kamar ternyata bentrok, pengecualian validasi langsung membatalkan seluruh transaksi agar basis data tetap bersih.
 
 <br>
 
-2. Implementasi Algoritma Pengecekan Benturan (*Double Booking*) Kamar  
-Keakuratan status ketersediaan 32 unit kamar sewa di Asri Boarding House dijaga melalui algoritma pendeteksi benturan jadwal pesanan. Fungsi ini memeriksa apakah rentang tanggal mulai hingga tanggal selesai sewa yang diajukan pemohon bertabrakan dengan jadwal reservasi lain yang masih aktif. Selain itu, pemeriksaan juga disandingkan dengan masa berlaku kontrak seluruh penghuni aktif yang sedang menempati kamar, sebagaimana ditunjukkan pada Gambar 4.46.
+2. Algoritma Pengecekan Benturan (*Double Booking*) Kamar  
+Ketepatan ketersediaan kamar dijaga oleh metode `cekDoubleBooking()` di dalam layanan yang sama. Fungsi itu mencocokkan rentang tanggal pengajuan baru terhadap reservasi aktif maupun kontrak penyewa berjalan pada kamar terkait, seperti pada Gambar 4.46.
 
 <div align="center">
 
@@ -1486,15 +1471,15 @@ Keakuratan status ketersediaan 32 unit kamar sewa di Asri Boarding House dijaga 
 
 </div>
 
-Mengacu pada Gambar 4.46, kueri pertama menyaring data reservasi aktif yang memiliki irisan tanggal pada unit kamar terkait, sedangkan kueri kedua memeriksa catatan kontrak penghuni aktif untuk memastikan kamar tersebut belum dihuni pada periode yang dipilih. Apabila salah satu dari kedua kondisi benturan jadwal tersebut terdeteksi, sistem akan mengembalikan nilai logika benar (*true*) untuk menolak pengajuan sewa baru.
+Kode pada Gambar 4.46 menjalankan dua kueri pemeriksa secara berurutan. Kueri pertama mencari reservasi aktif berjadwal bentrok disertai `lockForUpdate()` saat berada di dalam transaksi. Kueri kedua memeriksa penghuni berstatus aktif yang masa tinggalnya beririsan dengan periode baru. Fungsi mengembalikan nilai `true` bila salah satu terpenuhi sehingga pemesanan ganda otomatis ditolak.
 
 <br>
 
 ### 4.3.3 Implementasi *Payment Gateway*
-Penerapan gerbang pembayaran digital Midtrans memfasilitasi transaksi non-tunai melalui *Virtual Account*, QRIS, dan dompet digital secara praktis. Modul ini menghubungkan antarmuka aplikasi web langsung dengan *server* perbankan serta memperbarui status pelunasan tagihan secara otomatis melalui mekanisme *webhook*.
+Integrasi *payment gateway* Midtrans Snap dibangun pada kelas `MidtransService` dan pengendali `MidtransCallbackController`. Secara arsitektural, integrasi ini mendukung ragam kanal pembayaran non-tunai sesuai rancangan Bab 2, sementara pengujian lapangan berjalan lancar menggunakan kanal *Virtual Account* Bank BCA.
 
-1. Implementasi Pembuatan Transaksi dan *Snap Token* Midtrans  
-Proses pembayaran sewa kamar secara daring diawali dengan pembuatan token transaksi melalui layanan Midtrans Snap. Fungsi ini merangkum rincian sewa pokok beserta akumulasi denda keterlambatan ke dalam struktur data yang terverifikasi sebelum dikirimkan ke *server* gerbang pembayaran. Melalui integrasi yang tampak pada Gambar 4.47, calon penyewa maupun penghuni aktif akan menerima instruksi pembayaran resmi dengan masa berlaku pelunasan selama 24 jam.
+1. Pembuatan Transaksi dan *Snap Token* Midtrans  
+Setiap tagihan sewa maupun uang muka memerlukan *Snap token* sebelum jendela pembayaran Midtrans muncul di layar pengguna. Layanan `MidtransService` menyusun rincian nominal sewa, denda, dan durasi kedaluwarsa transaksi secara terstruktur sebelum memanggil API Midtrans, seperti terlihat pada Gambar 4.47.
 
 <div align="center">
 
@@ -1504,12 +1489,12 @@ Proses pembayaran sewa kamar secara daring diawali dengan pembuatan token transa
 
 </div>
 
-Sebagaimana tampak pada Gambar 4.47, sistem terlebih dahulu memetakan nominal pokok dan denda keterlambatan ke dalam larik rincian *item* transaksi. Bagian tengah kode menetapkan identitas pesanan unik berbasis penanda waktu (*timestamp*) beserta batas kadaluwarsa pembayaran 24 jam, lalu baris akhir mengeksekusi permintaan *HTTP POST* terenkripsi menggunakan autentikasi *server key* untuk memperoleh *Snap token* resmi.
+Metode `createSnapToken()` pada Gambar 4.47 memetakan komponen pokok dan denda ke dalam larik `$itemDetails`. Jika ada selisih nominal, nilai sewa pokok disesuaikan agar jumlah baris cocok dengan `gross_amount`. Kode lalu membentuk nomor pesanan unik beserta masa kedaluwarsa 24 jam, atau dibatasi sisa jam hingga akhir bulan bila kurang dari sehari. Parameter tersebut dikirim melalui permintaan HTTP berautentikasi *server key* untuk memperoleh *Snap token* resmi.
 
 <br>
 
-2. Implementasi Validasi *Signature Key* dan *Webhook Callback* Midtrans  
-Pembaruan status transaksi sewa bulanan dan uang muka reservasi diproses secara otomatis melalui mekanisme *webhook callback* dari Midtrans. Setiap kiriman data notifikasi dari *server* pembayaran wajib melewati verifikasi tanda tangan digital berbasis algoritma kriptografi SHA-512 agar terhindar dari manipulasi pihak luar. Mekanisme pemeriksaan keamanan dan pencatatan transaksi lunas tersebut dapat dilihat pada Gambar 4.48.
+2. Validasi *Signature Key* dan *Webhook Callback* Midtrans  
+Konfirmasi pelunasan dari server Midtrans diterima oleh pengendali `MidtransCallbackController` tanpa menunggu pengecekan manual penjaga kost. Setiap notifikasi masuk wajib melewati validasi tanda tangan kriptografi SHA-512 guna mencegah pemalsuan status pembayaran oleh pihak luar, seperti pada Gambar 4.48.
 
 <div align="center">
 
@@ -1519,15 +1504,15 @@ Pembaruan status transaksi sewa bulanan dan uang muka reservasi diproses secara 
 
 </div>
 
-Melalui tampilan Gambar 4.48, keaslian tanda tangan digital diverifikasi menggunakan fungsi *hash_equals()* guna mencegah celah serangan berbasis selisih waktu respons (*timing attack*). Sistem selanjutnya memeriksa status transaksi terdahulu untuk menjaga sifat idempoten agar tidak terjadi pencatatan kas masuk ganda. Begitu pembayaran dinyatakan sah, status tagihan pada basis data lokal langsung diperbarui menjadi lunas secara otomatis.
+Cuplikan kode pada Gambar 4.48 menampilkan perbandingan hash `signature_key` menggunakan fungsi *hash_equals()* agar terhindar dari serangan berbasis selisih waktu (*timing attack*). Setelah melewati saringan ping uji dari dasbor Midtrans, kode melakukan pengecekan idempoten berdasarkan `transaction_id` guna memastikan transaksi lunas tidak diproses dua kali. Bila seluruh pemeriksaan valid, tagihan atau reservasi langsung diperbarui statusnya secara otomatis.
 
 <br>
 
 ### 4.3.4 Implementasi Penjadwalan dan Notifikasi
-Otomasi operasional indekos dijalankan melalui perpaduan penjadwal tugas berkala di tingkat *server* dengan layanan pengiriman pesan instan dan surat elektronik resmi. Modul ini menghapus ketergantungan pada pengingat manual penjaga kost sehingga penagihan bulanan setiap tanggal 10 dan penerbitan bukti kuitansi selalu terkirim tepat waktu.
+Otomasi operasional harian dijalankan melalui penjadwal tugas Laravel bersama layanan pengiriman pesan WhatsApp dan surat elektronik. Gabungan modul ini membebaskan penjaga kost dari pekerjaan berulang seperti pembuatan tagihan tanggal 1 dan pengiriman pengingat jatuh tempo.
 
-1. Implementasi Penjadwalan Tugas Otomatis (*Task Scheduler Cron Job*)  
-Pengelolaan tagihan rutin tanggal 10 dan pembersihan transaksi kedaluwarsa diotomatisasi melalui fitur penjadwal tugas pada kerangka kerja Laravel. Cukup satu layanan penjadwal di tingkat *server* yang diaktifkan untuk menggerakkan seluruh perintah konsol sistem informasi secara mandiri di latar belakang, sebagaimana ditampilkan pada Gambar 4.49.
+1. Penjadwalan Tugas Otomatis (*Task Scheduler Cron Job*)  
+Seluruh tugas berkala didefinisikan pada berkas `routes/console.php` dengan zona waktu `Asia/Jakarta`. Penjadwal otomatis ini mengurus penerbitan tagihan, denda tanggal 10, pengingat kontrak habis, dan pembatalan reservasi kedaluwarsa seperti pada Gambar 4.49.
 
 <div align="center">
 
@@ -1537,12 +1522,12 @@ Pengelolaan tagihan rutin tanggal 10 dan pembersihan transaksi kedaluwarsa dioto
 
 </div>
 
-Pada tampilan Gambar 4.49, perintah penerbitan tagihan sewa bulanan dijadwalkan berjalan otomatis setiap tanggal 1 pukul 00:05 WIB. Sementara itu, perintah pemeriksaan keterlambatan dieksekusi setiap dini hari pukul 01:00 WIB untuk menandai tagihan yang melewati tanggal 10 sebagai masa tenggang dan menerapkan denda *flat* 5% satu kali apabila tunggakan melintasi pergantian bulan. Metode *withoutOverlapping()* turut disematkan pada rantai kode agar proses penjadwalan yang masih berjalan tidak dieksekusi secara tumpang-tindih.
+Gambar 4.49 memuat empat jadwal utama tugas latar belakang. Perintah `tagihan:generate-bulanan` berjalan setiap tanggal 1 pukul 00:05 WIB. Selanjutnya, `tagihan:proses-keterlambatan` dieksekusi pukul 01:00 WIB untuk menandai tagihan lewat tanggal 10 dan memicu denda *flat* 5% satu kali lintas bulan. Dua jadwal lainnya menjalankan `kontrak:reminder-habis` pukul 08:00 WIB dan `reservasi:cancel-expired` tiap jam, lengkap dengan `withoutOverlapping()` agar eksekusi tidak bertumpuk.
 
 <br>
 
-2. Implementasi Integrasi Layanan Pesan *WhatsApp Gateway* Fonnte  
-Notifikasi tagihan bulanan dan konfirmasi pelunasan reservasi kamar dikirimkan langsung ke nomor ponsel penyewa melalui integrasi API Fonnte. Sebelum meneruskan pesan teks melalui protokol HTTP, sistem menstandarkan format nomor telepon pengguna terlebih dahulu agar sesuai dengan kode panggilan internasional. Rincian fungsi pengiriman pesan instan otomatis tersebut diperlihatkan pada Gambar 4.50.
+2. Integrasi Layanan Pesan *WhatsApp Gateway* Fonnte  
+Notifikasi tagihan bulanan maupun kabar aktivasi kamar dikirim langsung ke ponsel penyewa melalui layanan `FonnteService`. Sebelum memanggil endpoint API Fonnte, nomor ponsel tujuan dinormalisasi ke format kode negara `62` agar pengiriman tidak gagal seperti pada Gambar 4.50.
 
 <div align="center">
 
@@ -1552,12 +1537,12 @@ Notifikasi tagihan bulanan dan konfirmasi pelunasan reservasi kamar dikirimkan l
 
 </div>
 
-Sebagaimana terlihat pada Gambar 4.50, nomor kontak pengguna diformat ke dalam standar penomoran internasional menggunakan awalan kode negara Indonesia. Fungsi kemudian mengirimkan permintaan *HTTP POST* yang dilengkapi *header* token otorisasi rahasia menuju *server* Fonnte, lalu memastikan keberhasilan pengiriman melalui pemeriksaan kode status koneksi beserta nilai respons JSON yang diterima.
+Metode `kirimPesan()` pada Gambar 4.50 menyaring nomor kosong, memformat angka ponsel lewat `formatNomor()`, lalu mencatat log uji bila token API belum terisi. Pada mode aktif, aplikasi mengirim permintaan HTTP POST bertenggat koneksi 3 detik ke `https://api.fonnte.com/send`. Keberhasilan pengiriman dipastikan melalui pemeriksaan status kode HTTP serta balasan JSON dari server Fonnte.
 
 <br>
 
-3. Implementasi Integrasi Pengiriman Dokumen Tagihan via *Email Gateway* SMTP  
-Dokumen penagihan resmi dan rincian kuitansi sewa kamar dikirimkan secara otomatis ke alamat surat elektronik penghuni melalui protokol SMTP dengan enkripsi TLS. Penerapan antrean pesan (*message queue*) pada modul ini membuat proses pengiriman berkas berjalan di latar belakang tanpa memperlambat interaksi pengguna pada antarmuka web. Susunan kelas pengirim surat tagihan digital tersebut disajikan pada Gambar 4.51.
+3. Integrasi Pengiriman Dokumen Tagihan via *Email Gateway* SMTP  
+Pengiriman pemberitahuan tagihan melalui surat elektronik ditangani oleh kelas *mailable* `TagihanBulanMail` melalui protokol SMTP. Pemakaian mekanisme antrean latar belakang (*ShouldQueue*) menjaga waktu respons antarmuka tetap cepat saat ratusan tagihan diterbitkan serentak pada awal bulan, seperti pada Gambar 4.51.
 
 <div align="center">
 
@@ -1567,12 +1552,12 @@ Dokumen penagihan resmi dan rincian kuitansi sewa kamar dikirimkan secara otomat
 
 </div>
 
-Merujuk pada Gambar 4.51, kelas pengirim menerapkan antarmuka *ShouldQueue* agar pemrosesan surat elektronik dieksekusi secara asinkron melalui antrean *server*. Di dalam kelas tersebut, metode *envelope()* bertugas menetapkan subjek surat resmi yang memuat nomor tagihan milik penghuni. Selanjutnya, metode *content()* memadukan rincian sewa pokok, biaya denda, dan tautan masuk portal penyewa ke dalam templat tampilan *email* yang rapi.
+Gambar 4.51 memperlihatkan metode `envelope()` yang menyusun judul surat berisi kode tagihan unik setiap penghuni. Di bawahnya, metode `content()` memuat relasi pengguna dan kamar via `loadMissing()`. Nilai sewa pokok, deposit, dan denda lalu diteruskan ke templat HTML `emails.tagihan-baru` beserta tautan portal penyewa.
 
 <br>
 
 ## 4.4 Pengujian Sistem
-Pengujian fungsionalitas sistem informasi Asri Boarding House dilakukan menggunakan metode pengujian kotak hitam (*black box testing*) untuk memastikan setiap fitur berjalan sesuai kebutuhan pengguna. Evaluasi ini berfokus pada kesesuaian antara masukan data dan respons antarmuka aplikasi tanpa memeriksa struktur kode program di dalamnya. Seluruh skenario uji dikelompokkan ke dalam enam bagian operasional utama, meliputi autentikasi dan hak akses, katalog publik, alur reservasi calon penyewa, portal penyewa aktif, manajemen admin, hingga penjadwal tugas otomatis di *server*. Rincian prosedur pengujian, respons sistem yang diharapkan, serta status keberhasilan fitur dirangkum pada Tabel 4.1.
+Pengujian fungsionalitas aplikasi dijalankan menggunakan metode kotak hitam (*black box testing*) untuk memastikan setiap fitur bekerja sesuai kebutuhan pengguna. Evaluasi difokuskan pada kesesuaian masukan pengguna dan keluaran antarmuka tanpa memeriksa baris kode di baliknya. Skenario uji dibagi ke dalam enam ranah, yakni autentikasi akun, katalog publik, alur reservasi, portal penyewa, manajemen admin, dan penjadwal tugas otomatis. Rekapitulasi 60 skenario pengujian terangkum pada Tabel 4.1.
 
 <br>
 
@@ -1581,85 +1566,85 @@ Pengujian fungsionalitas sistem informasi Asri Boarding House dilakukan mengguna
 | No | Modul / Skenario Uji | Prosedur Pengujian / Masukan Data | Hasil yang Diharapkan | Hasil Pengujian | Status |
 | :---: | :--- | :--- | :--- | :--- | :---: |
 | **Domain I: Autentikasi, Hak Akses & Profil Pengguna** | | | | | |
-| 1 | *Login* Administrator kredensial valid | Masukkan *email* dan *password* admin yang benar pada halaman `/admin/login` | Akses diterima, pengguna diarahkan ke `/admin/dashboard` | Sesuai ekspektasi | Berhasil |
-| 2 | *Login* Administrator *password* salah | Masukkan *email* admin yang valid dengan *password* yang salah | Akses ditolak, muncul pesan kesalahan "Kredensial tidak cocok" | Sesuai ekspektasi | Berhasil |
-| 3 | *Login* Administrator *email* tidak terdaftar | Masukkan *email* acak yang belum terdaftar di dalam sistem | Akses ditolak, muncul peringatan bahwa akun tidak ditemukan | Sesuai ekspektasi | Berhasil |
-| 4 | Kewajiban ganti *password* saat *login* pertama | Lakukan *login* menggunakan akun admin baru dengan status wajib ganti kata sandi aktif | Sistem mengalihkan navigasi secara otomatis ke formulir `/admin/password/change` | Sesuai ekspektasi | Berhasil |
-| 5 | *Login* Penyewa Aktif kredensial valid | Masukkan *email* dan kata sandi yang valid pada halaman `/penyewa/login` | Akses diterima, pengguna diarahkan ke `/penyewa/dashboard` | Sesuai ekspektasi | Berhasil |
-| 6 | *Login* Penyewa kata sandi salah | Masukkan *email* valid dengan kata sandi yang keliru pada portal penyewa | Akses ditolak, muncul jendela peringatan bahwa kata sandi salah | Sesuai ekspektasi | Berhasil |
-| 7 | Permintaan lupa kata sandi *email* terdaftar | Masukkan *email* terdaftar pada formulir `/penyewa/password/reset` | Tautan pemulihan kata sandi berhasil dikirimkan ke alamat *email* penyewa | Sesuai ekspektasi | Berhasil |
-| 8 | Permintaan lupa kata sandi *email* tidak terdaftar | Masukkan alamat *email* yang tidak tercatat di dalam basis data | Sistem menampilkan pesan kesalahan bahwa alamat *email* tidak ditemukan | Sesuai ekspektasi | Berhasil |
-| 9 | Pembaruan kata sandi dengan token valid | Klik tautan token pada *email*, lalu masukkan kata sandi baru minimal 8 karakter | Kata sandi berhasil diperbarui dan pengguna dapat *login* kembali | Sesuai ekspektasi | Berhasil |
-| 10 | Pendaftaran akun baru Calon Penyewa | Isi nama lengkap, nomor WhatsApp, *email*, dan kata sandi pada halaman registrasi | Akun baru berhasil dibuat dan pengguna diarahkan ke halaman pelengkapan profil | Sesuai ekspektasi | Berhasil |
-| 11 | Lengkapi profil dengan nomor WhatsApp valid | Masukkan nomor WhatsApp format Indonesia (`081234567890`) dan unggah foto KTP pada formulir profil | Data profil tersimpan dan pengguna diarahkan kembali ke alur pemesanan kamar | Sesuai ekspektasi | Berhasil |
-| 12 | Lengkapi profil dengan nomor telepon tidak valid | Masukkan karakter huruf atau simbol pada kolom nomor telepon | Validasi formulir gagal dan muncul pesan peringatan format nomor tidak valid | Sesuai ekspektasi | Berhasil |
+| 1 | *Login* Administrator kredensial valid | Masukkan *email* dan kata sandi admin yang benar pada halaman `/admin/login` | Akses diterima, pengguna diarahkan ke `/admin/dashboard` | Sesuai ekspektasi | Berhasil |
+| 2 | *Login* Administrator kata sandi salah | Masukkan *email* admin yang valid dengan kata sandi yang keliru | Akses ditolak, muncul pesan kesalahan bahwa kredensial tidak cocok | Sesuai ekspektasi | Berhasil |
+| 3 | *Login* Administrator *email* tidak terdaftar | Masukkan *email* acak yang belum terdaftar di dalam basis data | Akses ditolak, muncul peringatan bahwa akun tidak ditemukan | Sesuai ekspektasi | Berhasil |
+| 4 | Kewajiban ganti kata sandi saat *login* pertama | Lakukan *login* memakai akun admin dengan status wajib ganti kata sandi aktif | Sistem mengalihkan navigasi otomatis ke formulir `/admin/force-change-password` | Sesuai ekspektasi | Berhasil |
+| 5 | *Login* Penyewa Aktif kredensial valid | Masukkan *email* atau nomor WhatsApp dan kata sandi valid pada `/penyewa/login` | Akses diterima, pengguna diarahkan ke `/penyewa/dashboard` | Sesuai ekspektasi | Berhasil |
+| 6 | *Login* Penyewa kata sandi salah | Masukkan *email* valid dengan kata sandi keliru pada portal penyewa | Akses ditolak, muncul peringatan kesalahan autentikasi pada formulir masuk | Sesuai ekspektasi | Berhasil |
+| 7 | Permintaan lupa kata sandi *email* terdaftar | Masukkan *email* terdaftar pada formulir `/penyewa/forgot-password` | Tautan pemulihan kata sandi dikirim ke alamat *email* penyewa | Sesuai ekspektasi | Berhasil |
+| 8 | Permintaan lupa kata sandi *email* tidak terdaftar | Masukkan alamat *email* yang belum tercatat di dalam sistem | Sistem menampilkan peringatan bahwa alamat *email* tidak ditemukan | Sesuai ekspektasi | Berhasil |
+| 9 | Pembaruan kata sandi dengan token valid | Klik tautan token pada *email*, lalu isi kata sandi baru minimal 8 karakter | Kata sandi diperbarui dan akun dapat digunakan untuk masuk kembali | Sesuai ekspektasi | Berhasil |
+| 10 | Pendaftaran akun baru Calon Penyewa | Isi nama lengkap, nomor WhatsApp, *email*, dan kata sandi pada `/reservasi/register` | Akun baru terdaftar dan pengguna diarahkan menuju halaman kelengkapan profil | Sesuai ekspektasi | Berhasil |
+| 11 | Kelengkapan profil dengan data kontak dan NIK valid | Isi nomor WhatsApp aktif, NIK 16 digit, nama wali, dan nomor telepon wali di `/profil/complete` | Data profil tersimpan dan pengguna siap mengajukan pemesanan kamar | Sesuai ekspektasi | Berhasil |
+| 12 | Validasi nomor telepon tidak sesuai format | Masukkan huruf atau karakter tidak sah pada kolom nomor WhatsApp profil | Validasi formulir menolak masukan dan menampilkan pesan kesalahan format | Sesuai ekspektasi | Berhasil |
 | **Domain II: Portal Publik, Katalog & Guest Chat** | | | | | |
-| 13 | Akses halaman beranda (*home page*) publik | Buka alamat situs web utama Asri Boarding House pada peramban web | Informasi 32 unit kamar, daftar fasilitas, dan panduan reservasi tampil dengan rapi | Sesuai ekspektasi | Berhasil |
-| 14 | Penyaringan kamar berdasarkan lantai | Klik tombol *filter* "Lantai 1" pada katalog kamar | Katalog hanya menampilkan daftar unit kamar yang berada di lantai 1 | Sesuai ekspektasi | Berhasil |
-| 15 | Penyaringan kamar berdasarkan tipe | Klik tombol *filter* tipe kamar "VIP" pada katalog | Katalog hanya menampilkan daftar unit kamar dengan kategori tipe VIP | Sesuai ekspektasi | Berhasil |
-| 16 | Akses halaman detail kamar berstatus kosong | Klik salah satu kartu unit kamar yang berstatus "Tersedia" | Halaman detail terbuka, lencana hijau tampil aktif, dan tombol pemesanan muncul | Sesuai ekspektasi | Berhasil |
-| 17 | Akses halaman detail kamar berstatus terisi | Klik salah satu kartu unit kamar yang berstatus "Terisi" | Tombol pemesanan disembunyikan dan digantikan dengan tombol tanya admin | Sesuai ekspektasi | Berhasil |
-| 18 | Klik tombol pintasan WhatsApp pengelola | Klik tombol pintasan kontak di bagian bawah halaman publik | Peramban membuka halaman WhatsApp menuju nomor resmi pengelola kost | Sesuai ekspektasi | Berhasil |
-| 19 | Membuka *widget* *Guest Chat* tanpa *login* | Klik *widget* obrolan tamu di pojok kanan bawah layar | Jendela obrolan terbuka dan sistem membuat sesi percakapan tamu secara otomatis | Sesuai ekspektasi | Berhasil |
-| 20 | Mengirim pesan pertanyaan melalui *Guest Chat* | Ketik pesan pertanyaan ketersediaan kamar lalu tekan tombol kirim | Pesan terkirim tanpa memuat ulang halaman, tersimpan di basis data, dan masuk ke dasbor admin | Sesuai ekspektasi | Berhasil |
-| 21 | Uji ketahanan sesi obrolan tamu saat *refresh* | Muat ulang (*refresh*) halaman peramban saat sedang menggunakan *Guest Chat* | Riwayat percakapan sebelumnya tetap tampil utuh pada jendela obrolan | Sesuai ekspektasi | Berhasil |
-| 22 | Penampilan galeri foto dan detail fasilitas | Klik salah satu foto pada halaman galeri kost dan panel lipat FAQ | Pratinjau foto tampil jelas dan panel jawaban FAQ terbuka sesuai kategori yang dipilih | Sesuai ekspektasi | Berhasil |
-| **Domain III: Calon Penyewa & Alur Pemesanan 5 Tahap** | | | | | |
-| 23 | Pemilihan unit kamar pada Tahap 1 | Pilih salah satu unit kamar kosong pada langkah pertama pemesanan | Unit kamar terpilih ditandai garis tepi tebal dan tombol lanjut menjadi aktif | Sesuai ekspektasi | Berhasil |
-| 24 | Pengisian biodata dan NIK 16 digit valid | Masukkan biodata diri dan 16 digit angka NIK pada formulir Tahap 2 | Data berhasil divalidasi dan antarmuka beralih menuju langkah pemilihan durasi sewa | Sesuai ekspektasi | Berhasil |
-| 25 | Validasi NIK kurang dari 16 digit | Masukkan nomor NIK hanya 14 digit angka pada formulir Tahap 2 | Sistem menolak masukan dan menampilkan peringatan bahwa NIK wajib 16 digit | Sesuai ekspektasi | Berhasil |
-| 26 | Pemilihan durasi sewa pada simulasi biaya | Pilih opsi sewa bulanan dengan durasi 12 bulan pada langkah simulasi biaya | Tanggal selesai sewa dan total periode masa tinggal dihitung otomatis oleh sistem | Sesuai ekspektasi | Berhasil |
-| 27 | Perhitungan potongan harga sewa tahunan | Pilih durasi sewa 12 bulan pada kalkulator simulasi biaya kamar | Sistem menghitung potongan harga sewa jangka panjang secara otomatis pada tabel rincian | Sesuai ekspektasi | Berhasil |
-| 28 | Pemilihan skema pembayaran uang muka (DP) | Pilih opsi pembayaran uang muka (*down payment*) pada langkah skema bayar | Nominal tagihan awal disesuaikan secara proporsional dari total biaya sewa pokok | Sesuai ekspektasi | Berhasil |
-| 29 | Pemilihan skema pembayaran lunas penuh | Pilih opsi pelunasan penuh (100%) pada langkah skema bayar | Nominal tagihan awal ditetapkan penuh sesuai total nilai kontrak sewa | Sesuai ekspektasi | Berhasil |
-| 30 | Pemicuan jendela pembayaran Midtrans Snap | Klik tombol bayar pada langkah akhir reservasi kamar | Jendela *pop-up* Midtrans Snap tampil memuat pilihan *Virtual Account*, QRIS, dan *e-wallet* | Sesuai ekspektasi | Berhasil |
-| 31 | Penutupan jendela Snap sebelum transfer | Tutup jendela *pop-up* Midtrans tanpa menyelesaikan pembayaran | Pesanan tercatat berstatus *pending* dan unit kamar dikunci sementara selama masa tunggu | Sesuai ekspektasi | Berhasil |
-| 32 | Pembayaran uang muka hingga lunas | Selesaikan pembayaran uang muka melalui simulator pembayaran Midtrans | Status reservasi berubah terverifikasi, unit kamar terkunci, serta bukti kirim masuk ke WhatsApp dan *email* | Sesuai ekspektasi | Berhasil |
+| 13 | Akses halaman beranda (*home page*) publik | Buka alamat situs web utama Asri Boarding House pada peramban | Informasi profil indekos, fasilitas, dan tautan katalog tampil lengkap | Sesuai ekspektasi | Berhasil |
+| 14 | Pencarian kamar berdasarkan nomor unit | Ketik nomor kamar pada kolom pencarian halaman `/kamar` | Daftar katalog tersaring menampilkan unit kamar yang sesuai kata kunci | Sesuai ekspektasi | Berhasil |
+| 15 | Penyaringan kamar berdasarkan tipe | Klik tombol penyaring tipe kamar "VIP" pada halaman `/kamar` | Katalog hanya menampilkan daftar unit kamar dengan kategori VIP | Sesuai ekspektasi | Berhasil |
+| 16 | Akses halaman detail kamar berstatus tersedia | Klik tombol pesan pada kartu kamar yang berstatus "Tersedia" | Halaman detail `/kamar/{id}` terbuka bersama panel simulasi pemesanan | Sesuai ekspektasi | Berhasil |
+| 17 | Akses kartu kamar berstatus terisi | Tinjau kartu unit kamar yang berstatus "Terisi" pada katalog `/kamar` | Tombol pemesanan disembunyikan dan digantikan dengan tombol tanya WhatsApp | Sesuai ekspektasi | Berhasil |
+| 18 | Klik tombol pintasan WhatsApp pengelola | Klik tombol WhatsApp mengambang di pojok kanan bawah halaman publik | Peramban membuka tautan obrolan WhatsApp menuju nomor pengelola | Sesuai ekspektasi | Berhasil |
+| 19 | Membuka *widget* *Guest Chat* tanpa *login* | Klik tombol obrolan kuning di pojok kanan bawah layar | Jendela prapercakapan tamu terbuka untuk pengisian nama dan nomor WhatsApp | Sesuai ekspektasi | Berhasil |
+| 20 | Mengirim pesan pertanyaan melalui *Guest Chat* | Mulai obrolan lalu kirim pesan pertanyaan ketersediaan kamar | Pesan tersimpan di basis data dan langsung muncul pada dasbor admin | Sesuai ekspektasi | Berhasil |
+| 21 | Uji ketahanan sesi obrolan tamu saat *refresh* | Muat ulang (*refresh*) halaman peramban selama sesi *Guest Chat* berlangsung | Riwayat percakapan sebelumnya tetap tampil utuh pada jendela obrolan | Sesuai ekspektasi | Berhasil |
+| 22 | Penampilan galeri foto dan panel FAQ | Tekan tombol perbesar pada kartu `/galeri` dan ikon tambah di `/faq` | Gambar kamar tampil diperbesar dan panel jawaban FAQ terbuka rapi | Sesuai ekspektasi | Berhasil |
+| **Domain III: Calon Penyewa, Simulasi & Reservasi** | | | | | |
+| 23 | Pengisian formulir simulasi pada detail kamar | Pilih tipe sewa, durasi, tanggal mulai, dan opsi pembayaran di `/kamar/{id}` | Panel estimasi menampilkan rincian sewa dan tombol pesan unit siap dikirim | Sesuai ekspektasi | Berhasil |
+| 24 | Validasi NIK 16 digit dan data wali | Masukkan NIK tepat 16 digit angka serta data kontak wali pada `/profil/complete` | Data berhasil divalidasi dan pengguna dapat meneruskan proses reservasi | Sesuai ekspektasi | Berhasil |
+| 25 | Penolakan panjang NIK kurang dari 16 digit | Masukkan NIK hanya 14 digit angka pada formulir kelengkapan profil | Sistem menolak penyimpanan dan memunculkan pesan bahwa NIK harus 16 digit | Sesuai ekspektasi | Berhasil |
+| 26 | Perhitungan tanggal selesai otomatis berdasarkan durasi | Pilih sewa bulanan berdurasi 12 bulan pada simulasi `/kamar/{id}` | Tanggal selesai kontrak dihitung otomatis oleh sistem saat reservasi disimpan | Sesuai ekspektasi | Berhasil |
+| 27 | Penerapan potongan harga paket jangka panjang | Pilih durasi sewa 3 bulan atau 12 bulan pada kalkulator simulasi kamar | Potongan paket otomatis mengurangi total tagihan pada kotak estimasi biaya | Sesuai ekspektasi | Berhasil |
+| 28 | Pemilihan skema uang muka (DP 30%) | Pilih opsi uang muka pada bagian pilihan skema pembayaran di `/kamar/{id}` | Kewajiban pembayaran awal dihitung sebesar 30% dari total nilai sewa | Sesuai ekspektasi | Berhasil |
+| 29 | Pemilihan skema pembayaran penuh (100%) | Pilih opsi bayar penuh (100%) pada menu pilihan skema pembayaran | Kewajiban pembayaran awal ditetapkan penuh sesuai keseluruhan biaya sewa | Sesuai ekspektasi | Berhasil |
+| 30 | Pemicuan jendela pembayaran Midtrans Snap | Klik tombol **"Bayar Sekarang (Midtrans)"** pada portal pembayaran reservasi | Jendela *pop-up* Midtrans Snap tampil memuat tagihan dan kanal pembayaran aktif | Sesuai ekspektasi | Berhasil |
+| 31 | Penutupan jendela Snap sebelum transfer | Tutup jendela *pop-up* Midtrans sebelum menyelesaikan transfer | Pesanan berstatus *pending* dan penguncian jadwal mencegah benturan kamar ganda | Sesuai ekspektasi | Berhasil |
+| 32 | Pelunasan reservasi hingga terverifikasi Midtrans | Selesaikan pembayaran transaksi melalui simulator Bank BCA *Virtual Account* | Status pesanan terverifikasi otomatis dan penguncian kamar tercatat di sistem | Sesuai ekspektasi | Berhasil |
 | **Domain IV: Portal Penyewa Aktif, Tagihan & Keluhan** | | | | | |
-| 33 | Menampilkan dasbor ringkasan hunian | Buka halaman `/penyewa/dashboard` setelah status penghuni diaktifkan | Layar menampilkan nomor kamar, sisa masa sewa, dan ringkasan tagihan berjalan | Sesuai ekspektasi | Berhasil |
-| 34 | Menampilkan daftar riwayat tagihan sewa | Klik menu tagihan penyewa pada bilah navigasi portal penghuni | Sistem menampilkan daftar seluruh tagihan sewa bulanan beserta lencana statusnya | Sesuai ekspektasi | Berhasil |
-| 35 | Menampilkan rincian komponen *invoice* | Klik salah satu kartu tagihan yang berstatus belum dibayar | Sistem menampilkan rincian nominal sewa pokok, biaya denda, dan tanggal jatuh tempo | Sesuai ekspektasi | Berhasil |
-| 36 | Pelunasan tagihan sewa via Midtrans Snap | Klik tombol "Bayar Tagihan" lalu selesaikan pembayaran melalui *Virtual Account* | *Webhook* Midtrans memvalidasi transaksi dan status tagihan langsung berubah menjadi lunas | Sesuai ekspektasi | Berhasil |
-| 37 | Pengunduhan kuitansi resmi berformat PDF | Klik tombol cetak nota pada baris transaksi yang telah berstatus lunas | Sistem menghasilkan dan mengunduh dokumen kuitansi digital resmi berformat PDF | Sesuai ekspektasi | Berhasil |
-| 38 | Pengajuan laporan keluhan fasilitas kamar | Pilih kategori kerusakan dan tulis deskripsi kendala pada formulir keluhan | Tiket keluhan tersimpan di basis data dan langsung tampil pada daftar keluhan di dasbor admin | Sesuai ekspektasi | Berhasil |
-| 39 | Pengajuan keluhan disertai lampiran foto | Unggah berkas foto bukti kerusakan berformat `.jpg` dengan ukuran 1 MB | Foto berhasil disimpan ke direktori penyimpanan dan tertaut pada tiket keluhan terkait | Sesuai ekspektasi | Berhasil |
-| 40 | Validasi penolakan berkas bukan gambar | Unggah berkas dokumen berformat `.pdf` atau `.docx` pada kolom foto keluhan | Sistem menolak berkas dan menampilkan peringatan bahwa format lampiran harus berupa gambar | Sesuai ekspektasi | Berhasil |
-| 41 | Pemantauan status penyelesaian keluhan | Buka halaman keluhan setelah status tiketnya diperbarui oleh admin menjadi "Selesai" | Penghuni dapat melihat lencana hijau berstatus "Selesai" beserta catatan tindak lanjut perbaikan | Sesuai ekspektasi | Berhasil |
+| 33 | Menampilkan dasbor ringkasan hunian | Buka `/penyewa/dashboard` menggunakan akun penyewa yang telah aktif | Layar menampilkan informasi kamar, status jaminan, tagihan, serta grafik sewa | Sesuai ekspektasi | Berhasil |
+| 34 | Menampilkan daftar riwayat tagihan sewa | Buka menu Tagihan Saya pada bilah samping portal penyewa | Sistem menampilkan kartu ringkasan serta tabel daftar tagihan tiap periode | Sesuai ekspektasi | Berhasil |
+| 35 | Menampilkan rincian komponen *invoice* | Klik tautan **"Detail / Bayar"** pada baris tagihan di portal penyewa | Sistem menampilkan rincian pokok sewa, denda bila ada, dan jatuh tempo | Sesuai ekspektasi | Berhasil |
+| 36 | Pelunasan tagihan sewa via Midtrans Snap | Buka detail tagihan lalu bayar melalui jendela Midtrans (*Virtual Account* BCA) | *Webhook* Midtrans memvalidasi transaksi sehingga status tagihan menjadi lunas | Sesuai ekspektasi | Berhasil |
+| 37 | Pengunduhan kuitansi resmi berformat PDF | Buka halaman cetak nota tagihan lunas lalu klik tombol unduh PDF | Kuitansi digital berukuran A5 berstempel lunas berhasil diunduh via peramban | Sesuai ekspektasi | Berhasil |
+| 38 | Pengajuan laporan keluhan fasilitas kamar | Tekan tombol buat keluhan, pilih kategori, lalu kirim uraian kerusakan | Tiket keluhan tersimpan di basis data dan tampil pada daftar aduan admin | Sesuai ekspektasi | Berhasil |
+| 39 | Pengajuan keluhan disertai lampiran foto | Unggah berkas gambar bukti kerusakan saat mengisi formulir keluhan | Berkas gambar tersimpan aman dan terhubung ke tiket keluhan terkait | Sesuai ekspektasi | Berhasil |
+| 40 | Validasi penolakan berkas bukan gambar | Coba unggah berkas `.pdf` atau `.docx` pada kolom unggah foto keluhan | Sistem menolak berkas dan memberi peringatan agar memilih berkas gambar | Sesuai ekspektasi | Berhasil |
+| 41 | Pemantauan status penyelesaian keluhan | Buka halaman `/penyewa/keluhan` setelah admin memperbarui status tiket | Lencana status keluhan diperbarui menjadi "Selesai" beserta catatan admin | Sesuai ekspektasi | Berhasil |
 | **Domain V: Administrator & Manajemen Operasional** | | | | | |
-| 42 | Menampilkan kartu ringkasan operasional | Buka halaman utama `/admin/dashboard` menggunakan akun penjaga kost | Kartu indikator okupansi kamar, total pemasukan, pengeluaran, dan keluhan tampil akurat | Sesuai ekspektasi | Berhasil |
-| 43 | Penambahan data unit kamar baru | Masukkan nomor kamar, lantai, kategori tipe, dan tarif pada formulir tambah kamar | Data kamar baru tersimpan di basis data dan langsung tampil pada katalog halaman depan | Sesuai ekspektasi | Berhasil |
-| 44 | Pembaruan tarif dan spesifikasi kamar | Ubah nominal harga sewa dan deskripsi inventaris pada salah satu unit kamar | Perubahan data berhasil disimpan dan informasi tarif di halaman katalog ikut diperbarui | Sesuai ekspektasi | Berhasil |
-| 45 | Pencegahan hapus kamar yang sedang dihuni | Tekan tombol hapus pada unit kamar yang masih memiliki penghuni aktif | Sistem menolak penghapusan data demi menjaga keutuhan relasi riwayat transaksi sewa | Sesuai ekspektasi | Berhasil |
-| 46 | Pengelolaan data master fasilitas kost | Tambahkan data fasilitas umum baru beserta foto dokumentasinya pada menu fasilitas | Data sarana baru berhasil disimpan dan tampil pada halaman daftar fasilitas publik | Sesuai ekspektasi | Berhasil |
-| 47 | Konfirmasi aktivasi reservasi masuk | Klik tombol konfirmasi pada pesanan kamar yang telah melunasi uang muka dan verifikasi KTP | Status pemohon berubah menjadi penyewa aktif dan pemberitahuan aktivasi dikirim via WhatsApp Fonnte | Sesuai ekspektasi | Berhasil |
-| 48 | Pencatatan pelunasan tagihan secara tunai | Klik tombol konfirmasi pembayaran pada daftar tagihan penghuni yang membayar tunai | Status tagihan berubah menjadi lunas, kas masuk tercatat di pembukuan, dan nota digital diterbitkan | Sesuai ekspektasi | Berhasil |
-| 49 | Penonaktifan status hunian (*check-out*) | Klik tombol nonaktifkan pada data penghuni yang masa kontrak sewanya telah berakhir | Status akun penyewa berubah menjadi nonaktif dan riwayat sewanya tersimpan di arsip | Sesuai ekspektasi | Berhasil |
-| 50 | Pembaruan status kamar pasca-inspeksi | Ubah status unit kamar menjadi "Tersedia" setelah pemeriksaan kebersihan kamar selesai | Status kamar kembali menjadi kosong di katalog publik dan siap dipesan oleh calon penyewa baru | Sesuai ekspektasi | Berhasil |
-| 51 | Pengelolaan tindak lanjut tiket keluhan | Buka tiket aduan masuk, periksa foto kerusakan, lalu ubah statusnya menjadi "Diproses" | Perubahan status tiket tersimpan dan dapat langsung dipantau oleh penghuni yang melapor | Sesuai ekspektasi | Berhasil |
-| 52 | Membalas pesan pengunjung pada *Guest Chat* | Pilih antrean obrolan tamu pada panel admin, ketik jawaban, lalu tekan tombol kirim | Balasan pesan terkirim secara langsung ke jendela obrolan pengunjung di halaman publik | Sesuai ekspektasi | Berhasil |
-| 53 | Pencatatan pengeluaran operasional kost | Masukkan rincian biaya perawatan gedung dan nominal pengeluaran pada menu pengeluaran | Catatan kas keluar tersimpan dan otomatis memperbarui perhitungan laba bersih bulanan | Sesuai ekspektasi | Berhasil |
-| 54 | Ekspor laporan keuangan ke PDF dan Excel | Pilih rentang periode bulan laporan, lalu tekan tombol "Ekspor Excel" dan "Unduh PDF" | Dokumen rekapitulasi arus kas bulanan berhasil terunduh dalam format Excel maupun PDF dengan rapi | Sesuai ekspektasi | Berhasil |
+| 42 | Menampilkan kartu ringkasan operasional | Buka halaman utama `/admin/dashboard` setelah autentikasi admin berhasil | Delapan kartu indikator, grafik pemasukan, dan diagram status kamar tampil akurat | Sesuai ekspektasi | Berhasil |
+| 43 | Penambahan data unit kamar baru | Isi nomor kamar, lantai, tipe, fasilitas, dan tarif melalui formulir `/admin/kamar` | Unit kamar baru tersimpan di basis data dan langsung muncul pada katalog | Sesuai ekspektasi | Berhasil |
+| 44 | Pembaruan tarif dan spesifikasi kamar | Sunting nominal tarif dan fasilitas pada salah satu unit kamar | Perubahan tarif tersimpan dan tampilan harga pada katalog publik ikut berubah | Sesuai ekspektasi | Berhasil |
+| 45 | Pencegahan hapus kamar yang sedang dihuni | Tekan tombol hapus pada kamar yang masih memiliki penyewa atau reservasi aktif | Sistem menolak penghapusan untuk menjaga keutuhan riwayat transaksi sewa | Sesuai ekspektasi | Berhasil |
+| 46 | Pengelolaan data master fasilitas kost | Tambahkan data fasilitas baru berisi nama, ikon emoji, dan deskripsi di `/admin/fasilitas` | Fasilitas baru tersimpan ke tabel master dan muncul di daftar fasilitas publik | Sesuai ekspektasi | Berhasil |
+| 47 | Konfirmasi aktivasi reservasi masuk | Buka detail reservasi terbayar, cocokkan KTP fisik saat kedatangan, lalu konfirmasi | Status akun berubah menjadi penyewa aktif dan notifikasi dikirim via Fonnte serta *email* | Sesuai ekspektasi | Berhasil |
+| 48 | Pencatatan pelunasan tagihan secara tunai | Buka detail tagihan berjalan lalu klik konfirmasi pembayaran tunai di panel admin | Status tagihan langsung lunas, kas tercatat, dan nota digital siap dicetak | Sesuai ekspektasi | Berhasil |
+| 49 | Prosedur *checkout* dan penonaktifan penyewa | Jalankan formulir *checkout* bagi penghuni dengan nol tunggakan pada `/admin/penyewa` | Status akun berubah nonaktif, deposit selesai diproses, dan kamar menunggu inspeksi | Sesuai ekspektasi | Berhasil |
+| 50 | Pembaruan status kamar pasca-inspeksi | Ubah status unit kamar menjadi "Tersedia" setelah inspeksi fisik kebersihan selesai | Unit kamar terbuka kembali pada katalog publik untuk menerima pesanan baru | Sesuai ekspektasi | Berhasil |
+| 51 | Pengelolaan tindak lanjut tiket keluhan | Buka detail pengaduan masuk di `/admin/keluhan` dan perbarui status menjadi "Diproses" | Status tiket diperbarui dan langsung terlihat pada portal keluhan penyewa | Sesuai ekspektasi | Berhasil |
+| 52 | Membalas pesan pengunjung pada *Guest Chat* | Pilih utas tamu di `/admin/guest-chats`, tulis balasan, lalu tekan tombol kirim | Balasan pesan admin terkirim dan langsung muncul pada jendela obrolan tamu | Sesuai ekspektasi | Berhasil |
+| 53 | Pencatatan pengeluaran operasional kost | Masukkan nama biaya, kategori, nominal, dan tanggal pada menu `/admin/pengeluaran` | Transaksi kas keluar tersimpan dan memperbarui saldo bersih pada laporan kas | Sesuai ekspektasi | Berhasil |
+| 54 | Ekspor laporan keuangan ke PDF dan Excel | Pilih filter bulan, tahun, dan status di `/admin/laporan`, lalu klik Excel atau PDF | Berkas rekapitulasi arus kas bulanan berhasil terunduh dalam format CSV dan PDF | Sesuai ekspektasi | Berhasil |
 | **Domain VI: Otomasi Task Scheduler, Denda & API Eksternal** | | | | | |
-| 55 | Penerbitan tagihan sewa otomatis tanggal 1 | Jalankan perintah konsol `tagihan:generate-bulanan` melalui penjadwal tugas Laravel | Tagihan sewa periode bulan berjalan otomatis diterbitkan untuk seluruh penghuni aktif | Sesuai ekspektasi | Berhasil |
-| 56 | Pencegahan penerbitan tagihan ganda | Jalankan kembali perintah `tagihan:generate-bulanan` pada periode bulan yang sama | Sistem memeriksa tagihan yang sudah terbit dan tidak membuat duplikasi *invoice* pada bulan tersebut | Sesuai ekspektasi | Berhasil |
-| 57 | Pemeriksaan masa tenggang tanggal 10 dan denda *flat* 5% lintas bulan | Jalankan perintah *scheduler* pada tagihan belum lunas yang melewati tanggal 10 dan melintasi pergantian bulan | Sistem menetapkan status terlambat setelah tanggal 10 dan menambahkan denda *flat* 5% satu kali saat melewati pergantian bulan | Sesuai ekspektasi | Berhasil |
-| 58 | Penanganan sifat idempoten perhitungan denda | Jalankan kembali perintah *scheduler* denda secara berulang pada hari yang sama | Nilai denda tetap konsisten sesuai aturan tanpa terjadi penggandaan nominal yang keliru | Sesuai ekspektasi | Berhasil |
-| 59 | Pengiriman pengingat tagihan via WhatsApp Fonnte | Jalankan proses penerbitan tagihan bulanan yang terhubung dengan layanan API Fonnte | Pesan WhatsApp berisi rincian *invoice* dan tanggal jatuh tempo berhasil diterima di nomor ponsel penyewa | Sesuai ekspektasi | Berhasil |
-| 60 | Pengiriman dokumen tagihan via Email SMTP | Jalankan proses pengiriman surat tagihan melalui antrean *server* (*message queue*) | Surat elektronik resmi berisi rincian biaya sewa dan tautan pembayaran berhasil masuk ke kotak masuk *email* penyewa | Sesuai ekspektasi | Berhasil |
+| 55 | Penerbitan tagihan sewa otomatis tanggal 1 | Jalankan perintah `tagihan:generate-bulanan` melalui penjadwal tugas Laravel | Tagihan sewa periode berjalan diterbitkan otomatis bagi seluruh penyewa aktif | Sesuai ekspektasi | Berhasil |
+| 56 | Pencegahan penerbitan tagihan ganda | Jalankan ulang `tagihan:generate-bulanan` pada periode bulan yang sama | Sistem mendeteksi faktur yang sudah terbit dan mencegah pembuatan duplikat | Sesuai ekspektasi | Berhasil |
+| 57 | Pemeriksaan tanggal 10 dan denda *flat* 5% lintas bulan | Jalankan `tagihan:proses-keterlambatan` pada tagihan lewat tanggal 10 hingga berganti bulan | Status terlambat ditandai setelah tanggal 10 dan denda *flat* 5% diterapkan lintas bulan | Sesuai ekspektasi | Berhasil |
+| 58 | Penanganan sifat idempoten perhitungan denda | Jalankan ulang perintah `tagihan:proses-keterlambatan` berulang kali di hari sama | Nominal denda hanya diterapkan satu kali tanpa penggandaan nilai yang keliru | Sesuai ekspektasi | Berhasil |
+| 59 | Pengiriman pengingat tagihan via WhatsApp Fonnte | Jalankan penerbitan tagihan otomatis yang memicu API `FonnteService` | Pesan WhatsApp berisi rincian nomor tagihan dan jatuh tempo terkirim ke penyewa | Sesuai ekspektasi | Berhasil |
+| 60 | Pengiriman dokumen tagihan via Email SMTP | Jalankan pemrosesan antrean surat elektronik `TagihanBulanMail` di *server* | Surat elektronik berisi rincian tagihan sewa dan tautan masuk terkirim ke penyewa | Sesuai ekspektasi | Berhasil |
 
 <br>
 
-Berdasarkan hasil pengujian pada Tabel 4.1, seluruh 60 skenario uji fungsional berhasil dijalankan sesuai spesifikasi kebutuhan tanpa kendala teknis. Setiap proses validasi formulir, penguncian transaksi kamar dengan prinsip ACID, hingga pertukaran data dengan layanan Midtrans, Fonnte, dan SMTP beroperasi secara presisi di *server*. Hasil evaluasi wawancara bersama penjaga dan penghuni kost turut mengonfirmasi efektivitas sistem dalam mempermudah pemantauan hunian, penerbitan tagihan otomatis, serta verifikasi pembayaran sewa secara akurat.
+Seluruh 60 skenario uji pada Tabel 4.1 berjalan sesuai spesifikasi tanpa kendala fungsional yang menghambat operasi utama. Penguncian transaksi ACID, token dan *webhook* Midtrans, penjadwalan otomatis, serta notifikasi Fonnte dan SMTP bekerja selaras dalam satu alur. Tahap selanjutnya menguji aplikasi langsung kepada penjaga kost dan lima penghuni lewat wawancara lapangan.
 
 <br>
 
 ## 4.5 Hasil Wawancara
-Pengujian penerimaan pengguna (*User Acceptance Testing*) dilaksanakan untuk mengukur kelayakan operasional sistem informasi Asri Boarding House dengan melibatkan pengelola operasional senior dan lima mahasiswa penghuni kost aktif. Seluruh rangkaian evaluasi dijalankan melalui uji coba langsung berdampingan (*side-by-side usability testing*) serta wawancara semiterstruktur yang didokumentasikan melalui rekaman suara sebagai bukti otentik pengujian. Ruang lingkup wawancara ini meninjau aspek kejelasan katalog daring, formulir reservasi bertahap, pembayaran digital Midtrans, kuitansi instan, hingga pembukuan kas harian.
+Pengujian penerimaan pengguna (*User Acceptance Testing*) mengevaluasi kesiapan operasional aplikasi bersama penjaga kost senior serta lima mahasiswa penghuni aktif Asri Boarding House. Evaluasi dilakukan melalui uji coba langsung (*side-by-side usability testing*) disertai wawancara semiterstruktur yang direkam secara audio sebagai bukti lapangan. Aspek yang diuji mencakup kejelasan katalog publik, alur reservasi, pembayaran Midtrans, penerbitan kuitansi digital, hingga pembukuan kas harian.
 
 <br>
 
 1. Wawancara dengan Penjaga Kost  
-Sesi evaluasi bersama Bapak Asep difokuskan untuk menguji fungsionalitas panel pengelola serta kemudahan operasional harian kost setelah 20 tahun terbiasa menggunakan buku besar manual. Seluruh dialog berlangsung secara tatap muka di kantor pengelola dengan rekaman audio sebagai bukti verifikasi yang otentik.
+Sesi bersama Bapak Asep menguji panel administrator dan efektivitas pengelolaan operasional harian setelah dua puluh tahun memakai buku besar manual. Wawancara berlangsung tatap muka di ruang kerja pengelola dengan rekaman suara guna menangkap setiap catatan evaluasi secara utuh.
 
 <br>
 
@@ -1690,12 +1675,12 @@ Sesi evaluasi bersama Bapak Asep difokuskan untuk menguji fungsionalitas panel p
 
 <br>
 
-Berdasarkan hasil wawancara pada Tabel 4.2, Bapak Asep memberikan skor kepuasan 9,5 dari skala 10 karena antarmuka web dan tema OLED Black Dark Mode terbukti ramah bagi penglihatan pengelola senior. Rekapitulasi kas otomatis memangkas durasi pembukuan dari berhari-hari menjadi hitungan detik serta menghapus risiko selisih kas fisik dengan pemilik hunian. Aturan denda flat 5% dinilai tepat mendisiplinkan penyewa secara manusiawi, sementara status karantina kamar pasca-checkout terbukti krusial mencegah komplain pemesanan sebelum unit selesai dibersihkan.
+Melalui evaluasi pada Tabel 4.2, Bapak Asep memberi skor 9,5 dari 10 karena antarmuka dan *OLED Dark Mode* nyaman dibaca. Perhitungan kas otomatis memangkas waktu tutup buku bulanan dari hitungan hari menjadi detik tanpa selisih uang fisik. Kebijakan denda *flat* 5% dinilai adil untuk menertibkan pembayaran, sementara penguncian kamar pasca-*checkout* membantu pengelola membersihkan unit sebelum dibuka kembali.
 
 <br>
 
 2. Hasil Wawancara dengan Arjun  
-Wawancara dengan Arjun selaku mahasiswa UNDIP menggali pengalaman penghuni lama dalam menelusuri katalog kamar dan menyelesaikan transaksi sewa lewat m-Banking. Sesi pengujian mandiri ini direkam secara audio guna memastikan seluruh impresi penggunaan antarmuka tercatat secara utuh.
+Wawancara bersama Arjun selaku mahasiswa UNDIP meninjau pengalaman penghuni lama saat menelusuri katalog dan menyelesaikan transaksi lewat *m-Banking*. Seluruh sesi uji direkam secara audio agar tanggapan terhadap setiap layar tercatat apa adanya.
 
 <br>
 
@@ -1716,12 +1701,12 @@ Wawancara dengan Arjun selaku mahasiswa UNDIP menggali pengalaman penghuni lama 
 
 <br>
 
-Berdasarkan hasil wawancara pada Tabel 4.3, Arjun memberikan skor kepuasan 8,5 dari skala 10 dan menilai katalog Neo-Brutalism berhasil meniadakan keharusan survei fisik berkat kejelasan foto kamar serta badge ketersediaan hijau. Integrasi BCA Virtual Account Midtrans mempermudah transaksi instan tanpa kirim resi manual, didukung kuitansi format A5 resmi yang praktis untuk laporan sewa ke orang tua. Responden menyarankan penambahan fitur pengingat otomatis via WhatsApp pada H-3 sebelum tanggal 10 agar mahasiswa yang memiliki jadwal kuliah padat tidak terlambat membayar tagihan.
+Pada Tabel 4.3, Arjun mencatat skor 8,5 dari 10 dan menilai katalog *Neo-Brutalism* mempermudah pengecekan kamar kosong tanpa survei fisik. Integrasi *Virtual Account* Bank BCA di Midtrans memangkas konfirmasi pembayaran tanpa kirim foto resi. Kehadiran nota A5 resmi juga praktis diteruskan ke orang tua. Sebagai pengembangan lanjutan, Arjun menyarankan pengingat WhatsApp otomatis pada H-3 sebelum jatuh tempo tanggal 10.
 
 <br>
 
 3. Hasil Wawancara dengan Farrel  
-Pengujian bersama Farrel, penghuni kost yang berkuliah di USM, menyoroti perspektif mahasiswa perantau luar kota saat mengakses sistem reservasi melalui ponsel Android. Seluruh proses tanya jawab didokumentasikan lewat rekaman suara guna merekam pengalaman navigasi di layar seluler secara presisi.
+Pengujian bersama Farrel dari USM mengamati pengalaman mahasiswa perantau saat memesan kamar menggunakan peramban ponsel Android. Tanya jawab direkam secara langsung guna mencatat kendala navigasi pada layar ponsel berukuran ringkas.
 
 <br>
 
@@ -1742,12 +1727,12 @@ Pengujian bersama Farrel, penghuni kost yang berkuliah di USM, menyoroti perspek
 
 <br>
 
-Merujuk pada Tabel 4.4, Farrel memberikan nilai kepuasan 7,0 dari skala 10 dan mengapresiasi kemudahan akses via ponsel Android yang membantu mahasiswa perantau memesan kamar dari luar kota. Pelunasan tagihan mandiri lewat portal web dinilai sangat praktis karena menghilangkan antrean tarik uang tunai di ATM malam hari. Responden menyarankan pengembangan aplikasi *mobile* khusus serta penambahan fitur kontrak sewa digital (*e-contract*) agar akses dari ponsel lebih ringkas tanpa harus membuka peramban web.
+Tabel 4.4 menunjukkan Farrel memberikan nilai 7,0 dari 10 karena aplikasi sangat memudahkan pemesanan jarak jauh sekaligus menghapus ketergantungan pada antrean ATM malam hari. Tampilan responsif pada ponsel dinilai baik, meski tombol menu riwayat pembayaran masih perlu sedikit guliran layar samping saat pertama kali dicari. Ia mengusulkan pembuatan aplikasi *mobile* khusus serta penyediaan fitur kontrak sewa digital (*e-contract*) agar akses bulanan lebih cepat tanpa membuka peramban.
 
 <br>
 
 4. Hasil Wawancara dengan Iman  
-Wawancara bersama Iman selaku mahasiswa UDINUS membedah keandalan pencatatan pembayaran digital pada portal penghuni serta transparansi riwayat mutasi bulanan. Sesi interaksi diuji langsung pada laptop dengan bukti rekaman audio untuk memvalidasi tanggapan pengguna.
+Evaluasi bersama Iman selaku mahasiswa UDINUS berfokus pada transparansi pencatatan mutasi serta ketahanan arsip kuitansi pembayaran di portal penyewa. Pengujian dijalankan langsung melalui perangkat laptop dengan bukti rekaman suara selama diskusi berlangsung.
 
 <br>
 
@@ -1768,12 +1753,12 @@ Wawancara bersama Iman selaku mahasiswa UDINUS membedah keandalan pencatatan pem
 
 <br>
 
-Berdasarkan hasil wawancara pada Tabel 4.5, Iman memberikan skor kepuasan 9,0 dari skala 10 atas keandalan pencatatan mutasi otomatis yang menghapus risiko sengketa kuitansi hilang. Format kuitansi PDF A5 berstempel digital dan tabel riwayat sewa bulanan dinilai sangat akuntabel sebagai arsip pribadi mahasiswa tingkat akhir. Saran teknis yang diberikan berfokus pada pemeliharaan stabilitas server hosting agar performa situs tetap responsif saat terjadi lonjakan akses serentak di awal bulan.
+Dari catatan Tabel 4.5, Iman menilai sistem sangat layak dengan skor 9,0 dari 10 karena catatan transaksi tersimpan otomatis dan mencegah sengketa nota hilang. Ketersediaan kuitansi PDF format A5 serta tabel riwayat pembayaran bulanan dinilai rapi untuk keperluan arsip pribadi. Ia menambahkan catatan agar performa server tetap terjaga stabil saat seluruh penghuni mengakses halaman penagihan secara bersamaan pada tanggal 1 awal bulan.
 
 <br>
 
 5. Hasil Wawancara dengan Ammar  
-Pengujian bersama Ammar dari PKN STAN meninjau respon mahasiswa baru saat menavigasi alur pemesanan dan pembayaran via peramban Safari di iPhone. Diskusi pengujian terekam dalam audio guna menangkap masukan terkait integrasi tautan pesan WhatsApp secara mendalam.
+Sesi bersama Ammar dari PKN STAN menguji alur pemesanan serta pelunasan kamar melalui peramban Safari pada perangkat iPhone. Diskusi direkam dalam bentuk audio untuk menghimpun kesan pengguna baru terhadap kejelasan formulir dan tautan notifikasi.
 
 <br>
 
@@ -1794,12 +1779,12 @@ Pengujian bersama Ammar dari PKN STAN meninjau respon mahasiswa baru saat menavi
 
 <br>
 
-Mengacu pada Tabel 4.6, Ammar memberikan nilai kepuasan 7,5 dari skala 10 dan menilai antarmuka web sangat nyaman diakses menggunakan peramban Safari pada iPhone. Kolom kontak darurat wali memberikan ketenangan bagi keluarga di daerah asal, sementara sistem pembayaran daring memudahkan pelunasan sewa saat libur semester di luar kota. Responden mengusulkan penyematan tautan langsung pada pesan WhatsApp agar penghuni dapat langsung membuka halaman pembayaran tagihan dalam satu kali klik.
+Hasil pada Tabel 4.6 menunjukkan skor 7,5 dari 10 dengan pujian atas kelancaran peramban Safari iPhone. Kehadiran kontak darurat wali turut memberi ketenangan bagi keluarga di luar kota. Fitur pembayaran daring juga mempermudah penyewa melunasi tagihan saat sedang pulang kampung selama libur semester. Agar lebih cepat, Ammar mengusulkan penyisipan tautan langsung ke portal tagihan di dalam pesan WhatsApp.
 
 <br>
 
 6. Hasil Wawancara dengan Sindhu  
-Sesi wawancara bersama Sindhu, penghuni kost berstatus mahasiswa UI, difokuskan pada pengujian kenyamanan navigasi dasbor portal hunian serta kecepatan verifikasi pembayaran instan. Percakapan evaluasi didokumentasikan lewat rekaman suara untuk menjaring saran terkait panduan interaktif bagi pengguna baru.
+Wawancara bersama Sindhu selaku mahasiswa UI meneliti kejelasan navigasi awal bagi pengguna baru serta kecepatan verifikasi transaksi di portal penghuni. Sesi evaluasi didokumentasikan lewat rekaman suara guna merangkum kesan antarmuka dan saran panduan pengguna.
 
 <br>
 
@@ -1820,11 +1805,11 @@ Sesi wawancara bersama Sindhu, penghuni kost berstatus mahasiswa UI, difokuskan 
 
 <br>
 
-Berdasarkan hasil wawancara pada Tabel 4.7, Sindhu memberikan skor kepuasan 8,0 dari skala 10 dan memuji kesesuaian visual kamar pada web dengan kondisi fisik di lapangan. Transparansi rincian biaya tanpa biaya tersembunyi mempermudah pengelolaan bujet bulanan mahasiswa, serta pelunasan daring menghapus rasa canggung bertatap muka saat membayar sewa. Sebagai penyempurnaan, responden menyarankan penambahan tur panduan visual singkat bagi pengguna baru saat pertama kali masuk ke portal hunian.
+Evaluasi pada Tabel 4.7 mencatat skor 8,0 dari 10 atas kesesuaian foto katalog dengan kondisi kamar di Asri Boarding House. Rincian tarif yang terbuka serta pembayaran daring menghilangkan rasa canggung saat membayar sewa bulanan. Sebagai perbaikan awal, Sindhu menyarankan tur panduan visual singkat bagi pengguna yang baru masuk ke portal penyewa.
 
 <br>
 
-Pada skala 10, evaluasi wawancara mencatat skor kepuasan 9,5 dari penjaga kost dan rata-rata 8,0 dari lima penghuni. Pekerjaan tutup buku bulanan pengelola kini selesai dalam hitungan detik tanpa selisih kas fisik. Sementara itu, penghuni dapat memesan kamar jarak jauh dan melunasi sewa via *Virtual Account* Midtrans yang terverifikasi otomatis lengkap dengan kuitansi PDF resmi. Responden turut menyarankan penambahan pengingat H-3 disertai tautan bayar langsung di WhatsApp, aplikasi *mobile* dengan tur panduan visual pengguna baru, serta fitur kontrak sewa digital. Temuan lapangan ini menegaskan kelayakan sistem dalam menunjang operasional harian Asri Boarding House.
+Penilaian lapangan mencatat skor kepuasan 9,5 dari penjaga kost senior dan rata-rata 8,0 dari lima penghuni aktif. Pekerjaan tutup buku bulanan kini tuntas dalam hitungan detik tanpa selisih uang tunai. Di sisi penyewa, pemesanan jarak jauh dan bayar lewat *Virtual Account* Midtrans berlangsung instan lengkap dengan nota digital PDF. Sejumlah saran pengguna, mulai dari pengingat WhatsApp H-3 bertautan langsung, tur panduan visual portal, optimasi *server* awal bulan, hingga kontrak sewa digital dan aplikasi *mobile*, dirangkum pada Bab 5.
 
 <br>
 
@@ -1839,21 +1824,21 @@ Pada skala 10, evaluasi wawancara mencatat skor kepuasan 9,5 dari penjaga kost d
 <br>
 
 ## 5.1 Kesimpulan
-Arsitektur sistem informasi manajemen kost Asri Boarding House dirancang menggunakan *use case diagram*, ERD, *activity diagram*, dan *flowchart*. Skema basis data MySQL dan pembagian tiga aktor pengguna menyatukan pengelolaan 32 unit kamar beserta pembukuan kas dalam satu pusat data. Rancangan terpusat ini mencegah benturan pesanan kamar ganda sekaligus menggantikan pencatatan manual.
+Perancangan sistem informasi Asri Boarding House memadukan *use case diagram*, ERD, *activity diagram*, serta *flowchart* untuk menyatukan pengelolaan 32 unit kamar, penagihan sewa bulanan, dan pencatatan kas. Pemodelan tersebut membagi hak akses ke dalam tiga aktor utama: calon penyewa, admin (penjaga kost), dan penyewa aktif. Pada skema basis data MySQL, struktur tabel dipisah menjadi modul inti dan modul pendukung, disertai penyimpanan *snapshot* tarif kontrak tiap penghuni. Alur kerja terpadu ini menyingkirkan pembukuan kertas yang sebelumnya tercecer. Di sisi antarmuka, gaya *Neo-Brutalism* menyusun empat kelompok halaman agar setiap peran hanya berhadapan dengan fitur yang relevan.
 
-Aplikasi dibangun menggunakan kerangka kerja Laravel dengan penguncian baris basis data (`lockForUpdate`) serta integrasi pembayaran Midtrans Snap. Penjadwal tugas (*cron job*) secara otomatis menerbitkan tagihan bulanan, menghitung denda, dan mengirim pengingat via WhatsApp serta *email*. Seluruh fitur tersebut berjalan stabil berdasarkan pengujian 60 skenario *black box*.
+Aplikasi web dibangun memakai Laravel 12 berpola *Service Layer* yang dikawal `RoleMiddleware`. Pada basis data MySQL InnoDB, `lockForUpdate()` dipadukan dengan pemeriksa benturan jadwal dan kunci kamar pasca-*checkout* guna mencegah *double booking*. Pelunasan sewa memanfaatkan Midtrans Snap yang memverifikasi *webhook* SHA-512 secara idempoten sebelum menerbitkan kuitansi PDF berukuran A5. Untuk penagihan berkala, *cron job* menerbitkan faktur serentak tiap tanggal 1 lalu memantau masa tenggang tanggal 10. Tunggakan yang melewati pergantian bulan dikenai denda *flat* 5% satu kali. Pesan tagihan dan aktivasi hunian tersebut langsung dikirim lewat WhatsApp Fonnte serta antrean *email* SMTP.
 
-Hasil wawancara penjaga kost mencatat skor kepuasan 9,5 dari 10 karena rekapitulasi kas bulanan selesai secara instan tanpa selisih uang. Lima mahasiswa penghuni kost memberikan rata-rata skor 8,0 dari 10 atas kepraktisan reservasi daring, pembayaran *Virtual Account*, dan kuitansi PDF. Penerapan sistem ini terbukti mempermudah operasional harian Asri Boarding House.
+Pengujian *black box* terhadap 60 skenario di enam domain operasional tuntas dengan tingkat keberhasilan 100% tanpa galat validasi ataupun transaksi. Pada evaluasi lapangan, penjaga kost memberi skor kepuasan 9,5 dari 10. Rekapitulasi kas dan laporan PDF atau Excel memangkas waktu tutup buku dari tiga sampai empat hari menjadi hitungan detik tanpa selisih uang. Sementara itu, lima mahasiswa penghuni aktif memberi rata-rata skor 8,0 dari 10. Mereka menilai pemesanan kamar jarak jauh, pelunasan *Virtual Account* tanpa unggah resi, serta pengunduhan nota PDF berjalan praktis. Temuan uji fungsional dan wawancara ini menunjukkan sistem berhasil menata proses reservasi, penagihan sewa, serta pembukuan harian Asri Boarding House.
 
 <br>
 
 ## 5.2 Saran
-Berdasarkan hasil penelitian dan evaluasi di lapangan, saran pengembangan sistem ke depannya meliputi:
-1. Sistem dapat diintegrasikan dengan perangkat IoT berupa kunci pintu pintar (*smart lock*) dan meteran listrik digital pada tiap kamar.
-2. Cakupan aplikasi dapat diperluas menjadi platform multi-cabang untuk mengelola inventaris kamar dan keuangan di cabang indekos berikutnya.
-3. Notifikasi WhatsApp sebaiknya dilengkapi pengingat H-3 jatuh tempo beserta tautan pembayaran langsung (*direct link*) menuju halaman tagihan.
-4. Pengembangan selanjutnya dapat menghadirkan aplikasi *mobile* Android dan iOS yang disertai tur panduan visual (*onboarding tour*) bagi penghuni baru.
-5. Portal web dapat ditambahkan fitur kontrak sewa digital (*e-contract*) dan *chatbot* otomatis untuk melayani calon penyewa selama 24 jam.
+Berdasarkan kendala teknis selama implementasi serta masukan pengguna pada Bab 4, pengembangan sistem berikutnya diarahkan pada lima langkah berikut:
+1. **Pengingat WhatsApp H-3 dan Tautan Bayar Langsung**: Notifikasi tagihan tanggal 1 perlu dilengkapi pengingat otomatis pada H-3 sebelum jatuh tempo tanggal 10. Pesan tersebut sebaiknya menyertakan *direct link* menuju detail tagihan di portal agar penghuni langsung melunasi sewa dalam sekali ketuk.
+2. **Panduan Visual Awal dan Perapian Tampilan Seluler**: Portal penyewa sebaiknya menampilkan panduan visual singkat (*onboarding tour*) pada *login* pertama agar penghuni baru langsung paham letak menu kuitansi dan pengaduan. Selain itu, tata letak tombol riwayat transaksi di layar ponsel serta alur reservasi lima tahap perlu diringkas agar bebas gulir samping.
+3. **Optimasi Performa *Server* dan *Caching* Awal Bulan**: Penerapan *in-memory caching* serta pengujian beban (*load testing*) pada *server hosting* perlu disiapkan untuk menjaga respons halaman penagihan tetap stabil ketika puluhan penghuni mengakses portal bersamaan tiap tanggal 1.
+4. **Kontrak Sewa Digital dan Aplikasi *Mobile***: Portal dapat dilengkapi dokumen perjanjian sewa digital (*e-contract*) guna mengarsipkan durasi hunian serta tata tertib secara resmi, lalu dikembangkan ke bentuk aplikasi *mobile* Android atau *Progressive Web App* bagi penyewa yang menginginkan akses cepat dari ponsel.
+5. **Dukungan Multi-Cabang dan Kunci Pintu Pintar**: Apabila usaha indekos berkembang ke lokasi baru, basis data dapat diperluas untuk mengelola beberapa properti dalam satu panel sekaligus diintegrasikan dengan *smart lock* yang otomatis mengikuti masa sewa aktif penghuni.
 
 <br>
 
