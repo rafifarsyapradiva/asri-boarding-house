@@ -22,7 +22,7 @@ Bagian pembuka dokumen menetapkan aturan tata letak cetak standar jurnal ilmiah 
    * `10 pt Bold`: Label penomoran gambar (`Figure 1.` sampai `Figure 5.`).
    * `10 pt Regular`: Judul keterangan gambar di bawah gambar (*centered in Caps*) dan daftar pustaka (*References*).
    * `10 pt Italic`: Nama jurnal dan judul buku pada daftar pustaka berformat IEEE.
-6. **Batas Panjang Naskah:** **Maksimal 8 halaman** cetak A-4 dua kolom (memuat **5 kelompok *Figure* utama**, **0 tabel**, dan **2.720 kata total** inklusif judul, abstrak, isi, keterangan gambar, dan daftar pustaka; terverifikasi aman di bawah batas maksimal 8 halaman).
+6. **Batas Panjang Naskah:** **Maksimal 8 halaman** cetak A-4 dua kolom (memuat **5 kelompok *Figure* utama**, **0 tabel**, dan **2.779 kata total** inklusif judul, abstrak, isi, keterangan gambar, dan daftar pustaka; terverifikasi aman di bawah batas maksimal 8 halaman).
 
 ---
 
@@ -79,20 +79,20 @@ Bab pertama terdiri atas **5 paragraf** dengan **13 kalimat rujukan berurutan `[
 ---
 
 ## TAHAP 5: BAB II. METHOD (*METODE PENELITIAN*)
-Bab kedua terdiri atas **3 paragraf naratif** dan **1 gambar bagan (`Figure 1`)** sebagai pengganti tabel, melanjutkan urutan sitasi ketat **`[14]` sampai `[20]`** tanpa pengulangan mundur dan tanpa penyebutan nama orang:
+Bab kedua terdiri atas **3 paragraf naratif (15 kalimat berirama dinamis / *burstiness*)** dan **1 gambar bagan (`Figure 1`)** sebagai pengganti tabel, melanjutkan urutan sitasi ketat **`[14]` sampai `[20]`** tanpa pengulangan mundur, tanpa penumpukan tanda kurung, dan tanpa penyebutan nama orang:
 
-* **Paragraf 1 (Lokasi, Pendekatan R&D + Studi Kasus, dan Sumber Data, Sitasi `[14]`–`[15]`):**
-  * *Kalimat 1 (`[14]`):* Studi lapangan berlangsung di Asri Boarding House, Jalan Maera Sari No. 1, Tembalang, Semarang, menerapkan pendekatan rekayasa perangkat lunak R&D dan studi kasus tunggal dengan kerangka empat fase: *input* (kendala buku besar manual 32 kamar), *process* (perancangan, pengkodean, dan pengujian), *output* (platform manajemen web terverifikasi), dan *outcome* (pembukuan akurat serta pembayaran sewa digital yang praktis).
-  * *Kalimat 2 (`[15]`):* Data primer bersumber dari wawancara tatap muka terekam bersama pengelola indekos (*the resident manager*) dan penghuni aktif, sedangkan data sekunder meliputi buku besar internal, bukti transfer, catatan biaya, daftar tarif kamar, manual teknis API, dan literatur terdahulu.
-* **Paragraf 2 & `Figure 1` (Model Waterfall, Sitasi `[16]`):**
-  * *Kalimat 3 (`[16]`):* Pengembangan aplikasi mengikuti siklus hidup perangkat lunak *Waterfall* sekuensial pada `Figure 1`, bergerak berurutan melalui *Requirement gathering and analysis*, *Design*, *Implementation*, *Integration & testing*, *Verification*, dan *Operation & maintenance*.
+* **Paragraf 1 (Lokasi, Kerangka R&D + Studi Kasus, Transkripsi Wawancara, dan Sumber Data, Sitasi `[14]`–`[15]`, 5 Kalimat):**
+  * *Kalimat 1–3 (`[14]`):* Penelitian berlangsung di Asri Boarding House Tembalang, Semarang, memadukan pendekatan rekayasa perangkat lunak R&D dengan studi kasus tunggal. Kerangka riset bergerak dari masukan (*input*) kendala buku besar manual pada 32 kamar sewa menuju proses (*process*) perancangan sistem, pengkodean, dan pengujian, hingga menghasilkan keluaran (*output*) platform web terverifikasi serta dampak (*outcome*) berupa pembukuan kas akurat dan pembayaran sewa digital yang praktis.
+  * *Kalimat 4–5 (`[15]`):* Data primer dikumpulkan melalui wawancara tatap muka bersama penjaga kost (*the caretaker*) dan mahasiswa penghuni aktif yang direkam secara audio lalu disalin menjadi transkripsi tertulis pada tahap analisis kebutuhan awal maupun evaluasi akhir. Data sekunder bersumber dari buku kas fisik, bukti transfer bank, nota pengeluaran operasional, daftar tarif kamar, dokumentasi resmi API, dan literatur akademik terkait.
+* **Paragraf 2 & `Figure 1` (Alasan Pemilihan & Tahapan Model Waterfall, Sitasi `[16]`, 3 Kalimat):**
+  * *Kalimat 6–8 (`[16]`):* Konstruksi perangkat lunak mengikuti model *Waterfall* pada `Figure 1`. Siklus sekuensial ini dipilih karena aturan pemesanan kamar dan jadwal penagihan bulanan telah terpetakan secara jelas selama studi lapangan, sehingga pengembangan berjalan bertahap melalui *requirement gathering and analysis*, *design*, *implementation*, *integration and testing*, *verification*, serta *operation and maintenance* dengan tinjauan di setiap akhir fase sebelum berlanjut ke tahap berikutnya.
   * **`Figure 1` (`Figure 1. WATERFALL SYSTEM DEVELOPMENT MODEL`):**  
     *Berkas Gambar:* `images/metode_sdlc_waterfall.png` (lebar `95%` kolom), diagram SDLC Waterfall berbahasa Inggris 6 tahapan dengan panah umpan balik.
-* **Paragraf 3 (Desain, Implementasi ACID/Midtrans/Cron, Pengujian & Evaluasi, Sitasi `[17]`–`[20]`):**
-  * *Kalimat 4 (`[17]`):* Tahap desain memetakan batas akses tiga aktor (calon penyewa, administrator, penyewa aktif) melalui diagram UML dan skema ERD MySQL InnoDB 3NF untuk tabel transaksi inti serta operasional pendukung.
-  * *Kalimat 5 (`[18]`):* Tahap implementasi berjalan di atas Laravel MVC dan MySQL InnoDB menggunakan transaksi ACID dengan *pessimistic row-level locking* (`lockForUpdate()`) guna mencegah benturan reservasi pada kamar yang sama di waktu bersamaan.
-  * *Kalimat 6 (`[19]`):* Orkestrasi pembayaran mengintegrasikan token Midtrans Snap (masa berlaku 24 jam) dan verifikasi *webhook* SHA-512 (`hash_equals()`), dipadukan perintah *cron* bulanan tanggal 1 (`tagihan:generate-bulanan`), pengecekan denda harian (`tagihan:proses-keterlambatan`), peringatan WhatsApp Fonnte, serta antrean surel SMTP.
-  * *Kalimat 7 (`[20]`):* Tahap integrasi, pengujian, dan verifikasi menguji 60 skenario *black-box* pada enam domain operasional (12 kasus autentikasi dan profil, 10 portal publik, 10 reservasi 5 tahap, 9 portal penyewa, 13 operasi admin, dan 6 penjadwal dan API), dilanjutkan pasca-peluncuran produksi dengan uji pakai berdampingan dan wawancara semi-terstruktur skala 10 poin bersama pengelola indekos serta lima mahasiswa penghuni aktif.
+* **Paragraf 3 (Prosedur Desain UML/ERD, Implementasi ACID/Midtrans/Cron, serta Pengujian & Evaluasi, Sitasi `[17]`–`[20]`, 7 Kalimat):**
+  * *Kalimat 9–10 (`[17]`):* Tahap desain memodelkan hak akses calon penyewa, penyewa aktif, dan administrator menggunakan diagram UML, serta menormalisasi struktur basis data ke dalam ERD MySQL InnoDB bentuk Normal Ketiga (3NF) yang memisahkan catatan sewa dan keuangan inti dari tabel operasional pendukung.
+  * *Kalimat 11 (`[18]`):* Tahap implementasi menggunakan *framework* Laravel MVC dan transaksi basis data ACID dengan penguncian baris pesimis `lockForUpdate()` agar permintaan pemesanan bersamaan tidak dapat mengklaim kamar yang sama.
+  * *Kalimat 12–13 (`[19]`):* Pembayaran non-tunai mengintegrasikan token Midtrans Snap berdurasi 24 jam dengan validasi tanda tangan *webhook* SHA-512 melalui fungsi `hash_equals()`. Secara paralel, *cron job* *server* mengotomatiskan penerbitan tagihan setiap tanggal 1, pemeriksaan denda lewat bulan pasca-tanggal 10, peringatan WhatsApp Fonnte, dan antrean surel SMTP.
+  * *Kalimat 14–15 (`[20]`):* Tahap integrasi, pengujian, dan verifikasi mengeksekusi 60 skenario *black-box* di enam modul fungsional (autentikasi dan profil, katalog publik, pemesanan 5 langkah, portal penyewa, operasi admin, serta penjadwal latar belakang), dilanjutkan pasca-peluncuran ke *server* produksi dengan uji pakai langsung dan wawancara semi-terstruktur skala 10 poin bersama penjaga kost serta lima mahasiswa penghuni aktif.
 
 ---
 
@@ -139,8 +139,8 @@ Bab keempat terdiri atas **3 paragraf kesimpulan murni** yang langsung menjawab 
 ---
 
 ## TAHAP 8: ACKNOWLEDGMENT (*UCAPAN TERIMA KASIH*)
-Bagian ini ditempatkan setelah kesimpulan dengan **judul tanpa nomor bab (*unnumbered heading*)** dalam **1 paragraf** tanpa penyebutan nama narasumber:
-* Penulis menyampaikan terima kasih kepada Program Studi Sistem Informasi, Fakultas Ilmu Komputer, Universitas Katolik Soegijapranata Semarang atas bimbingan akademik dan dukungan riset selama penelitian berlangsung, serta apresiasi kepada pemilik properti, pengelola indekos (*the resident manager*), dan para mahasiswa penghuni Asri Boarding House di Tembalang atas kerja sama terbuka selama wawancara lapangan dan uji coba sistem.
+Bagian ini ditempatkan setelah kesimpulan dengan **judul tanpa nomor bab (*unnumbered heading*)** dalam **1 paragraf (3 kalimat aktif berirama dinamis)** tanpa penyebutan nama narasumber:
+* Penulis menyampaikan terima kasih kepada Program Studi Sistem Informasi, Fakultas Ilmu Komputer, Universitas Katolik Soegijapranata Semarang atas bimbingan dan dukungan riset selama penelitian berlangsung, rasa terima kasih kepada pemilik properti dan penjaga kost (*the caretaker*) Asri Boarding House di Tembalang yang telah membagikan buku kas harian serta menguji platform web, serta apresiasi khusus kepada para mahasiswa penghuni aktif atas masukan jujur mereka selama uji coba lapangan.
 
 ---
 

@@ -68,35 +68,35 @@ Gunakan satu keluarga huruf **Serif Klasik** yang konsisten (*Times New Roman*, 
 |----------------------------------------------------------------------------------|
 |                                                                                  |
 |               ABSTRAK                       HASIL DAN PEMBAHASAN                 |
-|  Paragraf ringkas tentang kendala      Paragraf pembagian ruang kerja pengguna,  |
-|  32 kamar manual, tujuan riset,        alur pemesanan 5 tahap (DP 30% / penuh),  |
-|  Laravel & MySQL, pendekatan R&D       pembayaran Virtual Account Midtrans,      |
-|  model Waterfall, penguncian kamar     kuitansi PDF lunas, tagihan otomatis tgl  |
-|  otomatis, verifikasi Midtrans,        1 via WhatsApp & email, denda tetap 5%,   |
-|  kuitansi PDF, pengingat otomatis,     kelolosan 60 uji fungsi (100%), skor      |
-|  60 uji fungsi (100%), skor penjaga    Bapak Asep 9,5/10, & rata-rata 8,0/10.    |
+|  Paragraf ringkas tentang kendala      Paragraf empat ruang akses pengguna,      |
+|  sewa 32 kamar manual, solusi web      dasbor pengelola & rekap kas (Gambar 1),  |
+|  kost terintegrasi Midtrans, metode    alur pesan 5 tahap & VA Midtrans          |
+|  Waterfall dengan Laravel & MySQL,     (Gambar 2), tagihan tgl 1, jatuh tempo    |
+|  kunci status kamar otomatis,          tgl 10 & denda 5% (Gambar 3), kuitansi    |
+|  kuitansi PDF, pengingat tagihan,      PDF lunas, 60 uji fungsi (100%), serta    |
+|  60 uji fungsi (100%), skor penjaga    skor 9,5/10 dan rata-rata 8,0/10.         |
 |  kost 9,5/10, serta rata-rata 8,0/10                                             |
-|  dari lima penghuni mahasiswa.         +--------------------------------------+  |
+|  dari lima mahasiswa penghuni.         +--------------------------------------+  |
 |                                        |  Gambar 1 (Dasbor Pengelola & Kas)   |  |
 |           LATAR BELAKANG               |  Lebar penuh kolom kanan (rasio 2:1) |  |
 |  Paragraf arus perantau di Tembalang,  +--------------------------------------+  |
 |  pengelolaan 32 kamar (VIP, Deluxe,     Gambar 1 Tampilan dasbor pengelola dan   |
-|  Standar) memakai buku besar & WA               laporan kas                      |
+|  Standar) memakai buku tulis & WA               laporan kas                      |
 |  pribadi, risiko pesanan ganda,                                                  |
-|  tagih tanggal 10 yang telat, cek      +-----------------+  +-----------------+  |
-|  transfer 3-4 hari, serta perlunya     | Gambar 2        |  | Gambar 3        |  |
+|  tagih tgl 10 & denda 5% manual,       +-----------------+  +-----------------+  |
+|  rekap kas 3-4 hari, serta perlunya    | Gambar 2        |  | Gambar 3        |  |
 |  aplikasi web terpusat.                | (Alur 5 Tahap)  |  | (Halaman Tagih) |  |
 |                                        +-----------------+  +-----------------+  |
 |         METODE PENELITIAN               Gambar 2 Tampilan    Gambar 3 Tampilan   |
-|  Paragraf studi kasus di Asri           alur pemesanan       halaman tagihan     |
-|  Boarding House Jl. Maera Sari No. 1,   kamar lima tahap     bulanan penghuni    |
+|  Paragraf riset pengembangan & studi    alur pemesanan       halaman tagihan     |
+|  kasus di Asri Boarding House,          kamar lima tahap     bulanan penghuni    |
 |  wawancara penjaga kost 20 th & lima                                             |
-|  penghuni, observasi, telaah arsip                 KESIMPULAN                    |
-|  catatan sewa, tahapan Waterfall       Paragraf rangkuman tertibnya pengelolaan  |
-|  (analisis, alur 3 peran, basis data   32 kamar tanpa pesanan ganda, kelolosan   |
-|  MySQL, pembuatan web Laravel,         60 uji fungsi, skor lapangan 9,5/10 dan   |
-|  60 skenario Black Box Testing, dan    8,0/10, serta saran lanjutan (WA H-3,     |
-|  uji coba pemakaian skala 1-10).       panduan awal, kontrak sewa digital).      |
+|  penghuni, pengamatan, telaah arsip,               KESIMPULAN                    |
+|  serta alur Waterfall (analisis,       Paragraf tertibnya sewa 32 kamar tanpa    |
+|  rancangan 3 peran, pembuatan web      pesanan ganda, rekap kas hitungan detik,  |
+|  Laravel & MySQL terhubung Midtrans,   kelulusan 60 uji fitur (100%), skor       |
+|  60 uji Black Box, dan uji coba        9,5/10 dan 8,0/10, serta saran lanjutan   |
+|  lapangan berskala 1 sampai 10).       (WA H-3, panduan awal, kontrak digital).  |
 +----------------------------------------------------------------------------------+
 ```
 
@@ -125,20 +125,20 @@ Rafif Arsya Pradiva 22.N4.0014
 ### KOLOM KIRI
 
 #### `ABSTRAK`
-> Pengelolaan 32 kamar di Asri Boarding House Tembalang selama ini masih memakai buku tulis dan pesan WhatsApp pribadi. Cara manual tersebut kerap memicu pemesanan ganda saat dua calon penghuni memilih kamar yang sama. Jadwal tagih setiap tanggal 10 juga sering terlewat, sementara mencocokkan bukti transfer akhir bulan menyita waktu tiga sampai empat hari. Penelitian ini merancang dan membangun sistem manajemen kost berbasis web yang terhubung dengan layanan pembayaran daring agar pemesanan kamar hingga pencatatan kas berjalan tertib. Pengembangan aplikasi memakai kerangka kerja Laravel dan basis data MySQL dengan pendekatan penelitian pengembangan (R&D) model *Waterfall*. Sistem dibekali penguncian data kamar otomatis untuk mencegah bentrok jadwal, verifikasi pembayaran instan lewat Midtrans tanpa perlu kirim foto resi, penerbitan kuitansi PDF, serta pengingat tagihan otomatis melalui WhatsApp dan *email*. Seluruh 60 skenario pengujian fungsi (*Black Box Testing*) berjalan lancar 100%. Hasil evaluasi lapangan mencatat skor kepuasan 9,5 dari 10 dari penjaga kost karena rekap kas selesai dalam hitungan detik tanpa selisih uang, sementara lima mahasiswa penghuni memberi nilai rata-rata 8,0 dari 10.
+> Urusan sewa 32 kamar di Asri Boarding House Tembalang selama ini masih dicatat manual lewat buku tulis dan WhatsApp pribadi. Akibatnya, dua peminat kerap memesan kamar yang sama karena data ketersediaan terlambat diperbarui. Penagihan sewa setiap tanggal 10 pun rawan terlewat, sedangkan rekap bukti transfer akhir bulan memakan waktu hingga empat hari. Penelitian ini membangun sistem informasi manajemen kost berbasis web yang terintegrasi dengan gerbang pembayaran Midtrans untuk menertibkan pemesanan kamar hingga pembukuan kas. Aplikasi dikembangkan melalui tahapan metode *Waterfall* menggunakan kerangka kerja Laravel dan basis data MySQL. Saat pemesanan berlangsung, sistem otomatis mengunci status kamar pilihan agar tidak terjadi bentrok jadwal antarpeminat. Pembayaran daring pun terverifikasi instan tanpa kirim foto resi, diikuti penerbitan kuitansi PDF serta pengingat tagihan otomatis via WhatsApp dan *email*. Seluruh 60 skenario pengujian fungsi aplikasi berjalan 100% tanpa kendala. Pada uji pemakaian langsung, penjaga kost memberikan nilai 9,5 dari 10 karena rekap kas tuntas dalam hitungan detik tanpa selisih, sedangkan lima mahasiswa penghuni memberikan rata-rata 8,0 dari 10.
 
 #### `LATAR BELAKANG`
-> Setiap awal tahun kuliah, kawasan Tembalang, Semarang, selalu ramai oleh mahasiswa perantau yang mencari tempat tinggal. Di Asri Boarding House, pengelola mengurus 32 kamar tipe VIP, Deluxe, dan Standar dengan buku besar serta WhatsApp pribadi. Akibatnya, peminat dari luar kota sulit mengetahui sisa kamar kosong secara cepat. Ketika dua orang memesan kamar yang sama dalam waktu berdekatan, jadwal sewa pun mudah bentrok. Di sisi keuangan, penjaga kost harus menagih penghuni satu per satu setiap tanggal 10 dan mengecek ratusan bukti transfer selama tiga sampai empat hari di akhir bulan. Melihat kendala tersebut, dibutuhkan aplikasi web terpusat agar pemesanan kamar, penagihan bulanan, serta pencatatan kas berjalan praktis dan bebas selisih.
+> Kawasan pendidikan Tembalang di Semarang selalu dipadati mahasiswa perantau setiap tahun ajaran baru, tetapi informasi kost yang masih mengandalkan kabar dari mulut ke mulut mengharuskan mereka survei langsung ke lokasi. Kendala serupa terjadi di Asri Boarding House saat mengelola 32 kamar tipe VIP, Deluxe, dan Standar. Penjaga kost masih mencatat hunian di buku tulis sembari membalas pesan calon penyewa satu per satu lewat WhatsApp pribadi. Perubahan status kamar pun sering terlambat tercatat. Saat dua peminat memesan kamar yang sama dalam waktu berdekatan, bentrok jadwal sewa sulit dihindari. Urusan penagihan setiap tanggal 10 dan perhitungan denda keterlambatan 5% juga masih dikerjakan manual sehingga pengingat bayar kerap terlewat. Di akhir bulan, penjaga kost bahkan membutuhkan tiga sampai empat hari untuk mencocokkan uang tunai, foto bukti transfer penghuni, serta tumpukan nota belanja operasional. Kondisi ini menuntut hadirnya aplikasi web manajemen kost yang terhubung dengan pembayaran otomatis (*payment gateway*) agar pemesanan kamar, penagihan rutin, dan pembukuan kas berjalan tertib tanpa selisih.
 
 #### `METODE PENELITIAN`
-> Penelitian studi kasus ini dilakukan di Asri Boarding House, Jalan Maera Sari Nomor 1, Tembalang, Semarang. Data dikumpulkan lewat wawancara langsung bersama penjaga kost berpengalaman 20 tahun dan lima mahasiswa penghuni aktif, ditambah pengamatan aktivitas harian serta penelaahan buku catatan sewa, daftar tarif, dan nota pengeluaran. Pembangunan web mengikuti metode *Waterfall* melalui tahapan analisis kebutuhan, perancangan alur tiga peran pengguna (calon penyewa, penghuni aktif, dan pengelola) beserta struktur basis data, pembuatan aplikasi memakai Laravel dan MySQL yang terhubung ke pembayaran Midtrans serta pesan otomatis, pengujian fungsi sistem, hingga evaluasi lapangan. Kelayakan fitur diuji melalui 60 skenario *Black Box Testing*, lalu dilanjutkan uji coba langsung bersama pengelola dan penghuni dengan penilaian skala 1 sampai 10.
+> Penelitian dan pengembangan berbasis studi kasus ini dilaksanakan di Asri Boarding House, Jalan Maera Sari Nomor 1, Tembalang, Semarang. Pengumpulan data dilakukan melalui wawancara langsung bersama penjaga kost berpengalaman 20 tahun dan lima mahasiswa penghuni aktif, disertai pengamatan harian serta telaah catatan sewa, daftar tarif, dan nota pengeluaran. Pengembangan aplikasi web mengikuti metode *Waterfall* yang diawali analisis kebutuhan, perancangan alur kerja tiga peran pengguna, serta penyusunan struktur basis data. Sistem kemudian dibangun menggunakan kerangka kerja Laravel dan basis data MySQL yang dihubungkan langsung dengan gerbang pembayaran Midtrans serta pengingat WhatsApp dan *email*. Tahap akhir mencakup pengujian *Black Box* pada 60 skenario fitur hingga uji coba pemakaian bersama pengelola dan penghuni kost menggunakan penilaian skala 1 sampai 10.
 
 ---
 
 ### KOLOM KANAN
 
 #### `HASIL DAN PEMBAHASAN`
-> Aplikasi web yang dihasilkan membagi ruang akses secara jelas untuk pengunjung umum, calon penyewa, penghuni aktif, dan pengelola. Peminat dari luar kota bisa memeriksa ketersediaan 32 kamar, mengisi identitas KTP 16 digit, lalu menyelesaikan pemesanan lima tahap dengan pilihan uang muka 30% atau bayar penuh melalui *Virtual Account* Midtrans. Begitu pembayaran diterima, sistem mengaktifkan hunian dan menerbitkan kuitansi PDF berstempel lunas secara otomatis. Untuk penghuni aktif, tagihan terbit otomatis setiap tanggal 1 disertai pengingat WhatsApp dan *email*, masa kelonggaran sampai akhir bulan berjalan setelah jatuh tempo tanggal 10, serta denda tetap 5% satu kali bila menunggak ke bulan berikutnya. Seluruh 60 skenario uji fungsi lolos 100%, sementara uji coba lapangan mencatat skor 9,5/10 dari penjaga kost (Bapak Asep) karena tutup buku menyusut ke hitungan detik tanpa selisih kas, diikuti nilai rata-rata 8,0/10 dari lima mahasiswa berbagai kampus.
+> Aplikasi web yang dibangun memisahkan ruang akses bagi pengunjung umum, calon penyewa, penghuni aktif, dan pengelola kost. Melalui dasbor pengelola (`Gambar 1`), keterisian 32 kamar, belanja operasional, hingga laporan kas terpantau langsung dalam satu layar sehingga tutup buku bulanan selesai dalam hitungan detik tanpa selisih. Calon penyewa dari luar kota dapat mengecek kamar kosong, mengisi NIK 16 digit beserta kontak wali, lalu mengikuti alur pemesanan lima tahap (`Gambar 2`). Pembayaran uang muka 30% maupun pelunasan penuh diproses lewat *Virtual Account* Midtrans yang otomatis mengunci kamar pilihan dan menerbitkan kuitansi PDF berstempel lunas. Bagi penghuni aktif, tagihan sewa terbit otomatis setiap tanggal 1 pada portal mandiri (`Gambar 3`) diiringi pengingat WhatsApp serta *email*. Batas bayar ditetapkan setiap tanggal 10 dengan kelonggaran hingga akhir bulan berjalan, sedangkan tunggakan yang melewati pergantian bulan dikenai denda tetap 5% satu kali. Pengujian 60 skenario fungsi sistem berhasil 100%, didukung nilai kepuasan 9,5 dari 10 oleh penjaga kost dan rata-rata 8,0 dari 10 oleh lima mahasiswa penghuni aktif.
 
 - **Penempatan Visual Hasil (`Gambar 1`, `Gambar 2`, `Gambar 3`):**
   1. **Baris Atas (Lebar Penuh Kolom Kanan):** Pasang `gambar_4_26_dashboard_admin.png` dan beri keterangan rata tengah di bawahnya: `Gambar 1 Tampilan dasbor pengelola dan laporan kas`
@@ -146,7 +146,7 @@ Rafif Arsya Pradiva 22.N4.0014
   3. **Baris Bawah Kanan (48% Kolom Kanan):** Pasang `gambar_4_38_tagihan_penyewa.png` dan beri keterangan rata tengah di bawahnya: `Gambar 3 Tampilan halaman tagihan bulanan penghuni`
 
 #### `KESIMPULAN`
-> Penerapan sistem manajemen kost berbasis Laravel, MySQL, dan gerbang pembayaran Midtrans berhasil menertibkan pengelolaan 32 kamar di Asri Boarding House. Fitur penguncian jadwal otomatis mampu mencegah pesanan ganda, sementara pembayaran daring dan kuitansi PDF membuat pencatatan uang sewa jauh lebih transparan. Pengiriman tagihan rutin tanggal 1 lewat WhatsApp serta *email* juga membantu penghuni membayar tepat waktu tanpa penagihan manual satu per satu. Seluruh 60 skenario pengujian fungsi lulus 100%, diikuti penilaian positif dari penjaga kost (9,5 dari 10) dan lima penghuni aktif (rata-rata 8,0 dari 10). Pengembangan berikutnya dapat menambahkan pengingat WhatsApp H-3 sebelum jatuh tempo beserta tautan bayar langsung, panduan awal pemakaian bagi penghuni baru, serta fitur kontrak sewa digital.
+> Kehadiran aplikasi web manajemen kost berhasil menertibkan pengelolaan 32 kamar di Asri Boarding House. Penguncian kamar otomatis saat pemesanan berlangsung mampu menutup celah pesanan ganda, sedangkan pembayaran daring Midtrans dan kuitansi PDF membuat pencatatan sewa lebih transparan. Pengingat tagihan rutin setiap tanggal 1 melalui WhatsApp serta *email* juga membantu penghuni membayar tepat waktu, sekaligus memangkas rekap kas bulanan menjadi hitungan detik. Secara teknis, seluruh 60 skenario pengujian fitur berjalan 100% tanpa kendala. Manfaat ini tercermin dari nilai kepuasan 9,5 dari 10 oleh penjaga kost serta rata-rata 8,0 dari 10 oleh lima mahasiswa penghuni. Ke depannya, sistem dapat dilengkapi pengingat WhatsApp H-3 bertautan bayar langsung, panduan awal bagi penghuni baru, perapian tampilan ponsel, serta kontrak sewa digital.
 
 ---
 
