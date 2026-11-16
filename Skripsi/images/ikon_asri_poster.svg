@@ -1,0 +1,20 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgSky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#93D5F5" />
+      <stop offset="100%" stop-color="#38A3DC" />
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="44" fill="url(#bgSky)" />
+  <g transform="translate(36, 38) scale(4.5)">
+    <path d="M20 3 L37 18 L33 18 L33 38 L7 38 L7 18 L3 18 Z"
+          fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round" />
+    <rect x="17" y="26" width="6" height="12" rx="1" fill="#FACC15" />
+    <rect x="11.5" y="16" width="4.5" height="4.5" rx="0.8"
+          fill="none" stroke="#FFFFFF" stroke-width="1.5" />
+    <rect x="24" y="16" width="4.5" height="4.5" rx="0.8"
+          fill="none" stroke="#FFFFFF" stroke-width="1.5" />
+    <path d="M37 8 C29 8 27 16 27 16 C27 16 33 17 38 13 C42 10 41 8 37 8 Z" fill="#10B981" />
+    <path d="M27 16 Q33 11 37 8" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-linecap="round" />
+  </g>
+</svg>
