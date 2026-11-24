@@ -28,3 +28,15 @@ Setiap pembuatan atau penyuntingan dokumen akademis (naskah skripsi, jurnal, rin
 - Jangan pernah menyalin susunan kalimat utuh dari sumber rujukan.
 - Lakukan parafrase murni dengan menangkap esensi fakta atau logika, kemudian merangkai ulang dengan struktur frasa, metafora fungsional, dan perspektif baru agar sepenuhnya orisinal serta aman dari deteksi Turnitin kampus.
 
+### 7. Integrasi Skill `humanizer` & Batasan Akademis
+- Saat menyunting, meninjau, atau memoles prosa naskah skripsi, jurnal, poster, maupun dokumentasi proyek, aktifkan skill lokal `.agents/skills/humanizer/SKILL.md` (gunakan *File Mode* untuk penyuntingan berkas penuh dan *Embedded Mode* saat membuat/memperbarui bagian tertentu).
+- Terapkan 26 pola deteksi `humanizer` secara adaptif untuk Bahasa Inggris dan Bahasa Indonesia, termasuk padanan pola AI berbahasa Indonesia:
+  - **§1 Kontras Semu**: hindari konstruksi *"bukan sekadar X, melainkan Y"*, *"tidak hanya X, tetapi juga Y"* bila separuh negatifnya tidak menyanggah asumsi nyata pembaca.
+  - **§6 Triad Paksa & §8 Tanda Pisah**: hindari pengelompokan tiga kata/klausa berulang yang dipaksakan, serta dilarang menggunakan *em-dash* (`—`) atau *en-dash* (`–`) di dalam prosa.
+  - **§12 Diksi Stok AI & §18 Kata Kerja Bertele-tele**: pangkas kata klise seperti *krusial, vital, komprehensif, lanskap, ekosistem (figuratif), menjembatani*, serta ganti frasa *bertindak sebagai / hadir sebagai / berfungsi sebagai* dengan kata kerja langsung (*adalah, menjadi, menghubungkan*).
+- **Zona Terproteksi (Wajib Dipertahankan Utuh)**:
+  - Format judul bab/subbab resmi Unika & IEEE (kecualikan §20 *sentence-case* & penghapusan garis pemisah template).
+  - Format *bold* wajib pada blok *Abstract* template jurnal IEEE (kecualikan §19) dan kutipan/rentang halaman di `DAFTAR PUSTAKA` / `REFERENCES` (kecualikan §21 & §8).
+  - Kutipan wawancara verbatim (`Tabel 4.2`–`Tabel 4.7`), tabel pengujian (`Tabel 4.1`), blok kode, rumus LaTeX, tautan gambar, nomor sitasi `[1]`–`[30]`, serta seluruh angka metrik empiris.
+  - Kalimat pasif akademis Bahasa Indonesia (§11) tetap diperbolehkan seperlunya selama tidak menyembunyikan pelaku utama atau membuat kalimat kaku.
+
