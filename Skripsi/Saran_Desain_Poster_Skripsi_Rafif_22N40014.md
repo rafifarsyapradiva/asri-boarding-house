@@ -18,8 +18,8 @@ Revisi ini menjawab langsung catatan dosen pembimbing agar setiap subjudul cukup
 
 | Unsur Poster | Kondisi Draf Sebelumnya | Rekomendasi Revisi Optimal (A1 `594 x 841 mm`) |
 | :--- | :--- | :--- |
-| **Kepadatan Naskah** | 5 hingga 8 kalimat per subjudul (total 34 kalimat, ~694 kata, 11 sampai 18 baris per kartu). | Dipangkas **47% kalimat / 49% kata** menjadi tepat **1 paragraf berisi 3 sampai 4 kalimat** per subjudul (total 18 kalimat, 357 kata, hanya 6 sampai 8 baris per kartu). |
-| **Gaya Bahasa** | Cukup informatif tetapi masih terasa panjang saat dipindai cepat pada pameran poster. | Ragam *hybrid* akademis-humanis yang luwes, mengalir, SPOK dinamis (*burstiness*), bebas klise AI, dan bebas tanda baca *em-dash*. |
+| **Kepadatan Naskah** | 5 hingga 8 kalimat per subjudul (total 34 kalimat, ~694 kata, 11 sampai 18 baris per kartu). | Dipangkas **47% kalimat / 47% kata** menjadi tepat **1 paragraf berisi 3 sampai 4 kalimat** per subjudul (total 18 kalimat, 371 kata, hanya 6 sampai 8 baris per kartu). |
+| **Gaya Bahasa** | Cukup informatif tetapi masih terasa panjang saat dipindai cepat pada pameran poster. | Ragam *hybrid* akademis-humanis yang luwes, mengalir, SPOK dinamis (*burstiness*), bersih dari kata rancu maupun kaku, bebas klise AI, dan bebas tanda baca *em-dash*. |
 | **Komposisi 5 Gambar** | Baru memuat 3 tangkapan layar antarmuka di Kolom Kanan (`Gambar 1` sampai `Gambar 3`). | Ditata seimbang: **2 diagram di Kolom Kiri** (`Gambar 1 Flowchart Alur Sistem`, `Gambar 2 Metode Waterfall`) dan **3 antarmuka di Kolom Kanan** (`Gambar 3`, `Gambar 4`, `Gambar 5`). |
 | **Kebersihan Gambar** | Bilah alamat serta *bookmark bar* Chrome masih tampak di bagian atas ketiga layar UI. | Seluruh gambar UI sudah dipotong bersih dan ditingkatkan ketajamannya dalam paket siap tempel `Skripsi/images/poster/` (`199` hingga `330 DPI` di A1). |
 | **Header & Identitas** | Ikon kiri masih memakai ikon templat huruf "S", belum ada afiliasi prodi/fakultas, dan baris nama memakai strip panjang. | Memakai `ikon_asri_poster.svg` di kiri, `logo_unika.png` di kanan, nama `Rafif Arsya Pradiva | 22.N4.0014`, serta satu baris afiliasi prodi/fakultas untuk pengunjung luar kampus. |
@@ -44,17 +44,17 @@ Revisi ini menjawab langsung catatan dosen pembimbing agar setiap subjudul cukup
 
 | Kolom Kiri (`265 mm`) | Alokasi Tinggi | Kolom Kanan (`265 mm`) | Alokasi Tinggi |
 | :--- | :---: | :--- | :---: |
-| **Kartu `ABSTRAK`** (4 kalimat, 69 kata) | `113 mm` | **Kartu `HASIL DAN PEMBAHASAN`** (4 kalimat, 87 kata + 3 gambar UI) | `559 mm` |
+| **Kartu `ABSTRAK`** (4 kalimat, 71 kata) | `113 mm` | **Kartu `HASIL DAN PEMBAHASAN`** (4 kalimat, 95 kata + 3 gambar UI) | `559 mm` |
 | Celah antarkartu | `14 mm` | &emsp;Judul, *padding* atas & teks paragraf | *(`120 mm`)* |
-| **Kartu `LATAR BELAKANG`** (4 kalimat, 72 kata) | `120 mm` | &emsp;Celah teks ke `Gambar 3` | *(`18 mm`)* |
+| **Kartu `LATAR BELAKANG`** (4 kalimat, 73 kata) | `120 mm` | &emsp;Celah teks ke `Gambar 3` | *(`18 mm`)* |
 | Celah antarkartu | `14 mm` | &emsp;`Gambar 3` (`237 x 103 mm`) + keterangan (`12 mm`) | *(`115 mm`)* |
-| **Kartu `METODE PENELITIAN`** (3 kalimat, 67 kata + 2 diagram) | `438 mm` | &emsp;Celah ke `Gambar 4` | *(`22 mm`)* |
+| **Kartu `METODE PENELITIAN`** (3 kalimat, 68 kata + 2 diagram) | `438 mm` | &emsp;Celah ke `Gambar 4` | *(`22 mm`)* |
 | &emsp;Judul, *padding* atas & teks paragraf | *(`98 mm`)* | &emsp;`Gambar 4` (`237 x 109 mm`) + keterangan (`12 mm`) | *(`121 mm`)* |
 | &emsp;Celah teks ke `Gambar 1` | *(`10 mm`)* | &emsp;Celah ke `Gambar 5` | *(`22 mm`)* |
 | &emsp;`Gambar 1` (`184 x 156 mm`, rata tengah) + keterangan (`11 mm`) | *(`167 mm`)* | &emsp;`Gambar 5` (`237 x 107 mm`) + keterangan (`12 mm`) | *(`119 mm`)* |
 | &emsp;Celah ke `Gambar 2` | *(`12 mm`)* | &emsp;*Padding* bawah kartu | *(`22 mm`)* |
 | &emsp;`Gambar 2` (`206 x 128 mm`, rata tengah) + keterangan (`11 mm`) | *(`139 mm`)* | Celah antarkartu | `18 mm` |
-| &emsp;*Padding* bawah kartu | *(`12 mm`)* | **Kartu `KESIMPULAN`** (3 kalimat, 62 kata) | `122 mm` |
+| &emsp;*Padding* bawah kartu | *(`12 mm`)* | **Kartu `KESIMPULAN`** (3 kalimat, 64 kata) | `122 mm` |
 | **Total Tinggi Kolom Kiri** | **`699 mm`** | **Total Tinggi Kolom Kanan** | **`699 mm`** |
 
 ### 2.2 Palet Warna Kartu Modern (Selaras Draf Aktual)
@@ -92,15 +92,15 @@ Gunakan satu keluarga huruf **Sans-Serif Modern** yang bersih (*Plus Jakarta San
 |----------------------------------------------------------------------------------|
 |  +------------------------------------+  +------------------------------------+  |
 |  |              ABSTRAK               |  |       HASIL DAN PEMBAHASAN         |  |
-|  |  1 paragraf (4 kalimat, 69 kata):  |  |  1 paragraf (4 kalimat, 87 kata):  |  |
+|  |  1 paragraf (4 kalimat, 71 kata):  |  |  1 paragraf (4 kalimat, 95 kata):  |  |
 |  |  kendala manual -> Laravel, MySQL, |  |  4 akses -> dasbor (Gambar 3) ->   |  |
 |  |  Waterfall & Midtrans -> kunci     |  |  pesan 5 tahap (Gambar 4) ->       |  |
-|  |  otomatis -> 60 uji & skor pakai.  |  |  portal tagihan & uji (Gambar 5).  |  |
+|  |  otomatis -> 60 uji & skor coba.   |  |  halaman tagihan & uji (Gambar 5). |  |
 |  +------------------------------------+  |                                    |  |
 |                                          |  +------------------------------+  |  |
 |  +------------------------------------+  |  |  Gambar 3 (Dasbor & Kas)     |  |  |
 |  |          LATAR BELAKANG            |  |  |  Crop bersih (237 x 103 mm)  |  |  |
-|  |  1 paragraf (4 kalimat, 72 kata):  |  |  +------------------------------+  |  |
+|  |  1 paragraf (4 kalimat, 73 kata):  |  |  +------------------------------+  |  |
 |  |  perantau Tembalang -> 32 kamar    |  |  Gambar 3 Tampilan dasbor pengelola|  |
 |  |  manual -> tagih, denda & rekap    |  |           dan laporan kas          |  |
 |  |  3-4 hari -> butuh web gateway.    |  |                                    |  |
@@ -108,9 +108,9 @@ Gunakan satu keluarga huruf **Sans-Serif Modern** yang bersih (*Plus Jakarta San
 |                                          |  |  Gambar 4 (Alur 5 Tahap)     |  |  |
 |  +------------------------------------+  |  |  Crop bersih (237 x 109 mm)  |  |  |
 |  |         METODE PENELITIAN          |  |  +------------------------------+  |  |
-|  |  1 paragraf (3 kalimat, 67 kata):  |  |  Gambar 4 Tampilan alur pemesanan  |  |
+|  |  1 paragraf (3 kalimat, 68 kata):  |  |  Gambar 4 Tampilan alur pemesanan  |  |
 |  |  studi kasus & wawancara -> alur   |  |         kamar lima tahap           |  |
-|  |  sistem (Gambar 1) -> 6 fase       |  |                                    |  |
+|  |  sistem (Gambar 1) -> 6 tahap      |  |                                    |  |
 |  |  Waterfall (Gambar 2) & uji.       |  |  +------------------------------+  |  |
 |  |                                    |  |  |  Gambar 5 (Halaman Tagihan)  |  |  |
 |  |  +------------------------------+  |  |  |  Crop bersih (237 x 107 mm)  |  |  |
@@ -121,9 +121,9 @@ Gunakan satu keluarga huruf **Sans-Serif Modern** yang bersih (*Plus Jakarta San
 |  |                                    |                                          |
 |  |  +------------------------------+  |  +------------------------------------+  |
 |  |  |  Gambar 2 (Metode Waterfall) |  |  |            KESIMPULAN              |  |
-|  |  |  Rata tengah (206 x 128 mm)  |  |  |  1 paragraf (3 kalimat, 62 kata):  |  |
+|  |  |  Rata tengah (206 x 128 mm)  |  |  |  1 paragraf (3 kalimat, 64 kata):  |  |
 |  |  +------------------------------+  |  |  32 kamar tertib & rekap detik ->  |  |
-|  |      Gambar 2 Metode Waterfall     |  |  validasi uji & skor pakai ->      |  |
+|  |      Gambar 2 Metode Waterfall     |  |  validasi uji & skor coba ->       |  |
 |  +------------------------------------+  |  arah pengembangan berikutnya.     |  |
 |                                          +------------------------------------+  |
 +----------------------------------------------------------------------------------+
@@ -133,7 +133,7 @@ Gunakan satu keluarga huruf **Sans-Serif Modern** yang bersih (*Plus Jakarta San
 
 ## 4. Naskah Siap Pakai Poster (Salin Langsung ke Canva atau Figma)
 
-Seluruh naskah di bawah sudah dipangkas menjadi **1 paragraf berisi 3 sampai 4 kalimat per subjudul** (total 18 kalimat / 357 kata) dengan ragam bahasa *hybrid* akademis-humanis yang luwes bagi mahasiswa Fakultas Ilmu Komputer, dosen penguji, dan dosen pembimbing, tanpa frasa klise AI dan tanpa tanda baca *em-dash*.
+Seluruh naskah di bawah sudah dipangkas menjadi **1 paragraf berisi 3 sampai 4 kalimat per subjudul** (total 18 kalimat / 371 kata) dengan ragam bahasa *hybrid* akademis-humanis yang luwes bagi mahasiswa Fakultas Ilmu Komputer, dosen penguji, dan dosen pembimbing, bersih dari istilah rancu maupun kaku, tanpa frasa klise AI, serta tanpa tanda baca *em-dash*.
 
 ### BAGIAN HEADER (ATAS, RATA TENGAH)
 
@@ -159,13 +159,13 @@ Sistem Informasi, Fakultas Ilmu Komputer, Universitas Katolik Soegijapranata
 ### KOLOM KIRI
 
 #### `ABSTRAK`
-> Pencatatan 32 kamar di Asri Boarding House lewat buku tulis dan WhatsApp kerap memicu pesanan ganda. Lewat metode *Waterfall*, riset ini membangun aplikasi web manajemen kost berbasis Laravel dan MySQL yang terintegrasi dengan *payment gateway* Midtrans, WhatsApp, serta *email*. Begitu pembayaran terverifikasi, kamar terkunci otomatis dan kuitansi PDF langsung terbit. Seluruh 60 uji *Black Box* berjalan 100%, meraih skor 9,5/10 dari penjaga kost dan rata-rata 8,0/10 dari lima penghuni.
+> Pencatatan 32 kamar di Asri Boarding House lewat buku tulis dan WhatsApp sering memicu pesanan ganda. Dengan metode *Waterfall*, riset ini membangun aplikasi web manajemen kost berbasis Laravel dan MySQL yang terhubung ke *payment gateway* Midtrans, WhatsApp, serta *email*. Begitu pembayaran terverifikasi, kamar terkunci otomatis dan kuitansi PDF langsung terbit. Seluruh 60 skenario uji fitur (*Black Box*) berjalan 100%, meraih skor 9,5/10 dari penjaga kost dan rata-rata 8,0/10 dari lima penghuni.
 
 #### `LATAR BELAKANG`
-> Mahasiswa perantau di Tembalang kerap kesulitan mengecek kamar kosong tanpa datang langsung ke lokasi. Di Asri Boarding House, pengelolaan 32 kamar tipe VIP, Deluxe, dan Standar lewat buku tulis serta WhatsApp pribadi kerap telat diperbarui hingga memicu bentrok pesan. Urusan tagihan tanggal 10, denda 5%, hingga pencocokan kas akhir bulan bahkan menyita tiga sampai empat hari. Kondisi ini membutuhkan aplikasi web terpusat dengan *payment gateway* agar reservasi dan pembukuan rapi tanpa selisih.
+> Mahasiswa perantau di Tembalang sering kesulitan mengecek kamar kosong tanpa datang langsung ke lokasi. Di Asri Boarding House, pencatatan 32 kamar tipe VIP, Deluxe, dan Standar pada buku tulis serta WhatsApp pribadi kerap terlambat diperbarui hingga memicu bentrok pesanan kamar. Urusan tagihan tanggal 10, denda 5%, hingga pencocokan kas akhir bulan bahkan menyita tiga sampai empat hari. Kondisi ini membutuhkan aplikasi web terpusat dengan *payment gateway* agar pemesanan dan pembukuan rapi tanpa selisih.
 
 #### `METODE PENELITIAN`
-> Studi kasus di Asri Boarding House ini menghimpun data lewat wawancara penjaga kost berpengalaman 20 tahun, lima penghuni aktif, observasi harian, serta telaah catatan kas. Kebutuhan tersebut dituangkan ke dalam alur pemesanan sampai serah terima kunci pada Gambar 1. Aplikasi berbasis Laravel, MySQL, dan Midtrans kemudian dibangun lewat enam fase *Waterfall* (Gambar 2), lalu divalidasi dengan 60 skenario *Black Box* serta uji pakai berskala 1 sampai 10.
+> Studi kasus di Asri Boarding House ini menghimpun data melalui wawancara penjaga kost berpengalaman 20 tahun, lima penghuni aktif, observasi harian, serta pengecekan catatan kas. Kebutuhan tersebut dituangkan ke dalam alur pemesanan sampai serah terima kunci pada Gambar 1. Aplikasi berbasis Laravel, MySQL, dan Midtrans kemudian dibangun mengikuti enam tahap *Waterfall* (Gambar 2), lalu diuji memakai 60 skenario *Black Box* serta uji coba langsung berskala 1 sampai 10.
 
 - **Penempatan Visual Kolom Kiri (Bertumpuk Vertikal di Bawah Paragraf `METODE PENELITIAN`):**
   1. **Diagram Atas (`184 x 156 mm`, rata tengah):** Pasang `Skripsi/images/poster/gambar_1_flowchart_alur_sistem.png` dan beri keterangan rata tengah di bawahnya: `Gambar 1 Flowchart Alur Sistem`
@@ -176,7 +176,7 @@ Sistem Informasi, Fakultas Ilmu Komputer, Universitas Katolik Soegijapranata
 ### KOLOM KANAN
 
 #### `HASIL DAN PEMBAHASAN`
-> Sistem membagi ruang akses untuk pengunjung umum, calon penyewa, penghuni aktif, dan pengelola kost. Lewat dasbor pengelola (Gambar 3), status 32 kamar serta arus kas terpantau langsung sehingga tutup buku tuntas dalam hitungan detik. Calon penyewa memesan kamar lewat alur lima tahap (Gambar 4) dengan DP 30% atau pelunasan via Midtrans yang otomatis mengunci unit dan menerbitkan kuitansi PDF. Portal mandiri (Gambar 5) menerbitkan tagihan tiap tanggal 1 dengan batas tanggal 10, denda 5% lintas bulan, serta pengingat WhatsApp dan *email*, didukung 60 uji fitur lulus 100%.
+> Sistem membagi hak akses untuk pengunjung umum, calon penyewa, penghuni aktif, dan pengelola kost. Melalui dasbor pengelola (Gambar 3), status 32 kamar serta arus kas terpantau langsung sehingga tutup buku tuntas dalam hitungan detik. Calon penyewa memesan kamar lewat alur lima tahap (Gambar 4) dengan uang muka (DP) 30% atau pelunasan via Midtrans yang otomatis mengunci unit dan menerbitkan kuitansi PDF. Halaman tagihan penghuni (Gambar 5) menerbitkan rincian sewa tiap tanggal 1 dengan batas bayar tanggal 10, denda 5% bila melewati akhir bulan, serta pengingat WhatsApp dan *email*, sementara seluruh 60 uji fitur lulus 100%.
 
 - **Penempatan Visual Kolom Kanan (Bertumpuk Vertikal Selebar Kartu `237 mm` di Bawah Paragraf `HASIL DAN PEMBAHASAN`):**
   1. **Layar Pertama (`237 x 103 mm`):** Pasang `Skripsi/images/poster/gambar_3_dasbor_pengelola_kas.png` dan beri keterangan rata tengah di bawahnya: `Gambar 3 Tampilan dasbor pengelola dan laporan kas`
@@ -184,7 +184,7 @@ Sistem Informasi, Fakultas Ilmu Komputer, Universitas Katolik Soegijapranata
   3. **Layar Ketiga (`237 x 107 mm`):** Pasang `Skripsi/images/poster/gambar_5_tagihan_bulanan_penghuni.png` dan beri keterangan rata tengah di bawahnya: `Gambar 5 Tampilan halaman tagihan bulanan penghuni`
 
 #### `KESIMPULAN`
-> Aplikasi web ini menutup celah pesanan ganda pada 32 kamar sekaligus memangkas rekap kas bulanan menjadi hitungan detik. Pembayaran Midtrans, kuitansi PDF, serta pengingat WhatsApp dan *email* teruji lewat 60 skenario *Black Box* (100%), skor 9,5/10 dari pengelola, dan 8,0/10 dari lima penghuni. Pengembangan selanjutnya dapat menambahkan pengingat WhatsApp H-3 bertautan bayar, panduan penghuni baru, perapian tampilan ponsel, serta kontrak sewa digital.
+> Aplikasi web ini mencegah pesanan ganda pada 32 kamar sekaligus memangkas rekap kas bulanan menjadi hitungan detik. Pembayaran Midtrans, kuitansi PDF, serta pengingat WhatsApp dan *email* teruji lewat 60 skenario *Black Box* (100%), skor 9,5/10 dari pengelola, dan 8,0/10 dari lima penghuni. Pengembangan selanjutnya dapat menambahkan pengingat WhatsApp H-3 dengan tautan bayar langsung, panduan penghuni baru, penyempurnaan tampilan di ponsel, serta kontrak sewa digital.
 
 ---
 
@@ -198,7 +198,7 @@ Seluruh 5 gambar utama sudah diproses non-destruktif ke dalam folder `Skripsi/im
 | **Header Kiri** | Ikon Aplikasi Asri | `ikon_asri_poster.svg` | Vektor | Tak terbatas | Ukuran pasang `54 x 54 mm`; menggantikan ikon templat huruf "S". |
 | **Header Kanan** | Logo Unika | `logo_unika.png` | `254 x 255 px` | ~`120 DPI` | Ukuran pasang `54 x 54 mm` sejajar vertikal dengan ikon kiri. |
 | **`Gambar 1`** | `Gambar 1 Flowchart Alur Sistem` | `poster/gambar_1_flowchart_alur_sistem.png` | `1444 x 1226 px` | ~`199 DPI` | Dari `gambar_4_6_flowchart_sistem.png`; margin dirapikan + *upscale* Lanczos 2x. |
-| **`Gambar 2`** | `Gambar 2 Metode Waterfall` | `poster/gambar_2_metode_waterfall.png` | `2677 x 1658 px` | ~`330 DPI` | Dari `metode_sdlc_waterfall.png` (resmi `Gambar 3.1` skripsi, 6 fase + umpan balik). |
+| **`Gambar 2`** | `Gambar 2 Metode Waterfall` | `poster/gambar_2_metode_waterfall.png` | `2677 x 1658 px` | ~`330 DPI` | Dari `metode_sdlc_waterfall.png` (resmi `Gambar 3.1` skripsi, 6 tahap + umpan balik). |
 | **`Gambar 3`** | `Gambar 3 Tampilan dasbor pengelola dan laporan kas` | `poster/gambar_3_dasbor_pengelola_kas.png` | `1897 x 823 px` | ~`203 DPI` | Dari `gambar_4_26_dashboard_admin.png`; bilah Chrome (`113 px`) sudah terpotong bersih. |
 | **`Gambar 4`** | `Gambar 4 Tampilan alur pemesanan kamar lima tahap` | `poster/gambar_4_alur_pemesanan_5_tahap.png` | `2048 x 944 px` | ~`219 DPI` | Dari `antarmuka_stepper_reservasi_penyewa.png`; bebas bilah Chrome + *upscale* 2x. |
 | **`Gambar 5`** | `Gambar 5 Tampilan halaman tagihan bulanan penghuni` | `poster/gambar_5_tagihan_bulanan_penghuni.png` | `1918 x 864 px` | ~`206 DPI` | Dari `gambar_4_38_tagihan_penyewa.png`; bilah Chrome (`73 px`) sudah terpotong bersih. |
