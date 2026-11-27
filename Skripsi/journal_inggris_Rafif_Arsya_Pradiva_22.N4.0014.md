@@ -38,7 +38,7 @@
 </p>
 
 <p align="justify">
-  <strong>Daily administration for the 32 rooms at Asri Boarding House still relies on paper ledgers. Because staff coordinate bookings and rent collection through personal chats, room reservations often collide, 10th-of-the-month billing reminders slip, and month-end cash reconciliation takes up to four days. This study designs and builds a web-based management information system to centralize reservations, recurring billing, and financial bookkeeping. Following a Research and Development (R&amp;D) approach, software construction adopts the Waterfall model. Built on Laravel and a 3NF MySQL database, the platform applies pessimistic row locking to block duplicate bookings during simultaneous reservation requests. Midtrans Snap verifies cashless payments automatically via SHA-512 webhooks, while server cron jobs issue monthly invoices, calculate cross-month late fees, and dispatch alerts through WhatsApp and SMTP email. All 60 black-box test scenarios across six operational domains passed without error. In field trials, the resident manager gave a 9.5/10 score as month-end closing became instant with zero cash variance, while five student tenants averaged 8.0/10 for Virtual Account payments and downloadable PDF receipts.</strong>
+  <strong>The caretaker at Asri Boarding House tracks 32 rooms manually. Because staff handle inquiries over personal chat and log payments in paper books, simultaneous requests often double-book a unit, 10th-of-the-month rent reminders slip, and month-end cash reconciliation takes up to four days. This Research and Development (R&amp;D) study builds a web-based management information system using Waterfall stages. On a Laravel and Third Normal Form (3NF) MySQL stack, pessimistic row locking blocks duplicate reservations whenever two applicants submit a room together. Midtrans Snap settles cashless payments automatically through SHA-512 webhook verification. Scheduled server cron jobs then generate monthly invoices and cross-month late fines while sending payment notices over WhatsApp and SMTP email. All 60 black-box test scenarios across six modules passed. During field trials, the resident caretaker scored the system 9.5/10 after month-end closing became instantaneous with zero cash variance, and five student tenants gave an 8.0/10 average for Virtual Account checkout and downloadable PDF receipts.</strong>
 </p>
 
 <p align="justify">
@@ -55,15 +55,15 @@
 </p>
 
 <p align="justify">
-  Manual administration also slows down monthly rent collection. The caretaker must check every 10th-of-the-month due date, calculate 5% cross-month late fines, and message tenants individually, which often lets reminders slip and arrears build up [3]. At month end, reconciling cash payments, transfer screenshots, and operational expense notes takes three to four days, leaving the cash book prone to human miscalculation [4].
+  Monthly rent collection strains the caretaker even further. Past every 10th-of-the-month due date, staff manually check unpaid rooms, compute 5% cross-month late fines, and text tenants individually, so overdue notices often slip and arrears accumulate [3]. Month-end closing drags on for three to four days as staff match cash receipts and chat transfer screenshots against paper expense slips. Arithmetic mistakes creep into the cash book during those manual tallies [4].
 </p>
 
 <p align="justify">
-  A centralized Management Information System (MIS) resolves these bottlenecks by uniting room inventory, lease contracts, and cash books in one database [5]. Through a Business-to-Consumer (B2C) web portal, the property owner markets available units directly to prospective students without paying third-party broker fees [6]. A high-contrast Neo-Brutalism interface then guides visitors through each booking step without visual clutter [7]. Behind the scenes, Laravel's Model-View-Controller (MVC) architecture separates business logic from page views [8]. while a Third Normal Form (3NF) MySQL InnoDB schema eliminates duplicate records and protects historical lease rates [9].
+  One centralized Management Information System (MIS) can unite room inventory, lease contracts, and cash books [5]. The property owner can then advertise vacant units directly to prospective students through a Business-to-Consumer (B2C) web portal without paying commissions to third-party brokers [6]. High-contrast Neo-Brutalism layouts cut visual clutter during checkout [7]. At the code layer, Laravel's Model-View-Controller (MVC) pattern separates business rules from page views [8], and a Third Normal Form (3NF) MySQL InnoDB schema prevents duplicate rows while preserving historical lease tariffs [9].
 </p>
 
 <p align="justify">
-  Most existing boarding house websites only digitize the room catalog. Tenants still upload transfer screenshots for manual checking, whereas integrating the Midtrans payment gateway with SHA-512 webhook verification settles Virtual Account and QRIS payments automatically [10]. On the server side, scheduled cron jobs generate monthly invoices on the 1st and run idempotent late-fee checks after the 10th without manual tracking [11]. Whenever an invoice is issued or settled, the platform sends instant alerts through the Fonnte WhatsApp API [12]. and delivers official receipts via SMTP email [13].
+  Typical boarding house websites stop at an online catalog. Because tenants on those sites still upload transfer screenshots for manual verification, connecting the Midtrans payment gateway with SHA-512 webhook checks is required to settle Virtual Account and QRIS transactions automatically [10]. On the server, cron schedulers create monthly invoices every 1st and run idempotent late-fee checks after the 10th [11]. Each invoice update sends Fonnte WhatsApp alerts [12] and official SMTP email receipts [13].
 </p>
 
 <p align="justify">
@@ -74,11 +74,11 @@
 ### **II. METHOD**
 
 <p align="justify">
-  This study was conducted at Asri Boarding House in Tembalang, Semarang. It combines a software engineering Research and Development (R&amp;D) approach with a single case study. The research framework moves from initial input on manual ledger bottlenecks across 32 rooms, through system design, coding, and testing, to a verified web platform and accurate digital bookkeeping as the final outcome [14]. Primary data came from face-to-face interviews with the caretaker and active student tenants, which were audio-recorded and transcribed into written text during initial requirement analysis and final evaluation. Secondary data were gathered from physical cash books, transfer slips, expense notes, room tariffs, official API manuals, and prior literature [15].
+  Fieldwork took place at Asri Boarding House in Tembalang, Semarang. This study applies a software engineering Research and Development (R&amp;D) method to a single 32-room case study, turning manual ledger problems into a verified web application for daily bookkeeping [14]. Face-to-face interviews with the resident caretaker and active student tenants supplied primary data during both initial requirement gathering and post-deployment evaluation. Every interview session was audio-recorded and transcribed verbatim. Physical cash books, bank transfer slips, operational expense notes, room tariff sheets, official API manuals, and published studies provided secondary references [15].
 </p>
 
 <p align="justify">
-  Software construction followed the Waterfall model shown in Figure 1. This sequential life cycle suited the project because room booking rules and monthly billing schedules were already clearly defined during fieldwork. Development progressed step by step through requirement gathering and analysis, design, implementation, integration and testing, verification, and operation and maintenance, with each stage reviewed before advancing to the next [16].
+  Figure 1 outlines the Waterfall software life cycle. Because Asri Boarding House already enforced fixed booking rules and monthly billing dates, system requirements did not shift mid-build. Engineering work therefore moved sequentially across six Waterfall phases: requirement gathering and analysis, design, implementation, integration and testing, verification, and operation and maintenance, where each phase passed review before the next began [16].
 </p>
 
 <div align="center">
@@ -88,7 +88,7 @@
 </div>
 
 <p align="justify">
-  In the design stage, access rights for prospective tenants, active tenants, and the administrator were modeled using Unified Modeling Language (UML) diagrams. Database structures were normalized into a Third Normal Form (3NF) MySQL InnoDB Entity Relationship Diagram (ERD) separating core lease and financial records from supporting operational tables [17]. System implementation ran on the Laravel MVC framework using ACID database transactions with <em>lockForUpdate()</em> pessimistic row locking so simultaneous booking requests could not claim the same room [18]. Cashless payments integrated 24-hour Midtrans Snap tokens with SHA-512 webhook signature validation through the <em>hash_equals()</em> function. In parallel, server cron jobs automated 1st-of-the-month invoicing, post-10th late-fee checks, Fonnte WhatsApp alerts, and queued SMTP emails [19]. During integration, testing, and verification, 60 black-box test scenarios were executed across six functional modules: authentication and profile, public catalog, five-step booking, tenant portal, admin operations, and background schedulers. After deployment to the production server, final evaluation paired direct usage trials with semi-structured 10-point interviews involving the caretaker and five active student tenants [20].
+  System design started with Unified Modeling Language (UML) access models for prospective tenants, active tenants, and the administrator, paired with a Third Normal Form (3NF) MySQL InnoDB Entity Relationship Diagram (ERD) separating lease finances from operational logs [17]. Laravel MVC handled backend coding and routing. Inside MySQL, ACID transactions apply <em>lockForUpdate()</em> pessimistic row locking so concurrent checkout requests cannot grab the same room [18]. Midtrans Snap issues 24-hour payment tokens and validates incoming SHA-512 webhook signatures via <em>hash_equals()</em>, while server cron jobs trigger 1st-of-the-month bills, post-10th late-fee checks, Fonnte WhatsApp notices, and queued SMTP emails [19]. Functional verification covered 60 black-box test scenarios. Those test cases spanned authentication and profile, public catalog, five-step booking, tenant portal, admin operations, and background schedulers. After production deployment, the caretaker and five active student tenants ran live transactions on the site and scored it in semi-structured 10-point interviews [20].
 </p>
 
 <!-- TAHAP 6: BAB III. RESULTS AND DISCUSSION -->
@@ -97,7 +97,7 @@
 #### **A. RESULT**
 
 <p align="justify">
-  The platform divides user access into three distinct roles. Prospective tenants browse rooms, chat live with staff, verify identity, and submit five-step bookings, whereas active tenants track monthly bills, download receipts, and report room repairs. Meanwhile, the administrator manages room inventory, lease contracts, operational expenses, and cash ledgers. Figure 2 illustrates the Third Normal Form (3NF) MySQL InnoDB schema built around six core transactional tables: <em>users</em>, <em>kamar</em>, <em>penyewa</em>, <em>reservasi</em>, <em>tagihan</em>, and <em>pembayaran</em>. Inside <em>penyewa</em>, the database saves a fixed snapshot of the agreed rental tariff, move-in date, lease expiry, and parent contact so future room rate adjustments never alter running contracts. Eight supporting tables then record complaints (<em>keluhan</em>), expenses (<em>pengeluaran</em>), notification logs (<em>log_notifikasi</em>), live chat (<em>guest_chat_threads</em> and <em>chat_messages</em>), tenant reviews (<em>customer_reviews</em>), house rules (<em>peraturan</em>), and FAQs (<em>faqs</em>).
+  Three separate account levels govern daily portal access. Visitors browse rooms, chat live with staff, upload identity cards, and submit five-step reservations; active residents check monthly invoices, download receipts, and log repair tickets. Room inventory, lease contracts, daily expenses, and cash ledgers belong to the administrator. At the database level (Figure 2), six Third Normal Form (3NF) MySQL InnoDB tables carry core transactions: <em>users</em>, <em>kamar</em>, <em>penyewa</em>, <em>reservasi</em>, <em>tagihan</em>, and <em>pembayaran</em>. Contract history stays immutable inside <em>penyewa</em>. That table stores a fixed snapshot of the agreed rental tariff, move-in date, lease expiry, and parent contact at sign-up so future room rate changes never alter running leases. Eight auxiliary tables handle maintenance complaints (<em>keluhan</em>), operational costs (<em>pengeluaran</em>), alert history (<em>log_notifikasi</em>), live chat (<em>guest_chat_threads</em> and <em>chat_messages</em>), tenant reviews (<em>customer_reviews</em>), house rules (<em>peraturan</em>), and FAQs (<em>faqs</em>).
 </p>
 
 <div align="center">
@@ -107,7 +107,7 @@
 </div>
 
 <p align="justify">
-  Figure 3 maps the end-to-end reservation, payment webhook, and recurring billing workflow. An applicant first selects a vacant unit, uploads a 16-digit National Identity (NIK) card, and submits a booking request. The backend then wraps the request in an ACID database transaction using <em>lockForUpdate()</em> row locking and date-overlap checks to prevent double bookings. After payment, Midtrans dispatches an HTTP webhook carrying a SHA-512 signature verified through <em>hash_equals()</em>. Validated callbacks immediately mark the invoice paid, upgrade the account to active tenant status, and send digital receipts over WhatsApp and email. For recurring rent, server cron jobs issue new bills on the 1st and run idempotent <em>withoutOverlapping()</em> late-fee checks after the 10th.
+  An applicant initiates the workflow in Figure 3 by selecting a vacant unit and uploading a 16-digit National Identity (NIK) card. Race conditions are blocked at checkout. Laravel wraps each submission inside an ACID database transaction that pairs <em>lockForUpdate()</em> row locking with date-overlap queries so two browsers cannot book one room. Once the applicant pays, Midtrans posts an HTTP webhook whose SHA-512 signature must pass a <em>hash_equals()</em> check before the backend marks the invoice paid, activates the tenant account, and sends digital receipts over WhatsApp and email. Subsequent monthly bills go out via server cron jobs on the 1st, followed by idempotent <em>withoutOverlapping()</em> late-fee checks after the 10th.
 </p>
 
 <div align="center">
@@ -117,7 +117,7 @@
 </div>
 
 <p align="justify">
-  The web interface spans 36 responsive Neo-Brutalism pages covering all 32 VIP, Deluxe, and Standard rooms. Visitors can filter live room availability, dimensions, facilities, and monthly tariffs before applying. Figure 4 displays the five-step reservation workspace alongside the embedded Midtrans Snap checkout window. The step-by-step form (Figure 4a) guides applicants through identity upload, live chat confirmation, and full or down-payment selection, whereas the Midtrans Snap modal (Figure 4b) generates a 24-hour Virtual Account or QRIS code for instant cashless settlement.
+  Prospective students browse 36 responsive Neo-Brutalism pages covering all 32 VIP, Deluxe, and Standard rooms. Catalog filters sort live vacancy, dimensions, facilities, and monthly tariffs. Inside the booking screen (Figure 4a), a five-step form collects the identity upload, confirms inquiry details via live chat, and records either full payment or a down payment before opening the embedded Midtrans Snap popup (Figure 4b). Snap then generates a 24-hour Virtual Account number or QRIS code for instant cashless settlement.
 </p>
 
 <div align="center">
@@ -129,7 +129,7 @@
 </div>
 
 <p align="justify">
-  Daily property oversight centers on the executive dashboard and financial reporting module in Figure 5. The main dashboard (Figure 5a) displays real-time metrics across all 32 rooms, including occupancy rates, monthly income, operational costs, net profit, unpaid bills, and pending reservations. It also plots a 12-month cash flow chart beside a room status donut graph. Meanwhile, the bookkeeping view (Figure 5b) matches settled rent payments against daily expenses and exports ready-to-print PDF or Excel ledgers in one click. From the resident portal, tenants check their billing history and download an A5 horizontal PDF receipt stamped <em>PAID</em> with the official Midtrans transaction ID.
+  The caretaker tracks daily operations through the administrator portal in Figure 5. Its main dashboard (Figure 5a) aggregates live metrics across all 32 rooms, pairing a 12-month cash flow chart and a room-status donut graph with counters for occupancy rates, monthly income, operational costs, net profit, unpaid bills, and pending reservations. One click exports ready-to-print PDF or Excel ledgers. Those reports come from the bookkeeping view (Figure 5b), which reconciles settled rent payments against daily expenses. Tenants check their own billing history in the resident portal, where each paid invoice provides an A5 horizontal PDF receipt stamped <em>PAID</em> alongside its official Midtrans transaction ID.
 </p>
 
 <div align="center">
@@ -141,32 +141,32 @@
 </div>
 
 <p align="justify">
-  All 60 black-box test scenarios across the six functional modules passed without validation or transaction failures. Room tier filters, 16-digit NIK checks, post-checkout room quarantine locks, PDF receipt generation, and ledger exports worked reliably during testing. Field trials and recorded interviews using a 10-point scale also showed positive user reception. The caretaker awarded the platform 9.5/10, while five active student tenants gave an average rating of 8.0/10, with individual scores between 7.0 and 9.0.
+  Every one of the 60 black-box test scenarios passed. Across all six functional modules, room tier filters, 16-digit NIK checks, post-checkout room quarantine locks, PDF receipt builders, and ledger exports ran without validation or transaction failures. Recorded 10-point field interviews confirmed positive reception after launch. The caretaker rated the system 9.5/10, while five active student tenants posted an 8.0/10 average rating with individual scores ranging from 7.0 to 9.0.
 </p>
 
 #### **B. DISCUSSION**
 
 <p align="justify">
-  Field interviews confirm that combining automated payment webhooks with row-level database locks removes the core administrative bottlenecks at Asri Boarding House. Automated ledger updates cut month-end closing from three or four days of cross-checking chat screenshots and paper notes to instant PDF and Excel exports. Cash discrepancies dropped to zero. On the billing side, granting an intra-month grace period past the 10th due date and charging an idempotent 5% fine only when unpaid balances roll into the next month keeps rent collection firm yet fair for students. Furthermore, the post-checkout quarantine state hides newly vacated rooms from public booking until staff finish room cleaning and inspection.
+  Post-deployment interviews show how automated payment webhooks and row-level database locks solved daily office bottlenecks at Asri Boarding House. Cash discrepancies dropped to zero. The caretaker no longer spends three or four days matching chat screenshots against paper notes because settled transactions flow straight into instant PDF and Excel exports. Rent rules also fit student cash flow: tenants receive an intra-month grace window past the 10th due date, and the system adds an idempotent 5% fine only when an unpaid balance crosses into the next month. Newly vacated rooms stay hidden in a post-checkout quarantine state until staff finish cleaning and inspection.
 </p>
 
 <p align="justify">
-  Student tenants noted that the self-service catalog and high-contrast Neo-Brutalism layout made it easy to compare room facilities and book units remotely from their hometowns. Paying rent via Virtual Account on Android or iPhone browsers also eliminated late-night trips to the ATM. Once paid, tenants could forward the A5 horizontal PDF receipt directly to their parents as official proof of payment, avoiding confusion over misplaced paper slips. For future updates, interviewees suggested adding a WhatsApp reminder with a direct checkout link three days before the due date, a short user guide, a mobile app, server tuning for peak billing days, and digital lease agreements.
+  Out-of-town students found it straightforward to compare room facilities on the high-contrast Neo-Brutalism catalog and book units remotely from their hometowns. Virtual Account checkout on Android and iPhone browsers ended late-night trips to the ATM. Paper receipts no longer go missing. Residents simply forward the A5 horizontal PDF receipt to their parents as official proof of payment. Interviewees still noted five upgrades for future updates: a WhatsApp reminder carrying a direct checkout link three days before the due date, a short user guide, a mobile app, server tuning for peak billing days, and digital lease agreements.
 </p>
 
 <p align="justify">
-  Most basic boarding house websites still rely on manual transfer receipt uploads and lack database concurrency guards. By contrast, pairing ACID transactions with <em>lockForUpdate()</em> row locking and post-checkout quarantine blocks double bookings across all 32 rooms even when multiple applicants check out at once. Midtrans Snap and SHA-512 signature checks via <em>hash_equals()</em> likewise replace manual bank statement audits with instant ledger settlement. Rather than stopping after a single retail checkout, this architecture connects payment webhooks directly to monthly cron schedulers, WhatsApp alerts, and queued SMTP emails to run the entire multi-month tenancy cycle automatically.
+  Ordinary boarding house portals still ask tenants for manual transfer receipt uploads and omit database concurrency guards. Here, ACID transactions with <em>lockForUpdate()</em> row locking and post-checkout quarantine block double bookings across all 32 rooms during simultaneous checkouts, while <em>hash_equals()</em> SHA-512 checks on Midtrans Snap callbacks settle the ledger without manual bank statement audits. Automation continues well past move-in day. Verified payment webhooks connect directly to monthly cron schedulers, WhatsApp alerts, and queued SMTP emails to run the full multi-month tenancy cycle automatically.
 </p>
 
 <!-- TAHAP 7: BAB IV. CONCLUSION -->
 ### **IV. CONCLUSION**
 
 <p align="justify">
-  The management information system architecture for Asri Boarding House pairs UML modeling with a 3NF MySQL InnoDB database. The schema separates six core lease and financial tables from eight supporting operational tables while dividing access across prospective tenants, active tenants, and the administrator. This unified structure replaces manual paper logs and prevents double bookings across all 32 rooms.
+  Asri Boarding House now runs on a centralized database. Its architecture combines Unified Modeling Language (UML) role permissions for prospective tenants, active tenants, and the administrator with a Third Normal Form (3NF) MySQL InnoDB schema of six core financial tables and eight operational tables. Paper occupancy logs and double-booked rooms across all 32 units are eliminated.
 </p>
 
 <p align="justify">
-  Built on the Laravel MVC framework, the web application combines ACID transactions and <em>lockForUpdate()</em> pessimistic row locking with SHA-512 Midtrans Snap webhooks. Server cron jobs then issue monthly invoices on the 1st, apply 5% cross-month late fines idempotently, and dispatch Fonnte WhatsApp and queued SMTP email alerts. All 60 black-box test scenarios across the six functional modules passed without error.
+  Laravel MVC combines ACID transactions and <em>lockForUpdate()</em> pessimistic row locks with SHA-512 Midtrans Snap payment webhooks. Server cron jobs handle recurring administration automatically: new invoices go out every 1st, idempotent 5% cross-month late fines run past the 10th, and payment notices reach tenants over Fonnte WhatsApp plus queued SMTP email. All 60 black-box tests across six modules passed.
 </p>
 
 <p align="justify">
